@@ -34,7 +34,7 @@ export default function ContinueGames() {
       ...listHostCodes(),
     ]);
     if (!codes.size) {
-      setLoaded(true);
+      void Promise.resolve().then(() => setLoaded(true));
       return;
     }
     void Promise.all(
@@ -74,8 +74,11 @@ export default function ContinueGames() {
   if (!loaded || items.length === 0) return null;
 
   return (
-    <section className="mx-auto w-full max-w-md space-y-3">
-      <h3 className="text-sm font-medium text-zinc-300">继续对局</h3>
+    <section className="mx-auto w-full max-w-xl space-y-3 lg:mx-0">
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-medium text-paper-200">继续对局</h3>
+        <span className="text-[10px] font-semibold tracking-widest text-success-400">SESSION FOUND</span>
+      </div>
       {items.map((item) => {
         const href = item.gameId ? `/play/${item.gameId}` : `/rooms/${item.code}`;
         const phase =
@@ -83,25 +86,25 @@ export default function ContinueGames() {
         return (
           <div
             key={item.roomId}
-            className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-3"
+            className="surface-panel flex items-center gap-3 px-4 py-3"
           >
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-zinc-100">{item.title}</p>
-              <p className="mt-0.5 text-xs text-zinc-500">
+              <p className="truncate text-sm font-medium text-paper-50">{item.title}</p>
+              <p className="mt-0.5 text-xs text-paper-500">
                 {item.code} · {phase}
                 {item.name ? ` · ${item.name}` : ""} · {item.seatLabel}
               </p>
             </div>
             <Link
               href={href}
-              className="shrink-0 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-medium text-zinc-950 hover:bg-amber-400"
+              className="shrink-0 rounded-lg bg-gold-500 px-3 py-1.5 text-xs font-semibold text-ink-950 hover:bg-gold-400"
             >
               {item.gameId ? "进入" : "回大厅"}
             </Link>
             <button
               type="button"
               onClick={() => dismiss(item)}
-              className="shrink-0 text-xs text-zinc-600 hover:text-zinc-400"
+              className="shrink-0 text-xs text-paper-500 hover:text-paper-200"
             >
               忽略
             </button>

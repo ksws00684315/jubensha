@@ -156,7 +156,7 @@ export default function GeneratePage() {
           {issues.length > 0 && (
             <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-4 text-sm text-amber-400/90">
               {issues.map((w, i) => (
-                <p key={i}>⚠ {w}</p>
+                <p key={i}>警告 · {w}</p>
               ))}
             </div>
           )}

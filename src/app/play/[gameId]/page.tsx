@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { BrandMark, SoundIcon } from "@/components/VisualIcons";
 import {
   api,
   getIdentity,
@@ -18,6 +19,8 @@ interface DmView {
   characters: Array<{ id: string; name: string; publicBio: string; secret: string; goal: string; timeline: string; isCulprit: boolean; seatIndex: number | null }>;
   clues: Array<{ id: string; location: string; name: string; content: string; policy: string }>;
 }
+
+type GameCue = "phase" | "clue" | "reveal";
 
 export default function PlayPage() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -39,9 +42,36 @@ export default function PlayPage() {
   const [privateText, setPrivateText] = useState("");
   const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
+  const [soundEnabled, setSoundEnabled] = useState(false);
   const lastSeq = useRef("0");
+  const soundedSeq = useRef("0");
+  const audioContext = useRef<AudioContext | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
   const [streamKey, setStreamKey] = useState<string | null>(null);
+
+  const playCue = useCallback(
+    (cue: GameCue, force = false) => {
+      if (!soundEnabled && !force) return;
+      const context = audioContext.current ?? new AudioContext();
+      audioContext.current = context;
+      void context.resume();
+      const notes = cue === "reveal" ? [164, 130, 329] : cue === "clue" ? [440, 659] : [220, 330];
+      notes.forEach((frequency, index) => {
+        const start = context.currentTime + index * (cue === "reveal" ? 0.18 : 0.1);
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.type = cue === "reveal" ? "triangle" : "sine";
+        oscillator.frequency.setValueAtTime(frequency, start);
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(0.055, start + 0.025);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.28);
+        oscillator.connect(gain).connect(context.destination);
+        oscillator.start(start);
+        oscillator.stop(start + 0.3);
+      });
+    },
+    [soundEnabled]
+  );
 
   // 1) 加载对局概要（先不带身份拿 roomId，再带身份重取私卡）
   useEffect(() => {
@@ -158,6 +188,22 @@ export default function PlayPage() {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" });
   }, [events, deltas]);
 
+  useEffect(() => {
+    const newest = events.at(-1);
+    if (!newest || BigInt(newest.seq) <= BigInt(soundedSeq.current)) return;
+    soundedSeq.current = newest.seq;
+    if (newest.type === "phase") playCue("phase");
+    if (newest.type === "clue") playCue("clue");
+    if (newest.type === "reveal") playCue("reveal");
+  }, [events, playCue]);
+
+  useEffect(
+    () => () => {
+      void audioContext.current?.close();
+    },
+    []
+  );
+
   const send = useCallback(
     async (action: Record<string, unknown>) => {
       if (mySeat === null) return;
@@ -207,7 +253,7 @@ export default function PlayPage() {
     [gameId, isDm, dmToken]
   );
 
-  if (!summary) return <p className="text-zinc-500">进入对局…</p>;
+  if (!summary) return <p className="text-paper-500">进入对局…</p>;
 
   const phase = summary.phase;
   const ended = phase === "ENDED" || events.some((e) => e.type === "reveal");
@@ -233,49 +279,80 @@ export default function PlayPage() {
   const phaseSteps = ["READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL"];
   const phaseIdx = phaseSteps.indexOf(phase === "ENDED" ? "REVEAL" : phase);
   const aiSeatSet = new Set(summary.seats.filter((s) => s.kind === "ai").map((s) => s.index));
+  const showLeftRail = Boolean(me || isDm || !ended);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[260px_1fr_300px]">
-      {/* 左栏：场景与行动 */}
-      <aside className="space-y-4">
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-          <Link href={`/rooms/${summary.roomCode}`} className="text-xs text-zinc-500 hover:text-zinc-300">
-            ← 房间 {summary.roomCode}
-          </Link>
-          <h2 className="mt-1 font-semibold">{summary.scriptTitle}</h2>
-          <div className="mt-3 flex flex-wrap gap-1 text-xs">
-            {phaseSteps.map((p, i) => (
-              <span
-                key={p}
-                className={`rounded px-1.5 py-0.5 ${
-                  i < phaseIdx ? "bg-zinc-800 text-zinc-500" : i === phaseIdx ? "bg-amber-500 text-zinc-950 font-medium" : "text-zinc-600"
-                }`}
-              >
-                {PHASE_LABEL[p]}
-              </span>
-            ))}
+    <div className="game-shell min-w-0 space-y-4">
+      <section className="game-panel min-w-0 overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6">
+          <div className="flex min-w-0 items-center gap-3">
+            <BrandMark className="size-9 shrink-0 text-gold-400" />
+            <div className="min-w-0">
+              <Link href={`/rooms/${summary.roomCode}`} className="text-[10px] font-semibold tracking-[0.18em] text-paper-500 transition hover:text-gold-400">
+                ROOM {summary.roomCode} · 返回房间
+              </Link>
+              <h1 className="truncate text-lg font-semibold text-paper-50">{summary.scriptTitle}</h1>
+            </div>
           </div>
-          {!ended && (
-            <p className="mt-3 text-sm text-amber-400">
-              {PHASE_LABEL[phase]}
-              {(phase === "SEARCH" || phase === "DISCUSSION") && ` · 第 ${summary.round} 轮`}
-            </p>
-          )}
+          <div className="flex items-center gap-3">
+            {!ended && (
+              <div className="text-right">
+                <p className="text-[10px] font-semibold tracking-[0.16em] text-paper-500">CURRENT ACT</p>
+                <p className="text-sm font-medium text-gold-400">
+                  {PHASE_LABEL[phase]}
+                  {(phase === "SEARCH" || phase === "DISCUSSION") && ` · 第 ${summary.round} 轮`}
+                </p>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                const next = !soundEnabled;
+                setSoundEnabled(next);
+                if (next) playCue("phase", true);
+              }}
+              aria-label={soundEnabled ? "关闭游戏音效" : "开启游戏音效"}
+              title={soundEnabled ? "关闭游戏音效" : "开启游戏音效"}
+              className={`grid size-9 place-items-center rounded-full border transition ${soundEnabled ? "border-gold-400/40 bg-gold-400/10 text-gold-400" : "border-gold-400/15 text-paper-500 hover:text-paper-200"}`}
+            >
+              <SoundIcon muted={!soundEnabled} className="size-4" />
+            </button>
+          </div>
         </div>
+        <div className="max-w-full overflow-x-auto border-t border-gold-400/10 px-4 py-4 sm:px-6">
+          <div className="phase-rail">
+            {phaseSteps.map((p, i) => {
+              const state = i < phaseIdx ? "done" : i === phaseIdx ? "active" : "upcoming";
+              return (
+                <div key={p} className="phase-node" data-state={state}>
+                  <span className="phase-node__dot">{state === "done" ? "✓" : String(i + 1).padStart(2, "0")}</span>
+                  <span>{PHASE_LABEL[p]}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
+      <div className={`grid min-w-0 gap-4 ${showLeftRail ? "xl:grid-cols-[250px_minmax(0,1fr)_310px]" : "xl:grid-cols-[minmax(0,1fr)_310px]"}`}>
+      {/* 左栏：场景与行动 */}
+      {showLeftRail && <aside className="space-y-4">
         {me && (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-            <h3 className="text-sm font-medium text-zinc-300">在场玩家</h3>
+          <div className="game-panel p-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-paper-200">在场玩家</h3>
+              <span className="text-[10px] font-semibold tracking-widest text-success-400">{activeSeats.length} ONLINE</span>
+            </div>
             <ul className="mt-2 space-y-1.5 text-sm">
               {activeSeats.map((s) => (
-                <li key={s.index} className={`flex items-center justify-between ${s.index === mySeat ? "text-amber-400" : "text-zinc-300"}`}>
-                  <span>
+                <li key={s.index} className={`flex items-center justify-between rounded-lg px-2 py-1.5 ${s.index === mySeat ? "bg-gold-400/7 text-gold-400" : "text-paper-200"}`}>
+                  <span className="min-w-0 truncate">
                     {s.characterName}
-                    <span className="ml-1.5 text-xs text-zinc-500">
+                    <span className="ml-1.5 text-xs text-paper-500">
                       {s.index === mySeat ? "（你）" : s.kind === "ai" ? "AI" : s.playerName}
                     </span>
                   </span>
-                  {thinking[s.index] && <span className="text-xs text-zinc-500">思考中…</span>}
+                  {thinking[s.index] && <span className="thinking-dots shrink-0 text-xs text-secret-400">思考中</span>}
                 </li>
               ))}
             </ul>
@@ -284,34 +361,37 @@ export default function PlayPage() {
 
         {/* 阶段行动区 */}
         {me && !ended && (
-          <div className="space-y-3 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
-            <h3 className="text-sm font-medium text-amber-400">你的行动</h3>
+          <div className="game-panel space-y-3 border-gold-400/30 bg-gold-400/5 p-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-gold-400">你的行动</h3>
+              <span className="size-1.5 animate-pulse rounded-full bg-gold-400 shadow-[0_0_10px_rgba(238,185,88,.8)]" />
+            </div>
             {phase === "READING" && (
-              <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-amber-500 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400">
+              <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400">
                 我已读完剧本
               </button>
             )}
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
-                <p className="text-xs text-zinc-400">选择搜证地点：</p>
+                <p className="text-xs text-paper-400">选择搜证地点：</p>
                 {summary.locations.map((loc) => (
-                  <button key={loc} onClick={() => void send({ type: "choose_location", location: loc })} className="w-full rounded-lg border border-zinc-700 px-3 py-1.5 text-left text-sm hover:border-amber-500/60">
+                  <button key={loc} onClick={() => void send({ type: "choose_location", location: loc })} className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400">
                     {loc}
                   </button>
                 ))}
               </div>
             )}
-            {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-zinc-400">已选择，等待其他玩家搜证…</p>}
+            {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
             {phase === "VOTE" && !iVoted && (
               <div className="space-y-2">
-                <p className="text-xs text-zinc-400">指认真凶：</p>
+                <p className="text-xs text-paper-400">指认真凶：</p>
                 {activeSeats
                   .filter((s) => s.index !== mySeat)
                   .map((s) => (
                     <button
                       key={s.index}
                       onClick={() => setVoteTarget(s.index)}
-                      className={`w-full rounded-lg border px-3 py-1.5 text-left text-sm ${voteTarget === s.index ? "border-amber-500 bg-amber-500/10" : "border-zinc-700 hover:border-amber-500/60"}`}
+                      className={`vote-target w-full rounded-lg border px-3 py-2 text-left text-sm ${voteTarget === s.index ? "border-danger-400/70 bg-danger-400/10 text-danger-400" : "border-gold-400/15 text-paper-200 hover:border-danger-400/40"}`}
                     >
                       {s.characterName}
                     </button>
@@ -320,27 +400,27 @@ export default function PlayPage() {
                   value={voteReason}
                   onChange={(e) => setVoteReason(e.target.value)}
                   placeholder="一句话理由（可选）"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-1.5 text-sm outline-none focus:border-amber-500"
+                  className="w-full rounded-lg border border-danger-400/20 bg-ink-950/80 px-3 py-2 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-danger-400"
                 />
                 <button
                   onClick={() => {
                     if (voteTarget !== null) void send({ type: "vote", target: voteTarget, reason: voteReason }).then(() => setVoteTarget(null));
                   }}
                   disabled={voteTarget === null}
-                  className="w-full rounded-lg bg-amber-500 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+                  className="w-full rounded-lg bg-danger-400 py-2.5 text-sm font-semibold text-ink-950 hover:brightness-110 disabled:opacity-40"
                 >
                   投票
                 </button>
               </div>
             )}
-            {phase === "VOTE" && iVoted && <p className="text-xs text-zinc-400">已投票，等待其他人…</p>}
+            {phase === "VOTE" && iVoted && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
             {phase === "DISCUSSION" && summary.flow.allowPrivateChat && (
-              <div className="space-y-2 border-t border-amber-500/20 pt-3">
-                <p className="text-xs text-zinc-400">私聊（每对象限 {summary.flow.privateChatMessageLimit} 条）：</p>
+              <div className="space-y-2 border-t border-secret-400/20 pt-3">
+                <p className="text-xs text-secret-400">私聊（每对象限 {summary.flow.privateChatMessageLimit} 条）：</p>
                 <select
                   value={privateTarget ?? ""}
                   onChange={(e) => setPrivateTarget(Number(e.target.value))}
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-sm outline-none focus:border-amber-500"
+                  className="w-full rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
                 >
                   <option value="" disabled>
                     选择对象…
@@ -358,7 +438,7 @@ export default function PlayPage() {
                     value={privateText}
                     onChange={(e) => setPrivateText(e.target.value)}
                     placeholder="悄悄话…"
-                    className="flex-1 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-sm outline-none focus:border-amber-500"
+                    className="min-w-0 flex-1 rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
                   />
                   <button
                     onClick={() => {
@@ -368,7 +448,7 @@ export default function PlayPage() {
                       }
                     }}
                     disabled={privateTarget === null || !privateText.trim()}
-                    className="rounded-lg bg-zinc-800 px-3 text-sm hover:bg-zinc-700 disabled:opacity-40"
+                    className="rounded-lg bg-secret-400/20 px-3 text-sm text-secret-400 hover:bg-secret-400/30 disabled:opacity-40"
                   >
                     发送
                   </button>
@@ -379,12 +459,12 @@ export default function PlayPage() {
         )}
         {/* 真人 DM 控制台 */}
         {isDm && !ended && (
-          <div className="space-y-3 rounded-xl border border-purple-500/40 bg-purple-500/5 p-4">
-            <h3 className="text-sm font-medium text-purple-300">DM 控制台</h3>
+          <div className="game-panel space-y-3 border-secret-400/40 bg-secret-400/5 p-4">
+            <h3 className="text-sm font-medium text-secret-400">DM 控制台</h3>
             {dmData && (
-              <div className="rounded-lg bg-zinc-950/60 p-3 text-xs text-zinc-400">
+              <div className="rounded-lg bg-ink-950/70 p-3 text-xs text-paper-400">
                 <p>
-                  真凶：<span className="font-semibold text-red-400">{dmData.characters.find((c) => c.isCulprit)?.name}</span>
+                  真凶：<span className="font-semibold text-danger-400">{dmData.characters.find((c) => c.isCulprit)?.name}</span>
                 </p>
                 <p className="mt-1">{dmData.truth.method.slice(0, 60)}…（完整真相见右侧「真相」页）</p>
               </div>
@@ -400,7 +480,7 @@ export default function PlayPage() {
                   }
                 }}
                 placeholder="以 DM 身份向全场旁白…"
-                className="flex-1 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-sm outline-none focus:border-purple-500"
+                className="min-w-0 flex-1 rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
               />
               <button
                 onClick={() => {
@@ -410,37 +490,46 @@ export default function PlayPage() {
                   }
                 }}
                 disabled={!dmText.trim()}
-                className="rounded-lg bg-purple-500/80 px-3 text-sm font-medium text-zinc-950 hover:bg-purple-400 disabled:opacity-40"
+                className="rounded-lg bg-secret-400 px-3 text-sm font-medium text-ink-950 hover:brightness-110 disabled:opacity-40"
               >
                 旁白
               </button>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => void sendDm({ type: "nudge" })} className="flex-1 rounded-lg border border-zinc-700 px-3 py-1.5 text-xs hover:border-purple-500/60">
+              <button onClick={() => void sendDm({ type: "nudge" })} className="flex-1 rounded-lg border border-secret-400/20 px-3 py-1.5 text-xs text-paper-300 hover:border-secret-400/60">
                 催促推进
               </button>
-              <button onClick={() => void sendDm({ type: "skip_turn" })} className="flex-1 rounded-lg border border-zinc-700 px-3 py-1.5 text-xs hover:border-purple-500/60">
+              <button onClick={() => void sendDm({ type: "skip_turn" })} className="flex-1 rounded-lg border border-secret-400/20 px-3 py-1.5 text-xs text-paper-300 hover:border-secret-400/60">
                 跳过当前回合
               </button>
             </div>
           </div>
         )}
         {!me && !isDm && !ended && (
-          <p className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-xs text-zinc-500">
+          <p className="game-panel p-4 text-xs text-paper-500">
             你正在以观众身份观看（公开事件流）。若你是本局玩家，回{" "}
-            <Link href={`/rooms/${summary.roomCode}`} className="text-amber-400 hover:underline">
+            <Link href={`/rooms/${summary.roomCode}`} className="text-gold-400 hover:underline">
               房间 {summary.roomCode}
             </Link>{" "}
             用入座时的昵称认领座位。
           </p>
         )}
-      </aside>
+      </aside>}
 
       {/* 中栏：对话流 */}
-      <section className="flex min-h-[70vh] flex-col rounded-xl border border-zinc-800 bg-zinc-900/30">
-        <div ref={chatRef} className="flex-1 space-y-3 overflow-y-auto p-5" style={{ maxHeight: "72vh" }}>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-sm leading-relaxed text-zinc-300">
-            <span className="font-semibold text-amber-400">背景</span>
+      <section className="game-panel flex min-h-[70vh] min-w-0 flex-col overflow-hidden">
+        <div className="flex items-center justify-between border-b border-gold-400/10 px-5 py-3">
+          <div>
+            <p className="text-[10px] font-semibold tracking-[0.18em] text-paper-500">LIVE SCENE</p>
+            <h2 className="text-sm font-medium text-paper-200">现场记录</h2>
+          </div>
+          <span className="flex items-center gap-2 text-[10px] font-semibold tracking-widest text-success-400">
+            <span className="size-1.5 rounded-full bg-success-400 shadow-[0_0_8px_rgba(102,196,154,.75)]" /> LIVE
+          </span>
+        </div>
+        <div ref={chatRef} className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5" style={{ maxHeight: "72vh" }}>
+          <div className="case-briefing p-4 text-sm leading-relaxed text-paper-300">
+            <span className="eyebrow">Case Briefing · 案情背景</span>
             <p className="mt-2 whitespace-pre-wrap">{summary.background}</p>
           </div>
 
@@ -459,27 +548,29 @@ export default function PlayPage() {
           {Object.entries(deltas).map(([seatStr, text]) =>
             text ? (
               <div key={`delta-${seatStr}`} className="fade-up flex gap-2">
-                <div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm">
-                  <p className="text-xs text-amber-400/80">{seatName(Number(seatStr))}</p>
-                  <p className="mt-1 whitespace-pre-wrap leading-relaxed text-zinc-200 typing-caret">{text}</p>
+                <div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-secret-400/20 bg-secret-400/5 px-4 py-2.5 text-sm">
+                  <p className="text-xs text-secret-400">{seatName(Number(seatStr))} · AI 正在演绎</p>
+                  <p className="typing-caret mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{text}</p>
                 </div>
               </div>
             ) : null
           )}
 
           {ended && reveal && (
-            <div className="fade-up rounded-xl border border-amber-500/40 bg-amber-500/5 p-5 text-sm">
-              <h3 className="font-bold text-amber-400">真相揭晓：{reveal.content.culpritName}</h3>
-              <p className="mt-2 text-zinc-300">
+            <div className="reveal-stage reveal-curtain p-6 text-center text-sm sm:p-8">
+              <p className="eyebrow text-danger-400">Final Reveal · 真相揭晓</p>
+              <BrandMark className="mx-auto mt-5 size-14 text-danger-400" />
+              <h3 className="mt-3 text-2xl font-bold text-paper-50">真凶：{reveal.content.culpritName}</h3>
+              <p className="mt-2 font-medium text-danger-400">
                 {reveal.content.caught ? "凶手被指认，好人阵营胜利！" : "凶手逃脱了……凶手阵营胜利！"}
               </p>
-              <p className="mt-3 whitespace-pre-wrap leading-relaxed text-zinc-400">{reveal.content.reveal}</p>
-              <p className="mt-3 text-xs text-zinc-500">{reveal.content.winText}</p>
-              <div className="mt-4 flex gap-3">
-                <Link href="/rooms/new" className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400">
+              <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
+              <p className="mt-4 text-xs text-paper-500">{reveal.content.winText}</p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Link href="/rooms/new" className="rounded-lg bg-gold-500 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-gold-400">
                   再来一局
                 </Link>
-                <Link href={`/rooms/${summary.roomCode}`} className="rounded-lg border border-zinc-700 px-4 py-2 text-sm hover:border-zinc-500">
+                <Link href={`/rooms/${summary.roomCode}`} className="rounded-lg border border-gold-400/20 px-4 py-2 text-sm text-paper-200 hover:border-gold-400/50">
                   回到大厅
                 </Link>
               </div>
@@ -489,8 +580,8 @@ export default function PlayPage() {
 
         {/* 输入区 */}
         {me && (phase === "SELF_INTRO" || phase === "DISCUSSION") && !ended && (
-          <div className="border-t border-zinc-800 p-4">
-            {error && <p className="mb-2 text-xs text-red-400">{error}</p>}
+          <div className="border-t border-gold-400/10 bg-ink-950/45 p-4">
+            {error && <p className="mb-2 text-xs text-danger-400">{error}</p>}
             <div className="flex gap-2">
               <input
                 value={input}
@@ -502,7 +593,7 @@ export default function PlayPage() {
                   }
                 }}
                 placeholder={phase === "SELF_INTRO" ? "以角色的身份介绍自己…" : "以角色的身份发言…（随时可以插话）"}
-                className="flex-1 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500"
+                className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2.5 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400"
               />
               <button
                 onClick={() => {
@@ -512,7 +603,7 @@ export default function PlayPage() {
                   }
                 }}
                 disabled={!input.trim()}
-                className="rounded-lg bg-amber-500 px-5 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+                className="rounded-lg bg-gold-500 px-5 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
               >
                 发言
               </button>
@@ -522,8 +613,8 @@ export default function PlayPage() {
       </section>
 
       {/* 右栏：我的剧本 / 我的线索 / 时间线 */}
-      <aside className="rounded-xl border border-zinc-800 bg-zinc-900/50">
-        <div className="flex border-b border-zinc-800 text-sm">
+      <aside className="game-panel overflow-hidden">
+        <div className="flex border-b border-gold-400/10 text-sm">
           {(
             [
               ["script", isDm ? "真相" : me?.myCard ? "我的剧本" : "剧本"],
@@ -531,7 +622,7 @@ export default function PlayPage() {
               ["timeline", "时间线"],
             ] as const
           ).map(([k, label]) => (
-            <button key={k} onClick={() => setTab(k)} className={`flex-1 px-2 py-3 text-center ${tab === k ? "bg-zinc-800/60 text-zinc-100" : "text-zinc-500 hover:text-zinc-300"}`}>
+            <button key={k} onClick={() => setTab(k)} className={`relative flex-1 px-2 py-3 text-center transition ${tab === k ? "bg-gold-400/7 text-gold-400 after:absolute after:inset-x-3 after:bottom-0 after:h-px after:bg-gold-400" : "text-paper-500 hover:text-paper-200"}`}>
               {label}
             </button>
           ))}
@@ -540,56 +631,56 @@ export default function PlayPage() {
           {tab === "script" && isDm && (
             dmData ? (
               <div className="space-y-3 leading-relaxed text-xs">
-                <section className="rounded-lg border border-red-500/30 bg-red-500/5 p-3">
-                  <h4 className="font-semibold text-red-400">真相</h4>
-                  <p className="mt-1 text-zinc-300">
+                <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
+                  <h4 className="font-semibold text-danger-400">真相</h4>
+                  <p className="mt-1 text-paper-200">
                     真凶：{dmData.characters.find((c) => c.isCulprit)?.name} · {dmData.truth.method}
                   </p>
-                  <p className="mt-2 whitespace-pre-wrap text-zinc-400">{dmData.truth.fullTimeline}</p>
-                  <p className="mt-2 text-zinc-500">关键证据：{dmData.truth.keyEvidence.join("、")}</p>
+                  <p className="mt-2 whitespace-pre-wrap text-paper-400">{dmData.truth.fullTimeline}</p>
+                  <p className="mt-2 text-paper-500">关键证据：{dmData.truth.keyEvidence.join("、")}</p>
                 </section>
                 <section>
-                  <h4 className="font-semibold text-zinc-400">各角色秘密</h4>
+                  <h4 className="font-semibold text-paper-400">各角色秘密</h4>
                   {dmData.characters.map((c) => (
-                    <div key={c.id} className="mt-2 rounded-lg border border-zinc-800 p-2.5">
-                      <p className="font-medium text-zinc-200">
+                    <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
+                      <p className="font-medium text-paper-200">
                         {c.name}
-                        {c.isCulprit && <span className="ml-1.5 text-red-400">← 真凶</span>}
-                        {c.seatIndex !== null && <span className="ml-1.5 text-zinc-500">（座位 {c.seatIndex + 1}）</span>}
+                        {c.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}
+                        {c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}
                       </p>
-                      <p className="mt-1 text-zinc-400">秘密：{c.secret}</p>
-                      <p className="mt-0.5 text-zinc-500">目标：{c.goal}</p>
+                      <p className="mt-1 text-paper-400">秘密：{c.secret}</p>
+                      <p className="mt-0.5 text-paper-500">目标：{c.goal}</p>
                     </div>
                   ))}
                 </section>
               </div>
             ) : (
-              <p className="text-zinc-500">加载真相…</p>
+              <p className="text-paper-500">加载真相…</p>
             )
           )}
           {tab === "script" && !isDm && (
             me?.myCard ? (
               <div className="space-y-3 leading-relaxed">
                 <section>
-                  <h4 className="text-xs font-semibold text-zinc-400">背景</h4>
-                  <p className="mt-1 text-zinc-300">{me.myCard.backstory}</p>
+                  <h4 className="text-xs font-semibold text-paper-400">背景</h4>
+                  <p className="mt-1 text-paper-300">{me.myCard.backstory}</p>
                 </section>
                 <section>
-                  <h4 className="text-xs font-semibold text-red-400/80">你的秘密（绝不主动透露）</h4>
-                  <p className="mt-1 text-zinc-300">{me.myCard.secret}</p>
+                  <h4 className="text-xs font-semibold text-danger-400">你的秘密（绝不主动透露）</h4>
+                  <p className="mt-1 text-paper-300">{me.myCard.secret}</p>
                 </section>
                 <section>
-                  <h4 className="text-xs font-semibold text-zinc-400">目标</h4>
-                  <p className="mt-1 text-zinc-300">{me.myCard.goal}</p>
+                  <h4 className="text-xs font-semibold text-paper-400">目标</h4>
+                  <p className="mt-1 text-paper-300">{me.myCard.goal}</p>
                 </section>
                 <section>
-                  <h4 className="text-xs font-semibold text-zinc-400">你的时间线</h4>
-                  <p className="mt-1 text-zinc-300">{me.myCard.timeline}</p>
+                  <h4 className="text-xs font-semibold text-paper-400">你的时间线</h4>
+                  <p className="mt-1 text-paper-300">{me.myCard.timeline}</p>
                 </section>
                 {me.myCard.knowledge.length > 0 && (
                   <section>
-                    <h4 className="text-xs font-semibold text-zinc-400">你额外知道</h4>
-                    <ul className="mt-1 list-disc space-y-1 pl-4 text-zinc-300">
+                    <h4 className="text-xs font-semibold text-paper-400">你额外知道</h4>
+                    <ul className="mt-1 list-disc space-y-1 pl-4 text-paper-300">
                       {me.myCard.knowledge.map((k, i) => (
                         <li key={i}>{k}</li>
                       ))}
@@ -598,7 +689,7 @@ export default function PlayPage() {
                 )}
               </div>
             ) : (
-              <p className="whitespace-pre-wrap leading-relaxed text-zinc-400">{summary.background}</p>
+              <p className="whitespace-pre-wrap leading-relaxed text-paper-400">{summary.background}</p>
             )
           )}
           {tab === "clues" && isDm && (
@@ -608,36 +699,36 @@ export default function PlayPage() {
                   const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
                   const isHeld = events.some((e) => e.type === "clue" && e.visibility !== "public" && e.content.clueId === c.id);
                   return (
-                    <div key={c.id} className="rounded-lg border border-zinc-800 p-2.5">
-                      <p className="font-medium text-zinc-200">
+                    <div key={c.id} className="clue-card p-3">
+                      <p className="font-medium text-paper-200">
                         {c.name}
-                        <span className="ml-2 text-zinc-500">[{c.location}]</span>
-                        <span className={`ml-2 ${isPublic ? "text-sky-400" : isHeld ? "text-purple-400" : "text-zinc-600"}`}>
+                        <span className="ml-2 text-paper-500">[{c.location}]</span>
+                        <span className={`ml-2 ${isPublic ? "text-clue-400" : isHeld ? "text-secret-400" : "text-paper-500"}`}>
                           {isPublic ? "已公开" : isHeld ? "被持有" : "未发现"}
                         </span>
                       </p>
-                      <p className="mt-1 text-zinc-400">{c.content}</p>
+                      <p className="mt-1 text-paper-400">{c.content}</p>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-zinc-500">加载中…</p>
+                <p className="text-paper-500">加载中…</p>
               )}
             </div>
           )}
           {tab === "clues" && !isDm && (
             <div className="space-y-3">
-              {myClueCardsUnique.length === 0 && <p className="text-zinc-500">还没有获得任何线索。搜证阶段选择地点后在这里查看。</p>}
+              {myClueCardsUnique.length === 0 && <p className="text-paper-500">还没有获得任何线索。搜证阶段选择地点后在这里查看。</p>}
               {myClueCardsUnique.map((c) => {
                 const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
                 const needDecision = phase === "SEARCH" && c.private && !isPublic && !decidedClues.has(c.id);
                 return (
-                  <div key={c.id} className="rounded-lg border border-purple-500/30 bg-purple-500/5 p-3">
+                  <div key={c.id} className="clue-card evidence-reveal p-3">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-purple-300">{c.name}</span>
-                      <span className="text-xs text-zinc-500">{isPublic ? "已公开" : "私藏"}</span>
+                      <span className="font-medium text-clue-400">{c.name}</span>
+                      <span className="rounded-full border border-clue-400/20 px-2 py-0.5 text-[10px] text-clue-400">{isPublic ? "已公开" : "私藏证据"}</span>
                     </div>
-                    <p className="mt-1 text-zinc-300">{c.content}</p>
+                    <p className="mt-2 leading-relaxed text-paper-300">{c.content}</p>
                     {needDecision && (
                       <div className="mt-2 flex gap-2">
                         <button
@@ -645,7 +736,7 @@ export default function PlayPage() {
                             setDecidedClues((s) => new Set(s).add(c.id));
                             void send({ type: "publish", clueId: c.id, publish: true });
                           }}
-                          className="rounded-lg bg-amber-500 px-3 py-1 text-xs font-medium text-zinc-950 hover:bg-amber-400"
+                          className="rounded-lg bg-clue-400 px-3 py-1.5 text-xs font-semibold text-ink-950 hover:brightness-110"
                         >
                           当场公开
                         </button>
@@ -654,7 +745,7 @@ export default function PlayPage() {
                             setDecidedClues((s) => new Set(s).add(c.id));
                             void send({ type: "publish", clueId: c.id, publish: false });
                           }}
-                          className="rounded-lg border border-zinc-700 px-3 py-1 text-xs hover:border-zinc-500"
+                          className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60"
                         >
                           私藏
                         </button>
@@ -666,12 +757,12 @@ export default function PlayPage() {
             </div>
           )}
           {tab === "timeline" && (
-            <ul className="space-y-2 text-xs text-zinc-400">
+            <ul className="space-y-2 text-xs text-paper-400">
               {events
                 .filter((e) => e.type === "phase" || e.type === "system" || e.type === "reveal")
                 .map((e) => (
                   <li key={e.seq}>
-                    <span className="text-zinc-600">{new Date(e.createdAt).toLocaleTimeString()}</span>{" "}
+                    <span className="text-paper-500">{new Date(e.createdAt).toLocaleTimeString()}</span>{" "}
                     {e.type === "phase" ? `进入 ${PHASE_LABEL[(e.content.phase as string) ?? e.phase] ?? e.phase}` : e.content.text}
                   </li>
                 ))}
@@ -682,6 +773,7 @@ export default function PlayPage() {
           )}
         </div>
       </aside>
+      </div>
     </div>
   );
 }
@@ -703,19 +795,19 @@ function EventBubble({
   switch (ev.type) {
     case "phase":
       return (
-        <div className="fade-up space-y-2">
-          <div className="flex items-center gap-3 text-xs text-zinc-600">
-            <span className="h-px flex-1 bg-zinc-800" />
-            <span>
+        <div className="phase-arrival space-y-2">
+          <div className="flex items-center gap-3 text-xs text-gold-400/70">
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-400/20" />
+            <span className="font-semibold tracking-wide">
               {PHASE_LABEL[(ev.content.phase as string) ?? ev.phase] ?? ev.phase}
               {ev.round ? ` · 第 ${ev.round} 轮` : ""}
             </span>
-            <span className="h-px flex-1 bg-zinc-800" />
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold-400/20" />
           </div>
           {ev.content.text && (
-            <div className="rounded-2xl rounded-tl-sm border border-amber-500/30 bg-amber-500/5 px-4 py-2.5 text-sm">
-              <p className="text-xs font-medium text-amber-400">主持人</p>
-              <p className="mt-1 whitespace-pre-wrap leading-relaxed text-zinc-300">{ev.content.text}</p>
+            <div className="rounded-2xl rounded-tl-sm border border-gold-400/25 bg-gold-400/5 px-4 py-3 text-sm">
+              <p className="eyebrow">DM · 主持人</p>
+              <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-300">{ev.content.text}</p>
             </div>
           )}
         </div>
@@ -725,51 +817,58 @@ function EventBubble({
       const canSpeak = ev.fromSeat !== null && ttsSeats.has(ev.fromSeat) && text;
       return (
         <div className={`fade-up flex ${mine ? "justify-end" : "justify-start"}`}>
-          <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${mine ? "rounded-tr-sm bg-amber-500/15" : "rounded-tl-sm border border-zinc-800 bg-zinc-900"}`}>
-            <p className={`text-xs ${mine ? "text-amber-400" : "text-zinc-500"}`}>
+          <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm sm:max-w-[82%] ${mine ? "rounded-tr-sm border border-gold-400/20 bg-gold-400/10" : "rounded-tl-sm border border-gold-400/10 bg-ink-850"}`}>
+            <p className={`flex items-center text-xs ${mine ? "justify-end text-gold-400" : "text-paper-500"}`}>
               {ev.content.speakerName ?? seatName(ev.fromSeat ?? 0)}
               {canSpeak && (
                 <button
                   onClick={() => onSpeak(ev.seq)}
                   title="播放语音"
-                  className="ml-2 rounded px-1 text-zinc-500 transition hover:bg-zinc-800 hover:text-amber-400"
+                  className="ml-2 grid size-6 place-items-center rounded-full text-paper-500 transition hover:bg-gold-400/10 hover:text-gold-400"
                 >
-                  🔊
+                  <SoundIcon className="size-3.5" />
                 </button>
               )}
             </p>
-            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-zinc-200">{text}</p>
+            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{text}</p>
           </div>
         </div>
       );
     }
     case "system":
-      return <p className="text-center text-xs text-zinc-600">{ev.content.text}</p>;
+      return <p className="mx-auto w-fit rounded-full border border-gold-400/10 bg-ink-950/70 px-3 py-1 text-center text-[11px] text-paper-500">{ev.content.text}</p>;
     case "clue":
       if (ev.visibility === "public") {
         return (
-          <div className="fade-up mx-auto max-w-[90%] rounded-xl border border-sky-500/30 bg-sky-500/5 px-4 py-3 text-sm">
-            <p className="text-xs font-medium text-sky-400">
-              公开线索{typeof ev.content.publicBy === "number" ? `（${seatName(ev.content.publicBy)} 公布）` : ""}
+          <div className="clue-card evidence-reveal mx-auto max-w-[92%] px-5 py-4 text-sm">
+            <p className="text-[10px] font-semibold tracking-[0.16em] text-clue-400">
+              EVIDENCE · 公开线索{typeof ev.content.publicBy === "number" ? ` · ${seatName(ev.content.publicBy)} 公布` : ""}
             </p>
-            <p className="mt-1 font-medium text-zinc-200">{ev.content.clueName}</p>
-            <p className="mt-1 leading-relaxed text-zinc-400">{ev.content.clueContent}</p>
+            <p className="mt-2 font-semibold text-paper-50">{ev.content.clueName}</p>
+            <p className="mt-1 leading-relaxed text-paper-400">{ev.content.clueContent}</p>
           </div>
         );
       }
       return (
-        <p className="text-center text-xs text-purple-400/80">你搜到了线索卡【{ev.content.clueName}】（在右侧「我的线索」中查看）</p>
+        <p className="evidence-reveal mx-auto w-fit rounded-full border border-secret-400/20 bg-secret-400/5 px-3 py-1.5 text-center text-xs text-secret-400">
+          获得私密线索「{ev.content.clueName}」· 前往线索栏查看
+        </p>
       );
     case "vote":
-      return <p className="text-center text-sm text-zinc-400">🗳 {ev.content.text}</p>;
+      return (
+        <div className="mx-auto flex w-fit items-center gap-2 rounded-lg border border-danger-400/20 bg-danger-400/5 px-3 py-2 text-center text-sm text-paper-300">
+          <span className="text-[10px] font-bold tracking-widest text-danger-400">VOTE</span>
+          <span>{ev.content.text}</span>
+        </div>
+      );
     case "private":
       return (
         <div className={`flex ${ev.fromSeat === mySeat ? "justify-end" : "justify-start"}`}>
-          <div className="max-w-[85%] rounded-2xl border border-dashed border-amber-500/40 bg-amber-500/5 px-4 py-2.5 text-sm">
-            <p className="text-xs text-amber-400/80">
+          <div className="max-w-[85%] rounded-2xl border border-dashed border-secret-400/40 bg-secret-400/5 px-4 py-2.5 text-sm">
+            <p className="text-xs text-secret-400">
               私聊 · {ev.fromSeat === mySeat ? "你对" : `${seatName(ev.fromSeat ?? 0)} 对`} {ev.toSeat === mySeat ? "你" : seatName(ev.toSeat ?? 0)}
             </p>
-            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-zinc-200">{ev.content.text}</p>
+            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{ev.content.text}</p>
           </div>
         </div>
       );

@@ -135,7 +135,7 @@ export default function ScriptDetail({
           ))}
           {warnings.map((w, i) => (
             <p key={`w${i}`} className="text-amber-400/80">
-              ⚠ {w.message}
+              警告 · {w.message}
             </p>
           ))}
         </div>
