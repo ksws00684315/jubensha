@@ -1,0 +1,117 @@
+{
+  "version": 2,
+  "meta": {
+    "title": "雾港的最后一班船",
+    "minPlayers": 3,
+    "maxPlayers": 3,
+    "durationMin": 90,
+    "difficulty": "新手",
+    "tags": ["现代", "港口", "本格"],
+    "intro": "暴雨封港的夜里，船务公司的老板死在只有三个人能进入的值班室。"
+  },
+  "background": [
+    { "type": "paragraph", "text": "雾港今晚封航，船务公司老板顾沉舟被发现死在值班室。警方要到天亮才能抵达，三名相关人员必须在港口恢复通航前还原真相。" },
+    { "type": "list", "style": "unordered", "items": ["值班室门锁完好", "死者身边有一只打翻的茶杯", "最后一班船的出港记录缺少一页"] }
+  ],
+  "characters": [
+    {
+      "id": "linhai",
+      "name": "林海",
+      "gender": "男",
+      "age": 36,
+      "publicProfile": {
+        "identity": "船务调度员",
+        "bio": [{ "type": "paragraph", "text": "负责安排船只进出港，熟悉所有值班记录。" }],
+        "relationships": [{ "characterId": "suyu", "label": "同事" }]
+      },
+      "privateCard": {
+        "backstory": [{ "type": "paragraph", "text": "你在雾港工作十年，最近发现公司账目有异常，却一直没有找到合适的证据。" }],
+        "secrets": [{ "id": "secret_linhai_1", "title": "私自留存的账页", "content": [{ "type": "paragraph", "text": "你把一页可疑账目藏在值班簿夹层里。" }], "disclosure": "conditional", "condition": "只有有人证明账目与命案有关时才出示。" }],
+        "objectives": [{ "id": "objective_linhai_1", "title": "查清账目", "content": [{ "type": "paragraph", "text": "保护自己不被当成盗窃账目的嫌疑人，同时找出真正篡改记录的人。" }], "priority": "primary" }],
+        "timeline": [{ "id": "linhai_event_1", "time": { "display": "21:00", "precision": "exact", "start": { "dayOffset": 0, "time": "21:00" } }, "title": "整理值班簿", "content": [{ "type": "paragraph", "text": "你在调度室整理值班簿，没有进入值班室。" }], "locationId": "dispatch", "characterIds": [], "clueIds": [], "truthEventId": "truth_event_1" }],
+        "knowledge": [{ "id": "knowledge_linhai_1", "title": "听见的争吵", "content": [{ "type": "paragraph", "text": "21:15 左右，你听见值班室传来顾沉舟和苏雨争吵。" }], "source": "heard", "relatedCharacterIds": ["suyu"], "relatedClueIds": [] }],
+        "relationships": [],
+        "persona": { "traits": ["谨慎", "重证据"], "speechStyle": "说话简短，习惯先报时间和记录。", "habits": ["核对门禁记录"], "taboos": ["不主动谈及私藏账页"] },
+        "isCulprit": false
+      }
+    },
+    {
+      "id": "suyu",
+      "name": "苏雨",
+      "gender": "女",
+      "age": 29,
+      "publicProfile": {
+        "identity": "船务公司财务",
+        "bio": [{ "type": "paragraph", "text": "负责公司账目，今晚因账目问题被老板叫去问话。" }],
+        "relationships": [{ "characterId": "guchen", "label": "上下级" }]
+      },
+      "privateCard": {
+        "backstory": [{ "type": "paragraph", "text": "你替家人偿还债务，曾经挪用过一笔周转金，顾沉舟发现了这件事。" }],
+        "secrets": [{ "id": "secret_suyu_1", "title": "挪用周转金", "content": [{ "type": "paragraph", "text": "你挪用过公司的周转金，顾沉舟准备在明天报警。" }], "disclosure": "never" }],
+        "objectives": [{ "id": "objective_suyu_1", "title": "隐瞒挪用", "content": [{ "type": "paragraph", "text": "让大家相信你只是与老板争吵，没有在案发时间进入值班室。" }], "priority": "primary" }],
+        "timeline": [{ "id": "suyu_event_1", "time": { "display": "21:15–21:25", "precision": "range", "start": { "dayOffset": 0, "time": "21:15" }, "end": { "dayOffset": 0, "time": "21:25" } }, "title": "接受老板质问", "content": [{ "type": "paragraph", "text": "你在值班室和顾沉舟争吵，随后声称自己回了财务室。" }], "locationId": "office", "characterIds": ["guchen"], "clueIds": [], "truthEventId": "truth_event_2" }],
+        "knowledge": [{ "id": "knowledge_suyu_1", "title": "值班室的备用钥匙", "content": [{ "type": "paragraph", "text": "你知道备用钥匙放在门卫抽屉里。" }], "source": "possessed", "relatedCharacterIds": [], "relatedClueIds": ["spare_key"] }],
+        "relationships": [],
+        "persona": { "traits": ["克制", "敏感"], "speechStyle": "先承认无关小事，再回避关键细节。", "habits": ["反复整理袖口"], "taboos": ["不提家人债务"] },
+        "isCulprit": true
+      }
+    },
+    {
+      "id": "guchen",
+      "name": "顾沉舟",
+      "gender": "男",
+      "age": 52,
+      "publicProfile": {
+        "identity": "船务公司老板",
+        "bio": [{ "type": "paragraph", "text": "死者，掌握公司账目和船期安排。" }],
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [{ "type": "paragraph", "text": "这是死者的角色卡，仅作为 DM 资料保留。" }],
+        "secrets": [{ "id": "secret_guchen_1", "title": "隐瞒的债务", "content": [{ "type": "paragraph", "text": "你曾用公司资金填补私人债务。" }], "disclosure": "never" }],
+        "objectives": [{ "id": "objective_guchen_1", "title": "控制账目", "content": [{ "type": "paragraph", "text": "在案发前迫使财务人员交出所有异常账页。" }], "priority": "primary" }],
+        "timeline": [{ "id": "guchen_event_1", "time": { "display": "21:20", "precision": "exact", "start": { "dayOffset": 0, "time": "21:20" } }, "title": "留在值班室", "content": [{ "type": "paragraph", "text": "你在值班室等待苏雨解释账目。" }], "locationId": "office", "characterIds": ["suyu"], "clueIds": [], "truthEventId": "truth_event_2" }],
+        "knowledge": [],
+        "relationships": [],
+        "persona": { "traits": ["强势"], "speechStyle": "命令式口吻。", "habits": [], "taboos": [] },
+        "isCulprit": false
+      }
+    }
+  ],
+  "locations": [
+    { "id": "office", "name": "值班室", "description": [{ "type": "paragraph", "text": "存放船期记录和门禁登记。" }] },
+    { "id": "dispatch", "name": "调度室", "description": [{ "type": "paragraph", "text": "可以看到港口主通道。" }] }
+  ],
+  "clues": [
+    { "id": "tea", "locationId": "office", "name": "打翻的茶杯", "category": "medical", "content": [{ "type": "paragraph", "text": "茶杯残液含有足以致死的药物，杯沿没有死者以外的完整唇印。" }], "policy": "auto_public", "relatedCharacterIds": ["guchen"], "relatedTruthEventIds": ["truth_event_2"] },
+    { "id": "spare_key", "locationId": "office", "name": "备用钥匙登记", "category": "document", "content": [{ "type": "paragraph", "text": "门卫登记显示备用钥匙在 21:10 被取走，21:30 才归还。" }], "policy": "manual_public", "relatedCharacterIds": ["suyu"], "relatedTruthEventIds": ["truth_event_2"] },
+    { "id": "ledger_page", "locationId": "dispatch", "name": "缺失的账页", "category": "document", "content": [{ "type": "paragraph", "text": "账页记录了一笔与苏雨家人有关的异常转账。" }], "policy": "manual_public", "relatedCharacterIds": ["suyu"], "relatedTruthEventIds": ["truth_event_2"] }
+  ],
+  "truth": {
+    "culpritId": "suyu",
+    "motive": [{ "type": "paragraph", "text": "顾沉舟准备报警，苏雨害怕家人和自己同时失去一切。" }],
+    "method": {
+      "summary": [{ "type": "paragraph", "text": "苏雨取走备用钥匙进入值班室，在茶中加入药物后伪装成争吵离开。" }],
+      "steps": [{ "id": "method_step_1", "title": "取钥匙并下药", "content": [{ "type": "paragraph", "text": "21:10 取走备用钥匙，21:15 进入值班室，争吵后将药物倒入茶杯。" }], "clueIds": ["tea", "spare_key"] }]
+    },
+    "timeline": [
+      { "id": "truth_event_1", "time": { "display": "21:00", "precision": "exact", "start": { "dayOffset": 0, "time": "21:00" } }, "title": "林海整理记录", "content": [{ "type": "paragraph", "text": "林海在调度室整理值班簿。" }], "locationId": "dispatch", "characterIds": ["linhai"], "participantIds": ["linhai"], "clueIds": [] },
+      { "id": "truth_event_2", "time": { "display": "21:15–21:25", "precision": "range", "start": { "dayOffset": 0, "time": "21:15" }, "end": { "dayOffset": 0, "time": "21:25" } }, "title": "值班室争吵与下药", "content": [{ "type": "paragraph", "text": "苏雨与顾沉舟争吵，利用备用钥匙进入值班室并下药。" }], "locationId": "office", "characterIds": ["suyu", "guchen"], "participantIds": ["suyu", "guchen"], "clueIds": ["tea", "spare_key"] }
+    ],
+    "keyEvidenceIds": ["tea", "spare_key", "ledger_page"],
+    "evidenceChain": [
+      { "id": "evidence_1", "clueIds": ["tea"], "conclusion": "死者并非自然死亡。" },
+      { "id": "evidence_2", "clueIds": ["spare_key", "ledger_page"], "conclusion": "苏雨同时具备进入条件和明确动机。" }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [{ "type": "paragraph", "text": "药物残留、备用钥匙登记和缺失账页共同证明，苏雨在争吵期间取得了进入值班室的机会，并试图把死亡伪装成意外。" }]
+  },
+  "flow": { "selfIntroRounds": 1, "searchRounds": 2, "discussionRounds": 2, "allowPrivateChat": true, "privateChatMessageLimit": 3 },
+  "ending": {
+    "outcomes": [
+      { "result": "culprit_caught", "title": "真凶被捕", "content": [{ "type": "paragraph", "text": "投票指认苏雨成功，其他玩家阵营获胜。" }] },
+      { "result": "culprit_escaped", "title": "真凶逃脱", "content": [{ "type": "paragraph", "text": "投票未能指认苏雨，凶手阵营获胜。" }] }
+    ]
+  }
+}

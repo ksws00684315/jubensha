@@ -11,7 +11,10 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:export": "node scripts/db-export.mjs",
-    "db:import": "node scripts/db-import.mjs"
+    "db:import": "node scripts/db-import.mjs",
+    "script:schema": "tsx scripts/script-v2-schema.ts",
+    "script:validate": "tsx scripts/validate-script-v2.ts",
+    "script:migrate": "tsx scripts/migrate-script-v1.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.45",
@@ -33,6 +36,7 @@
     "eslint-config-next": "16.3.3",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5",
     "vitest": "^4.1.11"
   }

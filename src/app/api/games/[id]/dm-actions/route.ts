@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { parseScriptDoc } from "@/core/script/schema";
+import { legacyScriptDocOf, parseAnyScriptDoc } from "@/core/script/compat";
 import { GameEngine } from "@/core/engine/engine";
 
 const actionSchema = z.object({
@@ -42,7 +42,8 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     return NextResponse.json({ error: "DM 鉴权失败" }, { status: 403 });
   }
 
-  const doc = parseScriptDoc(game.script.content);
+  const parsed = parseAnyScriptDoc(game.script.content);
+  const doc = legacyScriptDocOf(parsed.doc);
   return NextResponse.json({
     truth: doc.truth,
     characters: doc.characters.map((c) => ({
@@ -56,6 +57,17 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       seatIndex: game.room.seats.find((s) => s.characterId === c.id)?.index ?? null,
     })),
     clues: doc.clues,
+    structured: parsed.version === 2 ? {
+      truth: parsed.doc.truth,
+      characters: parsed.doc.characters.map((character) => ({
+        id: character.id,
+        name: character.name,
+        publicProfile: character.publicProfile,
+        privateCard: character.privateCard,
+        seatIndex: game.room.seats.find((seat) => seat.characterId === character.id)?.index ?? null,
+      })),
+      clues: parsed.doc.clues,
+    } : null,
     votes: game.votes.map((v) => ({ seatIndex: v.seatIndex, targetIndex: v.targetIndex, reason: v.reason })),
   });
 }

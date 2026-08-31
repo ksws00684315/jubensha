@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BrandMark, SoundIcon } from "@/components/VisualIcons";
+import { NarrativeBlocks, TimelineList } from "@/components/ScriptContent";
 import {
   api,
   getIdentity,
@@ -11,6 +12,7 @@ import {
   saveIdentity,
   type GameEventView,
   type GameSummary,
+  type DmStructuredView,
 } from "@/lib/client";
 import { gameEventsUrl } from "@/lib/join";
 
@@ -18,6 +20,7 @@ interface DmView {
   truth: { culprit: string; method: string; fullTimeline: string; keyEvidence: string[]; reveal: string };
   characters: Array<{ id: string; name: string; publicBio: string; secret: string; goal: string; timeline: string; isCulprit: boolean; seatIndex: number | null }>;
   clues: Array<{ id: string; location: string; name: string; content: string; policy: string }>;
+  structured: DmStructuredView | null;
 }
 
 type GameCue = "phase" | "clue" | "reveal";
@@ -272,7 +275,7 @@ export default function PlayPage() {
   // 我的线索卡（从私发线索事件中取内容）
   const myClueCards = events
     .filter((e) => e.type === "clue" && e.visibility === `seat:${mySeat}` && e.content.clueId)
-    .map((e) => ({ id: e.content.clueId!, name: e.content.clueName!, content: e.content.clueContent!, private: e.content.private as boolean }));
+    .map((e) => ({ id: e.content.clueId!, name: e.content.clueName!, content: e.content.clueContent!, private: e.content.private as boolean, structured: summary.myCluesV2.find((clue) => clue.id === e.content.clueId) ?? null }));
   const seen = new Set<string>();
   const myClueCardsUnique = myClueCards.filter((c) => !seen.has(c.id) && seen.add(c.id));
 
@@ -464,9 +467,9 @@ export default function PlayPage() {
             {dmData && (
               <div className="rounded-lg bg-ink-950/70 p-3 text-xs text-paper-400">
                 <p>
-                  真凶：<span className="font-semibold text-danger-400">{dmData.characters.find((c) => c.isCulprit)?.name}</span>
+                  真凶：<span className="font-semibold text-danger-400">{dmData.structured?.characters.find((c) => c.privateCard.isCulprit)?.name ?? dmData.characters.find((c) => c.isCulprit)?.name}</span>
                 </p>
-                <p className="mt-1">{dmData.truth.method.slice(0, 60)}…（完整真相见右侧「真相」页）</p>
+                <p className="mt-1">{dmData.structured ? "结构化真相已加载，可在右侧查看完整时间线。" : `${dmData.truth.method.slice(0, 60)}…（完整真相见右侧「真相」页）`}</p>
               </div>
             )}
             <div className="flex gap-2">
@@ -530,7 +533,11 @@ export default function PlayPage() {
         <div ref={chatRef} className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5" style={{ maxHeight: "72vh" }}>
           <div className="case-briefing p-4 text-sm leading-relaxed text-paper-300">
             <span className="eyebrow">Case Briefing · 案情背景</span>
-            <p className="mt-2 whitespace-pre-wrap">{summary.background}</p>
+            {summary.scriptV2 ? (
+              <NarrativeBlocks blocks={summary.scriptV2.background} className="mt-2" />
+            ) : (
+              <p className="mt-2 whitespace-pre-wrap">{summary.background}</p>
+            )}
           </div>
 
           {events.map((ev) => (
@@ -630,36 +637,62 @@ export default function PlayPage() {
         <div className="max-h-[65vh] overflow-y-auto p-4 text-sm">
           {tab === "script" && isDm && (
             dmData ? (
-              <div className="space-y-3 leading-relaxed text-xs">
-                <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
-                  <h4 className="font-semibold text-danger-400">真相</h4>
-                  <p className="mt-1 text-paper-200">
-                    真凶：{dmData.characters.find((c) => c.isCulprit)?.name} · {dmData.truth.method}
-                  </p>
-                  <p className="mt-2 whitespace-pre-wrap text-paper-400">{dmData.truth.fullTimeline}</p>
-                  <p className="mt-2 text-paper-500">关键证据：{dmData.truth.keyEvidence.join("、")}</p>
-                </section>
-                <section>
-                  <h4 className="font-semibold text-paper-400">各角色秘密</h4>
-                  {dmData.characters.map((c) => (
-                    <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
-                      <p className="font-medium text-paper-200">
-                        {c.name}
-                        {c.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}
-                        {c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}
-                      </p>
-                      <p className="mt-1 text-paper-400">秘密：{c.secret}</p>
-                      <p className="mt-0.5 text-paper-500">目标：{c.goal}</p>
-                    </div>
-                  ))}
-                </section>
-              </div>
+              dmData.structured ? (
+                <div className="space-y-4 leading-relaxed text-xs">
+                  <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
+                    <h4 className="font-semibold text-danger-400">真相</h4>
+                    <p className="mt-1 text-paper-200">真凶：{dmData.structured.characters.find((c) => c.privateCard.isCulprit)?.name}</p>
+                    <h5 className="mt-2 font-medium text-paper-300">作案手法</h5>
+                    <NarrativeBlocks blocks={dmData.structured.truth.method.summary} className="mt-1 text-paper-400" />
+                    <h5 className="mt-3 font-medium text-paper-300">完整时间线</h5>
+                    <TimelineList entries={dmData.structured.truth.timeline} className="mt-2" />
+                  </section>
+                  <section>
+                    <h4 className="font-semibold text-paper-400">各角色秘密</h4>
+                    {dmData.structured.characters.map((c) => (
+                      <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
+                        <p className="font-medium text-paper-200">{c.name}{c.privateCard.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}{c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}</p>
+                        {c.privateCard.secrets.map((secret) => <div key={secret.id} className="mt-1"><p className="font-medium text-paper-400">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1 text-paper-400" /></div>)}
+                        {c.privateCard.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-paper-500">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1 text-paper-500" /></div>)}
+                      </div>
+                    ))}
+                  </section>
+                </div>
+              ) : (
+                <div className="space-y-3 leading-relaxed text-xs">
+                  <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
+                    <h4 className="font-semibold text-danger-400">真相</h4>
+                    <p className="mt-1 text-paper-200">真凶：{dmData.characters.find((c) => c.isCulprit)?.name} · {dmData.truth.method}</p>
+                    <p className="mt-2 whitespace-pre-wrap text-paper-400">{dmData.truth.fullTimeline}</p>
+                    <p className="mt-2 text-paper-500">关键证据：{dmData.truth.keyEvidence.join("、")}</p>
+                  </section>
+                  <section>
+                    <h4 className="font-semibold text-paper-400">各角色秘密</h4>
+                    {dmData.characters.map((c) => (
+                      <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
+                        <p className="font-medium text-paper-200">{c.name}{c.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}{c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}</p>
+                        <p className="mt-1 text-paper-400">秘密：{c.secret}</p>
+                        <p className="mt-0.5 text-paper-500">目标：{c.goal}</p>
+                      </div>
+                    ))}
+                  </section>
+                </div>
+              )
             ) : (
               <p className="text-paper-500">加载真相…</p>
             )
           )}
           {tab === "script" && !isDm && (
             me?.myCard ? (
+              me.myCardV2 ? (
+                <div className="space-y-4 leading-relaxed">
+                  <section><h4 className="text-xs font-semibold text-paper-400">背景</h4><NarrativeBlocks blocks={me.myCardV2.backstory} className="mt-1 text-paper-300" /></section>
+                  <section><h4 className="text-xs font-semibold text-danger-400">你的秘密（绝不主动透露）</h4>{me.myCardV2.secrets.map((secret) => <div key={secret.id} className="mt-1 rounded-lg border border-danger-400/15 bg-danger-400/5 p-2 text-paper-300"><p className="font-medium text-danger-300">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1" /></div>)}</section>
+                  <section><h4 className="text-xs font-semibold text-paper-400">目标</h4>{me.myCardV2.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-paper-200">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1 text-paper-300" /></div>)}</section>
+                  <section><h4 className="text-xs font-semibold text-paper-400">你的时间线</h4><TimelineList entries={me.myCardV2.timeline} locations={new Map(summary.scriptV2?.locations.map((location) => [location.id, location.name]))} className="mt-2 text-paper-300" /></section>
+                  {me.myCardV2.knowledge.length > 0 && <section><h4 className="text-xs font-semibold text-paper-400">你额外知道</h4><div className="mt-1 space-y-2">{me.myCardV2.knowledge.map((item) => <div key={item.id} className="rounded-lg border border-gold-400/10 p-2"><p className="font-medium text-paper-200">{item.title}</p><NarrativeBlocks blocks={item.content} className="mt-1 text-paper-300" /></div>)}</div></section>}
+                </div>
+              ) : (
               <div className="space-y-3 leading-relaxed">
                 <section>
                   <h4 className="text-xs font-semibold text-paper-400">背景</h4>
@@ -688,6 +721,7 @@ export default function PlayPage() {
                   </section>
                 )}
               </div>
+              )
             ) : (
               <p className="whitespace-pre-wrap leading-relaxed text-paper-400">{summary.background}</p>
             )
@@ -695,7 +729,18 @@ export default function PlayPage() {
           {tab === "clues" && isDm && (
             <div className="space-y-2 text-xs">
               {dmData ? (
-                dmData.clues.map((c) => {
+                dmData.structured ? dmData.structured.clues.map((c) => {
+                  const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
+                  const isHeld = events.some((e) => e.type === "clue" && e.visibility !== "public" && e.content.clueId === c.id);
+                  const location = dmData.structured?.clues.find((item) => item.id === c.id)?.locationId;
+                  const locationName = dmData.structured ? summary.scriptV2?.locations.find((item) => item.id === location)?.name ?? location : location;
+                  return (
+                    <div key={c.id} className="clue-card p-3">
+                      <p className="font-medium text-paper-200">{c.name}<span className="ml-2 text-paper-500">[{locationName}]</span><span className={`ml-2 ${isPublic ? "text-clue-400" : isHeld ? "text-secret-400" : "text-paper-500"}`}>{isPublic ? "已公开" : isHeld ? "被持有" : "未发现"}</span></p>
+                      <NarrativeBlocks blocks={c.content} className="mt-1 text-paper-400" />
+                    </div>
+                  );
+                }) : dmData.clues.map((c) => {
                   const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
                   const isHeld = events.some((e) => e.type === "clue" && e.visibility !== "public" && e.content.clueId === c.id);
                   return (
@@ -728,7 +773,7 @@ export default function PlayPage() {
                       <span className="font-medium text-clue-400">{c.name}</span>
                       <span className="rounded-full border border-clue-400/20 px-2 py-0.5 text-[10px] text-clue-400">{isPublic ? "已公开" : "私藏证据"}</span>
                     </div>
-                    <p className="mt-2 leading-relaxed text-paper-300">{c.content}</p>
+                    {c.structured ? <NarrativeBlocks blocks={c.structured.content} className="mt-2 leading-relaxed text-paper-300" /> : <p className="mt-2 leading-relaxed text-paper-300">{c.content}</p>}
                     {needDecision && (
                       <div className="mt-2 flex gap-2">
                         <button

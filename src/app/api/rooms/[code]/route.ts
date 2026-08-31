@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { parseScriptDoc } from "@/core/script/schema";
+import { parseScriptForRuntime } from "@/core/script/compat";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 
 async function loadRoom(code: string) {
@@ -18,7 +18,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ code: string }
   if (!room) return NextResponse.json({ error: "房间不存在" }, { status: 404 });
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  const doc = parseScriptDoc(scriptRow.content);
+  const doc = parseScriptForRuntime(scriptRow.content);
   return NextResponse.json({
     id: room.id,
     code: room.code,
@@ -67,7 +67,7 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ code: string 
 
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  const doc = parseScriptDoc(scriptRow.content);
+  const doc = parseScriptForRuntime(scriptRow.content);
   const ordered = parsed.data.seats.slice().sort((a, b) => a.index - b.index);
   const validCharacterIds = new Set(doc.characters.map((c) => c.id));
   if (parsed.data.seats.some((s) => s.kind !== "empty" && s.characterId && !validCharacterIds.has(s.characterId))) {

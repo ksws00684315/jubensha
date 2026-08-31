@@ -2,6 +2,8 @@
 
 /** 客户端 fetch 帮助函数 */
 
+import type { CharacterV2, ClueV2, PrivateCardV2, PublicScriptViewV2, TruthV2 } from "@/core/script/v2/schema";
+
 export async function api<T = unknown>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     ...init,
@@ -104,10 +106,19 @@ export interface GameSummary {
       knowledge: string[];
       persona: string;
     } | null;
+    myCardV2: PrivateCardV2 | null;
   }>;
   mySeat: number | null;
   myClues: string[];
   clues: Array<{ id: string; name: string; location: string }>;
+  scriptV2: Pick<PublicScriptViewV2, "background" | "characters" | "locations"> | null;
+  myCluesV2: ClueV2[];
+}
+
+export interface DmStructuredView {
+  truth: TruthV2;
+  characters: Array<{ id: string; name: string; publicProfile: CharacterV2["publicProfile"]; privateCard: PrivateCardV2; seatIndex: number | null }>;
+  clues: ClueV2[];
 }
 
 export const PHASE_LABEL: Record<string, string> = {

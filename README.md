@@ -55,6 +55,29 @@ npm run dev
 
 逻辑校验器（`src/core/script/validate.ts`）检查真凶一致性、线索地点合法性、证据链呼应等，error 级问题会阻止开局。
 
+### V1 → V2 迁移
+
+迁移工具会保守地把旧版长文本拆成结构化内容块和时间线，并保留无法确定的信息为 warning；默认只检查，不覆盖原文件。
+
+```bash
+# 只检查迁移结果，不写文件
+npm run script:migrate -- seeds/generated/6p-zuihouyizhiwu.json
+
+# 生成一个 V2 副本；目标文件已存在时必须显式加 --force
+npm run script:migrate -- seeds/generated/6p-zuihouyizhiwu.json --out /tmp/zuihou-v2.json
+npm run script:validate -- /tmp/zuihou-v2.json
+
+# 批量迁移全部种子（保留原始 V1 文件）
+mkdir -p seeds/migrated-v2
+for file in seeds/*.json seeds/generated/*.json; do
+  name=$(basename "$file")
+  npm exec -- tsx scripts/migrate-script-v1.ts "$file" --out "seeds/migrated-v2/$name"
+done
+npm run script:validate -- seeds/migrated-v2/*.json
+```
+
+迁移后的 warning 需要人工复核，重点关注：无法识别的非 `HH:mm` 时间、没有独立动机的旧文本，以及关键证据无法唯一映射到线索 ID。V1 原文件可以继续导入和开局，确认 V2 内容无误后再替换导入源。
+
 ## 测试
 
 ```bash

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import type { Room, Seat } from "@prisma/client";
-import { parseScriptDoc, type ScriptDoc } from "@/core/script/schema";
+import { parseScriptForRuntime } from "@/core/script/compat";
+import type { ScriptDoc } from "@/core/script/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
@@ -87,7 +88,7 @@ export class GameEngine {
       state.readySeats ??= [];
       state.spokenSeats ??= [];
       state.searchDealtRound ??= 0;
-      const engine = new GameEngine(gameId, parseScriptDoc(scriptRow.content), state, events);
+      const engine = new GameEngine(gameId, parseScriptForRuntime(scriptRow.content), state, events);
       engines.set(gameId, engine);
       engine.resumeAfterLoad();
       return engine;
@@ -102,7 +103,7 @@ export class GameEngine {
 
   /** 创建并开始一局（房间开局时调用） */
   static async start(room: Room & { seats: Seat[] }, scriptRow: { id: string; content: unknown }): Promise<GameEngine> {
-    const script = parseScriptDoc(scriptRow.content);
+    const script = parseScriptForRuntime(scriptRow.content);
     const seats: SeatInfo[] = room.seats
       .slice()
       .sort((a, b) => a.index - b.index)

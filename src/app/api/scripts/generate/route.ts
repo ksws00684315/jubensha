@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { chat, extractJson } from "@/core/llm/client";
-import { scriptDocSchema } from "@/core/script/schema";
-import { validateScript } from "@/core/script/validate";
+import { parseScriptDoc } from "@/core/script/schema";
+import { migrateV1ToV2 } from "@/core/script/v2/migrate-v1";
+import { parseScriptDocV2, scriptDocV2Schema } from "@/core/script/v2/schema";
+import { validateScriptV2 } from "@/core/script/v2/validate";
 import { requireAdmin } from "@/lib/admin";
 
 const reqSchema = z.object({
@@ -16,22 +18,19 @@ const reqSchema = z.object({
   outline: z.unknown().optional(),
 });
 
-const SCHEMA_HINT = `输出必须是一个 JSON 对象，结构如下（字段名固定）：
+const SCHEMA_HINT = `输出必须是一个 JSON 对象，version 固定为 2，结构如下（字段名固定）：
 {
-  "version": 1,
+  "version": 2,
   "meta": { "title": "剧名", "minPlayers": 人数, "maxPlayers": 人数, "durationMin": 分钟数, "difficulty": "新手|进阶|硬核", "tags": ["标签"], "intro": "一句话简介" },
-  "background": "公开背景故事（所有玩家可见，300-500字，包含死者、场景、发现经过、时间压力）",
-  "characters": [ { "id": "小写拼音id", "name": "姓名", "gender": "男|女", "age": 数字,
-      "publicBio": "公开身份一句话",
-      "card": { "backstory": "私背景(150-300字, 第二人称'你')", "secret": "不可告人的秘密", "goal": "本局目标",
-        "isCulprit": true/false, "timeline": "个人时间线(第二人称, 含具体时刻)", "knowledge": ["你亲眼所见/所知情报"], "persona": "说话风格" } } ],
-  "locations": ["搜证地点1", "地点2", ...],
-  "clues": [ { "id": "线索id", "location": "所属地点", "name": "线索名", "content": "线索卡文本(含可推理的细节)", "policy": "auto_public|manual_public|keep_private" } ],
-  "truth": { "culprit": "真凶角色id", "method": "作案手法", "fullTimeline": "全场完整时间线(精确到时刻)", "keyEvidence": ["关键证据名"], "reveal": "复盘文本(200-400字)" },
+  "background": [{"type":"paragraph|list|quote", "text":"..."}],
+  "characters": [{ "id":"小写拼音id", "name":"姓名", "publicProfile":{"identity":"公开身份", "bio":[内容块], "relationships":[{"characterId":"id","label":"关系"}]}, "privateCard":{"backstory":[内容块], "secrets":[{"id":"id","title":"秘密标题","content":[内容块],"disclosure":"never|conditional","condition":"条件"}], "objectives":[{"id":"id","title":"目标标题","content":[内容块],"priority":"primary|secondary"}], "timeline":[时间事件], "knowledge":[{"id":"id","title":"情报标题","content":[内容块],"source":"witnessed|heard|possessed|inferred|other","relatedCharacterIds":[],"relatedClueIds":[]}], "relationships":[], "persona":{"traits":[],"speechStyle":"说话风格","habits":[],"taboos":[]}, "isCulprit":true/false}}],
+  "locations": [{"id":"地点id","name":"地点名","description":[内容块]}],
+  "clues": [{"id":"线索id","locationId":"地点id","name":"线索名","category":"object|document|testimony|trace|medical|digital|other","content":[内容块],"policy":"auto_public|manual_public|keep_private","relatedCharacterIds":[],"relatedTruthEventIds":[]}],
+  "truth": {"culpritId":"角色id","motive":[内容块],"method":{"summary":[内容块],"steps":[{"id":"id","title":"步骤","content":[内容块],"clueIds":[]}]},"timeline":[真相时间事件],"keyEvidenceIds":["线索id"],"evidenceChain":[{"id":"id","clueIds":["线索id"],"conclusion":"推论"}],"redHerrings":[],"supplemental":[],"reveal":[内容块]},
   "flow": { "selfIntroRounds": 1, "searchRounds": 2, "discussionRounds": 2, "allowPrivateChat": true, "privateChatMessageLimit": 3 },
-  "ending": { "winText": "胜负说明" }
+  "ending": { "outcomes": [{"result":"culprit_caught","title":"真凶被捕","content":[内容块]},{"result":"culprit_escaped","title":"真凶逃脱","content":[内容块]}] }
 }
-硬性要求：真凶恰有一名且其 card.isCulprit=true、truth.culprit=其 id；每个角色都有秘密/目标/时间线/persona；每条线索的 location 必须在 locations 中；每张线索卡的 content 要与时间线互相印证；keyEvidence 中的证据必须有对应线索卡（名称呼应）；至少 3 张线索卡；给 1 张 auto_public 线索（死因）。只输出 JSON，不要任何其他文本。`;
+内容块只能是 paragraph/list/quote，文本叶不要换行、Markdown 或 HTML；时间事件必须有 id、time.display、title、content，尽量提供 HH:mm 的 start/end。硬性要求：真凶恰有一名且 privateCard.isCulprit=true、truth.culpritId=其 id；所有引用 ID 必须存在；每个角色都有秘密/目标/时间线/persona；每条线索的 locationId 必须存在；keyEvidenceIds 和 evidenceChain 必须引用线索 ID；至少 3 张线索卡；给 1 张 auto_public 线索（死因）。只输出 JSON，不要任何其他文本。`;
 
 export async function POST(req: Request) {
   const denied = requireAdmin(req);
@@ -80,20 +79,39 @@ export async function POST(req: Request) {
     const doc = extractJson(res.text);
     if (!doc) return NextResponse.json({ error: "模型未返回合法 JSON，请重试" }, { status: 502 });
 
-    // 修正真凶 id 一致性后走 Zod 校验
-    try {
-      const anyDoc = doc as { characters?: Array<{ id?: string; isCulprit?: boolean }>; truth?: { culprit?: string } };
-      const culpritChar = anyDoc.characters?.find((c) => c.isCulprit === true);
-      if (culpritChar?.id && anyDoc.truth) anyDoc.truth.culprit = culpritChar.id;
-    } catch {
-      /* ignore */
+    let normalized;
+    let migrationIssues: Array<{ level: "warning"; message: string }> = [];
+    if (typeof doc === "object" && doc !== null && (doc as { version?: unknown }).version === 1) {
+      const v1 = parseScriptDoc(doc);
+      const migrated = migrateV1ToV2(v1);
+      normalized = migrated.doc;
+      migrationIssues = migrated.warnings.map((warning) => ({ level: "warning" as const, message: `${warning.path}: ${warning.message}` }));
+    } else {
+      try {
+        const anyDoc = doc as { characters?: Array<{ id?: string; privateCard?: { isCulprit?: boolean } }>; truth?: { culpritId?: string } };
+        const culpritChar = anyDoc.characters?.find((c) => c.privateCard?.isCulprit === true);
+        if (culpritChar?.id && anyDoc.truth) anyDoc.truth.culpritId = culpritChar.id;
+      } catch {
+        /* ignore */
+      }
+      const check = scriptDocV2Schema.safeParse(doc);
+      if (!check.success) {
+        return NextResponse.json(
+          {
+            error: "生成结果未通过结构校验",
+            issues: check.error.issues.map((issue) => ({
+              level: "error" as const,
+              path: issue.path.join("."),
+              message: issue.message,
+            })),
+            doc,
+          },
+          { status: 422 },
+        );
+      }
+      normalized = parseScriptDocV2(check.data);
     }
-    const check = scriptDocSchema.safeParse(doc);
-    if (!check.success) {
-      const issues = check.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).slice(0, 12);
-      return NextResponse.json({ error: "生成结果未通过结构校验", issues, doc }, { status: 422 });
-    }
-    return NextResponse.json({ doc: check.data, issues: validateScript(check.data) });
+    return NextResponse.json({ doc: normalized, issues: [...migrationIssues, ...validateScriptV2(normalized)] });
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 502 });
   }

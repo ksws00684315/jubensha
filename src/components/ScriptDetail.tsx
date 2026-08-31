@@ -5,21 +5,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/client";
 import type { PublicScriptView, ScriptDoc } from "@/core/script/schema";
+import type { PublicScriptViewV2, ScriptDocV2 } from "@/core/script/v2/schema";
+import { NarrativeBlocks, TimelineList } from "./ScriptContent";
 
 export default function ScriptDetail({
   id,
   publicDoc,
+  publicDocV2,
   source,
   updatedAt,
 }: {
   id: string;
   publicDoc: PublicScriptView;
+  publicDocV2: PublicScriptViewV2 | null;
   source: string;
   updatedAt: string;
 }) {
   const router = useRouter();
   const [dmView, setDmView] = useState(false);
-  const [full, setFull] = useState<ScriptDoc | null>(null);
+  const [full, setFull] = useState<ScriptDoc | ScriptDocV2 | null>(null);
   const [issues, setIssues] = useState<Array<{ level: "error" | "warning"; message: string }>>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +37,7 @@ export default function ScriptDetail({
     setError(null);
     setBusy(true);
     try {
-      const res = await api<{ doc: ScriptDoc; issues: Array<{ level: "error" | "warning"; message: string }> }>(
+      const res = await api<{ doc: ScriptDoc | ScriptDocV2; issues: Array<{ level: "error" | "warning"; message: string }> }>(
         `/api/scripts/${id}?full=1`
       );
       setFull(res.doc);
@@ -143,12 +147,18 @@ export default function ScriptDetail({
 
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
         <h2 className="font-semibold text-amber-400">公开背景</h2>
-        <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">{publicDoc.background}</p>
+        {publicDocV2 ? (
+          <NarrativeBlocks blocks={publicDocV2.background} className="mt-2 text-sm leading-relaxed text-zinc-300" />
+        ) : (
+          <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">{publicDoc.background}</p>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {publicDoc.characters.map((c) => {
-          const card = full?.characters.find((x) => x.id === c.id)?.card;
+          const card = full?.version === 1 ? full.characters.find((x) => x.id === c.id)?.card : null;
+          const cardV2 = full?.version === 2 ? full.characters.find((x) => x.id === c.id)?.privateCard : null;
+          const publicV2 = publicDocV2?.characters.find((x) => x.id === c.id)?.publicProfile;
           return (
             <div key={c.id} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
               <div className="flex items-center justify-between">
@@ -156,9 +166,16 @@ export default function ScriptDetail({
                   {c.name}
                   {c.gender ? <span className="ml-1 text-xs text-zinc-500">{c.gender}</span> : null}
                 </h3>
-                {dmView && card?.isCulprit && <span className="rounded bg-red-500/20 px-2 py-0.5 text-xs text-red-400">真凶</span>}
+                {dmView && (card?.isCulprit || cardV2?.isCulprit) && <span className="rounded bg-red-500/20 px-2 py-0.5 text-xs text-red-400">真凶</span>}
               </div>
-              <p className="mt-2 text-sm text-zinc-400">{c.publicBio}</p>
+              {publicV2 ? (
+                <div className="mt-2 text-sm text-zinc-400">
+                  {publicV2.identity && <p className="font-medium text-zinc-300">{publicV2.identity}</p>}
+                  <NarrativeBlocks blocks={publicV2.bio} className="mt-1" />
+                </div>
+              ) : (
+                <p className="mt-2 text-sm text-zinc-400">{c.publicBio}</p>
+              )}
               {dmView && card && (
                 <div className="mt-3 space-y-2 border-t border-zinc-800 pt-3 text-xs text-zinc-500">
                   <p>
@@ -175,12 +192,28 @@ export default function ScriptDetail({
                   </p>
                 </div>
               )}
+              {dmView && cardV2 && (
+                <div className="mt-3 space-y-3 border-t border-zinc-800 pt-3 text-xs text-zinc-500">
+                  <div>
+                    <p className="text-zinc-400">秘密</p>
+                    {cardV2.secrets.map((secret) => <div key={secret.id} className="mt-1"><p className="font-medium text-zinc-300">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1" /></div>)}
+                  </div>
+                  <div>
+                    <p className="text-zinc-400">目标</p>
+                    {cardV2.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-zinc-300">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1" /></div>)}
+                  </div>
+                  <div>
+                    <p className="text-zinc-400">时间线</p>
+                    <TimelineList entries={cardV2.timeline} className="mt-2" />
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
       </div>
 
-      {dmView && full && (
+      {dmView && full && full.version === 1 && (
         <>
           <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-6">
             <h2 className="font-semibold text-red-400">真相（仅 DM / 组织者可见）</h2>
@@ -205,6 +238,19 @@ export default function ScriptDetail({
           </div>
         </>
       )}
+      {dmView && full && full.version === 2 && (
+        <>
+          <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-6">
+            <h2 className="font-semibold text-red-400">真相（仅 DM / 组织者可见）</h2>
+            <p className="mt-2 text-sm text-zinc-300"><span className="text-zinc-500">真凶：</span>{full.characters.find((c) => c.id === full.truth.culpritId)?.name}</p>
+            <h3 className="mt-3 text-sm font-medium text-zinc-300">作案手法</h3>
+            <NarrativeBlocks blocks={full.truth.method.summary} className="mt-1 text-sm text-zinc-400" />
+            <div className="mt-3"><h3 className="text-sm font-medium text-zinc-300">关键证据</h3><p className="mt-1 text-sm text-zinc-400">{full.truth.keyEvidenceIds.map((id) => full.clues.find((clue) => clue.id === id)?.name ?? id).join("、") || "待整理"}</p></div>
+            <div className="mt-3"><h3 className="text-sm font-medium text-zinc-300">完整时间线</h3><TimelineList entries={full.truth.timeline} className="mt-2 text-sm" /></div>
+          </div>
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"><h2 className="font-semibold">复盘底稿</h2><NarrativeBlocks blocks={full.truth.reveal} className="mt-2 text-sm leading-relaxed text-zinc-400" /></div>
+        </>
+      )}
 
       <div>
         <h2 className="font-semibold">
@@ -213,7 +259,7 @@ export default function ScriptDetail({
             共 {dmView && full ? full.clues.length : publicDoc.clueCount} 张 · 搜证地点：{publicDoc.locations.join("、")}
           </span>
         </h2>
-        {dmView && full ? (
+        {dmView && full && full.version === 1 ? (
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {full.clues.map((c) => (
               <div key={c.id} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-sm">
@@ -224,6 +270,15 @@ export default function ScriptDetail({
                   </span>
                 </div>
                 <p className="mt-2 text-zinc-400">{c.content}</p>
+              </div>
+            ))}
+          </div>
+        ) : dmView && full && full.version === 2 ? (
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {full.clues.map((c) => (
+              <div key={c.id} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-sm">
+                <div className="flex items-center justify-between gap-2"><span className="font-medium">{c.name}</span><span className="text-xs text-zinc-500">{c.policy === "auto_public" ? "自动公开" : c.policy === "keep_private" ? "必私藏" : "可公开"}</span></div>
+                <NarrativeBlocks blocks={c.content} className="mt-2 text-zinc-400" />
               </div>
             ))}
           </div>

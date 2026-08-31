@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import crypto from "node:crypto";
 import { db } from "@/lib/db";
-import { parseScriptDoc } from "@/core/script/schema";
+import { parseScriptForRuntime } from "@/core/script/compat";
 import { isScriptPlayable } from "@/core/script/validate";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
   const scriptRow = await db.script.findFirst({ where: { id: parsed.data.scriptId, deleted: false } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  const doc = parseScriptDoc(scriptRow.content);
+  const doc = parseScriptForRuntime(scriptRow.content);
   if (parsed.data.seats.length < doc.meta.minPlayers || parsed.data.seats.length > doc.meta.maxPlayers) {
     return NextResponse.json({ error: `该剧本需要 ${doc.meta.minPlayers}-${doc.meta.maxPlayers} 名玩家` }, { status: 400 });
   }

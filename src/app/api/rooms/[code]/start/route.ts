@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { parseScriptDoc } from "@/core/script/schema";
+import { parseScriptForRuntime } from "@/core/script/compat";
 import { isScriptPlayable } from "@/core/script/validate";
 import { GameEngine } from "@/core/engine/engine";
 import { hasDuplicateCharacterIds } from "@/lib/seats";
@@ -27,7 +27,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ code: string }
 
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  const doc = parseScriptDoc(scriptRow.content);
+  const doc = parseScriptForRuntime(scriptRow.content);
   const play = isScriptPlayable(doc);
   if (!play.ok) return NextResponse.json({ error: "剧本校验失败", issues: play.errors }, { status: 400 });
 

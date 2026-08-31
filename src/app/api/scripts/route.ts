@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { parseScriptDoc, type ScriptDocInput } from "@/core/script/schema";
+import { parseAnyScriptDoc } from "@/core/script/compat";
 import { validateScript } from "@/core/script/validate";
+import type { ScriptDoc } from "@/core/script/schema";
+import { validateScriptV2 } from "@/core/script/v2/validate";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { requireAdmin } from "@/lib/admin";
 
 /** 剧本列表（仅元数据） */
@@ -31,7 +34,7 @@ export async function POST(req: Request) {
   if (denied) return denied;
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "请求体不是合法 JSON" }, { status: 400 });
-  const docInput: ScriptDocInput = "doc" in body ? body.doc : body;
+  const docInput = "doc" in body ? body.doc : body;
   const source = typeof body?.source === "string" && ["manual", "ai", "import"].includes(body.source) ? body.source : "import";
 
   const parsed = parseScriptDocSafe(docInput);
@@ -39,7 +42,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "剧本结构校验失败", issues: parsed.issues }, { status: 400 });
   }
   const doc = parsed.doc;
-  const issues = validateScript(doc);
+  const issues = parsed.version === 2 ? validateScriptV2(parsed.doc as ScriptDocV2) : validateScript(parsed.doc as ScriptDoc).map((issue) => ({ ...issue, path: "" }));
   const errors = issues.filter((i) => i.level === "error");
   if (errors.length) {
     return NextResponse.json({ error: "剧本逻辑校验失败", issues }, { status: 400 });
@@ -61,11 +64,13 @@ export async function POST(req: Request) {
   return NextResponse.json({ id: script.id, issues }, { status: 201 });
 }
 
-function parseScriptDocSafe(input: unknown):
-  | { ok: true; doc: ReturnType<typeof import("@/core/script/schema").parseScriptDoc> }
+function parseScriptDocSafe(
+  input: unknown
+):
+  | ({ ok: true } & ReturnType<typeof parseAnyScriptDoc>)
   | { ok: false; issues: Array<{ level: "error" | "warning"; message: string }> } {
   try {
-    return { ok: true, doc: parseScriptDoc(input) };
+    return { ok: true as const, ...parseAnyScriptDoc(input) };
   } catch (err) {
     const issues: Array<{ level: "error" | "warning"; message: string }> = [];
     if (err && typeof err === "object" && "issues" in err) {
@@ -75,6 +80,6 @@ function parseScriptDocSafe(input: unknown):
     } else {
       issues.push({ level: "error", message: err instanceof Error ? err.message : String(err) });
     }
-    return { ok: false, issues };
+    return { ok: false as const, issues };
   }
 }
