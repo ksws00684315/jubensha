@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, saveIdentity, type RoomView } from "@/lib/client";
+import { api, saveIdentity } from "@/lib/client";
 
 export default function JoinBox() {
   const router = useRouter();
@@ -14,16 +14,23 @@ export default function JoinBox() {
     setError(null);
     setBusy(true);
     try {
-      const res = await api<{ roomId: string; seatIndex: number; token: string }>("/api/rooms/join", {
+      const roomCode = code.code.trim().toUpperCase();
+      const name = code.name.trim();
+      const res = await api<{
+        roomId: string;
+        seatIndex: number;
+        token: string;
+        gameId: string | null;
+        resumed: boolean;
+      }>("/api/rooms/join", {
         method: "POST",
-        body: JSON.stringify({ code: code.code.trim(), name: code.name.trim() }),
+        body: JSON.stringify({ code: roomCode, name }),
       });
-      saveIdentity(res.roomId, res.seatIndex, res.token, code.name.trim());
-      const room = await api<RoomView>(`/api/rooms/${code.code.trim().toUpperCase()}`);
-      if (room.gameId) {
-        router.push(`/play/${room.gameId}`);
+      saveIdentity(res.roomId, res.seatIndex, res.token, name, { code: roomCode, gameId: res.gameId });
+      if (res.gameId) {
+        router.push(`/play/${res.gameId}`);
       } else {
-        router.push(`/rooms/${room.code}`);
+        router.push(`/rooms/${roomCode}`);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "加入失败");
@@ -35,7 +42,7 @@ export default function JoinBox() {
   return (
     <div className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
       <h3 className="font-medium">加入房间</h3>
-      <p className="mt-1 text-sm text-zinc-500">有房间码？直接入座。</p>
+      <p className="mt-1 text-sm text-zinc-500">有房间码？直接入座。断线后用原昵称即可回到座位。</p>
       <div className="mt-4 space-y-3">
         <input
           value={code.code}
@@ -47,7 +54,7 @@ export default function JoinBox() {
         <input
           value={code.name}
           onChange={(e) => setName((s) => ({ ...s, name: e.target.value }))}
-          placeholder="你的昵称"
+          placeholder="你的昵称（断线重连请填原名）"
           maxLength={20}
           className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500"
         />
@@ -57,7 +64,7 @@ export default function JoinBox() {
           disabled={busy || !code.code.trim() || !code.name.trim()}
           className="w-full rounded-lg bg-amber-500 py-2 font-medium text-zinc-950 transition hover:bg-amber-400 disabled:opacity-40"
         >
-          {busy ? "正在加入…" : "入座"}
+          {busy ? "正在加入…" : "入座 / 回到本局"}
         </button>
       </div>
     </div>

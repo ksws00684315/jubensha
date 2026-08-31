@@ -1,5 +1,6 @@
 import Link from "next/link";
 import JoinBox from "@/components/JoinBox";
+import ContinueGames from "@/components/ContinueGames";
 
 const features = [
   {
@@ -46,7 +47,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="flex justify-center">
+      <section className="flex flex-col items-center gap-6">
+        <ContinueGames />
         <JoinBox />
       </section>
 

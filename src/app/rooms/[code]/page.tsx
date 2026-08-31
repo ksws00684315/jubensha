@@ -17,6 +17,8 @@ export default function RoomPage() {
 
   const load = useCallback(async () => {
     const r = await api<RoomView>(`/api/rooms/${code}`);
+    const mine = getIdentity()[r.id];
+    if (mine) saveIdentity(r.id, mine.seatIndex, mine.token, mine.name, { code: r.code, gameId: r.gameId });
     setRoom(r);
     setIdentity(getIdentity());
     setHostToken(getHostToken(code));
@@ -28,16 +30,42 @@ export default function RoomPage() {
     return () => clearInterval(t);
   }, [load]);
 
+  const persistSeat = (
+    roomId: string,
+    seatIndex: number | "dm",
+    token: string,
+    name: string,
+    gameId: string | null,
+    roomCode: string
+  ) => {
+    saveIdentity(roomId, seatIndex, token, name, { code: roomCode, gameId });
+    setIdentity(getIdentity());
+  };
+
+  const enterGame = (gameId: string | null) => {
+    if (!gameId || !room) return;
+    const mine = getIdentity()[room.id];
+    if (mine) persistSeat(room.id, mine.seatIndex, mine.token, mine.name, gameId, room.code);
+    router.push(`/play/${gameId}`);
+  };
+
   const join = async () => {
     if (!room) return;
     setBusy(true);
     setError(null);
     try {
-      const res = await api<{ seatIndex: number; token: string }>("/api/rooms/join", {
-        method: "POST",
-        body: JSON.stringify({ code: room.code, name: joinName.trim() }),
-      });
-      saveIdentity(room.id, res.seatIndex, res.token, joinName.trim());
+      const res = await api<{ seatIndex: number; token: string; gameId: string | null; resumed: boolean }>(
+        "/api/rooms/join",
+        {
+          method: "POST",
+          body: JSON.stringify({ code: room.code, name: joinName.trim() }),
+        }
+      );
+      persistSeat(room.id, res.seatIndex, res.token, joinName.trim(), res.gameId, room.code);
+      if (res.gameId && room.status !== "lobby") {
+        router.push(`/play/${res.gameId}`);
+        return;
+      }
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -51,11 +79,18 @@ export default function RoomPage() {
     setBusy(true);
     setError(null);
     try {
-      const res = await api<{ roomId: string; token: string }>("/api/rooms/dm-join", {
-        method: "POST",
-        body: JSON.stringify({ code: room.code, name: dmName.trim() }),
-      });
-      saveIdentity(res.roomId, "dm", res.token, dmName.trim());
+      const res = await api<{ roomId: string; token: string; gameId: string | null; resumed: boolean }>(
+        "/api/rooms/dm-join",
+        {
+          method: "POST",
+          body: JSON.stringify({ code: room.code, name: dmName.trim() }),
+        }
+      );
+      persistSeat(res.roomId, "dm", res.token, dmName.trim(), res.gameId, room.code);
+      if (res.gameId && room.status !== "lobby") {
+        router.push(`/play/${res.gameId}`);
+        return;
+      }
       await load();
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -89,6 +124,8 @@ export default function RoomPage() {
     setError(null);
     try {
       const res = await api<{ gameId: string }>(`/api/rooms/${room.code}/start`, { method: "POST", body: JSON.stringify({ hostToken }) });
+      const mine = getIdentity()[room.id];
+      if (mine) persistSeat(room.id, mine.seatIndex, mine.token, mine.name, res.gameId, room.code);
       router.push(`/play/${res.gameId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -145,21 +182,34 @@ export default function RoomPage() {
           <h4 className="text-sm font-medium text-purple-300">真人 DM 模式</h4>
           {(() => {
             const meIsDm = my?.seatIndex === "dm";
-            if (meIsDm) return <p className="mt-2 text-sm text-zinc-300">你是本局的真人 DM（{my?.name}），进入对局后可见全部真相与私聊，并可随时旁白、催促或跳过卡住的回合。</p>;
-            if (room.dmTaken) return <p className="mt-2 text-sm text-zinc-400">DM 已由「{room.dmName}」担任。</p>;
-            if (room.status !== "lobby") return <p className="mt-2 text-sm text-zinc-400">对局已开始，DM 位不可再加入。</p>;
+            if (meIsDm) {
+              return (
+                <p className="mt-2 text-sm text-zinc-300">
+                  你是本局的真人 DM（{my?.name}），进入对局后可见全部真相与私聊，并可随时旁白、催促或跳过卡住的回合。
+                </p>
+              );
+            }
+            const reclaim = room.dmTaken || room.status !== "lobby";
             return (
               <div className="mt-3 space-y-3">
-                <p className="text-sm text-zinc-400">本房间由真人担任 DM，认领后进入对局可全知视角主持。</p>
+                <p className="text-sm text-zinc-400">
+                  {reclaim
+                    ? `DM 已由「${room.dmName ?? "他人"}」担任。若是你本人，填写认领时用的昵称即可回到本局。`
+                    : "本房间由真人担任 DM，认领后进入对局可全知视角主持。"}
+                </p>
                 <div className="flex gap-2">
                   <input
                     value={dmName}
                     onChange={(e) => setDmName(e.target.value)}
-                    placeholder="DM 昵称"
+                    placeholder={reclaim ? "认领时用的昵称" : "DM 昵称"}
                     className="flex-1 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-purple-500"
                   />
-                  <button onClick={joinDm} disabled={busy || !dmName.trim()} className="rounded-lg bg-purple-500/80 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-purple-400 disabled:opacity-40">
-                    以 DM 身份就位
+                  <button
+                    onClick={joinDm}
+                    disabled={busy || !dmName.trim()}
+                    className="rounded-lg bg-purple-500/80 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-purple-400 disabled:opacity-40"
+                  >
+                    {reclaim ? "认领 DM" : "以 DM 身份就位"}
                   </button>
                 </div>
               </div>
@@ -170,9 +220,11 @@ export default function RoomPage() {
 
       {room.status === "lobby" ? (
         <div className="space-y-4">
-          {openHumanSeat && (
+          {(openHumanSeat || !my) && (
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
-              <h4 className="text-sm font-medium text-zinc-300">还有空真人座位，坐进来？</h4>
+              <h4 className="text-sm font-medium text-zinc-300">
+                {openHumanSeat ? "还有空真人座位，坐进来？" : "用原昵称认领已入座的位置"}
+              </h4>
               <div className="mt-3 flex gap-2">
                 <input
                   value={joinName}
@@ -199,9 +251,45 @@ export default function RoomPage() {
           )}
         </div>
       ) : (
-        <button onClick={() => room.gameId && router.push(`/play/${room.gameId}`)} className="rounded-lg bg-amber-500 px-6 py-2.5 font-medium text-zinc-950 hover:bg-amber-400">
-          进入对局 →
-        </button>
+        <div className="space-y-4">
+          {my ? (
+            <button
+              onClick={() => enterGame(room.gameId)}
+              disabled={!room.gameId}
+              className="rounded-lg bg-amber-500 px-6 py-2.5 font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+            >
+              进入对局 →
+            </button>
+          ) : (
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+              <h4 className="text-sm font-medium text-zinc-300">回到本局</h4>
+              <p className="mt-1 text-sm text-zinc-500">对局已开始。填写入座时用的昵称即可认领座位。</p>
+              <div className="mt-3 flex gap-2">
+                <input
+                  value={joinName}
+                  onChange={(e) => setJoinName(e.target.value)}
+                  placeholder="入座时用的昵称"
+                  className="flex-1 rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500"
+                />
+                <button
+                  onClick={join}
+                  disabled={busy || !joinName.trim()}
+                  className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+                >
+                  认领并进入
+                </button>
+              </div>
+            </div>
+          )}
+          {hostToken && !my && room.gameId && (
+            <button
+              onClick={() => enterGame(room.gameId)}
+              className="text-sm text-zinc-500 hover:text-zinc-300"
+            >
+              以观众身份观看 →
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

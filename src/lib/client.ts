@@ -124,7 +124,7 @@ export const PHASE_LABEL: Record<string, string> = {
 /** 本地玩家身份存取（seatIndex 为 "dm" 表示真人 DM） */
 const IDENTITY_KEY = "jbs-identity";
 export interface PlayerIdentity {
-  [roomId: string]: { seatIndex: number | "dm"; token: string; name: string };
+  [roomId: string]: { seatIndex: number | "dm"; token: string; name: string; code?: string; gameId?: string | null };
 }
 export function getIdentity(): PlayerIdentity {
   if (typeof window === "undefined") return {};
@@ -134,9 +134,32 @@ export function getIdentity(): PlayerIdentity {
     return {};
   }
 }
-export function saveIdentity(roomId: string, seatIndex: number | "dm", token: string, name: string): void {
+export function saveIdentity(
+  roomId: string,
+  seatIndex: number | "dm",
+  token: string,
+  name: string,
+  extra?: { code?: string; gameId?: string | null }
+): void {
   const all = getIdentity();
-  all[roomId] = { seatIndex, token, name };
+  const prev = all[roomId];
+  all[roomId] = {
+    seatIndex,
+    token,
+    name,
+    code: extra?.code ?? prev?.code,
+    gameId: extra?.gameId !== undefined ? extra.gameId : prev?.gameId,
+  };
+  localStorage.setItem(IDENTITY_KEY, JSON.stringify(all));
+}
+
+export function listIdentities(): Array<{ roomId: string } & PlayerIdentity[string]> {
+  return Object.entries(getIdentity()).map(([roomId, v]) => ({ roomId, ...v }));
+}
+
+export function removeIdentity(roomId: string): void {
+  const all = getIdentity();
+  delete all[roomId];
   localStorage.setItem(IDENTITY_KEY, JSON.stringify(all));
 }
 
@@ -160,4 +183,24 @@ export function saveHostToken(code: string, token: string): void {
   })();
   all[code] = token;
   localStorage.setItem(HOST_KEY, JSON.stringify(all));
+}
+
+export function listHostCodes(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return Object.keys(JSON.parse(localStorage.getItem(HOST_KEY) ?? "{}") as Record<string, string>);
+  } catch {
+    return [];
+  }
+}
+
+export function removeHostToken(code: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const all = JSON.parse(localStorage.getItem(HOST_KEY) ?? "{}") as Record<string, string>;
+    delete all[code];
+    localStorage.setItem(HOST_KEY, JSON.stringify(all));
+  } catch {
+    /* ignore */
+  }
 }

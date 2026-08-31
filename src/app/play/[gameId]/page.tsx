@@ -7,9 +7,11 @@ import {
   api,
   getIdentity,
   PHASE_LABEL,
+  saveIdentity,
   type GameEventView,
   type GameSummary,
 } from "@/lib/client";
+import { gameEventsUrl } from "@/lib/join";
 
 interface DmView {
   truth: { culprit: string; method: string; fullTimeline: string; keyEvidence: string[]; reveal: string };
@@ -39,16 +41,30 @@ export default function PlayPage() {
   const [error, setError] = useState<string | null>(null);
   const lastSeq = useRef("0");
   const chatRef = useRef<HTMLDivElement>(null);
+  const [streamKey, setStreamKey] = useState<string | null>(null);
 
   // 1) 加载对局概要（先不带身份拿 roomId，再带身份重取私卡）
   useEffect(() => {
     let cancelled = false;
+    lastSeq.current = "0";
+    setEvents([]);
+    setDeltas({});
+    setThinking({});
+    setStreamKey(null);
+    setSummary(null);
+    setMySeat(null);
+    setMyToken(null);
+    setIsDm(false);
+    setDmToken(null);
     (async () => {
       const base = await api<GameSummary>(`/api/games/${gameId}`);
       if (cancelled) return;
       const id = getIdentity()[base.roomId];
       const seatIndex = id?.seatIndex;
       const idToken = id?.token;
+      if (id) {
+        saveIdentity(base.roomId, id.seatIndex, id.token, id.name, { code: base.roomCode, gameId });
+      }
       if (id && seatIndex === "dm") {
         setIsDm(true);
         setDmToken(idToken ?? null);
@@ -66,18 +82,23 @@ export default function PlayPage() {
       } else {
         setSummary(base);
       }
+      if (!cancelled) setStreamKey(gameId);
     })();
     return () => {
       cancelled = true;
     };
   }, [gameId]);
 
-  // 2) SSE 订阅
+  // 2) SSE 订阅：不依赖 summary，避免阶段刷新时拆掉连接导致 lastSeq 丢失
   useEffect(() => {
-    if (!summary) return;
-    const url = isDm
-      ? `/api/games/${gameId}/events?dm=1&dmtoken=${dmToken ?? ""}`
-      : `/api/games/${gameId}/events${mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : ""}`;
+    if (streamKey !== gameId) return;
+    const url = gameEventsUrl(gameId, {
+      dm: isDm,
+      dmToken,
+      seat: mySeat,
+      token: myToken,
+      lastSeq: lastSeq.current,
+    });
     const es = new EventSource(url);
     es.onmessage = (m) => {
       const msg = JSON.parse(m.data) as
@@ -100,7 +121,6 @@ export default function PlayPage() {
           setThinking((t) => ({ ...t, [ev.fromSeat as number]: false }));
         }
         if (ev.type === "private" && ev.fromSeat !== null) {
-          // 私聊最终事件已落库，清掉该座位的流式缓冲（避免气泡滞留）
           setDeltas((d) => {
             const { [ev.fromSeat as number]: _drop, ...rest } = d;
             void _drop;
@@ -111,7 +131,6 @@ export default function PlayPage() {
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
         if (ev.type === "clue" && ev.visibility === `seat:${mySeat}`) {
-          // 我获得了新线索 → 刷新私卡线索列表
           void api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}&token=${myToken ?? ""}`).then(setSummary).catch(() => null);
         }
       } else if (msg.kind === "delta") {
@@ -132,7 +151,7 @@ export default function PlayPage() {
       /* EventSource 自动重连，服务端按 Last-Event-ID 补发 */
     };
     return () => es.close();
-  }, [gameId, summary, mySeat, myToken, isDm, dmToken]);
+  }, [gameId, streamKey, mySeat, myToken, isDm, dmToken]);
 
   // 3) 自动滚动
   useEffect(() => {
@@ -408,7 +427,11 @@ export default function PlayPage() {
         )}
         {!me && !isDm && !ended && (
           <p className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-xs text-zinc-500">
-            你正在以观众身份观看（公开事件流）。
+            你正在以观众身份观看（公开事件流）。若你是本局玩家，回{" "}
+            <Link href={`/rooms/${summary.roomCode}`} className="text-amber-400 hover:underline">
+              房间 {summary.roomCode}
+            </Link>{" "}
+            用入座时的昵称认领座位。
           </p>
         )}
       </aside>
