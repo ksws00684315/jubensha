@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { chat, extractJson } from "@/core/llm/client";
+import { cacheFriendlyMessages, GENERATOR_SYSTEM } from "@/core/agents/context";
 import { parseScriptDoc } from "@/core/script/schema";
 import { migrateV1ToV2 } from "@/core/script/v2/migrate-v1";
 import { parseScriptDocV2, scriptDocV2Schema } from "@/core/script/v2/schema";
@@ -44,19 +45,12 @@ export async function POST(req: Request) {
     if (d.stage === 1) {
       const res = await chat({
         purpose: "generator",
-        messages: [
-          {
-            role: "system",
-            content:
-              "你是资深剧本杀作者。请根据用户需求先产出剧本骨架。只输出 JSON：{\"title\",\"intro\",\"background\",\"locations\":[\"地点\"],\"victim\":{\"name\",\"identity\",\"discovery\"},\"characters\":[{\"name\",\"gender\",\"age\",\"publicBio\",\"isCulprit\",\"secretIdea\"}],\"methodSummary\",\"timelineSketch\"}。characters 数量必须等于玩家人数；恰有一名 isCulprit=true；timelineSketch 给出案发夜完整时间线草稿（精确到时刻，谁在何时见过死者）。background 300-400字。",
-          },
-          {
-            role: "user",
-            content: `题材：${d.theme ?? "现代都市悬疑"}；玩家人数：${d.playerCount ?? 5}；难度：${d.difficulty ?? "新手"}；诡计偏好：${d.trickType ?? "本格叙述性误导（不用超自然）"}；其他要求：${d.extra ?? "无"}`,
-          },
-        ],
+        messages: cacheFriendlyMessages(
+          GENERATOR_SYSTEM,
+          "【任务】先产出剧本骨架。只输出 JSON：{\"title\",\"intro\",\"background\",\"locations\":[\"地点\"],\"victim\":{\"name\",\"identity\",\"discovery\"},\"characters\":[{\"name\",\"gender\",\"age\",\"publicBio\",\"isCulprit\",\"secretIdea\"}],\"methodSummary\",\"timelineSketch\"}。characters 数量必须等于玩家人数；恰有一名 isCulprit=true；timelineSketch 给出案发夜完整时间线草稿（精确到时刻）。background 300-400字。",
+          `题材：${d.theme ?? "现代都市悬疑"}；玩家人数：${d.playerCount ?? 5}；难度：${d.difficulty ?? "新手"}；诡计偏好：${d.trickType ?? "本格叙述性误导（不用超自然）"}；其他要求：${d.extra ?? "无"}`
+        ),
         temperature: 0.9,
-        maxTokens: 2500,
       });
       const outline = extractJson(res.text);
       if (!outline) return NextResponse.json({ error: "模型未返回合法 JSON，请重试" }, { status: 502 });
@@ -66,15 +60,12 @@ export async function POST(req: Request) {
     // stage 2：根据骨架产出完整剧本
     const res = await chat({
       purpose: "generator",
-      messages: [
-        { role: "system", content: `你是资深剧本杀作者。根据给定骨架写出完整剧本文档。\n${SCHEMA_HINT}` },
-        {
-          role: "user",
-          content: `剧本骨架：\n${JSON.stringify(d.outline, null, 2)}\n\n请输出完整剧本文档 JSON。人物 id 用其姓名的小写拼音。线索 8-14 张。`,
-        },
-      ],
+      messages: cacheFriendlyMessages(
+        GENERATOR_SYSTEM,
+        `【任务】根据骨架写出完整剧本文档。\n${SCHEMA_HINT}`,
+        `剧本骨架：\n${JSON.stringify(d.outline, null, 2)}\n\n请输出完整剧本文档 JSON。人物 id 用其姓名的小写拼音。线索 8-14 张。`
+      ),
       temperature: 0.8,
-      maxTokens: 8000,
     });
     const doc = extractJson(res.text);
     if (!doc) return NextResponse.json({ error: "模型未返回合法 JSON，请重试" }, { status: 502 });

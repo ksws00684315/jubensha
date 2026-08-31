@@ -34,5 +34,6 @@ export interface ResolvedBinding {
   apiKey: string;
   modelId: string;
   temperature: number | null;
+  maxTokens: number | null;
   fallbackSlot: string | null;
 }

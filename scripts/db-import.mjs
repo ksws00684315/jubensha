@@ -88,12 +88,14 @@ for (const b of snapshot.bindings ?? []) {
       providerId: b.providerId,
       modelId: b.modelId,
       temperature: b.temperature ?? null,
+      maxTokens: b.maxTokens ?? null,
       fallbackSlot: b.fallbackSlot ?? null,
     },
     update: {
       providerId: b.providerId,
       modelId: b.modelId,
       temperature: b.temperature ?? null,
+      maxTokens: b.maxTokens ?? null,
       fallbackSlot: b.fallbackSlot ?? null,
     },
   });

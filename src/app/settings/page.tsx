@@ -3,6 +3,11 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { api } from "@/lib/client";
 import { BINDING_SLOTS, PROVIDER_PRESETS } from "@/lib/provider-presets";
+import {
+  DEFAULT_MAX_OUTPUT_TOKENS,
+  MAX_BINDING_OUTPUT_TOKENS,
+  MIN_BINDING_OUTPUT_TOKENS,
+} from "@/core/llm/output-tokens";
 
 interface ProviderView {
   id: string;
@@ -19,8 +24,15 @@ interface BindingView {
   providerName: string;
   modelId: string;
   temperature: number | null;
+  maxTokens: number | null;
   fallbackSlot: string | null;
   providerEnabled: boolean;
+}
+
+type BindingDraft = { providerId: string; modelId: string; temperature: string; maxTokens: string };
+
+function emptyDraft(): BindingDraft {
+  return { providerId: "", modelId: "", temperature: "", maxTokens: "" };
 }
 interface UsageView {
   summary: Array<{
@@ -31,6 +43,7 @@ interface UsageView {
     calls: number;
     promptTokens: number;
     completionTokens: number;
+    cachedTokens: number;
     totalTokens: number;
   }>;
   recentErrors: Array<{ providerName: string; modelId: string; purpose: string; error: string | null; createdAt: string }>;
@@ -466,17 +479,22 @@ function ProvidersTab() {
 function BindingsTab() {
   const [providers, setProviders] = useState<ProviderView[]>([]);
   const [bindings, setBindings] = useState<BindingView[]>([]);
-  const [draft, setDraft] = useState<Record<string, { providerId: string; modelId: string }>>({});
+  const [draft, setDraft] = useState<Record<string, BindingDraft>>({});
   const [msg, setMsg] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setProviders(await api<ProviderView[]>("/api/providers"));
     const b = await api<BindingView[]>("/api/bindings");
     setBindings(b);
-    const d: Record<string, { providerId: string; modelId: string }> = {};
+    const d: Record<string, BindingDraft> = {};
     for (const slot of BINDING_SLOTS) {
       const found = b.find((x) => x.slot === slot.key);
-      d[slot.key] = { providerId: found?.providerId ?? "", modelId: found?.modelId ?? "" };
+      d[slot.key] = {
+        providerId: found?.providerId ?? "",
+        modelId: found?.modelId ?? "",
+        temperature: found?.temperature != null ? String(found.temperature) : "",
+        maxTokens: found?.maxTokens != null ? String(found.maxTokens) : "",
+      };
     }
     setDraft(d);
   }, []);
@@ -487,8 +505,24 @@ function BindingsTab() {
   const save = async (slot: string) => {
     const d = draft[slot];
     if (!d?.providerId || !d.modelId) return;
+    const temperature = d.temperature.trim() === "" ? null : Number(d.temperature);
+    const maxTokens = d.maxTokens.trim() === "" ? null : Number(d.maxTokens);
+    if (temperature !== null && (Number.isNaN(temperature) || temperature < 0 || temperature > 2)) {
+      setMsg("温度需在 0–2 之间，留空则用默认。");
+      return;
+    }
+    if (
+      maxTokens !== null &&
+      (!Number.isInteger(maxTokens) || maxTokens < MIN_BINDING_OUTPUT_TOKENS || maxTokens > MAX_BINDING_OUTPUT_TOKENS)
+    ) {
+      setMsg(`单次输出上限需为 ${MIN_BINDING_OUTPUT_TOKENS}–${MAX_BINDING_OUTPUT_TOKENS} 的整数。这是「这一句最多生成多长」，不是 1M 上下文窗口。`);
+      return;
+    }
     try {
-      await api("/api/bindings", { method: "PUT", body: JSON.stringify({ slot, providerId: d.providerId, modelId: d.modelId }) });
+      await api("/api/bindings", {
+        method: "PUT",
+        body: JSON.stringify({ slot, providerId: d.providerId, modelId: d.modelId, temperature, maxTokens }),
+      });
       setMsg(`已保存「${PURPOSE_LABEL[slot]}」绑定。`);
       await load();
     } catch (err) {
@@ -502,10 +536,11 @@ function BindingsTab() {
     <div className="space-y-4">
       <p className="text-sm text-zinc-500">
         为不同用途绑定不同模型：DM 与凶手建议用最强模型，路人 AI 用便宜模型即可。模型名参考各服务商文档（例如 deepseek-chat、glm-4.7-air）。
+        轮次变多会堆在「输入上下文」里，整局发言记录每次都会全量送给模型，没有截断。下面这项只限制「这一句最多生成多长」（含思考），默认 {DEFAULT_MAX_OUTPUT_TOKENS}，可填到 {MAX_BINDING_OUTPUT_TOKENS}。1M 是能读进去的上下文，不要填成输出上限。
       </p>
       {BINDING_SLOTS.map((slot) => {
         const bound = bindings.find((b) => b.slot === slot.key);
-        const d = draft[slot.key] ?? { providerId: "", modelId: "" };
+        const d = draft[slot.key] ?? emptyDraft();
         const preset = PROVIDER_PRESETS.find((p) => p.label === bound?.providerName);
         return (
           <div key={slot.key} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
@@ -516,6 +551,7 @@ function BindingsTab() {
                   {bound && (
                     <span className={`ml-2 rounded px-1.5 py-0.5 text-xs ${bound.providerEnabled ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/20 text-red-400"}`}>
                       {bound.providerName} / {bound.modelId}
+                      {bound.maxTokens ? ` · ${bound.maxTokens} tok` : ""}
                     </span>
                   )}
                 </h4>
@@ -546,6 +582,22 @@ function BindingsTab() {
                     <option key={m} value={m} />
                   ))}
                 </datalist>
+                <input
+                  value={d.temperature}
+                  onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, temperature: e.target.value } }))}
+                  placeholder="温度"
+                  inputMode="decimal"
+                  className="w-20 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-amber-500"
+                  title="温度 0–2，留空用默认"
+                />
+                <input
+                  value={d.maxTokens}
+                  onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, maxTokens: e.target.value } }))}
+                  placeholder={`输出 ${DEFAULT_MAX_OUTPUT_TOKENS}`}
+                  inputMode="numeric"
+                  className="w-28 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-amber-500"
+                  title={`单次输出上限，留空默认 ${DEFAULT_MAX_OUTPUT_TOKENS}，最高 ${MAX_BINDING_OUTPUT_TOKENS}`}
+                />
                 <button onClick={() => save(slot.key)} disabled={!d.providerId || !d.modelId} className="rounded-lg bg-zinc-800 px-3 py-1.5 text-sm hover:bg-zinc-700 disabled:opacity-40">
                   保存
                 </button>
@@ -568,12 +620,17 @@ function UsageTab() {
   const okRows = usage.summary.filter((r) => r.ok);
   const failRows = usage.summary.filter((r) => !r.ok);
   const total = okRows.reduce((a, r) => a + r.totalTokens, 0);
+  const cached = okRows.reduce((a, r) => a + (r.cachedTokens ?? 0), 0);
+  const prompt = okRows.reduce((a, r) => a + r.promptTokens, 0);
+  const hit = prompt > 0 ? Math.round((cached / prompt) * 100) : 0;
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
         <h3 className="font-semibold">近 30 天总用量</h3>
         <p className="mt-2 text-3xl font-bold text-amber-400">{total.toLocaleString()}</p>
-        <p className="text-xs text-zinc-500">tokens（按 provider/模型/用途分项如下）</p>
+        <p className="text-xs text-zinc-500">
+          tokens · 输入缓存命中 {cached.toLocaleString()}（{hit}%）
+        </p>
         {okRows.length > 0 && (
           <table className="mt-4 w-full text-left text-sm">
             <thead className="text-xs text-zinc-500">
@@ -583,6 +640,7 @@ function UsageTab() {
                 <th>用途</th>
                 <th className="text-right">调用</th>
                 <th className="text-right">输入</th>
+                <th className="text-right">缓存</th>
                 <th className="text-right">输出</th>
               </tr>
             </thead>
@@ -594,6 +652,7 @@ function UsageTab() {
                   <td>{PURPOSE_LABEL[r.purpose] ?? r.purpose}</td>
                   <td className="text-right">{r.calls}</td>
                   <td className="text-right">{r.promptTokens.toLocaleString()}</td>
+                  <td className="text-right">{(r.cachedTokens ?? 0).toLocaleString()}</td>
                   <td className="text-right">{r.completionTokens.toLocaleString()}</td>
                 </tr>
               ))}

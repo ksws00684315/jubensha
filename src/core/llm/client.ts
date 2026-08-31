@@ -4,6 +4,7 @@ import { generateText, streamText, type LanguageModel } from "ai";
 import { db } from "@/lib/db";
 import { decryptSecret } from "@/lib/crypto";
 import { candidateModelListUrls, normalizeProviderBaseUrl } from "./provider-url";
+import { emptyCompletionError, isRetryableLlmError, resolveMaxOutputTokens } from "./output-tokens";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
@@ -30,6 +31,7 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
         apiKey: decryptSecret(binding.provider.apiKeyCipher),
         modelId: binding.modelId,
         temperature: binding.temperature ?? null,
+        maxTokens: binding.maxTokens ?? null,
         fallbackSlot: binding.fallbackSlot ?? null,
       };
     }
@@ -39,7 +41,7 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
   throw new Error(`槽位 "${slot}" 的 fallback 链解析失败`);
 }
 
-function toLanguageModel(b: ResolvedBinding): LanguageModel {
+function toLanguageModel(b: ResolvedBinding, extraBody?: Record<string, unknown>): LanguageModel {
   const baseURL = normalizeProviderBaseUrl(b.baseUrl, b.protocol);
   if (b.protocol === "anthropic") {
     const p = createAnthropic({ apiKey: b.apiKey, baseURL: baseURL || undefined });
@@ -49,15 +51,35 @@ function toLanguageModel(b: ResolvedBinding): LanguageModel {
     name: b.providerName,
     baseURL,
     apiKey: b.apiKey,
+    ...(extraBody
+      ? { transformRequestBody: (args: Record<string, any>) => ({ ...args, ...extraBody }) }
+      : {}),
   });
   return p(b.modelId);
 }
 
-function normalizeUsage(usage: unknown): { prompt: number; completion: number } {
-  const u = usage as { inputTokens?: number; outputTokens?: number; promptTokens?: number; completionTokens?: number } | undefined;
+function normalizeUsage(usage: unknown): { prompt: number; completion: number; cached: number } {
+  const u = usage as {
+    inputTokens?: number;
+    outputTokens?: number;
+    promptTokens?: number;
+    completionTokens?: number;
+    cachedInputTokens?: number;
+    inputTokenDetails?: { cacheReadTokens?: number; cachedTokens?: number };
+    prompt_tokens_details?: { cached_tokens?: number; cache_hit_tokens?: number };
+  } | undefined;
+  const details = u?.inputTokenDetails;
+  const raw = u?.prompt_tokens_details;
   return {
     prompt: u?.inputTokens ?? u?.promptTokens ?? 0,
     completion: u?.outputTokens ?? u?.completionTokens ?? 0,
+    cached:
+      u?.cachedInputTokens ??
+      details?.cacheReadTokens ??
+      details?.cachedTokens ??
+      raw?.cached_tokens ??
+      raw?.cache_hit_tokens ??
+      0,
   };
 }
 
@@ -67,6 +89,7 @@ async function logUsage(args: {
   gameId?: string | null;
   prompt: number;
   completion: number;
+  cached?: number;
   latencyMs: number;
   ok: boolean;
   error?: string;
@@ -81,6 +104,7 @@ async function logUsage(args: {
         gameId: args.gameId ?? null,
         promptTokens: args.prompt,
         completionTokens: args.completion,
+        cachedTokens: args.cached ?? 0,
         totalTokens: args.prompt + args.completion,
         latencyMs: args.latencyMs,
         ok: args.ok,
@@ -96,13 +120,10 @@ const RETRY_DELAYS_MS = [800, 2000];
 const REQUEST_TIMEOUT_MS = 180_000;
 
 function isRetryable(err: unknown): boolean {
-  const msg = err instanceof Error ? err.message : String(err);
-  return /timeout|ECONNRESET|ECONNREFUSED|fetch failed|network|socket|502|503|504|429|rate.?limit|overloaded/i.test(
-    msg
-  );
+  return isRetryableLlmError(err);
 }
 
-/** 部分网关（如 DeepSeek V4）拒绝 system 角色，把系统提示并进第一条 user。 */
+/** 部分网关拒绝 system 角色，把系统提示并进第一条 user 的前缀（仍保持「稳定前缀 + 追加尾部」以便缓存）。 */
 function toCompatibleMessages(messages: ChatMessage[]): Array<{ role: "user" | "assistant"; content: string }> {
   const system = messages.filter((m) => m.role === "system").map((m) => m.content).join("\n\n");
   const rest = messages
@@ -122,24 +143,45 @@ async function callOnce(
   b: ResolvedBinding,
   purpose: string,
   opts: ChatOptions
-): Promise<{ text: string; prompt: number; completion: number; latencyMs: number }> {
-  const model = toLanguageModel(b);
+): Promise<{ text: string; prompt: number; completion: number; cached: number; latencyMs: number }> {
   const messages = toCompatibleMessages(opts.messages);
   const started = Date.now();
-  const result = await generateText({
-    model,
-    messages,
-    temperature: opts.temperature ?? b.temperature ?? 0.8,
-    maxOutputTokens: opts.maxTokens ?? 2048,
-    abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-  });
-  const usage = normalizeUsage(result.usage);
-  return {
-    text: result.text,
-    prompt: usage.prompt,
-    completion: usage.completion,
-    latencyMs: Date.now() - started,
+  const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
+
+  const invoke = async (extra?: Record<string, unknown>) => {
+    const result = await generateText({
+      model: toLanguageModel(b, extra),
+      messages,
+      temperature: opts.temperature ?? b.temperature ?? 0.8,
+      maxOutputTokens,
+      abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+    const usage = normalizeUsage(result.usage);
+    const text = (result.text ?? "").trim();
+    if (!text) {
+      console.warn(
+        `[llm] empty text purpose=${purpose} model=${b.modelId} completion=${usage.completion} maxOutput=${maxOutputTokens}`
+      );
+      throw emptyCompletionError(usage.completion);
+    }
+    return {
+      text,
+      prompt: usage.prompt,
+      completion: usage.completion,
+      cached: usage.cached,
+      latencyMs: Date.now() - started,
+    };
   };
+
+  try {
+    // 推理模型默认开思考会把输出额度吃光；多数网关会忽略未知字段。
+    return await invoke({ thinking: { type: "disabled" } });
+  } catch (err) {
+    if (isRetryableLlmError(err) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(err))) {
+      return await invoke();
+    }
+    throw err;
+  }
 }
 
 /** 非流式对话：重试 + fallback + 用量记账 */
@@ -176,6 +218,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
         };
       } catch (err) {
         lastErr = err;
+        console.warn(`[llm] call failed purpose=${opts.purpose} model=${b.modelId}:`, err instanceof Error ? err.message : err);
         if (!isRetryable(err)) break;
       }
     }
@@ -202,7 +245,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
 /** 流式对话：逐 token 产出文本；结束时记账。失败时抛出。 */
 export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   const b = await resolveBinding(opts.purpose);
-  const model = toLanguageModel(b);
+  const model = toLanguageModel(b, { thinking: { type: "disabled" } });
   const messages = toCompatibleMessages(opts.messages);
   const started = Date.now();
   try {
@@ -210,7 +253,7 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
       model,
       messages,
       temperature: opts.temperature ?? b.temperature ?? 0.8,
-      maxOutputTokens: opts.maxTokens ?? 2048,
+      maxOutputTokens: resolveMaxOutputTokens(b.maxTokens, opts.maxTokens),
       abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     for await (const chunk of result.textStream) {

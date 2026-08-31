@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
+import { MAX_BINDING_OUTPUT_TOKENS, MIN_BINDING_OUTPUT_TOKENS } from "@/core/llm/output-tokens";
 
 const upsertSchema = z.object({
   slot: z.enum(["dm", "culprit", "player", "generator", "tts"]),
   providerId: z.string().min(1),
   modelId: z.string().min(1),
   temperature: z.number().min(0).max(2).nullable().optional(),
+  maxTokens: z.number().int().min(MIN_BINDING_OUTPUT_TOKENS).max(MAX_BINDING_OUTPUT_TOKENS).nullable().optional(),
   fallbackSlot: z.enum(["dm", "culprit", "player", "generator", "tts"]).nullable().optional(),
 });
 
@@ -22,6 +24,7 @@ export async function GET(req: Request) {
       providerName: b.provider.name,
       modelId: b.modelId,
       temperature: b.temperature,
+      maxTokens: b.maxTokens,
       fallbackSlot: b.fallbackSlot,
       providerEnabled: b.provider.enabled,
     }))
@@ -46,12 +49,14 @@ export async function PUT(req: Request) {
       providerId: d.providerId,
       modelId: d.modelId,
       temperature: d.temperature ?? null,
+      maxTokens: d.maxTokens ?? null,
       fallbackSlot: d.fallbackSlot ?? null,
     },
     update: {
       providerId: d.providerId,
       modelId: d.modelId,
       ...(d.temperature !== undefined ? { temperature: d.temperature } : {}),
+      ...(d.maxTokens !== undefined ? { maxTokens: d.maxTokens } : {}),
       ...(d.fallbackSlot !== undefined ? { fallbackSlot: d.fallbackSlot } : {}),
     },
   });

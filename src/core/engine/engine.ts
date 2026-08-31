@@ -217,6 +217,11 @@ export class GameEngine {
       publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
       return;
     }
+    if (!text.trim()) {
+      await this.systemSay(`（AI 玩家「${this.speakerName(seatIndex)}」没有组织出有效发言，先跳过。）`);
+      publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
+      return;
+    }
     await this.typewriter(seatIndex, text);
     await this.recordEvent({
       type: "speech",

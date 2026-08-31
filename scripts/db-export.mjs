@@ -53,6 +53,7 @@ const snapshot = {
     providerId: b.providerId,
     modelId: b.modelId,
     temperature: b.temperature,
+    maxTokens: b.maxTokens,
     fallbackSlot: b.fallbackSlot,
   })),
 };

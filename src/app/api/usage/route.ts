@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const rows = await db.usageLog.groupBy({
     by: ["providerName", "modelId", "purpose", "ok"],
     where: { createdAt: { gte: since } },
-    _sum: { promptTokens: true, completionTokens: true, totalTokens: true },
+    _sum: { promptTokens: true, completionTokens: true, totalTokens: true, cachedTokens: true },
     _count: { _all: true },
   });
   const recentErrors = await db.usageLog.findMany({
@@ -27,6 +27,7 @@ export async function GET(req: Request) {
     calls: r._count._all,
     promptTokens: r._sum.promptTokens ?? 0,
     completionTokens: r._sum.completionTokens ?? 0,
+    cachedTokens: r._sum.cachedTokens ?? 0,
     totalTokens: r._sum.totalTokens ?? 0,
   }));
   return NextResponse.json({ since: since.toISOString(), summary, recentErrors });

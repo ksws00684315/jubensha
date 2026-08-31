@@ -55,6 +55,7 @@ model ModelBinding {
   providerId   String
   modelId      String // provider 侧的模型标识，如 deepseek-chat
   temperature  Float?
+  maxTokens    Int? // 单次最大输出 token（含思考）；空则用运行时默认 32768。不是上下文窗口。
   fallbackSlot String?
 
   provider AiProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
@@ -193,6 +194,7 @@ model UsageLog {
   gameId           String?
   promptTokens     Int      @default(0)
   completionTokens Int      @default(0)
+  cachedTokens     Int      @default(0) // 输入里命中前缀缓存的 token
   totalTokens      Int      @default(0)
   latencyMs        Int?
   ok               Boolean  @default(true)
