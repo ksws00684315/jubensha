@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { parseAnyScriptDoc } from "@/core/script/compat";
-import { publicScriptView } from "@/core/script/schema";
+import { ingestScriptDoc, parseScriptForRuntime } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
-import { validateScript } from "@/core/script/validate";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { isAdminRequest, requireAdmin } from "@/lib/admin";
 
@@ -15,7 +13,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
   const { id } = await ctx.params;
   const script = await getScript(id);
   if (!script) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  const parsed = parseOrRaw(script.content);
+  const doc = parseOrCanonical(script.content);
   const full = new URL(req.url).searchParams.get("full") === "1";
   if (full) {
     const denied = requireAdmin(req);
@@ -24,21 +22,22 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       id: script.id,
       source: script.source,
       updatedAt: script.updatedAt,
-      issues: parsed.version === 2 ? validateScriptV2(parsed.doc) : validateScript(parsed.doc),
-      doc: parsed.doc,
+      issues: validateScriptV2(doc),
+      doc,
     });
   }
+  const publicView = publicScriptViewV2(doc);
   return NextResponse.json({
     id: script.id,
     source: script.source,
     updatedAt: script.updatedAt,
-    public: parsed.version === 2 ? publicScriptViewV2(parsed.doc) : publicScriptView(parsed.doc),
-    structured: parsed.version === 2 ? publicScriptViewV2(parsed.doc) : null,
+    public: publicView,
+    structured: publicView,
     admin: isAdminRequest(req),
   });
 }
 
-/** 更新剧本（整体替换文档，需重新通过校验） */
+/** 更新剧本（整体替换文档，需重新通过校验）。入库一律存 V2。 */
 export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
@@ -46,27 +45,30 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "请求体不是合法 JSON" }, { status: 400 });
   const docInput = body.doc ?? body;
-  let parsed;
+  let ingested;
   try {
-    parsed = parseAnyScriptDoc(docInput);
+    ingested = ingestScriptDoc(docInput);
   } catch (err) {
     return NextResponse.json({ error: "剧本结构校验失败", issues: String(err).slice(0, 1000) }, { status: 400 });
   }
-  const issues = parsed.version === 2 ? validateScriptV2(parsed.doc) : validateScript(parsed.doc).map((issue) => ({ ...issue, path: "" }));
+  const issues = [
+    ...ingested.migrationWarnings.map((warning) => ({ level: "warning" as const, path: warning.path, message: warning.message })),
+    ...validateScriptV2(ingested.doc),
+  ];
   const errors = issues.filter((i) => i.level === "error");
   if (errors.length) return NextResponse.json({ error: "剧本逻辑校验失败", issues: errors }, { status: 400 });
 
   const script = await db.script.update({
     where: { id },
     data: {
-      title: parsed.doc.meta.title,
-      minPlayers: parsed.doc.meta.minPlayers,
-      maxPlayers: parsed.doc.meta.maxPlayers,
-      durationMin: parsed.doc.meta.durationMin,
-      difficulty: parsed.doc.meta.difficulty,
-      tags: parsed.doc.meta.tags,
-      intro: parsed.doc.meta.intro,
-      content: parsed.doc as unknown as object,
+      title: ingested.doc.meta.title,
+      minPlayers: ingested.doc.meta.minPlayers,
+      maxPlayers: ingested.doc.meta.maxPlayers,
+      durationMin: ingested.doc.meta.durationMin,
+      difficulty: ingested.doc.meta.difficulty,
+      tags: ingested.doc.meta.tags,
+      intro: ingested.doc.meta.intro,
+      content: ingested.doc as unknown as object,
     },
   });
   return NextResponse.json({ id: script.id });
@@ -87,7 +89,8 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   const { id } = await ctx.params;
   const script = await getScript(id);
   if (!script) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
-  return new NextResponse(JSON.stringify(script.content, null, 2), {
+  const doc = parseOrCanonical(script.content);
+  return new NextResponse(JSON.stringify(doc, null, 2), {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Content-Disposition": `attachment; filename="${encodeURIComponent(script.title)}.json"`,
@@ -95,24 +98,35 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   });
 }
 
-function parseOrRaw(doc: unknown) {
+function parseOrCanonical(doc: unknown) {
   try {
-    return parseAnyScriptDoc(doc);
+    return parseScriptForRuntime(doc);
   } catch {
-    // 旧数据容错：结构坏了也让详情页能打开（校验结果里会报 error）
     return {
-      version: 1 as const,
-      doc: {
-        version: 1,
-        meta: { title: "（结构损坏的剧本）", minPlayers: 0, maxPlayers: 0, durationMin: 0, difficulty: "新手", tags: [], intro: "" },
-        background: "",
-        characters: [],
-        locations: [],
-        clues: [],
-        truth: { culprit: "", method: "", fullTimeline: "", keyEvidence: [], reveal: "" },
-        flow: {},
-        ending: { winText: "" },
-      } as unknown as ReturnType<typeof import("@/core/script/schema").parseScriptDoc>,
+      version: 2 as const,
+      meta: { title: "（结构损坏的剧本）", minPlayers: 0, maxPlayers: 0, durationMin: 0, difficulty: "新手" as const, tags: [], intro: "结构损坏" },
+      background: [{ type: "paragraph" as const, text: "结构损坏" }],
+      characters: [],
+      locations: [],
+      clues: [],
+      truth: {
+        culpritId: "unknown",
+        motive: [],
+        method: { summary: [{ type: "paragraph" as const, text: "结构损坏" }], steps: [] },
+        timeline: [],
+        keyEvidenceIds: [],
+        evidenceChain: [],
+        redHerrings: [],
+        supplemental: [],
+        reveal: [{ type: "paragraph" as const, text: "结构损坏" }],
+      },
+      flow: { selfIntroRounds: 1, searchRounds: 2, discussionRounds: 2, allowPrivateChat: false, privateChatMessageLimit: 3 },
+      ending: {
+        outcomes: [
+          { result: "culprit_caught" as const, title: "损坏", content: [{ type: "paragraph" as const, text: "结构损坏" }] },
+          { result: "culprit_escaped" as const, title: "损坏", content: [{ type: "paragraph" as const, text: "结构损坏" }] },
+        ],
+      },
     };
   }
 }

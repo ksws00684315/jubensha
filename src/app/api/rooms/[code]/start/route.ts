@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { parseScriptForRuntime } from "@/core/script/compat";
-import { isScriptPlayable } from "@/core/script/validate";
+import { isScriptPlayable } from "@/core/script/v2/validate";
 import { GameEngine } from "@/core/engine/engine";
 import { hasDuplicateCharacterIds } from "@/lib/seats";
 

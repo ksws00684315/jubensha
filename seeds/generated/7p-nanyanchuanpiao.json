@@ -1,34 +1,336 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "南洋船票·海澄号",
     "minPlayers": 7,
     "maxPlayers": 7,
     "durationMin": 200,
     "difficulty": "进阶",
-    "tags": ["民国", "邮轮", "本格", "伪造自杀"],
+    "tags": [
+      "民国",
+      "邮轮",
+      "本格",
+      "伪造自杀"
+    ],
     "intro": "民国二十二年十月，海澄号邮轮行在沪—叻埠航线的第七夜。船长晚宴正酣时，船东陆允中死在头等舱里：伏案、遗书、倒翻的牛奶杯——像一场体面的自尽。可海上无官府，七个人被留在那艘白船里。遗书是真是假？毒从何来？等船到叻埠，一切就都晚了。"
   },
-  "background": "海澄号，白船，三千吨，挂的是华商懋记轮船公司的旗。船东陆允中此行亲自押阵，因为公司'周转不灵'的风声已经传遍了上海滩，股东们逼他到南洋催账回血。第七夜，船上照例开船长晚宴：香槟、乐队、头等舱的灯亮得像不夜城。22:15，值夜侍应给船东送安神药水，发现他伏在书案上，唇甲发绀，案头一页遗书压在茶碟下，牛奶杯翻倒，残奶散着苦杏仁味。船长封锁了船电与舱门：到叻埠还有四天水路，海上没有巡捕，只有七个人——大副、船医、事务长、侄子、歌女、记者、秘书。十五年前，懋记还叫广济商号的时候，沉过一条船。那件事，今晚跟着尸体一起浮上来了。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "海澄号，白船，三千吨，挂的是华商懋记轮船公司的旗。船东陆允中此行亲自押阵，因为公司'周转不灵'的风声已经传遍了上海滩，股东们逼他到南洋催账回血。第七夜，船上照例开船长晚宴：香槟、乐队、头等舱的灯亮得像不夜城。22:15，值夜侍应给船东送安神药水，发现他伏在书案上，唇甲发绀，案头一页遗书压在茶碟下，牛奶杯翻倒，残奶散着苦杏仁味。船长封锁了船电与舱门：到叻埠还有四天水路，海上没有巡捕，只有七个人——大副、船医、事务长、侄子、歌女、记者、秘书。十五年前，懋记还叫广济商号的时候，沉过一条船。那件事，今晚跟着尸体一起浮上来了。"
+    }
+  ],
   "characters": [
     {
       "id": "xiewangbei",
       "name": "谢望北",
       "gender": "男",
       "age": 39,
-      "publicBio": "海澄号事务长，管全船膳食酒水与物资领用，签字、誊单、点验，一双手比账房还细。船长晚宴由他总管，案发时段他离席'查夜班'。",
-      "card": {
-        "backstory": "你叫谢望北，海澄号事务长。十五年你只做一件事：留在这条公司的船上，等陆允中死。戊午年十月，广济轮在南洋外海'失事'——真相是陆允中为吞一批赈粮、再骗一笔保险，把你父亲谢阿大（水手长）发现货舱亏空的口供摁了下去，又借土匪的刀断了自己的尾。你父亲'落海失踪'，你那年二十四岁，改名换姓，从配膳间的杂役做到事务长。三个月前，一个散伙的老舵工把当年航海日志的誊本交给你：白纸黑字，'夜闻货舱私卸，水手长阿大声言报官'。你练了三个月他的签名。今晚 21:45，你亲手把那杯牛奶端进了头等舱。",
-        "secret": "你就是凶手。你父亲谢阿大当年因撞破陆允中盗卖赈粮、骗保沉船而被灭口；你隐姓埋名十五年上船复仇。今晚 21:45 你借送夜奶将电镀间领用的氰化钾掺入牛奶，21:47 船东毒发身亡；遗书是你仿笔所写，用的轮机部公文笺。",
-        "goal": "把'自尽'坐实，让船靠岸、案结卷、你全身而退。你要用'公司亏空'的传闻垫住遗书，主动协理丧务、显得最称职。若被问 21:25 之后的行踪，咬定'21:35 起在三等舱查夜，签到本可证'。你要把怀疑往两处引：陆小侯（借据与继承）、沈砚洲（股权转让与匿名电报）。你最大的软肋是练字纸——纸篓必须抢先倒掉。",
-        "isCulprit": true,
-        "timeline": "20:30 晚宴开席，你以事务长身份巡桌敬酒。20:50-21:25 你在宴会厅与配膳房之间来回，21:25 签批'加香槟十瓶'。21:30 你离席'查夜班'，吩咐值夜侍应阿贵'头等舱夜奶今夜不必送，我有数'，支他去三等舱点验铺位。21:35-21:40 你在配膳房温牛奶、下氰化钾（上月你以电镀保养名义领了三磅，实耗一磅）。21:45 你亲自把牛奶送进船东舱。21:47 船东饮奶毒发，怀表磕停；你退出舱门，未闩未锁。21:50-22:05 你在三等舱签到本补签'查夜'。22:10 回宴会厅露面。22:15 阿贵送药水发现尸体，你第一个赶到'主持秩序'。",
-        "knowledge": [
-          "21:42 顾曼按铃时船东已死——她'无人应答'的证词与怀表停摆时刻互为表里，这正是你设计的死亡时刻上界，对你有利。",
-          "电镀间领用登记上你的花押被你描过一次——轮机长识字不多，你赌他记不清三磅还是一磅。",
-          "你的纸篓里还有练字的废稿——'陆允中'三个字写了几百遍。天亮前必须倒掉，或者烧掉。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "海澄号事务长，管全船膳食酒水与物资领用，签字、誊单、点验，一双手比账房还细。船长晚宴由他总管，案发时段他离席'查夜班'。"
+          }
         ],
-        "persona": "周全是你的铠甲：礼数滴水不漏，开口'先生们'闭口'按船规'。惯用小本记事，答话先翻本子。心虚时把袖口捋得极整齐。只在独处擦银托盘时，眼神会停在那枚火漆封记上。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫谢望北，海澄号事务长。十五年你只做一件事：留在这条公司的船上，等陆允中死。戊午年十月，广济轮在南洋外海'失事'——真相是陆允中为吞一批赈粮、再骗一笔保险，把你父亲谢阿大（水手长）发现货舱亏空的口供摁了下去，又借土匪的刀断了自己的尾。你父亲'落海失踪'，你那年二十四岁，改名换姓，从配膳间的杂役做到事务长。三个月前，一个散伙的老舵工把当年航海日志的誊本交给你：白纸黑字，'夜闻货舱私卸，水手长阿大声言报官'。你练了三个月他的签名。今晚 21:45，你亲手把那杯牛奶端进了头等舱。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_xiewangbei_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。你父亲谢阿大当年因撞破陆允中盗卖赈粮、骗保沉船而被灭口；你隐姓埋名十五年上船复仇。今晚 21:45 你借送夜奶将电镀间领用的氰化钾掺入牛奶，21:47 船东毒发身亡；遗书是你仿笔所写，用的轮机部公文笺。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_xiewangbei_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'自尽'坐实，让船靠岸、案结卷、你全身而退。你要用'公司亏空'的传闻垫住遗书，主动协理丧务、显得最称职。若被问 21:25 之后的行踪，咬定'21:35 起在三等舱查夜，签到本可证'。你要把怀疑往两处引：陆小侯（借据与继承）、沈砚洲（股权转让与匿名电报）。你最大的软肋是练字纸——纸篓必须抢先倒掉。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_xiewangbei_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴开席，你以事务长身份巡桌敬酒。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_2",
+            "time": {
+              "display": "20:50–21:25",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:25"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅与配膳房之间来回，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_3",
+            "time": {
+              "display": "21:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:25"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "签批'加香槟十瓶'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_4",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你离席'查夜班'，吩咐值夜侍应阿贵'头等舱夜奶今夜不必送，我有数'，支他去三等舱点验铺位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_5",
+            "time": {
+              "display": "21:35–21:40",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在配膳房温牛奶、下氰化钾（上月你以电镀保养名义领了三磅，实耗一磅）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_6",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你亲自把牛奶送进船东舱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_7",
+            "time": {
+              "display": "21:47",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:47"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "船东饮奶毒发，怀表磕停；你退出舱门，未闩未锁。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_8",
+            "time": {
+              "display": "21:50–22:05",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:05"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在三等舱签到本补签'查夜'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_9",
+            "time": {
+              "display": "22:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回宴会厅露面。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiewangbei_event_10",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 10",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "阿贵送药水发现尸体，你第一个赶到'主持秩序'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_xiewangbei_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:42 顾曼按铃时船东已死——她'无人应答'的证词与怀表停摆时刻互为表里，这正是你设计的死亡时刻上界，对你有利。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xiewangbei_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "电镀间领用登记上你的花押被你描过一次——轮机长识字不多，你赌他记不清三磅还是一磅。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xiewangbei_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的纸篓里还有练字的废稿——'陆允中'三个字写了几百遍。天亮前必须倒掉，或者烧掉。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "周全是你的铠甲：礼数滴水不漏，开口'先生们'闭口'按船规'。惯用小本记事，答话先翻本子。心虚时把袖口捋得极整齐。只在独处擦银托盘时，眼神会停在那枚火漆封记上。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +338,247 @@
       "name": "沈砚洲",
       "gender": "男",
       "age": 36,
-      "publicBio": "海澄号大副，航海学校科班出身，一手好字，兼管海图与航海日志。晚宴后他在海图室复核航线，20:50 曾在头等舱走廊停留过。",
-      "card": {
-        "backstory": "你叫沈砚洲，大副。你父亲是广济轮的老舵工，戊午年那场'失事'他活了下来，从此夜夜梦到水手长阿大被浪卷走时的喊声。老舵工临终留给你一份抄自当年航海日志的誊本——那页写着船东见死不救的底细。你不是来寻仇的，你是来换钱的：船东要贱卖公司，你握着这份'广济旧档'，想换一成五的船股。今晚 20:50 你把《股权转让委托书》塞进他舱门缝里，他批了两个字回来：'做梦。'你没杀他。你只是已经想好了下一步：把誊本卖给一个记者，让报纸替你开价。",
-        "secret": "你私藏广济轮旧航海日志誊本，用来要挟船东让股；今晚 20:50 塞进船东舱的委托书被批'做梦'。那封把记者程一苇约到后甲板的匿名电报，也是你以'广济旧人'的名义发的——你想借报馆的嘴抬价。",
-        "goal": "守住'我只是谈生意'的立场。匿名电报若被追出来，就咬定'我只是想卖旧档换股，没想过要谁的命'。你 21:00-21:30 在海图室独自复核航线，无人在旁——这是你最说不清的窗口，要靠航海日志的复核记录撑着。你要抢在别人之前把'广济旧案'摆上台面：旧案越响，你自己越像'另有目的'的人，反而越不像毒杀亲船东的凶手。",
-        "isCulprit": false,
-        "timeline": "19:30 晚宴前你在驾驶台交班。20:30 宴会开席，你在厅中应酬至 20:45。20:50 你到头等舱走廊，把《股权转让委托书》塞进船东舱门缝（被侍应撞见背影）。21:00-21:30 你在海图室独自复核航线（无证人）。21:30-23:00 你上驾驶台与二副轮值夜航，有人证。22:15 被急报惊动，赶到头等舱时尸体已经凉了半分。",
-        "knowledge": [
-          "20:50 你塞委托书时，舱内有业务转椅拖动的响动，你以为是船东在会客——现在想来，那是他伏案的动静。",
-          "你的匿名电报 21:10 发出，用的'船员舱代付'——电报房的留底会指向你，你要抢先解释成'约记者看货'。",
-          "航海日志誊本缝在你房中海图筒的夹层里——那是父亲的命，也是你的价码。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "海澄号大副，航海学校科班出身，一手好字，兼管海图与航海日志。晚宴后他在海图室复核航线，20:50 曾在头等舱走廊停留过。"
+          }
         ],
-        "persona": "军人式的干净利落，答话先报时刻与方位。对船东无敬意，对航海的事却半点不糊弄。被逼急了冷笑：'我要杀他，还需要挑在他签死我股份的当口？'提到'广济'二字，喉结会动。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫沈砚洲，大副。你父亲是广济轮的老舵工，戊午年那场'失事'他活了下来，从此夜夜梦到水手长阿大被浪卷走时的喊声。老舵工临终留给你一份抄自当年航海日志的誊本——那页写着船东见死不救的底细。你不是来寻仇的，你是来换钱的：船东要贱卖公司，你握着这份'广济旧档'，想换一成五的船股。今晚 20:50 你把《股权转让委托书》塞进他舱门缝里，他批了两个字回来：'做梦。'你没杀他。你只是已经想好了下一步：把誊本卖给一个记者，让报纸替你开价。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_shenyanzhou_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你私藏广济轮旧航海日志誊本，用来要挟船东让股；今晚 20:50 塞进船东舱的委托书被批'做梦'。那封把记者程一苇约到后甲板的匿名电报，也是你以'广济旧人'的名义发的——你想借报馆的嘴抬价。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_shenyanzhou_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "守住'我只是谈生意'的立场。匿名电报若被追出来，就咬定'我只是想卖旧档换股，没想过要谁的命'。你 21:00-21:30 在海图室独自复核航线，无人在旁——这是你最说不清的窗口，要靠航海日志的复核记录撑着。你要抢在别人之前把'广济旧案'摆上台面：旧案越响，你自己越像'另有目的'的人，反而越不像毒杀亲船东的凶手。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_shenyanzhou_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴前你在驾驶台交班。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_2",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴会开席，你在厅中应酬至"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_3",
+            "time": {
+              "display": "20:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:45"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_4",
+            "time": {
+              "display": "20:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你到头等舱走廊，把《股权转让委托书》塞进船东舱门缝（被侍应撞见背影）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_5",
+            "time": {
+              "display": "21:00–21:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在海图室独自复核航线（无证人）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_6",
+            "time": {
+              "display": "21:30–23:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你上驾驶台与二副轮值夜航，有人证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenyanzhou_event_7",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被急报惊动，赶到头等舱时尸体已经凉了半分。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_shenyanzhou_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:50 你塞委托书时，舱内有业务转椅拖动的响动，你以为是船东在会客——现在想来，那是他伏案的动静。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_shenyanzhou_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的匿名电报 21:10 发出，用的'船员舱代付'——电报房的留底会指向你，你要抢先解释成'约记者看货'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_shenyanzhou_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "航海日志誊本缝在你房中海图筒的夹层里——那是父亲的命，也是你的价码。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "军人式的干净利落，答话先报时刻与方位。对船东无敬意，对航海的事却半点不糊弄。被逼急了冷笑：'我要杀他，还需要挑在他签死我股份的当口？'提到'广济'二字，喉结会动。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +586,207 @@
       "name": "韩汀",
       "gender": "男",
       "age": 45,
-      "publicBio": "随船医生，医术过得去，药账却总有些含糊。21:00 他给船东送过安神药水，是死者生前最后一位到访的'公务'访客。",
-      "card": {
-        "backstory": "你叫韩汀，随船医生，船东的失眠是你揽下的差事：一瓶'安神药水'，每晚一匙。没人知道你往里掺了蒸馏水——原方贵，减了料，半年你省下四十元，寄回家给老娘抓药。你还有另一桩不能说的：药柜暗格里那半支吗啡，是你自己的——海上的夜太长，你戒过三次。今晚 21:00 你送药水进舱，船东独酌白兰地，还嫌你'药越吃越不顶事'。22:15 你被叫去验看，你一眼就看出这不是安眠药能办到的事：苦杏仁味。你头一个念头竟是药账——死人账上一查，你那四十元的窟窿就藏不住了。",
-        "secret": "你克扣船东安神药水的药料、吃差价半年四十元；药柜暗格私藏自用的吗啡半支与一张当票。这两件事若被翻出，你'随船医生'的饭碗就砸了。",
-        "goal": "先自保再查案。你要抢先把'死者体内另有毒物、与我那瓶药水无关'讲清楚——可药账一翻就露，你得决定什么时候主动认下'减料'来换'不是凶手'。你的专业判断是全案钥匙：初验时你就知道死因不在安眠药，这份证词值千金，也烫手。",
-        "isCulprit": false,
-        "timeline": "20:30-21:00 你在宴会厅应酬。21:00 你配好'安神药水'送到船东舱，见船东独酌白兰地、面红气粗，还嘱咐他'少喝两口'——这是船东最后活着的公务访客。21:00-22:00 你在医务室为三等舱一个发热的孩童诊治，侍应有证。22:15 被叫去初验，你验出残奶的苦杏仁味，手抖得险些掉听诊器。23:00 起你守在头等舱外，谁也不许进。",
-        "knowledge": [
-          "21:00 你见船东时他活得好好的——红光满面，酒气冲天，还骂你药不顶事。死因绝不在你的药水里，这话你必须第一个说。",
-          "初验你就断定：苦杏仁气味、唇甲发绀、指尖无针孔——不是安眠药过量，是氢氰酸一类，来源指向工业用药。船上用氰化物的地方只有电镀间。",
-          "你的药账和暗格经不起细查——搜证时你要想办法站在药柜前面。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "随船医生，医术过得去，药账却总有些含糊。21:00 他给船东送过安神药水，是死者生前最后一位到访的'公务'访客。"
+          }
         ],
-        "persona": "懒散里藏精明，开口'依我看'闭口'听诊器不骗人'。提到药账先咳嗽。验尸时判若两人：手稳、句句斩钉截铁。独处时会摸药柜暗格的锁。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫韩汀，随船医生，船东的失眠是你揽下的差事：一瓶'安神药水'，每晚一匙。没人知道你往里掺了蒸馏水——原方贵，减了料，半年你省下四十元，寄回家给老娘抓药。你还有另一桩不能说的：药柜暗格里那半支吗啡，是你自己的——海上的夜太长，你戒过三次。今晚 21:00 你送药水进舱，船东独酌白兰地，还嫌你'药越吃越不顶事'。22:15 你被叫去验看，你一眼就看出这不是安眠药能办到的事：苦杏仁味。你头一个念头竟是药账——死人账上一查，你那四十元的窟窿就藏不住了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_hanting_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你克扣船东安神药水的药料、吃差价半年四十元；药柜暗格私藏自用的吗啡半支与一张当票。这两件事若被翻出，你'随船医生'的饭碗就砸了。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_hanting_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "先自保再查案。你要抢先把'死者体内另有毒物、与我那瓶药水无关'讲清楚——可药账一翻就露，你得决定什么时候主动认下'减料'来换'不是凶手'。你的专业判断是全案钥匙：初验时你就知道死因不在安眠药，这份证词值千金，也烫手。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_hanting_event_1",
+            "time": {
+              "display": "20:30–21:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅应酬。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hanting_event_2",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你配好'安神药水'送到船东舱，见船东独酌白兰地、面红气粗，还嘱咐他'少喝两口'——这是船东最后活着的公务访客。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hanting_event_3",
+            "time": {
+              "display": "21:00–22:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在医务室为三等舱一个发热的孩童诊治，侍应有证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hanting_event_4",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被叫去初验，你验出残奶的苦杏仁味，手抖得险些掉听诊器。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hanting_event_5",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你守在头等舱外，谁也不许进。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_hanting_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00 你见船东时他活得好好的——红光满面，酒气冲天，还骂你药不顶事。死因绝不在你的药水里，这话你必须第一个说。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hanting_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "初验你就断定：苦杏仁气味、唇甲发绀、指尖无针孔——不是安眠药过量，是氢氰酸一类，来源指向工业用药。船上用氰化物的地方只有电镀间。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hanting_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的药账和暗格经不起细查——搜证时你要想办法站在药柜前面。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "懒散里藏精明，开口'依我看'闭口'听诊器不骗人'。提到药账先咳嗽。验尸时判若两人：手稳、句句斩钉截铁。独处时会摸药柜暗格的锁。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +794,211 @@
       "name": "陆小侯",
       "gender": "男",
       "age": 27,
-      "publicBio": "船东独侄，挂名公司'帮办'，实情是上海赌窟的常客。21:05 他进过头等舱借钱，红着脸出来——被侍应看在眼里。",
-      "card": {
-        "backstory": "你叫陆小侯，懋记公司的挂名帮办，真名号是赌桌上的'小侯爷'。你把名下船股押给了印子钱，借据上写着'腊月前不清，股权过割'。伯父此行逼你随船，明摆着要收你的股抵债。今晚你豁出脸去求他：21:05 你进舱，他头也不抬：'股是我的，命是我的，你的债自己个儿跳海去。'你红着脸出来，在走廊撞见侍应，恨不得钻进海里。你没杀他——他死了，股是你继承的，这道理全船都懂，所以全船都在看你。可他们也该看见：他要是活着，你腊月就得跳海。谁受益谁嫌疑？不，谁不受益谁清白——你偏偏两头都占。",
-        "secret": "你押了船股的借据就揣在贴身口袋，腊月到期；你是船东死后股权的第一顺位继承人，21:05 你进舱借钱被骂出来，是死前最后一个单独见他的人之一。",
-        "goal": "活下去，也洗清楚。借据不能露，可露了反而能自证'我求活不求生'——什么时候亮这张牌，要看火候。你要把 21:05-21:15 在舱内、之后在船员娱乐室打牌至 22:00 的行踪钉死，三个牌友都是你的人证。把水往'继承阴谋'上引的人，你一个都不认。",
-        "isCulprit": false,
-        "timeline": "20:30-21:00 你在宴会厅喝酒壮胆。21:05-21:15 你进头等舱借钱，被伯父斥退——侍应阿贵在走廊看见你红着眼出来。21:20-22:00 你在船员娱乐室与水手长等人打牌，三人对证。22:15 闻报赶来，在舱门口哭得比谁都响。23:00 起你守在灵前——没人赶你走。",
-        "knowledge": [
-          "21:05 你进舱时，伯父案头摆着一杯白兰地、一份刚拆的文件，他的怀表搁在案角——你赌钱人眼尖，还看了眼表：刚过一刻。",
-          "你出来时，走廊尽头配膳房的方向有牛奶的甜腥气——那会儿夜奶还没送进去。",
-          "打牌的三位水手都欠你人情，可他们也会说：你 21:20 上牌桌时，手抖得压不住牌。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "船东独侄，挂名公司'帮办'，实情是上海赌窟的常客。21:05 他进过头等舱借钱，红着脸出来——被侍应看在眼里。"
+          }
         ],
-        "persona": "浮浪里藏着精光，开口'诸位'闭口'见笑'。牌品好、酒品差。被指'谋产'时会掀桌子：'我倒是想！谁替我把腊月的债跳过去？'提到借据下意识摸胸口。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆小侯，懋记公司的挂名帮办，真名号是赌桌上的'小侯爷'。你把名下船股押给了印子钱，借据上写着'腊月前不清，股权过割'。伯父此行逼你随船，明摆着要收你的股抵债。今晚你豁出脸去求他：21:05 你进舱，他头也不抬：'股是我的，命是我的，你的债自己个儿跳海去。'你红着脸出来，在走廊撞见侍应，恨不得钻进海里。你没杀他——他死了，股是你继承的，这道理全船都懂，所以全船都在看你。可他们也该看见：他要是活着，你腊月就得跳海。谁受益谁嫌疑？不，谁不受益谁清白——你偏偏两头都占。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luxiaohou_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你押了船股的借据就揣在贴身口袋，腊月到期；你是船东死后股权的第一顺位继承人，21:05 你进舱借钱被骂出来，是死前最后一个单独见他的人之一。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luxiaohou_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "活下去，也洗清楚。借据不能露，可露了反而能自证'我求活不求生'——什么时候亮这张牌，要看火候。你要把 21:05-21:15 在舱内、之后在船员娱乐室打牌至 22:00 的行踪钉死，三个牌友都是你的人证。把水往'继承阴谋'上引的人，你一个都不认。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luxiaohou_event_1",
+            "time": {
+              "display": "20:30–21:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅喝酒壮胆。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaohou_event_2",
+            "time": {
+              "display": "21:05–21:15",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你进头等舱借钱，被伯父斥退——侍应阿贵在走廊看见你红着眼出来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaohou_event_3",
+            "time": {
+              "display": "21:20–22:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在船员娱乐室与水手长等人打牌，三人对证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaohou_event_4",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻报赶来，在舱门口哭得比谁都响。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaohou_event_5",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你守在灵前——没人赶你走。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luxiaohou_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:05 你进舱时，伯父案头摆着一杯白兰地、一份刚拆的文件，他的怀表搁在案角——你赌钱人眼尖，还看了眼表：刚过一刻。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiaohou_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你出来时，走廊尽头配膳房的方向有牛奶的甜腥气——那会儿夜奶还没送进去。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiaohou_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "打牌的三位水手都欠你人情，可他们也会说：你 21:20 上牌桌时，手抖得压不住牌。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "浮浪里藏着精光，开口'诸位'闭口'见笑'。牌品好、酒品差。被指'谋产'时会掀桌子：'我倒是想！谁替我把腊月的债跳过去？'提到借据下意识摸胸口。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,19 +1006,227 @@
       "name": "白玫",
       "gender": "女",
       "age": 24,
-      "publicBio": "头等舱驻唱歌女，一夜六支歌，晚宴的灵魂。船东生前向她求过婚，被她回绝——合同被撕了一角，今晚她照唱不误。",
-      "card": {
-        "backstory": "你叫白玫，唱的是粤讴和时代小曲，头等舱的客人点她一支歌要三块大洋。船东陆允中上船第三天向你求婚——六十岁的船东，红木匣子装着钻戒。你回绝了，他笑着说'合同在我手里，你唱到叻埠，就别想再上岸卖唱'。昨夜他当着侍应撕了你合同的角：'撕一角，留七角，够你想到新加坡。'你恨透了他。今晚你照唱六支歌，21:20 下台补妆五分钟——全船人都看着你的嘴和腰，没人看得见你妆匣里那两根金条：那是你三年攒下的赎身钱，还有一张写好的'自由身'字据。",
-        "secret": "船东以合同要挟逼婚未遂；你妆匣夹层藏着三年攒的赎身金条与一份拟好的'自由身'字据。21:20-21:25 你离台补妆，是全船唯一的'五分钟空白'——虽然那五分钟根本不够走一个来回。",
-        "goal": "唱完最后一支歌，把'五分钟'钉死在化妆室里——梳头阿姨可以作证。你要主动认下'逼婚、撕合同'的恩怨，再把它变成'最没动机'：船东活着，你被合同拴着；他'自尽'了，合同作废，你自由了——这话毒，但你自己不说，别人也会说。",
-        "isCulprit": false,
-        "timeline": "20:30 晚宴开席你登台，唱至 21:20。21:20-21:25 你在化妆室补妆，梳头阿姨全程在旁。21:25-22:10 你续唱四支歌，全场注目。22:15 闻报你下台，守在头等舱门外没进去。23:00 你被请来认一认船东桌上的首饰匣——里面有一只没送出去的红木匣。",
-        "knowledge": [
-          "21:20 你下台时瞥见事务长往配膳房方向去，背影匆匆——那会儿他该在宴会厅敬酒才对。",
-          "梳头阿姨能作证你补妆的五分钟没出化妆室半步——这是你全部的命。",
-          "船东桌上的红木匣你认得：求婚那只。他死前把它摆在了案头最显眼处——像是要送谁，又像是在提醒谁。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "头等舱驻唱歌女，一夜六支歌，晚宴的灵魂。船东生前向她求过婚，被她回绝——合同被撕了一角，今晚她照唱不误。"
+          }
         ],
-        "persona": "台上眼波流转，台下字斟句酌，惯把狠话包在软腔里：'先生们的心思，和点歌单一样，白玫唱不唱，都得给钱。'提到'合同'会碰一下妆匣。补妆时手极稳，稳得不像刚死过人的船。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫白玫，唱的是粤讴和时代小曲，头等舱的客人点她一支歌要三块大洋。船东陆允中上船第三天向你求婚——六十岁的船东，红木匣子装着钻戒。你回绝了，他笑着说'合同在我手里，你唱到叻埠，就别想再上岸卖唱'。昨夜他当着侍应撕了你合同的角：'撕一角，留七角，够你想到新加坡。'你恨透了他。今晚你照唱六支歌，21:20 下台补妆五分钟——全船人都看着你的嘴和腰，没人看得见你妆匣里那两根金条：那是你三年攒下的赎身钱，还有一张写好的'自由身'字据。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_baimei_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "船东以合同要挟逼婚未遂；你妆匣夹层藏着三年攒的赎身金条与一份拟好的'自由身'字据。21:20-21:25 你离台补妆，是全船唯一的'五分钟空白'——虽然那五分钟根本不够走一个来回。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_baimei_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "唱完最后一支歌，把'五分钟'钉死在化妆室里——梳头阿姨可以作证。你要主动认下'逼婚、撕合同'的恩怨，再把它变成'最没动机'：船东活着，你被合同拴着；他'自尽'了，合同作废，你自由了——这话毒，但你自己不说，别人也会说。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_baimei_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴开席你登台，唱至"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimei_event_2",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimei_event_3",
+            "time": {
+              "display": "21:20–21:25",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:25"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在化妆室补妆，梳头阿姨全程在旁。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimei_event_4",
+            "time": {
+              "display": "21:25–22:10",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:25"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你续唱四支歌，全场注目。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimei_event_5",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻报你下台，守在头等舱门外没进去。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimei_event_6",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你被请来认一认船东桌上的首饰匣——里面有一只没送出去的红木匣。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_baimei_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20 你下台时瞥见事务长往配膳房方向去，背影匆匆——那会儿他该在宴会厅敬酒才对。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimei_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "梳头阿姨能作证你补妆的五分钟没出化妆室半步——这是你全部的命。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimei_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "船东桌上的红木匣你认得：求婚那只。他死前把它摆在了案头最显眼处——像是要送谁，又像是在提醒谁。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "台上眼波流转，台下字斟句酌，惯把狠话包在软腔里：'先生们的心思，和点歌单一样，白玫唱不唱，都得给钱。'提到'合同'会碰一下妆匣。补妆时手极稳，稳得不像刚死过人的船。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -116,19 +1234,227 @@
       "name": "程一苇",
       "gender": "男",
       "age": 30,
-      "publicBio": "上海《沪声报》的调查记者，这趟船票是船东'送'的——明摆着请君入瓮。他在查一桩十五年前的沉船骗保案。",
-      "card": {
-        "backstory": "你叫程一苇，《沪声报》跑社会新闻的记者。半年前你收到一叠匿名剪报：戊午年，广济轮，赈粮失踪，保险三十万，水手长'落海'。你顺着查到懋记——公司改了名，船东还是那个人。你登了海澄号，船东'好心'送你头等舱船票，宴席上句句带刺：'程先生笔杆子快，海上浪大，别闪了腰。'今晚 21:10 你收到船上的匿名电报：'广济旧案有凭，亥正后甲板舵楼一见，广济旧人。'你 21:30 起在电报房拍长电给报馆发稿，22:00 回房。23:00 你依约去后甲板——舵楼空无一人，只有海图筒的印子还是新的。有人拿你当枪，有人拿你当靶。",
-        "secret": "匿名电报约你在案发时段去后甲板，你赴约扑空——这让你 21:30-22:00 的行踪有电报员作证，却也让你成了'约人密谈的可疑客'。你手里的旧案剪报，若被认出是'船上人'整理过的，那人就现形了。",
-        "goal": "把旧案挖出来，也把自己摘出去。电报房的发报留底可查——你要抢在别人之前追发报人。你的原则：记者不下场杀人，但记者可以掀桌子。必要时公开'我收到电报'，看谁的脸色变。",
-        "isCulprit": false,
-        "timeline": "20:30-21:10 你在宴会厅角落记录席间谈资。21:10 电报房转来匿名电报。21:30-22:00 你在电报房拍长电发稿（电报员作证）。22:00 回房整理剪报。22:15 船上惊乱时你在房中——有侍应送热水可证。23:00 你赴约后甲板，扑空，捡到海图筒压出的新印。",
-        "knowledge": [
-          "匿名电报的措辞'亥正'用了老式更点——年轻人不这么写电报，发报人上了年纪，或者故意装老派。",
-          "电报房留底上有发报签单，付费走的是'船员舱'——头等舱客人发电报都是记账到房号。",
-          "你的剪报里夹着一张广济轮旧照：舷梯前合影，最边上那个端盘子的年轻人，眉眼像极了今晚满场跑的事务长。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "上海《沪声报》的调查记者，这趟船票是船东'送'的——明摆着请君入瓮。他在查一桩十五年前的沉船骗保案。"
+          }
         ],
-        "persona": "话锋快、笔记快，开口先亮身份：'《沪声报》程一苇，采访而非冒犯。'对权势者惯用捧一句踩一句。独处时反复读那封电报，指节敲着'广济旧人'四个字。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫程一苇，《沪声报》跑社会新闻的记者。半年前你收到一叠匿名剪报：戊午年，广济轮，赈粮失踪，保险三十万，水手长'落海'。你顺着查到懋记——公司改了名，船东还是那个人。你登了海澄号，船东'好心'送你头等舱船票，宴席上句句带刺：'程先生笔杆子快，海上浪大，别闪了腰。'今晚 21:10 你收到船上的匿名电报：'广济旧案有凭，亥正后甲板舵楼一见，广济旧人。'你 21:30 起在电报房拍长电给报馆发稿，22:00 回房。23:00 你依约去后甲板——舵楼空无一人，只有海图筒的印子还是新的。有人拿你当枪，有人拿你当靶。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_chengyiwei_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "匿名电报约你在案发时段去后甲板，你赴约扑空——这让你 21:30-22:00 的行踪有电报员作证，却也让你成了'约人密谈的可疑客'。你手里的旧案剪报，若被认出是'船上人'整理过的，那人就现形了。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_chengyiwei_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把旧案挖出来，也把自己摘出去。电报房的发报留底可查——你要抢在别人之前追发报人。你的原则：记者不下场杀人，但记者可以掀桌子。必要时公开'我收到电报'，看谁的脸色变。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_chengyiwei_event_1",
+            "time": {
+              "display": "20:30–21:10",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅角落记录席间谈资。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyiwei_event_2",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "电报房转来匿名电报。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyiwei_event_3",
+            "time": {
+              "display": "21:30–22:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在电报房拍长电发稿（电报员作证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyiwei_event_4",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回房整理剪报。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyiwei_event_5",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "船上惊乱时你在房中——有侍应送热水可证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyiwei_event_6",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你赴约后甲板，扑空，捡到海图筒压出的新印。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_chengyiwei_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "匿名电报的措辞'亥正'用了老式更点——年轻人不这么写电报，发报人上了年纪，或者故意装老派。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_chengyiwei_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "电报房留底上有发报签单，付费走的是'船员舱'——头等舱客人发电报都是记账到房号。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_chengyiwei_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的剪报里夹着一张广济轮旧照：舷梯前合影，最边上那个端盘子的年轻人，眉眼像极了今晚满场跑的事务长。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "话锋快、笔记快，开口先亮身份：'《沪声报》程一苇，采访而非冒犯。'对权势者惯用捧一句踩一句。独处时反复读那封电报，指节敲着'广济旧人'四个字。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -136,94 +1462,903 @@
       "name": "顾曼",
       "gender": "女",
       "age": 33,
-      "publicBio": "船东的私人秘书，随船管文件与应酬，晚宴上最得体的一杯酒。21:42 她去头等舱送合约文本，按铃无人应——她是最接近发现尸体的人。",
-      "card": {
-        "backstory": "你叫顾曼，懋记的私人秘书，十年账目在你指下过成流水。没人知道你抽屉里有一张四万元的借条——那是你替陆小侯还印子钱时，从他手里按下来的：你与这位小侯爷有段说不出口的情分，钱是你从公司'公积金'里腾挪的。船东前日起疑，说要调你的账。今晚 21:42 你去头等舱送明早的合约文本，按铃，无人应；你隔着门喊了一声'船东，文件放案上了'，无人应。你以为他睡了——放下文件就走了。22:15 你听到惊叫才明白：你隔着那扇门，和一具尸体说了话。还有：你按铃的时候，门内明明有极轻的一声响，像怀表磕在桌沿。",
-        "secret": "你挪用公司公积金替陆小侯还赌债，借条在手；船东前日起疑要调你的账。21:42 到 21:50 你在船东舱外按铃喊话时听到'怀表磕桌'的轻响——那正是死亡时刻（21:47 前后），你的证词是全案时间锁，也可能把嫌疑引到'你为何在门外逗留'。",
-        "goal": "护住借条与情分，把 21:42 的见闻说清说满：无人应答、轻响、你未推门。你的证词能把死亡时刻钉死在 21:42-22:15 之间，这是你最硬的牌。但调账的风声让你不得不防：账册若被搜，你和小侯一起完。",
-        "isCulprit": false,
-        "timeline": "20:30-21:40 你在宴会厅陪董事们应酬。21:42-21:50 你到头等舱送合约文本，按铃两声、隔门喊话，均无人应；你听见案头一声轻响，放下文件走了——未推门。21:50-22:10 你回宴会厅继续应酬。22:15 闻报赶到，你认得案上那份你送的文本。23:00 起你替船长整理舱内文书——顺手把抽屉里你的借条压进了袖本。",
-        "knowledge": [
-          "21:42 到 21:50 你两次按铃、隔门喊话，其中一声之后舱内有轻响——像怀表磕在桌沿。那声响在'无人应答'之后，不合常理：死人不会碰怀表，活人为何不应门？",
-          "合约文本你放的是案头右手——22:15 你再进去时，它被挪到了茶碟下面压着遗书。你没动过它。",
-          "你的抽屉里压着四万元的借条，'公积金'三个字是你亲笔——账册被调的那天，就是你和小侯的末日。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "船东的私人秘书，随船管文件与应酬，晚宴上最得体的一杯酒。21:42 她去头等舱送合约文本，按铃无人应——她是最接近发现尸体的人。"
+          }
         ],
-        "persona": "得体到无懈可击，开口'按船东的意思'闭口'按公司规程'。写字比说话多。被问及 21:42 的细节，会先补口红再答——口红是她的镇纸。提到陆小侯，眼风扫得比谁都冷。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫顾曼，懋记的私人秘书，十年账目在你指下过成流水。没人知道你抽屉里有一张四万元的借条——那是你替陆小侯还印子钱时，从他手里按下来的：你与这位小侯爷有段说不出口的情分，钱是你从公司'公积金'里腾挪的。船东前日起疑，说要调你的账。今晚 21:42 你去头等舱送明早的合约文本，按铃，无人应；你隔着门喊了一声'船东，文件放案上了'，无人应。你以为他睡了——放下文件就走了。22:15 你听到惊叫才明白：你隔着那扇门，和一具尸体说了话。还有：你按铃的时候，门内明明有极轻的一声响，像怀表磕在桌沿。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_guman_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你挪用公司公积金替陆小侯还赌债，借条在手；船东前日起疑要调你的账。21:42 到 21:50 你在船东舱外按铃喊话时听到'怀表磕桌'的轻响——那正是死亡时刻（21:47 前后），你的证词是全案时间锁，也可能把嫌疑引到'你为何在门外逗留'。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_guman_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "护住借条与情分，把 21:42 的见闻说清说满：无人应答、轻响、你未推门。你的证词能把死亡时刻钉死在 21:42-22:15 之间，这是你最硬的牌。但调账的风声让你不得不防：账册若被搜，你和小侯一起完。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_guman_event_1",
+            "time": {
+              "display": "20:30–21:40",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅陪董事们应酬。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guman_event_2",
+            "time": {
+              "display": "21:42–21:50",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你到头等舱送合约文本，按铃两声、隔门喊话，均无人应；你听见案头一声轻响，放下文件走了——未推门。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guman_event_3",
+            "time": {
+              "display": "21:50–22:10",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回宴会厅继续应酬。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guman_event_4",
+            "time": {
+              "display": "22:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻报赶到，你认得案上那份你送的文本。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guman_event_5",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你替船长整理舱内文书——顺手把抽屉里你的借条压进了袖本。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_guman_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:42 到 21:50 你两次按铃、隔门喊话，其中一声之后舱内有轻响——像怀表磕在桌沿。那声响在'无人应答'之后，不合常理：死人不会碰怀表，活人为何不应门？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guman_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "合约文本你放的是案头右手——22:15 你再进去时，它被挪到了茶碟下面压着遗书。你没动过它。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guman_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的抽屉里压着四万元的借条，'公积金'三个字是你亲笔——账册被调的那天，就是你和小侯的末日。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "得体到无懈可击，开口'按船东的意思'闭口'按公司规程'。写字比说话多。被问及 21:42 的细节，会先补口红再答——口红是她的镇纸。提到陆小侯，眼风扫得比谁都冷。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["船东头等舱", "宴会厅与配膳房", "轮机部电镀间", "三等舱甲板", "电报房", "事务长室"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "船东头等舱",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "宴会厅与配膳房",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "轮机部电镀间",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "三等舱甲板",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "电报房",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "事务长室",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "c_yanshi",
-      "location": "船东头等舱",
+      "locationId": "location_1",
       "name": "随船医生的初验单",
-      "content": "船东伏于书案，唇甲发绀，右手无针孔无药粉。桌面牛奶杯倾倒，残奶散着苦杏仁气味，杯底沉着一层未化尽的白色粉渣；白兰地杯完好，酒未动。怀表摔停在案角，指针停在 21:47。舱门未闩、未锁——按船东习惯，入夜必反锁两道。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "船东伏于书案，唇甲发绀，右手无针孔无药粉。桌面牛奶杯倾倒，残奶散着苦杏仁气味，杯底沉着一层未化尽的白色粉渣；白兰地杯完好，酒未动。怀表摔停在案角，指针停在 21:47。舱门未闩、未锁——按船东习惯，入夜必反锁两道。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_yishu",
-      "location": "船东头等舱",
+      "locationId": "location_1",
       "name": "案头遗书",
-      "content": "遗书一页：'鄙人经营航业二十年，今公司周转不灵，愧对股东诸君，唯有一死以谢……'末署'陆允中 绝笔'。疑点有三：所用是轮机部公文笺，并非船东私用的蟠龙水印信笺；'允中'之'中'字末竖直下无钩，而船东历年签单批文'中'字一律带钩；遗书没有日期。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "遗书一页：'鄙人经营航业二十年，今公司周转不灵，愧对股东诸君，唯有一死以谢……'末署'陆允中 绝笔'。疑点有三：所用是轮机部公文笺，并非船东私用的蟠龙水印信笺；'允中'之'中'字末竖直下无钩，而船东历年签单批文'中'字一律带钩；遗书没有日期。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_naibei",
-      "location": "船东头等舱",
+      "locationId": "location_1",
       "name": "牛奶杯与银托盘",
-      "content": "头等舱专用的银托盘与青花牛奶杯。按船规，夜奶由值夜侍应送达、托盘当面收回；今夜托盘却留在舱内，杯是倾倒的。托盘把手上有一枚事务长专用的火漆封记——那是他点验配膳用品时亲手打的封。杯底残渣试以银簪，簪身泛黑。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "头等舱专用的银托盘与青花牛奶杯。按船规，夜奶由值夜侍应送达、托盘当面收回；今夜托盘却留在舱内，杯是倾倒的。托盘把手上有一枚事务长专用的火漆封记——那是他点验配膳用品时亲手打的封。杯底残渣试以银簪，簪身泛黑。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_guquan",
-      "location": "船东头等舱",
+      "locationId": "location_1",
       "name": "门缝里的股权转让书",
-      "content": "书案上有一份从门缝塞入的《股权转让委托书》：大副沈砚洲愿以所持船股一成五，换船东手内'广济旧档'的封存处置权，落款时间 20:50。页脚有船东的朱批，只有两个字：'做梦。'墨迹未干时杯奶已翻。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书案上有一份从门缝塞入的《股权转让委托书》：大副沈砚洲愿以所持船股一成五，换船东手内'广济旧档'的封存处置权，落款时间 20:50。页脚有船东的朱批，只有两个字：'做梦。'墨迹未干时杯奶已翻。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_lingyong",
-      "location": "轮机部电镀间",
+      "locationId": "location_3",
       "name": "电镀间领用登记",
-      "content": "上月氰化钾（电镀保养用）领用登记：批领三磅，而电镀池月耗至多一磅；经手花押的押脚是个'北'字——事务长谢望北签字惯把末笔甩成小旗。保管柜钥匙共两把：轮机长一把，事务长一把。轮机长识字不多，账目向来'凭事务长的本子'。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "上月氰化钾（电镀保养用）领用登记：批领三磅，而电镀池月耗至多一磅；经手花押的押脚是个'北'字——事务长谢望北签字惯把末笔甩成小旗。保管柜钥匙共两把：轮机长一把，事务长一把。轮机长识字不多，账目向来'凭事务长的本子'。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_qiandao",
-      "location": "三等舱甲板",
+      "locationId": "location_4",
       "name": "查舱签到本",
-      "content": "谢望北名下'21:35 入舱查夜，22:05 签出'。墨色前淡后浓，'入'字与'出'字笔锋不同，像一口气补签的。而宴会厅酒水账显示他 21:25 还在厅里签批'加香槟十瓶'——从 21:25 到 21:35，从宴会厅到三等舱隔着两层甲板，再算上配膳房那一趟，一刻钟里要走三处。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "谢望北名下'21:35 入舱查夜，22:05 签出'。墨色前淡后浓，'入'字与'出'字笔锋不同，像一口气补签的。而宴会厅酒水账显示他 21:25 还在厅里签批'加香槟十瓶'——从 21:25 到 21:35，从宴会厅到三等舱隔着两层甲板，再算上配膳房那一趟，一刻钟里要走三处。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_jiushui",
-      "location": "宴会厅与配膳房",
+      "locationId": "location_2",
       "name": "酒水账与侍应口录",
-      "content": "酒水账 21:25 有谢望北签批'加香槟十瓶'，笔迹如常。侍应阿贵的口录：'21:25 至 21:30，事务长先生在配膳房门口吩咐——头等舱的夜奶今夜不必送，他有数。另：21:05 小侯爷出舱时红着眼，走廊尽头有牛奶的甜腥气，那会儿夜奶还没送。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "酒水账 21:25 有谢望北签批'加香槟十瓶'，笔迹如常。侍应阿贵的口录：'21:25 至 21:30，事务长先生在配膳房门口吩咐——头等舱的夜奶今夜不必送，他有数。另：21:05 小侯爷出舱时红着眼，走廊尽头有牛奶的甜腥气，那会儿夜奶还没送。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_dianbao",
-      "location": "电报房",
+      "locationId": "location_5",
       "name": "匿名电报底稿",
-      "content": "电报房留底：21:10 发往上海报馆，收报人程一苇，文曰'广济旧案有凭，亥正后甲板舵楼一见，广济旧人'。付费签单走'船员舱'代付，签单笔迹与大副沈砚洲航海日志上的批注笔势相似。电报员补了一句：'这位客人拍长电拍了半个钟头，手指头都熏黄了。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "电报房留底：21:10 发往上海报馆，收报人程一苇，文曰'广济旧案有凭，亥正后甲板舵楼一见，广济旧人'。付费签单走'船员舱'代付，签单笔迹与大副沈砚洲航海日志上的批注笔势相似。电报员补了一句：'这位客人拍长电拍了半个钟头，手指头都熏黄了。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_lianzi",
-      "location": "事务长室",
+      "locationId": "location_6",
       "name": "舱单废稿与练字纸",
-      "content": "事务长室纸篓未倒。废舱单背面写满反复练写的'陆允中'三字，'中'字一律末竖无钩——与案头遗书同病。废稿里还夹着半页没写完的启事：'先父谢阿大，广济轮水手长，戊午年十月……'后头是一片涂黑的墨团。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "事务长室纸篓未倒。废舱单背面写满反复练写的'陆允中'三字，'中'字一律末竖无钩——与案头遗书同病。废稿里还夹着半页没写完的启事：'先父谢阿大，广济轮水手长，戊午年十月……'后头是一片涂黑的墨团。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "xiewangbei",
-    "method": "谢望北为十五年前'广济轮沉船灭口案'复仇：其父谢阿大作为水手长撞破船东陆允中盗卖赈粮、骗保沉船，被灭口'落海'。他隐姓埋名十五年做到事务长，取得物资领用与配膳之权：上月以电镀保养名义多领氰化钾两磅，21:30 借'查夜班'支开值夜侍应，21:45 亲自把掺毒牛奶送进头等舱——船东认得他，绝不疑心。21:47 船东毒发身亡，他退出时故意不闩门，再补签三等舱'查夜'制造不在场，回厅后以遗书坐实'亏空自尽'。为何只有他：氰化钾钥匙在他手、送奶身份只有他有、仿写船东笔迹十五年少有人及、'自尽'的解释权由管文书的事务长一手把持。",
-    "fullTimeline": "20:30 船长晚宴开席，头等舱宾客齐聚宴会厅；谢望北巡桌敬酒。20:50 沈砚洲把股权转让书塞进船东舱门缝（侍应撞见背影），21:00 韩汀送安神药水入舱，船东独酌白兰地如常——最后的公务访客。21:05-21:15 陆小侯进舱借钱被斥退，侍应阿贵看见他红眼出来。21:10 匿名电报（沈砚洲所发）送达程一苇。21:20-21:25 白玫下台补妆，梳头阿姨作证。21:25 谢望北签批香槟。21:30 他离席'查夜班'，吩咐阿贵'夜奶不必送'，支其去三等舱。21:35-21:40 他在配膳房温奶下毒（氰化钾出自电镀间，多领两磅）。21:45 亲自送奶入舱。21:47 船东饮奶毒发，怀表磕停；谢望北退出，门未闩。21:42-21:50 顾曼送合约文本，按铃喊话无人应，听见案头轻响（怀表磕桌），放下文件离开——她成了死亡时刻的界碑。21:50-22:05 谢望北在三等舱签到本补签。21:30-22:00 程一苇在电报房拍长电。22:10 谢望北回厅露面。22:15 阿贵送药水，发现尸体与遗书。破案链：初验单（苦杏仁味+怀表 21:47+门未闩）→ 遗书三疑（公文笺、缺钩、无日期）→ 领用登记（多领氰化钾）→ 签到本与酒水账（补签破绽、支开侍应）→ 练字纸（仿迹与身世）。红鲱鱼：陆小侯的借据与继承、沈砚洲的要挟与匿名电报、白玫的逼婚与五分钟空白、韩汀的药账与吗啡、程一苇的赴约扑空、顾曼的公积金挪款与 21:42 逗留——人人有秘密，无人是凶手。",
-    "keyEvidence": ["遗书", "氰化钾", "领用登记", "怀表", "公文笺"],
-    "reveal": "真相：凶手是事务长谢望北。十五年前，广济轮的水手长谢阿大撞破了船东陆允中盗卖赈粮、骗保沉船的勾当，'落海失踪'；十五年后，他的儿子端着一杯温好的牛奶，敲响了仇人的舱门。他算得极精：氰化钾有领用登记遮着，侍应被他一句话支去三等舱，遗书仿了三个月的笔迹，签到本补上不在场，连门都替'自尽'虚掩好了。他只输在两处小处：仿迹仿得出字形，仿不出'中'字那一钩；练字纸揉进了纸篓，却忘了事务长室的纸篓从来不倒。那页没写完的启事上，'先父谢阿大'五个字，是十五年来他第一次写下的真名。"
+    "culpritId": "xiewangbei",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "谢望北为十五年前'广济轮沉船灭口案'复仇：其父谢阿大作为水手长撞破船东陆允中盗卖赈粮、骗保沉船，被灭口'落海'。他隐姓埋名十五年做到事务长，取得物资领用与配膳之权：上月以电镀保养名义多领氰化钾两磅，21:30 借'查夜班'支开值夜侍应，21:45 亲自把掺毒牛奶送进头等舱——船东认得他，绝不疑心。21:47 船东毒发身亡，他退出时故意不闩门，再补签三等舱'查夜'制造不在场，回厅后以遗书坐实'亏空自尽'。为何只有他：氰化钾钥匙在他手、送奶身份只有他有、仿写船东笔迹十五年少有人及、'自尽'的解释权由管文书的事务长一手把持。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "谢望北为十五年前'广济轮沉船灭口案'复仇：其父谢阿大作为水手长撞破船东陆允中盗卖赈粮、骗保沉船，被灭口'落海'。他隐姓埋名十五年做到事务长，取得物资领用与配膳之权：上月以电镀保养名义多领氰化钾两磅，21:30 借'查夜班'支开值夜侍应，21:45 亲自把掺毒牛奶送进头等舱——船东认得他，绝不疑心。21:47 船东毒发身亡，他退出时故意不闩门，再补签三等舱'查夜'制造不在场，回厅后以遗书坐实'亏空自尽'。为何只有他：氰化钾钥匙在他手、送奶身份只有他有、仿写船东笔迹十五年少有人及、'自尽'的解释权由管文书的事务长一手把持。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "船长晚宴开席，头等舱宾客齐聚宴会厅；谢望北巡桌敬酒。"
+          }
+        ],
+        "characterIds": [
+          "xiewangbei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiewangbei"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "20:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:50"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈砚洲把股权转让书塞进船东舱门缝（侍应撞见背影），"
+          }
+        ],
+        "characterIds": [
+          "shenyanzhou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenyanzhou"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "韩汀送安神药水入舱，船东独酌白兰地如常——最后的公务访客。"
+          }
+        ],
+        "characterIds": [
+          "hanting"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hanting"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "21:05–21:15",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆小侯进舱借钱被斥退，侍应阿贵看见他红眼出来。"
+          }
+        ],
+        "characterIds": [
+          "luxiaohou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiaohou"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "21:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:10"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "匿名电报（沈砚洲所发）送达程一苇。"
+          }
+        ],
+        "characterIds": [
+          "shenyanzhou",
+          "chengyiwei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenyanzhou",
+          "chengyiwei"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:20–21:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白玫下台补妆，梳头阿姨作证。"
+          }
+        ],
+        "characterIds": [
+          "baimei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baimei"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谢望北签批香槟。"
+          }
+        ],
+        "characterIds": [
+          "xiewangbei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiewangbei"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "他离席'查夜班'，吩咐阿贵'夜奶不必送'，支其去三等舱。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:35–21:40",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:35"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "他在配膳房温奶下毒（氰化钾出自电镀间，多领两磅）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:45"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "亲自送奶入舱。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:47",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:47"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "船东饮奶毒发，怀表磕停；谢望北退出，门未闩。"
+          }
+        ],
+        "characterIds": [
+          "xiewangbei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiewangbei"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:42–21:50",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:42"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "顾曼送合约文本，按铃喊话无人应，听见案头轻响（怀表磕桌），放下文件离开——她成了死亡时刻的界碑。"
+          }
+        ],
+        "characterIds": [
+          "guman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guman"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "21:50–22:05",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:05"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谢望北在三等舱签到本补签。"
+          }
+        ],
+        "characterIds": [
+          "xiewangbei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiewangbei"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:30–22:00",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "程一苇在电报房拍长电。"
+          }
+        ],
+        "characterIds": [
+          "chengyiwei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyiwei"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "22:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:10"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谢望北回厅露面。"
+          }
+        ],
+        "characterIds": [
+          "xiewangbei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiewangbei"
+        ]
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "22:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:15"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "阿贵送药水，发现尸体与遗书。破案链：初验单（苦杏仁味+怀表"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "21:47",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:47"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "+门未闩）→ 遗书三疑（公文笺、缺钩、无日期）→ 领用登记（多领氰化钾）→ 签到本与酒水账（补签破绽、支开侍应）→ 练字纸（仿迹与身世）。红鲱鱼：陆小侯的借据与继承、沈砚洲的要挟与匿名电报、白玫的逼婚与五分钟空白、韩汀的药账与吗啡、程一苇的赴约扑空、顾曼的公积金挪款与"
+          }
+        ],
+        "characterIds": [
+          "shenyanzhou",
+          "hanting",
+          "luxiaohou",
+          "baimei",
+          "chengyiwei",
+          "guman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenyanzhou",
+          "hanting",
+          "luxiaohou",
+          "baimei",
+          "chengyiwei",
+          "guman"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:42",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:42"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "逗留——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      }
+    ],
+    "keyEvidenceIds": [
+      "c_yishu",
+      "c_lingyong"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "c_yishu"
+        ],
+        "conclusion": "遗书"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "c_lingyong"
+        ],
+        "conclusion": "领用登记"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是事务长谢望北。十五年前，广济轮的水手长谢阿大撞破了船东陆允中盗卖赈粮、骗保沉船的勾当，'落海失踪'；十五年后，他的儿子端着一杯温好的牛奶，敲响了仇人的舱门。他算得极精：氰化钾有领用登记遮着，侍应被他一句话支去三等舱，遗书仿了三个月的笔迹，签到本补上不在场，连门都替'自尽'虚掩好了。他只输在两处小处：仿迹仿得出字形，仿不出'中'字那一钩；练字纸揉进了纸篓，却忘了事务长室的纸篓从来不倒。那页没写完的启事上，'先父谢阿大'五个字，是十五年来他第一次写下的真名。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -233,6 +2368,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

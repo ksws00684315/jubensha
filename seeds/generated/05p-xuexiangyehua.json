@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "雪乡夜话",
     "minPlayers": 5,
@@ -15,26 +15,237 @@
     ],
     "intro": "大雪封山第三天，雪乡老白家民宿只有一炉火、一桌人和一场没讲完的旧事。老板白守业昨晚多喝了几盅，当众讲了段二十年前'雪夜捡了个丫头'的往事，又把五个人挨个数了一遍。今早 6:40，帮工在柴房雪堆旁发现了他——俯卧着，衣扣整齐，面容安静，像醉后冻毙。可兽医出身的崔九安只看了一眼就皱了眉：冻死的人，不这么'干净'。这栋民宿昨晚谁都没出大门，真相就埋在雪里。"
   },
-  "background": "雪乡，大雪封山第三天，进山车道全埋，手机只剩村部方向一格信号。老白家民宿昨晚聚了六个人：老板白守业，57 岁，嗓门大酒量深，三十年前从跑山汉子手里接下这间店；帮工郭翠，跟他讨了三年工钱；养女白桦，在店里长大，正赶上城里媒人催婚；借宿的南方摄影师简一舟，进山拍雪景；跑山司机马长贵，车被雪困在院外车道；还有个常客，村兽医崔九安，为后院那排老界树跟白守业吵了二十年。昨晚 19:00 围炉夜话，白守业半斤烧刀子下肚，当众讲起'二十年前雪夜捡了个丫头'的旧事，讲完又说：'明儿，都了了。'今早 6:40，郭翠喂鸡时发现柴房门虚掩——白守业俯卧在柴垛旁的雪地里，身上覆着薄雪，面容安静。他有醉后去柴房睡的历史，村里人都知道。可崔九安验看了遗体，一口气说出四个'不对'：冻死的人会挣扎，会脱衣，睫毛会挂霜——他没有；他后脑发际下，还有一块没散开的淤血。封山至少还有两天，昨晚这扇大门一次都没开过。五个人，一炉火，一段被雪盖住的旧事。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "雪乡，大雪封山第三天，进山车道全埋，手机只剩村部方向一格信号。老白家民宿昨晚聚了六个人：老板白守业，57 岁，嗓门大酒量深，三十年前从跑山汉子手里接下这间店；帮工郭翠，跟他讨了三年工钱；养女白桦，在店里长大，正赶上城里媒人催婚；借宿的南方摄影师简一舟，进山拍雪景；跑山司机马长贵，车被雪困在院外车道；还有个常客，村兽医崔九安，为后院那排老界树跟白守业吵了二十年。昨晚 19:00 围炉夜话，白守业半斤烧刀子下肚，当众讲起'二十年前雪夜捡了个丫头'的旧事，讲完又说：'明儿，都了了。'今早 6:40，郭翠喂鸡时发现柴房门虚掩——白守业俯卧在柴垛旁的雪地里，身上覆着薄雪，面容安静。他有醉后去柴房睡的历史，村里人都知道。可崔九安验看了遗体，一口气说出四个'不对'：冻死的人会挣扎，会脱衣，睫毛会挂霜——他没有；他后脑发际下，还有一块没散开的淤血。封山至少还有两天，昨晚这扇大门一次都没开过。五个人，一炉火，一段被雪盖住的旧事。"
+    }
+  ],
   "characters": [
     {
       "id": "baihua",
       "name": "白桦",
       "gender": "女",
       "age": 26,
-      "publicBio": "白守业的养女，在店里长大，管账订房一把好手。昨晚夜话后回房最早，今早却是最沉默的人。",
-      "card": {
-        "backstory": "你叫白桦，二十年前一个雪夜，白守业把你抱回来养大。20:00 你偷看到寻亲会的快件：DNA 比对成功，周姓夫妇明日到店。21:20 他叫你去柴房'只跟你一个人唠'：当年是从人贩子手里半买半救。你甩手要走，他拽住你不放——你发力一甩，他仰面摔进柴垛，后脑磕在垫木上没了动静。你探不出鼻息，没敢喊人。",
-        "secret": "你不是预谋。21:35 的推搡是意外，但你探鼻息没探准就认定他死了，你本可以喊人、可以施救，你没有——你把他拖进柴房伪装成醉归冻毙，用雪扬盖拖痕，回屋还给每个人倒了姜汤。你 22:40 之后才真正杀死他的，是你的沉默。",
-        "goal": "你最大的软肋是'最后见他的人'：你 21:20 进柴房、21:40 前后独自出来，没有任何人证。策略：主动坦白'爷俩唠了身世，我不愿说细节，他要面子'，把 21:35 的摔倒说成'他自己醉得站不稳，我扶了一把没扶住'——半真半假，但要咬死'他当时还活着，我看着他回柴房才走的'。绝不能让人翻你围巾。寻亲快件的事若被爆，就认下并哭：'我不是不想认，我怕认了就什么都不是了。'",
-        "isCulprit": true,
-        "timeline": "20:00 在里屋偷看到寻亲快件。21:20 应召进柴房。21:35 争执推搡，白守业仰面摔在柴垛垫木上昏迷。21:40-21:55 拖尸入柴房柴垛旁，扬雪盖拖痕，回柴房插好门闩。22:00 回屋分姜汤（对外称'爸在里屋睡下了'）。22:30 回房。整夜未再出门。6:40 郭翠发现遗体后你最先赶到，你扑在雪里的哭是真的。",
-        "knowledge": [
-          "21:35 那一声闷响之后你探过鼻息——指尖太冷，你自己也在抖，你没探准。你到今天都不知道他当时可能还活着。",
-          "拖尸时你的围巾扫过柴垛，木屑扎进了毛线里；院里的拖痕你只盖了一半，后半夜雪帮了你——可崔九安那种眼睛，雪盖不住。",
-          "白守业醉后睡柴房的旧事是村里人尽皆知的——你选这个伪装，是因为它'合理'；可你忘了，他今晚喝的半斤酒，一半在后半夜才上来。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "白守业的养女，在店里长大，管账订房一把好手。昨晚夜话后回房最早，今早却是最沉默的人。"
+          }
         ],
-        "persona": "温顺能干，笑起来先低头。说谎时手指绞围巾，一被追问细节就转移话题问别人'你昨晚几点睡的'。崩溃点在'爹'字——无论谁说'你爹'，她眼泪都绷不住。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫白桦，二十年前一个雪夜，白守业把你抱回来养大。20:00 你偷看到寻亲会的快件：DNA 比对成功，周姓夫妇明日到店。21:20 他叫你去柴房'只跟你一个人唠'：当年是从人贩子手里半买半救。你甩手要走，他拽住你不放——你发力一甩，他仰面摔进柴垛，后脑磕在垫木上没了动静。你探不出鼻息，没敢喊人。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_baihua_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你不是预谋。21:35 的推搡是意外，但你探鼻息没探准就认定他死了，你本可以喊人、可以施救，你没有——你把他拖进柴房伪装成醉归冻毙，用雪扬盖拖痕，回屋还给每个人倒了姜汤。你 22:40 之后才真正杀死他的，是你的沉默。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_baihua_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你最大的软肋是'最后见他的人'：你 21:20 进柴房、21:40 前后独自出来，没有任何人证。策略：主动坦白'爷俩唠了身世，我不愿说细节，他要面子'，把 21:35 的摔倒说成'他自己醉得站不稳，我扶了一把没扶住'——半真半假，但要咬死'他当时还活着，我看着他回柴房才走的'。绝不能让人翻你围巾。寻亲快件的事若被爆，就认下并哭：'我不是不想认，我怕认了就什么都不是了。'"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_baihua_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在里屋偷看到寻亲快件。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baihua_event_2",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "应召进柴房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baihua_event_3",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "争执推搡，白守业仰面摔在柴垛垫木上昏迷。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baihua_event_4",
+            "time": {
+              "display": "21:40–21:55",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:55"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拖尸入柴房柴垛旁，扬雪盖拖痕，回柴房插好门闩。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baihua_event_5",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回屋分姜汤（对外称'爸在里屋睡下了'）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baihua_event_6",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回房。整夜未再出门。6:40 郭翠发现遗体后你最先赶到，你扑在雪里的哭是真的。"
+              }
+            ],
+            "characterIds": [
+              "guocui"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_baihua_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:35 那一声闷响之后你探过鼻息——指尖太冷，你自己也在抖，你没探准。你到今天都不知道他当时可能还活着。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baihua_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拖尸时你的围巾扫过柴垛，木屑扎进了毛线里；院里的拖痕你只盖了一半，后半夜雪帮了你——可崔九安那种眼睛，雪盖不住。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baihua_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白守业醉后睡柴房的旧事是村里人尽皆知的——你选这个伪装，是因为它'合理'；可你忘了，他今晚喝的半斤酒，一半在后半夜才上来。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "温顺能干，笑起来先低头。说谎时手指绞围巾，一被追问细节就转移话题问别人'你昨晚几点睡的'。崩溃点在'爹'字——无论谁说'你爹'，她眼泪都绷不住。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -42,19 +253,159 @@
       "name": "崔九安",
       "gender": "男",
       "age": 55,
-      "publicBio": "村兽医，二十年老常客，每年来雪乡给牲畜看诊顺带住两晚。与白守业因后院界树结怨多年。第一个验看遗体的人。",
-      "card": {
-        "backstory": "你叫崔九安，村兽医。白守业后院的老界树压着你家药材地二十年，前天他砍了两棵，你上门被骂了回来。昨晚 21:00 你又去摔了一回门，全院听见你喊'这事没完'；21:30 你回屋早睡——你耳背，夜里什么都没听见。今早你蹲在遗体边只看一眼就皱眉：冻死的人有冻死的死相，而他有四个'不对'。",
-        "secret": "你与死者有二十年界树积怨，昨晚 21:00 你摔门叫阵'这事没完'，全院听见——你是案发前最后一个跟他红过脸的外人。你还有件私事：砍树前你在界树桩里埋过一截地界铁桩，'证据'在你手里，你怕验尸验出你也怕翻树桩翻出你。",
-        "goal": "你是全场唯一能给出专业验看细节的人，四个'不对'（无反常脱衣、睫毛无霜、后脑淤血、覆雪厚度与死亡时间矛盾）是你的立身之本。策略：先亮验看细节立住'意外不成立'，再主动交代 21:00 摔门与界树斧口（藏不住），用'我耳背早睡'撑时间线。把众人往'院子里的雪'引——地上的事，比人嘴诚实。",
-        "isCulprit": false,
-        "timeline": "20:00 与白守业在火炉边又呛两句。21:00 上门摔门叫阵'这事没完'，被众人听见。21:30 回屋早睡（耳背，夜无察觉）。6:40 闻喊声起身，第一时间验看遗体，当场说出四个'不对'并要求保护现场。",
-        "knowledge": [
-          "验看细节：衣扣整齐无'反常脱衣'、睫毛耳廓无霜花（冻毙者呼吸凝霜）、后脑发际下一处皮下淤血未散、覆雪约指厚——与 22:00 前后倒卧吻合，可他'里屋睡下'的说法撑不到 6:40。",
-          "你收过冻僵的牲口也见过醉汉冻毙：冻死的人死前躁动，雪地会乱成一片——柴房外的雪面，太平整了。",
-          "前天他砍界树时你在墙外听斧声数过：两棵树，十一斧。斧口是新的，斧子还在他家柴房门口立着。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "村兽医，二十年老常客，每年来雪乡给牲畜看诊顺带住两晚。与白守业因后院界树结怨多年。第一个验看遗体的人。"
+          }
         ],
-        "persona": "耿直暴躁，说话带兽医行话：'这死相不对，牲口都骗不了我。'对'树'和'地'寸土必争，对'人'却软：'我跟他吵了二十年，吵的是树，不是命。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫崔九安，村兽医。白守业后院的老界树压着你家药材地二十年，前天他砍了两棵，你上门被骂了回来。昨晚 21:00 你又去摔了一回门，全院听见你喊'这事没完'；21:30 你回屋早睡——你耳背，夜里什么都没听见。今早你蹲在遗体边只看一眼就皱眉：冻死的人有冻死的死相，而他有四个'不对'。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cuijiuan_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与死者有二十年界树积怨，昨晚 21:00 你摔门叫阵'这事没完'，全院听见——你是案发前最后一个跟他红过脸的外人。你还有件私事：砍树前你在界树桩里埋过一截地界铁桩，'证据'在你手里，你怕验尸验出你也怕翻树桩翻出你。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cuijiuan_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是全场唯一能给出专业验看细节的人，四个'不对'（无反常脱衣、睫毛无霜、后脑淤血、覆雪厚度与死亡时间矛盾）是你的立身之本。策略：先亮验看细节立住'意外不成立'，再主动交代 21:00 摔门与界树斧口（藏不住），用'我耳背早睡'撑时间线。把众人往'院子里的雪'引——地上的事，比人嘴诚实。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cuijiuan_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "与白守业在火炉边又呛两句。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cuijiuan_event_2",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "上门摔门叫阵'这事没完'，被众人听见。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cuijiuan_event_3",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回屋早睡（耳背，夜无察觉）。6:40 闻喊声起身，第一时间验看遗体，当场说出四个'不对'并要求保护现场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cuijiuan_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "验看细节：衣扣整齐无'反常脱衣'、睫毛耳廓无霜花（冻毙者呼吸凝霜）、后脑发际下一处皮下淤血未散、覆雪约指厚——与 22:00 前后倒卧吻合，可他'里屋睡下'的说法撑不到 6:40。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cuijiuan_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你收过冻僵的牲口也见过醉汉冻毙：冻死的人死前躁动，雪地会乱成一片——柴房外的雪面，太平整了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cuijiuan_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "前天他砍界树时你在墙外听斧声数过：两棵树，十一斧。斧口是新的，斧子还在他家柴房门口立着。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "耿直暴躁，说话带兽医行话：'这死相不对，牲口都骗不了我。'对'树'和'地'寸土必争，对'人'却软：'我跟他吵了二十年，吵的是树，不是命。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -62,19 +413,183 @@
       "name": "简一舟",
       "gender": "男",
       "age": 32,
-      "publicBio": "南方来的摄影师，进山拍'封山中的雪乡'专题。昨晚在后院架了一整晚三脚架拍星空。相机被白守业没收过。",
-      "card": {
-        "backstory": "你叫简一舟，南方来的摄影师，进山拍雪乡。20:55 你偷拍醉后骂人的白守业，相机被他夺走收进里屋。21:10-22:10 你在后院架三脚架拍星野，长曝光连拍。你不知道自己拍到了什么：21:50 那张照片里，雪面上有两道拖出的光影和一束手电光。今早你翻到手抖：你是偷拍的人，也是唯一拍到那一幕的人。",
-        "secret": "你 20:55 偷拍被夺相机，与死者结了怨；你 21:10-22:10 独自在后院，无人证；你的长曝光照片拍到了 21:50 前后雪面上的拖拽光影与手电光束——你是唯一的影像证人，也是'谁会故意丢了自己相机也要毁掉照片'的最佳反证。",
-        "goal": "用照片自证并定案：21:50 的拖拽光影把'冻毙意外'撕开一角，时间戳是你的信誉（RAW 文件与机身序列号都交出来）。策略：主动交代偷拍与夺相机（'我拍他，是忌惮不是爱好'），再在第二轮放出 21:50 那张——太早放，你会被'伪造'咬住；配合崔九安的验看时间一起亮。",
-        "isCulprit": false,
-        "timeline": "20:55 院中偷拍白守业，相机被夺收进里屋。21:10-22:10 后院三脚架星野连拍（长曝光，间隔定时）。21:50 前后拍到雪面拖拽光影与手电光束。22:10 收机回房。6:40 闻喊声起身，今早翻看照片发现异常画面。",
-        "knowledge": [
-          "21:50 前后长曝光画面：雪面两道拖影自院中偏向柴房、一束手电光晃动、拖影末端有个矮小的弧影——你反复放大过，那不是狗，也不是雪堆。",
-          "被夺相机收进里屋前，你最后拍到的画面（20:55）是白守业站在院里，右手还拎着半瓶酒——他 20:55 还能站着骂人。",
-          "你 22:10 收机时瞟见柴房门是新闩的，门闩头上没有霜——今晚的风，吹不进闩了门的柴房。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "南方来的摄影师，进山拍'封山中的雪乡'专题。昨晚在后院架了一整晚三脚架拍星空。相机被白守业没收过。"
+          }
         ],
-        "persona": "话不多，专业词密集：'长曝''星野''RAW'。护设备如护命。被指'偷拍'时先涨红脸再掏照片：'我偷拍了他，可我拍下的东西，比我们所有人的嘴都干净。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫简一舟，南方来的摄影师，进山拍雪乡。20:55 你偷拍醉后骂人的白守业，相机被他夺走收进里屋。21:10-22:10 你在后院架三脚架拍星野，长曝光连拍。你不知道自己拍到了什么：21:50 那张照片里，雪面上有两道拖出的光影和一束手电光。今早你翻到手抖：你是偷拍的人，也是唯一拍到那一幕的人。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_jianyizhou_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 20:55 偷拍被夺相机，与死者结了怨；你 21:10-22:10 独自在后院，无人证；你的长曝光照片拍到了 21:50 前后雪面上的拖拽光影与手电光束——你是唯一的影像证人，也是'谁会故意丢了自己相机也要毁掉照片'的最佳反证。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_jianyizhou_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "用照片自证并定案：21:50 的拖拽光影把'冻毙意外'撕开一角，时间戳是你的信誉（RAW 文件与机身序列号都交出来）。策略：主动交代偷拍与夺相机（'我拍他，是忌惮不是爱好'），再在第二轮放出 21:50 那张——太早放，你会被'伪造'咬住；配合崔九安的验看时间一起亮。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_jianyizhou_event_1",
+            "time": {
+              "display": "20:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:55"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "院中偷拍白守业，相机被夺收进里屋。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jianyizhou_event_2",
+            "time": {
+              "display": "21:10–22:10",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后院三脚架星野连拍（长曝光，间隔定时）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jianyizhou_event_3",
+            "time": {
+              "display": "21:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "前后拍到雪面拖拽光影与手电光束。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jianyizhou_event_4",
+            "time": {
+              "display": "22:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "收机回房。6:40 闻喊声起身，今早翻看照片发现异常画面。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_jianyizhou_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:50 前后长曝光画面：雪面两道拖影自院中偏向柴房、一束手电光晃动、拖影末端有个矮小的弧影——你反复放大过，那不是狗，也不是雪堆。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jianyizhou_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被夺相机收进里屋前，你最后拍到的画面（20:55）是白守业站在院里，右手还拎着半瓶酒——他 20:55 还能站着骂人。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jianyizhou_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 22:10 收机时瞟见柴房门是新闩的，门闩头上没有霜——今晚的风，吹不进闩了门的柴房。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "话不多，专业词密集：'长曝''星野''RAW'。护设备如护命。被指'偷拍'时先涨红脸再掏照片：'我偷拍了他，可我拍下的东西，比我们所有人的嘴都干净。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -82,19 +597,183 @@
       "name": "郭翠",
       "gender": "女",
       "age": 40,
-      "publicBio": "民宿帮工兼厨娘，做了六年饭，讨了三年工钱。今早 6:40 发现遗体的人。",
-      "card": {
-        "backstory": "你叫郭翠，老白家帮工厨娘，三年没结的工钱。20:30 你截住他讨钱，他让你'翻账本去'，你急了拍空一掌。21:20 你看见白桦往柴房方向去；22:00 白桦端来姜汤说'爸在里屋睡下了'，你犯嘀咕：那酒桶哪回不是喝到灶膛凉？6:40 你发现柴房门虚掩、雪堆旁一只棉鞋尖朝上——你那一嗓子喊醒了整个雪乡。",
-        "secret": "你讨了三年工钱、昨晚拍了他一巴掌没拍着、20:30 的争吵全院听见——三张欠条既是你的损失也是你的'动机'。你 21:20 远远看见白桦进柴房方向，这半眼你犹豫了一夜：说出来，你怕冤了好姑娘；不说，你怕对不起死鬼老板。",
-        "goal": "你是发现人，你的证词从 6:40 开始贯穿全程。策略：先报现场（柴房门虚掩、棉鞋朝向、雪面平整），再交代 20:30 争吵与欠条（主动认，'我巴不得他给钱，没想过要他命'）。21:20 那半眼是全场最重的一句话——你要在白桦的谎言出现裂缝后再说，说早了，你会变成'构陷'；说晚了，你会变成'隐瞒'。掂好这个时机。",
-        "isCulprit": false,
-        "timeline": "20:30 院中与白守业争吵工钱，拍空一掌。21:20 隔窗看见白桦走向柴房方向。22:00 接白桦端的姜汤，听'爸在里屋睡下了'。22:30 回房睡。6:40 喂鸡发现柴房异常，喊醒全院。",
-        "knowledge": [
-          "6:40 现场：柴房门虚掩、门闩头无霜、白守业棉鞋右脚朝上、雪面平整无乱痕——你做了六年早饭，雪地脚印谁多谁少，你一眼的事。",
-          "22:00 白桦端姜汤时手背上有两道红痕，像被柴火燎的——你当时以为是灶上烫的，现在想想，柴房里哪来的火？",
-          "白守业的三张欠条一年一张，第三张背面有他醉后的糊涂话：'翠啊，等桦丫头的事了了，钱一并给你。'"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "民宿帮工兼厨娘，做了六年饭，讨了三年工钱。今早 6:40 发现遗体的人。"
+          }
         ],
-        "persona": "刀子嘴豆腐心，说话嗓门大、爱拍围裙。对钱的事寸步不让，对'人没了'的事最先腿软。被逼急了会哭：'我讨的是工钱，不是人命！'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫郭翠，老白家帮工厨娘，三年没结的工钱。20:30 你截住他讨钱，他让你'翻账本去'，你急了拍空一掌。21:20 你看见白桦往柴房方向去；22:00 白桦端来姜汤说'爸在里屋睡下了'，你犯嘀咕：那酒桶哪回不是喝到灶膛凉？6:40 你发现柴房门虚掩、雪堆旁一只棉鞋尖朝上——你那一嗓子喊醒了整个雪乡。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_guocui_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你讨了三年工钱、昨晚拍了他一巴掌没拍着、20:30 的争吵全院听见——三张欠条既是你的损失也是你的'动机'。你 21:20 远远看见白桦进柴房方向，这半眼你犹豫了一夜：说出来，你怕冤了好姑娘；不说，你怕对不起死鬼老板。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_guocui_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是发现人，你的证词从 6:40 开始贯穿全程。策略：先报现场（柴房门虚掩、棉鞋朝向、雪面平整），再交代 20:30 争吵与欠条（主动认，'我巴不得他给钱，没想过要他命'）。21:20 那半眼是全场最重的一句话——你要在白桦的谎言出现裂缝后再说，说早了，你会变成'构陷'；说晚了，你会变成'隐瞒'。掂好这个时机。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_guocui_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "院中与白守业争吵工钱，拍空一掌。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guocui_event_2",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "隔窗看见白桦走向柴房方向。"
+              }
+            ],
+            "characterIds": [
+              "baihua"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_guocui_event_3",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接白桦端的姜汤，听'爸在里屋睡下了'。"
+              }
+            ],
+            "characterIds": [
+              "baihua"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_guocui_event_4",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回房睡。6:40 喂鸡发现柴房异常，喊醒全院。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_guocui_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "6:40 现场：柴房门虚掩、门闩头无霜、白守业棉鞋右脚朝上、雪面平整无乱痕——你做了六年早饭，雪地脚印谁多谁少，你一眼的事。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guocui_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:00 白桦端姜汤时手背上有两道红痕，像被柴火燎的——你当时以为是灶上烫的，现在想想，柴房里哪来的火？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guocui_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白守业的三张欠条一年一张，第三张背面有他醉后的糊涂话：'翠啊，等桦丫头的事了了，钱一并给你。'"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "刀子嘴豆腐心，说话嗓门大、爱拍围裙。对钱的事寸步不让，对'人没了'的事最先腿软。被逼急了会哭：'我讨的是工钱，不是人命！'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -102,106 +781,934 @@
       "name": "马长贵",
       "gender": "男",
       "age": 48,
-      "publicBio": "跑山司机，常年往来县城与雪乡拉货载客，昨晚车被雪困在院外车道，借宿民宿。与白守业是三十年的老熟人。",
-      "card": {
-        "backstory": "你叫马长贵，跑山司机，车被雪困在院外。二十年前那个雪夜，女婴被递到白守业手里时你就在旁边——那孩子是'半买半救'，你收了两条烟。这次你听说'南边有人来认亲'，连夜赶来想拿封口钱。21:05 你在柴房外开口，被一句'用不着你置喙'顶回来。你最怕两件事：旧事兜不住；还有，那两分钟没人证。",
-        "secret": "你是当年'半买半救'的经手人之一，收过两条烟；昨晚 21:05-21:15 你在柴房外与死者密谈'封口费'被崔九安的狗听见过动静（当时拴在檐下的狗朝柴房方向叫了两声）；你连夜想溜被雪封住。'拉套的'三个字，你谁都不能让翻出来。",
-        "goal": "你的行踪在案发前两分钟贴着柴房——这是死穴。策略：主动交代 21:05 密谈但改写内容（'我劝他明天把话说开，别拖'——把讨封口钱说成劝和），用'檐下狗叫'的时间戳撑住 21:15 前你已回屋。你真正的牌是'经手人'身份：你知道 20 年前的细节，能证明白守业对白桦有恩无仇——这张牌要么救你，要么把水搅得更浑。",
-        "isCulprit": false,
-        "timeline": "18:50 进院（车困院外车道）。19:00 围炉夜话坐末位，没喝酒（要开车）。21:05-21:15 柴房外与白守业抽烟密谈（讨封口费未遂）。21:15 回客房数钱、收拾行李想溜。21:40 起在客房无眠（耳听院子动静，未出门）。22:30 后睡。整夜未出院门。",
-        "knowledge": [
-          "21:05 你在柴房外看见窗纸透出的灯影里有两个人的影子晃——白守业和白桦，爷俩在里头唠。你掐了烟走的时候，听见里头白守业高了声：'都了了，明天当着人说了。'",
-          "二十年前的雪夜你记得清楚：女婴裹在军大衣里，襁褓角上绣了个'周'字——寻亲会的函上若有个周姓，就是那对。",
-          "你在客房里听见 21:35 前后院里一声闷响，像柴垛塌了一角——你以为是雪压的，翻了个身。你现在恨死了这个翻身。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "跑山司机，常年往来县城与雪乡拉货载客，昨晚车被雪困在院外车道，借宿民宿。与白守业是三十年的老熟人。"
+          }
         ],
-        "persona": "跑山人做派，见人三分笑、开口先递烟。谈钱不脸红，谈'当年'就眨眼。被逼急了会拿话垫：'跑山的人，雪夜路滑，什么事都可能出——但也什么事都可能有人看着。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫马长贵，跑山司机，车被雪困在院外。二十年前那个雪夜，女婴被递到白守业手里时你就在旁边——那孩子是'半买半救'，你收了两条烟。这次你听说'南边有人来认亲'，连夜赶来想拿封口钱。21:05 你在柴房外开口，被一句'用不着你置喙'顶回来。你最怕两件事：旧事兜不住；还有，那两分钟没人证。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_machanggui_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是当年'半买半救'的经手人之一，收过两条烟；昨晚 21:05-21:15 你在柴房外与死者密谈'封口费'被崔九安的狗听见过动静（当时拴在檐下的狗朝柴房方向叫了两声）；你连夜想溜被雪封住。'拉套的'三个字，你谁都不能让翻出来。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_machanggui_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的行踪在案发前两分钟贴着柴房——这是死穴。策略：主动交代 21:05 密谈但改写内容（'我劝他明天把话说开，别拖'——把讨封口钱说成劝和），用'檐下狗叫'的时间戳撑住 21:15 前你已回屋。你真正的牌是'经手人'身份：你知道 20 年前的细节，能证明白守业对白桦有恩无仇——这张牌要么救你，要么把水搅得更浑。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_machanggui_event_1",
+            "time": {
+              "display": "18:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "进院（车困院外车道）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_machanggui_event_2",
+            "time": {
+              "display": "19:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "围炉夜话坐末位，没喝酒（要开车）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_machanggui_event_3",
+            "time": {
+              "display": "21:05–21:15",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "柴房外与白守业抽烟密谈（讨封口费未遂）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_machanggui_event_4",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回客房数钱、收拾行李想溜。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_machanggui_event_5",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起在客房无眠（耳听院子动静，未出门）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_machanggui_event_6",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后睡。整夜未出院门。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_machanggui_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:05 你在柴房外看见窗纸透出的灯影里有两个人的影子晃——白守业和白桦，爷俩在里头唠。你掐了烟走的时候，听见里头白守业高了声：'都了了，明天当着人说了。'"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_machanggui_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "二十年前的雪夜你记得清楚：女婴裹在军大衣里，襁褓角上绣了个'周'字——寻亲会的函上若有个周姓，就是那对。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_machanggui_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在客房里听见 21:35 前后院里一声闷响，像柴垛塌了一角——你以为是雪压的，翻了个身。你现在恨死了这个翻身。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "跑山人做派，见人三分笑、开口先递烟。谈钱不脸红，谈'当年'就眨眼。被逼急了会拿话垫：'跑山的人，雪夜路滑，什么事都可能出——但也什么事都可能有人看着。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
   "locations": [
-    "柴房与柴垛",
-    "院子与雪地",
-    "白守业的里屋",
-    "账房柜台",
-    "客房与车斗"
+    {
+      "id": "location_1",
+      "name": "柴房与柴垛",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "院子与雪地",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "白守业的里屋",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "账房柜台",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "客房与车斗",
+      "description": []
+    }
   ],
   "clues": [
     {
       "id": "yankan_jilu",
-      "location": "柴房与柴垛",
+      "locationId": "location_1",
       "name": "崔九安的验看记录",
-      "content": "兽医手记（职业经验之谈，非正式法医）：初判'醉后冻毙'存四处反常——一、衣扣整齐，无冻毙常见的'反常脱衣'与挣扎乱痕；二、睫毛耳廓无霜花（冻毙者呼吸凝霜）；三、后脑发际下一处皮下淤血，磕碰所致；四、覆雪约指厚，与 22:00 前后倒卧吻合，但院中雪 23:00 才转密——他倒下时，雪还没下大。结论：'冻毙'背后另有死因。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "兽医手记（职业经验之谈，非正式法医）：初判'醉后冻毙'存四处反常——一、衣扣整齐，无冻毙常见的'反常脱衣'与挣扎乱痕；二、睫毛耳廓无霜花（冻毙者呼吸凝霜）；三、后脑发际下一处皮下淤血，磕碰所致；四、覆雪约指厚，与 22:00 前后倒卧吻合，但院中雪 23:00 才转密——他倒下时，雪还没下大。结论：'冻毙'背后另有死因。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "changguang_sheying",
-      "location": "院子与雪地",
+      "locationId": "location_2",
       "name": "长曝光照片",
-      "content": "简一舟备用机 RAW 原片（21:10-22:10 星野连拍，机身序列号与时间码完整）：21:50 前后一张长曝光中，院中雪面有两道拖拽光影偏向柴房、一束手电光晃动、拖影末端有一矮小弧影。21:55 后画面无新动静。旁证：三脚架脚印与机位全程未动。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "简一舟备用机 RAW 原片（21:10-22:10 星野连拍，机身序列号与时间码完整）：21:50 前后一张长曝光中，院中雪面有两道拖拽光影偏向柴房、一束手电光晃动、拖影末端有一矮小弧影。21:55 后画面无新动静。旁证：三脚架脚印与机位全程未动。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "dianmu_xue",
-      "location": "柴房与柴垛",
+      "locationId": "location_1",
       "name": "垫木上的血与发",
-      "content": "柴垛下的垫木背面有一小片蹭血，粘着几根长发（发质细软，非死者花白短发）；垫木有新鲜的头皮蹭撞痕，位置与死者后脑淤血吻合——这里才是他倒下的地方，柴房内只是第二现场。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "柴垛下的垫木背面有一小片蹭血，粘着几根长发（发质细软，非死者花白短发）；垫木有新鲜的头皮蹭撞痕，位置与死者后脑淤血吻合——这里才是他倒下的地方，柴房内只是第二现场。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "tuozhuai_hen",
-      "location": "院子与雪地",
+      "locationId": "location_2",
       "name": "拖拽痕与扬雪",
-      "content": "院中自柴垛至柴房门的雪面下有两道平行的拖拽浅沟（表层新雪扬盖，底层旧雪留痕）；柴垛旁半埋一只手电筒，灯头碎裂；拖痕起点处的雪被人为扬乱——扬雪的手法笨拙，且只盖了一半。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "院中自柴垛至柴房门的雪面下有两道平行的拖拽浅沟（表层新雪扬盖，底层旧雪留痕）；柴垛旁半埋一只手电筒，灯头碎裂；拖痕起点处的雪被人为扬乱——扬雪的手法笨拙，且只盖了一半。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xunqin_kuaijian",
-      "location": "白守业的里屋",
+      "locationId": "location_3",
       "name": "炕头的寻亲快件",
-      "content": "里屋炕头拆开的快递：南方寻亲会函件——'白桦 DNA 比对成功，周姓夫妇确认血缘，定于明日上午到店'，附一张二十年前襁褓的照片，襁褓角绣'周'字；另有白守业手写的草稿纸：'桦儿，爹没本事，当年是从人贩手里半买半救。明天，爹当面还你。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "里屋炕头拆开的快递：南方寻亲会函件——'白桦 DNA 比对成功，周姓夫妇确认血缘，定于明日上午到店'，附一张二十年前襁褓的照片，襁褓角绣'周'字；另有白守业手写的草稿纸：'桦儿，爹没本事，当年是从人贩手里半买半救。明天，爹当面还你。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "weijin_muxie",
-      "location": "柴房与柴垛",
+      "locationId": "location_1",
       "name": "围巾上的木屑",
-      "content": "白桦围巾下摆嵌着新鲜的松木屑与一点暗红血痂——柴垛垫木正是新劈的松木。血痂量少，更像扫蹭而非喷溅。围巾上有反复搓洗未净的痕迹。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "白桦围巾下摆嵌着新鲜的松木屑与一点暗红血痂——柴垛垫木正是新劈的松木。血痂量少，更像扫蹭而非喷溅。围巾上有反复搓洗未净的痕迹。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "qianpiao_san",
-      "location": "账房柜台",
+      "locationId": "location_4",
       "name": "三张工钱欠条",
-      "content": "账房抽屉里郭翠的三张欠条（合计一万八，一年一张）；第三张背面有白守业醉后铅笔字：'翠啊，等桦丫头的事了了，钱一并给你。'——'桦丫头的事'四个字，昨晚之前就写下了。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "账房抽屉里郭翠的三张欠条（合计一万八，一年一张）；第三张背面有白守业醉后铅笔字：'翠啊，等桦丫头的事了了，钱一并给你。'——'桦丫头的事'四个字，昨晚之前就写下了。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jiebie_fukou",
-      "location": "院子与雪地",
+      "locationId": "location_2",
       "name": "界树的新斧口",
-      "content": "后院界墙两棵老树新砍的斧口（前天所为），树桩里被起出一截地界铁桩；柴房门口立着白守业的斧子，斧刃有松脂与树皮碎屑——砍树之争是二十年的积怨，也是崔九安 21:00 摔门的由头。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "后院界墙两棵老树新砍的斧口（前天所为），树桩里被起出一截地界铁桩；柴房门口立着白守业的斧子，斧刃有松脂与树皮碎屑——砍树之争是二十年的积怨，也是崔九安 21:00 摔门的由头。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "yanxia_yantou",
-      "location": "客房与车斗",
+      "locationId": "location_5",
       "name": "檐下两个烟头",
-      "content": "柴房外檐下雪面（半掩）有两个'长白山'烟头，烟蒂咬痕相同、落雪量相同——同一人同一次抽剩；另有一枚烟头碎屑飘进了柴房门缝。跑山司机马长贵惯抽此烟，白守业抽的是旱烟袋。时间推定：21:05-21:15 前后。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "柴房外檐下雪面（半掩）有两个'长白山'烟头，烟蒂咬痕相同、落雪量相同——同一人同一次抽剩；另有一枚烟头碎屑飘进了柴房门缝。跑山司机马长贵惯抽此烟，白守业抽的是旱烟袋。时间推定：21:05-21:15 前后。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "baihua",
-    "method": "白守业已通过寻亲会为养女白桦找到亲生父母（周姓夫妇，明日上午到店），并决定当面坦白'二十年前从人贩子手里半买半救'的真相。21:20 他召白桦独入柴垛旁摊牌；21:35 白桦情绪崩溃推搡，白守业仰面摔在柴垛垫木上，后脑磕伤昏迷（一声闷响被马长贵听见又放过）。白桦探鼻息未准，误认其死亡，为伪装'醉归冻毙'（他有醉后睡柴房的历史）于 21:40-21:55 将其拖入柴房、扬雪盖拖痕。白守业实际于 22:40 前后死于低温——昏迷加速冻死。她本可呼救，她选择了沉默：这桩案子的手法没有凶器，只有一个不肯喊人的一刻钟。",
-    "fullTimeline": "18:50 马长贵进院（车困院外车道）。19:00 围炉夜话，白守业当众讲'雪夜捡丫头'旧事并说'明儿都了了'；马长贵坐末位未饮酒。20:00 白桦在里屋偷看到寻亲快件（比对成功、周姓夫妇明日到）。20:30 郭翠院中讨薪争吵，拍空一掌。20:55 简一舟偷拍白守业被夺相机。21:00 崔九安上门摔门叫阵'这事没完'。21:05-21:15 马长贵柴房外与白守业抽烟密谈讨封口费未遂（檐下两烟头；白守业言'都了了，明天当着人说'）；21:15 马长贵回客房。21:20 白桦应召进柴垛旁（郭翠隔窗望见半眼）。21:35 争执推搡，白守业仰面摔在垫木上昏迷（闷响，马长贵在客房听见未在意）。21:40-21:55 白桦拖尸入柴房、扬雪盖拖痕（21:50 被简一舟长曝光拍下拖影与手电光）、回插门闩。22:00 白桦回屋分姜汤，称'爸在里屋睡下了'。22:10 简一舟收机回房。22:30 郭翠与马长贵各自回房。22:40 前后白守业死于低温。23:00 大雪，掩去拖痕表层。6:40 郭翠发现柴房异常喊醒全院，崔九安验看遗体提出四处反常。破案链：验看记录（冻毙四处反常）→ 垫木血与发（第一现场在柴垛，柴房是第二现场）→ 拖拽痕与扬雪+长曝光照片（21:50 拖尸影像与物证互锁）→ 围巾上的木屑（拖尸者身上带走了柴垛）→ 炕头的寻亲快件（动机：身世即将公开）→ 三张欠条（'桦丫头的事'的注脚）。红鲱鱼：崔九安的界树积怨与摔门、简一舟的偷拍与被夺相机、郭翠的三年欠薪与争吵、马长贵的柴房外密谈与封口钱——人人有秘密，无人是预谋凶手。",
-    "keyEvidence": [
-      "验看记录",
-      "长曝光",
-      "拖拽痕",
-      "寻亲快件",
-      "木屑"
+    "culpritId": "baihua",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "白守业已通过寻亲会为养女白桦找到亲生父母（周姓夫妇，明日上午到店），并决定当面坦白'二十年前从人贩子手里半买半救'的真相。21:20 他召白桦独入柴垛旁摊牌；21:35 白桦情绪崩溃推搡，白守业仰面摔在柴垛垫木上，后脑磕伤昏迷（一声闷响被马长贵听见又放过）。白桦探鼻息未准，误认其死亡，为伪装'醉归冻毙'（他有醉后睡柴房的历史）于 21:40-21:55 将其拖入柴房、扬雪盖拖痕。白守业实际于 22:40 前后死于低温——昏迷加速冻死。她本可呼救，她选择了沉默：这桩案子的手法没有凶器，只有一个不肯喊人的一刻钟。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "白守业已通过寻亲会为养女白桦找到亲生父母（周姓夫妇，明日上午到店），并决定当面坦白'二十年前从人贩子手里半买半救'的真相。21:20 他召白桦独入柴垛旁摊牌；21:35 白桦情绪崩溃推搡，白守业仰面摔在柴垛垫木上，后脑磕伤昏迷（一声闷响被马长贵听见又放过）。白桦探鼻息未准，误认其死亡，为伪装'醉归冻毙'（他有醉后睡柴房的历史）于 21:40-21:55 将其拖入柴房、扬雪盖拖痕。白守业实际于 22:40 前后死于低温——昏迷加速冻死。她本可呼救，她选择了沉默：这桩案子的手法没有凶器，只有一个不肯喊人的一刻钟。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "18:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:50"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "马长贵进院（车困院外车道）。"
+          }
+        ],
+        "characterIds": [
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "19:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:00"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "围炉夜话，白守业当众讲'雪夜捡丫头'旧事并说'明儿都了了'；马长贵坐末位未饮酒。"
+          }
+        ],
+        "characterIds": [
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白桦在里屋偷看到寻亲快件（比对成功、周姓夫妇明日到）。"
+          }
+        ],
+        "characterIds": [
+          "baihua"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baihua"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郭翠院中讨薪争吵，拍空一掌。"
+          }
+        ],
+        "characterIds": [
+          "guocui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guocui"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "20:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:55"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "简一舟偷拍白守业被夺相机。"
+          }
+        ],
+        "characterIds": [
+          "jianyizhou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jianyizhou"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "崔九安上门摔门叫阵'这事没完'。"
+          }
+        ],
+        "characterIds": [
+          "cuijiuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cuijiuan"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:05–21:15",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "马长贵柴房外与白守业抽烟密谈讨封口费未遂（檐下两烟头；白守业言'都了了，明天当着人说'）；"
+          }
+        ],
+        "characterIds": [
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "21:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "马长贵回客房。"
+          }
+        ],
+        "characterIds": [
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白桦应召进柴垛旁（郭翠隔窗望见半眼）。"
+          }
+        ],
+        "characterIds": [
+          "baihua",
+          "guocui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baihua",
+          "guocui"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "争执推搡，白守业仰面摔在垫木上昏迷（闷响，马长贵在客房听见未在意）。"
+          }
+        ],
+        "characterIds": [
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:40–21:55",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:55"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白桦拖尸入柴房、扬雪盖拖痕（"
+          }
+        ],
+        "characterIds": [
+          "baihua"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baihua"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "被简一舟长曝光拍下拖影与手电光）、回插门闩。"
+          }
+        ],
+        "characterIds": [
+          "jianyizhou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jianyizhou"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "22:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白桦回屋分姜汤，称'爸在里屋睡下了'。"
+          }
+        ],
+        "characterIds": [
+          "baihua"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baihua"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "22:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:10"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "简一舟收机回房。"
+          }
+        ],
+        "characterIds": [
+          "jianyizhou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jianyizhou"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "22:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:30"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郭翠与马长贵各自回房。"
+          }
+        ],
+        "characterIds": [
+          "guocui",
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guocui",
+          "machanggui"
+        ]
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "前后白守业死于低温。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "大雪，掩去拖痕表层。6:40 郭翠发现柴房异常喊醒全院，崔九安验看遗体提出四处反常。破案链：验看记录（冻毙四处反常）→ 垫木血与发（第一现场在柴垛，柴房是第二现场）→ 拖拽痕与扬雪+长曝光照片（"
+          }
+        ],
+        "characterIds": [
+          "cuijiuan",
+          "guocui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cuijiuan",
+          "guocui"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "拖尸影像与物证互锁）→ 围巾上的木屑（拖尸者身上带走了柴垛）→ 炕头的寻亲快件（动机：身世即将公开）→ 三张欠条（'桦丫头的事'的注脚）。红鲱鱼：崔九安的界树积怨与摔门、简一舟的偷拍与被夺相机、郭翠的三年欠薪与争吵、马长贵的柴房外密谈与封口钱——人人有秘密，无人是预谋凶手。"
+          }
+        ],
+        "characterIds": [
+          "cuijiuan",
+          "jianyizhou",
+          "guocui",
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cuijiuan",
+          "jianyizhou",
+          "guocui",
+          "machanggui"
+        ]
+      }
     ],
-    "reveal": "真相：凶手是白桦。二十年前那个雪夜，白守业从人贩子手里把她抱回来；二十年后这个雪夜，他把'亲爹娘明早就到'和'当年是买的'一起摊在了柴垛旁。她推的那一把，把两个真相一起摔碎在了垫木上。她探不出他的鼻息，就当自己杀了他；她探出了自己的余生，就再没喊过一声人——22:40 冻死白守业的，是雪，也是她回屋端出的那碗姜汤。柴垛垫木上那片血、雪面下没盖严的拖痕、围巾里没洗净的木屑、还有 21:50 那张长曝光里的手电光——封山的雪乡什么都能盖，就是盖不住一个女儿不肯回头的那一段路。崔九安的树、简一舟的相机、郭翠的欠条、马长贵的烟头，都是这场夜话里各怀心事的注脚——夜话说完了，天亮了。"
+    "keyEvidenceIds": [
+      "yankan_jilu",
+      "changguang_sheying",
+      "tuozhuai_hen",
+      "xunqin_kuaijian",
+      "weijin_muxie"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "yankan_jilu"
+        ],
+        "conclusion": "验看记录"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "changguang_sheying"
+        ],
+        "conclusion": "长曝光"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "tuozhuai_hen"
+        ],
+        "conclusion": "拖拽痕"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "xunqin_kuaijian"
+        ],
+        "conclusion": "寻亲快件"
+      },
+      {
+        "id": "evidence_5",
+        "clueIds": [
+          "weijin_muxie"
+        ],
+        "conclusion": "木屑"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是白桦。二十年前那个雪夜，白守业从人贩子手里把她抱回来；二十年后这个雪夜，他把'亲爹娘明早就到'和'当年是买的'一起摊在了柴垛旁。她推的那一把，把两个真相一起摔碎在了垫木上。她探不出他的鼻息，就当自己杀了他；她探出了自己的余生，就再没喊过一声人——22:40 冻死白守业的，是雪，也是她回屋端出的那碗姜汤。柴垛垫木上那片血、雪面下没盖严的拖痕、围巾里没洗净的木屑、还有 21:50 那张长曝光里的手电光——封山的雪乡什么都能盖，就是盖不住一个女儿不肯回头的那一段路。崔九安的树、简一舟的相机、郭翠的欠条、马长贵的烟头，都是这场夜话里各怀心事的注脚——夜话说完了，天亮了。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -211,6 +1718,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

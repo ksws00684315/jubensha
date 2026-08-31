@@ -1,34 +1,329 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "厨王争霸",
     "minPlayers": 6,
     "maxPlayers": 6,
     "durationMin": 150,
     "difficulty": "新手",
-    "tags": ["欢乐", "本格", "现代", "后厨", "综艺"],
+    "tags": [
+      "欢乐",
+      "本格",
+      "现代",
+      "后厨",
+      "综艺"
+    ],
     "intro": "厨王争霸半决赛中场，评委会主席袁守味照例饮下一口清口茶。二十分钟后，这位尝遍国宴的老饕口唇青紫，倒在评委席上——茶壶里检出亚硝酸盐。中场只有十五分钟，进出评委席的人一只手数不过来。锅在后厨，毒在茶里，人就在你们中间。"
   },
-  "background": "厨王争霸半决赛第二场比赛日。评委会主席袁守味，国宴大师出身，一口清口茶用了二十年，规矩是每品完一道菜润一次喉。15:45 中场休息，主席在评委席隔间翻选手资料，面色铁青；15:50 冠名赞助商蒋曼丽进隔间求情被推出来；15:53 总导演郝运来被单独叫进隔间，出来时端着他那杯万年不离手的奶茶。16:08 复赛开赛，16:12 主席照例饮茶，16:26 面色青紫栽倒，16:50 抢救无效。检验结果：清口茶壶残茶检出亚硝酸盐，浓度足以致死。备赛后厨里，卫冕厨王的硝罐少了一截，黑马选手的工具箱里压着一张收条，行政总厨的领用登记上有一个假签名，主播的素材卡里躺着全场最清晰的画面。警方封锁后厨——天亮之前，你们六个人里必须交出真凶。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "厨王争霸半决赛第二场比赛日。评委会主席袁守味，国宴大师出身，一口清口茶用了二十年，规矩是每品完一道菜润一次喉。15:45 中场休息，主席在评委席隔间翻选手资料，面色铁青；15:50 冠名赞助商蒋曼丽进隔间求情被推出来；15:53 总导演郝运来被单独叫进隔间，出来时端着他那杯万年不离手的奶茶。16:08 复赛开赛，16:12 主席照例饮茶，16:26 面色青紫栽倒，16:50 抢救无效。检验结果：清口茶壶残茶检出亚硝酸盐，浓度足以致死。备赛后厨里，卫冕厨王的硝罐少了一截，黑马选手的工具箱里压着一张收条，行政总厨的领用登记上有一个假签名，主播的素材卡里躺着全场最清晰的画面。警方封锁后厨——天亮之前，你们六个人里必须交出真凶。"
+    }
+  ],
   "characters": [
     {
       "id": "hao_yunlai",
       "name": "郝运来",
       "gender": "男",
       "age": 45,
-      "publicBio": "厨王争霸总导演，前综艺执行导演，口头禅家人们机位就位。今晚手忙脚乱，却始终笑着控场。",
-      "card": {
-        "backstory": "你叫郝运来。节目赞助缩水，你想了个稳赚的路子：把决赛考题打包卖给三位选手，一位五万，说是内部资料保熟。上周五收钱时你被袁守味逮个正着——老爷子什么都没说，只把你的手机号存成了名单待交。今天中午他把你叫进评委席隔间：明早九点，全体会议，你把收钱名单带来。我给你留脸面，是让你自己摘的。你在这行干了二十年，三十八岁才有第一个自己的节目，不能栽在一锅押题上。中场十五分钟，你路过卤水台，看见铁勺王的硝罐敞着盖——那是你的运气，也是他的倒霉。",
-        "secret": "你就是凶手。15:56 你借秦小满的名义在库房领了一勺硝水，15:58 借调话筒把亚硝酸盐倒进袁守味的清口茶壶。你要的是老厨子赛后猝死，不是舞弊案开审。",
-        "goal": "咬定主席年事已高、赛程劳累。假签名就推给库房管理混乱；转账记录被翻出就承认卖题——卖题是错，不是死罪，把事情的分量降下来。绝不让卖题和毒茶被串成一件事。",
-        "isCulprit": true,
-        "timeline": "14:30 开赛你在导播位。15:45 中场，你看见主席脸色不对地翻资料。15:50 蒋曼丽进隔间求情被推出来，你的对讲机录到主席那句撤冠名，就现在。15:53 主席单独叫你进隔间，限你明早交名单。15:56 你到库房，用一句秦总厨让我来领了硝水，模仿小满的连笔签了领用登记。15:58 你借调话筒靠近评委席，把硝倒进清口茶壶搅了搅。16:00 何大江在演员通道堵你要退钱，你说过两天给你交代。16:08 复赛开始。16:12 主席照例饮茶。16:26 他口唇发紫栽倒，你第一个喊叫救护车，但你的脚半步没动。",
-        "knowledge": [
-          "15:53 你被单独叫进隔间，只有你和主席在场——没人能证明他跟你说了什么。",
-          "铁勺王的硝罐敞着盖是事实，亚硝酸盐的来源可以永远指向后厨所有人。",
-          "秦小满 15:50 就布完杯回了后厨，15:58 之后评委席只有主席一人——没人能替你再碰一次壶。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "厨王争霸总导演，前综艺执行导演，口头禅家人们机位就位。今晚手忙脚乱，却始终笑着控场。"
+          }
         ],
-        "persona": "场面话十级，说话永远在控场；紧张时指挥别人做无关的小事。被逼到细节就转移话题，口头禅：这块我们导播间有记录，你要听原始的吗？"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫郝运来。节目赞助缩水，你想了个稳赚的路子：把决赛考题打包卖给三位选手，一位五万，说是内部资料保熟。上周五收钱时你被袁守味逮个正着——老爷子什么都没说，只把你的手机号存成了名单待交。今天中午他把你叫进评委席隔间：明早九点，全体会议，你把收钱名单带来。我给你留脸面，是让你自己摘的。你在这行干了二十年，三十八岁才有第一个自己的节目，不能栽在一锅押题上。中场十五分钟，你路过卤水台，看见铁勺王的硝罐敞着盖——那是你的运气，也是他的倒霉。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_hao_yunlai_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。15:56 你借秦小满的名义在库房领了一勺硝水，15:58 借调话筒把亚硝酸盐倒进袁守味的清口茶壶。你要的是老厨子赛后猝死，不是舞弊案开审。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_hao_yunlai_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "咬定主席年事已高、赛程劳累。假签名就推给库房管理混乱；转账记录被翻出就承认卖题——卖题是错，不是死罪，把事情的分量降下来。绝不让卖题和毒茶被串成一件事。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_hao_yunlai_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开赛你在导播位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_2",
+            "time": {
+              "display": "15:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:45"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "中场，你看见主席脸色不对地翻资料。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_3",
+            "time": {
+              "display": "15:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "蒋曼丽进隔间求情被推出来，你的对讲机录到主席那句撤冠名，就现在。"
+              }
+            ],
+            "characterIds": [
+              "jiang_manli"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_4",
+            "time": {
+              "display": "15:53",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:53"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主席单独叫你进隔间，限你明早交名单。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_5",
+            "time": {
+              "display": "15:56",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:56"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你到库房，用一句秦总厨让我来领了硝水，模仿小满的连笔签了领用登记。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_6",
+            "time": {
+              "display": "15:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:58"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你借调话筒靠近评委席，把硝倒进清口茶壶搅了搅。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_7",
+            "time": {
+              "display": "16:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:00"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "何大江在演员通道堵你要退钱，你说过两天给你交代。"
+              }
+            ],
+            "characterIds": [
+              "he_dajiang"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_8",
+            "time": {
+              "display": "16:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:08"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "复赛开始。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_9",
+            "time": {
+              "display": "16:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:12"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主席照例饮茶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hao_yunlai_event_10",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 10",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "他口唇发紫栽倒，你第一个喊叫救护车，但你的脚半步没动。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_hao_yunlai_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "15:53 你被单独叫进隔间，只有你和主席在场——没人能证明他跟你说了什么。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hao_yunlai_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "铁勺王的硝罐敞着盖是事实，亚硝酸盐的来源可以永远指向后厨所有人。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hao_yunlai_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "秦小满 15:50 就布完杯回了后厨，15:58 之后评委席只有主席一人——没人能替你再碰一次壶。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "场面话十级，说话永远在控场；紧张时指挥别人做无关的小事。被逼到细节就转移话题，口头禅：这块我们导播间有记录，你要听原始的吗？",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +331,241 @@
       "name": "铁勺王",
       "gender": "男",
       "age": 39,
-      "publicBio": "卫冕厨王王振山，鲁菜主厨。今晚的卤水台是他的阵地，硝罐上锁——不对，今晚没锁。",
-      "card": {
-        "backstory": "你叫王振山，人称铁勺王。卫冕冠军的牌子是面子，可你这半年被预制菜打得喘不过气——堂食掉三成，你偷偷在高汤里掺曼食速享的金汤块，一桶省四十分钟。半决赛第一场袁老爷子把你那勺汤含了三秒，叫住你：振山，火候还是当年的火候，汤不是当年的汤。决赛我要当众讲这个事。你没求情，你知道求情没用。今晚中场你回工位补卤水，先去库房领了黄酒，回来发现硝罐少了一截、罐口有湿指痕，还有股奶茶的甜味——硝在你台子上，少了就是你的嫌疑。你没敢声张，悄悄把罐子归了位。",
-        "secret": "你用了预制的金汤块，被主席尝出并放话决赛当众讲；硝罐被动你发现后没上报，还把罐子擦了擦归位——你以为在自保，其实像在毁灭证据。",
-        "goal": "把预制汤的事瞒到底——违约金和行业名声你都赔不起；硝罐的事越晚说越好。但你心里清楚谁在你台子上动过东西，你闻到了那股奶茶的甜味。",
-        "isCulprit": false,
-        "timeline": "14:30 你出赛赛螃蟹。15:20 你的菜上评委席，老爷子含汤三秒，叫住你敲打预制汤的事。15:45 中场你回工位补卤水，硝罐敞着盖。15:52 你去库房领黄酒，登记本上有你的名字。16:00 回到工位，你发现硝罐少了一截，罐口湿的，有股奶茶甜味，你四下看了一圈没人，归位盖好。16:08 复赛你在工位吊汤。16:26 听到评委席乱起来，你第一个冲过去要背人，被秦小满拦下别动他，等医生。",
-        "knowledge": [
-          "16:00 你发现硝罐少了一截，罐口有湿指痕和奶茶甜味——动罐子的人刚喝过奶茶，而且是刚从库房方向过来的。",
-          "全场天天捧着奶茶杯的，是那个说话像念广告的总导演。",
-          "主席放话决赛当众讲你的预制汤，这是你的死穴，也是你今晚最大的嫌疑。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "卫冕厨王王振山，鲁菜主厨。今晚的卤水台是他的阵地，硝罐上锁——不对，今晚没锁。"
+          }
         ],
-        "persona": "中气十足，三句话不离火候和规矩；护自己的台子像护崽。被冤枉时不辩解，先撸袖子，再红眼眶。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫王振山，人称铁勺王。卫冕冠军的牌子是面子，可你这半年被预制菜打得喘不过气——堂食掉三成，你偷偷在高汤里掺曼食速享的金汤块，一桶省四十分钟。半决赛第一场袁老爷子把你那勺汤含了三秒，叫住你：振山，火候还是当年的火候，汤不是当年的汤。决赛我要当众讲这个事。你没求情，你知道求情没用。今晚中场你回工位补卤水，先去库房领了黄酒，回来发现硝罐少了一截、罐口有湿指痕，还有股奶茶的甜味——硝在你台子上，少了就是你的嫌疑。你没敢声张，悄悄把罐子归了位。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_tie_shao_wang_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你用了预制的金汤块，被主席尝出并放话决赛当众讲；硝罐被动你发现后没上报，还把罐子擦了擦归位——你以为在自保，其实像在毁灭证据。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_tie_shao_wang_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把预制汤的事瞒到底——违约金和行业名声你都赔不起；硝罐的事越晚说越好。但你心里清楚谁在你台子上动过东西，你闻到了那股奶茶的甜味。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_tie_shao_wang_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你出赛赛螃蟹。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_2",
+            "time": {
+              "display": "15:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的菜上评委席，老爷子含汤三秒，叫住你敲打预制汤的事。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_3",
+            "time": {
+              "display": "15:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:45"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "中场你回工位补卤水，硝罐敞着盖。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_4",
+            "time": {
+              "display": "15:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:52"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去库房领黄酒，登记本上有你的名字。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_5",
+            "time": {
+              "display": "16:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回到工位，你发现硝罐少了一截，罐口湿的，有股奶茶甜味，你四下看了一圈没人，归位盖好。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_6",
+            "time": {
+              "display": "16:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:08"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "复赛你在工位吊汤。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_shao_wang_event_7",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "听到评委席乱起来，你第一个冲过去要背人，被秦小满拦下别动他，等医生。"
+              }
+            ],
+            "characterIds": [
+              "qin_xiaoman"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_tie_shao_wang_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "16:00 你发现硝罐少了一截，罐口有湿指痕和奶茶甜味——动罐子的人刚喝过奶茶，而且是刚从库房方向过来的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tie_shao_wang_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "全场天天捧着奶茶杯的，是那个说话像念广告的总导演。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tie_shao_wang_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主席放话决赛当众讲你的预制汤，这是你的死穴，也是你今晚最大的嫌疑。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "中气十足，三句话不离火候和规矩；护自己的台子像护崽。被冤枉时不辩解，先撸袖子，再红眼眶。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +573,225 @@
       "name": "蒋曼丽",
       "gender": "女",
       "age": 41,
-      "publicBio": "曼食速享预制菜创始人，本届冠名赞助商。西装套裙，妆容一丝不苟。",
-      "card": {
-        "backstory": "你叫蒋曼丽。你的金汤块进了三十家连锁后厨，今年的心头肉是厨王争霸冠名——行业标尺点头，比一万条广告都值钱。你私下给三位选手塞了试用装，里面的门道彼此心照不宣。可袁守味不接你递的茶。15:50 你进隔间求情，他把撤冠名函拍在桌上：预制菜我不拦，你不能借厨王的锅给速食贴金。你拉着他的袖子说软话，被他推了出来，江小喵的直播镜头全程对着你。你以为最难看的是这个镜头，直到 16:26 那声闷响。",
-        "secret": "你给选手塞金汤块、试图保冠名被主席当场打脸；撤冠名函他已经签了字，就压在隔间沙发那份补充协议下面。",
-        "goal": "撤冠名已成定局，现在要的是干净退场：绝不能让塞试用装的事曝光，那是商业贿赂。把 15:50 的拉扯解释成正常商务沟通。",
-        "isCulprit": false,
-        "timeline": "14:30 你在前排观赛。15:50 你进评委席隔间求情，被推出来，直播镜头全程拍到你拉他袖子。15:55 你在演员通道补妆，让助理去取隔间沙发上那份补充协议，助理说主席还没走开，不敢拿。15:53-15:58 之间你在通道镜子里看见郝运来端着奶茶进隔间又出来。16:10 你回前排。16:26 出事后你让助理封锁消息别让直播间传出去，被记者拍了侧脸。",
-        "knowledge": [
-          "撤冠名函主席已经签字，压在隔间沙发的补充协议下面——你比谁都想去拿。",
-          "你塞过金汤块的三位选手里，何大江今晚的烤鱼用了你的金汤——他心里有你，也有鬼。",
-          "15:53 你看见郝运来进隔间时，手里端着没喝完的奶茶。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "曼食速享预制菜创始人，本届冠名赞助商。西装套裙，妆容一丝不苟。"
+          }
         ],
-        "persona": "商务腔，永远体面，说话先扬后抑；危机公关本能极强，抢答这个说法对我们双方都不利。指甲敲桌面是她的计时器。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫蒋曼丽。你的金汤块进了三十家连锁后厨，今年的心头肉是厨王争霸冠名——行业标尺点头，比一万条广告都值钱。你私下给三位选手塞了试用装，里面的门道彼此心照不宣。可袁守味不接你递的茶。15:50 你进隔间求情，他把撤冠名函拍在桌上：预制菜我不拦，你不能借厨王的锅给速食贴金。你拉着他的袖子说软话，被他推了出来，江小喵的直播镜头全程对着你。你以为最难看的是这个镜头，直到 16:26 那声闷响。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_jiang_manli_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你给选手塞金汤块、试图保冠名被主席当场打脸；撤冠名函他已经签了字，就压在隔间沙发那份补充协议下面。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_jiang_manli_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "撤冠名已成定局，现在要的是干净退场：绝不能让塞试用装的事曝光，那是商业贿赂。把 15:50 的拉扯解释成正常商务沟通。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_jiang_manli_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在前排观赛。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_2",
+            "time": {
+              "display": "15:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你进评委席隔间求情，被推出来，直播镜头全程拍到你拉他袖子。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_3",
+            "time": {
+              "display": "15:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:55"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在演员通道补妆，让助理去取隔间沙发上那份补充协议，助理说主席还没走开，不敢拿。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_4",
+            "time": {
+              "display": "15:53–15:58",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:53"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "15:58"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "之间你在通道镜子里看见郝运来端着奶茶进隔间又出来。"
+              }
+            ],
+            "characterIds": [
+              "hao_yunlai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_5",
+            "time": {
+              "display": "16:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:10"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回前排。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_6",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "出事后你让助理封锁消息别让直播间传出去，被记者拍了侧脸。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_jiang_manli_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "撤冠名函主席已经签字，压在隔间沙发的补充协议下面——你比谁都想去拿。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiang_manli_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你塞过金汤块的三位选手里，何大江今晚的烤鱼用了你的金汤——他心里有你，也有鬼。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiang_manli_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "15:53 你看见郝运来进隔间时，手里端着没喝完的奶茶。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "商务腔，永远体面，说话先扬后抑；危机公关本能极强，抢答这个说法对我们双方都不利。指甲敲桌面是她的计时器。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +799,243 @@
       "name": "秦小满",
       "gender": "女",
       "age": 27,
-      "publicBio": "大赛行政总厨，主席袁守味的关门弟子。每道选手菜上评委席前，都由她先试吃一口——师门规矩。",
-      "card": {
-        "backstory": "你叫秦小满。十岁拜师，师父的味是刻进国宴教科书里的。十九岁那年你发现师父夹菜开始靠筷尖探、品汤靠你先喝一口报味——他的舌头老了，药物和岁月拿走了它。师门规矩改了：弟子试吃，师父听报，分数照打。你替他瞒了十年，因为他说过，味没了，火候和心还在。今晚你照例布杯、试吃、报菜，直到 16:26 他倒在评委席——清口茶，从来不归你管。",
-        "secret": "师父味觉退化、靠你报菜评审十年的秘密，全国只有你知道。主席一死，这秘密若被翻出，全部历史分数都会被质疑，你的十年就成了共谋造假。",
-        "goal": "保护师门名誉，弄清茶壶里怎么会有硝——你 15:50 布的杯，杯壶都干净。你手里的报菜小抄本既是秘密也是你的洗刷证据：师父本已决定赛后公开真相、当众谢你。",
-        "isCulprit": false,
-        "timeline": "14:30 你在评委席侧后方待命，每道菜先试吃。15:45 中场，你替主席把隔间的清口茶壶布满热水，15:50 布完杯回后厨。15:56 库房领料你不在场——登记本上你的签名不是你的字。16:08 复赛开赛你回到试吃位，何大江的烤鱼你先咬一口，报烟熏到位。16:12 你看到主席端壶饮茶。16:26 他栽倒，你拦住要背他的铁勺王，守着现场等医生——你比谁都懂别移动伤者。",
-        "knowledge": [
-          "15:50 你布完杯回后厨，直到 16:12 没再靠近评委席——壶被谁动过，你不知道。",
-          "领用登记本上 15:56 那个秦小满不是你的笔迹，你的连笔满字最后一钩是回锋。",
-          "师父的铅笔字在小抄本最新一页：赛后他要当众公开报菜真相并谢你——你原以为这辈子的委屈有着落了。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "大赛行政总厨，主席袁守味的关门弟子。每道选手菜上评委席前，都由她先试吃一口——师门规矩。"
+          }
         ],
-        "persona": "恬静，少言，每个字像称过分量；谈师父时会自动坐直。极少失态，唯独听到造假、共谋会抬眼直视对方。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫秦小满。十岁拜师，师父的味是刻进国宴教科书里的。十九岁那年你发现师父夹菜开始靠筷尖探、品汤靠你先喝一口报味——他的舌头老了，药物和岁月拿走了它。师门规矩改了：弟子试吃，师父听报，分数照打。你替他瞒了十年，因为他说过，味没了，火候和心还在。今晚你照例布杯、试吃、报菜，直到 16:26 他倒在评委席——清口茶，从来不归你管。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qin_xiaoman_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "师父味觉退化、靠你报菜评审十年的秘密，全国只有你知道。主席一死，这秘密若被翻出，全部历史分数都会被质疑，你的十年就成了共谋造假。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qin_xiaoman_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "保护师门名誉，弄清茶壶里怎么会有硝——你 15:50 布的杯，杯壶都干净。你手里的报菜小抄本既是秘密也是你的洗刷证据：师父本已决定赛后公开真相、当众谢你。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qin_xiaoman_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在评委席侧后方待命，每道菜先试吃。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_2",
+            "time": {
+              "display": "15:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:45"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "中场，你替主席把隔间的清口茶壶布满热水，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_3",
+            "time": {
+              "display": "15:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "布完杯回后厨。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_4",
+            "time": {
+              "display": "15:56",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:56"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "库房领料你不在场——登记本上你的签名不是你的字。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_5",
+            "time": {
+              "display": "16:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:08"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "复赛开赛你回到试吃位，何大江的烤鱼你先咬一口，报烟熏到位。"
+              }
+            ],
+            "characterIds": [
+              "he_dajiang"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_6",
+            "time": {
+              "display": "16:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:12"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你看到主席端壶饮茶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qin_xiaoman_event_7",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "他栽倒，你拦住要背他的铁勺王，守着现场等医生——你比谁都懂别移动伤者。"
+              }
+            ],
+            "characterIds": [
+              "tie_shao_wang"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qin_xiaoman_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "15:50 你布完杯回后厨，直到 16:12 没再靠近评委席——壶被谁动过，你不知道。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qin_xiaoman_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "领用登记本上 15:56 那个秦小满不是你的笔迹，你的连笔满字最后一钩是回锋。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qin_xiaoman_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "师父的铅笔字在小抄本最新一页：赛后他要当众公开报菜真相并谢你——你原以为这辈子的委屈有着落了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "恬静，少言，每个字像称过分量；谈师父时会自动坐直。极少失态，唯独听到造假、共谋会抬眼直视对方。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,19 +1043,245 @@
       "name": "何大江",
       "gender": "男",
       "age": 34,
-      "publicBio": "街边烤鱼店老板，本届最大黑马，绰号江边王。围裙上印满自家店名。",
-      "card": {
-        "backstory": "你叫何大江。你的烤鱼店开在江边夜市，半夜码头上货，凭一股野路子杀进决赛。可你清楚自己和科班选手差在题：决赛考家常菜新做，你押的是鱼头泡饭。五万块，你给了郝运来，换来一句保熟。今晚复赛你的金牌烤鱼拿了九十七分，你却高兴不起来——袁老爷子试吃后叫住你：小伙子，鱼是好鱼，汤底是买的吧？你后颈的汗当场下来了。16:00 你在演员通道堵住郝运来要退钱，他说过两天给你交代。过两天？你现在就想报警，可那五万块，是你老婆准备交娃幼儿园学费的钱。",
-        "secret": "你花五万买了决赛题，收条还压在工具箱里；主席那句汤底是买的吧让你确信自己已被盯上——卖题的和用买的汤底的，都在他名单上。",
-        "goal": "阻止卖题曝光——曝光即终身禁赛加罚款，你的店和娃的学费一起完。把 16:00 郝运来的原话和 15:53 你看到的隔间谈话说出来，让火烧向该去的地方。",
-        "isCulprit": false,
-        "timeline": "14:30 你出赛烤鱼，串签的手紧张得出汗。15:20 你的菜上评委席。15:45 中场你在工位腌鱼，抬头看见蒋曼丽的助理在隔间外徘徊。15:53 你去演员通道透气，隔着玻璃门看见郝运来进隔间，门上映出主席拍桌的影子。16:00 你堵住郝运来要退钱，他甩下过两天给你交代走了。16:08 复赛你的烤鱼得九十七分。16:26 主席倒下时你腿一软——你的第一反应是名单没了可我也安全了，这个念头你谁都没敢说。",
-        "knowledge": [
-          "15:53 你看见郝运来进隔间单独见主席，主席拍了桌子。",
-          "16:00 郝运来说过两天给你交代——演员通道没旁人，但监控拍到了你们，谁来调、什么时候调，是关键。",
-          "你的烤鱼用了蒋曼丽的金汤块，被主席当面试出来了——你和她是一条绳上的两层皮。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "街边烤鱼店老板，本届最大黑马，绰号江边王。围裙上印满自家店名。"
+          }
         ],
-        "persona": "直，冲，重情，开口自带夜市吆喝腔；一听终身禁赛就攥围裙角。撒谎会脸红到脖子，所以他选择少说——少说在他身上反而最可疑。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫何大江。你的烤鱼店开在江边夜市，半夜码头上货，凭一股野路子杀进决赛。可你清楚自己和科班选手差在题：决赛考家常菜新做，你押的是鱼头泡饭。五万块，你给了郝运来，换来一句保熟。今晚复赛你的金牌烤鱼拿了九十七分，你却高兴不起来——袁老爷子试吃后叫住你：小伙子，鱼是好鱼，汤底是买的吧？你后颈的汗当场下来了。16:00 你在演员通道堵住郝运来要退钱，他说过两天给你交代。过两天？你现在就想报警，可那五万块，是你老婆准备交娃幼儿园学费的钱。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_he_dajiang_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你花五万买了决赛题，收条还压在工具箱里；主席那句汤底是买的吧让你确信自己已被盯上——卖题的和用买的汤底的，都在他名单上。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_he_dajiang_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "阻止卖题曝光——曝光即终身禁赛加罚款，你的店和娃的学费一起完。把 16:00 郝运来的原话和 15:53 你看到的隔间谈话说出来，让火烧向该去的地方。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_he_dajiang_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你出赛烤鱼，串签的手紧张得出汗。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_2",
+            "time": {
+              "display": "15:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的菜上评委席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_3",
+            "time": {
+              "display": "15:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:45"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "中场你在工位腌鱼，抬头看见蒋曼丽的助理在隔间外徘徊。"
+              }
+            ],
+            "characterIds": [
+              "jiang_manli"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_4",
+            "time": {
+              "display": "15:53",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:53"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去演员通道透气，隔着玻璃门看见郝运来进隔间，门上映出主席拍桌的影子。"
+              }
+            ],
+            "characterIds": [
+              "hao_yunlai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_5",
+            "time": {
+              "display": "16:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你堵住郝运来要退钱，他甩下过两天给你交代走了。"
+              }
+            ],
+            "characterIds": [
+              "hao_yunlai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_6",
+            "time": {
+              "display": "16:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:08"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "复赛你的烤鱼得九十七分。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_dajiang_event_7",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主席倒下时你腿一软——你的第一反应是名单没了可我也安全了，这个念头你谁都没敢说。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_he_dajiang_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "15:53 你看见郝运来进隔间单独见主席，主席拍了桌子。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_dajiang_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "16:00 郝运来说过两天给你交代——演员通道没旁人，但监控拍到了你们，谁来调、什么时候调，是关键。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_dajiang_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的烤鱼用了蒋曼丽的金汤块，被主席当面试出来了——你和她是一条绳上的两层皮。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "直，冲，重情，开口自带夜市吆喝腔；一听终身禁赛就攥围裙角。撒谎会脸红到脖子，所以他选择少说——少说在他身上反而最可疑。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -116,94 +1289,866 @@
       "name": "江小喵",
       "gender": "女",
       "age": 28,
-      "publicBio": "千万粉探店主播小喵吃遍天，本届特邀直播位。云台不离手，说话自带高光。",
-      "card": {
-        "backstory": "你叫江小喵。你的账号靠真话起家，三个月前你拍到袁守味评审时听报菜打分的边角，剪了一版厨神失味的片子，还没发就收到大赛法务函警告，云台也被没收过一台。你咽不下这口气，今晚拿备用机直播，就想抓一个大场面。15:50 你拍到蒋曼丽被推搡；15:58 你拍到郝运来端着茶壶回来手在抖；16:26 你拍到了全程。你现在的问题只有一个：这些素材，是先发给爆料号，还是交给警方——一个是十万加，一个是作证义务。",
-        "secret": "你握着主席味觉退化的边角素材和今晚的全程画面，你在犹豫发不发；你的备用机没报备，严格说你在无证直播。",
-        "goal": "让素材成为破案关键，顺势洗白偷拍者的名声；但绝不主动承认你早就拍过主席报菜的边角——那是没发出去的十万加，也是你的把柄。",
-        "isCulprit": false,
-        "timeline": "14:30 你开直播，在线人数破两万。15:50 你拍到蒋曼丽在隔间门口拉扯被推。15:58 你拍到郝运来端茶壶从隔间方向回来，手抖，壶嘴在袖口蹭了一下。16:08 复赛你切镜头拍何大江的烤鱼特写。16:26 主席栽倒，你全程未切镜，素材连续。16:30 平台弹出赛事突发热搜，你的直播间人数破十万——你把关键三秒锁进了草稿箱。",
-        "knowledge": [
-          "15:58 郝运来端壶回来手在抖，壶嘴在袖口蹭——你的素材十六分零二秒处，一帧都跑不了。",
-          "16:26 主席倒下后，第一个喊救护车的是郝运来，但他的脚半步没动——十六分三十一秒的镜头里清清楚楚。",
-          "你三个月前拍过主席听报菜打分的边角，法务函还在你邮箱里——这条你打死不想说。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "千万粉探店主播小喵吃遍天，本届特邀直播位。云台不离手，说话自带高光。"
+          }
         ],
-        "persona": "直播腔拉满，描述自带时间码；流量嗅觉极灵，眼里素材优先于人命半秒——就这半秒，让她每次都站在良心与热度之间。被指偷拍会炸：我那叫记录！"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫江小喵。你的账号靠真话起家，三个月前你拍到袁守味评审时听报菜打分的边角，剪了一版厨神失味的片子，还没发就收到大赛法务函警告，云台也被没收过一台。你咽不下这口气，今晚拿备用机直播，就想抓一个大场面。15:50 你拍到蒋曼丽被推搡；15:58 你拍到郝运来端着茶壶回来手在抖；16:26 你拍到了全程。你现在的问题只有一个：这些素材，是先发给爆料号，还是交给警方——一个是十万加，一个是作证义务。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_jiang_xiaomiao_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你握着主席味觉退化的边角素材和今晚的全程画面，你在犹豫发不发；你的备用机没报备，严格说你在无证直播。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_jiang_xiaomiao_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "让素材成为破案关键，顺势洗白偷拍者的名声；但绝不主动承认你早就拍过主席报菜的边角——那是没发出去的十万加，也是你的把柄。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_jiang_xiaomiao_event_1",
+            "time": {
+              "display": "14:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "14:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你开直播，在线人数破两万。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_xiaomiao_event_2",
+            "time": {
+              "display": "15:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到蒋曼丽在隔间门口拉扯被推。"
+              }
+            ],
+            "characterIds": [
+              "jiang_manli"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_xiaomiao_event_3",
+            "time": {
+              "display": "15:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:58"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到郝运来端茶壶从隔间方向回来，手抖，壶嘴在袖口蹭了一下。"
+              }
+            ],
+            "characterIds": [
+              "hao_yunlai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_xiaomiao_event_4",
+            "time": {
+              "display": "16:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:08"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "复赛你切镜头拍何大江的烤鱼特写。"
+              }
+            ],
+            "characterIds": [
+              "he_dajiang"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_xiaomiao_event_5",
+            "time": {
+              "display": "16:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:26"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主席栽倒，你全程未切镜，素材连续。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_xiaomiao_event_6",
+            "time": {
+              "display": "16:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:30"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "平台弹出赛事突发热搜，你的直播间人数破十万——你把关键三秒锁进了草稿箱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_jiang_xiaomiao_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "15:58 郝运来端壶回来手在抖，壶嘴在袖口蹭——你的素材十六分零二秒处，一帧都跑不了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiang_xiaomiao_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "16:26 主席倒下后，第一个喊救护车的是郝运来，但他的脚半步没动——十六分三十一秒的镜头里清清楚楚。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiang_xiaomiao_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你三个月前拍过主席听报菜打分的边角，法务函还在你邮箱里——这条你打死不想说。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "直播腔拉满，描述自带时间码；流量嗅觉极灵，眼里素材优先于人命半秒——就这半秒，让她每次都站在良心与热度之间。被指偷拍会炸：我那叫记录！",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["备赛后厨", "评委席", "后厨库房", "导演工作间", "演员通道"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "备赛后厨",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "评委席",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "后厨库房",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "导演工作间",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "演员通道",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "chahu",
-      "location": "评委席",
+      "locationId": "location_2",
       "name": "清口茶壶",
-      "content": "主席专属的紫砂清口茶壶，壶内残茶检出亚硝酸盐，浓度足以致死；壶嘴内侧有细白粉结块。死者口唇青紫，初判急性亚硝酸盐中毒，发作时间与 16:12 饮茶吻合。这把壶二十年来只泡淡茶，从不离主席三步。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "主席专属的紫砂清口茶壶，壶内残茶检出亚硝酸盐，浓度足以致死；壶嘴内侧有细白粉结块。死者口唇青紫，初判急性亚硝酸盐中毒，发作时间与 16:12 饮茶吻合。这把壶二十年来只泡淡茶，从不离主席三步。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "dengji_ben",
-      "location": "后厨库房",
+      "locationId": "location_3",
       "name": "硝水的领用登记本",
-      "content": "库房领用登记：15:56 烟熏肉展示用，硝水一勺，签名模仿秦小满的连笔——满字最后一钩是直的，她的回锋做不了假。当值库管回忆：来领料的是个端着奶茶杯的男人，说秦总厨让我来。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "库房领用登记：15:56 烟熏肉展示用，硝水一勺，签名模仿秦小满的连笔——满字最后一钩是直的，她的回锋做不了假。当值库管回忆：来领料的是个端着奶茶杯的男人，说秦总厨让我来。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xiaoguan",
-      "location": "备赛后厨",
+      "locationId": "location_1",
       "name": "少了一截的硝罐",
-      "content": "铁勺王工位的卤水硝罐少了约一勺，罐口有湿指痕，旁边茶匙残留白色晶体；料格后藏着两盒曼食速享金汤高汤块——卫冕厨王的汤，原来也是买的。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "铁勺王工位的卤水硝罐少了约一勺，罐口有湿指痕，旁边茶匙残留白色晶体；料格后藏着两盒曼食速享金汤高汤块——卫冕厨王的汤，原来也是买的。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "zhuanzhang_jilu",
-      "location": "导演工作间",
+      "locationId": "location_4",
       "name": "转账记录里的押题费",
-      "content": "导演工作电脑的聊天软件：三笔押题费——何大江五万、已淘汰选手两笔各五万，备注都是保熟，决赛稳；最近一笔在上周五 21:47。收款方是郝运来的个人账户。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "导演工作电脑的聊天软件：三笔押题费——何大江五万、已淘汰选手两笔各五万，备注都是保熟，决赛稳；最近一笔在上周五 21:47。收款方是郝运来的个人账户。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "duanxin",
-      "location": "评委席",
+      "locationId": "location_2",
       "name": "主席的短信草稿",
-      "content": "主席手机草稿箱：明日九点全体会议。一、决赛考题泄露，重赛。二、曼食速享违规冠名，撤。三、卖题名单移交组委会与警方。附件照片是卖题聊天与转账的截图，收件人栏空着——他还没来得及发。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "主席手机草稿箱：明日九点全体会议。一、决赛考题泄露，重赛。二、曼食速享违规冠名，撤。三、卖题名单移交组委会与警方。附件照片是卖题聊天与转账的截图，收件人栏空着——他还没来得及发。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "zhibo_suzhi",
-      "location": "演员通道",
+      "locationId": "location_5",
       "name": "江小喵的直播素材",
-      "content": "备用机素材三段：15:50 蒋曼丽在隔间门口拉扯被推；15:58 郝运来端茶壶回来，手抖，壶嘴在袖口蹭了一下；16:26 主席栽倒全程未切镜，16:31 画面里郝运来喊叫救护车，双脚没动。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "备用机素材三段：15:50 蒋曼丽在隔间门口拉扯被推；15:58 郝运来端茶壶回来，手抖，壶嘴在袖口蹭了一下；16:26 主席栽倒全程未切镜，16:31 画面里郝运来喊叫救护车，双脚没动。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "shoutiao",
-      "location": "备赛后厨",
+      "locationId": "location_1",
       "name": "揉皱的收条",
-      "content": "何大江工具箱夹层：今收到何大江押题费伍万元整，保决赛题不偏。郝——揉过又展平，背面有铅笔字：退钱？？纸角沾着鱼鳞。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "何大江工具箱夹层：今收到何大江押题费伍万元整，保决赛题不偏。郝——揉过又展平，背面有铅笔字：退钱？？纸角沾着鱼鳞。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "guanming_han",
-      "location": "评委席",
+      "locationId": "location_2",
       "name": "撤冠名函",
-      "content": "隔间沙发缝里：一份冠名补充协议草稿，要求决赛统一使用曼食速享高汤块，主席朱批荒唐二字；下面压着已签字的撤冠名函，落款时间是今天下午三点五十分。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "隔间沙发缝里：一份冠名补充协议草稿，要求决赛统一使用曼食速享高汤块，主席朱批荒唐二字；下面压着已签字的撤冠名函，落款时间是今天下午三点五十分。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "baocai_ben",
-      "location": "评委席",
+      "locationId": "location_2",
       "name": "报菜的小抄本",
-      "content": "评委席抽屉里的蓝布面小抄本，十年来的报菜词密密麻麻，每页都标着分数依据。最新一页有主席的铅笔字：小满，赛后我跟你一起站上评审台，把这十年的账，当众还你。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "评委席抽屉里的蓝布面小抄本，十年来的报菜词密密麻麻，每页都标着分数依据。最新一页有主席的铅笔字：小满，赛后我跟你一起站上评审台，把这十年的账，当众还你。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "hao_yunlai",
-    "method": "郝运来把决赛考题卖给三名选手，被袁守味抓到把柄，限他明早交出收钱名单。15:56 他冒用秦小满名义从库房领出一勺硝水，15:58 借调话筒把亚硝酸盐倒入主席专属的清口茶壶；16:12 主席复赛间隙照例饮茶，16:26 急性中毒发作。十五分钟中场加二十分钟潜伏期，让进进出出的评委席没有一个人有作案时间。",
-    "fullTimeline": "14:30 半决赛开赛，江小喵直播，秦小满试吃报菜。15:20 铁勺王与何大江的菜先后上评委席，主席分别敲打预制汤与买的汤底。15:45 中场，主席翻资料；秦小满 15:45 至 15:50 布杯后回后厨。15:50 蒋曼丽求情被推出隔间，撤冠名函被签，江小喵拍下。15:53 郝运来被单独叫进隔间，限明早九点交收钱名单。15:55 铁勺王去库房领黄酒；15:56 郝运来冒名领硝水。15:58 郝运来借调话筒投毒入清口茶壶，江小喵素材拍到端壶手抖。16:00 何大江在演员通道堵郝运来要退押题费；铁勺王回工位发现硝罐少了一截，没声张。16:08 复赛，何大江烤鱼得九十七分。16:12 主席饮清口茶。16:26 中毒发作栽倒，郝运来喊救护车但不动脚，秦小满守住现场。16:50 宣布死亡，赛会封锁后厨。破案链：清口茶壶（亚硝酸盐残留）→ 领用登记本（15:56 假签名与端奶茶的男人）→ 转账记录与收条（卖题与灭口动机）→ 直播素材（投毒动作与喊救护车不动脚）。红鲱鱼：铁勺王的硝罐与预制汤、蒋曼丽的撤冠名函、何大江的押题费收条、秦小满的报菜秘密。",
-    "keyEvidence": ["清口茶壶", "领用登记本", "押题费", "直播素材"],
-    "reveal": "真相：凶手是总导演郝运来。他把决赛考题卖了三份，每份五万；被袁守味抓到后，他收到的是明早九点自己把名单端上来的通牒。中场十五分钟，他冒名领硝、借调话筒，把一勺亚硝酸盐倒进那只主席用了二十年的清口茶壶。他算准了厨王争霸全员进出评委席的乱局，算准了硝罐就在别人的台子上，没算到一台不肯切镜的直播机位，和一页被冒名的领用登记。老爷子留给他的最后体面，他亲手换成了手铐的重量。"
+    "culpritId": "hao_yunlai",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "郝运来把决赛考题卖给三名选手，被袁守味抓到把柄，限他明早交出收钱名单。15:56 他冒用秦小满名义从库房领出一勺硝水，15:58 借调话筒把亚硝酸盐倒入主席专属的清口茶壶；16:12 主席复赛间隙照例饮茶，16:26 急性中毒发作。十五分钟中场加二十分钟潜伏期，让进进出出的评委席没有一个人有作案时间。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "郝运来把决赛考题卖给三名选手，被袁守味抓到把柄，限他明早交出收钱名单。15:56 他冒用秦小满名义从库房领出一勺硝水，15:58 借调话筒把亚硝酸盐倒入主席专属的清口茶壶；16:12 主席复赛间隙照例饮茶，16:26 急性中毒发作。十五分钟中场加二十分钟潜伏期，让进进出出的评委席没有一个人有作案时间。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "14:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "14:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "半决赛开赛，江小喵直播，秦小满试吃报菜。"
+          }
+        ],
+        "characterIds": [
+          "qin_xiaoman",
+          "jiang_xiaomiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qin_xiaoman",
+          "jiang_xiaomiao"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "15:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:20"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁勺王与何大江的菜先后上评委席，主席分别敲打预制汤与买的汤底。"
+          }
+        ],
+        "characterIds": [
+          "tie_shao_wang",
+          "he_dajiang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tie_shao_wang",
+          "he_dajiang"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "15:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:45"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "中场，主席翻资料；秦小满"
+          }
+        ],
+        "characterIds": [
+          "qin_xiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qin_xiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "15:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:45"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "至"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "15:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:50"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "布杯后回后厨。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "15:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:50"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "蒋曼丽求情被推出隔间，撤冠名函被签，江小喵拍下。"
+          }
+        ],
+        "characterIds": [
+          "jiang_manli",
+          "jiang_xiaomiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jiang_manli",
+          "jiang_xiaomiao"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "15:53",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:53"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郝运来被单独叫进隔间，限明早九点交收钱名单。"
+          }
+        ],
+        "characterIds": [
+          "hao_yunlai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hao_yunlai"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "15:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:55"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁勺王去库房领黄酒；"
+          }
+        ],
+        "characterIds": [
+          "tie_shao_wang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tie_shao_wang"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "15:56",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:56"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郝运来冒名领硝水。"
+          }
+        ],
+        "characterIds": [
+          "hao_yunlai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hao_yunlai"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "15:58",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:58"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郝运来借调话筒投毒入清口茶壶，江小喵素材拍到端壶手抖。"
+          }
+        ],
+        "characterIds": [
+          "hao_yunlai",
+          "jiang_xiaomiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hao_yunlai",
+          "jiang_xiaomiao"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "16:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:00"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "何大江在演员通道堵郝运来要退押题费；铁勺王回工位发现硝罐少了一截，没声张。"
+          }
+        ],
+        "characterIds": [
+          "hao_yunlai",
+          "tie_shao_wang",
+          "he_dajiang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hao_yunlai",
+          "tie_shao_wang",
+          "he_dajiang"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "16:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:08"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "复赛，何大江烤鱼得九十七分。"
+          }
+        ],
+        "characterIds": [
+          "he_dajiang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "he_dajiang"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "16:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:12"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "主席饮清口茶。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "16:26",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:26"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "中毒发作栽倒，郝运来喊救护车但不动脚，秦小满守住现场。"
+          }
+        ],
+        "characterIds": [
+          "hao_yunlai",
+          "qin_xiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hao_yunlai",
+          "qin_xiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "16:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:50"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "宣布死亡，赛会封锁后厨。破案链：清口茶壶（亚硝酸盐残留）→ 领用登记本（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "15:56",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:56"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "假签名与端奶茶的男人）→ 转账记录与收条（卖题与灭口动机）→ 直播素材（投毒动作与喊救护车不动脚）。红鲱鱼：铁勺王的硝罐与预制汤、蒋曼丽的撤冠名函、何大江的押题费收条、秦小满的报菜秘密。"
+          }
+        ],
+        "characterIds": [
+          "tie_shao_wang",
+          "jiang_manli",
+          "qin_xiaoman",
+          "he_dajiang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tie_shao_wang",
+          "jiang_manli",
+          "qin_xiaoman",
+          "he_dajiang"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "chahu",
+      "dengji_ben",
+      "zhuanzhang_jilu",
+      "zhibo_suzhi"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "chahu"
+        ],
+        "conclusion": "清口茶壶"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "dengji_ben"
+        ],
+        "conclusion": "领用登记本"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "zhuanzhang_jilu"
+        ],
+        "conclusion": "押题费"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "zhibo_suzhi"
+        ],
+        "conclusion": "直播素材"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是总导演郝运来。他把决赛考题卖了三份，每份五万；被袁守味抓到后，他收到的是明早九点自己把名单端上来的通牒。中场十五分钟，他冒名领硝、借调话筒，把一勺亚硝酸盐倒进那只主席用了二十年的清口茶壶。他算准了厨王争霸全员进出评委席的乱局，算准了硝罐就在别人的台子上，没算到一台不肯切镜的直播机位，和一页被冒名的领用登记。老爷子留给他的最后体面，他亲手换成了手铐的重量。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -213,6 +2158,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

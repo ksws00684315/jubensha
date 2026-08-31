@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { parseScriptDoc } from "@/core/script/schema";
+import { methodText, narrativeToText } from "@/core/script/compat";
+import { parseScriptDocV2 } from "@/core/script/v2/schema";
 import { guardDmSpeech, guardPlayerSpeech } from "./guard";
 import { buildDmContext, buildPlayerContext } from "./context";
 import { initialState } from "@/core/engine/state";
 import type { EngineEvent } from "@/core/engine/types";
 
-const doc = parseScriptDoc(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
+const doc = parseScriptDocV2(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
 
 /** 构造一个测试对局：座位 0=苏晚(凶手AI) 1=周伯 2=沈青禾 3=白慕森 4=陆小开 */
 function makeState() {
@@ -32,12 +33,11 @@ describe("信息防火墙", () => {
     for (let seat = 0; seat < 5; seat++) {
       const msgs = buildPlayerContext(doc, state, seat, events, {});
       const joined = msgs.map((m) => m.content).join("\n");
-      expect(joined).not.toContain(doc.truth.method.slice(0, 12));
-      expect(joined).not.toContain(doc.truth.fullTimeline.slice(0, 12));
-      // 其他角色的秘密
+      expect(joined).not.toContain(methodText(doc).slice(0, 12));
+      expect(joined).not.toContain(narrativeToText(doc.truth.timeline[0]?.content ?? []).slice(0, 12));
       for (const c of doc.characters) {
         if (c.id === state.seats[seat].characterId) continue;
-        expect(joined).not.toContain(c.card.secret.slice(0, 10));
+        expect(joined).not.toContain(narrativeToText(c.privateCard.secrets[0].content).slice(0, 10));
       }
     }
   });
@@ -53,8 +53,8 @@ describe("信息防火墙", () => {
     const msgs = buildPlayerContext(doc, state, 1, events, {}).map((m) => m.content).join("\n");
     const zhoubo = doc.characters.find((c) => c.id === "zhoubo")!;
     const suwan = doc.characters.find((c) => c.id === "suwan")!;
-    expect(msgs).toContain(zhoubo.card.secret.slice(0, 8));
-    expect(msgs).not.toContain(suwan.card.secret.slice(0, 8));
+    expect(msgs).toContain(narrativeToText(zhoubo.privateCard.secrets[0].content).slice(0, 8));
+    expect(msgs).not.toContain(narrativeToText(suwan.privateCard.secrets[0].content).slice(0, 8));
   });
 
   it("同一座位的 system 不随事件、线索、阶段变化，事件只追加在 user", () => {
@@ -109,7 +109,7 @@ describe("信息防火墙", () => {
     const c = buildDmContext(doc, s3, [ev], { task: "揭晓真相" });
     expect(a[0].content).toBe(b[0].content);
     expect(b[0].content).toBe(c[0].content);
-    expect(a[0].content).toContain(doc.truth.method.slice(0, 8));
+    expect(a[0].content).toContain(methodText(doc).slice(0, 8));
     expect(a[0].content).not.toContain("开场旁白");
     expect(b[1].content).toContain("转入搜证");
     expect(c[1].content).toContain("揭晓真相");
@@ -173,7 +173,7 @@ describe("输出守卫", () => {
 describe("DM 旁白守卫", () => {
   it("复盘前剥掉真凶名和未公开线索", () => {
     const state = makeState();
-    const culprit = doc.characters.find((c) => c.id === doc.truth.culprit)!;
+    const culprit = doc.characters.find((c) => c.id === doc.truth.culpritId)!;
     const result = guardDmSpeech(doc, state, `欢迎来到云澜山庄。凶手其实是${culprit.name}。锁在箱子里的账本很关键。请开始搜证。`);
     expect(result.leaked.length).toBeGreaterThan(0);
     expect(result.text).not.toContain(culprit.name);
@@ -184,7 +184,7 @@ describe("DM 旁白守卫", () => {
   it("复盘阶段允许宣读真相", () => {
     const state = makeState();
     state.phase = "REVEAL";
-    const culprit = doc.characters.find((c) => c.id === doc.truth.culprit)!;
+    const culprit = doc.characters.find((c) => c.id === doc.truth.culpritId)!;
     const result = guardDmSpeech(doc, state, `凶手是${culprit.name}。`);
     expect(result.leaked).toEqual([]);
     expect(result.text).toContain(culprit.name);

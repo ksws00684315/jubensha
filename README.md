@@ -44,39 +44,35 @@ npm run dev
 
 ## 剧本 Schema
 
-核心契约见 `src/core/script/schema.ts`。一个剧本文档包含：
+核心契约见 `src/core/script/v2/schema.ts`（V2）。一个剧本文档包含：
 
 - `meta`：标题、人数、时长、难度、标签
-- `background`：公开背景（全员可见）
-- `characters[]`：公开简介 + 私有卡（背景、**秘密**、目标、个人时间线、已知情报、说话风格、`isCulprit`）
-- `locations[]` / `clues[]`：搜证地点与线索卡（`auto_public` 自动公开 / `manual_public` 可公开 / `keep_private` 必私藏）
-- `truth`（仅 DM 可见）：真凶、手法、完整时间线、关键证据、复盘底稿
+- `background[]`：公开背景内容块（全员可见）
+- `characters[]`：`publicProfile` + `privateCard`（背景、秘密、目标、个人时间线、已知情报、人设、`isCulprit`）
+- `locations[]` / `clues[]`：地点对象与线索卡（`locationId` 引用；`auto_public` / `manual_public` / `keep_private`）
+- `truth`（仅 DM 可见）：真凶、手法、时间线、证据链、复盘底稿
 - `flow`：各阶段轮数、是否开私聊
 
-逻辑校验器（`src/core/script/validate.ts`）检查真凶一致性、线索地点合法性、证据链呼应等，error 级问题会阻止开局。
+运行时与存储以 V2 为准（`src/core/script/v2/`）。逻辑校验器（`validateScriptV2`）检查真凶一致性、线索地点、证据链等，error 级问题会阻止开局。
 
 ### V1 → V2 迁移
 
-迁移工具会保守地把旧版长文本拆成结构化内容块和时间线，并保留无法确定的信息为 warning；默认只检查，不覆盖原文件。
+种子剧本已经是 V2。导入接口遇到 V1 会自动转换成 V2 再入库。文件转换工具仍可用于散落的旧 JSON：
 
 ```bash
 # 只检查迁移结果，不写文件
-npm run script:migrate -- seeds/generated/6p-zuihouyizhiwu.json
+npm run script:migrate -- seeds/fixtures/script-v1.sample.json
 
 # 生成一个 V2 副本；目标文件已存在时必须显式加 --force
-npm run script:migrate -- seeds/generated/6p-zuihouyizhiwu.json --out /tmp/zuihou-v2.json
-npm run script:validate -- /tmp/zuihou-v2.json
+npm run script:migrate -- seeds/fixtures/script-v1.sample.json --out /tmp/v1-to-v2.json
+npm run script:validate -- /tmp/v1-to-v2.json
 
-# 批量迁移全部种子（保留原始 V1 文件）
-mkdir -p seeds/migrated-v2
-for file in seeds/*.json seeds/generated/*.json; do
-  name=$(basename "$file")
-  npm exec -- tsx scripts/migrate-script-v1.ts "$file" --out "seeds/migrated-v2/$name"
-done
-npm run script:validate -- seeds/migrated-v2/*.json
+# 把数据库里尚未升级的剧本回写成 V2
+npm run script:migrate-db
+npm run script:migrate-db -- --write
 ```
 
-迁移后的 warning 需要人工复核，重点关注：无法识别的非 `HH:mm` 时间、没有独立动机的旧文本，以及关键证据无法唯一映射到线索 ID。V1 原文件可以继续导入和开局，确认 V2 内容无误后再替换导入源。
+迁移 warning 需要人工复核：无法识别的非 `HH:mm` 时间、没有独立动机的旧文本、关键证据无法唯一映射到线索 ID。V1 schema 只留给转换器，不再作为运行时契约。
 
 ## 测试
 

@@ -3,7 +3,7 @@ import { z } from "zod";
 import crypto from "node:crypto";
 import { db } from "@/lib/db";
 import { parseScriptForRuntime } from "@/core/script/compat";
-import { isScriptPlayable } from "@/core/script/validate";
+import { isScriptPlayable } from "@/core/script/v2/validate";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 
 const seatSchema = z.object({

@@ -1,34 +1,229 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "云澜山庄的雪夜",
     "minPlayers": 5,
     "maxPlayers": 5,
     "durationMin": 120,
     "difficulty": "新手",
-    "tags": ["本格", "推理", "现代", "密闭空间"],
+    "tags": [
+      "本格",
+      "推理",
+      "现代",
+      "密闭空间"
+    ],
     "intro": "云澜山庄庄主沈万山的六十大寿寿宴散场后，大雪封山。深夜，庄主被发现死于书房——参茶中检出剧毒乌头碱。警察天亮才能进山，山庄里的五个人，必须在雪停之前找出真凶。"
   },
-  "background": "云澜山庄庄主沈万山，白手起家的地产大亨，为人强势刻薄。今晚是他六十大寿，寿宴设在山庄主楼，受邀的都是他的'自己人'：侄女沈青禾、跟了他三十年的老管家周伯、生意伙伴白慕森、私人医生苏晚，以及他收养的义子兼司机陆小开。晚宴上沈万山兴致不高，几度冷场。21:42，老管家周伯进书房收茶具，发现沈万山倒在地上，已无呼吸。桌上那杯参茶的残液中检出剧毒乌头碱——服药后约一刻钟发作，无色无味，剂量足以致死。大雪封山，警察最早也要明早才能进山。沈万山死前召集的五个人都宿在山庄。天亮之前，你们必须找出凶手——因为凶手，就坐在你们中间。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "云澜山庄庄主沈万山，白手起家的地产大亨，为人强势刻薄。今晚是他六十大寿，寿宴设在山庄主楼，受邀的都是他的'自己人'：侄女沈青禾、跟了他三十年的老管家周伯、生意伙伴白慕森、私人医生苏晚，以及他收养的义子兼司机陆小开。晚宴上沈万山兴致不高，几度冷场。21:42，老管家周伯进书房收茶具，发现沈万山倒在地上，已无呼吸。桌上那杯参茶的残液中检出剧毒乌头碱——服药后约一刻钟发作，无色无味，剂量足以致死。大雪封山，警察最早也要明早才能进山。沈万山死前召集的五个人都宿在山庄。天亮之前，你们必须找出凶手——因为凶手，就坐在你们中间。"
+    }
+  ],
   "characters": [
     {
       "id": "qinghe",
       "name": "沈青禾",
       "gender": "女",
       "age": 26,
-      "publicBio": "沈万山的侄女，父母早逝后由沈万山抚养长大，山庄唯一的血脉继承人。今晚是她的提议：全家人为叔叔好好过个寿。",
-      "card": {
-        "backstory": "你叫沈青禾，父亲是沈万山早逝的弟弟。你三岁起就住在云澜山庄，叔叔待你谈不上坏，但永远隔着一层——他要的是'沈家有后'这四个字。你大学生物系毕业，回山庄帮他打理了三年账目。上个月你无意中看到遗嘱草稿：他要把百分之八十的资产捐给慈善基金，只留给你百分之五。你质问他，他说'你翅膀硬了，配不上云澜'。今晚寿宴前，你伪造了一封他十年前的亲笔信——信里写明云澜山庄将来由你继承。你想在今晚众人面前'不小心'露出这封信，逼他就范。晚宴上他看你的眼神冷得像冰。",
-        "secret": "你伪造了叔叔十年前允诺你继承云澜山庄的亲笔信，就藏在你房间的梳妆夹层里。一旦被发现，你不仅得不到遗产，还会身败名裂。",
-        "goal": "查清真凶，为自己洗清嫌疑。同时绝不能让任何人发现那封伪造的信。若被逼问遗嘱动机，就模糊带过。",
-        "isCulprit": false,
-        "timeline": "20:00 寿宴入席。20:40 你注意到叔叔被白慕森请去书房。21:00 你按捺不住，进书房想再谈遗嘱的事，他喝了点酒，骂你是'养不熟的白眼狼'，扇了你一耳光。21:10 你哭着跑回房间，之后一直没再出来。21:42 听到周伯的喊声跑向书房。你看到周伯端着空托盘站在尸体旁，也看到陆小开比你先到一步，站在门口，脸色发白。",
-        "knowledge": [
-          "21:00-21:10 你在书房和叔叔争执遗嘱，你离开时他还活着，正端起参茶要喝。",
-          "21:12 你回房的路上，在楼梯拐角看见苏医生拎着她那个墨绿色出诊包上楼，她说是给叔叔送安神药。",
-          "你知道白慕森和叔叔这两年为股份的事闹得很僵，今晚晚宴上两人一句话都没说。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈万山的侄女，父母早逝后由沈万山抚养长大，山庄唯一的血脉继承人。今晚是她的提议：全家人为叔叔好好过个寿。"
+          }
         ],
-        "persona": "说话直接带刺，情绪外露，委屈和愤怒写在脸上；提到叔叔时语气复杂，有恨但更多的是委屈。被怀疑时容易炸毛，但逻辑清晰时会冷静下来。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫沈青禾，父亲是沈万山早逝的弟弟。你三岁起就住在云澜山庄，叔叔待你谈不上坏，但永远隔着一层——他要的是'沈家有后'这四个字。你大学生物系毕业，回山庄帮他打理了三年账目。上个月你无意中看到遗嘱草稿：他要把百分之八十的资产捐给慈善基金，只留给你百分之五。你质问他，他说'你翅膀硬了，配不上云澜'。今晚寿宴前，你伪造了一封他十年前的亲笔信——信里写明云澜山庄将来由你继承。你想在今晚众人面前'不小心'露出这封信，逼他就范。晚宴上他看你的眼神冷得像冰。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qinghe_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你伪造了叔叔十年前允诺你继承云澜山庄的亲笔信，就藏在你房间的梳妆夹层里。一旦被发现，你不仅得不到遗产，还会身败名裂。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qinghe_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "查清真凶，为自己洗清嫌疑。同时绝不能让任何人发现那封伪造的信。若被逼问遗嘱动机，就模糊带过。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qinghe_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "寿宴入席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinghe_event_2",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你注意到叔叔被白慕森请去书房。"
+              }
+            ],
+            "characterIds": [
+              "baimusen"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinghe_event_3",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你按捺不住，进书房想再谈遗嘱的事，他喝了点酒，骂你是'养不熟的白眼狼'，扇了你一耳光。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinghe_event_4",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你哭着跑回房间，之后一直没再出来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinghe_event_5",
+            "time": {
+              "display": "21:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "听到周伯的喊声跑向书房。你看到周伯端着空托盘站在尸体旁，也看到陆小开比你先到一步，站在门口，脸色发白。"
+              }
+            ],
+            "characterIds": [
+              "zhoubo",
+              "luxiaokai"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qinghe_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00-21:10 你在书房和叔叔争执遗嘱，你离开时他还活着，正端起参茶要喝。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qinghe_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:12 你回房的路上，在楼梯拐角看见苏医生拎着她那个墨绿色出诊包上楼，她说是给叔叔送安神药。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qinghe_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你知道白慕森和叔叔这两年为股份的事闹得很僵，今晚晚宴上两人一句话都没说。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "说话直接带刺，情绪外露，委屈和愤怒写在脸上；提到叔叔时语气复杂，有恨但更多的是委屈。被怀疑时容易炸毛，但逻辑清晰时会冷静下来。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -36,19 +231,199 @@
       "name": "周伯",
       "gender": "男",
       "age": 58,
-      "publicBio": "沈家老管家，跟了沈万山三十年，山庄上下大小事都由他打理。今晚的参茶是他亲手送到书房的。",
-      "card": {
-        "backstory": "你叫周伯，本名周福安。你十九岁就跟着老爷，看着他起高楼、宴宾客。这两年你迷上了网络赌球，输了近两百万，从账上陆续挪用了三十七万填窟窿。你以为神不知鬼不觉，直到半个月前，老爷把一本对账册扔在你面前，冷冷说了句：'人老了，手别伸太长。'从那以后你提心吊胆，今晚你听见他跟电话那头说'周伯的事，年后一并处理'。你知道自己要被辞退甚至送进去。你只求撑到退休。",
-        "secret": "你挪用了公款三十七万赌球，老爷半个月前已经发现了。你担心他报警，所以你拼命想表现出'一切如常'。",
-        "goal": "找出真凶证明自己清白，同时绝不能让人翻出你房里那本账。若有人提起钱的事，就说'账目我核对过，没有问题'，态度要稳。",
-        "isCulprit": false,
-        "timeline": "20:00 你张罗寿宴，全程在餐厅和厨房。20:58 白先生从书房出来时撞见你，你给他开了廊灯。21:15 你把参茶送到书房，老爷就着药喝了大半杯，还嫌苦。你顺口提了句'老爷，账上的事……'被他挥手打断，说你多嘴。21:20 你退出来，在书房外走廊擦了十分钟栏杆。这期间你看见苏医生从她房间方向走过来，进了书房，手里拎着出诊包。21:42 你进书房收茶具，发现老爷倒在地上。你吓得手一抖，托盘摔了，喊声惊动了所有人。",
-        "knowledge": [
-          "21:15 你送茶时老爷活着，还喝了茶——茶里的毒不可能是你下的，因为你退出去后他还活着（毒发要一刻钟，但他 21:35 才倒下，而 21:20 后你再没进去过）。",
-          "21:20 你在走廊亲眼看见苏医生拎着出诊包进了书房，待了约十分钟。",
-          "半个月的账册风波，除了你和老爷，没人知道。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈家老管家，跟了沈万山三十年，山庄上下大小事都由他打理。今晚的参茶是他亲手送到书房的。"
+          }
         ],
-        "persona": "谨慎恭敬，措辞圆滑，习惯性遮掩但掩饰得很笨；提到老爷时会哽咽。有强烈的服务本能，别人询问时会下意识提供细节。心虚的事一旦被戳破，手会发抖。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫周伯，本名周福安。你十九岁就跟着老爷，看着他起高楼、宴宾客。这两年你迷上了网络赌球，输了近两百万，从账上陆续挪用了三十七万填窟窿。你以为神不知鬼不觉，直到半个月前，老爷把一本对账册扔在你面前，冷冷说了句：'人老了，手别伸太长。'从那以后你提心吊胆，今晚你听见他跟电话那头说'周伯的事，年后一并处理'。你知道自己要被辞退甚至送进去。你只求撑到退休。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_zhoubo_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你挪用了公款三十七万赌球，老爷半个月前已经发现了。你担心他报警，所以你拼命想表现出'一切如常'。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_zhoubo_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "找出真凶证明自己清白，同时绝不能让人翻出你房里那本账。若有人提起钱的事，就说'账目我核对过，没有问题'，态度要稳。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_zhoubo_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你张罗寿宴，全程在餐厅和厨房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhoubo_event_2",
+            "time": {
+              "display": "20:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:58"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白先生从书房出来时撞见你，你给他开了廊灯。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhoubo_event_3",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你把参茶送到书房，老爷就着药喝了大半杯，还嫌苦。你顺口提了句'老爷，账上的事……'被他挥手打断，说你多嘴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhoubo_event_4",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你退出来，在书房外走廊擦了十分钟栏杆。这期间你看见苏医生从她房间方向走过来，进了书房，手里拎着出诊包。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhoubo_event_5",
+            "time": {
+              "display": "21:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你进书房收茶具，发现老爷倒在地上。你吓得手一抖，托盘摔了，喊声惊动了所有人。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_zhoubo_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:15 你送茶时老爷活着，还喝了茶——茶里的毒不可能是你下的，因为你退出去后他还活着（毒发要一刻钟，但他 21:35 才倒下，而 21:20 后你再没进去过）。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_zhoubo_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20 你在走廊亲眼看见苏医生拎着出诊包进了书房，待了约十分钟。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_zhoubo_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "半个月的账册风波，除了你和老爷，没人知道。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "谨慎恭敬，措辞圆滑，习惯性遮掩但掩饰得很笨；提到老爷时会哽咽。有强烈的服务本能，别人询问时会下意识提供细节。心虚的事一旦被戳破，手会发抖。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +431,203 @@
       "name": "白慕森",
       "gender": "男",
       "age": 45,
-      "publicBio": "沈万山多年的生意伙伴，鼎峰置业的二当家。场面上八面玲珑，今晚却少见地沉默。",
-      "card": {
-        "backstory": "你叫白慕森，做工程起家。前年跟沈万山合伙拿地，行情急转，你挪用合作款去补别的窟窿，被沈万山抓个正着。他没报警，而是让你签了两千万的借条——从此你就是他的打工仔。今年你终于找到了出路：鼎峰资本愿意收购你在合作公司的股份，代价是你必须拿到沈万山的签字放行。今晚书房摊牌，他一字一句告诉你：'慕森啊，人这辈子，欠钱的爷爷，欠命的孙子。你那两千万，慢慢还。'谈崩了。你摔门而出，在门廊抽了半支雪茄，回房喝闷酒。你随身带着录音笔——从进门那一刻就在录。这是你的习惯，也是你今晚唯一的武器。",
-        "secret": "你欠沈万山两千万，且已私下与鼎峰资本谈妥股份收购。录音笔里有今晚 20:40-20:58 书房谈话全程，以及你摔门后回房独处的独白。",
-        "goal": "找出真凶，但录音笔是你的底牌——公开它等于承认自己欠债两千万。先观察风向，必要时用录音里'20:58 我已回房'的段落自证清白，其他内容绝不给人看。",
-        "isCulprit": false,
-        "timeline": "20:40 你应召进书房谈股份放行的事，谈到 20:58 彻底谈崩，他骂你'欠钱的爷爷'，你摔门而出。20:58-21:05 你在门廊抽了半支雪茄，烟头就摁灭在廊下铜缸里。21:05 你回房，给自己倒了杯威士忌，之后一直听歌喝酒，没再出门。21:42 听见喊声赶到书房时，地上已经围了一圈人。",
-        "knowledge": [
-          "你的录音笔证明：20:58 你离开书房时沈万山还活着、还在骂人，21:05 后你独处一室。",
-          "20:40 你进书房时，看见书桌上放着老爷的日记本，摊开着——他有个记日记的习惯。",
-          "晚宴上你注意到苏医生一直盯着老爷看，老爷寿酒都是她给挡的。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈万山多年的生意伙伴，鼎峰置业的二当家。场面上八面玲珑，今晚却少见地沉默。"
+          }
         ],
-        "persona": "商人腔，爱打哈哈，说话滴水不漏，习惯用'这个嘛''怎么说呢'起头；谈钱时才露出精明。被逼急了会拍桌子，但很快又堆起笑。对录音笔的事极度敏感。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫白慕森，做工程起家。前年跟沈万山合伙拿地，行情急转，你挪用合作款去补别的窟窿，被沈万山抓个正着。他没报警，而是让你签了两千万的借条——从此你就是他的打工仔。今年你终于找到了出路：鼎峰资本愿意收购你在合作公司的股份，代价是你必须拿到沈万山的签字放行。今晚书房摊牌，他一字一句告诉你：'慕森啊，人这辈子，欠钱的爷爷，欠命的孙子。你那两千万，慢慢还。'谈崩了。你摔门而出，在门廊抽了半支雪茄，回房喝闷酒。你随身带着录音笔——从进门那一刻就在录。这是你的习惯，也是你今晚唯一的武器。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_baimusen_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你欠沈万山两千万，且已私下与鼎峰资本谈妥股份收购。录音笔里有今晚 20:40-20:58 书房谈话全程，以及你摔门后回房独处的独白。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_baimusen_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "找出真凶，但录音笔是你的底牌——公开它等于承认自己欠债两千万。先观察风向，必要时用录音里'20:58 我已回房'的段落自证清白，其他内容绝不给人看。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_baimusen_event_1",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你应召进书房谈股份放行的事，谈到"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusen_event_2",
+            "time": {
+              "display": "20:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:58"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "彻底谈崩，他骂你'欠钱的爷爷'，你摔门而出。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusen_event_3",
+            "time": {
+              "display": "20:58–21:05",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:58"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在门廊抽了半支雪茄，烟头就摁灭在廊下铜缸里。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusen_event_4",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回房，给自己倒了杯威士忌，之后一直听歌喝酒，没再出门。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusen_event_5",
+            "time": {
+              "display": "21:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "听见喊声赶到书房时，地上已经围了一圈人。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_baimusen_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的录音笔证明：20:58 你离开书房时沈万山还活着、还在骂人，21:05 后你独处一室。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimusen_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:40 你进书房时，看见书桌上放着老爷的日记本，摊开着——他有个记日记的习惯。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimusen_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴上你注意到苏医生一直盯着老爷看，老爷寿酒都是她给挡的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "商人腔，爱打哈哈，说话滴水不漏，习惯用'这个嘛''怎么说呢'起头；谈钱时才露出精明。被逼急了会拍桌子，但很快又堆起笑。对录音笔的事极度敏感。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,20 +635,214 @@
       "name": "苏晚",
       "gender": "女",
       "age": 34,
-      "publicBio": "沈家私人医生，十年间随叫随到，山庄上下都叫她'苏医生'。今晚寿宴上老爷的酒，是她一杯一杯挡下来的。",
-      "card": {
-        "backstory": "你叫苏晚。十年前你在县医院值夜班，实习护士配错了药，你签字放行——病人死在抢救室。护士顶了全部责任，但签字医生是你。沈万山不知通过什么关系拿到了那份事故报告。这十年，你是他随叫随到的'苏医生'：不收诊费，不说出去，全家老小的健康都归你管。上个月他把一份《自愿承认医疗过失并自愿吊销执照声明》推到你面前，让你签字存档。今晚寿宴上，他当着满桌人的面只说了一句：'苏医生，过了今晚，你就自由了。'你知道他说的自由，是身败名裂的自由。你口袋里有个小玻璃瓶，是上个月从药材市场配的乌头碱溶液——你告诉自己只是'以防万一'。今晚，以防万一变成了唯一的路。21:20 你以送安神药为名进了书房。他背对你开保险柜取礼盒，说要'补个寿礼'。你把药水倒进那杯还温着的参茶，搅了搅。前后二十秒。",
-        "secret": "你就是凶手。十年前医疗事故的把柄被沈万山攥了十年，今晚他逼你签认罪声明。21:20 你把乌头碱倒进了他的参茶。空瓶还在你房间窗台的绿植盆里。",
-        "goal": "活过今晚。绝不主动承认；所有回答围绕'我是医生，我在救他'展开。若雪地脚印或玻璃瓶被提起，立刻给出医学解释（诊视、采血样）。必要时把怀疑引向有钥匙、有怨恨、有私心的人——例如被扇耳光的青禾、被轰走的陆小开、有账本把柄的周伯。",
-        "isCulprit": true,
-        "timeline": "20:00 寿宴上你替老爷挡酒，观察他的状态（你有安眠药起效时间的职业敏感）。21:12 你回房取了安神药和出诊包——顺手把玻璃瓶放进白大褂口袋。21:20 你进书房送药，他心情不错，正要给你看'补的寿礼'，背身开保险柜。你把乌头碱倒进参茶。21:30 你离开书房，回房把玻璃瓶塞进窗台绿植盆的土里。21:42 周伯喊声传来，你以医生身份第一个检查尸体，宣布死亡，并交代'雪夜封山，保护现场，等天亮报警'。",
-        "knowledge": [
-          "21:20 你进书房时，参茶还温着，就放在他手边——毒是下在这杯茶里的，你自己最清楚。",
-          "书房保险柜的密码是老爷的生日，他知道你了解他的身体情况，从不避讳在你面前开柜子。",
-          "周伯 21:15 送过茶——你们可以互相证明茶原本无毒，但这也意味着下毒窗口就在 21:15-21:35 之间。",
-          "你宣布死亡和'保护现场'的话术让所有人都以为警察进山前不能动任何东西——其实你是怕有人翻出书房保险柜里那份事故报告。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈家私人医生，十年间随叫随到，山庄上下都叫她'苏医生'。今晚寿宴上老爷的酒，是她一杯一杯挡下来的。"
+          }
         ],
-        "persona": "温柔镇定，语速偏慢，职业性的微笑，习惯用医学词汇把事情说得客观冷静。撒谎不打草稿，被质疑时先共情再解释，语气永远委屈而克制。只有被人连续追问细节时，微笑会出现一瞬间的僵硬。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫苏晚。十年前你在县医院值夜班，实习护士配错了药，你签字放行——病人死在抢救室。护士顶了全部责任，但签字医生是你。沈万山不知通过什么关系拿到了那份事故报告。这十年，你是他随叫随到的'苏医生'：不收诊费，不说出去，全家老小的健康都归你管。上个月他把一份《自愿承认医疗过失并自愿吊销执照声明》推到你面前，让你签字存档。今晚寿宴上，他当着满桌人的面只说了一句：'苏医生，过了今晚，你就自由了。'你知道他说的自由，是身败名裂的自由。你口袋里有个小玻璃瓶，是上个月从药材市场配的乌头碱溶液——你告诉自己只是'以防万一'。今晚，以防万一变成了唯一的路。21:20 你以送安神药为名进了书房。他背对你开保险柜取礼盒，说要'补个寿礼'。你把药水倒进那杯还温着的参茶，搅了搅。前后二十秒。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_suwan_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。十年前医疗事故的把柄被沈万山攥了十年，今晚他逼你签认罪声明。21:20 你把乌头碱倒进了他的参茶。空瓶还在你房间窗台的绿植盆里。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_suwan_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "活过今晚。绝不主动承认；所有回答围绕'我是医生，我在救他'展开。若雪地脚印或玻璃瓶被提起，立刻给出医学解释（诊视、采血样）。必要时把怀疑引向有钥匙、有怨恨、有私心的人——例如被扇耳光的青禾、被轰走的陆小开、有账本把柄的周伯。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_suwan_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "寿宴上你替老爷挡酒，观察他的状态（你有安眠药起效时间的职业敏感）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suwan_event_2",
+            "time": {
+              "display": "21:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:12"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回房取了安神药和出诊包——顺手把玻璃瓶放进白大褂口袋。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suwan_event_3",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你进书房送药，他心情不错，正要给你看'补的寿礼'，背身开保险柜。你把乌头碱倒进参茶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suwan_event_4",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你离开书房，回房把玻璃瓶塞进窗台绿植盆的土里。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suwan_event_5",
+            "time": {
+              "display": "21:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "周伯喊声传来，你以医生身份第一个检查尸体，宣布死亡，并交代'雪夜封山，保护现场，等天亮报警'。"
+              }
+            ],
+            "characterIds": [
+              "zhoubo"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_suwan_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20 你进书房时，参茶还温着，就放在他手边——毒是下在这杯茶里的，你自己最清楚。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suwan_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房保险柜的密码是老爷的生日，他知道你了解他的身体情况，从不避讳在你面前开柜子。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suwan_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "周伯 21:15 送过茶——你们可以互相证明茶原本无毒，但这也意味着下毒窗口就在 21:15-21:35 之间。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suwan_4",
+            "title": "情报 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你宣布死亡和'保护现场'的话术让所有人都以为警察进山前不能动任何东西——其实你是怕有人翻出书房保险柜里那份事故报告。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "温柔镇定，语速偏慢，职业性的微笑，习惯用医学词汇把事情说得客观冷静。撒谎不打草稿，被质疑时先共情再解释，语气永远委屈而克制。只有被人连续追问细节时，微笑会出现一瞬间的僵硬。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -97,129 +850,971 @@
       "name": "陆小开",
       "gender": "男",
       "age": 24,
-      "publicBio": "沈万山三年前收养的义子，现在是山庄的司机兼跑腿。今晚寿宴他负责开车接人，全程在门厅待命。",
-      "card": {
-        "backstory": "你叫陆小开，孤儿院出来，三年前老爷'发善心'收养了你——代价是你得随传随到：开车、跑腿、赔笑。你认了，因为你喜欢青禾姐。你偷配了一把书房钥匙，不是想偷东西，只是想在他骂青禾的时候能有个地方让她躲一躲。今晚 21:05 你溜到书房外廊柱后面，想等青禾姐出来。你听见里面在吵架，听见她哭着跑出来。你想进去说情，21:12 被老爷发现，一句'滚'砸在你脸上。你躲在廊柱后面没走——你看见苏医生拎着出诊包进了书房。21:20 你才回房。你憋着一肚子火：凭什么他们都可以进书房，你连说句话都不配？你把偷配的钥匙攥在手心，第一次认真想过用它做点什么。",
-        "secret": "你偷配了书房钥匙（就在你外套口袋里），21:05-21:20 你一直躲在书房外廊柱后，看见了 21:20 进书房的每一个人。你庆幸自己什么都没做，但钥匙说不清。你还偷偷写了没寄出的情书给青禾姐。",
-        "goal": "把 21:05-21:20 门口看到的一切说出来——这是你洗清自己的唯一办法。但私配钥匙和情书绝不能被发现，被问到 21:20 前在哪儿就含糊说'在门厅'。",
-        "isCulprit": false,
-        "timeline": "20:00 你在门厅迎客、开车接人。21:05 你溜到书房外廊柱后等青禾姐。21:12 被老爷隔着门骂'滚'。21:15 你缩在廊柱后，看见周伯端托盘进书房又出来，在走廊擦栏杆。21:20 你看见苏医生拎着墨绿色出诊包走进书房。21:30 左右，你听见苏医生和老爷道晚安的声音，你怕撞见她又缩回去，21:35 才从侧楼梯回房。21:42 周伯的喊声传来，你第一个冲到书房门口。",
-        "knowledge": [
-          "21:20 苏医生进书房、21:30 左右你听见她道晚安离开——她是 21:15 之后唯一进过书房的人，这一点周伯可以部分印证。",
-          "21:35 你从侧楼梯上楼时，闻到二楼走廊有股淡淡的苦杏仁味，当时没在意。（乌头碱无杏仁味——你记错了，或者那只是苏晚的药味。这条情报你自己也不确定。）",
-          "你外套口袋里有私配的书房钥匙和给青禾姐的没寄出的情书。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈万山三年前收养的义子，现在是山庄的司机兼跑腿。今晚寿宴他负责开车接人，全程在门厅待命。"
+          }
         ],
-        "persona": "年轻冲动，讲义气，话多且快，紧张时会绕头发、语速更快。提到老爷时又怕又恨。愿意为了保护青禾姐扛下所有事，说到她时明显不自然。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆小开，孤儿院出来，三年前老爷'发善心'收养了你——代价是你得随传随到：开车、跑腿、赔笑。你认了，因为你喜欢青禾姐。你偷配了一把书房钥匙，不是想偷东西，只是想在他骂青禾的时候能有个地方让她躲一躲。今晚 21:05 你溜到书房外廊柱后面，想等青禾姐出来。你听见里面在吵架，听见她哭着跑出来。你想进去说情，21:12 被老爷发现，一句'滚'砸在你脸上。你躲在廊柱后面没走——你看见苏医生拎着出诊包进了书房。21:20 你才回房。你憋着一肚子火：凭什么他们都可以进书房，你连说句话都不配？你把偷配的钥匙攥在手心，第一次认真想过用它做点什么。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luxiaokai_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷配了书房钥匙（就在你外套口袋里），21:05-21:20 你一直躲在书房外廊柱后，看见了 21:20 进书房的每一个人。你庆幸自己什么都没做，但钥匙说不清。你还偷偷写了没寄出的情书给青禾姐。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luxiaokai_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把 21:05-21:20 门口看到的一切说出来——这是你洗清自己的唯一办法。但私配钥匙和情书绝不能被发现，被问到 21:20 前在哪儿就含糊说'在门厅'。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luxiaokai_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在门厅迎客、开车接人。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_2",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你溜到书房外廊柱后等青禾姐。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_3",
+            "time": {
+              "display": "21:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:12"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被老爷隔着门骂'滚'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_4",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你缩在廊柱后，看见周伯端托盘进书房又出来，在走廊擦栏杆。"
+              }
+            ],
+            "characterIds": [
+              "zhoubo"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_5",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你看见苏医生拎着墨绿色出诊包走进书房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_6",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "左右，你听见苏医生和老爷道晚安的声音，你怕撞见她又缩回去，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_7",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "才从侧楼梯回房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaokai_event_8",
+            "time": {
+              "display": "21:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:42"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "周伯的喊声传来，你第一个冲到书房门口。"
+              }
+            ],
+            "characterIds": [
+              "zhoubo"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luxiaokai_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20 苏医生进书房、21:30 左右你听见她道晚安离开——她是 21:15 之后唯一进过书房的人，这一点周伯可以部分印证。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiaokai_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:35 你从侧楼梯上楼时，闻到二楼走廊有股淡淡的苦杏仁味，当时没在意。（乌头碱无杏仁味——你记错了，或者那只是苏晚的药味。这条情报你自己也不确定。）"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiaokai_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你外套口袋里有私配的书房钥匙和给青禾姐的没寄出的情书。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "年轻冲动，讲义气，话多且快，紧张时会绕头发、语速更快。提到老爷时又怕又恨。愿意为了保护青禾姐扛下所有事，说到她时明显不自然。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["书房", "门廊雪地", "苏晚的房间", "周伯的房间", "白慕森的房间", "陆小开的房间"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "书房",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "门廊雪地",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "苏晚的房间",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "周伯的房间",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "白慕森的房间",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "陆小开的房间",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "teacup",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "参茶残液",
-      "content": "书桌上的青瓷茶杯中剩有小半杯参茶，检出剧毒乌头碱。杯沿只有死者一个人的唇纹与指纹。毒物无色微苦，服用后约一刻钟发作。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书桌上的青瓷茶杯中剩有小半杯参茶，检出剧毒乌头碱。杯沿只有死者一个人的唇纹与指纹。毒物无色微苦，服用后约一刻钟发作。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "diary",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "沈万山的日记本",
-      "content": "摊开的一页写着：'苏晚的事，十年了，这把柄用得顺手。今日摊牌，她脸白得吓人。江山要用在手才值钱。'后几页被撕掉，撕口很新。字迹确认为沈万山本人。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "摊开的一页写着：'苏晚的事，十年了，这把柄用得顺手。今日摊牌，她脸白得吓人。江山要用在手才值钱。'后几页被撕掉，撕口很新。字迹确认为沈万山本人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "will",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "遗嘱草稿",
-      "content": "打印的遗嘱草稿：名下资产的百分之八十捐入慈善基金，沈青禾名下得百分之五，陆小开得百分之五，其余归公司。草稿边角有反复折叠的痕迹，像是被人攥在手里许久。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "打印的遗嘱草稿：名下资产的百分之八十捐入慈善基金，沈青禾名下得百分之五，陆小开得百分之五，其余归公司。草稿边角有反复折叠的痕迹，像是被人攥在手里许久。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "safe_report",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "保险柜里的旧文件",
-      "content": "书房暗格保险柜（密码为死者生日）内有一份十年前的《医疗差错事故调查报告》复印件：某县医院夜班，实习生配药错误、签字医生放行，患者死亡。责任医生签名栏：苏晚。报告下方压着一份未签署的《自愿承认医疗过失声明》。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书房暗格保险柜（密码为死者生日）内有一份十年前的《医疗差错事故调查报告》复印件：某县医院夜班，实习生配药错误、签字医生放行，患者死亡。责任医生签名栏：苏晚。报告下方压着一份未签署的《自愿承认医疗过失声明》。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "missing_key",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "书房钥匙挂板",
-      "content": "书房门内挂板上写着'备用钥匙 ×2'的标签，板上只剩一把钥匙。另一把去向不明。管家周伯称挂板钥匙'很久没动过'。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书房门内挂板上写着'备用钥匙 ×2'的标签，板上只剩一把钥匙。另一把去向不明。管家周伯称挂板钥匙'很久没动过'。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "footprint",
-      "location": "门廊雪地",
+      "locationId": "location_2",
       "name": "雪地脚印",
-      "content": "晚 21:10 雪转小、21:25 雪停。门廊至书房方向的雪地上有一串往返脚印：37 码平底女靴，鞋底为横条纹。脚印往返各一次，去程深、回程稍浅。山庄内穿 37 码的只有苏晚（出诊靴）和沈青禾（短靴，圆点纹鞋底）。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "晚 21:10 雪转小、21:25 雪停。门廊至书房方向的雪地上有一串往返脚印：37 码平底女靴，鞋底为横条纹。脚印往返各一次，去程深、回程稍浅。山庄内穿 37 码的只有苏晚（出诊靴）和沈青禾（短靴，圆点纹鞋底）。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "cigar",
-      "location": "门廊雪地",
+      "locationId": "location_2",
       "name": "雪茄烟头",
-      "content": "门廊铜缸里有一枚掐灭的高希霸雪茄烟头，雪茄表面落了薄雪——熄灭时间约在雪转小之前（21:10 前）。白慕森的雪茄盒少了一支。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "门廊铜缸里有一枚掐灭的高希霸雪茄烟头，雪茄表面落了薄雪——熄灭时间约在雪转小之前（21:10 前）。白慕森的雪茄盒少了一支。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "bottle",
-      "location": "苏晚的房间",
+      "locationId": "location_3",
       "name": "窗台盆栽里的玻璃瓶",
-      "content": "窗台绿植盆的土里埋着一个眼药水瓶大小的棕色玻璃瓶，瓶内残留约一毫升液体，气味微苦。实验室快检：乌头碱阳性。瓶身原有标签被撕掉，撕痕边缘有指甲抠挖的痕迹。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "窗台绿植盆的土里埋着一个眼药水瓶大小的棕色玻璃瓶，瓶内残留约一毫升液体，气味微苦。实验室快检：乌头碱阳性。瓶身原有标签被撕掉，撕痕边缘有指甲抠挖的痕迹。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "newspaper",
-      "location": "苏晚的房间",
+      "locationId": "location_3",
       "name": "折起的旧剪报",
-      "content": "床头柜医药箱夹层里有一张折了又折的十年前剪报：《县医院用药事故致一死，涉事护士被吊销执照》。报道配图中被遮住脸、站在护士身后的值班医生，身形与苏晚一致。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "床头柜医药箱夹层里有一张折了又折的十年前剪报：《县医院用药事故致一死，涉事护士被吊销执照》。报道配图中被遮住脸、站在护士身后的值班医生，身形与苏晚一致。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "ledger",
-      "location": "周伯的房间",
+      "locationId": "location_4",
       "name": "锁在箱子里的账本",
-      "content": "衣箱底一部手写账本：近两年陆续从公账转出三十七万，备注'还债''周转'。最后一页夹着一张赌球代理的名片，以及一张字条：'周伯的事，年后一并处理。——沈'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "衣箱底一部手写账本：近两年陆续从公账转出三十七万，备注'还债''周转'。最后一页夹着一张赌球代理的名片，以及一张字条：'周伯的事，年后一并处理。——沈'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "recorder",
-      "location": "白慕森的房间",
+      "locationId": "location_5",
       "name": "录音笔",
-      "content": "一支录音笔，最后一段录音时间 20:40-21:07：前段为书房内与沈万山的争吵（谈股份放行与两千万欠款），20:58 有摔门声，之后是白慕森独自回房的叹息与倒酒声，21:07 录音停止。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "一支录音笔，最后一段录音时间 20:40-21:07：前段为书房内与沈万山的争吵（谈股份放行与两千万欠款），20:58 有摔门声，之后是白慕森独自回房的叹息与倒酒声，21:07 录音停止。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "contract",
-      "location": "白慕森的房间",
+      "locationId": "location_5",
       "name": "收购意向书",
-      "content": "公文包内一份《股份收购意向书》：鼎峰资本拟收购白慕森所持合作公司全部股份，生效条件为'沈万山书面同意放行'。签署栏已签白慕森姓名，日期为本周三。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "公文包内一份《股份收购意向书》：鼎峰资本拟收购白慕森所持合作公司全部股份，生效条件为'沈万山书面同意放行'。签署栏已签白慕森姓名，日期为本周三。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "spare_key",
-      "location": "陆小开的房间",
+      "locationId": "location_6",
       "name": "私配的书房钥匙",
-      "content": "外套口袋里有一把黄铜钥匙，齿形与书房门锁匹配，为新配痕迹（齿口发亮，无使用磨损）。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "外套口袋里有一把黄铜钥匙，齿形与书房门锁匹配，为新配痕迹（齿口发亮，无使用磨损）。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "love_letter",
-      "location": "陆小开的房间",
+      "locationId": "location_6",
       "name": "未寄出的情书",
-      "content": "枕头下有一封没装信封的信，抬头'青禾姐'：字迹稚拙，写他愿意替她做任何事，落款日期是今晚。信纸右下角有一小片洇开的水渍。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "枕头下有一封没装信封的信，抬头'青禾姐'：字迹稚拙，写他愿意替她做任何事，落款日期是今晚。信纸右下角有一小片洇开的水渍。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "suwan",
-    "method": "苏晚将预先配制的乌头碱溶液倒入沈万山的参茶，剂量致死，约一刻钟后毒发。",
-    "fullTimeline": "20:00 寿宴开始，苏晚为沈万山挡酒，观察其状态。20:40-20:58 白慕森在书房摊牌失败，摔门而出，在门廊抽雪茄后于 21:05 回房独处（有录音笔佐证）。21:00-21:10 沈青禾进书房争执遗嘱，被扇耳光后哭着离开。21:05-21:20 陆小开躲在书房外廊柱后，21:12 被沈万山隔门骂走；他先后目击周伯送茶（21:15）与苏晚进书房（21:20）。21:15 周伯送参茶，茶无毒，21:20 退出后在走廊擦栏杆，目击苏晚进入书房。21:20-21:30 苏晚进书房'送安神药'，趁沈万山背身开保险柜时将乌头碱倒入参茶并搅拌。21:30 苏晚离开回房，将空玻璃瓶埋入窗台盆栽土中。21:35 沈万山饮下毒茶，毒发倒地。21:42 周伯发现尸体。苏晚以医生身份第一个接触尸体，宣布死亡并以'保护现场'为由阻止任何人接近书房——实际是防止有人打开保险柜发现那份载有她签名的事故报告。关键破案链：书房日记（要挟动机）→ 保险柜事故报告（十年把柄与签名）→ 雪地 37 码女靴往返脚印（21:15-21:25 唯一去书房的脚印）→ 苏晚房间的乌头碱空瓶。红鲱鱼：周伯的账本与'年后处理'字条、白慕森的两千万欠款与收购意向书、陆小开的私配钥匙。",
-    "keyEvidence": ["参茶残液", "玻璃瓶", "雪地脚印", "事故报告", "日记"],
-    "reveal": "真相：凶手是苏晚。十年前的一次医疗事故让她被沈万山攥住把柄，做了十年随叫随到的私人医生。今晚沈万山逼她签署认罪声明，'过了今晚你就自由了'——他指的是身败名裂的自由。21:20，她借着送安神药的机会，把乌头碱倒进了那杯温着的参茶。她不知道的是：周伯在走廊看见她进书房，陆小开在廊柱后看见她拎着出诊包往返，而雪地记下了那双 37 码女靴的脚印。她唯一的失误，是以为撕掉标签的瓶子埋进花盆就万无一失。"
+    "culpritId": "suwan",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "苏晚将预先配制的乌头碱溶液倒入沈万山的参茶，剂量致死，约一刻钟后毒发。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "苏晚将预先配制的乌头碱溶液倒入沈万山的参茶，剂量致死，约一刻钟后毒发。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "寿宴开始，苏晚为沈万山挡酒，观察其状态。"
+          }
+        ],
+        "characterIds": [
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "20:40–20:58",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:40"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "20:58"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白慕森在书房摊牌失败，摔门而出，在门廊抽雪茄后于"
+          }
+        ],
+        "characterIds": [
+          "baimusen"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baimusen"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "21:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "回房独处（有录音笔佐证）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "21:00–21:10",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:10"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈青禾进书房争执遗嘱，被扇耳光后哭着离开。"
+          }
+        ],
+        "characterIds": [
+          "qinghe"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qinghe"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "21:05–21:20",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:20"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆小开躲在书房外廊柱后，"
+          }
+        ],
+        "characterIds": [
+          "luxiaokai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiaokai"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:12"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "被沈万山隔门骂走；他先后目击周伯送茶（"
+          }
+        ],
+        "characterIds": [
+          "zhoubo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "zhoubo"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）与苏晚进书房（"
+          }
+        ],
+        "characterIds": [
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "21:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "周伯送参茶，茶无毒，"
+          }
+        ],
+        "characterIds": [
+          "zhoubo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "zhoubo"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "退出后在走廊擦栏杆，目击苏晚进入书房。"
+          }
+        ],
+        "characterIds": [
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:20–21:30",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "苏晚进书房'送安神药'，趁沈万山背身开保险柜时将乌头碱倒入参茶并搅拌。"
+          }
+        ],
+        "characterIds": [
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "苏晚离开回房，将空玻璃瓶埋入窗台盆栽土中。"
+          }
+        ],
+        "characterIds": [
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "21:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈万山饮下毒茶，毒发倒地。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:42",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:42"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "周伯发现尸体。苏晚以医生身份第一个接触尸体，宣布死亡并以'保护现场'为由阻止任何人接近书房——实际是防止有人打开保险柜发现那份载有她签名的事故报告。关键破案链：书房日记（要挟动机）→ 保险柜事故报告（十年把柄与签名）→ 雪地 37 码女靴往返脚印（"
+          }
+        ],
+        "characterIds": [
+          "zhoubo",
+          "suwan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "zhoubo",
+          "suwan"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "21:15–21:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "唯一去书房的脚印）→ 苏晚房间的乌头碱空瓶。红鲱鱼：周伯的账本与'年后处理'字条、白慕森的两千万欠款与收购意向书、陆小开的私配钥匙。"
+          }
+        ],
+        "characterIds": [
+          "zhoubo",
+          "baimusen",
+          "suwan",
+          "luxiaokai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "zhoubo",
+          "baimusen",
+          "suwan",
+          "luxiaokai"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "teacup",
+      "bottle",
+      "footprint",
+      "diary"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "teacup"
+        ],
+        "conclusion": "参茶残液"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "bottle"
+        ],
+        "conclusion": "玻璃瓶"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "footprint"
+        ],
+        "conclusion": "雪地脚印"
+      },
+      {
+        "id": "evidence_5",
+        "clueIds": [
+          "diary"
+        ],
+        "conclusion": "日记"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是苏晚。十年前的一次医疗事故让她被沈万山攥住把柄，做了十年随叫随到的私人医生。今晚沈万山逼她签署认罪声明，'过了今晚你就自由了'——他指的是身败名裂的自由。21:20，她借着送安神药的机会，把乌头碱倒进了那杯温着的参茶。她不知道的是：周伯在走廊看见她进书房，陆小开在廊柱后看见她拎着出诊包往返，而雪地记下了那双 37 码女靴的脚印。她唯一的失误，是以为撕掉标签的瓶子埋进花盆就万无一失。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -229,6 +1824,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

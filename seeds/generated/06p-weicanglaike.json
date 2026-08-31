@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "尾舱来客",
     "minPlayers": 6,
@@ -15,26 +15,431 @@
     ],
     "intro": "沧溟号豪华游轮，跨年南海航线第三夜，尾舱员工层的艺术品库房里，收藏家晏起予被发现吊在横梁上——脚下的木箱翻倒，库房门从内闩死，检修门挂锁完好，一切像一场体面的自缢。可船医复验时发现，颈部索沟是水平的。一个被反锁的密室，一位不该出现在尾舱的贵客，一张 21:03 停摆的怀表。有人比死亡更早到过那里——从一条只去不回的布草滑道。"
   },
-  "background": "沧溟号，五天四夜南海跨年航线，船尾员工层（3 层）设有艺术品暂存库——收藏家晏起予此行的全部展品随船存放于此。晏起予，66 岁，'晏园'主人，半生收藏毁誉参半；今晚 20:30 船长欢迎宴，他坐主桌，20:55 向船长告假：'21:00 去库房取件好东西，给诸位开开眼。'此后再没人见过他。0:30，恒温库温度漂移告警；0:40 轮机员与保安下到 3 层，密码门从内闩死，敲之无人应；从洗衣房开启检修门——晏起予吊在库房横梁上，脚下木箱翻倒。船医初判自缢。1:30 复验改判：颈部索沟水平环绕、有生活反应，是勒杀后悬尸。真正的谜在于：尾舱走廊监控当晚因跨年直播挤占带宽而故障，全案只有一张门禁刷卡清单——而晏起予 20:58 刷卡进员工门后，没有任何一张卡再进过 3 层库房。可尸体被吊起来，库门从里面锁死。这条船的尾部，有一条只去不回的路：客房层的布草滑道，一头在 9 层服务间，一头扎进 3 层洗衣房。尾舱来过客人——客人是从天上来的。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "沧溟号，五天四夜南海跨年航线，船尾员工层（3 层）设有艺术品暂存库——收藏家晏起予此行的全部展品随船存放于此。晏起予，66 岁，'晏园'主人，半生收藏毁誉参半；今晚 20:30 船长欢迎宴，他坐主桌，20:55 向船长告假：'21:00 去库房取件好东西，给诸位开开眼。'此后再没人见过他。0:30，恒温库温度漂移告警；0:40 轮机员与保安下到 3 层，密码门从内闩死，敲之无人应；从洗衣房开启检修门——晏起予吊在库房横梁上，脚下木箱翻倒。船医初判自缢。1:30 复验改判：颈部索沟水平环绕、有生活反应，是勒杀后悬尸。真正的谜在于：尾舱走廊监控当晚因跨年直播挤占带宽而故障，全案只有一张门禁刷卡清单——而晏起予 20:58 刷卡进员工门后，没有任何一张卡再进过 3 层库房。可尸体被吊起来，库门从里面锁死。这条船的尾部，有一条只去不回的路：客房层的布草滑道，一头在 9 层服务间，一头扎进 3 层洗衣房。尾舱来过客人——客人是从天上来的。"
+    }
+  ],
   "characters": [
     {
       "id": "niehuaiyuan",
       "name": "聂怀远",
       "gender": "男",
       "age": 54,
-      "publicBio": "受邀上船的书画鉴定顾问，为跨年新展'沧海遗珠'掌眼。三十年鉴定生涯，同行称'聂半尺'——放大镜离眼不过半尺。",
-      "card": {
-        "backstory": "你叫聂怀远。五十多年前，你的祖父、装裱宗师聂松年，被晏起予用摹本调包了家藏《寒江独钓图》，反被指监守自盗，悬梁自尽。你学鉴定三十年，就为以'掌眼人'的身份站到他身边。这次上船，你在库房第一眼认出《寒江》：印鉴'松年长物'——你家的东西。20:40 你递字条约他 21:00 库房相看。他没活过那幅画。",
-        "secret": "你就是凶手。你提前预写医务室登记伪造'21:08 在医务室'，走布草滑道避开监控与电梯，杀人后把密码门内闩插死、扣死检修门挂锁，制造'晏起予独自入库自缢'的密室，再从员工梯上 9 层刷卡而出——21:15 准时入席，有全场最硬的目击。怀表摔停在木箱下 21:03，你不知道它掉了。你唯一的物证疏漏：放大镜袋里那张鉴定底稿，边角写着不该写的四个字。",
-        "goal": "死无对证是你的目标，密室与不在场证明是你的双保险。策略：以鉴定权威定调'库房件件是真迹，无人有动机碰它'；主动配合调阅门禁与监控故障的说明，把自己塑造成最讲程序的人。若被问 20:52 进员工门，就答'取晕船药，登记在册'——医务室那张预写的登记是你押上性命的伪证，除非有人鉴定墨迹。绝不能让人翻你的放大镜袋。",
-        "isCulprit": true,
-        "timeline": "15:00 借 40 号钥匙'通风'，16:00 拨挂锁成虚挂，16:30 归还钥匙。20:30 宴会入席。20:40 递字条约 21:00 库房。20:45 离席赴医务室预写 21:08 取药登记。20:52 刷卡进 9 层员工门。20:55 经布草滑道滑降至 3 层洗衣房。20:58 拉开虚挂挂锁入艺术品库房。21:00 晏起予入库。21:03 以画框打包带勒杀（怀表摔停）。21:10 伪装自缢、插死密码门内闩、扣死检修门挂锁。21:12 员工梯上 9 层刷卡出。21:15 入席至散席。0:40 案发后要求'先封库房，别碰原件'。",
-        "knowledge": [
-          "晏起予入库从不改密码——'我的生日，谁偷得走，是他的命'，这是他当着你的面说的；检修门挂锁是老式弹簧锁梁，扣上不必钥匙。",
-          "怀表不在他身上了。你在库房没看见它——它若是摔在了哪里，摔停的时刻就是你不动声色的死刑。",
-          "闻笛 21:20 讲《寒江》时你全程在席——你最稳的证词是别人的讲台；你最险的破绽，是洛之梧 20:52 看见了你刷卡。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "受邀上船的书画鉴定顾问，为跨年新展'沧海遗珠'掌眼。三十年鉴定生涯，同行称'聂半尺'——放大镜离眼不过半尺。"
+          }
         ],
-        "persona": "谦和古雅，开口先引画史，'裱工不会说谎'是口头禅。被问'松年'二字会瞬间枯坐，拇指摩挲放大镜柄。极端镇定，只在'布草间''滑道'被提及时手停半秒。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫聂怀远。五十多年前，你的祖父、装裱宗师聂松年，被晏起予用摹本调包了家藏《寒江独钓图》，反被指监守自盗，悬梁自尽。你学鉴定三十年，就为以'掌眼人'的身份站到他身边。这次上船，你在库房第一眼认出《寒江》：印鉴'松年长物'——你家的东西。20:40 你递字条约他 21:00 库房相看。他没活过那幅画。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_niehuaiyuan_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。你提前预写医务室登记伪造'21:08 在医务室'，走布草滑道避开监控与电梯，杀人后把密码门内闩插死、扣死检修门挂锁，制造'晏起予独自入库自缢'的密室，再从员工梯上 9 层刷卡而出——21:15 准时入席，有全场最硬的目击。怀表摔停在木箱下 21:03，你不知道它掉了。你唯一的物证疏漏：放大镜袋里那张鉴定底稿，边角写着不该写的四个字。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_niehuaiyuan_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死无对证是你的目标，密室与不在场证明是你的双保险。策略：以鉴定权威定调'库房件件是真迹，无人有动机碰它'；主动配合调阅门禁与监控故障的说明，把自己塑造成最讲程序的人。若被问 20:52 进员工门，就答'取晕船药，登记在册'——医务室那张预写的登记是你押上性命的伪证，除非有人鉴定墨迹。绝不能让人翻你的放大镜袋。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_niehuaiyuan_event_1",
+            "time": {
+              "display": "15:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "借 40 号钥匙'通风'，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_2",
+            "time": {
+              "display": "16:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拨挂锁成虚挂，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_3",
+            "time": {
+              "display": "16:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "归还钥匙。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_4",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴会入席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_5",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "递字条约"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_6",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "库房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_7",
+            "time": {
+              "display": "20:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:45"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "离席赴医务室预写"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_8",
+            "time": {
+              "display": "21:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:08"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "取药登记。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_9",
+            "time": {
+              "display": "20:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:52"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "刷卡进 9 层员工门。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_10",
+            "time": {
+              "display": "20:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:55"
+              }
+            },
+            "title": "事件 10",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "经布草滑道滑降至 3 层洗衣房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_11",
+            "time": {
+              "display": "20:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:58"
+              }
+            },
+            "title": "事件 11",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拉开虚挂挂锁入艺术品库房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_12",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 12",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晏起予入库。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_13",
+            "time": {
+              "display": "21:03",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:03"
+              }
+            },
+            "title": "事件 13",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "以画框打包带勒杀（怀表摔停）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_14",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 14",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "伪装自缢、插死密码门内闩、扣死检修门挂锁。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_15",
+            "time": {
+              "display": "21:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:12"
+              }
+            },
+            "title": "事件 15",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "员工梯上 9 层刷卡出。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_16",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 16",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "入席至散席。0:40 案发后要求'先封库房，别碰原件'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_niehuaiyuan_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晏起予入库从不改密码——'我的生日，谁偷得走，是他的命'，这是他当着你的面说的；检修门挂锁是老式弹簧锁梁，扣上不必钥匙。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_niehuaiyuan_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "怀表不在他身上了。你在库房没看见它——它若是摔在了哪里，摔停的时刻就是你不动声色的死刑。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_niehuaiyuan_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻笛 21:20 讲《寒江》时你全程在席——你最稳的证词是别人的讲台；你最险的破绽，是洛之梧 20:52 看见了你刷卡。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "谦和古雅，开口先引画史，'裱工不会说谎'是口头禅。被问'松年'二字会瞬间枯坐，拇指摩挲放大镜柄。极端镇定，只在'布草间''滑道'被提及时手停半秒。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -42,19 +447,206 @@
       "name": "晏承",
       "gender": "男",
       "age": 36,
-      "publicBio": "晏起予的养子兼总管家，掌晏园账目与库房密码。与养父为'藏品全捐省博'的决定僵了半年。",
-      "card": {
-        "backstory": "你叫晏承，三岁被抱回晏园，叫了他三十三年'老爷子'。他上月立备忘：藏品全捐省博——拍卖行却拿你签的保底协议压你：'不进场，你赔两千万。'21:20 你刷卡进 9 层员工门，卡到不了 3 层，只能在走廊徘徊。22:40 你拦住洛之梧谈'保底可转'，被邬双撞见。0:40 你说漏嘴：'门是从里面闩死的。'",
-        "secret": "你 21:20-21:35 刷卡进出 9 层员工门，在走廊徘徊（无 3 层权限）——门禁记录你是案发时段唯一'接近'过尾舱的亲属；你欠拍卖行保底两千万，是'藏品不能捐'的最大受益人；你与洛之梧深夜密谈被目击。你知道库房密码与门闩构造，是'密室'最顺手的嫌疑人。",
-        "goal": "门禁记录是你的劫也是你的证：无 3 层权限、21:35 卡出，两点钉死你到不了库房。策略：主动交代 21:20 上楼的理由（'我去催签字，没敢敲门——我现在最后悔的就是没敲'）；保底协议被翻出就认（'老爷子知道协议的事，他说他死后协议自动作废——我等他死，等得到，用不着杀'）；'从里面闩死'说漏的嘴，用'我管了十年库房'圆回去。",
-        "isCulprit": false,
-        "timeline": "20:30 宴会入席主桌侧位。20:55 目送养父离席。21:20-21:35 刷卡进出 9 层员工门，走廊徘徊（无 3 层权限）。21:40 回席。22:40 与洛之梧走廊密谈（被邬双目击）。0:40 案发后赶到 3 层，说漏'门从里面闩死'。",
-        "knowledge": [
-          "21:20 你在 9 层走廊闻到一缕陈年浆糊味，从布草间方向飘来——当时你以为是谁在清洗画轴。布草间里不该有浆糊。",
-          "养父的公文包从不离身，0:40 你在现场看见它躺在木箱旁——他把它带进了库房，里面是他最见不得人的两页纸。",
-          "洛之梧 22:40 递给你一张名片背面写着'保底可转'——她比你自己更清楚你欠了多少。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "晏起予的养子兼总管家，掌晏园账目与库房密码。与养父为'藏品全捐省博'的决定僵了半年。"
+          }
         ],
-        "persona": "体面周到，滴水不漏的管家腔：'老爷子的意思''按老规矩'。被逼急了管家腔碎掉，露出仓皇：'我不是他儿子，我是他雇的遗产执行人——这话他亲口说过！'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫晏承，三岁被抱回晏园，叫了他三十三年'老爷子'。他上月立备忘：藏品全捐省博——拍卖行却拿你签的保底协议压你：'不进场，你赔两千万。'21:20 你刷卡进 9 层员工门，卡到不了 3 层，只能在走廊徘徊。22:40 你拦住洛之梧谈'保底可转'，被邬双撞见。0:40 你说漏嘴：'门是从里面闩死的。'"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_yancheng_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 21:20-21:35 刷卡进出 9 层员工门，在走廊徘徊（无 3 层权限）——门禁记录你是案发时段唯一'接近'过尾舱的亲属；你欠拍卖行保底两千万，是'藏品不能捐'的最大受益人；你与洛之梧深夜密谈被目击。你知道库房密码与门闩构造，是'密室'最顺手的嫌疑人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_yancheng_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "门禁记录是你的劫也是你的证：无 3 层权限、21:35 卡出，两点钉死你到不了库房。策略：主动交代 21:20 上楼的理由（'我去催签字，没敢敲门——我现在最后悔的就是没敲'）；保底协议被翻出就认（'老爷子知道协议的事，他说他死后协议自动作废——我等他死，等得到，用不着杀'）；'从里面闩死'说漏的嘴，用'我管了十年库房'圆回去。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_yancheng_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴会入席主桌侧位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yancheng_event_2",
+            "time": {
+              "display": "20:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:55"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "目送养父离席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yancheng_event_3",
+            "time": {
+              "display": "21:20–21:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "刷卡进出 9 层员工门，走廊徘徊（无 3 层权限）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yancheng_event_4",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yancheng_event_5",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "与洛之梧走廊密谈（被邬双目击）。0:40 案发后赶到 3 层，说漏'门从里面闩死'。"
+              }
+            ],
+            "characterIds": [
+              "wushuang",
+              "luozhiwu"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_yancheng_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20 你在 9 层走廊闻到一缕陈年浆糊味，从布草间方向飘来——当时你以为是谁在清洗画轴。布草间里不该有浆糊。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_yancheng_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "养父的公文包从不离身，0:40 你在现场看见它躺在木箱旁——他把它带进了库房，里面是他最见不得人的两页纸。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_yancheng_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "洛之梧 22:40 递给你一张名片背面写着'保底可转'——她比你自己更清楚你欠了多少。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "体面周到，滴水不漏的管家腔：'老爷子的意思''按老规矩'。被逼急了管家腔碎掉，露出仓皇：'我不是他儿子，我是他雇的遗产执行人——这话他亲口说过！'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -62,19 +654,190 @@
       "name": "邬双",
       "gender": "女",
       "age": 29,
-      "publicBio": "娱乐部荷官主管，掌船上赌场三张牌桌。三天前被晏起予举报'出千'，停职令明早生效。更衣柜在 3 层洗衣房隔壁。",
-      "card": {
-        "backstory": "你叫邬双，娱乐部荷官主管，手稳了十年。晏起予连赢你三晚八十万，第三晚他输了五万，转身举报你'出千'——复核你是干净的，停职令明早生效。21:05 你下班走 3 层员工通道回更衣柜，闻到一股浆糊混陈年绢纸的味道从检修门方向飘出来。0:40 你被叫下来帮忙，又闻到同味——这次它从库房里出来。",
-        "secret": "你被死者举报停职（明天生效），有最直接的'动机'；你 21:05 在洗衣房闻到浆糊味（当时未在意——这是凶手 20:58 入库后的旁证）；你 22:40 目击晏承与洛之梧密谈。你怕自己说出的一切被组织成'停职者的报复叙事'。",
-        "goal": "你的鼻子和鼻子里的味道是本案最隐秘的证词：浆糊味 21:05 就在洗衣房——那时所有人都以为死者还在宴会厅。策略：先只报'闻到怪味'存疑（'我当时以为是洗画帘子'），等密室说法站不住时再补时间；举报停职的事主动认（'我恨他，可我的手十年没抖过，杀人这活儿，手不稳干不了'）。",
-        "isCulprit": false,
-        "timeline": "20:30-21:00 赌场值台。21:05 下班走 3 层员工通道回更衣柜（闻到浆糊与陈年绢纸味）。21:10-22:30 更衣、在员工休息舱。22:40 路过 9 层走廊目击晏承与洛之梧密谈。0:00 下班回舱。0:40 被叫到 3 层协助，再闻同味。",
-        "knowledge": [
-          "21:05 那股浆糊味——艺术品库房常年封存的画轴就是这个味，可库房的门 21:05 时该是关死的，味道怎么到得了洗衣房？只有一条路：检修门开过。",
-          "第三晚他输五万时抓着你的手腕说：'小姑娘，出千的人，手再稳也稳不过账。'——他举报你时，账目复核你是干净的。",
-          "22:40 晏承与洛之梧密谈时，洛之梧手里的文件封皮是拍卖行的火漆。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "娱乐部荷官主管，掌船上赌场三张牌桌。三天前被晏起予举报'出千'，停职令明早生效。更衣柜在 3 层洗衣房隔壁。"
+          }
         ],
-        "persona": "冷面利落，说话像报点数：'两点半，开牌。'不解释，只陈述。被翻停职旧账时冷笑：'我恨他，全世界都知道——所以我才要把话说在明处。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫邬双，娱乐部荷官主管，手稳了十年。晏起予连赢你三晚八十万，第三晚他输了五万，转身举报你'出千'——复核你是干净的，停职令明早生效。21:05 你下班走 3 层员工通道回更衣柜，闻到一股浆糊混陈年绢纸的味道从检修门方向飘出来。0:40 你被叫下来帮忙，又闻到同味——这次它从库房里出来。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_wushuang_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你被死者举报停职（明天生效），有最直接的'动机'；你 21:05 在洗衣房闻到浆糊味（当时未在意——这是凶手 20:58 入库后的旁证）；你 22:40 目击晏承与洛之梧密谈。你怕自己说出的一切被组织成'停职者的报复叙事'。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_wushuang_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的鼻子和鼻子里的味道是本案最隐秘的证词：浆糊味 21:05 就在洗衣房——那时所有人都以为死者还在宴会厅。策略：先只报'闻到怪味'存疑（'我当时以为是洗画帘子'），等密室说法站不住时再补时间；举报停职的事主动认（'我恨他，可我的手十年没抖过，杀人这活儿，手不稳干不了'）。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_wushuang_event_1",
+            "time": {
+              "display": "20:30–21:00",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "赌场值台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wushuang_event_2",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下班走 3 层员工通道回更衣柜（闻到浆糊与陈年绢纸味）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wushuang_event_3",
+            "time": {
+              "display": "21:10–22:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "更衣、在员工休息舱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wushuang_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "路过 9 层走廊目击晏承与洛之梧密谈。0:00 下班回舱。0:40 被叫到 3 层协助，再闻同味。"
+              }
+            ],
+            "characterIds": [
+              "yancheng",
+              "luozhiwu"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_wushuang_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:05 那股浆糊味——艺术品库房常年封存的画轴就是这个味，可库房的门 21:05 时该是关死的，味道怎么到得了洗衣房？只有一条路：检修门开过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wushuang_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "第三晚他输五万时抓着你的手腕说：'小姑娘，出千的人，手再稳也稳不过账。'——他举报你时，账目复核你是干净的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wushuang_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:40 晏承与洛之梧密谈时，洛之梧手里的文件封皮是拍卖行的火漆。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "冷面利落，说话像报点数：'两点半，开牌。'不解释，只陈述。被翻停职旧账时冷笑：'我恨他，全世界都知道——所以我才要把话说在明处。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -82,19 +845,224 @@
       "name": "洛之梧",
       "gender": "女",
       "age": 41,
-      "publicBio": "拍卖行副总，随船洽购晏氏收藏。20:52 在 9 层服务通道取请柬时，看见聂怀远刷卡走进员工门。",
-      "card": {
-        "backstory": "你叫洛之梧，拍卖行副总。晏氏收藏一旦进场，保底三十亿。20:52 你在 9 层通道取请柬，迎面看见聂怀远刷卡进员工门，拎着那只磨破角的放大镜袋——你和他打了半年交道。21:20 闻笛讲《寒江》，他端坐主桌。22:40 晏承拦你谈'保底可转'，被邬双撞见。你 20:52 的目击，成了全船最烫手的话。",
-        "secret": "你 20:52 目击聂怀远刷卡进员工门（案发前最重要的独立目击）；你与晏承深夜密谈'保底可转'被邬双目击（利益链与'合谋'假象）；死者死亡后你第一反应是保住估价业务——你的每一步都写着'利益'两个字。",
-        "goal": "你是把'时刻'钉进案子的人：20:52 聂进员工门、21:15 聂在席——这两个时刻之间隔着一条布草滑道。策略：先示弱自保（密谈被目击就认，'我做生意，不谋财害命'），在确认聂怀远的'医务室说法'有裂缝后再抛目击——你的证词要踩着证据走，别踩着自己的利益走。",
-        "isCulprit": false,
-        "timeline": "20:30 宴会入席。20:50 离席取请柬。20:52 9 层服务通道目击聂怀远刷卡进员工门。21:00 回席。21:20 在场听讲《寒江》。22:40 与晏承走廊密谈（被邬双目击）。0:00 回舱。0:40 案发后到场。",
-        "knowledge": [
-          "20:52 的目击细节：聂怀远刷卡进员工门时没回头，放大镜袋换到了左手——他惯用右手拎袋。",
-          "21:15 聂怀远入席时额角有汗，他说'船上热'——十二月的南海，宴会厅恒温二十四度。",
-          "晏起予 20:55 告假时对船长说'带件好东西给大家开眼'，船长笑着应'别忘了让聂先生掌掌眼'——两个人的应答，现在听来像谶语。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "拍卖行副总，随船洽购晏氏收藏。20:52 在 9 层服务通道取请柬时，看见聂怀远刷卡走进员工门。"
+          }
         ],
-        "persona": "职业优雅，谈判桌上先笑后刀，'价格后面的东西才是价格'。被怀疑利益动机时摊手：'我图财，财在他活着的时候最好挣。'唯一次失态是听到'滑道'两个字。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫洛之梧，拍卖行副总。晏氏收藏一旦进场，保底三十亿。20:52 你在 9 层通道取请柬，迎面看见聂怀远刷卡进员工门，拎着那只磨破角的放大镜袋——你和他打了半年交道。21:20 闻笛讲《寒江》，他端坐主桌。22:40 晏承拦你谈'保底可转'，被邬双撞见。你 20:52 的目击，成了全船最烫手的话。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luozhiwu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 20:52 目击聂怀远刷卡进员工门（案发前最重要的独立目击）；你与晏承深夜密谈'保底可转'被邬双目击（利益链与'合谋'假象）；死者死亡后你第一反应是保住估价业务——你的每一步都写着'利益'两个字。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luozhiwu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是把'时刻'钉进案子的人：20:52 聂进员工门、21:15 聂在席——这两个时刻之间隔着一条布草滑道。策略：先示弱自保（密谈被目击就认，'我做生意，不谋财害命'），在确认聂怀远的'医务室说法'有裂缝后再抛目击——你的证词要踩着证据走，别踩着自己的利益走。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luozhiwu_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴会入席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luozhiwu_event_2",
+            "time": {
+              "display": "20:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "离席取请柬。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luozhiwu_event_3",
+            "time": {
+              "display": "20:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:52"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "9 层服务通道目击聂怀远刷卡进员工门。"
+              }
+            ],
+            "characterIds": [
+              "niehuaiyuan"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luozhiwu_event_4",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luozhiwu_event_5",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在场听讲《寒江》。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luozhiwu_event_6",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "与晏承走廊密谈（被邬双目击）。0:00 回舱。0:40 案发后到场。"
+              }
+            ],
+            "characterIds": [
+              "yancheng",
+              "wushuang"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luozhiwu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:52 的目击细节：聂怀远刷卡进员工门时没回头，放大镜袋换到了左手——他惯用右手拎袋。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luozhiwu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:15 聂怀远入席时额角有汗，他说'船上热'——十二月的南海，宴会厅恒温二十四度。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luozhiwu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晏起予 20:55 告假时对船长说'带件好东西给大家开眼'，船长笑着应'别忘了让聂先生掌掌眼'——两个人的应答，现在听来像谶语。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "职业优雅，谈判桌上先笑后刀，'价格后面的东西才是价格'。被怀疑利益动机时摊手：'我图财，财在他活着的时候最好挣。'唯一次失态是听到'滑道'两个字。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -102,19 +1070,159 @@
       "name": "佟肃",
       "gender": "男",
       "age": 38,
-      "publicBio": "保安部主管，掌全船门禁系统与巡检排班。21:35 例行巡检曾刷卡进出员工层，是案发后唯一'合法'下过 3 层的人。",
-      "card": {
-        "backstory": "你叫佟肃，保安部主管。今晚你两头受气：跨年直播挤占带宽，尾舱走廊监控 20:00 起黑屏；21:35 你例行巡检刷卡进出 3 层，看见洗衣房门轴挂着一缕深色缎面丝线，像晚礼服衬里，你随手拂掉了。0:40 温度告警，你提议走检修门下 3 层。所有人都在问：监控为什么黑屏，你为什么恰好巡检到 3 层。",
-        "secret": "监控黑屏与你的巡检时段重叠，你成了'关监控配合作案'的天然嫌疑人；你 21:35 在洗衣房门轴看到的缎面丝线被你随手拂掉（无意识）——那是检修门方向飘来的、真凶衣物的纤维；你压下过一次赌场投诉（为保你一手提拔的邬双，你建议'冷处理'晏起予的出千投诉未果）。",
-        "goal": "你的价值是系统与记录：门禁清单、监控故障证明（轮机部带宽日志）、巡检路线。策略：第一时间交出全部记录自证，把'黑屏是直播挤占'的证明链甩出来；21:35 门轴丝线的事是压箱底的一手——它指向'有人不走正门'；压下投诉的事可以认：'我保的是我的人，不是他的命。'",
-        "isCulprit": false,
-        "timeline": "20:00 起尾舱走廊监控黑屏（带宽被直播挤占）。21:35 例行巡检刷卡进出 3 层员工区（门轴见缎面丝线）。22:00-0:00 主甲板安保值守。0:30 接恒温告警。0:40 与轮机员下 3 层，撬密码门无果，提议走检修门，发现悬尸。",
-        "knowledge": [
-          "门禁系统的铁律：进库房要两重——3 层员工门刷卡+库房密码门。今晚密码门被人从内插死，意味着凶手离场时人在库内——可门禁上没有任何'进'的记录在 20:58 之后。",
-          "21:35 门轴那缕深色缎面丝线，质地是高级晚礼服衬里——3 层员工没有这种衣料。",
-          "0:40 你随轮机员开检修门时，挂锁是锁着的，但锁梁搭扣内侧有两道新鲜的蹭亮划痕——锁被动过的痕迹，懂锁的人一眼就懂。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "保安部主管，掌全船门禁系统与巡检排班。21:35 例行巡检曾刷卡进出员工层，是案发后唯一'合法'下过 3 层的人。"
+          }
         ],
-        "persona": "军人做派，说话按条令节奏，'记录在案'是口头禅。被怀疑监控问题时把日志拍在桌上：'带宽被谁占了，轮机部一秒一秒记着。'只在提到'那条丝线'时语塞——他后悔拂掉了它。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫佟肃，保安部主管。今晚你两头受气：跨年直播挤占带宽，尾舱走廊监控 20:00 起黑屏；21:35 你例行巡检刷卡进出 3 层，看见洗衣房门轴挂着一缕深色缎面丝线，像晚礼服衬里，你随手拂掉了。0:40 温度告警，你提议走检修门下 3 层。所有人都在问：监控为什么黑屏，你为什么恰好巡检到 3 层。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_tongsu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "监控黑屏与你的巡检时段重叠，你成了'关监控配合作案'的天然嫌疑人；你 21:35 在洗衣房门轴看到的缎面丝线被你随手拂掉（无意识）——那是检修门方向飘来的、真凶衣物的纤维；你压下过一次赌场投诉（为保你一手提拔的邬双，你建议'冷处理'晏起予的出千投诉未果）。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_tongsu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的价值是系统与记录：门禁清单、监控故障证明（轮机部带宽日志）、巡检路线。策略：第一时间交出全部记录自证，把'黑屏是直播挤占'的证明链甩出来；21:35 门轴丝线的事是压箱底的一手——它指向'有人不走正门'；压下投诉的事可以认：'我保的是我的人，不是他的命。'"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_tongsu_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起尾舱走廊监控黑屏（带宽被直播挤占）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongsu_event_2",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "例行巡检刷卡进出 3 层员工区（门轴见缎面丝线）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongsu_event_3",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "-0:00 主甲板安保值守。0:30 接恒温告警。0:40 与轮机员下 3 层，撬密码门无果，提议走检修门，发现悬尸。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_tongsu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "门禁系统的铁律：进库房要两重——3 层员工门刷卡+库房密码门。今晚密码门被人从内插死，意味着凶手离场时人在库内——可门禁上没有任何'进'的记录在 20:58 之后。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tongsu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:35 门轴那缕深色缎面丝线，质地是高级晚礼服衬里——3 层员工没有这种衣料。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tongsu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "0:40 你随轮机员开检修门时，挂锁是锁着的，但锁梁搭扣内侧有两道新鲜的蹭亮划痕——锁被动过的痕迹，懂锁的人一眼就懂。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "军人做派，说话按条令节奏，'记录在案'是口头禅。被怀疑监控问题时把日志拍在桌上：'带宽被谁占了，轮机部一秒一秒记着。'只在提到'那条丝线'时语塞——他后悔拂掉了它。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -122,107 +1230,1124 @@
       "name": "闻笛",
       "gender": "女",
       "age": 52,
-      "publicBio": "随船文化讲席，大学艺术史教授，为跨年晚会主持'沧海遗珠'讲座。21:20 讲《寒江独钓图》，全场目击者。",
-      "card": {
-        "backstory": "你叫闻笛，艺术史教授。20:00 你与晏起予在书吧为讲稿争过一场：你写'此画流传存疑'，他拍桌要你删，你顶了回去。21:20 你按他改过的稿子讲了《寒江》，讲稿边角用铅笔补了'存疑如故'。讲到一半，你瞥见主桌空了两把椅子：老爷子没回来，聂怀远 21:15 才入席，额角有汗。",
-        "secret": "你与死者为'画来路不正'当众争执过（20:00 书吧，两人皆失态），你有'被激怒的学者'的动机外衣；你的讲稿批注'存疑如故'是《寒江》来源问题的唯一书面记录——它把画、把聂怀远、把五十多年前的旧案连在一起。",
-        "goal": "你的讲台是全场的时间锚：21:15 聂在席、21:20-21:35 讲座、主桌空椅——把'谁有可能在 21:03 进库房'变成一道算术题。策略：先讲程序（'我按他改的稿子讲，批注是我最后的骨头'），争执的事主动认（'我疑他的画，没害他的人'），最后把讲稿批注与鉴定底稿并排——'存疑如故'四个字，会替聂怀远念出他祖父的名字。",
-        "isCulprit": false,
-        "timeline": "20:00 书吧与死者争执'画来路'。20:30-21:15 宴会入席。21:15 注意到聂怀远入席（额角有汗）。21:20-21:35 主讲《寒江独钓图》，全程在场。21:35-22:30 散场寒暄。0:40 案发后到场，提供全场时间证人证。",
-        "knowledge": [
-          "你的讲稿批注'存疑如故'写在 21:20 台本边角——你讲完才发现自己把'存疑'讲出了声，全场安静了三秒，聂怀远带头鼓掌，掌声响得反常。",
-          "20:00 争执时晏起予吼过一句：'那画在我晏家六十年，谁来问来源？'——六十年，比他收藏其他任何一件都长，像在替谁守灵。",
-          "21:15 聂怀远入席时向你道歉'取药来迟'，并把一板晕船药放进西装内袋——你后来想，取药回来的人，为什么药还揣在身上？"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "随船文化讲席，大学艺术史教授，为跨年晚会主持'沧海遗珠'讲座。21:20 讲《寒江独钓图》，全场目击者。"
+          }
         ],
-        "persona": "学者骨相，讲课抑扬顿挫，'文献互证'是口头禅。与人对峙时不拔高声量，反而放轻：'学术上的事，越吵越明白。'只在提到死者那句'守灵'时停顿很久。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫闻笛，艺术史教授。20:00 你与晏起予在书吧为讲稿争过一场：你写'此画流传存疑'，他拍桌要你删，你顶了回去。21:20 你按他改过的稿子讲了《寒江》，讲稿边角用铅笔补了'存疑如故'。讲到一半，你瞥见主桌空了两把椅子：老爷子没回来，聂怀远 21:15 才入席，额角有汗。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_wendi_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与死者为'画来路不正'当众争执过（20:00 书吧，两人皆失态），你有'被激怒的学者'的动机外衣；你的讲稿批注'存疑如故'是《寒江》来源问题的唯一书面记录——它把画、把聂怀远、把五十多年前的旧案连在一起。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_wendi_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的讲台是全场的时间锚：21:15 聂在席、21:20-21:35 讲座、主桌空椅——把'谁有可能在 21:03 进库房'变成一道算术题。策略：先讲程序（'我按他改的稿子讲，批注是我最后的骨头'），争执的事主动认（'我疑他的画，没害他的人'），最后把讲稿批注与鉴定底稿并排——'存疑如故'四个字，会替聂怀远念出他祖父的名字。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_wendi_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书吧与死者争执'画来路'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wendi_event_2",
+            "time": {
+              "display": "20:30–21:15",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴会入席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wendi_event_3",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "注意到聂怀远入席（额角有汗）。"
+              }
+            ],
+            "characterIds": [
+              "niehuaiyuan"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_wendi_event_4",
+            "time": {
+              "display": "21:20–21:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主讲《寒江独钓图》，全程在场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wendi_event_5",
+            "time": {
+              "display": "21:35–22:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "散场寒暄。0:40 案发后到场，提供全场时间证人证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_wendi_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的讲稿批注'存疑如故'写在 21:20 台本边角——你讲完才发现自己把'存疑'讲出了声，全场安静了三秒，聂怀远带头鼓掌，掌声响得反常。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wendi_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:00 争执时晏起予吼过一句：'那画在我晏家六十年，谁来问来源？'——六十年，比他收藏其他任何一件都长，像在替谁守灵。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wendi_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:15 聂怀远入席时向你道歉'取药来迟'，并把一板晕船药放进西装内袋——你后来想，取药回来的人，为什么药还揣在身上？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "学者骨相，讲课抑扬顿挫，'文献互证'是口头禅。与人对峙时不拔高声量，反而放轻：'学术上的事，越吵越明白。'只在提到死者那句'守灵'时停顿很久。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
   "locations": [
-    "艺术品库房",
-    "洗衣房与滑道出口",
-    "医务室",
-    "宴会厅主甲板",
-    "保安室与轮机部",
-    "布草间与9层服务通道"
+    {
+      "id": "location_1",
+      "name": "艺术品库房",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "洗衣房与滑道出口",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "医务室",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "宴会厅主甲板",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "保安室与轮机部",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "布草间与9层服务通道",
+      "description": []
+    }
   ],
   "clues": [
     {
       "id": "chuyan_jilu",
-      "location": "艺术品库房",
+      "locationId": "location_1",
       "name": "船医的初验与复验记录",
-      "content": "船医记录：初判（0:40-1:00）'悬吊姿态、脚下半倒木箱，疑似自缢'；复验（1:30）改判——颈部索沟水平环绕、交于颈后，非自缢缢沟之耳后上提八字形，舌骨大角骨折方向与垂直悬吊不符，索沟有生活反应。结论：先勒后悬，勒痕宽度与画框打包带吻合。死亡时间初推 22:30-23:30（恒温库低温干扰尸温，存疑）。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "船医记录：初判（0:40-1:00）'悬吊姿态、脚下半倒木箱，疑似自缢'；复验（1:30）改判——颈部索沟水平环绕、交于颈后，非自缢缢沟之耳后上提八字形，舌骨大角骨折方向与垂直悬吊不符，索沟有生活反应。结论：先勒后悬，勒痕宽度与画框打包带吻合。死亡时间初推 22:30-23:30（恒温库低温干扰尸温，存疑）。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "huaibiao",
-      "location": "艺术品库房",
+      "locationId": "location_1",
       "name": "木箱下的怀表",
-      "content": "半倒木箱下的地面缝隙里卡着一块怀表：表链断裂、表蒙碎裂、指针停在 21:03，表底錾刻'松年'二字。死者家人证实，此表随身六十年从不离袋——它坠落停摆的时刻，即勒杀发生的时刻，比船医推定早了近两个小时。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "半倒木箱下的地面缝隙里卡着一块怀表：表链断裂、表蒙碎裂、指针停在 21:03，表底錾刻'松年'二字。死者家人证实，此表随身六十年从不离袋——它坠落停摆的时刻，即勒杀发生的时刻，比船医推定早了近两个小时。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "menjin_qingdan",
-      "location": "保安室与轮机部",
+      "locationId": "location_5",
       "name": "门禁刷卡清单",
-      "content": "当晚员工层门禁全记录：20:52 聂怀远入 9 层员工门；20:58 晏起予入 9 层员工门；21:12 聂怀远出 9 层员工门；21:20-21:35 晏承入出 9 层员工门（卡无 3 层权限）；21:35 佟肃巡检入出 3 层；0:40 轮机员与佟肃下 3 层。备注：3 层库房密码门无刷卡记录（密码开启不刷卡），尾舱走廊监控当晚黑屏（跨年直播挤占带宽，轮机部日志佐证）。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "当晚员工层门禁全记录：20:52 聂怀远入 9 层员工门；20:58 晏起予入 9 层员工门；21:12 聂怀远出 9 层员工门；21:20-21:35 晏承入出 9 层员工门（卡无 3 层权限）；21:35 佟肃巡检入出 3 层；0:40 轮机员与佟肃下 3 层。备注：3 层库房密码门无刷卡记录（密码开启不刷卡），尾舱走廊监控当晚黑屏（跨年直播挤占带宽，轮机部日志佐证）。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "yaodeng_jilu",
-      "location": "医务室",
+      "locationId": "location_3",
       "name": "医务室药箱登记本",
-      "content": "药箱自助登记本：21:08 行——'聂怀远，晕船药，一板'。鉴定：该行墨迹氧化程度明显早于上下相邻两行，属提前预写；笔迹为聂怀远本人。夜班护士证词：20:55 至 21:20 间未见过任何人来取药（里间配液，仅凭登记）。晕船药确少一板。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "药箱自助登记本：21:08 行——'聂怀远，晕船药，一板'。鉴定：该行墨迹氧化程度明显早于上下相邻两行，属提前预写；笔迹为聂怀远本人。夜班护士证词：20:55 至 21:20 间未见过任何人来取药（里间配液，仅凭登记）。晕船药确少一板。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "yaoshi_jieyong",
-      "location": "洗衣房与滑道出口",
+      "locationId": "location_2",
       "name": "钥匙借用登记",
-      "content": "洗衣房钥匙板借用登记：15:00 聂怀远借 40 号（检修门挂锁）钥匙，事由'库房侧门通风防潮'；16:30 归还。轮机部证实：检修门确曾开窗通风。挂锁为老式弹簧锁梁，扣上无需钥匙，开启才需——'归还'的钥匙管不住虚挂的锁。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "洗衣房钥匙板借用登记：15:00 聂怀远借 40 号（检修门挂锁）钥匙，事由'库房侧门通风防潮'；16:30 归还。轮机部证实：检修门确曾开窗通风。挂锁为老式弹簧锁梁，扣上无需钥匙，开启才需——'归还'的钥匙管不住虚挂的锁。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jianxiu_kanyan",
-      "location": "洗衣房与滑道出口",
+      "locationId": "location_2",
       "name": "检修门与滑道出口的勘验记录",
-      "content": "保安部勘验：检修门挂锁锁梁搭扣内侧两道新鲜蹭亮划痕（锁当日被动过）；门轴夹一缕深色缎面丝线（高级晚礼服衬里质地，3 层员工无此衣料）；布草滑道出口防回弹门内侧落尘上有一枚新鲜掌印（戴手套）；洗衣房内可闻浆糊混陈年绢纸味自检修门缝逸出——库房味道出现在了库房外。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "保安部勘验：检修门挂锁锁梁搭扣内侧两道新鲜蹭亮划痕（锁当日被动过）；门轴夹一缕深色缎面丝线（高级晚礼服衬里质地，3 层员工无此衣料）；布草滑道出口防回弹门内侧落尘上有一枚新鲜掌印（戴手套）；洗衣房内可闻浆糊混陈年绢纸味自检修门缝逸出——库房味道出现在了库房外。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jianding_digao",
-      "location": "布草间与9层服务通道",
+      "locationId": "location_6",
       "name": "鉴定底稿的边角",
-      "content": "聂怀远寄存于 9 层布草间的放大镜袋内：鉴定底稿一页，边角铅笔小字——'裱工三段式，仿家父手泽；印鉴松年长物，库房原件吻合'。另有半页纸反复写着被涂掉的两字：'寒江'。底稿日期为登船当日——他上船第一天就认出了那幅画。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "聂怀远寄存于 9 层布草间的放大镜袋内：鉴定底稿一页，边角铅笔小字——'裱工三段式，仿家父手泽；印鉴松年长物，库房原件吻合'。另有半页纸反复写着被涂掉的两字：'寒江'。底稿日期为登船当日——他上船第一天就认出了那幅画。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "yizhu_beiwang",
-      "location": "艺术品库房",
+      "locationId": "location_1",
       "name": "公文包里的捐赠备忘",
-      "content": "死者随身公文包（木箱旁）：捐赠备忘原件——'晏氏藏品全数捐省博，死后生效'；夹层一份拍卖行保底协议复印件（晏承个人担保两千万），页边有死者批注：'我死后，此约作废。'——《寒江独钓图》说明页独缺来源一栏，被撕去一角。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者随身公文包（木箱旁）：捐赠备忘原件——'晏氏藏品全数捐省博，死后生效'；夹层一份拍卖行保底协议复印件（晏承个人担保两千万），页边有死者批注：'我死后，此约作废。'——《寒江独钓图》说明页独缺来源一栏，被撕去一角。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jianggao_pizhu",
-      "location": "宴会厅主甲板",
+      "locationId": "location_4",
       "name": "闻笛的讲稿批注",
-      "content": "21:20 讲座台本：边角铅笔批注'存疑如故'。全场证词：21:15 聂怀远入席（额角有汗）、21:20-21:35 全程在座并带头鼓掌；主桌 20:55 起空椅（死者告假去库房），船长证词：'他说带件好东西给大家开眼，还笑说让聂先生掌眼。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "21:20 讲座台本：边角铅笔批注'存疑如故'。全场证词：21:15 聂怀远入席（额角有汗）、21:20-21:35 全程在座并带头鼓掌；主桌 20:55 起空椅（死者告假去库房），船长证词：'他说带件好东西给大家开眼，还笑说让聂先生掌眼。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "niehuaiyuan",
-    "method": "聂怀远是装裱宗师聂松年之孙：五十多年前晏起予以摹本调包聂家《寒江独钓图》真迹，祖父被诬监守自盗悬梁自尽；聂怀远学鉴定三十年，以'掌眼人'身份上船认出了家传真迹。20:40 他递字条约晏起予 21:00 库房'看《寒江》'；下午 15:00 他借 40 号钥匙把检修门挂锁拨成虚挂，20:45 离席在医务室预写 21:08 取药登记，20:52 刷卡进 9 层员工门，20:55 从布草间滑道直落 3 层洗衣房，20:58 经检修门入库。21:03 趁晏起予俯身看画，以画框打包带勒杀之（怀表摔停于木箱下 21:03），21:10 伪装自缢、插死密码门内闩、扣死检修门挂锁，21:12 员工梯上 9 层刷卡而出，21:15 入席——用全场目击与'21:08 取药登记'把 21:03 的自己洗成了'在宴会上的人'。密室与时刻表，他各押一半，输在了一块怀表上。",
-    "fullTimeline": "15:00 聂怀远借 40 号钥匙'通风'，16:00 拨挂锁成虚挂，16:30 归还钥匙。20:00 闻笛与晏起予书吧争执'画来路不正'。20:30 船长欢迎宴开幕，晏起予主桌、聂怀远晏承洛之梧闻笛在席。20:40 聂怀远递字条'21:00 库房看《寒江》'，死者回'准'。20:45 聂怀远离席赴医务室预写 21:08 取药登记并取药。20:50 洛之梧离席取请柬。20:52 洛之梧目击聂怀远刷卡进 9 层员工门（放大镜袋换左手）。20:55 晏起予向船长告假'取件好东西'；聂怀远进 9 层布草间。20:58 晏起予刷卡进员工门、入密码门；聂怀远经滑道至 3 层洗衣房，拉开虚挂挂锁入艺术品库房藏身画后。21:03 晏起予俯身看《寒江》时被聂怀远以画框打包带勒杀，怀表自袖袋滑出摔停于木箱下。21:05 邬双下班过 3 层员工通道，闻到浆糊与陈年绢纸味自检修门缝逸出。21:10 聂怀远伪装自缢（打包带挂梁、木箱垫脚踢倒）、插死密码门内闩、扣死检修门挂锁。21:12 聂怀远员工梯上 9 层刷卡出。21:15 聂怀远入席（额角有汗，向闻笛称'取药来迟'）。21:20-21:35 闻笛讲《寒江独钓图》，聂怀远全程在座带头鼓掌，主桌空椅。21:20-21:35 晏承在 9 层走廊徘徊（无 3 层权限）。21:35 佟肃巡检刷卡过 3 层（见门轴缎面丝线，随手拂去）。22:30 散席。22:40 晏承与洛之梧走廊密谈'保底可转'（邬双目击）。0:30 库房恒温柜电源被翻倒木箱碰脱，温度漂移告警。0:40 佟肃与轮机员下 3 层，密码门内闩敲不开，走检修门发现悬尸；船医初判自缢。1:30 船医复验改判'先勒后悬'。破案链：船医复验（索沟水平环绕=勒杀后悬尸）→ 木箱下的怀表（21:03 停摆+表底'松年'=死亡时刻与仇家姓氏）→ 门禁刷卡清单（20:52 进 21:12 出的 20 分钟空窗）→ 医务室登记本（21:08 行系预写伪证）→ 钥匙借用登记+检修门勘验（虚挂挂锁、缎面丝线、滑道掌印=只去不回的路）→ 鉴定底稿边角（'松年长物'印鉴吻合=动机与身份）→ 公文包捐赠备忘（遗产格局，红鲱鱼）→ 闻笛讲稿批注（'存疑如故'=来源疑案的书面回声）。红鲱鱼：晏承的门禁徘徊与保底协议、邬双的停职之恨与浆糊嗅觉、洛之梧的利益目击与深夜密谈、佟肃的黑屏监控与巡检时段——人人有秘密，真凶只有一个。",
-    "keyEvidence": [
-      "怀表",
-      "索沟",
-      "门禁",
-      "滑道",
-      "松年"
+    "culpritId": "niehuaiyuan",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "聂怀远是装裱宗师聂松年之孙：五十多年前晏起予以摹本调包聂家《寒江独钓图》真迹，祖父被诬监守自盗悬梁自尽；聂怀远学鉴定三十年，以'掌眼人'身份上船认出了家传真迹。20:40 他递字条约晏起予 21:00 库房'看《寒江》'；下午 15:00 他借 40 号钥匙把检修门挂锁拨成虚挂，20:45 离席在医务室预写 21:08 取药登记，20:52 刷卡进 9 层员工门，20:55 从布草间滑道直落 3 层洗衣房，20:58 经检修门入库。21:03 趁晏起予俯身看画，以画框打包带勒杀之（怀表摔停于木箱下 21:03），21:10 伪装自缢、插死密码门内闩、扣死检修门挂锁，21:12 员工梯上 9 层刷卡而出，21:15 入席——用全场目击与'21:08 取药登记'把 21:03 的自己洗成了'在宴会上的人'。密室与时刻表，他各押一半，输在了一块怀表上。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "聂怀远是装裱宗师聂松年之孙：五十多年前晏起予以摹本调包聂家《寒江独钓图》真迹，祖父被诬监守自盗悬梁自尽；聂怀远学鉴定三十年，以'掌眼人'身份上船认出了家传真迹。20:40 他递字条约晏起予 21:00 库房'看《寒江》'；下午 15:00 他借 40 号钥匙把检修门挂锁拨成虚挂，20:45 离席在医务室预写 21:08 取药登记，20:52 刷卡进 9 层员工门，20:55 从布草间滑道直落 3 层洗衣房，20:58 经检修门入库。21:03 趁晏起予俯身看画，以画框打包带勒杀之（怀表摔停于木箱下 21:03），21:10 伪装自缢、插死密码门内闩、扣死检修门挂锁，21:12 员工梯上 9 层刷卡而出，21:15 入席——用全场目击与'21:08 取药登记'把 21:03 的自己洗成了'在宴会上的人'。密室与时刻表，他各押一半，输在了一块怀表上。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "15:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:00"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远借 40 号钥匙'通风'，"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "16:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:00"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "拨挂锁成虚挂，"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "16:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:30"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "归还钥匙。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "闻笛与晏起予书吧争执'画来路不正'。"
+          }
+        ],
+        "characterIds": [
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "wendi"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "船长欢迎宴开幕，晏起予主桌、聂怀远晏承洛之梧闻笛在席。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan",
+          "yancheng",
+          "luozhiwu",
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan",
+          "yancheng",
+          "luozhiwu",
+          "wendi"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "20:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:40"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远递字条'"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "库房看《寒江》'，死者回'准'。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "20:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:45"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远离席赴医务室预写"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:08"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "取药登记并取药。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "20:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:50"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "洛之梧离席取请柬。"
+          }
+        ],
+        "characterIds": [
+          "luozhiwu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luozhiwu"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "20:52",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:52"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "洛之梧目击聂怀远刷卡进 9 层员工门（放大镜袋换左手）。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan",
+          "luozhiwu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan",
+          "luozhiwu"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "20:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:55"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晏起予向船长告假'取件好东西'；聂怀远进 9 层布草间。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "20:58",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:58"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晏起予刷卡进员工门、入密码门；聂怀远经滑道至 3 层洗衣房，拉开虚挂挂锁入艺术品库房藏身画后。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:03",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:03"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晏起予俯身看《寒江》时被聂怀远以画框打包带勒杀，怀表自袖袋滑出摔停于木箱下。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "21:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "邬双下班过 3 层员工通道，闻到浆糊与陈年绢纸味自检修门缝逸出。"
+          }
+        ],
+        "characterIds": [
+          "wushuang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "wushuang"
+        ]
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "21:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:10"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远伪装自缢（打包带挂梁、木箱垫脚踢倒）、插死密码门内闩、扣死检修门挂锁。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "21:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:12"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远员工梯上 9 层刷卡出。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聂怀远入席（额角有汗，向闻笛称'取药来迟'）。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan",
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan",
+          "wendi"
+        ]
+      },
+      {
+        "id": "truth_event_19",
+        "time": {
+          "display": "21:20–21:35",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 19",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "闻笛讲《寒江独钓图》，聂怀远全程在座带头鼓掌，主桌空椅。"
+          }
+        ],
+        "characterIds": [
+          "niehuaiyuan",
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niehuaiyuan",
+          "wendi"
+        ]
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "21:20–21:35",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晏承在 9 层走廊徘徊（无 3 层权限）。"
+          }
+        ],
+        "characterIds": [
+          "yancheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yancheng"
+        ]
+      },
+      {
+        "id": "truth_event_21",
+        "time": {
+          "display": "21:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "佟肃巡检刷卡过 3 层（见门轴缎面丝线，随手拂去）。"
+          }
+        ],
+        "characterIds": [
+          "tongsu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tongsu"
+        ]
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "22:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:30"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "散席。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_23",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 23",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晏承与洛之梧走廊密谈'保底可转'（邬双目击）。0:30 库房恒温柜电源被翻倒木箱碰脱，温度漂移告警。0:40 佟肃与轮机员下 3 层，密码门内闩敲不开，走检修门发现悬尸；船医初判自缢。1:30 船医复验改判'先勒后悬'。破案链：船医复验（索沟水平环绕=勒杀后悬尸）→ 木箱下的怀表（"
+          }
+        ],
+        "characterIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu"
+        ]
+      },
+      {
+        "id": "truth_event_24",
+        "time": {
+          "display": "21:03",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:03"
+          }
+        },
+        "title": "事件 24",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "停摆+表底'松年'=死亡时刻与仇家姓氏）→ 门禁刷卡清单（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_25",
+        "time": {
+          "display": "20:52",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:52"
+          }
+        },
+        "title": "事件 25",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "进"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_26",
+        "time": {
+          "display": "21:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:12"
+          }
+        },
+        "title": "事件 26",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "出的 20 分钟空窗）→ 医务室登记本（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_27",
+        "time": {
+          "display": "21:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:08"
+          }
+        },
+        "title": "事件 27",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "行系预写伪证）→ 钥匙借用登记+检修门勘验（虚挂挂锁、缎面丝线、滑道掌印=只去不回的路）→ 鉴定底稿边角（'松年长物'印鉴吻合=动机与身份）→ 公文包捐赠备忘（遗产格局，红鲱鱼）→ 闻笛讲稿批注（'存疑如故'=来源疑案的书面回声）。红鲱鱼：晏承的门禁徘徊与保底协议、邬双的停职之恨与浆糊嗅觉、洛之梧的利益目击与深夜密谈、佟肃的黑屏监控与巡检时段——人人有秘密，真凶只有一个。"
+          }
+        ],
+        "characterIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu",
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu",
+          "wendi"
+        ]
+      }
     ],
-    "reveal": "真相：凶手是聂怀远。五十多年前，晏起予用一幅摹本调走聂家的《寒江独钓图》，把'监守自盗'四个字钉死了装裱宗师聂松年；五十多年后，聂松年的孙子带着放大镜上了船，在库房里一眼认出印鉴'松年长物'——他家丢失的画，被仇人吊着看了半生。他递字条约画主入库，借布草滑道避开所有的门，用画框打包带还了祖父那一根绳：让他吊死在偷来的画前面。他预写了医务室的登记，扣死了检修门的挂锁，插死了密码门的门闩，又坐回全船的灯与掌声里——21:15 之后，他是全船最体面的证人。可怀表从他袖口滑落，摔进了木箱缝里，指针停在 21:03；表底'松年'两个字，像署名。闻笛那声'存疑如故'，晏承敲不响的门，邬双鼻子里的浆糊味，洛之梧看见的那次刷卡，佟肃拂掉的那缕缎面丝线——尾舱的客人来过，又走了，只有那块表，替死掉的画主，把时刻报给了活人。"
+    "keyEvidenceIds": [
+      "huaibiao",
+      "menjin_qingdan",
+      "jianxiu_kanyan"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "huaibiao"
+        ],
+        "conclusion": "怀表"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "menjin_qingdan"
+        ],
+        "conclusion": "门禁"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "jianxiu_kanyan"
+        ],
+        "conclusion": "滑道"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是聂怀远。五十多年前，晏起予用一幅摹本调走聂家的《寒江独钓图》，把'监守自盗'四个字钉死了装裱宗师聂松年；五十多年后，聂松年的孙子带着放大镜上了船，在库房里一眼认出印鉴'松年长物'——他家丢失的画，被仇人吊着看了半生。他递字条约画主入库，借布草滑道避开所有的门，用画框打包带还了祖父那一根绳：让他吊死在偷来的画前面。他预写了医务室的登记，扣死了检修门的挂锁，插死了密码门的门闩，又坐回全船的灯与掌声里——21:15 之后，他是全船最体面的证人。可怀表从他袖口滑落，摔进了木箱缝里，指针停在 21:03；表底'松年'两个字，像署名。闻笛那声'存疑如故'，晏承敲不响的门，邬双鼻子里的浆糊味，洛之梧看见的那次刷卡，佟肃拂掉的那缕缎面丝线——尾舱的客人来过，又走了，只有那块表，替死掉的画主，把时刻报给了活人。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -232,6 +2357,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

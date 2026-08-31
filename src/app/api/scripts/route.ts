@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { parseAnyScriptDoc } from "@/core/script/compat";
-import { validateScript } from "@/core/script/validate";
-import type { ScriptDoc } from "@/core/script/schema";
+import { ingestScriptDoc } from "@/core/script/compat";
 import { validateScriptV2 } from "@/core/script/v2/validate";
-import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { requireAdmin } from "@/lib/admin";
 
 /** 剧本列表（仅元数据） */
@@ -28,7 +25,7 @@ export async function GET() {
   return NextResponse.json(scripts);
 }
 
-/** 导入/创建剧本：body = { doc: ScriptDocInput, source? } 或直接是剧本文档 */
+/** 导入/创建剧本：body = { doc: ScriptDocV2 | V1, source? } 或直接是剧本文档。入库一律存 V2。 */
 export async function POST(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
@@ -37,12 +34,15 @@ export async function POST(req: Request) {
   const docInput = "doc" in body ? body.doc : body;
   const source = typeof body?.source === "string" && ["manual", "ai", "import"].includes(body.source) ? body.source : "import";
 
-  const parsed = parseScriptDocSafe(docInput);
-  if (!parsed.ok) {
-    return NextResponse.json({ error: "剧本结构校验失败", issues: parsed.issues }, { status: 400 });
+  const ingested = ingestScriptDocSafe(docInput);
+  if (!ingested.ok) {
+    return NextResponse.json({ error: "剧本结构校验失败", issues: ingested.issues }, { status: 400 });
   }
-  const doc = parsed.doc;
-  const issues = parsed.version === 2 ? validateScriptV2(parsed.doc as ScriptDocV2) : validateScript(parsed.doc as ScriptDoc).map((issue) => ({ ...issue, path: "" }));
+  const doc = ingested.doc;
+  const issues = [
+    ...ingested.migrationWarnings.map((warning) => ({ level: "warning" as const, path: warning.path, message: warning.message })),
+    ...validateScriptV2(doc),
+  ];
   const errors = issues.filter((i) => i.level === "error");
   if (errors.length) {
     return NextResponse.json({ error: "剧本逻辑校验失败", issues }, { status: 400 });
@@ -64,13 +64,9 @@ export async function POST(req: Request) {
   return NextResponse.json({ id: script.id, issues }, { status: 201 });
 }
 
-function parseScriptDocSafe(
-  input: unknown
-):
-  | ({ ok: true } & ReturnType<typeof parseAnyScriptDoc>)
-  | { ok: false; issues: Array<{ level: "error" | "warning"; message: string }> } {
+function ingestScriptDocSafe(input: unknown) {
   try {
-    return { ok: true as const, ...parseAnyScriptDoc(input) };
+    return { ok: true as const, ...ingestScriptDoc(input) };
   } catch (err) {
     const issues: Array<{ level: "error" | "warning"; message: string }> = [];
     if (err && typeof err === "object" && "issues" in err) {

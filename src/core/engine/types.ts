@@ -1,4 +1,4 @@
-import type { ScriptDoc } from "@/core/script/schema";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
 
 /** 游戏阶段状态机：LOBBY → READING → SELF_INTRO → [SEARCH → DISCUSSION]×N → VOTE → REVEAL → ENDED */
 export type Phase = "LOBBY" | "READING" | "SELF_INTRO" | "SEARCH" | "DISCUSSION" | "VOTE" | "REVEAL" | "ENDED";
@@ -84,6 +84,6 @@ export type BusMessage =
 
 export interface EngineContext {
   gameId: string;
-  script: ScriptDoc;
+  script: ScriptDocV2;
   state: GameState;
 }

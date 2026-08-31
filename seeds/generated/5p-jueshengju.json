@@ -1,34 +1,275 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "决胜局",
     "minPlayers": 5,
     "maxPlayers": 5,
     "durationMin": 120,
     "difficulty": "新手",
-    "tags": ["本格", "现代", "电竞", "职场", "新手友好"],
+    "tags": [
+      "本格",
+      "现代",
+      "电竞",
+      "职场",
+      "新手友好"
+    ],
     "intro": "破晓战队基地，距离明晚总决赛开打还有二十六小时。22:40，教练的呼喊从二楼书房炸开：战队老板蒋万川伏在书桌上，背部一处创口——书架上那把'2021首冠纪念剑'出了鞘。基地大门门禁整晚没有外人进出，楼道监控却早在三月就被老板签字停修。杀他的人，就睡在这栋楼里，而其中一个人，今晚的直播画面正在几百名观众眼前'认真训练'。"
   },
-  "background": "破晓战队，五年前的一冠之师，明晚就是总决赛。基地是一栋三层小楼：一楼食堂，二楼书房、直播间和训练房，三楼宿舍。老板蒋万川，五十二岁，今晚在二楼书房核一份东西——审计师事务所的邮件草稿就停在屏幕上：明早九点，审计进场。明面上查的是战队账目，实际上，十年间七笔'顾问费'的对手公司查无实址，每一份协议的签名页都是主教练陆骁的亲笔——蒋万川早就备好了把这口锅单独扣在他头上的材料。21:20，蒋万川把陆骁叫进书房摊牌，'名字都是你签的，你体面自首，别连累孩子'；21:40，全楼都听见了摔门声。22:40，陆骁去书房敲门汇报明早安排，无人应答——推门看见的，是伏在桌上渐冷的老板。基地大门门禁记录整晚干净，楼道监控三月十二日起损坏未修，报修单上的批语是蒋万川的亲笔：'赛前不花钱。'案发时段（22:00-22:30）人在楼内的，只有你们五个。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "破晓战队，五年前的一冠之师，明晚就是总决赛。基地是一栋三层小楼：一楼食堂，二楼书房、直播间和训练房，三楼宿舍。老板蒋万川，五十二岁，今晚在二楼书房核一份东西——审计师事务所的邮件草稿就停在屏幕上：明早九点，审计进场。明面上查的是战队账目，实际上，十年间七笔'顾问费'的对手公司查无实址，每一份协议的签名页都是主教练陆骁的亲笔——蒋万川早就备好了把这口锅单独扣在他头上的材料。21:20，蒋万川把陆骁叫进书房摊牌，'名字都是你签的，你体面自首，别连累孩子'；21:40，全楼都听见了摔门声。22:40，陆骁去书房敲门汇报明早安排，无人应答——推门看见的，是伏在桌上渐冷的老板。基地大门门禁记录整晚干净，楼道监控三月十二日起损坏未修，报修单上的批语是蒋万川的亲笔：'赛前不花钱。'案发时段（22:00-22:30）人在楼内的，只有你们五个。"
+    }
+  ],
   "characters": [
     {
       "id": "luxiao",
       "name": "陆骁",
       "gender": "男",
       "age": 46,
-      "publicBio": "破晓主教练，建队元老，与老板蒋万川并肩十年。今晚21:20与老板在书房密谈，21:40摔门而出；22:40'发现'尸体。",
-      "card": {
-        "backstory": "你叫陆骁，破晓建队就是你和蒋万川两个人：他出钱，你出命。十年，你替他签了七份'顾问协议'——他说'名头你背着，钱我兜着'，你签了。上个月你才知道那笔一千二百八十万的签约金去了哪。今晚21:20书房里，他把审计函拍在桌上：'明早九点，名字都是你签的，你体面自首，别连累孩子。'你摔了门。走廊里你听见他补了一句：'破晓离了谁都转。'22:05你回到书房时，纪念剑就在剑架上——十年来你第一次觉得，这把剑该换个挂法。",
-        "secret": "你就是凶手。21:55你在直播间用教练帐号启动训练回放循环（八分二十秒），22:05进书房，22:08从身后一剑刺入蒋万川背部，擦剑放回剑架，22:28回直播间切回实时镜头，22:40佯装送安排'发现'尸体。",
-        "goal": "你的初始口供是'21:55起一直在直播间'——后台一查就穿。策略：在推流记录被翻出来之前，先自首'假合同都是我签的'，把叙事往'审计逼人'上带；把22:00-22:30的空档圆进'洗澡、接电话'，再把许冲的讨薪、方晴的账、闻声的后台权限一个个摆上台面。纪念剑鞘里那一滴血，是你唯一没料到的。",
-        "isCulprit": true,
-        "timeline": "21:20-21:40 书房摊牌，摔门而出。21:55 直播间启动训练回放循环。22:05-22:25 书房行凶与清理。22:28 直播间切回实时镜头，弹幕回'在的，认真训练'。22:40 敲书房门'发现'尸体。22:45 呼叫众人，23:00 陪方晴报警。",
-        "knowledge": [
-          "剑架上的纪念剑从没开过刃，鞘口朝上——你擦剑时没料到血会倒流进鞘。",
-          "直播间主机不锁屏，密码便签是闻声贴的——这既方便了你，也会方便别人把你和那台机器钉在一起。",
-          "21:53你上楼时，一楼售货机前有个小身影——齐小满。你当时心头一紧，现在更紧。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "破晓主教练，建队元老，与老板蒋万川并肩十年。今晚21:20与老板在书房密谈，21:40摔门而出；22:40'发现'尸体。"
+          }
         ],
-        "persona": "训练场上嗓门最大，'再来一把'是口头禅，私下抽最便宜的烟。谈钱会摆手，谈队员会失神。撒谎时会先咳嗽一声再开口，这个习惯十年没改。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆骁，破晓建队就是你和蒋万川两个人：他出钱，你出命。十年，你替他签了七份'顾问协议'——他说'名头你背着，钱我兜着'，你签了。上个月你才知道那笔一千二百八十万的签约金去了哪。今晚21:20书房里，他把审计函拍在桌上：'明早九点，名字都是你签的，你体面自首，别连累孩子。'你摔了门。走廊里你听见他补了一句：'破晓离了谁都转。'22:05你回到书房时，纪念剑就在剑架上——十年来你第一次觉得，这把剑该换个挂法。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luxiao_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。21:55你在直播间用教练帐号启动训练回放循环（八分二十秒），22:05进书房，22:08从身后一剑刺入蒋万川背部，擦剑放回剑架，22:28回直播间切回实时镜头，22:40佯装送安排'发现'尸体。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luxiao_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的初始口供是'21:55起一直在直播间'——后台一查就穿。策略：在推流记录被翻出来之前，先自首'假合同都是我签的'，把叙事往'审计逼人'上带；把22:00-22:30的空档圆进'洗澡、接电话'，再把许冲的讨薪、方晴的账、闻声的后台权限一个个摆上台面。纪念剑鞘里那一滴血，是你唯一没料到的。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luxiao_event_1",
+            "time": {
+              "display": "21:20–21:40",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房摊牌，摔门而出。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_2",
+            "time": {
+              "display": "21:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:55"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "直播间启动训练回放循环。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_3",
+            "time": {
+              "display": "22:05–22:25",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:05"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:25"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房行凶与清理。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_4",
+            "time": {
+              "display": "22:28",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:28"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "直播间切回实时镜头，弹幕回'在的，认真训练'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_5",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "敲书房门'发现'尸体。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_6",
+            "time": {
+              "display": "22:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:45"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "呼叫众人，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiao_event_7",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "陪方晴报警。"
+              }
+            ],
+            "characterIds": [
+              "fangqing"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luxiao_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "剑架上的纪念剑从没开过刃，鞘口朝上——你擦剑时没料到血会倒流进鞘。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiao_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "直播间主机不锁屏，密码便签是闻声贴的——这既方便了你，也会方便别人把你和那台机器钉在一起。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxiao_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:53你上楼时，一楼售货机前有个小身影——齐小满。你当时心头一紧，现在更紧。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "训练场上嗓门最大，'再来一把'是口头禅，私下抽最便宜的烟。谈钱会摆手，谈队员会失神。撒谎时会先咳嗽一声再开口，这个习惯十年没改。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +277,185 @@
       "name": "许冲",
       "gender": "男",
       "age": 21,
-      "publicBio": "明星中单，'破晓·白鲨'，十九岁的常规赛最有价值选手。签约金一千二百八十万只到账三百万，今晚21:50去书房拍门讨薪。",
-      "card": {
-        "backstory": "你叫许冲，十九岁拿下常规赛最有价值选手。签约金一千二百八十万，合同上写得漂亮，到账只有三百万，尾款拖了九个月——你妈住院的押金单还在手机里。今晚21:50你去书房拍门：'我的钱呢？'门里那句'滚，明天说'你录了音。22:03你回到训练房开了一局单排——三十五分钟，一秒没退。22:40教练的呼喊从二楼西头传来时，你戴着耳机，是闻声冲上来拽掉你的线。",
-        "secret": "你讨薪录音里有'滚，明天说'——你有最直白的动机；你还偷偷在队内群里拉过票，想带动队友集体'停训讨薪'，方晴劝住过你。",
-        "goal": "你的战绩记录是全场最硬的不在场证明，而录音是你最危险的东西。策略：第一时间放录音（先说清'我21:50在书房门外'），再亮战绩时间戳；讨薪大方认，'停训'的小动作最好自己提——被人挖出来就成了'密谋'。",
-        "isCulprit": false,
-        "timeline": "21:50 书房门外讨薪被骂。22:03-22:38 训练房单排一局（队内平台战绩可证）。22:40 被闻声拽掉耳机叫上楼。23:00 陪队报警。",
-        "knowledge": [
-          "书房门缝里飘出来的浓茶味，和教练保温杯里的一模一样——21:20之后，去过书房的人不止你一个。",
-          "蒋万川桌上那封审计邮件草稿你瞄见过抬头：'明早9:00'——你当时只想着自己的九百八十万。",
-          "闻声管直播后台，22:26、22:27两次拨教练手机的事，他跟你说过。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "明星中单，'破晓·白鲨'，十九岁的常规赛最有价值选手。签约金一千二百八十万只到账三百万，今晚21:50去书房拍门讨薪。"
+          }
         ],
-        "persona": "冲，点火就着，说话带梗，情绪全写在脸上。提钱会瞬间炸毛，提妈妈会突然哑火。翻录音时手在抖：'我不是要他死，我是要我的九百八十万。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫许冲，十九岁拿下常规赛最有价值选手。签约金一千二百八十万，合同上写得漂亮，到账只有三百万，尾款拖了九个月——你妈住院的押金单还在手机里。今晚21:50你去书房拍门：'我的钱呢？'门里那句'滚，明天说'你录了音。22:03你回到训练房开了一局单排——三十五分钟，一秒没退。22:40教练的呼喊从二楼西头传来时，你戴着耳机，是闻声冲上来拽掉你的线。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_xuchong_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你讨薪录音里有'滚，明天说'——你有最直白的动机；你还偷偷在队内群里拉过票，想带动队友集体'停训讨薪'，方晴劝住过你。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_xuchong_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的战绩记录是全场最硬的不在场证明，而录音是你最危险的东西。策略：第一时间放录音（先说清'我21:50在书房门外'），再亮战绩时间戳；讨薪大方认，'停训'的小动作最好自己提——被人挖出来就成了'密谋'。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_xuchong_event_1",
+            "time": {
+              "display": "21:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房门外讨薪被骂。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xuchong_event_2",
+            "time": {
+              "display": "22:03–22:38",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:03"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:38"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "训练房单排一局（队内平台战绩可证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xuchong_event_3",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被闻声拽掉耳机叫上楼。"
+              }
+            ],
+            "characterIds": [
+              "wensheng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_xuchong_event_4",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "陪队报警。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_xuchong_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房门缝里飘出来的浓茶味，和教练保温杯里的一模一样——21:20之后，去过书房的人不止你一个。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xuchong_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "蒋万川桌上那封审计邮件草稿你瞄见过抬头：'明早9:00'——你当时只想着自己的九百八十万。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xuchong_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻声管直播后台，22:26、22:27两次拨教练手机的事，他跟你说过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "冲，点火就着，说话带梗，情绪全写在脸上。提钱会瞬间炸毛，提妈妈会突然哑火。翻录音时手在抖：'我不是要他死，我是要我的九百八十万。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +463,205 @@
       "name": "方晴",
       "gender": "女",
       "age": 34,
-      "publicBio": "战队领队兼出纳，管着基地一百多号账。今晚21:10送茶进书房，21:15-22:30在一楼食堂对账。",
-      "card": {
-        "backstory": "你叫方晴，领队兼出纳，基地上下的账都从你手里过。三个月前你发现七笔'顾问费'的对手公司查无实址，报告递上去，第二天你的差旅报销被驳回两次——蒋万川的意思很明白。你把每一页单据都拍照存档，你告诉自己：审计一来，一切清白。今晚21:10你送茶进书房，听见蒋万川说'明早九点'；21:40楼上摔门，你在备忘录里记了一笔。22:40陆骁的喊声炸开时，你的第一反应是：审计函，谁拿走了？",
-        "secret": "你提前一周就知道审计行程（是你对接的事务所），却没告诉任何人——包括明早要被'点名'的陆骁；你还私自借过两万公款给青训营换空调，账挂在'设备维护'里。",
-        "goal": "你的账本和时间戳最完整，你的知情不报也最扎眼。策略：主动交代审计对接（'我以为他会自首'），交出报销存档锚定21:15-22:30在食堂；'借公款'宁可自己说——审计真进场那天，你是全场唯一经得起翻账的人。",
-        "isCulprit": false,
-        "timeline": "21:10 送茶进书房。21:15-22:30 食堂对账（报销单拍照时间戳）。21:40 听见摔门并记备忘。22:40 闻声赶来，清点书房物品。23:00 报警。",
-        "knowledge": [
-          "21:20你回食堂前，听见书房里蒋万川说：'名字都是你签的。'你当时手一抖，茶托响了一声。",
-          "审计预约函20:47由快递员送进大门，你签收的——那份函现在不在书房桌上。",
-          "陆骁的浓茶是队里老梗：只有他喝隔夜浓茶，杯底挂釉——茶盘上那只杯，你一眼认出来。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "战队领队兼出纳，管着基地一百多号账。今晚21:10送茶进书房，21:15-22:30在一楼食堂对账。"
+          }
         ],
-        "persona": "账房先生做派，句句带'有单据''对时间'，心细到报应援棒都要拍照。护队员时凶，被问账时稳。提'我以为他会自首'时会咬嘴唇。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫方晴，领队兼出纳，基地上下的账都从你手里过。三个月前你发现七笔'顾问费'的对手公司查无实址，报告递上去，第二天你的差旅报销被驳回两次——蒋万川的意思很明白。你把每一页单据都拍照存档，你告诉自己：审计一来，一切清白。今晚21:10你送茶进书房，听见蒋万川说'明早九点'；21:40楼上摔门，你在备忘录里记了一笔。22:40陆骁的喊声炸开时，你的第一反应是：审计函，谁拿走了？"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_fangqing_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你提前一周就知道审计行程（是你对接的事务所），却没告诉任何人——包括明早要被'点名'的陆骁；你还私自借过两万公款给青训营换空调，账挂在'设备维护'里。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_fangqing_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的账本和时间戳最完整，你的知情不报也最扎眼。策略：主动交代审计对接（'我以为他会自首'），交出报销存档锚定21:15-22:30在食堂；'借公款'宁可自己说——审计真进场那天，你是全场唯一经得起翻账的人。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_fangqing_event_1",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "送茶进书房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangqing_event_2",
+            "time": {
+              "display": "21:15–22:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "食堂对账（报销单拍照时间戳）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangqing_event_3",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "听见摔门并记备忘。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangqing_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻声赶来，清点书房物品。"
+              }
+            ],
+            "characterIds": [
+              "wensheng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangqing_event_5",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "报警。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_fangqing_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:20你回食堂前，听见书房里蒋万川说：'名字都是你签的。'你当时手一抖，茶托响了一声。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangqing_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "审计预约函20:47由快递员送进大门，你签收的——那份函现在不在书房桌上。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangqing_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "陆骁的浓茶是队里老梗：只有他喝隔夜浓茶，杯底挂釉——茶盘上那只杯，你一眼认出来。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "账房先生做派，句句带'有单据''对时间'，心细到报应援棒都要拍照。护队员时凶，被问账时稳。提'我以为他会自首'时会咬嘴唇。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +669,221 @@
       "name": "闻声",
       "gender": "男",
       "age": 28,
-      "publicBio": "直播运营，退役老将，管直播后台与推流。今晚22:25送水进直播间，两次拨打教练手机无人接听。",
-      "card": {
-        "backstory": "你叫闻声，前破晓辅助，手腕伤退转了直播运营，后台、推流、剪辑一肩挑。教练帐号的密码便签是你贴的——他总忘。今晚22:25你送水进直播间，屏幕里教练侧脸，叫了两声没应，拨手机两次也没人接；你多看了一眼那只外卖杯——绿色杯套，白天你送的那只，可画面桌上是红色。你以为他要大赛前清静，没多留。22:30刷到'直播回来了'，22:40楼西头的喊声让你的后颈一凉。",
-        "secret": "你22:25送水时已隐约觉得'画面不对'（外卖杯对不上），却没声张——你怕多事；你还帮蒋万川养过三个月'水军控评'，刷他的好评压选手的差评，方晴发现过一次。",
-        "goal": "你是全场唯一摸过推流后台的人，你的证词能戳破录播，也能被反咬成'你会操作，所以是你'。策略：主动陈述22:25的三个反常（不应声、不接电话、外卖杯对不上），出示通话记录；主动交代密码便签（'全队都知道'），再交水军的事——把每条暗线摆上明面，你才安全。",
-        "isCulprit": false,
-        "timeline": "22:25 送水进直播间，打招呼无应。22:26、22:27 拨教练手机无人接（通话记录可证）。22:27 下楼回工作室。22:30 刷到直播恢复实时。22:40 拽掉许冲耳机，随众人上楼。",
-        "knowledge": [
-          "后台日志你点开过两次：21:55:12启动训练回放循环，22:28:41切回实时——操作帐号是教练的，可密码便签就贴在屏幕边上。",
-          "许冲21:50拍门你听见了两句：'我的钱呢''滚，明天说'——他的录音和你听到的对得上。",
-          "蒋万川3月12日批过'监控不修'，理由是赛前不花钱——二楼走廊今晚是黑的。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "直播运营，退役老将，管直播后台与推流。今晚22:25送水进直播间，两次拨打教练手机无人接听。"
+          }
         ],
-        "persona": "慢性子，话少但准，习惯用'我按了什么、屏幕显示了什么'的流水账说话。提老东家旧伤会揉右腕。最怕别人说'你也会操作后台'：'会开锁的不都是贼。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫闻声，前破晓辅助，手腕伤退转了直播运营，后台、推流、剪辑一肩挑。教练帐号的密码便签是你贴的——他总忘。今晚22:25你送水进直播间，屏幕里教练侧脸，叫了两声没应，拨手机两次也没人接；你多看了一眼那只外卖杯——绿色杯套，白天你送的那只，可画面桌上是红色。你以为他要大赛前清静，没多留。22:30刷到'直播回来了'，22:40楼西头的喊声让你的后颈一凉。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_wensheng_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你22:25送水时已隐约觉得'画面不对'（外卖杯对不上），却没声张——你怕多事；你还帮蒋万川养过三个月'水军控评'，刷他的好评压选手的差评，方晴发现过一次。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_wensheng_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是全场唯一摸过推流后台的人，你的证词能戳破录播，也能被反咬成'你会操作，所以是你'。策略：主动陈述22:25的三个反常（不应声、不接电话、外卖杯对不上），出示通话记录；主动交代密码便签（'全队都知道'），再交水军的事——把每条暗线摆上明面，你才安全。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_wensheng_event_1",
+            "time": {
+              "display": "22:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:25"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "送水进直播间，打招呼无应。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wensheng_event_2",
+            "time": {
+              "display": "22:26",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:26"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "、"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wensheng_event_3",
+            "time": {
+              "display": "22:27",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:27"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拨教练手机无人接（通话记录可证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wensheng_event_4",
+            "time": {
+              "display": "22:27",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:27"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下楼回工作室。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wensheng_event_5",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "刷到直播恢复实时。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wensheng_event_6",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拽掉许冲耳机，随众人上楼。"
+              }
+            ],
+            "characterIds": [
+              "xuchong"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_wensheng_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后台日志你点开过两次：21:55:12启动训练回放循环，22:28:41切回实时——操作帐号是教练的，可密码便签就贴在屏幕边上。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wensheng_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "许冲21:50拍门你听见了两句：'我的钱呢''滚，明天说'——他的录音和你听到的对得上。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_wensheng_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "蒋万川3月12日批过'监控不修'，理由是赛前不花钱——二楼走廊今晚是黑的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "慢性子，话少但准，习惯用'我按了什么、屏幕显示了什么'的流水账说话。提老东家旧伤会揉右腕。最怕别人说'你也会操作后台'：'会开锁的不都是贼。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,94 +891,1029 @@
       "name": "齐小满",
       "gender": "女",
       "age": 17,
-      "publicBio": "青训生，替补中单，睡三楼储物间改的小单间。今晚21:53在一楼售货机前，目击一个灰色连帽衫背影上二楼。",
-      "card": {
-        "backstory": "你叫齐小满，青训营打上来的替补，十七岁，睡在三楼储物间改的小单间。今晚21:53你溜到一楼售货机买可乐，抬头看见楼梯口一个灰色连帽衫的背影上楼——步子沉，是教练。你没多想。22:40基地炸了锅。你最怕的是另一件事：上周教练让你去书房打印机取文件，你顺手翻到一沓扫描件，签名页全是'陆骁'——你把它们拍了下来，存在手机里，想着关键时刻'保自己转正'。",
-        "secret": "你拍过假合同扫描件存在手机里（替罪结构的知情者），既怕教练也怕被灭口；21:53你在楼梯口看见教练上楼——这是你唯一的筹码，也是你最不敢说的证词。",
-        "goal": "你年龄最小、地位最低，谁都能唬你。策略：先说21:53的背影（全场唯一目击教练上楼的人），再交照片（逼教练的谎话崩盘）；但要防'未成年深夜窥探'被反打——强调你是去取文件的，文件正是教练让你取的。",
-        "isCulprit": false,
-        "timeline": "21:30-21:50 三楼自习文化课。21:53 一楼售货机买可乐，目击灰色连帽衫上二楼。22:00 回三楼小间。22:40 闻声跑上三楼报信，你跟着下楼。",
-        "knowledge": [
-          "灰色连帽衫是教练的，袖口磨白——队里没人敢穿他的衣服。",
-          "书房打印机当天卡过一次纸，你取文件时顺手看了扫描件：签名页七份，全是'陆骁'。",
-          "大门门禁21:10后没有外人进来——这是你帮方晴搬快递时听她说的。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "青训生，替补中单，睡三楼储物间改的小单间。今晚21:53在一楼售货机前，目击一个灰色连帽衫背影上二楼。"
+          }
         ],
-        "persona": "半大孩子，说话快而碎，紧张时绞卫衣抽绳。对教练又怕又感激，交照片时像上交检讨。口头禅：'我、我就说一句，你们别吼我。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫齐小满，青训营打上来的替补，十七岁，睡在三楼储物间改的小单间。今晚21:53你溜到一楼售货机买可乐，抬头看见楼梯口一个灰色连帽衫的背影上楼——步子沉，是教练。你没多想。22:40基地炸了锅。你最怕的是另一件事：上周教练让你去书房打印机取文件，你顺手翻到一沓扫描件，签名页全是'陆骁'——你把它们拍了下来，存在手机里，想着关键时刻'保自己转正'。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qixiaoman_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍过假合同扫描件存在手机里（替罪结构的知情者），既怕教练也怕被灭口；21:53你在楼梯口看见教练上楼——这是你唯一的筹码，也是你最不敢说的证词。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qixiaoman_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你年龄最小、地位最低，谁都能唬你。策略：先说21:53的背影（全场唯一目击教练上楼的人），再交照片（逼教练的谎话崩盘）；但要防'未成年深夜窥探'被反打——强调你是去取文件的，文件正是教练让你取的。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qixiaoman_event_1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "三楼自习文化课。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qixiaoman_event_2",
+            "time": {
+              "display": "21:53",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:53"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "一楼售货机买可乐，目击灰色连帽衫上二楼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qixiaoman_event_3",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回三楼小间。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qixiaoman_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻声跑上三楼报信，你跟着下楼。"
+              }
+            ],
+            "characterIds": [
+              "wensheng"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qixiaoman_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灰色连帽衫是教练的，袖口磨白——队里没人敢穿他的衣服。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qixiaoman_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "书房打印机当天卡过一次纸，你取文件时顺手看了扫描件：签名页七份，全是'陆骁'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qixiaoman_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "大门门禁21:10后没有外人进来——这是你帮方晴搬快递时听她说的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "半大孩子，说话快而碎，紧张时绞卫衣抽绳。对教练又怕又感激，交照片时像上交检讨。口头禅：'我、我就说一句，你们别吼我。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["书房", "直播间", "训练房", "食堂", "门厅与大门"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "书房",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "直播间",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "训练房",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "食堂",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "门厅与大门",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "shufang_kanyan",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "书房现场勘验记录",
-      "content": "死者伏于书桌，背部单一致命创口，创道与书架'2021首冠纪念剑'刃形吻合；创口周围无搏斗性擦伤，系身后突刺。死亡时间初判22:00-22:30。茶盘上两只茶杯：一只属死者，另一只杯底残茶挂釉——与教练惯喝的隔夜浓茶一致，那是21:20谈话留下的。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者伏于书桌，背部单一致命创口，创道与书架'2021首冠纪念剑'刃形吻合；创口周围无搏斗性擦伤，系身后突刺。死亡时间初判22:00-22:30。茶盘上两只茶杯：一只属死者，另一只杯底残茶挂釉——与教练惯喝的隔夜浓茶一致，那是21:20谈话留下的。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jianqiao_xuedi",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "剑鞘内的血滴",
-      "content": "纪念剑已插回剑架，剑身洁净，但鞘口内壁凝着一滴暗褐血珠——拔剑刺入时倒流所致；剑柄缠带上嵌着一根蓝色织物纤维，与死者身上'破晓五周年'纪念T恤的脱线处吻合。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "纪念剑已插回剑架，剑身洁净，但鞘口内壁凝着一滴暗褐血珠——拔剑刺入时倒流所致；剑柄缠带上嵌着一根蓝色织物纤维，与死者身上'破晓五周年'纪念T恤的脱线处吻合。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "tuiliu_houtai",
-      "location": "直播间",
+      "locationId": "location_2",
       "name": "推流后台日志",
-      "content": "直播后台日志：21:55:12教练帐号启动'训练回放循环'，素材为4月17日训练录像，时长八分二十秒；22:28:41切回实时摄像头。循环期间弹幕四十七条'教练在吗'均无回应；素材画面里的外卖杯是白天那只（咖啡渍位置与今晚不符）。主机不锁屏，屏幕边贴着帐号密码便签（闻声手笔）。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "直播后台日志：21:55:12教练帐号启动'训练回放循环'，素材为4月17日训练录像，时长八分二十秒；22:28:41切回实时摄像头。循环期间弹幕四十七条'教练在吗'均无回应；素材画面里的外卖杯是白天那只（咖啡渍位置与今晚不符）。主机不锁屏，屏幕边贴着帐号密码便签（闻声手笔）。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "zhibo_luping",
-      "location": "直播间",
+      "locationId": "location_2",
       "name": "平台录屏切片",
-      "content": "平台自动存档的录屏：21:55-22:28画面每八分二十秒完整重复一次，教练三次抬手看表的动作分秒不差；22:30后画面恢复实时，教练入镜，并在弹幕回复'在的，认真训练'。22:30前后，直播间门口的走廊无人经过——可惜走廊监控早已停修。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "平台自动存档的录屏：21:55-22:28画面每八分二十秒完整重复一次，教练三次抬手看表的动作分秒不差；22:30后画面恢复实时，教练入镜，并在弹幕回复'在的，认真训练'。22:30前后，直播间门口的走廊无人经过——可惜走廊监控早已停修。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jiahetong_saomiao",
-      "location": "书房",
+      "locationId": "location_1",
       "name": "假合同扫描件与审计邮件草稿",
-      "content": "死者书桌加密文件夹里是十年间七份'顾问协议'扫描件，走账对手均为查无实址的'迅跃体育'；每份签名页都是'陆骁'手写体——而公司章程补录页上，实际受益人签的是蒋万川。审计邮件草稿（未发送，20:47）：'明早9:00，请事务所直接对接蒋办。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者书桌加密文件夹里是十年间七份'顾问协议'扫描件，走账对手均为查无实址的'迅跃体育'；每份签名页都是'陆骁'手写体——而公司章程补录页上，实际受益人签的是蒋万川。审计邮件草稿（未发送，20:47）：'明早9:00，请事务所直接对接蒋办。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xuchong_taoxin",
-      "location": "训练房",
+      "locationId": "location_3",
       "name": "许冲的讨薪录音与战绩",
-      "content": "许冲与经纪人的聊天：签约金一千二百八十万只到账三百万，尾款被拖九个月。21:50他去书房拍门讨薪，录音原话：'我的钱呢？''滚，明天说。'队内平台战绩：22:03-22:38一局单排，全程在线，一秒未退。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "许冲与经纪人的聊天：签约金一千二百八十万只到账三百万，尾款被拖九个月。21:50他去书房拍门讨薪，录音原话：'我的钱呢？''滚，明天说。'队内平台战绩：22:03-22:38一局单排，全程在线，一秒未退。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "fangqing_jizhang",
-      "location": "食堂",
+      "locationId": "location_4",
       "name": "方晴的记账与送茶时间",
-      "content": "方晴手机记账记录：21:10'送茶两杯至书房'；21:15-22:30在一楼食堂对账，每页报销单都有拍照存档的时间戳。21:40她听见楼上摔门声，在备忘录里记了一笔：'教练和老板又吵了。'她的报销单里有一笔'设备维护'支出，实为青训营换空调。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "方晴手机记账记录：21:10'送茶两杯至书房'；21:15-22:30在一楼食堂对账，每页报销单都有拍照存档的时间戳。21:40她听见楼上摔门声，在备忘录里记了一笔：'教练和老板又吵了。'她的报销单里有一笔'设备维护'支出，实为青训营换空调。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "wensheng_songshui",
-      "location": "直播间",
+      "locationId": "location_2",
       "name": "闻声送水的两分钟",
-      "content": "闻声的口述记录：22:25送水进直播间，看见屏幕里教练侧脸，打招呼没应；拨打教练手机两次无人接（通话记录22:26、22:27）。他注意到画面里那只外卖杯——绿色杯套，白天他送去的那只，而今晚桌上是红色。他放下水就下楼；22:30的'直播回来了'他刷到过。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "闻声的口述记录：22:25送水进直播间，看见屏幕里教练侧脸，打招呼没应；拨打教练手机两次无人接（通话记录22:26、22:27）。他注意到画面里那只外卖杯——绿色杯套，白天他送去的那只，而今晚桌上是红色。他放下水就下楼；22:30的'直播回来了'他刷到过。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "damen_menjin",
-      "location": "门厅与大门",
+      "locationId": "location_5",
       "name": "大门门禁与监控报修单",
-      "content": "基地大门门禁当晚记录：20:47快递员放入审计预约函，21:10后无外人进出，全员在内。楼道监控3月12日起损坏未修，报修单压在门厅，签批：蒋万川，批语'赛前不花钱'。二楼走廊因此无影像，各房间为机械锁、无开锁记录。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "基地大门门禁当晚记录：20:47快递员放入审计预约函，21:10后无外人进出，全员在内。楼道监控3月12日起损坏未修，报修单压在门厅，签批：蒋万川，批语'赛前不花钱'。二楼走廊因此无影像，各房间为机械锁、无开锁记录。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "luxiao",
-    "method": "蒋万川十年的假账全签在陆骁名下，明早审计进场，他要陆骁'体面自首'独扛罪名——被十年的兄长当成一次性手套，陆骁决定自己来收场。21:55他走进直播间，用贴在屏幕边的密码在主机上启动'训练回放循环'：一段八分二十秒的旧训练录像顶替他的摄像头，几百名观众看着'教练'认真训练，而直播间与书房同在二楼、隔着储物间，谁也看不见他二十步之外的身影。22:05他进书房，22:08从身后拔出剑架上从不开刃的'2021首冠纪念剑'，一剑刺入蒋万川背部；擦剑、放回、关灯——从走廊看去'老板睡了'。22:28他回直播间切回实时镜头、弹幕回复，22:40佯装送明早安排'发现'尸体。破绽：剑鞘内壁倒流的血滴与缠带上的蓝色纤维、推流后台的启动与切换时刻、录屏里分秒不差的循环、闻声送水时打不通的电话与对不上的外卖杯，以及齐小满21:53的楼梯口目击。",
-    "fullTimeline": "19:00 备战会结束，队员自由训练。20:47 快递员送审计预约函进大门（方晴签收）。20:47 蒋万川写审计邮件草稿（未发送）。21:10 方晴送茶两杯进书房，21:20 听见'名字都是你签的'后回食堂。21:20-21:40 蒋万川与陆骁书房摊牌。21:40 陆骁摔门而出（许冲在走廊听见，方晴记入备忘录）。21:50 许冲书房门外讨薪被骂（录音可证）。21:53 齐小满在一楼售货机前目击灰色连帽衫背影上二楼。21:55:12 陆骁在直播间启动训练回放循环。22:00 蒋万川独自在书房核材料。22:03-22:38 许冲在训练房单排一局（战绩可证）。22:05-22:25 陆骁进书房，22:08 行凶，随后擦剑、放回、关灯。22:25-22:27 闻声送水进直播间，打招呼无应、两次拨教练手机无人接，22:27下楼。22:28:41 陆骁回直播间切回实时镜头。22:30 弹幕回复'在的，认真训练'。22:40 陆骁敲书房门'发现'尸体，呼叫众人；闻声拽掉许冲耳机上楼。23:00 方晴报警。破案链：书房勘验（身后突刺+纪念剑刃形+死亡时间22:00-22:30）→ 剑鞘血滴与蓝色纤维（凶器归位却留下痕迹）→ 推流后台与录屏（21:55启动循环、22:28切换，教练帐号操作）→ 闻声的通话记录与外卖杯（22:25'直播里的教练'不应声不接电话）→ 齐小满21:53目击（唯一看见教练上楼的人）→ 假合同扫描件（替罪结构，动机）→ 各人不在线证明（许冲战绩、方晴记账、齐小满目击位置）。红鲱鱼：许冲最响的讨薪动机与录音、方晴提前知道审计的知情不报与两万公款、闻声的后台权限与水军旧事、齐小满偷拍的扫描件——人人有秘密，无人是第二凶手。",
-    "keyEvidence": ["纪念剑", "回放循环", "假合同", "审计", "外卖杯"],
-    "reveal": "真相：凶手是主教练陆骁。十年前他把名字借给兄弟，十年后兄弟把刀递还给他——审计函上的每一个字都在说：陆骁，你签的字，你进的牢。他没喊冤，他选了决赛前夜。他懂这栋楼的每一盏灯：监控是老板省下的钱，密码便签是他自己贴的，直播间的八百个观众是最好的不在场证人——一段八分二十秒的旧录像，替他坐了二十三分钟的教练席。可录屏会循环，外卖杯不会；电话打不通的时候，'在的，认真训练'四个字就成了谎话的注脚；剑擦得再亮，鞘里那滴血也会替死者开口。许冲讨的是钱，方晴记的是账，闻声攥着后台的钥匙，小满举着那张目击——决赛还没开打，破晓的决胜局，是先把自家人钉死在证据上。"
+    "culpritId": "luxiao",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "蒋万川十年的假账全签在陆骁名下，明早审计进场，他要陆骁'体面自首'独扛罪名——被十年的兄长当成一次性手套，陆骁决定自己来收场。21:55他走进直播间，用贴在屏幕边的密码在主机上启动'训练回放循环'：一段八分二十秒的旧训练录像顶替他的摄像头，几百名观众看着'教练'认真训练，而直播间与书房同在二楼、隔着储物间，谁也看不见他二十步之外的身影。22:05他进书房，22:08从身后拔出剑架上从不开刃的'2021首冠纪念剑'，一剑刺入蒋万川背部；擦剑、放回、关灯——从走廊看去'老板睡了'。22:28他回直播间切回实时镜头、弹幕回复，22:40佯装送明早安排'发现'尸体。破绽：剑鞘内壁倒流的血滴与缠带上的蓝色纤维、推流后台的启动与切换时刻、录屏里分秒不差的循环、闻声送水时打不通的电话与对不上的外卖杯，以及齐小满21:53的楼梯口目击。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "蒋万川十年的假账全签在陆骁名下，明早审计进场，他要陆骁'体面自首'独扛罪名——被十年的兄长当成一次性手套，陆骁决定自己来收场。21:55他走进直播间，用贴在屏幕边的密码在主机上启动'训练回放循环'：一段八分二十秒的旧训练录像顶替他的摄像头，几百名观众看着'教练'认真训练，而直播间与书房同在二楼、隔着储物间，谁也看不见他二十步之外的身影。22:05他进书房，22:08从身后拔出剑架上从不开刃的'2021首冠纪念剑'，一剑刺入蒋万川背部；擦剑、放回、关灯——从走廊看去'老板睡了'。22:28他回直播间切回实时镜头、弹幕回复，22:40佯装送明早安排'发现'尸体。破绽：剑鞘内壁倒流的血滴与缠带上的蓝色纤维、推流后台的启动与切换时刻、录屏里分秒不差的循环、闻声送水时打不通的电话与对不上的外卖杯，以及齐小满21:53的楼梯口目击。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "19:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:00"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "备战会结束，队员自由训练。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "20:47",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:47"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "快递员送审计预约函进大门（方晴签收）。"
+          }
+        ],
+        "characterIds": [
+          "fangqing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangqing"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "20:47",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:47"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "蒋万川写审计邮件草稿（未发送）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "21:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:10"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方晴送茶两杯进书房，"
+          }
+        ],
+        "characterIds": [
+          "fangqing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangqing"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "21:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "听见'名字都是你签的'后回食堂。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:20–21:40",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:20"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "蒋万川与陆骁书房摊牌。"
+          }
+        ],
+        "characterIds": [
+          "luxiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆骁摔门而出（许冲在走廊听见，方晴记入备忘录）。"
+          }
+        ],
+        "characterIds": [
+          "luxiao",
+          "xuchong",
+          "fangqing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao",
+          "xuchong",
+          "fangqing"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许冲书房门外讨薪被骂（录音可证）。"
+          }
+        ],
+        "characterIds": [
+          "xuchong"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xuchong"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:53",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:53"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "齐小满在一楼售货机前目击灰色连帽衫背影上二楼。"
+          }
+        ],
+        "characterIds": [
+          "qixiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qixiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:55"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": ":12 陆骁在直播间启动训练回放循环。"
+          }
+        ],
+        "characterIds": [
+          "luxiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "22:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "蒋万川独自在书房核材料。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "22:03–22:38",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:03"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:38"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许冲在训练房单排一局（战绩可证）。"
+          }
+        ],
+        "characterIds": [
+          "xuchong"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xuchong"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "22:05–22:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:05"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:25"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆骁进书房，"
+          }
+        ],
+        "characterIds": [
+          "luxiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "22:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:08"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "行凶，随后擦剑、放回、关灯。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "22:25–22:27",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:25"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:27"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "闻声送水进直播间，打招呼无应、两次拨教练手机无人接，"
+          }
+        ],
+        "characterIds": [
+          "wensheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "wensheng"
+        ]
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "22:27",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:27"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "下楼。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "22:28",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:28"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": ":41 陆骁回直播间切回实时镜头。"
+          }
+        ],
+        "characterIds": [
+          "luxiao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "22:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:30"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "弹幕回复'在的，认真训练'。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_19",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 19",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆骁敲书房门'发现'尸体，呼叫众人；闻声拽掉许冲耳机上楼。"
+          }
+        ],
+        "characterIds": [
+          "luxiao",
+          "xuchong",
+          "wensheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxiao",
+          "xuchong",
+          "wensheng"
+        ]
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方晴报警。破案链：书房勘验（身后突刺+纪念剑刃形+死亡时间"
+          }
+        ],
+        "characterIds": [
+          "fangqing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangqing"
+        ]
+      },
+      {
+        "id": "truth_event_21",
+        "time": {
+          "display": "22:00–22:30",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:30"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）→ 剑鞘血滴与蓝色纤维（凶器归位却留下痕迹）→ 推流后台与录屏（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "21:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:55"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "启动循环、"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_23",
+        "time": {
+          "display": "22:28",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:28"
+          }
+        },
+        "title": "事件 23",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "切换，教练帐号操作）→ 闻声的通话记录与外卖杯（"
+          }
+        ],
+        "characterIds": [
+          "wensheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "wensheng"
+        ]
+      },
+      {
+        "id": "truth_event_24",
+        "time": {
+          "display": "22:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:25"
+          }
+        },
+        "title": "事件 24",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "'直播里的教练'不应声不接电话）→ 齐小满"
+          }
+        ],
+        "characterIds": [
+          "qixiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qixiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_25",
+        "time": {
+          "display": "21:53",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:53"
+          }
+        },
+        "title": "事件 25",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "目击（唯一看见教练上楼的人）→ 假合同扫描件（替罪结构，动机）→ 各人不在线证明（许冲战绩、方晴记账、齐小满目击位置）。红鲱鱼：许冲最响的讨薪动机与录音、方晴提前知道审计的知情不报与两万公款、闻声的后台权限与水军旧事、齐小满偷拍的扫描件——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [
+          "xuchong",
+          "fangqing",
+          "wensheng",
+          "qixiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xuchong",
+          "fangqing",
+          "wensheng",
+          "qixiaoman"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "jiahetong_saomiao",
+      "jiahetong_saomiao"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "jiahetong_saomiao"
+        ],
+        "conclusion": "假合同"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "jiahetong_saomiao"
+        ],
+        "conclusion": "审计"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是主教练陆骁。十年前他把名字借给兄弟，十年后兄弟把刀递还给他——审计函上的每一个字都在说：陆骁，你签的字，你进的牢。他没喊冤，他选了决赛前夜。他懂这栋楼的每一盏灯：监控是老板省下的钱，密码便签是他自己贴的，直播间的八百个观众是最好的不在场证人——一段八分二十秒的旧录像，替他坐了二十三分钟的教练席。可录屏会循环，外卖杯不会；电话打不通的时候，'在的，认真训练'四个字就成了谎话的注脚；剑擦得再亮，鞘里那滴血也会替死者开口。许冲讨的是钱，方晴记的是账，闻声攥着后台的钥匙，小满举着那张目击——决赛还没开打，破晓的决胜局，是先把自家人钉死在证据上。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -193,6 +1923,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

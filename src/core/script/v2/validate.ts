@@ -127,6 +127,13 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   return issues;
 }
 
+export function isScriptPlayable(doc: ScriptDocV2): { ok: boolean; errors: string[] } {
+  const errors = validateScriptV2(doc)
+    .filter((entry) => entry.level === "error")
+    .map((entry) => entry.message);
+  return { ok: errors.length === 0, errors };
+}
+
 export function isScriptV2Playable(doc: ScriptDocV2) {
   const errors = validateScriptV2(doc).filter((entry) => entry.level === "error");
   return { ok: errors.length === 0, errors };

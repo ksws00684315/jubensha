@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// 剧本。content 为完整剧本文档（结构见 src/core/script/schema.ts），元数据列用于列表查询。
+/// 剧本。content 为 V2 剧本文档（结构见 src/core/script/v2/schema.ts），元数据列用于列表查询。
 model Script {
   id          String   @id @default(cuid())
   title       String

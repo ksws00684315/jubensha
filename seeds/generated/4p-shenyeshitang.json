@@ -1,34 +1,313 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "深夜食堂",
     "minPlayers": 4,
     "maxPlayers": 4,
     "durationMin": 100,
     "difficulty": "新手",
-    "tags": ["本格", "现代", "市井", "小店", "新手友好"],
+    "tags": [
+      "本格",
+      "现代",
+      "市井",
+      "小店",
+      "新手友好"
+    ],
     "intro": "梧桐街口的芳记小馆打烊了。寒潮预警的冬夜，常客老陈照旧醉宿在靠窗老位的餐桌旁——三年来，芳姐总会把那台'小太阳'取暖器留在他脚边。凌晨五点，送菜的王婆推开卷帘，发现他伏在桌上，再没醒来。急救初判：醉酒猝死。可他血液里的酒精只有微醺量级，尸体指端的冻痕、墙边温湿度记录仪上爬到六度的曲线、还有仓库里那台插头尚有余温的取暖器——都在说：杀他的不是酒，是这一夜的风。"
   },
-  "background": "梧桐街口的老城街角，芳记小馆开了九年，深夜营业，街坊都喊老板方晓芳一声'芳姐'。常客陈广发，六十一岁，街坊口中'混过江湖的老陈'，每夜自带泡酒来吃蹄髈，高血压多年；打烊后醉宿店内是三年来的惯例——芳姐会给他披毯子、把'小太阳'取暖器留在他脚边，第二天早上照常开门。今晚是寒潮蓝色预警之夜，预报最低气温两度。23:00打烊，老陈伏桌醉睡；23:10芳姐反锁侧门离开；23:12她在隔壁便利店买了两杯热饮，23:40步行回街对面的家——每一分钟都有记录。凌晨五点，送菜的王婆发现老陈伏在餐桌旁已无呼吸，急救初判'醉酒猝死'。但细节不对：血检酒精仅微醺量级；指端冻痕、耳廓冻斑明显；墙上的电子温湿记录仪显示，凌晨一点起店堂温度降至七度以下，三点最低六点二度——寒潮夜里，一间打烊的小店不该是这个温度。仓库里那台三年没离开过老陈脚边的取暖器，插头还温着。这一夜进出过小店的，只有你们四个。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "梧桐街口的老城街角，芳记小馆开了九年，深夜营业，街坊都喊老板方晓芳一声'芳姐'。常客陈广发，六十一岁，街坊口中'混过江湖的老陈'，每夜自带泡酒来吃蹄髈，高血压多年；打烊后醉宿店内是三年来的惯例——芳姐会给他披毯子、把'小太阳'取暖器留在他脚边，第二天早上照常开门。今晚是寒潮蓝色预警之夜，预报最低气温两度。23:00打烊，老陈伏桌醉睡；23:10芳姐反锁侧门离开；23:12她在隔壁便利店买了两杯热饮，23:40步行回街对面的家——每一分钟都有记录。凌晨五点，送菜的王婆发现老陈伏在餐桌旁已无呼吸，急救初判'醉酒猝死'。但细节不对：血检酒精仅微醺量级；指端冻痕、耳廓冻斑明显；墙上的电子温湿记录仪显示，凌晨一点起店堂温度降至七度以下，三点最低六点二度——寒潮夜里，一间打烊的小店不该是这个温度。仓库里那台三年没离开过老陈脚边的取暖器，插头还温着。这一夜进出过小店的，只有你们四个。"
+    }
+  ],
   "characters": [
     {
       "id": "fangxiaofang",
       "name": "方晓芳",
       "gender": "女",
       "age": 47,
-      "publicBio": "芳记小馆店主，街坊口中的'芳姐'，手脚麻利，熟客口味记得一清二楚。今晚23:10打烊锁门，23:12-23:40在隔壁便利店，有监控。",
-      "card": {
-        "backstory": "你叫方晓芳，梧桐街口这家小店开了九年，街坊都喊你芳姐。十二年前的雨夜，一辆越野车把下班回家的丈夫撞飞后逃逸，人没抢救回来；判决书轻得像张餐巾纸：缓刑四年，赔了三十万。两年前，你在自己的店里认出了那张脸——腕上一道旧疤，自称'跑过江湖的老陈'。他也认出了你，从此隔三差五来白吃白喝，一句'老街坊了，记账上'，两年记了一万二。你查了判决书，对了名字，忍到女儿高考完。今夜寒潮，他照旧留宿——你只借了老天爷一点风。",
-        "secret": "你就是凶手。你明知他高血压、醉后贪睡、打烊留宿是三年惯例：今夜你收走取暖器、打开排风扇、把卷帘拉到只留一掌缝、反锁侧门，让他醉睡在穿堂寒风里失温而死。你手机里存着十二年前的判决书复印件，你认了他两年。",
-        "goal": "你的时间线干净得像新铺的桌布——23:10离店、便利店消费、23:40到家，每分钟都有记录。策略：把'排风''卷帘缝'都归给'排潮气的老规矩'，把取暖器说成'上周就坏了'；最危险的是判决书，一旦被搜出，抢先哭诉'我只是想他道歉，没想到天这么冷'——把故意说成侥幸，把两年说成一晚。",
-        "isCulprit": true,
-        "timeline": "21:30 上蹄髈（手抖多撒了盐）。22:50 看见小隋钻缝进店，在厨房没出声。23:00 打烊，照旧留宿老陈。23:02-23:04 收取暖器入库，23:06 打开排风扇，23:08 把卷帘拉至一掌缝。23:10 反锁侧门离开。23:12-23:40 便利店消费（监控可证），23:40 回家。",
-        "knowledge": [
-          "他的酒量你数了三年：半斤封顶，今晚那壶剩了三分之二就趴了——醉，但不至于人事不省，是冷得不想动。",
-          "取暖器三年没坏过。它'坏'的那天，是你需要它坏的一天。",
-          "便利店监控是无声的证人：23:40你到家，他死在凌晨两点之后——你连一分钟都不在场，这是你夜里唯一敢想的事。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "芳记小馆店主，街坊口中的'芳姐'，手脚麻利，熟客口味记得一清二楚。今晚23:10打烊锁门，23:12-23:40在隔壁便利店，有监控。"
+          }
         ],
-        "persona": "嗓门亮、话密，爱喊人'多吃点'，抹布不离手。提到丈夫立刻转移话题去添茶。被逼急了不吵，用围裙擦手：'我这店开了九年，街坊都看着。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫方晓芳，梧桐街口这家小店开了九年，街坊都喊你芳姐。十二年前的雨夜，一辆越野车把下班回家的丈夫撞飞后逃逸，人没抢救回来；判决书轻得像张餐巾纸：缓刑四年，赔了三十万。两年前，你在自己的店里认出了那张脸——腕上一道旧疤，自称'跑过江湖的老陈'。他也认出了你，从此隔三差五来白吃白喝，一句'老街坊了，记账上'，两年记了一万二。你查了判决书，对了名字，忍到女儿高考完。今夜寒潮，他照旧留宿——你只借了老天爷一点风。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_fangxiaofang_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。你明知他高血压、醉后贪睡、打烊留宿是三年惯例：今夜你收走取暖器、打开排风扇、把卷帘拉到只留一掌缝、反锁侧门，让他醉睡在穿堂寒风里失温而死。你手机里存着十二年前的判决书复印件，你认了他两年。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_fangxiaofang_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的时间线干净得像新铺的桌布——23:10离店、便利店消费、23:40到家，每分钟都有记录。策略：把'排风''卷帘缝'都归给'排潮气的老规矩'，把取暖器说成'上周就坏了'；最危险的是判决书，一旦被搜出，抢先哭诉'我只是想他道歉，没想到天这么冷'——把故意说成侥幸，把两年说成一晚。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_fangxiaofang_event_1",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "上蹄髈（手抖多撒了盐）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_2",
+            "time": {
+              "display": "22:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "看见小隋钻缝进店，在厨房没出声。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_3",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "打烊，照旧留宿老陈。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_4",
+            "time": {
+              "display": "23:02–23:04",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:02"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:04"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "收取暖器入库，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_5",
+            "time": {
+              "display": "23:06",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:06"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "打开排风扇，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_6",
+            "time": {
+              "display": "23:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:08"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把卷帘拉至一掌缝。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_7",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "反锁侧门离开。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_8",
+            "time": {
+              "display": "23:12–23:40",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:12"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "便利店消费（监控可证），"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangxiaofang_event_9",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回家。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_fangxiaofang_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "他的酒量你数了三年：半斤封顶，今晚那壶剩了三分之二就趴了——醉，但不至于人事不省，是冷得不想动。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangxiaofang_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "取暖器三年没坏过。它'坏'的那天，是你需要它坏的一天。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangxiaofang_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "便利店监控是无声的证人：23:40你到家，他死在凌晨两点之后——你连一分钟都不在场，这是你夜里唯一敢想的事。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "嗓门亮、话密，爱喊人'多吃点'，抹布不离手。提到丈夫立刻转移话题去添茶。被逼急了不吵，用围裙擦手：'我这店开了九年，街坊都看着。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +315,139 @@
       "name": "蒋春来",
       "gender": "男",
       "age": 54,
-      "publicBio": "代驾司机，每晚收车在芳记吃一碗雪菜面。今晚23:05收车路过店门口，凌晨5:30闻讯折返。",
-      "card": {
-        "backstory": "你叫蒋春来，代驾司机，收车总在梧桐街，芳姐店里那碗雪菜面你吃了六年。十二年前你还是出租车司机，那个雨夜你送客经过事发路口，是你在现场帮着抬的人——你记了那辆车十二年，也记住了车主的名字：陈广发。两年前，你第一次在这个店里、在那个点蹄髈的男人脸上认出他，又看见芳姐端菜的手停了半秒——你以为只有你知道。今夜之后你知道了：两个都知道的人，有多危险。",
-        "secret": "你认出老陈是十二年前那场肇事逃逸案的司机（现场目击加判决新闻照片），也猜到芳姐认出了他；你还留着当年拍的路口照片和判决新闻的剪报——你没说，是怕撕开芳姐的伤口，也怕惹上'混过江湖的老陈'。",
-        "goal": "你手里握着全案动机的另一半。策略：主动交出剪报与照片（先说'十二年前我在现场'），把动机摊开——动机一明，手法就现形：全店只有一个人知道他今夜留宿、知道他怕冷、知道取暖器的三年惯例。你23:05路过看见的每一样东西都要说早：灯半亮、老陈伏桌、取暖器已经不在他脚边。",
-        "isCulprit": false,
-        "timeline": "23:05 收车路过店门口：店内灯半亮，老陈伏桌，取暖器不在他脚边，芳姐在后厨收东西，隔窗打了招呼。23:10 芳姐出店，你接单驶离（平台接单记录）。凌晨5:30 闻讯折返。",
-        "knowledge": [
-          "23:05你看见的那一眼：取暖器不在老陈脚边——三年了，那台'小太阳'从没离开过他的脚边，除了今夜。",
-          "判决书上的名字你抄进过手机备忘录：陈广发，缓刑——你抄的时候手在抖。现在想想，芳姐抄的时候呢？",
-          "老陈醉话念叨过'当年三十万摆平'，小许也听过——这店里的两个人，一人记着车，一人记着判决。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "代驾司机，每晚收车在芳记吃一碗雪菜面。今晚23:05收车路过店门口，凌晨5:30闻讯折返。"
+          }
         ],
-        "persona": "话糙理端，三句不离'我开了十九年车'。认人认事极准，护起芳姐来笨嘴拙舌。说漏嘴会自己抽自己嘴：'我这张嘴，欠抽。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫蒋春来，代驾司机，收车总在梧桐街，芳姐店里那碗雪菜面你吃了六年。十二年前你还是出租车司机，那个雨夜你送客经过事发路口，是你在现场帮着抬的人——你记了那辆车十二年，也记住了车主的名字：陈广发。两年前，你第一次在这个店里、在那个点蹄髈的男人脸上认出他，又看见芳姐端菜的手停了半秒——你以为只有你知道。今夜之后你知道了：两个都知道的人，有多危险。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_jiangchunlai_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你认出老陈是十二年前那场肇事逃逸案的司机（现场目击加判决新闻照片），也猜到芳姐认出了他；你还留着当年拍的路口照片和判决新闻的剪报——你没说，是怕撕开芳姐的伤口，也怕惹上'混过江湖的老陈'。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_jiangchunlai_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你手里握着全案动机的另一半。策略：主动交出剪报与照片（先说'十二年前我在现场'），把动机摊开——动机一明，手法就现形：全店只有一个人知道他今夜留宿、知道他怕冷、知道取暖器的三年惯例。你23:05路过看见的每一样东西都要说早：灯半亮、老陈伏桌、取暖器已经不在他脚边。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_jiangchunlai_event_1",
+            "time": {
+              "display": "23:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:05"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "收车路过店门口：店内灯半亮，老陈伏桌，取暖器不在他脚边，芳姐在后厨收东西，隔窗打了招呼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiangchunlai_event_2",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "芳姐出店，你接单驶离（平台接单记录）。凌晨5:30 闻讯折返。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_jiangchunlai_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:05你看见的那一眼：取暖器不在老陈脚边——三年了，那台'小太阳'从没离开过他的脚边，除了今夜。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiangchunlai_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "判决书上的名字你抄进过手机备忘录：陈广发，缓刑——你抄的时候手在抖。现在想想，芳姐抄的时候呢？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_jiangchunlai_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "老陈醉话念叨过'当年三十万摆平'，小许也听过——这店里的两个人，一人记着车，一人记着判决。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "话糙理端，三句不离'我开了十九年车'。认人认事极准，护起芳姐来笨嘴拙舌。说漏嘴会自己抽自己嘴：'我这张嘴，欠抽。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +455,159 @@
       "name": "许亦然",
       "gender": "女",
       "age": 26,
-      "publicBio": "市医院夜班护士，下了夜班常来吃小馄饨，曾劝老陈规律服降压药被抢白。今晚23:20路过店门敲窗无人应。",
-      "card": {
-        "backstory": "你叫许亦然，市医院夜班护士，下了夜班总要来吃一碗小馄饨。你给老陈量过血压：高得吓人，他嫌药贵，三天打鱼两天晒网，你说过他两次。今晚23:20你下夜班路过，敲门敲窗都没人应，卷帘只留一道缝，风从缝里呜呜地灌——你站在街口犹豫了一分钟，想着'也许又去阁楼睡了'，走了。凌晨的电话响起时，这一分钟的犹豫变成了一辈子的刺。你是护士，你本该踹开门的。",
-        "secret": "你23:20到过店门口没进（无人在场证明，只有你自己知道）；你还曾私下劝老陈用药被他当众抢白——你怕被人翻出'他死不死跟药有关'这种话。",
-        "goal": "你有全案唯一的专业视角：微醺量级的酒、咸得发苦的汤、失温的病程。策略：主动交代23:20的路过（先说'我敲了门'），抢先把'冻毙'讲给所有人听——温湿记录仪、指端冻痕、缺了三年的取暖器；把'如果23:20有人应门他就不会死'说出来，你的犹豫会成为压垮沉默的最后一根稻草。",
-        "isCulprit": false,
-        "timeline": "23:20 下夜班路过店门，敲窗无人应，卷帘缝灌风。23:22 离开回宿舍（宿舍门禁23:25刷卡）。凌晨5:40 闻讯赶到，协助初步查看。",
-        "knowledge": [
-          "失温不挑壮汉：血管扩张、醉睡、低温、穿堂风，四个凑齐，两三个小时就能死人——你值夜班见过冻毙的流浪者。",
-          "那碟蹄髈汤你尝过一口，咸得发苦；他药盒上'当日'那格没撕——血压是在裸奔。",
-          "23:20你敲窗时，店里灯是半亮的，排风扇在转——风声盖过了你的敲门声。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "市医院夜班护士，下了夜班常来吃小馄饨，曾劝老陈规律服降压药被抢白。今晚23:20路过店门敲窗无人应。"
+          }
         ],
-        "persona": "说话又快又轻，习惯先给结论再给依据，'医学上'挂嘴边。愧疚压在脸上，越怕越要说。提'敲窗没人应'时声音会劈：'我数过风声，我没数人心。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫许亦然，市医院夜班护士，下了夜班总要来吃一碗小馄饨。你给老陈量过血压：高得吓人，他嫌药贵，三天打鱼两天晒网，你说过他两次。今晚23:20你下夜班路过，敲门敲窗都没人应，卷帘只留一道缝，风从缝里呜呜地灌——你站在街口犹豫了一分钟，想着'也许又去阁楼睡了'，走了。凌晨的电话响起时，这一分钟的犹豫变成了一辈子的刺。你是护士，你本该踹开门的。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_xuyiran_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你23:20到过店门口没进（无人在场证明，只有你自己知道）；你还曾私下劝老陈用药被他当众抢白——你怕被人翻出'他死不死跟药有关'这种话。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_xuyiran_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你有全案唯一的专业视角：微醺量级的酒、咸得发苦的汤、失温的病程。策略：主动交代23:20的路过（先说'我敲了门'），抢先把'冻毙'讲给所有人听——温湿记录仪、指端冻痕、缺了三年的取暖器；把'如果23:20有人应门他就不会死'说出来，你的犹豫会成为压垮沉默的最后一根稻草。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_xuyiran_event_1",
+            "time": {
+              "display": "23:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:20"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下夜班路过店门，敲窗无人应，卷帘缝灌风。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xuyiran_event_2",
+            "time": {
+              "display": "23:22",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:22"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "离开回宿舍（宿舍门禁"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xuyiran_event_3",
+            "time": {
+              "display": "23:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:25"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "刷卡）。凌晨5:40 闻讯赶到，协助初步查看。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_xuyiran_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "失温不挑壮汉：血管扩张、醉睡、低温、穿堂风，四个凑齐，两三个小时就能死人——你值夜班见过冻毙的流浪者。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xuyiran_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "那碟蹄髈汤你尝过一口，咸得发苦；他药盒上'当日'那格没撕——血压是在裸奔。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xuyiran_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:20你敲窗时，店里灯是半亮的，排风扇在转——风声盖过了你的敲门声。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "说话又快又轻，习惯先给结论再给依据，'医学上'挂嘴边。愧疚压在脸上，越怕越要说。提'敲窗没人应'时声音会劈：'我数过风声，我没数人心。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,80 +615,762 @@
       "name": "隋亮",
       "gender": "男",
       "age": 30,
-      "publicBio": "老陈的远房侄子，今晚22:50钻卷帘缝进店，23:52离店——最后见到老陈活着、又从死者包里拿走过东西的人。",
-      "card": {
-        "backstory": "你叫隋亮，老陈是你远房叔叔，你爸生前欠他八万，账本上记着你家的名字。今晚22:50你钻开卷帘缝进店，他趴在桌上打鼾，脚边烤着'小太阳'；你在他帆布包里翻到账本，撕了自家那页，又顺手抽走夹层的两沓欠条——23:52你钻缝出门时，他的鼾声还在。凌晨的电话让你腿一软：最后见到他活着的是你，从他包里拿走东西的也是你——你比谁都说不清。",
-        "secret": "你拿走账本并撕了自家欠账那页、抽走两沓欠条（现场被翻动的来源）；22:50你看见他脚边的取暖器还烤着——这条证词能钉死'取暖器是谁收走的'，也能把你钉在最后在场者的位置上。",
-        "goal": "你是最后见证人也是现行的贼。策略：主动认下拿账本（'只想销我家那页'），立刻交出22:50取暖器还烤着的细节——你越早说越像证人，越晚说越像凶手；欠条的去向圆成'怕叔叔的钱说不清，先带回去理一理'。",
-        "isCulprit": false,
-        "timeline": "22:50 钻缝入店翻包：拿账本、撕自家那页、抽走两沓欠条（老陈打鼾，脚边有取暖器）。23:52 钻缝出店离开（店外监控可证）。凌晨5:40 接电话赶回，见到封条。",
-        "knowledge": [
-          "22:50他还打着鼾，脚边那台'小太阳'橘红的光照着他的脸——那是我最后一次看见我叔。",
-          "卷帘缝进得来也出得去，可侧门是反锁的——他要是半夜醒了，连门都推不开。",
-          "账本末页那句'梧桐街，芳记，壹万贰'，我撕的时候没看懂——现在我懂了，可我不敢说我懂了。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "老陈的远房侄子，今晚22:50钻卷帘缝进店，23:52离店——最后见到老陈活着、又从死者包里拿走过东西的人。"
+          }
         ],
-        "persona": "见人三分笑，话说一半留一半，手比嘴快。提到叔叔会突然蔫下去。被逼到墙角会梗脖子：'我是拿了账本，可我进店的时候，他还活着！'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫隋亮，老陈是你远房叔叔，你爸生前欠他八万，账本上记着你家的名字。今晚22:50你钻开卷帘缝进店，他趴在桌上打鼾，脚边烤着'小太阳'；你在他帆布包里翻到账本，撕了自家那页，又顺手抽走夹层的两沓欠条——23:52你钻缝出门时，他的鼾声还在。凌晨的电话让你腿一软：最后见到他活着的是你，从他包里拿走东西的也是你——你比谁都说不清。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_suiliang_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拿走账本并撕了自家欠账那页、抽走两沓欠条（现场被翻动的来源）；22:50你看见他脚边的取暖器还烤着——这条证词能钉死'取暖器是谁收走的'，也能把你钉在最后在场者的位置上。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_suiliang_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是最后见证人也是现行的贼。策略：主动认下拿账本（'只想销我家那页'），立刻交出22:50取暖器还烤着的细节——你越早说越像证人，越晚说越像凶手；欠条的去向圆成'怕叔叔的钱说不清，先带回去理一理'。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_suiliang_event_1",
+            "time": {
+              "display": "22:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "钻缝入店翻包：拿账本、撕自家那页、抽走两沓欠条（老陈打鼾，脚边有取暖器）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suiliang_event_2",
+            "time": {
+              "display": "23:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:52"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "钻缝出店离开（店外监控可证）。凌晨5:40 接电话赶回，见到封条。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_suiliang_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:50他还打着鼾，脚边那台'小太阳'橘红的光照着他的脸——那是我最后一次看见我叔。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suiliang_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "卷帘缝进得来也出得去，可侧门是反锁的——他要是半夜醒了，连门都推不开。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suiliang_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "账本末页那句'梧桐街，芳记，壹万贰'，我撕的时候没看懂——现在我懂了，可我不敢说我懂了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "见人三分笑，话说一半留一半，手比嘴快。提到叔叔会突然蔫下去。被逼到墙角会梗脖子：'我是拿了账本，可我进店的时候，他还活着！'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["店堂", "后厨与库房", "街面（便利店与监控）"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "店堂",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "后厨与库房",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "街面（便利店与监控）",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "xianchang_kanyan",
-      "location": "店堂",
+      "locationId": "location_1",
       "name": "店堂现场勘验记录",
-      "content": "死者伏于靠窗老位的餐桌，身上披着芳姐惯给的旧毛毯，姿势像睡着而非挣扎。尸检初判：重度低体温（冻毙）致死，死亡时间约凌晨二至四时；血液酒精仅微醺量级，无致命毒物与外伤；指端冻痕、耳廓冻斑明显。墙上电子温湿记录仪：凌晨一点起店堂降至七度以下，三点最低六点二度——寒潮夜，一间打烊的小店不该是这个温度。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者伏于靠窗老位的餐桌，身上披着芳姐惯给的旧毛毯，姿势像睡着而非挣扎。尸检初判：重度低体温（冻毙）致死，死亡时间约凌晨二至四时；血液酒精仅微醺量级，无致命毒物与外伤；指端冻痕、耳廓冻斑明显。墙上电子温湿记录仪：凌晨一点起店堂降至七度以下，三点最低六点二度——寒潮夜，一间打烊的小店不该是这个温度。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "qunuanqi_yu",
-      "location": "后厨与库房",
+      "locationId": "location_2",
       "name": "库房里的取暖器",
-      "content": "仓库角落的'小太阳'取暖器：插头拔下不久、插片尚有余温，机身新落灰处被蹭亮——凌晨五时探看仍温。隔壁水果摊老板证言：每晚打烊后芳姐都把这台取暖器留给留宿的老陈，三年如此；'上周说它坏了才收进去'——可它今晚还热着。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "仓库角落的'小太阳'取暖器：插头拔下不久、插片尚有余温，机身新落灰处被蹭亮——凌晨五时探看仍温。隔壁水果摊老板证言：每晚打烊后芳姐都把这台取暖器留给留宿的老陈，三年如此；'上周说它坏了才收进去'——可它今晚还热着。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "paifeng_juanlian",
-      "location": "店堂",
+      "locationId": "location_1",
       "name": "排风扇与卷帘缝",
-      "content": "排风扇开关停在'开'档，扇叶停转是清晨跳闸所致；排风口正对靠窗老位，吊扇也停在'开'档。卷帘门下沿离地仅一掌宽，冷风灌入形成贯通对流——寒潮夜外界两度，排风一开，店堂成了风道。芳姐解释'排潮气，老规矩'；水果摊老板记得，往日她的排风扇只开十分钟。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "排风扇开关停在'开'档，扇叶停转是清晨跳闸所致；排风口正对靠窗老位，吊扇也停在'开'档。卷帘门下沿离地仅一掌宽，冷风灌入形成贯通对流——寒潮夜外界两度，排风一开，店堂成了风道。芳姐解释'排潮气，老规矩'；水果摊老板记得，往日她的排风扇只开十分钟。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "bianlidian_jiankong",
-      "location": "街面（便利店与监控）",
+      "locationId": "location_3",
       "name": "便利店小票与街面监控",
-      "content": "隔壁便利店小票：23:12热饮两杯、充电宝租借一次。监控画面：23:08芳姐把卷帘拉至一掌缝后出店，23:12进便利店，23:40步态平稳地走回街对面，全程未回店。店门口监控另拍到22:50一个年轻男人钻缝入店、23:52钻缝出店，手里夹着黑色账本状物——隋亮。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "隔壁便利店小票：23:12热饮两杯、充电宝租借一次。监控画面：23:08芳姐把卷帘拉至一掌缝后出店，23:12进便利店，23:40步态平稳地走回街对面，全程未回店。店门口监控另拍到22:50一个年轻男人钻缝入店、23:52钻缝出店，手里夹着黑色账本状物——隋亮。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "zhangben_sijiao",
-      "location": "后厨与库房",
+      "locationId": "location_2",
       "name": "被撕角的账本",
-      "content": "老陈帆布包夹层的讨债账本被翻动过，末页被撕去一角。隋亮承认拿了账本，发誓'只撕了我家那页'；撕角处残留半行字：'……梧桐街，芳记，壹万贰。'账本里另有'白吃两年，记着呢'的随手批注——老陈在自己的账上，给芳记留了两年。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "老陈帆布包夹层的讨债账本被翻动过，末页被撕去一角。隋亮承认拿了账本，发誓'只撕了我家那页'；撕角处残留半行字：'……梧桐街，芳记，壹万贰。'账本里另有'白吃两年，记着呢'的随手批注——老陈在自己的账上，给芳记留了两年。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "paojiu_tangcai",
-      "location": "店堂",
+      "locationId": "location_1",
       "name": "泡酒壶与剩菜",
-      "content": "老陈自带的泡酒壶剩三分之二（约一两半，微醺量级），碟中蹄髈剩半只，汤汁咸得发苦——夜班护士许亦然尝过：'这个咸法，高血压的人一勺就该放下了。'他的高血压药盒在包里，'当日'一格未撕。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "老陈自带的泡酒壶剩三分之二（约一两半，微醺量级），碟中蹄髈剩半只，汤汁咸得发苦——夜班护士许亦然尝过：'这个咸法，高血压的人一勺就该放下了。'他的高血压药盒在包里，'当日'一格未撕。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "panjueshu_fuyinjian",
-      "location": "后厨与库房",
+      "locationId": "location_2",
       "name": "判决书复印件",
-      "content": "芳姐手机相册加密夹里有一份十二年前的刑事判决书复印件照片：'被告人陈广发，交通肇事逃逸致一人死亡，判处有期徒刑三年，缓刑四年。'判决页死者栏的名字，与她丈夫的名字一字不差。相册拍摄时间：两年前——她认了他两年。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "芳姐手机相册加密夹里有一份十二年前的刑事判决书复印件照片：'被告人陈广发，交通肇事逃逸致一人死亡，判处有期徒刑三年，缓刑四年。'判决页死者栏的名字，与她丈夫的名字一字不差。相册拍摄时间：两年前——她认了他两年。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "fangxiaofang",
-    "method": "十二年前酒驾逃逸撞死方晓芳丈夫的陈广发，两年前走进了她的小店——认出了她，从此以'老街坊'为名白吃白喝两年，账本上记着一万二。她认出他的那天就对着判决书存了照片，忍到女儿高考完。她不碰他一根手指：她太清楚他的作息——高血压、醉后贪睡、打烊留宿、脚边三年不缺一台'小太阳'。寒潮预警之夜，23:00打烊后她照常给他披毯子，随后收走取暖器入库（插头余温五点仍温）、打开正对他座位的排风扇、把卷帘从半落拉到只留一掌缝，形成冷风贯通的对流，再反锁侧门——他醒了也出不去。23:10她离开，23:12-23:40在便利店制造'不在场'；老陈醉睡在六度的穿堂风里，凌晨两至四时失温死亡。她全程零接触、时间线最干净——杀招全部藏在'惯例的反常'里。破绽：余温未散的取暖器、停在'开'档的排风与吊扇、一掌宽的卷帘缝、温湿记录仪的六度曲线、微醺的血检，和手机里那份存了两年的判决书。",
-    "fullTimeline": "21:30 老陈自带泡酒独酌，方晓芳上了他点的红烧蹄髈（多撒了盐）。22:50 隋亮钻卷帘缝入店翻包：拿账本、撕自家那页、抽走两沓欠条；老陈打鼾，脚边烤着'小太阳'。23:00 打烊，方晓芳照旧给老陈披毯子留宿。23:02-23:04 她收走取暖器入库；23:05 蒋春来收车路过：店内灯半亮、老陈伏桌、取暖器已不在他脚边、她在后厨收东西。23:06 她打开排风扇（正对老位）与吊扇。23:08 她把卷帘拉至一掌缝（街面监控可证）。23:10 反锁侧门离开。23:12-23:40 便利店买热饮租充电宝（小票与监控），23:40步行回家，全程未回店。23:12-23:20 隋亮仍在店内翻欠条，23:52钻缝离开。23:20 许亦然下夜班路过敲窗，风声里无人应，23:22离开（宿舍门禁23:25）。23:00起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（23:08-23:40她每一步都在镜头里，唯独不在店里）→ 账本'芳记壹万贰'（两年的白吃白喝）→ 判决书复印件（十二年前的雨夜）。红鲱鱼：隋亮拿走账本撕页抽欠条（现场翻动与最后在场者）、蒋春来十二年的隐忍目击与剪报、许亦然23:20敲窗无人应的犹豫——人人有秘密，无人是第二凶手。",
-    "keyEvidence": ["取暖器", "排风", "账本", "判决书", "低体温"],
-    "reveal": "真相：凶手是店主方晓芳。十二年前那辆越野车带走了她的丈夫，判决书轻得像张餐巾纸；两年前，肇事者端着蹄髈坐在她的店里，一句'老街坊了，记账上'，记走了她一万二，也记进了她每晚的刀口。她没有买药，没有动刀——她只是读懂了一个人三年的习惯：醉睡、贪暖、留宿。寒潮夜，她收走那台'小太阳'，打开排风扇，把卷帘拉到只留一掌缝，反锁侧门——然后去买了两杯热饮，在监控里做一个干干净净的'外人'。杀他的不是她，是六度的风；可把窗留给风的，是她。隋亮撕掉的账页里躺着一万二，蒋春来的剪报里躺着一辆车，许亦然敲了没人应的窗——这三个人各自攥着一半真相，凑在一起，就是那个披毯子的手势。打烊的深夜食堂第二天照常开门，只是靠窗老位，再没有人喊'芳姐，加饭'。"
+    "culpritId": "fangxiaofang",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "十二年前酒驾逃逸撞死方晓芳丈夫的陈广发，两年前走进了她的小店——认出了她，从此以'老街坊'为名白吃白喝两年，账本上记着一万二。她认出他的那天就对着判决书存了照片，忍到女儿高考完。她不碰他一根手指：她太清楚他的作息——高血压、醉后贪睡、打烊留宿、脚边三年不缺一台'小太阳'。寒潮预警之夜，23:00打烊后她照常给他披毯子，随后收走取暖器入库（插头余温五点仍温）、打开正对他座位的排风扇、把卷帘从半落拉到只留一掌缝，形成冷风贯通的对流，再反锁侧门——他醒了也出不去。23:10她离开，23:12-23:40在便利店制造'不在场'；老陈醉睡在六度的穿堂风里，凌晨两至四时失温死亡。她全程零接触、时间线最干净——杀招全部藏在'惯例的反常'里。破绽：余温未散的取暖器、停在'开'档的排风与吊扇、一掌宽的卷帘缝、温湿记录仪的六度曲线、微醺的血检，和手机里那份存了两年的判决书。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "十二年前酒驾逃逸撞死方晓芳丈夫的陈广发，两年前走进了她的小店——认出了她，从此以'老街坊'为名白吃白喝两年，账本上记着一万二。她认出他的那天就对着判决书存了照片，忍到女儿高考完。她不碰他一根手指：她太清楚他的作息——高血压、醉后贪睡、打烊留宿、脚边三年不缺一台'小太阳'。寒潮预警之夜，23:00打烊后她照常给他披毯子，随后收走取暖器入库（插头余温五点仍温）、打开正对他座位的排风扇、把卷帘从半落拉到只留一掌缝，形成冷风贯通的对流，再反锁侧门——他醒了也出不去。23:10她离开，23:12-23:40在便利店制造'不在场'；老陈醉睡在六度的穿堂风里，凌晨两至四时失温死亡。她全程零接触、时间线最干净——杀招全部藏在'惯例的反常'里。破绽：余温未散的取暖器、停在'开'档的排风与吊扇、一掌宽的卷帘缝、温湿记录仪的六度曲线、微醺的血检，和手机里那份存了两年的判决书。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "老陈自带泡酒独酌，方晓芳上了他点的红烧蹄髈（多撒了盐）。"
+          }
+        ],
+        "characterIds": [
+          "fangxiaofang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangxiaofang"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "22:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:50"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "隋亮钻卷帘缝入店翻包：拿账本、撕自家那页、抽走两沓欠条；老陈打鼾，脚边烤着'小太阳'。"
+          }
+        ],
+        "characterIds": [
+          "suiliang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suiliang"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "打烊，方晓芳照旧给老陈披毯子留宿。"
+          }
+        ],
+        "characterIds": [
+          "fangxiaofang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangxiaofang"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "23:02–23:04",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:02"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:04"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她收走取暖器入库；"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "23:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:05"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "蒋春来收车路过：店内灯半亮、老陈伏桌、取暖器已不在他脚边、她在后厨收东西。"
+          }
+        ],
+        "characterIds": [
+          "jiangchunlai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jiangchunlai"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "23:06",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:06"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她打开排风扇（正对老位）与吊扇。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "23:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:08"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她把卷帘拉至一掌缝（街面监控可证）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "反锁侧门离开。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "23:12–23:40",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:12"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:40"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "便利店买热饮租充电宝（小票与监控），"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "23:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:40"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "步行回家，全程未回店。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "23:12–23:20",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:12"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:20"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "隋亮仍在店内翻欠条，"
+          }
+        ],
+        "characterIds": [
+          "suiliang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suiliang"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "23:52",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:52"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "钻缝离开。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "23:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:20"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许亦然下夜班路过敲窗，风声里无人应，"
+          }
+        ],
+        "characterIds": [
+          "xuyiran"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xuyiran"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "23:22",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:22"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "离开（宿舍门禁"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "23:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:25"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "23:08–23:40",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:08"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:40"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她每一步都在镜头里，唯独不在店里）→ 账本'芳记壹万贰'（两年的白吃白喝）→ 判决书复印件（十二年前的雨夜）。红鲱鱼：隋亮拿走账本撕页抽欠条（现场翻动与最后在场者）、蒋春来十二年的隐忍目击与剪报、许亦然"
+          }
+        ],
+        "characterIds": [
+          "jiangchunlai",
+          "xuyiran",
+          "suiliang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jiangchunlai",
+          "xuyiran",
+          "suiliang"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "23:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:20"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "敲窗无人应的犹豫——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      }
+    ],
+    "keyEvidenceIds": [
+      "qunuanqi_yu",
+      "paifeng_juanlian",
+      "zhangben_sijiao",
+      "panjueshu_fuyinjian"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "qunuanqi_yu"
+        ],
+        "conclusion": "取暖器"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "paifeng_juanlian"
+        ],
+        "conclusion": "排风"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "zhangben_sijiao"
+        ],
+        "conclusion": "账本"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "panjueshu_fuyinjian"
+        ],
+        "conclusion": "判决书"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是店主方晓芳。十二年前那辆越野车带走了她的丈夫，判决书轻得像张餐巾纸；两年前，肇事者端着蹄髈坐在她的店里，一句'老街坊了，记账上'，记走了她一万二，也记进了她每晚的刀口。她没有买药，没有动刀——她只是读懂了一个人三年的习惯：醉睡、贪暖、留宿。寒潮夜，她收走那台'小太阳'，打开排风扇，把卷帘拉到只留一掌缝，反锁侧门——然后去买了两杯热饮，在监控里做一个干干净净的'外人'。杀他的不是她，是六度的风；可把窗留给风的，是她。隋亮撕掉的账页里躺着一万二，蒋春来的剪报里躺着一辆车，许亦然敲了没人应的窗——这三个人各自攥着一半真相，凑在一起，就是那个披毯子的手势。打烊的深夜食堂第二天照常开门，只是靠窗老位，再没有人喊'芳姐，加饭'。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -159,6 +1380,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

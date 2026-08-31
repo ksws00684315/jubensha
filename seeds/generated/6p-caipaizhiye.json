@@ -1,34 +1,253 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "彩排之夜",
     "minPlayers": 6,
     "maxPlayers": 6,
     "durationMin": 150,
     "difficulty": "新手",
-    "tags": ["欢乐", "本格", "现代", "婚礼", "密闭空间"],
+    "tags": [
+      "欢乐",
+      "本格",
+      "现代",
+      "婚礼",
+      "密闭空间"
+    ],
     "intro": "婚礼前夜彩排，婚庆公司老板金满堂坚持加演满堂彩致辞，追光灯全功率打在他自己身上。20:18，致辞进行到一半，头顶的灯架轰然坠落。宴会厅的灯、酒、账、情，每一样背后都站着一个人——先找出那只拧松保险销的手。"
   },
-  "background": "云顶国际宴会厅，程亦飞与苏甜甜的婚礼彩排晚宴。承办婚礼的满堂彩婚庆老板金满堂临时加环节：追光灯全功率打在他自己身上致辞——他比新人还抢戏。20:18，致辞进行到一半，舞台上方三米高的追光灯连架坠落，正中金满堂。法医初判：重物砸击致颅脑损伤死亡。灯架吊环的保险销不翼而飞，固定螺纹被反向拧松，吊环上还缠着胶带。宴会厅里，欠薪的策划师、被催债的新郎、换掉茅台的伴郎、举着双机位的伴娘、抠门到极致的酒店经理，人人有鬼。警方封锁宴会厅，天亮之前，凶手必须从你们六个人里现形。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "云顶国际宴会厅，程亦飞与苏甜甜的婚礼彩排晚宴。承办婚礼的满堂彩婚庆老板金满堂临时加环节：追光灯全功率打在他自己身上致辞——他比新人还抢戏。20:18，致辞进行到一半，舞台上方三米高的追光灯连架坠落，正中金满堂。法医初判：重物砸击致颅脑损伤死亡。灯架吊环的保险销不翼而飞，固定螺纹被反向拧松，吊环上还缠着胶带。宴会厅里，欠薪的策划师、被催债的新郎、换掉茅台的伴郎、举着双机位的伴娘、抠门到极致的酒店经理，人人有鬼。警方封锁宴会厅，天亮之前，凶手必须从你们六个人里现形。"
+    }
+  ],
   "characters": [
     {
       "id": "cheng_yifei",
       "name": "程亦飞",
       "gender": "男",
       "age": 31,
-      "publicBio": "新郎，创业公司小老板。今晚全程陪着婚庆对流程，笑得比哭还累。",
-      "card": {
-        "backstory": "你叫程亦飞。创业三年，公司半死不活，婚礼预算却一路加码——甜甜值得世上最好的一场婚礼，这话你说出口就没法收回。找金满堂垫的二十万婚庆尾款，月息两分。今晚他把你叫进库房：担保协议签字，拿你婚后那套房抵；不签，他就当着甜甜的面给你算账。你在库房吼你不能毁了我，铁军就在门外。签字笔悬在纸上时喜糖礼盒倒了，你顺势砸了笔。你是新郎，你不能让任何人知道你的账。",
-        "secret": "你欠金满堂二十万婚庆垫款，他逼你在个人无限连带担保上签字拿婚房抵债，你撕了草稿没签。",
-        "goal": "找出真凶——但更要抢在警方前找到借条原件或还款凭证，别让新郎杀婚庆老板上头条。被问钱的事就说公司流水正常周转。",
-        "isCulprit": false,
-        "timeline": "18:30 你陪彩排走位。19:00 你在贵宾室外等金满堂对账，隔门听到他和钱进吵截图、场地费。19:50 金满堂把你叫到库房谈担保，你们吵起来，铁军在外头咳嗽了两声，你们压了声。20:05 你回宴会厅给岳父敬茶赔笑。20:10-20:15 你在后场备改口红包，没看手机。20:18 金满堂上台，灯架砸下来，你第一个翻上舞台抱住他。",
-        "knowledge": [
-          "19:00 你亲耳听到金满堂拿截图要挟钱进：场地费全免，不然发给董事长。",
-          "金满堂房车里有一张你签过字的借条，你今晚想趁乱找回来。",
-          "20:10-20:15 你在后场，没有人能给你作证——这是你最怕被问的十分钟。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "新郎，创业公司小老板。今晚全程陪着婚庆对流程，笑得比哭还累。"
+          }
         ],
-        "persona": "圆滑，见谁都递烟，笑有两层：给客人的和给熟人的；提到钱、担保秒变结巴。急了会拽领带，口头禅：这事儿吧，它不是这么算的。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫程亦飞。创业三年，公司半死不活，婚礼预算却一路加码——甜甜值得世上最好的一场婚礼，这话你说出口就没法收回。找金满堂垫的二十万婚庆尾款，月息两分。今晚他把你叫进库房：担保协议签字，拿你婚后那套房抵；不签，他就当着甜甜的面给你算账。你在库房吼你不能毁了我，铁军就在门外。签字笔悬在纸上时喜糖礼盒倒了，你顺势砸了笔。你是新郎，你不能让任何人知道你的账。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cheng_yifei_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你欠金满堂二十万婚庆垫款，他逼你在个人无限连带担保上签字拿婚房抵债，你撕了草稿没签。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cheng_yifei_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "找出真凶——但更要抢在警方前找到借条原件或还款凭证，别让新郎杀婚庆老板上头条。被问钱的事就说公司流水正常周转。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cheng_yifei_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你陪彩排走位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cheng_yifei_event_2",
+            "time": {
+              "display": "19:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在贵宾室外等金满堂对账，隔门听到他和钱进吵截图、场地费。"
+              }
+            ],
+            "characterIds": [
+              "qian_jin"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_cheng_yifei_event_3",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "金满堂把你叫到库房谈担保，你们吵起来，铁军在外头咳嗽了两声，你们压了声。"
+              }
+            ],
+            "characterIds": [
+              "tie_jun"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_cheng_yifei_event_4",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回宴会厅给岳父敬茶赔笑。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cheng_yifei_event_5",
+            "time": {
+              "display": "20:10–20:15",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "20:15"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在后场备改口红包，没看手机。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cheng_yifei_event_6",
+            "time": {
+              "display": "20:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:18"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "金满堂上台，灯架砸下来，你第一个翻上舞台抱住他。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cheng_yifei_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:00 你亲耳听到金满堂拿截图要挟钱进：场地费全免，不然发给董事长。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cheng_yifei_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "金满堂房车里有一张你签过字的借条，你今晚想趁乱找回来。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cheng_yifei_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:10-20:15 你在后场，没有人能给你作证——这是你最怕被问的十分钟。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "圆滑，见谁都递烟，笑有两层：给客人的和给熟人的；提到钱、担保秒变结巴。急了会拽领带，口头禅：这事儿吧，它不是这么算的。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -36,19 +255,225 @@
       "name": "苏甜甜",
       "gender": "女",
       "age": 29,
-      "publicBio": "新娘，自媒体甜品师，五层翻糖主蛋糕是她亲手做的。今晚坚持亲自检查每一处布置。",
-      "card": {
-        "backstory": "你叫苏甜甜。你拍甜品测评三年，粉丝叫你甜甜不踩雷。为了今天你推了两个商务，亲手做了主蛋糕。可你发现婚庆在坑你：报价单上的进口鲜花是冷库旧花，手作背景板是网购爆款，对不上的差额有六万八。今晚你堵住金满堂要说法，他笑呵呵递你一杯果茶：小姑娘，婚礼是喜事，别把日子过成打官司。你把写了一半的投诉信攥在手心。你要的不只是钱——甜甜不踩雷这块招牌，不能砸在你自己的婚礼上。",
-        "secret": "你写了一半的致婚庆行业协会投诉信押在化妆台粉饼盒下；你还存着假花与报价单的对比图，打算婚礼后发到账号上。",
-        "goal": "亲手指认真凶——婚礼出事又查不出人，你的账号会被凶案流量反噬。同时别让投诉信被翻出来，那会让你显得动机最大。",
-        "isCulprit": false,
-        "timeline": "18:30 你逐桌核对花艺。19:15 你注意到金满堂临时加满堂彩致辞、追光灯打他自己，你跟米琪抱怨他比新娘还抢戏。19:40 你去化妆间找发票，隔壁金满堂在跟米琪吵，你听见欠薪、署名。20:00 你上台走位站在新郎旁边。20:18 灯架砸下时你被程亦飞拽住才没被弹回的支架扫到。20:20 你第一个跪下来给金满堂做心肺按压。",
-        "knowledge": [
-          "19:40 你听到米琪和金满堂为欠薪和方案署名大吵，米琪摔了流程册。",
-          "你手里有假花和报价单的对比证据，差额六万八——你本打算婚礼后曝光。",
-          "追光灯 20:10 就开始全功率预热，钱进说预热越久效果越好，当时你只觉得他在省司仪费。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "新娘，自媒体甜品师，五层翻糖主蛋糕是她亲手做的。今晚坚持亲自检查每一处布置。"
+          }
         ],
-        "persona": "甜嗓，说话带直播腔，家人们谁懂啊挂嘴边；但核账时判若两人，一串数字往外蹦，语速快到咬字含糊。委屈了会咬住下唇不说话。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫苏甜甜。你拍甜品测评三年，粉丝叫你甜甜不踩雷。为了今天你推了两个商务，亲手做了主蛋糕。可你发现婚庆在坑你：报价单上的进口鲜花是冷库旧花，手作背景板是网购爆款，对不上的差额有六万八。今晚你堵住金满堂要说法，他笑呵呵递你一杯果茶：小姑娘，婚礼是喜事，别把日子过成打官司。你把写了一半的投诉信攥在手心。你要的不只是钱——甜甜不踩雷这块招牌，不能砸在你自己的婚礼上。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_su_tiantian_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你写了一半的致婚庆行业协会投诉信押在化妆台粉饼盒下；你还存着假花与报价单的对比图，打算婚礼后发到账号上。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_su_tiantian_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "亲手指认真凶——婚礼出事又查不出人，你的账号会被凶案流量反噬。同时别让投诉信被翻出来，那会让你显得动机最大。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_su_tiantian_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你逐桌核对花艺。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_su_tiantian_event_2",
+            "time": {
+              "display": "19:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你注意到金满堂临时加满堂彩致辞、追光灯打他自己，你跟米琪抱怨他比新娘还抢戏。"
+              }
+            ],
+            "characterIds": [
+              "mi_qi"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_su_tiantian_event_3",
+            "time": {
+              "display": "19:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去化妆间找发票，隔壁金满堂在跟米琪吵，你听见欠薪、署名。"
+              }
+            ],
+            "characterIds": [
+              "mi_qi"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_su_tiantian_event_4",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你上台走位站在新郎旁边。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_su_tiantian_event_5",
+            "time": {
+              "display": "20:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:18"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灯架砸下时你被程亦飞拽住才没被弹回的支架扫到。"
+              }
+            ],
+            "characterIds": [
+              "cheng_yifei"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_su_tiantian_event_6",
+            "time": {
+              "display": "20:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:20"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你第一个跪下来给金满堂做心肺按压。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_su_tiantian_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:40 你听到米琪和金满堂为欠薪和方案署名大吵，米琪摔了流程册。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_su_tiantian_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你手里有假花和报价单的对比证据，差额六万八——你本打算婚礼后曝光。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_su_tiantian_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "追光灯 20:10 就开始全功率预热，钱进说预热越久效果越好，当时你只觉得他在省司仪费。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "甜嗓，说话带直播腔，家人们谁懂啊挂嘴边；但核账时判若两人，一串数字往外蹦，语速快到咬字含糊。委屈了会咬住下唇不说话。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +481,223 @@
       "name": "铁军",
       "gender": "男",
       "age": 32,
-      "publicBio": "伴郎兼婚车司机，新郎发小，开汽修店。今晚主管酒水，自称宴会厅酒水总管。",
-      "card": {
-        "backstory": "你叫铁军。今晚那两瓶赞助茅台归你管，你惦记半个月了——不是想喝，是想拿去表哥的烟酒店顶三千块账。你把真茅台倒进随身分酒器，灌回一瓶自己泡的枸杞红枣酒，心想婚宴上没几个人喝得出。19:50 你去库房拿酒，隔着门听见金满堂训程亦飞：担保不签，你未婚妻就该知道你欠了多少。你吓得贴墙站了半分钟。你是来当伴郎的，不是来当贼的——可账是真的，你也真的缺钱。",
-        "secret": "你调包了两瓶茅台，真酒在你汽修店冷柜，库房和地库里都是假货；你还听到了金满堂拿债务威胁新郎。",
-        "goal": "把茅台的事烂在肚子里，实在被逼急就主动认换酒——换酒是贪，不是杀人。用地库的时间线证明你不在宴会厅。",
-        "isCulprit": false,
-        "timeline": "18:30 你帮着抬灯架、拉电线，被钱进骂别碰灯碰坏你赔不起。19:50 你去库房取酒，在门口听到金满堂和程亦飞吵架。20:05 你抱着酒到宴会厅后场。20:10 你下地库，从婚车里取出备用酒瓶，换走之前调包剩下的枸杞酒空瓶——你在地库待到 20:20，灯架砸下来的闷响你在地库都听到了。20:25 你提着两瓶酒冲上楼，装作刚取酒回来。",
-        "knowledge": [
-          "19:50 你在库房外听到金满堂拿二十万债务和告诉你未婚妻威胁程亦飞。",
-          "20:10-20:20 你在地下车库，那里听不见宴会厅的动静——这是你的不在场证明，也是你的死穴。",
-          "19:00 你路过贵宾室，隐约听到钱进和金满堂在吵，钱进的声音又尖又急。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "伴郎兼婚车司机，新郎发小，开汽修店。今晚主管酒水，自称宴会厅酒水总管。"
+          }
         ],
-        "persona": "嗓门大，自来熟，张口就是哥们儿；心虚时疯狂灌自己喝水。撒谎技巧拙劣，眼神先飘，耳朵根先红。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫铁军。今晚那两瓶赞助茅台归你管，你惦记半个月了——不是想喝，是想拿去表哥的烟酒店顶三千块账。你把真茅台倒进随身分酒器，灌回一瓶自己泡的枸杞红枣酒，心想婚宴上没几个人喝得出。19:50 你去库房拿酒，隔着门听见金满堂训程亦飞：担保不签，你未婚妻就该知道你欠了多少。你吓得贴墙站了半分钟。你是来当伴郎的，不是来当贼的——可账是真的，你也真的缺钱。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_tie_jun_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你调包了两瓶茅台，真酒在你汽修店冷柜，库房和地库里都是假货；你还听到了金满堂拿债务威胁新郎。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_tie_jun_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把茅台的事烂在肚子里，实在被逼急就主动认换酒——换酒是贪，不是杀人。用地库的时间线证明你不在宴会厅。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_tie_jun_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你帮着抬灯架、拉电线，被钱进骂别碰灯碰坏你赔不起。"
+              }
+            ],
+            "characterIds": [
+              "qian_jin"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_jun_event_2",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去库房取酒，在门口听到金满堂和程亦飞吵架。"
+              }
+            ],
+            "characterIds": [
+              "cheng_yifei"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_jun_event_3",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你抱着酒到宴会厅后场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_jun_event_4",
+            "time": {
+              "display": "20:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你下地库，从婚车里取出备用酒瓶，换走之前调包剩下的枸杞酒空瓶——你在地库待到"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_jun_event_5",
+            "time": {
+              "display": "20:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:20"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "，灯架砸下来的闷响你在地库都听到了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tie_jun_event_6",
+            "time": {
+              "display": "20:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:25"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你提着两瓶酒冲上楼，装作刚取酒回来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_tie_jun_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:50 你在库房外听到金满堂拿二十万债务和告诉你未婚妻威胁程亦飞。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tie_jun_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:10-20:20 你在地下车库，那里听不见宴会厅的动静——这是你的不在场证明，也是你的死穴。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tie_jun_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:00 你路过贵宾室，隐约听到钱进和金满堂在吵，钱进的声音又尖又急。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "嗓门大，自来熟，张口就是哥们儿；心虚时疯狂灌自己喝水。撒谎技巧拙劣，眼神先飘，耳朵根先红。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +705,221 @@
       "name": "何小鹿",
       "gender": "女",
       "age": 26,
-      "publicBio": "伴娘兼婚礼跟拍摄影师，新娘闺蜜。双机位挂脖，嘴里永远念叨这段绝了。",
-      "card": {
-        "backstory": "你叫何小鹿。白天你是行政，周末接婚礼跟拍，暗地里给婚庆避雷针爆料号供稿，署名鹿眼看局。满堂彩婚庆你盯了半年：偷工减料、坐地起价，可惜一直凑不齐一锤定音的素材。今晚你挂两台机器，心想婚礼出幺蛾子的概率，婚庆老板本人比新人高多了。19:33 你的长焦扫过天桥检修口，一双白手套一闪而过；20:18 灯架砸下来的瞬间，你的机器一格都没漏。",
-        "secret": "你拍到了检修口探出的白手套，也存着金满堂偷工减料的完整素材。这段素材要么洗清你，要么把你变成早就预知出事的嫌疑人。",
-        "goal": "抢先回看素材、锁定白手套的主人，让它在正确时机公开。绝不能让人发现你早就预判了现场，那解释不清。",
-        "isCulprit": false,
-        "timeline": "18:30 你双机位拍走位。19:33 你在宴会厅侧门换电池，长焦扫过天桥检修口，取景框里一双白手套探出又缩回，你按了录制。19:40 你拍到米琪摔流程册冲出后台。19:50 你在库房方向补拍花絮，远远看到两个人影在库里拉扯。20:00 你回主机位。20:18 灯架坠落，你全程举着机器没抖——素材里连金满堂倒地的角度都在。",
-        "knowledge": [
-          "19:33 白手套出现的位置是检修天桥入口，那个口平时上锁，得刷工牌进。",
-          "你的素材里 20:20 第一个拉总闸的是钱进，他喊断电防二次事故——可追光灯的电源在另一侧配电箱。",
-          "你和金满堂没有私仇，但你的爆料号后台存着他公司一堆料，你们隔着屏幕互相知道对方存在。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "伴娘兼婚礼跟拍摄影师，新娘闺蜜。双机位挂脖，嘴里永远念叨这段绝了。"
+          }
         ],
-        "persona": "语速极快，专业术语混着网络梗，描述画面精确到秒；一涉及私活就含糊就是随便拍拍。急了会举起相机挡在脸前。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫何小鹿。白天你是行政，周末接婚礼跟拍，暗地里给婚庆避雷针爆料号供稿，署名鹿眼看局。满堂彩婚庆你盯了半年：偷工减料、坐地起价，可惜一直凑不齐一锤定音的素材。今晚你挂两台机器，心想婚礼出幺蛾子的概率，婚庆老板本人比新人高多了。19:33 你的长焦扫过天桥检修口，一双白手套一闪而过；20:18 灯架砸下来的瞬间，你的机器一格都没漏。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_he_xiaolu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到了检修口探出的白手套，也存着金满堂偷工减料的完整素材。这段素材要么洗清你，要么把你变成早就预知出事的嫌疑人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_he_xiaolu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "抢先回看素材、锁定白手套的主人，让它在正确时机公开。绝不能让人发现你早就预判了现场，那解释不清。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_he_xiaolu_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你双机位拍走位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_xiaolu_event_2",
+            "time": {
+              "display": "19:33",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:33"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在宴会厅侧门换电池，长焦扫过天桥检修口，取景框里一双白手套探出又缩回，你按了录制。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_xiaolu_event_3",
+            "time": {
+              "display": "19:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到米琪摔流程册冲出后台。"
+              }
+            ],
+            "characterIds": [
+              "mi_qi"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_xiaolu_event_4",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在库房方向补拍花絮，远远看到两个人影在库里拉扯。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_xiaolu_event_5",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回主机位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_xiaolu_event_6",
+            "time": {
+              "display": "20:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:18"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灯架坠落，你全程举着机器没抖——素材里连金满堂倒地的角度都在。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_he_xiaolu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:33 白手套出现的位置是检修天桥入口，那个口平时上锁，得刷工牌进。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_xiaolu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的素材里 20:20 第一个拉总闸的是钱进，他喊断电防二次事故——可追光灯的电源在另一侧配电箱。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_xiaolu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你和金满堂没有私仇，但你的爆料号后台存着他公司一堆料，你们隔着屏幕互相知道对方存在。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "语速极快，专业术语混着网络梗，描述画面精确到秒；一涉及私活就含糊就是随便拍拍。急了会举起相机挡在脸前。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,19 +927,263 @@
       "name": "钱进",
       "gender": "男",
       "age": 47,
-      "publicBio": "云顶国际宴会厅经理，从业二十年，客人的酒量看一眼就有数。今晚亲自盯追光灯调试。",
-      "card": {
-        "backstory": "你叫钱进。金满堂的婚庆在你这里做了七年，每一场的吊装他都要吃你一成回扣——直到上个月，他的人不小心拍到了你和宏达吊装的转账流水。昨晚他打电话来笑得像庙里的弥勒：钱经理，从这场起场地费全免。不然，截图发给董事长，你猜你那点养老钱够赔几个零？你在这家酒店干了二十年，供儿子读完研究生，还差八个月退休。今晚彩排他还临时加环节，让追光灯全功率打他自己——电费都是你出的。你拧松保险销的时候手很稳：这是你的场子，谁也跑不出你的场子。",
-        "secret": "你就是凶手。19:18 你借消防巡检刷工牌上检修天桥，拧松追光灯吊环保险销，用印着云顶国际水印的透明胶带缠住吊环——灯全功率预热旋转，胶带一脱，灯架就落。你保管的扳手、你的工牌、你的胶带，样样指向你，你本打算散场后清理。",
-        "goal": "咬定坠落是设备老化加婚庆超期使用：灯是婚庆自带的，保养记录你已抽走。门禁记录就说是例行消防巡检，胶带是高空作业常规固定。把水搅向金满堂结仇的每一个人。",
-        "isCulprit": true,
-        "timeline": "18:30 你盯全场布置，骂了铁军一次。19:00 贵宾室里金满堂拿截图勒索你，你赔笑应下场地费全免。19:18 你刷工牌进检修天桥，19:30 拧松吊环、缠好胶带，19:36 刷工牌出来，路过侧门时何小鹿的镜头正对着这边。20:00 你把追光灯调到满堂彩模式全功率预热，嘴里说预热越久效果越好。20:18 灯架坠落，你第一时间冲配电间拉总闸喊断电防二次事故，并拦住要上天桥的人：上面危险，都下来。20:25 医护到场，你配合得无可挑剔。",
-        "knowledge": [
-          "灯架的保险销上个月报过损耗，补货单你压着没批——设备老化是可以坐实的。",
-          "何小鹿 19:33 的镜头扫过检修口，你的白手套可能入镜了。",
-          "金满堂手里的转账截图藏在哪儿你不知道——找到它，比找到凶手更要紧。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "云顶国际宴会厅经理，从业二十年，客人的酒量看一眼就有数。今晚亲自盯追光灯调试。"
+          }
         ],
-        "persona": "职业假笑，抠门到口头禅是这盏灯一小时八块钱；训人时官腔十足，被质疑先背制度条款，再阴阳怪气：年轻人，懂什么叫承重吗？提到退休金时笑容会塌一下。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫钱进。金满堂的婚庆在你这里做了七年，每一场的吊装他都要吃你一成回扣——直到上个月，他的人不小心拍到了你和宏达吊装的转账流水。昨晚他打电话来笑得像庙里的弥勒：钱经理，从这场起场地费全免。不然，截图发给董事长，你猜你那点养老钱够赔几个零？你在这家酒店干了二十年，供儿子读完研究生，还差八个月退休。今晚彩排他还临时加环节，让追光灯全功率打他自己——电费都是你出的。你拧松保险销的时候手很稳：这是你的场子，谁也跑不出你的场子。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qian_jin_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。19:18 你借消防巡检刷工牌上检修天桥，拧松追光灯吊环保险销，用印着云顶国际水印的透明胶带缠住吊环——灯全功率预热旋转，胶带一脱，灯架就落。你保管的扳手、你的工牌、你的胶带，样样指向你，你本打算散场后清理。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qian_jin_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "咬定坠落是设备老化加婚庆超期使用：灯是婚庆自带的，保养记录你已抽走。门禁记录就说是例行消防巡检，胶带是高空作业常规固定。把水搅向金满堂结仇的每一个人。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qian_jin_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你盯全场布置，骂了铁军一次。"
+              }
+            ],
+            "characterIds": [
+              "tie_jun"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_2",
+            "time": {
+              "display": "19:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "贵宾室里金满堂拿截图勒索你，你赔笑应下场地费全免。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_3",
+            "time": {
+              "display": "19:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:18"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你刷工牌进检修天桥，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_4",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拧松吊环、缠好胶带，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_5",
+            "time": {
+              "display": "19:36",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:36"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "刷工牌出来，路过侧门时何小鹿的镜头正对着这边。"
+              }
+            ],
+            "characterIds": [
+              "he_xiaolu"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_6",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你把追光灯调到满堂彩模式全功率预热，嘴里说预热越久效果越好。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_7",
+            "time": {
+              "display": "20:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:18"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灯架坠落，你第一时间冲配电间拉总闸喊断电防二次事故，并拦住要上天桥的人：上面危险，都下来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qian_jin_event_8",
+            "time": {
+              "display": "20:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:25"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "医护到场，你配合得无可挑剔。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qian_jin_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灯架的保险销上个月报过损耗，补货单你压着没批——设备老化是可以坐实的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qian_jin_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "何小鹿 19:33 的镜头扫过检修口，你的白手套可能入镜了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qian_jin_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "金满堂手里的转账截图藏在哪儿你不知道——找到它，比找到凶手更要紧。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "职业假笑，抠门到口头禅是这盏灯一小时八块钱；训人时官腔十足，被质疑先背制度条款，再阴阳怪气：年轻人，懂什么叫承重吗？提到退休金时笑容会塌一下。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -116,94 +1191,810 @@
       "name": "米琪",
       "gender": "女",
       "age": 28,
-      "publicBio": "满堂彩金牌策划，本场婚礼总执行。流程册被她翻得起毛边，人却越到后半夜越冷。",
-      "card": {
-        "backstory": "你叫米琪。三个月前你熬了七个通宵做出的满堂彩原创方案，被金满堂三万块卖给同行——甲方拿它比稿、压价、夸金总毕竟老牌。你的工资欠了三个月，你递辞职信，他当面撕了：年轻人，凭什么都跟老板谈署名。今晚他临时加致辞环节抢新人风头，你在流程册上把他那页折了个角——折得整整齐齐，像折断。19:40 你冲进后台摊牌，他把辞职信又撕了一遍。",
-        "secret": "你欠薪三个月、方案被卖，辞职信被撕了两次；今晚你在后台和金满堂大吵，全场都听见动静。你还留着带设计时间戳的方案底稿——那是你翻盘的本钱。",
-        "goal": "拿回署名和欠薪——现在只有你能证明他的方案值多少钱。同时把 19:00 贵宾室外听到的话说出来：勒索别人的不止一个。",
-        "isCulprit": false,
-        "timeline": "18:30 你总控彩排流程。19:00 你抱酒水单去贵宾室，隔门听到金满堂和钱进争执截图、场地费全免，你退了两步没敢敲门。19:15 金满堂宣布加致辞环节，你在流程册上折角。19:40 你冲进后台讨薪，吵到摔册子。19:50 你在天桥楼梯口平复情绪，自拍了一张加班到死的氛围照发朋友圈，定位开着——照片时间 19:52，背景里检修口的门虚掩着、门禁指示灯还亮着红，你当时没看第二眼。20:00 你回到控制台。20:18 灯架坠落，你第一个喊别动现场，保护吊点。",
-        "knowledge": [
-          "19:00 你听到钱进和金满堂在贵宾室谈截图，钱进答应场地费全免。",
-          "19:52 你在天桥楼梯口自拍，照片背景里检修口的门是虚掩的——那个口平时都上锁。",
-          "你的方案底稿带设计时间戳，是证明金满堂卖方案的铁证，也是你讨薪的铁证。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "满堂彩金牌策划，本场婚礼总执行。流程册被她翻得起毛边，人却越到后半夜越冷。"
+          }
         ],
-        "persona": "冷，快，精确，说话像念流程单；骂人不带脏字，每句都往痛处点。崩溃前兆是突然开始微笑着鞠躬道歉。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫米琪。三个月前你熬了七个通宵做出的满堂彩原创方案，被金满堂三万块卖给同行——甲方拿它比稿、压价、夸金总毕竟老牌。你的工资欠了三个月，你递辞职信，他当面撕了：年轻人，凭什么都跟老板谈署名。今晚他临时加致辞环节抢新人风头，你在流程册上把他那页折了个角——折得整整齐齐，像折断。19:40 你冲进后台摊牌，他把辞职信又撕了一遍。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_mi_qi_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你欠薪三个月、方案被卖，辞职信被撕了两次；今晚你在后台和金满堂大吵，全场都听见动静。你还留着带设计时间戳的方案底稿——那是你翻盘的本钱。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_mi_qi_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拿回署名和欠薪——现在只有你能证明他的方案值多少钱。同时把 19:00 贵宾室外听到的话说出来：勒索别人的不止一个。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_mi_qi_event_1",
+            "time": {
+              "display": "18:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你总控彩排流程。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_2",
+            "time": {
+              "display": "19:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你抱酒水单去贵宾室，隔门听到金满堂和钱进争执截图、场地费全免，你退了两步没敢敲门。"
+              }
+            ],
+            "characterIds": [
+              "qian_jin"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_3",
+            "time": {
+              "display": "19:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "金满堂宣布加致辞环节，你在流程册上折角。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_4",
+            "time": {
+              "display": "19:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你冲进后台讨薪，吵到摔册子。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_5",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在天桥楼梯口平复情绪，自拍了一张加班到死的氛围照发朋友圈，定位开着——照片时间"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_6",
+            "time": {
+              "display": "19:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:52"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "，背景里检修口的门虚掩着、门禁指示灯还亮着红，你当时没看第二眼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_7",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回到控制台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_mi_qi_event_8",
+            "time": {
+              "display": "20:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:18"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "灯架坠落，你第一个喊别动现场，保护吊点。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_mi_qi_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:00 你听到钱进和金满堂在贵宾室谈截图，钱进答应场地费全免。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_mi_qi_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:52 你在天桥楼梯口自拍，照片背景里检修口的门是虚掩的——那个口平时都上锁。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_mi_qi_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的方案底稿带设计时间戳，是证明金满堂卖方案的铁证，也是你讨薪的铁证。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "冷，快，精确，说话像念流程单；骂人不带脏字，每句都往痛处点。崩溃前兆是突然开始微笑着鞠躬道歉。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["宴会厅舞台", "后台化妆间", "工程部", "地下车库", "库房"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "宴会厅舞台",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "后台化妆间",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "工程部",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "地下车库",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "库房",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "zhuideng_deng",
-      "location": "宴会厅舞台",
+      "locationId": "location_1",
       "name": "坠落的追光灯",
-      "content": "灯架吊环保险销缺失，固定螺纹被反向拧松三圈；吊环上残留透明胶带，胶带上印着云顶国际的水印。法医初判：重物砸击致颅脑损伤死亡，死者倒在舞台中央的追光圈里——那是他亲自指定的站位。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "灯架吊环保险销缺失，固定螺纹被反向拧松三圈；吊环上残留透明胶带，胶带上印着云顶国际的水印。法医初判：重物砸击致颅脑损伤死亡，死者倒在舞台中央的追光圈里——那是他亲自指定的站位。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "menjin_jilu",
-      "location": "工程部",
+      "locationId": "location_3",
       "name": "检修天桥的门禁记录",
-      "content": "门禁系统打印条：19:18 刷入、19:36 刷出，工牌 B072，持有人宴会厅经理钱进。同一时段近一个月无任何巡检登记，消防巡检本应两人同行——记录里只有他一个人。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "门禁系统打印条：19:18 刷入、19:36 刷出，工牌 B072，持有人宴会厅经理钱进。同一时段近一个月无任何巡检登记，消防巡检本应两人同行——记录里只有他一个人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "banshou",
-      "location": "工程部",
+      "locationId": "location_3",
       "name": "工具间里的活动扳手",
-      "content": "检修口工具间挂架上少了一把活动扳手，在天桥护栏角落找到：手柄有缠过胶带的残胶，齿口嵌着黄铜屑——吊环正是黄铜材质。工具借用登记显示，这把活动扳手由钱进长期保管。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "检修口工具间挂架上少了一把活动扳手，在天桥护栏角落找到：手柄有缠过胶带的残胶，齿口嵌着黄铜屑——吊环正是黄铜材质。工具借用登记显示，这把活动扳手由钱进长期保管。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "bianqian",
-      "location": "后台化妆间",
+      "locationId": "location_2",
       "name": "金满堂的手机便签",
-      "content": "死者手机从内袋滑出，被工作人员放进后台化妆间遗物托盘。备忘录置顶：两张转账截图，金满堂转宏达吊装劳务费，备注按老规矩；下面一行字：周三前，场地费全免。不然，发给董事长。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者手机从内袋滑出，被工作人员放进后台化妆间遗物托盘。备忘录置顶：两张转账截图，金满堂转宏达吊装劳务费，备注按老规矩；下面一行字：周三前，场地费全免。不然，发给董事长。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "danbao",
-      "location": "库房",
+      "locationId": "location_5",
       "name": "被撕碎的担保协议",
-      "content": "库房垃圾篓里拼得起大半张个人无限连带担保草稿：借款人程亦飞，出借人金满堂，金额贰拾万，抵押物栏写着婚房地址。撕口很新，纸边沾着喜糖的糖渍——撕它的时候礼盒倒了。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "库房垃圾篓里拼得起大半张个人无限连带担保草稿：借款人程亦飞，出借人金满堂，金额贰拾万，抵押物栏写着婚房地址。撕口很新，纸边沾着喜糖的糖渍——撕它的时候礼盒倒了。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "maotai",
-      "location": "地下车库",
+      "locationId": "location_4",
       "name": "地库里的两瓶茅台",
-      "content": "婚车后备箱：一瓶真茅台空瓶（约剩一两）和一只散装枸杞红枣酒桶，桶上便利贴写着铁哥先拿一瓶账回头算；旁边是烟酒店小票：枸杞二斤、红枣一斤。婚宴上那两瓶赞助茅台，已经不全是茅台了。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "婚车后备箱：一瓶真茅台空瓶（约剩一两）和一只散装枸杞红枣酒桶，桶上便利贴写着铁哥先拿一瓶账回头算；旁边是烟酒店小票：枸杞二斤、红枣一斤。婚宴上那两瓶赞助茅台，已经不全是茅台了。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "sucai",
-      "location": "宴会厅舞台",
+      "locationId": "location_1",
       "name": "素材卡里的画面",
-      "content": "何小鹿备用机素材：19:33 检修口探出一双白手套又缩回；19:40 米琪摔流程册冲出后台；19:50 库房门口两个男人影拉扯；20:18 灯架坠落全程未切镜——吊环上的胶带在灯光下反着光。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "何小鹿备用机素材：19:33 检修口探出一双白手套又缩回；19:40 米琪摔流程册冲出后台；19:50 库房门口两个男人影拉扯；20:18 灯架坠落全程未切镜——吊环上的胶带在灯光下反着光。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "cuzhi",
-      "location": "后台化妆间",
+      "locationId": "location_2",
       "name": "辞职信与欠薪条",
-      "content": "米琪工位：被撕了两次又用胶带粘回去的辞职信，三张欠薪工资条，一份带设计时间戳的满堂彩方案底稿复印件——与某同行公司即将发布的方案高度雷同。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "米琪工位：被撕了两次又用胶带粘回去的辞职信，三张欠薪工资条，一份带设计时间戳的满堂彩方案底稿复印件——与某同行公司即将发布的方案高度雷同。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "tousu",
-      "location": "后台化妆间",
+      "locationId": "location_2",
       "name": "写了一半的投诉信",
-      "content": "苏甜甜粉饼盒下的信纸：致婚庆行业协会的投诉信——进口鲜花实为冷库陈花，报价与实付差额六万八，写到请求协会两个字戛然而止。字迹后半段越写越用力，戳破了纸。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "苏甜甜粉饼盒下的信纸：致婚庆行业协会的投诉信——进口鲜花实为冷库陈花，报价与实付差额六万八，写到请求协会两个字戛然而止。字迹后半段越写越用力，戳破了纸。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "qian_jin",
-    "method": "钱进趁 19:18-19:36 的消防巡检时段刷工牌登上检修天桥，拧松追光灯吊环保险销，用印有自家酒店水印的透明胶带临时缠固；20:00 他借满堂彩模式让灯全功率预热，旋转震动后胶带脱开，20:18 灯架坠落砸死金满堂。事后他拉总闸、封天桥，以安全管理之名拖延吊点检查。",
-    "fullTimeline": "18:30 全员走位，钱进训铁军别碰灯。19:00 金满堂在贵宾室拿转账截图勒索钱进场地费全免，米琪隔门听到，程亦飞在门外等账。19:15 金满堂临时加满堂彩致辞，指定追光灯全功率。19:18-19:36 钱进借巡检上天桥做手脚，19:33 何小鹿的镜头拍到检修口的白手套。19:40 米琪进后台讨薪大吵，苏甜甜在隔壁化妆间听见。19:50 铁军在库房外听到金满堂以债务威胁程亦飞签担保，何小鹿远拍到库房拉扯。20:00 钱进调灯全功率预热。20:05-20:20 铁军在地库调包茅台，听到闷响；程亦飞在后场备红包。20:18 金满堂上台致辞，灯架坠落，苏甜甜跪地按压，米琪喊保护吊点，钱进拉总闸封天桥。20:25 医护确认死亡，警方封锁宴会厅。破案链：坠落的追光灯（吊环胶带与缺失保险销）→ 门禁记录（19:18-19:36 唯一登桥者）→ 印有云顶国际水印的透明胶带与保管的扳手 → 金满堂手机里的转账截图（勒索动机）。红鲱鱼：程亦飞的担保协议与债务、米琪的欠薪撕信、苏甜甜的投诉信、铁军的茅台调包。",
-    "keyEvidence": ["透明胶带", "门禁记录", "活动扳手", "转账截图"],
-    "reveal": "真相：凶手是宴会厅经理钱进。金满堂握着他和吊装供应商吃回扣的转账截图，勒索场地费全免——今晚正是最后期限。二十年老酒店人没骂一句，他只是照常巡检：拧松保险销，缠上自家水印的胶带，再亲手把满堂彩调到最亮。灯越亮，胶带化得越快，人死得越像意外。他忘了两件事：一台不肯切镜的跟拍机位，和他自己刷过的门禁。那只在天桥上稳了二十年的手，终究留下了三处指纹一样的把柄。"
+    "culpritId": "qian_jin",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "钱进趁 19:18-19:36 的消防巡检时段刷工牌登上检修天桥，拧松追光灯吊环保险销，用印有自家酒店水印的透明胶带临时缠固；20:00 他借满堂彩模式让灯全功率预热，旋转震动后胶带脱开，20:18 灯架坠落砸死金满堂。事后他拉总闸、封天桥，以安全管理之名拖延吊点检查。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "钱进趁 19:18-19:36 的消防巡检时段刷工牌登上检修天桥，拧松追光灯吊环保险销，用印有自家酒店水印的透明胶带临时缠固；20:00 他借满堂彩模式让灯全功率预热，旋转震动后胶带脱开，20:18 灯架坠落砸死金满堂。事后他拉总闸、封天桥，以安全管理之名拖延吊点检查。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "18:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "全员走位，钱进训铁军别碰灯。"
+          }
+        ],
+        "characterIds": [
+          "tie_jun",
+          "qian_jin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tie_jun",
+          "qian_jin"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "19:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:00"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "金满堂在贵宾室拿转账截图勒索钱进场地费全免，米琪隔门听到，程亦飞在门外等账。"
+          }
+        ],
+        "characterIds": [
+          "cheng_yifei",
+          "qian_jin",
+          "mi_qi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cheng_yifei",
+          "qian_jin",
+          "mi_qi"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "19:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "金满堂临时加满堂彩致辞，指定追光灯全功率。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "19:18–19:36",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:18"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:36"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "钱进借巡检上天桥做手脚，"
+          }
+        ],
+        "characterIds": [
+          "qian_jin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qian_jin"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "19:33",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:33"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "何小鹿的镜头拍到检修口的白手套。"
+          }
+        ],
+        "characterIds": [
+          "he_xiaolu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "he_xiaolu"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "19:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:40"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "米琪进后台讨薪大吵，苏甜甜在隔壁化妆间听见。"
+          }
+        ],
+        "characterIds": [
+          "su_tiantian",
+          "mi_qi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "su_tiantian",
+          "mi_qi"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "19:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:50"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁军在库房外听到金满堂以债务威胁程亦飞签担保，何小鹿远拍到库房拉扯。"
+          }
+        ],
+        "characterIds": [
+          "cheng_yifei",
+          "tie_jun",
+          "he_xiaolu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cheng_yifei",
+          "tie_jun",
+          "he_xiaolu"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "钱进调灯全功率预热。"
+          }
+        ],
+        "characterIds": [
+          "qian_jin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qian_jin"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "20:05–20:20",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:05"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "20:20"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁军在地库调包茅台，听到闷响；程亦飞在后场备红包。"
+          }
+        ],
+        "characterIds": [
+          "cheng_yifei",
+          "tie_jun"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cheng_yifei",
+          "tie_jun"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "20:18",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:18"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "金满堂上台致辞，灯架坠落，苏甜甜跪地按压，米琪喊保护吊点，钱进拉总闸封天桥。"
+          }
+        ],
+        "characterIds": [
+          "su_tiantian",
+          "qian_jin",
+          "mi_qi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "su_tiantian",
+          "qian_jin",
+          "mi_qi"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "20:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:25"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "医护确认死亡，警方封锁宴会厅。破案链：坠落的追光灯（吊环胶带与缺失保险销）→ 门禁记录（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "19:18–19:36",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:18"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:36"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "唯一登桥者）→ 印有云顶国际水印的透明胶带与保管的扳手 → 金满堂手机里的转账截图（勒索动机）。红鲱鱼：程亦飞的担保协议与债务、米琪的欠薪撕信、苏甜甜的投诉信、铁军的茅台调包。"
+          }
+        ],
+        "characterIds": [
+          "cheng_yifei",
+          "su_tiantian",
+          "tie_jun",
+          "mi_qi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cheng_yifei",
+          "su_tiantian",
+          "tie_jun",
+          "mi_qi"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "menjin_jilu",
+      "banshou"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "menjin_jilu"
+        ],
+        "conclusion": "门禁记录"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "banshou"
+        ],
+        "conclusion": "活动扳手"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是宴会厅经理钱进。金满堂握着他和吊装供应商吃回扣的转账截图，勒索场地费全免——今晚正是最后期限。二十年老酒店人没骂一句，他只是照常巡检：拧松保险销，缠上自家水印的胶带，再亲手把满堂彩调到最亮。灯越亮，胶带化得越快，人死得越像意外。他忘了两件事：一台不肯切镜的跟拍机位，和他自己刷过的门禁。那只在天桥上稳了二十年的手，终究留下了三处指纹一样的把柄。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -213,6 +2004,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

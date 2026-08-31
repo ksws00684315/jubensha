@@ -1,34 +1,267 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "祠堂夜祭",
     "minPlayers": 6,
     "maxPlayers": 6,
     "durationMin": 180,
     "difficulty": "进阶",
-    "tags": ["进阶", "本格", "宗族", "南方", "夜祭"],
+    "tags": [
+      "进阶",
+      "本格",
+      "宗族",
+      "南方",
+      "夜祭"
+    ],
     "intro": "岭南岑氏宗祠，冬至夜祭。78岁的族老按例独自守夜，23:10 被发现倒在偏殿门槛内，手背两个针孔样齿痕——银环蛇毒，神经麻痹，起病无声。毒不在茶里，不在饭里，现场连一个容器都没有。守夜的祠堂里，每个房头都有不能宣读的账。"
   },
-  "background": "岭南岑氏宗祠，冬至夜祭。族老岑松年掌祭田账目四十年，今晚 19:30 他在祖宗牌位前宣布：明晚开祠堂大会，宣读祭田账本、新旧遗嘱、二房字据——有账的要还，有错的要认。一句话，满祠堂的人都变了脸色。20:00 各房散去，族老按例独自守夜。21:00，三房管事岑有财提着鼓鼓的布袋进偏殿添灯油，出来时袋子瘪了。21:40，族老开供桌下的樟木锦盒取炭，手背被咬了一口——不痛，不肿，他以为是蚊虫。22:20 他视物模糊爬向殿门，22:40 倒在门槛内，23:10 才被发现。乡医无力回天：银环蛇毒，神经麻痹，呼吸衰竭。现场没有蛇，没有针，没有一杯异常的茶。祠堂里守夜的五个人和一名不请自来的外人，人人守着一份见不得光的账。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "岭南岑氏宗祠，冬至夜祭。族老岑松年掌祭田账目四十年，今晚 19:30 他在祖宗牌位前宣布：明晚开祠堂大会，宣读祭田账本、新旧遗嘱、二房字据——有账的要还，有错的要认。一句话，满祠堂的人都变了脸色。20:00 各房散去，族老按例独自守夜。21:00，三房管事岑有财提着鼓鼓的布袋进偏殿添灯油，出来时袋子瘪了。21:40，族老开供桌下的樟木锦盒取炭，手背被咬了一口——不痛，不肿，他以为是蚊虫。22:20 他视物模糊爬向殿门，22:40 倒在门槛内，23:10 才被发现。乡医无力回天：银环蛇毒，神经麻痹，呼吸衰竭。现场没有蛇，没有针，没有一杯异常的茶。祠堂里守夜的五个人和一名不请自来的外人，人人守着一份见不得光的账。"
+    }
+  ],
   "characters": [
     {
       "id": "cen_youcai",
       "name": "岑有财",
       "gender": "男",
       "age": 52,
-      "publicBio": "三房管事，有财蛇酒坊当家人，经手祠堂祭扫采买二十年。今晚管三牲酒水，忙得脚不沾地。",
-      "card": {
-        "backstory": "你叫岑有财。祠堂三年的香烛、三牲、修缮采买都过你的手，祭田租金四十七万八千，真正用在祖宗身上的不到一半——剩下的填了你省城儿子的首付和你家后山的新坟。你以为账做得天衣无缝，直到三日前族老把你叫进账房，拍出厚厚一沓手抄流水：明晚祠堂大会，当着列祖列宗，你自己念。你在蛇场坐了一整夜。祭祀要进贡蛇酒，蛇是你自己蛇场出的——银环蛇昼伏夜出，咬人不痛，神经毒起病无声。你把蛇连袋放进他取炭的锦盒，就当，祖宗自己收了他这条看门狗。",
-        "secret": "你就是凶手。三日前你从蛇场提出一条银环蛇，21:00 借添灯油把敞口火漆蛇袋放进偏殿供桌下的樟木锦盒。族老 21:40 取炭被咬，23:10 才被发现——银环蛇毒，正是无声的路数。",
-        "goal": "咬定蛇是意外：偏殿旧物多，供品里本就有蛇酒，坛里爬出来的说法你已备好。出货单经手栏是空的，往离场伙计身上推。账本一旦翻出，就哭穷认手头紧借了公款，把命案和钱案切开说。",
-        "isCulprit": true,
-        "timeline": "18:00 祭祖你负责分胙肉，全程在前殿。19:30 族老宣布明晚大会宣读账本，你手里的酒壶差点脱手。20:00 各房散去，你去后院清点三牲。21:00 你提灯油布袋进偏殿，把火漆蛇袋放进锦盒上层，出来时在前殿香案前拜了三拜——前殿抄族谱的阿照和蹲石阶的陆嘉树都看见了。21:40 你在后院听见偏殿有响动，没敢去看。22:30 你守在后院柴房，一遍遍擦那坛没开封的蛇酒。23:10 喊声起来你冲进偏殿，族老已经不行了。",
-        "knowledge": [
-          "族老三日前已把流水摊在你面前，明晚大会四个字就是你的死刑判决。",
-          "锦盒是族老守夜取炭的地方，这个习惯全族只有几个老人知道——你是其中之一。",
-          "21:00 你进偏殿的事，前殿的阿照和石阶上的陆嘉树都可能看见——那双眼睛不止一双。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "三房管事，有财蛇酒坊当家人，经手祠堂祭扫采买二十年。今晚管三牲酒水，忙得脚不沾地。"
+          }
         ],
-        "persona": "笑面，见人先递烟，张口都是自家人；算账时眼皮都不抬。慌起来会不停给祖宗牌位上香，香插得歪歪扭扭。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫岑有财。祠堂三年的香烛、三牲、修缮采买都过你的手，祭田租金四十七万八千，真正用在祖宗身上的不到一半——剩下的填了你省城儿子的首付和你家后山的新坟。你以为账做得天衣无缝，直到三日前族老把你叫进账房，拍出厚厚一沓手抄流水：明晚祠堂大会，当着列祖列宗，你自己念。你在蛇场坐了一整夜。祭祀要进贡蛇酒，蛇是你自己蛇场出的——银环蛇昼伏夜出，咬人不痛，神经毒起病无声。你把蛇连袋放进他取炭的锦盒，就当，祖宗自己收了他这条看门狗。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cen_youcai_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。三日前你从蛇场提出一条银环蛇，21:00 借添灯油把敞口火漆蛇袋放进偏殿供桌下的樟木锦盒。族老 21:40 取炭被咬，23:10 才被发现——银环蛇毒，正是无声的路数。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cen_youcai_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "咬定蛇是意外：偏殿旧物多，供品里本就有蛇酒，坛里爬出来的说法你已备好。出货单经手栏是空的，往离场伙计身上推。账本一旦翻出，就哭穷认手头紧借了公款，把命案和钱案切开说。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cen_youcai_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "祭祖你负责分胙肉，全程在前殿。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_2",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老宣布明晚大会宣读账本，你手里的酒壶差点脱手。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_3",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "各房散去，你去后院清点三牲。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_4",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你提灯油布袋进偏殿，把火漆蛇袋放进锦盒上层，出来时在前殿香案前拜了三拜——前殿抄族谱的阿照和蹲石阶的陆嘉树都看见了。"
+              }
+            ],
+            "characterIds": [
+              "lu_jiashu"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_5",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在后院听见偏殿有响动，没敢去看。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_6",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你守在后院柴房，一遍遍擦那坛没开封的蛇酒。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_youcai_event_7",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "喊声起来你冲进偏殿，族老已经不行了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cen_youcai_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老三日前已把流水摊在你面前，明晚大会四个字就是你的死刑判决。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_youcai_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "锦盒是族老守夜取炭的地方，这个习惯全族只有几个老人知道——你是其中之一。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_youcai_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00 你进偏殿的事，前殿的阿照和石阶上的陆嘉树都可能看见——那双眼睛不止一双。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "笑面，见人先递烟，张口都是自家人；算账时眼皮都不抬。慌起来会不停给祖宗牌位上香，香插得歪歪扭扭。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +269,219 @@
       "name": "岑守拙",
       "gender": "男",
       "age": 63,
-      "publicBio": "大房族长，族老岑松年的堂弟。今晚主持祭仪，每个环节都按老礼，一丝不苟。",
-      "card": {
-        "backstory": "你叫岑守拙。二十年前二房绝户，留下六亩水田，你做主签字把田暂归公田，转头折半价典给了自家幺弟——字据压在族老账房的铁盒里。这些年祭田水涨船高，你夜夜梦见那六亩田。今晚族老宣布要宣读账本，还点了名：守拙，你二十年前经手的字据，也一并念。他这是要拿你祭旗，立他修谱立规的威。你劝过他祖宗的规矩改不得，他说：我的规矩就是规矩。",
-        "secret": "你贱买二房绝户田的字据在族老账房铁盒里，明晚就会被当众念出——你的族长之位和二十年的脸面都要完。",
-        "goal": "阻止或拖延明晚的大会，想办法在宣读前借走字据。绝不能让人查出你今晚惦记过账房——你 20:30 起守正殿寸步未离，何秋和守夜的香客都能作证，这是你唯一的救命稻草。",
-        "isCulprit": false,
-        "timeline": "18:00 你主持祭仪，唱礼分胙。19:30 族老宣布明晚大会，你当场黑了脸，顶了句列祖列宗面前账本算什么东西。20:00 散后你去账房外转了一圈，铁盒锁着，钥匙在族老身上，你没敢叫门。20:30 起你在正殿守香添油，寸步未离。22:40 你听见偏殿方向像有人撞翻了什么，差小辈去看，回话说没事。23:10 你例行添香路过偏殿，发现族老倒在门槛内，跪下去探他鼻息，喊人。",
-        "knowledge": [
-          "账房铁盒里压着你二十年前贱买二房田的字据，钥匙在族老身上——他死后铁盒会被警方先开。",
-          "22:40 偏殿方向的响动你听到了，却只差小辈去看——这条你会后悔一辈子。",
-          "你 20:30 起守正殿没离过身，何秋和守夜的香客都能作证——这是你唯一的救命稻草。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "大房族长，族老岑松年的堂弟。今晚主持祭仪，每个环节都按老礼，一丝不苟。"
+          }
         ],
-        "persona": "老成持重，说话引经据典，惯用反问；提二房、绝户田会突然提高音量。跪祠堂比谁都虔诚——虔诚得让人不敢怀疑他。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫岑守拙。二十年前二房绝户，留下六亩水田，你做主签字把田暂归公田，转头折半价典给了自家幺弟——字据压在族老账房的铁盒里。这些年祭田水涨船高，你夜夜梦见那六亩田。今晚族老宣布要宣读账本，还点了名：守拙，你二十年前经手的字据，也一并念。他这是要拿你祭旗，立他修谱立规的威。你劝过他祖宗的规矩改不得，他说：我的规矩就是规矩。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cen_shouzhuo_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你贱买二房绝户田的字据在族老账房铁盒里，明晚就会被当众念出——你的族长之位和二十年的脸面都要完。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cen_shouzhuo_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "阻止或拖延明晚的大会，想办法在宣读前借走字据。绝不能让人查出你今晚惦记过账房——你 20:30 起守正殿寸步未离，何秋和守夜的香客都能作证，这是你唯一的救命稻草。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cen_shouzhuo_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你主持祭仪，唱礼分胙。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_shouzhuo_event_2",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老宣布明晚大会，你当场黑了脸，顶了句列祖列宗面前账本算什么东西。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_shouzhuo_event_3",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "散后你去账房外转了一圈，铁盒锁着，钥匙在族老身上，你没敢叫门。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_shouzhuo_event_4",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你在正殿守香添油，寸步未离。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_shouzhuo_event_5",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你听见偏殿方向像有人撞翻了什么，差小辈去看，回话说没事。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_shouzhuo_event_6",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你例行添香路过偏殿，发现族老倒在门槛内，跪下去探他鼻息，喊人。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cen_shouzhuo_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "账房铁盒里压着你二十年前贱买二房田的字据，钥匙在族老身上——他死后铁盒会被警方先开。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_shouzhuo_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:40 偏殿方向的响动你听到了，却只差小辈去看——这条你会后悔一辈子。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_shouzhuo_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 20:30 起守正殿没离过身，何秋和守夜的香客都能作证——这是你唯一的救命稻草。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "老成持重，说话引经据典，惯用反问；提二房、绝户田会突然提高音量。跪祠堂比谁都虔诚——虔诚得让人不敢怀疑他。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +489,241 @@
       "name": "何秋",
       "gender": "女",
       "age": 55,
-      "publicBio": "族老续弦，小族老二十三岁，管祠堂洒扫与守夜饭食。族里背后叫她半路进的门。",
-      "card": {
-        "backstory": "你叫何秋。你伺候岑松年十二年，图什么？图名分背后那间养老屋和每年三千的年金——你儿子在外地等你接过去带孙子。上周律师来祠堂，你隔门听见：新遗嘱把你的份额全数拨作祠堂香火钱，老头说让祖宗养你，比人靠谱。你趁他去前殿，把新遗嘱草稿从账房文书堆里抽出来，塞进正殿神龛夹层——拖一天是一天，拖到他改主意。今晚祭夜他说明晚大会连遗嘱一起宣读，你在厢房数了一夜佛珠。",
-        "secret": "你把新遗嘱草稿藏进了神龛夹层，翻动的痕迹是你留的；你还偷偷换过他的一副老花镜——让写字手抖的他，新遗嘱的签名一直没签完。",
-        "goal": "新遗嘱不能见光。被问神龛就说祭前擦拭是老规矩。遗嘱若被发现，就哭诉一小妇人的哪敢动祖宗的东西，把水引向那些贪了祭田的男人——他们比你有得可查。",
-        "isCulprit": false,
-        "timeline": "18:00 你张罗祭夜饭食。19:30 族老宣布明晚宣读遗嘱，你手里的汤勺磕在缸沿上。20:10 你借口添灯油在正殿待着。20:40 你瞥见晚晴进偏殿送披风被骂出来。21:00 你在正殿神龛前上香，隔着院子看见岑有财提布袋进偏殿添灯油，出来时袋子瘪了。22:00 起你在厢房灶边打盹，数佛珠。23:10 听到喊声你冲过去，第一个去解族老的衣领，摸到他手背两个小红点。",
-        "knowledge": [
-          "21:00 岑有财提布袋进偏殿，出来时袋子瘪了——那袋子鼓鼓囊囊，不像装灯油。",
-          "20:40 晚晴送披风被族老骂出来，爷孙俩为开发商的事吵翻了。",
-          "新遗嘱签名只有半笔，因为他的老花镜恰好总找不到——这事只有你知道。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "族老续弦，小族老二十三岁，管祠堂洒扫与守夜饭食。族里背后叫她半路进的门。"
+          }
         ],
-        "persona": "声音软，慢，带哭腔的习惯性尾音；撒谎时佛珠转得飞快。提到养老、名分就掉泪，泪来得又快又准。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫何秋。你伺候岑松年十二年，图什么？图名分背后那间养老屋和每年三千的年金——你儿子在外地等你接过去带孙子。上周律师来祠堂，你隔门听见：新遗嘱把你的份额全数拨作祠堂香火钱，老头说让祖宗养你，比人靠谱。你趁他去前殿，把新遗嘱草稿从账房文书堆里抽出来，塞进正殿神龛夹层——拖一天是一天，拖到他改主意。今晚祭夜他说明晚大会连遗嘱一起宣读，你在厢房数了一夜佛珠。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_he_qiu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你把新遗嘱草稿藏进了神龛夹层，翻动的痕迹是你留的；你还偷偷换过他的一副老花镜——让写字手抖的他，新遗嘱的签名一直没签完。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_he_qiu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "新遗嘱不能见光。被问神龛就说祭前擦拭是老规矩。遗嘱若被发现，就哭诉一小妇人的哪敢动祖宗的东西，把水引向那些贪了祭田的男人——他们比你有得可查。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_he_qiu_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你张罗祭夜饭食。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_2",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老宣布明晚宣读遗嘱，你手里的汤勺磕在缸沿上。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_3",
+            "time": {
+              "display": "20:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:10"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你借口添灯油在正殿待着。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_4",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你瞥见晚晴进偏殿送披风被骂出来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_5",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在正殿神龛前上香，隔着院子看见岑有财提布袋进偏殿添灯油，出来时袋子瘪了。"
+              }
+            ],
+            "characterIds": [
+              "cen_youcai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_6",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你在厢房灶边打盹，数佛珠。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_he_qiu_event_7",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "听到喊声你冲过去，第一个去解族老的衣领，摸到他手背两个小红点。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_he_qiu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00 岑有财提布袋进偏殿，出来时袋子瘪了——那袋子鼓鼓囊囊，不像装灯油。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_qiu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:40 晚晴送披风被族老骂出来，爷孙俩为开发商的事吵翻了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_he_qiu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "新遗嘱签名只有半笔，因为他的老花镜恰好总找不到——这事只有你知道。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "声音软，慢，带哭腔的习惯性尾音；撒谎时佛珠转得飞快。提到养老、名分就掉泪，泪来得又快又准。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +731,239 @@
       "name": "岑晚晴",
       "gender": "女",
       "age": 29,
-      "publicBio": "族老孙女，省城野生动物救助站饲养员，全族最出格的姑娘——开越野车，养蛇。",
-      "card": {
-        "backstory": "你叫岑晚晴。你在救助站养了八年蛇，爷爷的祠堂对你来说比蛇园更冷：女丁不进谱，牌位靠边站。三个月前你把男朋友陆嘉树带回家——他是文旅集团来谈祠堂地块的项目代表。爷爷摔了茶碗：你要跟拆祠堂的人睡一张床，就改姓。今晚你送披风进偏殿，他指着你鼻子：明晚大会，你当众跟他断，不然除名。你摔门出来，坐在越野车里哭，后备箱的蛇笼空着——你上周刚把一条救回来的银环蛇放归青云山。22:00 起你赌气守在车棚没进去，直到听见偏殿的动静不对。",
-        "secret": "你和拆祠堂的人恋爱、被以除名相逼的事全族皆知；你的车后备箱有蛇笼、捕蛇袋和放生记录——祠堂夜死了人，这些东西件件都是催命符。",
-        "goal": "你没杀人，但必须抢在警方之前理清蛇从哪来——全世界只有你能随手搞到银环蛇，这层嫌疑你赖不掉。同时护住陆嘉树，别让恋情把他也卷进来。",
-        "isCulprit": false,
-        "timeline": "18:00 你破例被允许上香，全场盯着你看。19:30 族老宣布明晚大会连你的处分一起议，你摔了筷子离席。20:40 你送披风进偏殿，吵到被骂出来。21:10 你回车棚，22:00 起在车里坐着，电台开着。22:40 你听到偏殿一声闷响，探头望了一眼没见人，你以为是野猫。23:10 喊声起来你冲进偏殿，你比谁都先看出他手背的齿痕——你在救助站见得太多了。",
-        "knowledge": [
-          "你在救助站经手过银环蛇，齿痕、症状、发作时间你比乡医清楚——这既是本事也是嫌疑。",
-          "爷爷守夜取炭必开供桌下锦盒，这习惯从小告诉你的就是你——你知道，别人也知道你知道。",
-          "陆嘉树今晚不请自来蹲在前院石阶，说他等你下班——他到底拍了什么你不知道。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "族老孙女，省城野生动物救助站饲养员，全族最出格的姑娘——开越野车，养蛇。"
+          }
         ],
-        "persona": "外冷内韧，说话短促，城市腔和宗族腔打架的别扭；谈蛇时专业冷静，谈爷爷时全乱。护短，尤其护陆嘉树，护到不打自招。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫岑晚晴。你在救助站养了八年蛇，爷爷的祠堂对你来说比蛇园更冷：女丁不进谱，牌位靠边站。三个月前你把男朋友陆嘉树带回家——他是文旅集团来谈祠堂地块的项目代表。爷爷摔了茶碗：你要跟拆祠堂的人睡一张床，就改姓。今晚你送披风进偏殿，他指着你鼻子：明晚大会，你当众跟他断，不然除名。你摔门出来，坐在越野车里哭，后备箱的蛇笼空着——你上周刚把一条救回来的银环蛇放归青云山。22:00 起你赌气守在车棚没进去，直到听见偏殿的动静不对。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cen_wanqing_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你和拆祠堂的人恋爱、被以除名相逼的事全族皆知；你的车后备箱有蛇笼、捕蛇袋和放生记录——祠堂夜死了人，这些东西件件都是催命符。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cen_wanqing_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你没杀人，但必须抢在警方之前理清蛇从哪来——全世界只有你能随手搞到银环蛇，这层嫌疑你赖不掉。同时护住陆嘉树，别让恋情把他也卷进来。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cen_wanqing_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你破例被允许上香，全场盯着你看。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_2",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老宣布明晚大会连你的处分一起议，你摔了筷子离席。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_3",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你送披风进偏殿，吵到被骂出来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_4",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回车棚，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_5",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起在车里坐着，电台开着。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_6",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你听到偏殿一声闷响，探头望了一眼没见人，你以为是野猫。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_wanqing_event_7",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "喊声起来你冲进偏殿，你比谁都先看出他手背的齿痕——你在救助站见得太多了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cen_wanqing_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在救助站经手过银环蛇，齿痕、症状、发作时间你比乡医清楚——这既是本事也是嫌疑。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_wanqing_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "爷爷守夜取炭必开供桌下锦盒，这习惯从小告诉你的就是你——你知道，别人也知道你知道。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_wanqing_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "陆嘉树今晚不请自来蹲在前院石阶，说他等你下班——他到底拍了什么你不知道。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "外冷内韧，说话短促，城市腔和宗族腔打架的别扭；谈蛇时专业冷静，谈爷爷时全乱。护短，尤其护陆嘉树，护到不打自招。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,19 +971,241 @@
       "name": "岑阿照",
       "gender": "男",
       "age": 24,
-      "publicBio": "二房过继支的大学生，修谱志愿者。今晚被罚在前殿抄族规——将功赎罪的罚站。",
-      "card": {
-        "backstory": "你叫岑阿照。二房绝户后你这一支被过继、被改写，族谱上轻轻一笔出继带走。你读历史系，做了修谱志愿者，想把本支的记载改回来——你在族谱软件后台把出继改回留守，手一抖，连太爷爷的生卒年都修正了。族老发现后拍桌：欺祖灭伦。罚你祭夜在前殿抄一百遍族规。19:30 他宣布明晚当众让你认错，不然除名。你抄到第二十三遍，手在抖——不是怕认错，是怕你妈知道。她是二房最后的骨血，留守两个字是她临终的执念。",
-        "secret": "你偷改了族谱记载，被族老抓住把柄，明晚要么当众认错除名，要么身败名裂；改录截图打印出来藏在电动车筐——你想留着证据证明你只是修正不是篡改。",
-        "goal": "别让除名发生，把篡改族谱说成订正讹误。你守前殿一整晚，全祠堂的进出你都看在眼里——这是你换清白的筹码。",
-        "isCulprit": false,
-        "timeline": "18:00 你帮着挂灯结彩，全程没人跟你说话。19:30 族老宣布明晚你当众认错，你手里的族规抄本掉了。20:00 起你在前殿抄族规，抄到第二十三遍。21:00 你抬头看见岑有财提鼓布袋进偏殿，出来时袋子瘪了。21:40 你听见偏殿像炭灰撒了的响动，探头望了一眼。22:40 你又听见闷响，没敢动——你以为又是族老摔东西。23:10 喊声炸开，你第一个跑向偏殿，又在门口刹住——你想起车筐里那袋证据。",
-        "knowledge": [
-          "21:00 岑有财提着鼓鼓囊囊的布袋进偏殿，出来时袋子瘪了。",
-          "21:40 和 22:40 偏殿各有一次响动，你都听到了——你是全祠堂耳朵最闲的人。",
-          "你的电动车筐里藏着改录截图和族老的字条，你现在恨不得它们从没被打印过。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "二房过继支的大学生，修谱志愿者。今晚被罚在前殿抄族规——将功赎罪的罚站。"
+          }
         ],
-        "persona": "学生腔，习惯引族谱原文反驳人，口头禅是谱上写的是；紧张时咬笔杆，被逼急了会背整段族规。对妈和留守两个字敏感得碰不得。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫岑阿照。二房绝户后你这一支被过继、被改写，族谱上轻轻一笔出继带走。你读历史系，做了修谱志愿者，想把本支的记载改回来——你在族谱软件后台把出继改回留守，手一抖，连太爷爷的生卒年都修正了。族老发现后拍桌：欺祖灭伦。罚你祭夜在前殿抄一百遍族规。19:30 他宣布明晚当众让你认错，不然除名。你抄到第二十三遍，手在抖——不是怕认错，是怕你妈知道。她是二房最后的骨血，留守两个字是她临终的执念。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_cen_azhao_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷改了族谱记载，被族老抓住把柄，明晚要么当众认错除名，要么身败名裂；改录截图打印出来藏在电动车筐——你想留着证据证明你只是修正不是篡改。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_cen_azhao_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "别让除名发生，把篡改族谱说成订正讹误。你守前殿一整晚，全祠堂的进出你都看在眼里——这是你换清白的筹码。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_cen_azhao_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你帮着挂灯结彩，全程没人跟你说话。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_2",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "族老宣布明晚你当众认错，你手里的族规抄本掉了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_3",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你在前殿抄族规，抄到第二十三遍。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_4",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你抬头看见岑有财提鼓布袋进偏殿，出来时袋子瘪了。"
+              }
+            ],
+            "characterIds": [
+              "cen_youcai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_5",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你听见偏殿像炭灰撒了的响动，探头望了一眼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_6",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你又听见闷响，没敢动——你以为又是族老摔东西。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_cen_azhao_event_7",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "喊声炸开，你第一个跑向偏殿，又在门口刹住——你想起车筐里那袋证据。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_cen_azhao_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00 岑有财提着鼓鼓囊囊的布袋进偏殿，出来时袋子瘪了。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_azhao_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:40 和 22:40 偏殿各有一次响动，你都听到了——你是全祠堂耳朵最闲的人。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_cen_azhao_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的电动车筐里藏着改录截图和族老的字条，你现在恨不得它们从没被打印过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "学生腔，习惯引族谱原文反驳人，口头禅是谱上写的是；紧张时咬笔杆，被逼急了会背整段族规。对妈和留守两个字敏感得碰不得。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -116,94 +1213,702 @@
       "name": "陆嘉树",
       "gender": "男",
       "age": 31,
-      "publicBio": "文旅集团项目代表，不在祭祖名单上，却蹲在祠堂前院石阶不肯走——他说他等晚晴下班。",
-      "card": {
-        "backstory": "你叫陆嘉树。祠堂地块是集团明年文旅片区的核心，谈判卡在岑松年一个人身上。你做了三手：加价方案、录像施压，以及——晚晴。她是真心的，你起初不是，现在说不清。今晚你未经邀请跟到祠堂，想拍一组宗族阻挠发展的素材逼集团加码。19:30 族老隔墙骂你滚出祠堂，你蹲在石阶上没走。21:00 你拍到岑有财提布袋进偏殿；20:40 你拍到晚晴挨骂。23:10 出了人命，你的手机里躺着两段可能改变一切的画面——还有一段你和晚晴的合影，千万不能被人看见。",
-        "secret": "你偷拍了祠堂内外多段素材，包括 21:00 岑有财提布袋进偏殿的特写——火漆印清清楚楚。你是擅闯者、偷拍者，还是全族眼中的拆祠堂的人。",
-        "goal": "用素材换活路：主动交出 21:00 的画面，换一个配合调查的定性；死守与晚晴的合影和 20:40 那段——恋情一旦曝光，你在集团的项目和晚晴的族籍一起完。",
-        "isCulprit": false,
-        "timeline": "19:30 你被族老隔墙痛骂滚出祠堂，你蹲在前院石阶没走。20:40 你拍到晚晴送披风被骂出来。21:00 你拍到岑有财提鼓布袋进偏殿、空手出来，还给布袋拍了特写——火漆印有财蛇酒坊清清楚楚。22:00 起你手机只剩一成多的电，你蹲着不敢乱动。23:10 喊声起，你是唯一的外来者，你第一个举起手机：我拍到了，我拍到了有财叔进偏殿。",
-        "knowledge": [
-          "21:00 你拍到岑有财提鼓布袋进偏殿、空手出来，火漆印在你特写里。",
-          "20:40 晚晴被族老骂出偏殿的画面在你手机里——这段千万不能先交。",
-          "你手机只剩一成多的电，关机前要想清楚哪段交、哪段删。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "文旅集团项目代表，不在祭祖名单上，却蹲在祠堂前院石阶不肯走——他说他等晚晴下班。"
+          }
         ],
-        "persona": "商务精英范，说话先讲利益结构；被全族敌视时嘴硬心慌，撒谎靠语速。提到晚晴会突然词穷，手机不自觉锁屏扣在胸口。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆嘉树。祠堂地块是集团明年文旅片区的核心，谈判卡在岑松年一个人身上。你做了三手：加价方案、录像施压，以及——晚晴。她是真心的，你起初不是，现在说不清。今晚你未经邀请跟到祠堂，想拍一组宗族阻挠发展的素材逼集团加码。19:30 族老隔墙骂你滚出祠堂，你蹲在石阶上没走。21:00 你拍到岑有财提布袋进偏殿；20:40 你拍到晚晴挨骂。23:10 出了人命，你的手机里躺着两段可能改变一切的画面——还有一段你和晚晴的合影，千万不能被人看见。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_lu_jiashu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷拍了祠堂内外多段素材，包括 21:00 岑有财提布袋进偏殿的特写——火漆印清清楚楚。你是擅闯者、偷拍者，还是全族眼中的拆祠堂的人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_lu_jiashu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "用素材换活路：主动交出 21:00 的画面，换一个配合调查的定性；死守与晚晴的合影和 20:40 那段——恋情一旦曝光，你在集团的项目和晚晴的族籍一起完。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_lu_jiashu_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你被族老隔墙痛骂滚出祠堂，你蹲在前院石阶没走。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lu_jiashu_event_2",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到晚晴送披风被骂出来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lu_jiashu_event_3",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拍到岑有财提鼓布袋进偏殿、空手出来，还给布袋拍了特写——火漆印有财蛇酒坊清清楚楚。"
+              }
+            ],
+            "characterIds": [
+              "cen_youcai"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_lu_jiashu_event_4",
+            "time": {
+              "display": "22:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你手机只剩一成多的电，你蹲着不敢乱动。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lu_jiashu_event_5",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "喊声起，你是唯一的外来者，你第一个举起手机：我拍到了，我拍到了有财叔进偏殿。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_lu_jiashu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:00 你拍到岑有财提鼓布袋进偏殿、空手出来，火漆印在你特写里。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_lu_jiashu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:40 晚晴被族老骂出偏殿的画面在你手机里——这段千万不能先交。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_lu_jiashu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你手机只剩一成多的电，关机前要想清楚哪段交、哪段删。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "商务精英范，说话先讲利益结构；被全族敌视时嘴硬心慌，撒谎靠语速。提到晚晴会突然词穷，手机不自觉锁屏扣在胸口。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["偏殿", "正殿", "账房", "前殿", "后院车棚"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "偏殿",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "正殿",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "账房",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "前殿",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "后院车棚",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "chihen_shijian",
-      "location": "偏殿",
+      "locationId": "location_1",
       "name": "齿痕与尸检初判",
-      "content": "死者左手背两个针孔样齿痕，间距约一厘米，局部不红不肿；乡医与县法医电话初判：银环蛇毒致神经麻痹、呼吸衰竭，咬伤至死亡约一个半小时，与守夜时段吻合。现场搜遍偏殿，没有蛇，没有任何盛毒容器。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者左手背两个针孔样齿痕，间距约一厘米，局部不红不肿；乡医与县法医电话初判：银环蛇毒致神经麻痹、呼吸衰竭，咬伤至死亡约一个半小时，与守夜时段吻合。现场搜遍偏殿，没有蛇，没有任何盛毒容器。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "huoqi_shadai",
-      "location": "偏殿",
+      "locationId": "location_1",
       "name": "有财蛇酒坊的火漆蛇袋",
-      "content": "供桌下樟木锦盒旁，一只敞口的麻布袋，双道火漆印有财蛇酒坊，袋内残留蛇鳞两片；锦盒底的炭灰里也有一片。锦盒是族老守夜取炭的地方——袋子的位置，正对着他每晚弯腰伸手的角度。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "供桌下樟木锦盒旁，一只敞口的麻布袋，双道火漆印有财蛇酒坊，袋内残留蛇鳞两片；锦盒底的炭灰里也有一片。锦盒是族老守夜取炭的地方——袋子的位置，正对着他每晚弯腰伸手的角度。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "chuhuo_dan",
-      "location": "账房",
+      "locationId": "location_3",
       "name": "蛇酒坊出货单",
-      "content": "账房文书堆里的出货单存根：三日前，有财蛇酒坊出库银环蛇壹条，名目泡酒用，经手人栏空白。同批进贡的三坛蛇酒里，有一坛坛口封泥是新封的，泥色发白——坛，可能根本没封上过。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "账房文书堆里的出货单存根：三日前，有财蛇酒坊出库银环蛇壹条，名目泡酒用，经手人栏空白。同批进贡的三坛蛇酒里，有一坛坛口封泥是新封的，泥色发白——坛，可能根本没封上过。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "duanxin",
-      "location": "偏殿",
+      "locationId": "location_1",
       "name": "族老的短信",
-      "content": "族老手机（未锁）在三日前有一条发给岑有财的短信，发送失败重试两次：祭田的账，我连夜对了。明晚祠堂大会，当着列祖列宗，你自己念。之后是岑有财的三条未接来电，都在当晚深夜。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "族老手机（未锁）在三日前有一条发给岑有财的短信，发送失败重试两次：祭田的账，我连夜对了。明晚祠堂大会，当着列祖列宗，你自己念。之后是岑有财的三条未接来电，都在当晚深夜。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jitian_zhangben",
-      "location": "账房",
+      "locationId": "location_3",
       "name": "祭田账本",
-      "content": "账房暗格里族老的手抄账本：三年祭田租金四十七万八千，其中香烛三牲采买名目的支出与市价相差逾三十万，收款方均为有财蛇酒坊。账本页脚一行小字：明晚大会，一并发落。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "账房暗格里族老的手抄账本：三年祭田租金四十七万八千，其中香烛三牲采买名目的支出与市价相差逾三十万，收款方均为有财蛇酒坊。账本页脚一行小字：明晚大会，一并发落。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "yizhu",
-      "location": "正殿",
+      "locationId": "location_2",
       "name": "神龛夹层的两份遗嘱",
-      "content": "正殿神龛夹层：旧遗嘱写着续弦何秋得养老屋与每年三千元年金；新遗嘱草稿把她的份额全数拨作祠堂香火钱，签名只有半笔，笔锋在名字第二个字上断了。夹层灰尘有新近翻动的痕迹。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "正殿神龛夹层：旧遗嘱写着续弦何秋得养老屋与每年三千元年金；新遗嘱草稿把她的份额全数拨作祠堂香火钱，签名只有半笔，笔锋在名字第二个字上断了。夹层灰尘有新近翻动的痕迹。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "shelong",
-      "location": "后院车棚",
+      "locationId": "location_5",
       "name": "蛇笼与放生记录",
-      "content": "晚晴越野车后备箱：空蛇笼、折叠捕蛇袋、救助站放生登记本——上月放生银环蛇壹条，地点青云山保护区。笼内没有新鲜蛇蜕，捕蛇袋洗过；保护区离祠堂九十里，登记本上有两名同事的联名签字。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "晚晴越野车后备箱：空蛇笼、折叠捕蛇袋、救助站放生登记本——上月放生银环蛇壹条，地点青云山保护区。笼内没有新鲜蛇蜕，捕蛇袋洗过；保护区离祠堂九十里，登记本上有两名同事的联名签字。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "gailu_jietu",
-      "location": "后院车棚",
+      "locationId": "location_5",
       "name": "族谱改录的截图",
-      "content": "阿照电动车筐的文件袋：族谱软件后台改录的打印截图——二房三支出继改留守，操作时间上个月，旁边压着族老的字条：欺祖灭伦。明晚当众认错，不然除名。字条的纸角被汗浸皱。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "阿照电动车筐的文件袋：族谱软件后台改录的打印截图——二房三支出继改留守，操作时间上个月，旁边压着族老的字条：欺祖灭伦。明晚当众认错，不然除名。字条的纸角被汗浸皱。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "kance_tu",
-      "location": "前殿",
+      "locationId": "location_4",
       "name": "勘测图与朱批",
-      "content": "前殿香案上一份文旅集团勘测图：祠堂地块画了红线，族老朱笔划叉并写祠堂一寸不让；附陆嘉树的名片，背面一个清晰的鞋印——被人踩过。勘测图的折痕里落着前殿的香灰。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "前殿香案上一份文旅集团勘测图：祠堂地块画了红线，族老朱笔划叉并写祠堂一寸不让；附陆嘉树的名片，背面一个清晰的鞋印——被人踩过。勘测图的折痕里落着前殿的香灰。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "cen_youcai",
-    "method": "岑有财三日前从自家蛇场提出一条银环蛇，21:00 借添灯油把敞口的火漆蛇袋放进族老守夜取炭的樟木锦盒；21:40 族老取炭时被咬——银环蛇毒不痛不肿、神经麻痹起病无声，22:40 族老倒在偏殿门槛内，23:10 才被发现。毒是活的，不在茶里不在饭里，现场不留容器。",
-    "fullTimeline": "18:00 祭祖分胙：守拙主祭，有财管采买，何秋管饭食，阿照被罚抄族规，晚晴破例上香，陆嘉树不请自来。19:30 族老宣布明晚祠堂大会：宣读祭田账本、新旧遗嘱、二房字据，并让阿照当众认错、晚晴当众断情——满祠堂人人有鬼。20:00 各房散去，族老独自守夜；守拙去账房外转了一圈没敢叫门。20:30 起守拙守正殿；20:40 晚晴送披风被骂出，陆嘉树拍到。21:00 岑有财提鼓布袋进偏殿添灯油，将敞口蛇袋放进供桌下锦盒，出来时袋子瘪了——阿照、何秋、陆嘉树三双眼睛都看见了，却都没多想。21:40 族老开锦盒取炭被咬，只当蚊叮。22:20 他视物模糊爬向殿门；22:40 倒在门槛内，守拙听到闷响只差小辈去看，晚晴探头未见人。23:10 守拙例行添香路过偏殿发现族老，喊声炸开：晚晴第一个认出齿痕，阿照跑去车棚护证据，有财冲进来抢救，陆嘉树举起手机交出 21:00 的画面。23:30 乡医无力回天，午夜警方封锁祠堂。破案链：齿痕与尸检初判（银环蛇毒）→ 火漆蛇袋与锦盒蛇鳞 → 蛇酒坊出货单（三日前出库银环蛇）→ 祭田账本与族老短信（四十七万八，明晚宣判）。红鲱鱼：守拙的绝户田字据、何秋的遗嘱夹层、晚晴的蛇笼放生记录、阿照的改谱截图、陆嘉树的偷拍与威胁言论。",
-    "keyEvidence": ["银环蛇", "蛇酒坊", "出货单", "祭田账本"],
-    "reveal": "真相：凶手是三房管事岑有财。三年祭田租金四十七万八，大半流进他的蛇场和省城的楼盘；三日前族老把账摊在他面前，定了祠堂大会当众清算。他没下毒——他送了一条祖宗收下的看门狗：银环蛇昼伏夜出，咬人不痛，神经麻痹无声无息。族老守夜取炭，手背两个小红点，到死都以为是蚊子。杀他的不是蛇，是明晚大会四个字。而那一夜，至少三双眼睛看着有财提着鼓布袋进偏殿——祠堂里的人心，比蛇毒更快地败露了。"
+    "culpritId": "cen_youcai",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "岑有财三日前从自家蛇场提出一条银环蛇，21:00 借添灯油把敞口的火漆蛇袋放进族老守夜取炭的樟木锦盒；21:40 族老取炭时被咬——银环蛇毒不痛不肿、神经麻痹起病无声，22:40 族老倒在偏殿门槛内，23:10 才被发现。毒是活的，不在茶里不在饭里，现场不留容器。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "岑有财三日前从自家蛇场提出一条银环蛇，21:00 借添灯油把敞口的火漆蛇袋放进族老守夜取炭的樟木锦盒；21:40 族老取炭时被咬——银环蛇毒不痛不肿、神经麻痹起病无声，22:40 族老倒在偏殿门槛内，23:10 才被发现。毒是活的，不在茶里不在饭里，现场不留容器。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "18:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:00"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "祭祖分胙：守拙主祭，有财管采买，何秋管饭食，阿照被罚抄族规，晚晴破例上香，陆嘉树不请自来。"
+          }
+        ],
+        "characterIds": [
+          "he_qiu",
+          "lu_jiashu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "he_qiu",
+          "lu_jiashu"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "19:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:30"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "族老宣布明晚祠堂大会：宣读祭田账本、新旧遗嘱、二房字据，并让阿照当众认错、晚晴当众断情——满祠堂人人有鬼。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "各房散去，族老独自守夜；守拙去账房外转了一圈没敢叫门。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "起守拙守正殿；"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "20:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:40"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "晚晴送披风被骂出，陆嘉树拍到。"
+          }
+        ],
+        "characterIds": [
+          "lu_jiashu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "lu_jiashu"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "岑有财提鼓布袋进偏殿添灯油，将敞口蛇袋放进供桌下锦盒，出来时袋子瘪了——阿照、何秋、陆嘉树三双眼睛都看见了，却都没多想。"
+          }
+        ],
+        "characterIds": [
+          "cen_youcai",
+          "he_qiu",
+          "lu_jiashu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cen_youcai",
+          "he_qiu",
+          "lu_jiashu"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "族老开锦盒取炭被咬，只当蚊叮。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "22:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:20"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "他视物模糊爬向殿门；"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "倒在门槛内，守拙听到闷响只差小辈去看，晚晴探头未见人。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "守拙例行添香路过偏殿发现族老，喊声炸开：晚晴第一个认出齿痕，阿照跑去车棚护证据，有财冲进来抢救，陆嘉树举起手机交出"
+          }
+        ],
+        "characterIds": [
+          "lu_jiashu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "lu_jiashu"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "的画面。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "23:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:30"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "乡医无力回天，午夜警方封锁祠堂。破案链：齿痕与尸检初判（银环蛇毒）→ 火漆蛇袋与锦盒蛇鳞 → 蛇酒坊出货单（三日前出库银环蛇）→ 祭田账本与族老短信（四十七万八，明晚宣判）。红鲱鱼：守拙的绝户田字据、何秋的遗嘱夹层、晚晴的蛇笼放生记录、阿照的改谱截图、陆嘉树的偷拍与威胁言论。"
+          }
+        ],
+        "characterIds": [
+          "he_qiu",
+          "lu_jiashu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "he_qiu",
+          "lu_jiashu"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "chuhuo_dan",
+      "jitian_zhangben"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "chuhuo_dan"
+        ],
+        "conclusion": "出货单"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "jitian_zhangben"
+        ],
+        "conclusion": "祭田账本"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是三房管事岑有财。三年祭田租金四十七万八，大半流进他的蛇场和省城的楼盘；三日前族老把账摊在他面前，定了祠堂大会当众清算。他没下毒——他送了一条祖宗收下的看门狗：银环蛇昼伏夜出，咬人不痛，神经麻痹无声无息。族老守夜取炭，手背两个小红点，到死都以为是蚊子。杀他的不是蛇，是明晚大会四个字。而那一夜，至少三双眼睛看着有财提着鼓布袋进偏殿——祠堂里的人心，比蛇毒更快地败露了。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -213,6 +1918,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

@@ -14,7 +14,8 @@
     "db:import": "node scripts/db-import.mjs",
     "script:schema": "tsx scripts/script-v2-schema.ts",
     "script:validate": "tsx scripts/validate-script-v2.ts",
-    "script:migrate": "tsx scripts/migrate-script-v1.ts"
+    "script:migrate": "tsx scripts/migrate-script-v1.ts",
+    "script:migrate-db": "tsx scripts/migrate-db-scripts-v2.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.45",

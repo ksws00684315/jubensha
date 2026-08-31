@@ -3,19 +3,20 @@ import type { Purpose } from "@/core/llm/types";
 import { buildDmContext, buildPlayerContext, characterOf } from "./context";
 import { guardDmSpeech, guardPlayerSpeech } from "./guard";
 import type { EngineEvent, GameState } from "@/core/engine/types";
-import type { ScriptDoc } from "@/core/script/schema";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
+import { clueText, locationNameOf } from "@/core/script/compat";
 
 export interface AgentCtx {
-  script: ScriptDoc;
+  script: ScriptDocV2;
   state: GameState;
   events: EngineEvent[];
   gameId: string;
 }
 
 /** 座位对应的 LLM 用途：凶手用 culprit 槽位（强模型），其余用 player 槽位 */
-export function seatPurpose(script: ScriptDoc, state: GameState, seatIndex: number): Purpose {
+export function seatPurpose(script: ScriptDocV2, state: GameState, seatIndex: number): Purpose {
   const character = characterOf(script, state, seatIndex);
-  return character?.card.isCulprit ? "culprit" : "player";
+  return character?.privateCard.isCulprit ? "culprit" : "player";
 }
 
 export const agent = {
@@ -87,7 +88,7 @@ export const agent = {
   async playerChoosePublish(ctx: AgentCtx, seatIndex: number, clueId: string): Promise<boolean> {
     const clue = ctx.script.clues.find((c) => c.id === clueId);
     if (!clue) return false;
-    const requireJson = `你刚搜到线索卡【${clue.name}】（地点：${clue.location}）。内容：${clue.content}。请只输出 JSON：{"publish":true/false}。publish=true 表示当场公开给大家，false 表示私藏。判断依据：公开对你有利/能推进调查就公开；线索指向你自己或暴露你的秘密就私藏。`;
+    const requireJson = `你刚搜到线索卡【${clue.name}】（地点：${locationNameOf(ctx.script, clue.locationId)}）。内容：${clueText(clue)}。请只输出 JSON：{"publish":true/false}。publish=true 表示当场公开给大家，false 表示私藏。判断依据：公开对你有利/能推进调查就公开；线索指向你自己或暴露你的秘密就私藏。`;
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     for (let i = 0; i < 3; i++) {
       const res = await chat({ purpose, gameId: ctx.gameId, messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }), temperature: 0.5 });

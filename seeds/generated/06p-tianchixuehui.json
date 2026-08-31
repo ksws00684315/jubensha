@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "天池雪会",
     "minPlayers": 6,
@@ -15,26 +15,297 @@
     ],
     "intro": "天池峰滑雪度假区暴雪封山，索道全停，山顶酒店连同缆车站成了一座雪中孤岛。20:00，投资公司老板傅崇礼被发现俯卧在缆车站一层候车厅——像极了一次酒后的失足坠落。可他白天滴酒未沾，二层检修平台的栏杆断口撬痕崭新。封山之夜，缆车站里来过的只有五个人。天亮索道恢复之前，你们得把真凶钉在这片雪里。"
   },
-  "background": "天池峰滑雪度假区，海拔两千一百米，一年一度的'雪会'之夜——傅崇礼的崇礼资本每年在此宴请核心团队。今晚 19:40，风雪骤急，山顶索道全线停运，度假区封山，驻场医生与警力都在山下，天亮前没人能上来。傅崇礼，五十八岁，崇礼资本创始人，白天滴酒未沾——他宣布过：19:40 在缆车站二层会议室开临时董事会，'有一件大事'。19:40，五个人到齐，会议室空着。19:55 仍不见人。20:00，缆车站值班员谷雨下楼查看：傅崇礼俯卧在一层候车厅，后脑着地，雪镜摔碎在身侧，人已没了呼吸。他趴的位置正对二层检修平台正下方，乍看像一次失足坠落。可值班日志显示，19:02 之后只有他自己上过二层；风雪掩住了雪廊里所有的脚步声。五个人——副总裁、遗孀、助理、银行行长、滑雪教练，还有那个 19:02 目送他上楼的值班员——每个人在这条雪廊里都有一段说不清的两分钟。天亮之前，索道不会动，凶手也走不了。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "天池峰滑雪度假区，海拔两千一百米，一年一度的'雪会'之夜——傅崇礼的崇礼资本每年在此宴请核心团队。今晚 19:40，风雪骤急，山顶索道全线停运，度假区封山，驻场医生与警力都在山下，天亮前没人能上来。傅崇礼，五十八岁，崇礼资本创始人，白天滴酒未沾——他宣布过：19:40 在缆车站二层会议室开临时董事会，'有一件大事'。19:40，五个人到齐，会议室空着。19:55 仍不见人。20:00，缆车站值班员谷雨下楼查看：傅崇礼俯卧在一层候车厅，后脑着地，雪镜摔碎在身侧，人已没了呼吸。他趴的位置正对二层检修平台正下方，乍看像一次失足坠落。可值班日志显示，19:02 之后只有他自己上过二层；风雪掩住了雪廊里所有的脚步声。五个人——副总裁、遗孀、助理、银行行长、滑雪教练，还有那个 19:02 目送他上楼的值班员——每个人在这条雪廊里都有一段说不清的两分钟。天亮之前，索道不会动，凶手也走不了。"
+    }
+  ],
   "characters": [
     {
       "id": "fangyu",
       "name": "方屿",
       "gender": "男",
       "age": 41,
-      "publicBio": "崇礼资本副总裁，傅崇礼十六年的左右手，明天的临时董事会由他主持。今晚全程神色如常，甚至比平时更健谈。",
-      "card": {
-        "backstory": "你叫方屿，跟傅崇礼打了十六年天下。三年前起你用基金通道给自己持仓的化工股抬轿，浮亏四千万，上个月被审计抽中。今晚 18:50 他来电给你留'最后一次自首的机会'。下午巡场时，你看见二层检修平台的栏杆螺栓锈得只剩一圈螺纹——你去时，顺手带上了内六角扳手。",
-        "secret": "你就是凶手。19:20 你在二层检修平台与傅崇礼谈崩，他转身要走并说'明早停职、报案'，你从他身后发力将他推下平台，他后脑撞上一层的电缆盘。你事先把栏杆第三根立柱的螺栓拧松，伪造'扶栏失足'；事后把他外套的线头捡走，却漏了断口上缠着的深灰抓绒纤维——与你滑雪服同色，回房后你剪掉了右袖口沾纤维的一角。",
-        "goal": "你 19:15-19:25 在雪廊里没有人证，这是你唯一的空窗，你要把它解释成'慢慢走、顺便抽烟'。主动说 19:32 之后你在酒吧拼桌——那是最硬的不在场证明，先把牌打出去。把嫌疑引向 19:15 在雪板柜出现过的乔曼和 19:58 出现在缆车站外的陆野。若有人提栏杆、提扳手，就说'下午谁都能上二层平台，撬痕未必是今晚的事'。",
-        "isCulprit": true,
-        "timeline": "18:50 在房间接傅崇礼内线电话。19:10 对大堂众人说'我去帮傅总摆会议室'。19:15 进雪廊，与取雪板的陆野擦肩（你压了帽檐）。19:20 在二层检修平台行凶。19:22 简单布置现场。19:25 经雪廊返回主楼。19:32 起在大堂酒吧与戴鸿、裴小北、陆野拼桌，直到 20:25。20:05 随众人去缆车站'发现'现场。",
-        "knowledge": [
-          "傅崇礼 18:50 的内线电话给了你'自首机会'——这件事一旦被问出来等于自认动机，你打算把它圆成'他约我谈明天的人事安排'。",
-          "下午 16:00 你拧松栏杆螺栓时，二层平台没人；你以为雪夜里没人会去看那两颗螺栓。",
-          "裴小北知道你的报销单有水分，她曾想拿这个跟你换明年的年度名额——你不怕她，但她撒谎时会摸耳垂，你可以利用。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "崇礼资本副总裁，傅崇礼十六年的左右手，明天的临时董事会由他主持。今晚全程神色如常，甚至比平时更健谈。"
+          }
         ],
-        "persona": "沉稳干练，爱说'我跟傅总十六年'。压力下习惯用手势比划数字。被追问 19:15-19:32 的行踪时会先看一眼表再回答，语速明显变快。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫方屿，跟傅崇礼打了十六年天下。三年前起你用基金通道给自己持仓的化工股抬轿，浮亏四千万，上个月被审计抽中。今晚 18:50 他来电给你留'最后一次自首的机会'。下午巡场时，你看见二层检修平台的栏杆螺栓锈得只剩一圈螺纹——你去时，顺手带上了内六角扳手。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_fangyu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。19:20 你在二层检修平台与傅崇礼谈崩，他转身要走并说'明早停职、报案'，你从他身后发力将他推下平台，他后脑撞上一层的电缆盘。你事先把栏杆第三根立柱的螺栓拧松，伪造'扶栏失足'；事后把他外套的线头捡走，却漏了断口上缠着的深灰抓绒纤维——与你滑雪服同色，回房后你剪掉了右袖口沾纤维的一角。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_fangyu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 19:15-19:25 在雪廊里没有人证，这是你唯一的空窗，你要把它解释成'慢慢走、顺便抽烟'。主动说 19:32 之后你在酒吧拼桌——那是最硬的不在场证明，先把牌打出去。把嫌疑引向 19:15 在雪板柜出现过的乔曼和 19:58 出现在缆车站外的陆野。若有人提栏杆、提扳手，就说'下午谁都能上二层平台，撬痕未必是今晚的事'。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_fangyu_event_1",
+            "time": {
+              "display": "18:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在房间接傅崇礼内线电话。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_2",
+            "time": {
+              "display": "19:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:10"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "对大堂众人说'我去帮傅总摆会议室'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_3",
+            "time": {
+              "display": "19:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "进雪廊，与取雪板的陆野擦肩（你压了帽檐）。"
+              }
+            ],
+            "characterIds": [
+              "luye"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_4",
+            "time": {
+              "display": "19:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:20"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在二层检修平台行凶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_5",
+            "time": {
+              "display": "19:22",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:22"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "简单布置现场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_6",
+            "time": {
+              "display": "19:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:25"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "经雪廊返回主楼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_7",
+            "time": {
+              "display": "19:32",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:32"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起在大堂酒吧与戴鸿、裴小北、陆野拼桌，直到"
+              }
+            ],
+            "characterIds": [
+              "daihong",
+              "peixiaobei",
+              "luye"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_8",
+            "time": {
+              "display": "20:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:25"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_fangyu_event_9",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "随众人去缆车站'发现'现场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_fangyu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "傅崇礼 18:50 的内线电话给了你'自首机会'——这件事一旦被问出来等于自认动机，你打算把它圆成'他约我谈明天的人事安排'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangyu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下午 16:00 你拧松栏杆螺栓时，二层平台没人；你以为雪夜里没人会去看那两颗螺栓。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fangyu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "裴小北知道你的报销单有水分，她曾想拿这个跟你换明年的年度名额——你不怕她，但她撒谎时会摸耳垂，你可以利用。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "沉稳干练，爱说'我跟傅总十六年'。压力下习惯用手势比划数字。被追问 19:15-19:32 的行踪时会先看一眼表再回答，语速明显变快。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -42,19 +313,221 @@
       "name": "乔曼",
       "gender": "女",
       "age": 39,
-      "publicBio": "傅崇礼的第二任妻子，市中心医院急诊科护士长。今晚负责查看遗体的人，也是唯一有医护背景的人。",
-      "card": {
-        "backstory": "你叫乔曼，傅崇礼的第二任妻子，急诊科护士长。你的医美诊所亏空两百万，挪用了他给儿子的教育信托，上周被查出来——他把一份婚前财产补充协议拍在你面前，说今晚'把这件事也了了'。19:12 你揣着胃药去雪廊想缓和，隔着二十米望见他的背影，你忽然怕他，站了两分钟就折返了。",
-        "secret": "你 19:15 在雪板柜停留过，离缆车站只有二十米，你'没进去'只有你自己和取雪板的陆野能侧面印证——你的婚内亏空与那份补充协议，是你最大的动机。你不敢主动提协议，但验伤记录上你的名字写得太清楚了。",
-        "goal": "你是唯一验过遗体的人，你的《验伤记录》是全场的时间锚——死亡不晚于 19:50、坠落而非击打，这些结论由你给出最有分量。主动坦白 19:15 送药折返的事（'我在柜子前站了两分钟，没进'），比被陆野戳穿要好。把补充协议的事说成'已经在谈了，不至于'，并引导众人注意雪镜碎片和栏杆——你相信那不是失足。",
-        "isCulprit": false,
-        "timeline": "19:12 从主楼出发送药。19:15 到雪板柜，与取板的陆野照面，遥见傅崇礼背影进缆车站，未跟进。19:18 折返。19:30 回房换装。19:42 到二层会议室。20:00 得报赶到候车厅验看遗体，当场记录。",
-        "knowledge": [
-          "验伤时你确认：后脑一处撞击伤、无对冲伤、指端无搏斗伤，符合坠落后即刻昏迷；但你摸到他右手掌心攥着几点金属漆屑——坠落的人会本能抓东西，漆色崭新，不像旧锈。",
-          "你判断死亡不晚于 19:50：背面积雪只有薄薄一层，腕部尚有余温，'雪盖不住一个死人超过十分钟'。",
-          "上周傅崇礼把婚前财产补充协议拍在你面前时，方屿就在客厅，他垂着眼没劝——你记得那个表情。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "傅崇礼的第二任妻子，市中心医院急诊科护士长。今晚负责查看遗体的人，也是唯一有医护背景的人。"
+          }
         ],
-        "persona": "职业冷静，说医学术语时最流利；提到丈夫时语气会突然放轻。护住自己的方式是先把流程做满：'先保护现场，再谈人。'被逼急了会说：'我在急诊见过三百种死亡，这一种不对。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫乔曼，傅崇礼的第二任妻子，急诊科护士长。你的医美诊所亏空两百万，挪用了他给儿子的教育信托，上周被查出来——他把一份婚前财产补充协议拍在你面前，说今晚'把这件事也了了'。19:12 你揣着胃药去雪廊想缓和，隔着二十米望见他的背影，你忽然怕他，站了两分钟就折返了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qiaoman_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 19:15 在雪板柜停留过，离缆车站只有二十米，你'没进去'只有你自己和取雪板的陆野能侧面印证——你的婚内亏空与那份补充协议，是你最大的动机。你不敢主动提协议，但验伤记录上你的名字写得太清楚了。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qiaoman_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是唯一验过遗体的人，你的《验伤记录》是全场的时间锚——死亡不晚于 19:50、坠落而非击打，这些结论由你给出最有分量。主动坦白 19:15 送药折返的事（'我在柜子前站了两分钟，没进'），比被陆野戳穿要好。把补充协议的事说成'已经在谈了，不至于'，并引导众人注意雪镜碎片和栏杆——你相信那不是失足。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qiaoman_event_1",
+            "time": {
+              "display": "19:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:12"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "从主楼出发送药。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiaoman_event_2",
+            "time": {
+              "display": "19:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "到雪板柜，与取板的陆野照面，遥见傅崇礼背影进缆车站，未跟进。"
+              }
+            ],
+            "characterIds": [
+              "luye"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiaoman_event_3",
+            "time": {
+              "display": "19:18",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:18"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "折返。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiaoman_event_4",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回房换装。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiaoman_event_5",
+            "time": {
+              "display": "19:42",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:42"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "到二层会议室。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiaoman_event_6",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "得报赶到候车厅验看遗体，当场记录。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qiaoman_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "验伤时你确认：后脑一处撞击伤、无对冲伤、指端无搏斗伤，符合坠落后即刻昏迷；但你摸到他右手掌心攥着几点金属漆屑——坠落的人会本能抓东西，漆色崭新，不像旧锈。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qiaoman_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你判断死亡不晚于 19:50：背面积雪只有薄薄一层，腕部尚有余温，'雪盖不住一个死人超过十分钟'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qiaoman_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "上周傅崇礼把婚前财产补充协议拍在你面前时，方屿就在客厅，他垂着眼没劝——你记得那个表情。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "职业冷静，说医学术语时最流利；提到丈夫时语气会突然放轻。护住自己的方式是先把流程做满：'先保护现场，再谈人。'被逼急了会说：'我在急诊见过三百种死亡，这一种不对。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -62,19 +535,207 @@
       "name": "戴鸿",
       "gender": "男",
       "age": 55,
-      "publicBio": "临江银行行长，傅崇礼二十年的老对手，这次'雪会'的不速之客——他明天要当面宣布对崇礼资本的抽贷决定。",
-      "card": {
-        "backstory": "你叫戴鸿，临江银行行长，和傅崇礼斗了二十年。这次上山是奉命送抽贷函：明天 9 点，四千万敞口，当着全公司。19:15-19:25 你在露台抽雪茄——那十分钟你想的是：他若出事，抽贷函送不出去，你的体面就稳了。这个念头让你心惊。19:32 你走进大堂酒吧，坐进那桌人中间。",
-        "secret": "你抽贷函的内页有一段手写批注——'方屿账户异常，建议并案核查'，是总行稽核给你的附件，你还没来得及交给傅崇礼。你 19:15-19:25 的露台无人作证。你隐瞒这两件事，怕第一个被怀疑的是你。",
-        "goal": "你与死者有最公开的冲突，却没有最深的动机——你需要在开局就把抽贷函的事说成'公事公办，杀人救不了银行'。那份并案批注是你的暗牌：它直指方屿，但你亮出来的时机要选在众人快把矛头对你时——'我才是来送他罪证的人'。记住你在露台那十分钟没有人证，只能拿 19:32 的酒吧签单当锚点。",
-        "isCulprit": false,
-        "timeline": "19:00-19:30 在自己房间与总行通话（有通话记录），其中 19:15-19:25 在走廊尽头露台抽雪茄（无人证）。19:32 入座大堂酒吧拼桌。19:40 赴会议室。20:05 随众人下楼。",
-        "knowledge": [
-          "你从露台望出去时，看见雪廊方向有人影进进出出——风雪太大，你只记得'有两拨，都不是我'。",
-          "总行稽核的批注写得很直白：方屿名下账户与基金头寸'同进同出'，浮亏四千万。你原打算明天连函带附件一起甩在他脸上。",
-          "傅崇礼去年帮过你儿子进医学院——你恨他，但你欠他。露台上你把雪茄摁灭的时候，骂了自己一句。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "临江银行行长，傅崇礼二十年的老对手，这次'雪会'的不速之客——他明天要当面宣布对崇礼资本的抽贷决定。"
+          }
         ],
-        "persona": "官腔里带狠劲，说话爱先冷笑三秒。惯用'银行的语言'：敞口、对价、风控。被逼急了会摘眼镜擦：'我这把年纪，杀人？我用一个函就能弄死他。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫戴鸿，临江银行行长，和傅崇礼斗了二十年。这次上山是奉命送抽贷函：明天 9 点，四千万敞口，当着全公司。19:15-19:25 你在露台抽雪茄——那十分钟你想的是：他若出事，抽贷函送不出去，你的体面就稳了。这个念头让你心惊。19:32 你走进大堂酒吧，坐进那桌人中间。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_daihong_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你抽贷函的内页有一段手写批注——'方屿账户异常，建议并案核查'，是总行稽核给你的附件，你还没来得及交给傅崇礼。你 19:15-19:25 的露台无人作证。你隐瞒这两件事，怕第一个被怀疑的是你。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_daihong_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与死者有最公开的冲突，却没有最深的动机——你需要在开局就把抽贷函的事说成'公事公办，杀人救不了银行'。那份并案批注是你的暗牌：它直指方屿，但你亮出来的时机要选在众人快把矛头对你时——'我才是来送他罪证的人'。记住你在露台那十分钟没有人证，只能拿 19:32 的酒吧签单当锚点。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_daihong_event_1",
+            "time": {
+              "display": "19:00–19:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在自己房间与总行通话（有通话记录），其中"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_daihong_event_2",
+            "time": {
+              "display": "19:15–19:25",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "19:25"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在走廊尽头露台抽雪茄（无人证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_daihong_event_3",
+            "time": {
+              "display": "19:32",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:32"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "入座大堂酒吧拼桌。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_daihong_event_4",
+            "time": {
+              "display": "19:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "赴会议室。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_daihong_event_5",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "随众人下楼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_daihong_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从露台望出去时，看见雪廊方向有人影进进出出——风雪太大，你只记得'有两拨，都不是我'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_daihong_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "总行稽核的批注写得很直白：方屿名下账户与基金头寸'同进同出'，浮亏四千万。你原打算明天连函带附件一起甩在他脸上。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_daihong_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "傅崇礼去年帮过你儿子进医学院——你恨他，但你欠他。露台上你把雪茄摁灭的时候，骂了自己一句。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "官腔里带狠劲，说话爱先冷笑三秒。惯用'银行的语言'：敞口、对价、风控。被逼急了会摘眼镜擦：'我这把年纪，杀人？我用一个函就能弄死他。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -82,19 +743,225 @@
       "name": "裴小北",
       "gender": "女",
       "age": 26,
-      "publicBio": "傅崇礼的贴身助理，跟了他三年。今晚的高管群通知、会议室布置、材料打印都经她的手。",
-      "card": {
-        "backstory": "你叫裴小北，傅崇礼的贴身助理。18:55 你按他的口吻往高管群发了'19:40 缆车站开会'，随后在商务角打印材料——打印机日志能证明，走廊里没人。你有把柄：三十七张报销单有两万多对不上，一部分是替他'协调'用的。19:32 方屿叫你去酒吧拼桌，你坐下时心里发毛：傅总从没缺席过自己宣布的会。",
-        "secret": "你的报销单有水分，其中两万块是替傅崇礼'协调'用的——你说不清，也怕说不清。18:55 的群通知是你发的，这意味着'19:40 开会'的制度性安排由你背书——如果有人说通知是伪造的，你是第一个被架上去的人。",
-        "goal": "你是全场唯一的'流程中枢'：群通知、打印机日志、酒吧拼桌都在你身上交汇。策略：把 18:55 通知、19:00-19:35 打印、19:32 拼桌三件事一次说清，用人证链自证清白；把报销的事压到后半场再认（'单子有水分，但钱进了谁的口袋，查酒店流水就知道'——这笔钱经手的是方屿介绍的供应商）。",
-        "isCulprit": false,
-        "timeline": "18:55 按傅崇礼口吻发高管群通知。19:00-19:35 在商务角打印会议材料（打印机日志为证，走廊无人）。19:32 被方屿叫去大堂酒吧拼桌。19:40 赴会议室。20:05 下楼发现现场，第一时间呼叫山下医生（信号一格，通话记录 20:07）。",
-        "knowledge": [
-          "傅崇礼 18:50 打完内线电话后从房间出来，脸色很差，只对你说了一句：'材料按旧版打，别用新的。'你不懂他指什么。",
-          "群通知发出后，傅崇礼 19:02 进雪廊前与你隔着走廊点头——他那时还活着，这是你亲眼所见。",
-          "方屿 19:32 叫你拼桌时手里端着两杯酒，酒是他刚开的第一瓶——侍应生放杯子时你看了眼表。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "傅崇礼的贴身助理，跟了他三年。今晚的高管群通知、会议室布置、材料打印都经她的手。"
+          }
         ],
-        "persona": "语速快，条目化，说话像念备忘录：'第一……第二……'紧张时会摸耳垂。对傅崇礼有近乎女儿式的忠诚，提到他时会红了眼眶但立刻低头做记录。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫裴小北，傅崇礼的贴身助理。18:55 你按他的口吻往高管群发了'19:40 缆车站开会'，随后在商务角打印材料——打印机日志能证明，走廊里没人。你有把柄：三十七张报销单有两万多对不上，一部分是替他'协调'用的。19:32 方屿叫你去酒吧拼桌，你坐下时心里发毛：傅总从没缺席过自己宣布的会。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_peixiaobei_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的报销单有水分，其中两万块是替傅崇礼'协调'用的——你说不清，也怕说不清。18:55 的群通知是你发的，这意味着'19:40 开会'的制度性安排由你背书——如果有人说通知是伪造的，你是第一个被架上去的人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_peixiaobei_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是全场唯一的'流程中枢'：群通知、打印机日志、酒吧拼桌都在你身上交汇。策略：把 18:55 通知、19:00-19:35 打印、19:32 拼桌三件事一次说清，用人证链自证清白；把报销的事压到后半场再认（'单子有水分，但钱进了谁的口袋，查酒店流水就知道'——这笔钱经手的是方屿介绍的供应商）。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_peixiaobei_event_1",
+            "time": {
+              "display": "18:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:55"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "按傅崇礼口吻发高管群通知。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peixiaobei_event_2",
+            "time": {
+              "display": "19:00–19:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "19:35"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在商务角打印会议材料（打印机日志为证，走廊无人）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peixiaobei_event_3",
+            "time": {
+              "display": "19:32",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:32"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被方屿叫去大堂酒吧拼桌。"
+              }
+            ],
+            "characterIds": [
+              "fangyu"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_peixiaobei_event_4",
+            "time": {
+              "display": "19:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "赴会议室。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peixiaobei_event_5",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下楼发现现场，第一时间呼叫山下医生（信号一格，通话记录"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peixiaobei_event_6",
+            "time": {
+              "display": "20:07",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:07"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_peixiaobei_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "傅崇礼 18:50 打完内线电话后从房间出来，脸色很差，只对你说了一句：'材料按旧版打，别用新的。'你不懂他指什么。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_peixiaobei_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "群通知发出后，傅崇礼 19:02 进雪廊前与你隔着走廊点头——他那时还活着，这是你亲眼所见。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_peixiaobei_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "方屿 19:32 叫你拼桌时手里端着两杯酒，酒是他刚开的第一瓶——侍应生放杯子时你看了眼表。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "语速快，条目化，说话像念备忘录：'第一……第二……'紧张时会摸耳垂。对傅崇礼有近乎女儿式的忠诚，提到他时会红了眼眶但立刻低头做记录。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -102,19 +969,187 @@
       "name": "陆野",
       "gender": "男",
       "age": 28,
-      "publicBio": "度假区明星单板教练，连续三年'雪会'压轴表演者。今晚他被发现在索道停运后仍在高级道夜滑——违反雪场铁律。",
-      "card": {
-        "backstory": "你叫陆野，单板教练，连续三年'雪会'压轴。傅崇礼今年把教练组整季分成砍了四成，你妹妹的学费压在这笔钱上。19:15 你去雪廊口取板，看见一个女人在柜前站了两分钟就走，又与一个压着帽檐的高个男人擦肩。你上高级道夜滑发泄，19:58 滑到缆车站外被谷雨喝止。你不知道，二十分钟前楼上有人松开了栏杆。",
-        "secret": "你 19:15-19:58 独自在雪道上，无人证，且违反夜滑禁令——禁令背后是保险条款：出事自担。你恨傅崇礼的话被教练组两个人听见。你 19:15 那次擦肩，你认出了那是方屿的毛线帽——但你不敢确定，说出来怕被当成栽赃。",
-        "goal": "你的嫌疑来自三点：克扣分成、夜滑禁令、案发时段无人证。策略：主动认下夜滑（禁令是小事，隐瞒是大事），交出雪板柜取用牌的时间；说出 19:15 两次照面（雪板柜的女人、擦肩的男人）但强调'不敢咬死是谁'——这两条目击是全场最有价值的窗口信息，也是你唯一的救命稻草。",
-        "isCulprit": false,
-        "timeline": "19:15 雪廊口雪板柜取板（取用牌翻面），与乔曼照面、与一戴毛线帽高个男人擦肩。19:16-19:58 沿员工道爬升、高级道夜滑（违禁，无人证）。19:58 停在缆车站外侧，被谷雨挥手喝止，举手认罚。20:05 随众人进候车厅。",
-        "knowledge": [
-          "19:15 与你擦肩的男人戴深色毛线帽、右肩背细长工具袋——那种袋型你只见过维修部用，可当晚维修组都在山下。",
-          "19:58 你在缆车站外抬头，看见二层检修平台的栏杆在风雪里晃了一下——不像被人碰，像本来就松。",
-          "傅崇礼砍分成的决定，是方屿在群里转达的，末尾加了一句'董事长已批'——你怀疑那四个字是他自己加的。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "度假区明星单板教练，连续三年'雪会'压轴表演者。今晚他被发现在索道停运后仍在高级道夜滑——违反雪场铁律。"
+          }
         ],
-        "persona": "爽直冲动，说话带雪场黑话：'粉雪''立刃''收尾流'。认错痛快：'滑就滑了，我认。'被冤枉时会攥拳但先深呼吸：'我这双手是教小孩转弯的。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆野，单板教练，连续三年'雪会'压轴。傅崇礼今年把教练组整季分成砍了四成，你妹妹的学费压在这笔钱上。19:15 你去雪廊口取板，看见一个女人在柜前站了两分钟就走，又与一个压着帽檐的高个男人擦肩。你上高级道夜滑发泄，19:58 滑到缆车站外被谷雨喝止。你不知道，二十分钟前楼上有人松开了栏杆。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luye_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 19:15-19:58 独自在雪道上，无人证，且违反夜滑禁令——禁令背后是保险条款：出事自担。你恨傅崇礼的话被教练组两个人听见。你 19:15 那次擦肩，你认出了那是方屿的毛线帽——但你不敢确定，说出来怕被当成栽赃。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luye_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的嫌疑来自三点：克扣分成、夜滑禁令、案发时段无人证。策略：主动认下夜滑（禁令是小事，隐瞒是大事），交出雪板柜取用牌的时间；说出 19:15 两次照面（雪板柜的女人、擦肩的男人）但强调'不敢咬死是谁'——这两条目击是全场最有价值的窗口信息，也是你唯一的救命稻草。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luye_event_1",
+            "time": {
+              "display": "19:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:15"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "雪廊口雪板柜取板（取用牌翻面），与乔曼照面、与一戴毛线帽高个男人擦肩。"
+              }
+            ],
+            "characterIds": [
+              "qiaoman"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luye_event_2",
+            "time": {
+              "display": "19:16–19:58",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:16"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "19:58"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "沿员工道爬升、高级道夜滑（违禁，无人证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luye_event_3",
+            "time": {
+              "display": "19:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:58"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "停在缆车站外侧，被谷雨挥手喝止，举手认罚。"
+              }
+            ],
+            "characterIds": [
+              "guyu"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luye_event_4",
+            "time": {
+              "display": "20:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:05"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "随众人进候车厅。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luye_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:15 与你擦肩的男人戴深色毛线帽、右肩背细长工具袋——那种袋型你只见过维修部用，可当晚维修组都在山下。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luye_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:58 你在缆车站外抬头，看见二层检修平台的栏杆在风雪里晃了一下——不像被人碰，像本来就松。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luye_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "傅崇礼砍分成的决定，是方屿在群里转达的，末尾加了一句'董事长已批'——你怀疑那四个字是他自己加的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "爽直冲动，说话带雪场黑话：'粉雪''立刃''收尾流'。认错痛快：'滑就滑了，我认。'被冤枉时会攥拳但先深呼吸：'我这双手是教小孩转弯的。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -122,107 +1157,1058 @@
       "name": "谷雨",
       "gender": "男",
       "age": 24,
-      "publicBio": "缆车站值班员，退伍工程兵，持急救证。19:02 目送傅崇礼进雪廊，20:00 发现遗体的人。",
-      "card": {
-        "backstory": "你叫谷雨，缆车站值班员，退伍工程兵。19:02 傅崇礼进雪廊时交代'19:40 前别打扰'，你随即去东侧室外做缆绳润滑——19:10 到 19:45，耳罩里什么也听不见。19:55 会议室却空着；20:00 你下楼查看：他趴在候车厅，后脑的血在雪色灯光下发黑。你第一眼就觉得，这不是摔的。",
-        "secret": "你 19:10-19:45 在东侧室外，是全场唯一的'盲区目击'：你既证明这期间没人从雪廊正门进，也证明不了有人从别的路径进。你第一眼的'挣扎痕迹缺失'判断没写进日志——你怕担'现场判断错误'的责任。另外，19:58 你喝止陆野时，候车厅的灯其实已经亮了半小时——你当时以为是傅总布置会议室，现在想想，19:55 布置会议室的人应该在二层。",
-        "goal": "你是时刻表的守护者，你的《巡查日志》能把死亡窗口压进 19:15-19:45。策略：第一时间交日志，补上你咽回去的判断（'地面浮雪没乱'），并把 19:58 灯亮与 19:55 会议室空置的矛盾抛出来——'布置会议室的人在哪儿？'你的盲区要坦白：东侧室外看不见雪廊门内侧。",
-        "isCulprit": false,
-        "timeline": "19:02 目送傅崇礼进雪廊。19:10-19:45 东侧室外检修缆绳润滑（戴耳罩，听不见、看不见雪廊门内侧）。19:50 回值班室。19:55 引主楼众人上二层（会议室空置）。19:58 隔窗喝止夜滑的陆野。20:00 下楼发现遗体，即刻保护现场并通知众人。",
-        "knowledge": [
-          "20:00 你发现遗体时，右手边的雪镜碎片压着一层薄雪，碎片下的地面浮雪平整——坠落发生时雪镜才碎，说明坠落不早于你离开视角的时段，但地面没乱说明坠落者昏迷极快。",
-          "二层检修平台西侧栏杆第三根立柱，昨天巡检记录写的是'锈蚀、待加固'——今天它断了，断口是新的。",
-          "19:58 你隔窗看见陆野时，他身后雪道上方有个黑点一闪而过——你当时以为是雪团。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "缆车站值班员，退伍工程兵，持急救证。19:02 目送傅崇礼进雪廊，20:00 发现遗体的人。"
+          }
         ],
-        "persona": "话少，军用口吻报时间：'19:02，人进廊。'做事一板一眼，先封现场再开口。被人质疑时会说：'日志在，误差不超过一分钟，要扣责任我担。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫谷雨，缆车站值班员，退伍工程兵。19:02 傅崇礼进雪廊时交代'19:40 前别打扰'，你随即去东侧室外做缆绳润滑——19:10 到 19:45，耳罩里什么也听不见。19:55 会议室却空着；20:00 你下楼查看：他趴在候车厅，后脑的血在雪色灯光下发黑。你第一眼就觉得，这不是摔的。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_guyu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你 19:10-19:45 在东侧室外，是全场唯一的'盲区目击'：你既证明这期间没人从雪廊正门进，也证明不了有人从别的路径进。你第一眼的'挣扎痕迹缺失'判断没写进日志——你怕担'现场判断错误'的责任。另外，19:58 你喝止陆野时，候车厅的灯其实已经亮了半小时——你当时以为是傅总布置会议室，现在想想，19:55 布置会议室的人应该在二层。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_guyu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是时刻表的守护者，你的《巡查日志》能把死亡窗口压进 19:15-19:45。策略：第一时间交日志，补上你咽回去的判断（'地面浮雪没乱'），并把 19:58 灯亮与 19:55 会议室空置的矛盾抛出来——'布置会议室的人在哪儿？'你的盲区要坦白：东侧室外看不见雪廊门内侧。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_guyu_event_1",
+            "time": {
+              "display": "19:02",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:02"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "目送傅崇礼进雪廊。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyu_event_2",
+            "time": {
+              "display": "19:10–19:45",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "19:45"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "东侧室外检修缆绳润滑（戴耳罩，听不见、看不见雪廊门内侧）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyu_event_3",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回值班室。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyu_event_4",
+            "time": {
+              "display": "19:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:55"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "引主楼众人上二层（会议室空置）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyu_event_5",
+            "time": {
+              "display": "19:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:58"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "隔窗喝止夜滑的陆野。"
+              }
+            ],
+            "characterIds": [
+              "luye"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyu_event_6",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下楼发现遗体，即刻保护现场并通知众人。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_guyu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:00 你发现遗体时，右手边的雪镜碎片压着一层薄雪，碎片下的地面浮雪平整——坠落发生时雪镜才碎，说明坠落不早于你离开视角的时段，但地面没乱说明坠落者昏迷极快。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guyu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "二层检修平台西侧栏杆第三根立柱，昨天巡检记录写的是'锈蚀、待加固'——今天它断了，断口是新的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guyu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "19:58 你隔窗看见陆野时，他身后雪道上方有个黑点一闪而过——你当时以为是雪团。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "话少，军用口吻报时间：'19:02，人进廊。'做事一板一眼，先封现场再开口。被人质疑时会说：'日志在，误差不超过一分钟，要扣责任我担。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
   "locations": [
-    "缆车站一层候车厅",
-    "缆车站二层检修平台",
-    "缆车站值班室",
-    "雪廊与雪板柜",
-    "山顶酒店大堂酒吧",
-    "缆车站二层会议室"
+    {
+      "id": "location_1",
+      "name": "缆车站一层候车厅",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "缆车站二层检修平台",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "缆车站值班室",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "雪廊与雪板柜",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "山顶酒店大堂酒吧",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "缆车站二层会议室",
+      "description": []
+    }
   ],
   "clues": [
     {
       "id": "yanshang_jilu",
-      "location": "缆车站一层候车厅",
+      "locationId": "location_1",
       "name": "验伤记录与死亡推定",
-      "content": "乔曼的现场记录：后脑一处撞击伤、无对冲伤、指端无搏斗伤，符合坠落即刻昏迷；右手掌心攥有几点崭新的金属漆屑（坠落前本能抓握所致）；背面积雪薄而均匀、腕部有余温，推定死亡不晚于 19:50。结论：高坠致死，非击打，非猝死。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "乔曼的现场记录：后脑一处撞击伤、无对冲伤、指端无搏斗伤，符合坠落即刻昏迷；右手掌心攥有几点崭新的金属漆屑（坠落前本能抓握所致）；背面积雪薄而均匀、腕部有余温，推定死亡不晚于 19:50。结论：高坠致死，非击打，非猝死。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "lanangan",
-      "location": "缆车站二层检修平台",
+      "locationId": "location_2",
       "name": "松动的栏杆断口",
-      "content": "西侧栏杆第三根立柱断裂，断口崭新，两颗膨胀螺栓被拧退到只剩一圈螺纹，螺口有内六角扳手的压痕——人工松动，非锈蚀断裂。断口缠着几缕深灰抓绒纤维，比死者手套纤维更细，纤维断面有新鲜剪裁痕，来自一件被修剪过袖口的同色抓绒外套。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "西侧栏杆第三根立柱断裂，断口崭新，两颗膨胀螺栓被拧退到只剩一圈螺纹，螺口有内六角扳手的压痕——人工松动，非锈蚀断裂。断口缠着几缕深灰抓绒纤维，比死者手套纤维更细，纤维断面有新鲜剪裁痕，来自一件被修剪过袖口的同色抓绒外套。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xuejing_sui",
-      "location": "缆车站一层候车厅",
+      "locationId": "location_1",
       "name": "雪镜碎片与落雪",
-      "content": "死者身侧的雪镜碎片分两层：下层是 19:50 之前的间歇细雪，上层压着 20:00 后的密雪。碎片散落方向与坠落点吻合，无二次摆放痕迹——雪镜是坠落瞬间飞脱的，坠落发生在 19:50 前。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者身侧的雪镜碎片分两层：下层是 19:50 之前的间歇细雪，上层压着 20:00 后的密雪。碎片散落方向与坠落点吻合，无二次摆放痕迹——雪镜是坠落瞬间飞脱的，坠落发生在 19:50 前。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xunzha_rizhi",
-      "location": "缆车站值班室",
+      "locationId": "location_3",
       "name": "值班员的巡查日志",
-      "content": "谷雨的记录：19:02 目送傅总进雪廊；19:10-19:45 东侧室外检修缆绳（戴耳罩，雪廊门内侧为盲区）；19:50 回值班室，窗外雪廊门无动静；19:55 引众人上二层，会议室空置；19:58 隔窗喝止夜滑的陆野；20:00 发现遗体。备注一行小字：'地面浮雪未乱，不像清醒坠地。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "谷雨的记录：19:02 目送傅总进雪廊；19:10-19:45 东侧室外检修缆绳（戴耳罩，雪廊门内侧为盲区）；19:50 回值班室，窗外雪廊门无动静；19:55 引众人上二层，会议室空置；19:58 隔窗喝止夜滑的陆野；20:00 发现遗体。备注一行小字：'地面浮雪未乱，不像清醒坠地。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "qiandan",
-      "location": "山顶酒店大堂酒吧",
+      "locationId": "location_5",
       "name": "酒吧的拼桌签单",
-      "content": "19:32 方屿签单开第一瓶威士忌。侍应生证词：方屿、戴鸿、裴小北、陆野自 19:32 起断续同桌至 20:25；其间戴鸿 19:20 前后起身去露台接电话约十分钟（无人证），陆野 19:58 离席去缆车站外。签单时间与侍应生证词互相吻合。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "19:32 方屿签单开第一瓶威士忌。侍应生证词：方屿、戴鸿、裴小北、陆野自 19:32 起断续同桌至 20:25；其间戴鸿 19:20 前后起身去露台接电话约十分钟（无人证），陆野 19:58 离席去缆车站外。签单时间与侍应生证词互相吻合。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "laoshucang",
-      "location": "缆车站二层会议室",
+      "locationId": "location_6",
       "name": "老鼠仓对账草稿",
-      "content": "傅崇礼的公文包里有审计草稿，页边批注字迹急促：'方屿账户与基金头寸同进同出，浮亏四千万。明日停职、报案。'另一页写着 18:50 的通话安排：'19:15 缆车站，单独谈——给他最后一次自首的机会。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "傅崇礼的公文包里有审计草稿，页边批注字迹急促：'方屿账户与基金头寸同进同出，浮亏四千万。明日停职、报案。'另一页写着 18:50 的通话安排：'19:15 缆车站，单独谈——给他最后一次自首的机会。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "xuebangui",
-      "location": "雪廊与雪板柜",
+      "locationId": "location_4",
       "name": "雪板柜的取用牌",
-      "content": "取用牌显示陆野 19:15 取板。柜前值班员工证词：19:15 前后有一名女士在柜前站了约两分钟，'一直在往缆车站方向张望，没进去'；同一时刻有高个男子从她身侧走向雪廊深处，压着帽檐。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "取用牌显示陆野 19:15 取板。柜前值班员工证词：19:15 前后有一名女士在柜前站了约两分钟，'一直在往缆车站方向张望，没进去'；同一时刻有高个男子从她身侧走向雪廊深处，压着帽檐。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "weiyao",
-      "location": "雪廊与雪板柜",
+      "locationId": "location_4",
       "name": "没送出去的胃药",
-      "content": "乔曼手包里有一盒未拆封的胃药，附一张字条'饭后服'，笔迹是她的。19:15 她到过雪板柜、未进缆车站——这是她自述与柜前证词互相印证的版本；若她隐瞒，'二十米'就成了她永远洗不掉的距离。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "乔曼手包里有一盒未拆封的胃药，附一张字条'饭后服'，笔迹是她的。19:15 她到过雪板柜、未进缆车站——这是她自述与柜前证词互相印证的版本；若她隐瞒，'二十米'就成了她永远洗不掉的距离。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "banshou",
-      "location": "雪廊与雪板柜",
+      "locationId": "location_4",
       "name": "雪具包里缺的内六角",
-      "content": "方屿寄存在雪廊雪具包的工具袋里，内六角扳手的插袋空着，袋底有金属锈痕与几点白色漆屑——漆色与栏杆断口的旧漆一致。袋内其余工具齐全，唯独扳手不翼而飞。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "方屿寄存在雪廊雪具包的工具袋里，内六角扳手的插袋空着，袋底有金属锈痕与几点白色漆屑——漆色与栏杆断口的旧漆一致。袋内其余工具齐全，唯独扳手不翼而飞。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "fangyu",
-    "method": "方屿因老鼠仓败露（浮亏四千万，明日停职报案）起意杀人。白天巡场时他发现二层检修平台栏杆螺栓锈蚀松动，16:00 用内六角扳手将其拧退到只剩一圈螺纹，为'失足坠落'预设陷阱。19:15 他借'帮摆会议室'进入雪廊，19:20 与傅崇礼在检修平台谈崩，趁其转身自背后发力将其推下，傅崇礼后脑撞上一层电缆盘当场死亡。他捡走外套线头、布置坠落现场，却漏了断口上缠着的抓绒纤维，回房后仓促剪掉右袖口沾纤维的一角。死亡时间被物证锁死在 19:15-19:45：雪镜碎片下层细雪、落雪分层与值班日志互相印证，而他 19:32 起的酒吧拼桌恰是精心安排的不在场证明。",
-    "fullTimeline": "18:30 山顶酒店大堂茶叙。18:50 傅崇礼回房打内线电话给方屿（'19:15 缆车站单独谈，给自首机会'），对裴小北说'材料按旧版打'。18:55 裴小北按傅崇礼口吻发高管群通知（19:40 缆车站二层会议室全员）。19:02 傅崇礼进雪廊，谷雨目送后赴东侧室外检修（19:10-19:45，耳罩盲区）。19:15 方屿进雪廊，与取板的陆野擦肩；乔曼在雪板柜停留两分钟未进。19:20 方屿与傅崇礼在二层检修平台谈崩，从背后发力推其坠落，傅崇礼后脑撞电缆盘死亡，雪镜飞脱摔碎。19:22 方屿布置现场、捡走线头，漏了栏杆断口纤维。19:25 方屿经雪廊返回主楼。19:15-19:25 戴鸿在露台抽雪茄（无人证）。19:30 乔曼回房换装。19:32 方屿在酒吧开酒拼桌，戴鸿、裴小北先后入座。19:40 众人到会议室，空置。19:42 乔曼到会。19:58 陆野夜滑至缆车站外被谷雨喝止（二层栏杆在风雪中晃动）。20:00 谷雨发现遗体并保护现场。20:05 众人下楼，乔曼验看遗体，20:07 裴小北呼叫山下医生未果。破案链：验伤记录（坠落即刻昏迷、掌心漆屑）→ 松动的栏杆断口（人工松动+外来的抓绒纤维）→ 雪具包缺的内六角（凶器工具与漆屑）→ 雪镜碎片落雪分层 + 巡查日志（窗口压缩到 19:15-19:45）→ 酒吧签单（19:32 后方屿人证链完整）→ 老鼠仓对账草稿（动机与 18:50 电话）。红鲱鱼：乔曼的亏空、协议与二十米雪廊；陆野的夜滑禁令与分成纠纷；戴鸿的抽贷函与露台十分钟；裴小北的报销水分——人人有秘密，无人是凶手。",
-    "keyEvidence": [
-      "栏杆",
-      "雪镜",
-      "巡查日志",
-      "老鼠仓",
-      "内六角"
+    "culpritId": "fangyu",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "方屿因老鼠仓败露（浮亏四千万，明日停职报案）起意杀人。白天巡场时他发现二层检修平台栏杆螺栓锈蚀松动，16:00 用内六角扳手将其拧退到只剩一圈螺纹，为'失足坠落'预设陷阱。19:15 他借'帮摆会议室'进入雪廊，19:20 与傅崇礼在检修平台谈崩，趁其转身自背后发力将其推下，傅崇礼后脑撞上一层电缆盘当场死亡。他捡走外套线头、布置坠落现场，却漏了断口上缠着的抓绒纤维，回房后仓促剪掉右袖口沾纤维的一角。死亡时间被物证锁死在 19:15-19:45：雪镜碎片下层细雪、落雪分层与值班日志互相印证，而他 19:32 起的酒吧拼桌恰是精心安排的不在场证明。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "方屿因老鼠仓败露（浮亏四千万，明日停职报案）起意杀人。白天巡场时他发现二层检修平台栏杆螺栓锈蚀松动，16:00 用内六角扳手将其拧退到只剩一圈螺纹，为'失足坠落'预设陷阱。19:15 他借'帮摆会议室'进入雪廊，19:20 与傅崇礼在检修平台谈崩，趁其转身自背后发力将其推下，傅崇礼后脑撞上一层电缆盘当场死亡。他捡走外套线头、布置坠落现场，却漏了断口上缠着的抓绒纤维，回房后仓促剪掉右袖口沾纤维的一角。死亡时间被物证锁死在 19:15-19:45：雪镜碎片下层细雪、落雪分层与值班日志互相印证，而他 19:32 起的酒吧拼桌恰是精心安排的不在场证明。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "18:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "山顶酒店大堂茶叙。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "18:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:50"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "傅崇礼回房打内线电话给方屿（'"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "19:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "缆车站单独谈，给自首机会'），对裴小北说'材料按旧版打'。"
+          }
+        ],
+        "characterIds": [
+          "peixiaobei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "peixiaobei"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "18:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:55"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "裴小北按傅崇礼口吻发高管群通知（"
+          }
+        ],
+        "characterIds": [
+          "peixiaobei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "peixiaobei"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "19:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:40"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "缆车站二层会议室全员）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "19:02",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:02"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "傅崇礼进雪廊，谷雨目送后赴东侧室外检修（"
+          }
+        ],
+        "characterIds": [
+          "guyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyu"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "19:10–19:45",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:10"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:45"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "，耳罩盲区）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "19:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方屿进雪廊，与取板的陆野擦肩；乔曼在雪板柜停留两分钟未进。"
+          }
+        ],
+        "characterIds": [
+          "fangyu",
+          "qiaoman",
+          "luye"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu",
+          "qiaoman",
+          "luye"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "19:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:20"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方屿与傅崇礼在二层检修平台谈崩，从背后发力推其坠落，傅崇礼后脑撞电缆盘死亡，雪镜飞脱摔碎。"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "19:22",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:22"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方屿布置现场、捡走线头，漏了栏杆断口纤维。"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "19:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:25"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方屿经雪廊返回主楼。"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "19:15–19:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:25"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戴鸿在露台抽雪茄（无人证）。"
+          }
+        ],
+        "characterIds": [
+          "daihong"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "daihong"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "19:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:30"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "乔曼回房换装。"
+          }
+        ],
+        "characterIds": [
+          "qiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "19:32",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:32"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方屿在酒吧开酒拼桌，戴鸿、裴小北先后入座。"
+          }
+        ],
+        "characterIds": [
+          "fangyu",
+          "daihong",
+          "peixiaobei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu",
+          "daihong",
+          "peixiaobei"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "19:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:40"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "众人到会议室，空置。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "19:42",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:42"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "乔曼到会。"
+          }
+        ],
+        "characterIds": [
+          "qiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "19:58",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:58"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆野夜滑至缆车站外被谷雨喝止（二层栏杆在风雪中晃动）。"
+          }
+        ],
+        "characterIds": [
+          "luye",
+          "guyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luye",
+          "guyu"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谷雨发现遗体并保护现场。"
+          }
+        ],
+        "characterIds": [
+          "guyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyu"
+        ]
+      },
+      {
+        "id": "truth_event_19",
+        "time": {
+          "display": "20:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:05"
+          }
+        },
+        "title": "事件 19",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "众人下楼，乔曼验看遗体，"
+          }
+        ],
+        "characterIds": [
+          "qiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "20:07",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:07"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "裴小北呼叫山下医生未果。破案链：验伤记录（坠落即刻昏迷、掌心漆屑）→ 松动的栏杆断口（人工松动+外来的抓绒纤维）→ 雪具包缺的内六角（凶器工具与漆屑）→ 雪镜碎片落雪分层 + 巡查日志（窗口压缩到"
+          }
+        ],
+        "characterIds": [
+          "peixiaobei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "peixiaobei"
+        ]
+      },
+      {
+        "id": "truth_event_21",
+        "time": {
+          "display": "19:15–19:45",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:45"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）→ 酒吧签单（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "19:32",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:32"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "后方屿人证链完整）→ 老鼠仓对账草稿（动机与"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_23",
+        "time": {
+          "display": "18:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:50"
+          }
+        },
+        "title": "事件 23",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "电话）。红鲱鱼：乔曼的亏空、协议与二十米雪廊；陆野的夜滑禁令与分成纠纷；戴鸿的抽贷函与露台十分钟；裴小北的报销水分——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "qiaoman",
+          "daihong",
+          "peixiaobei",
+          "luye"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiaoman",
+          "daihong",
+          "peixiaobei",
+          "luye"
+        ]
+      }
     ],
-    "reveal": "真相：凶手是方屿。十六年的影子，在影子要被拆穿的前一夜伸手推了主人一把。他下午拧松的螺栓，是他给傅崇礼准备的'意外'；18:50 那通给自首机会的电话，成了最后的确认——傅崇礼要的是认罪，他交出去的是命。他算准了雪夜、算准了耳罩、算准了 19:32 的威士忌，只没算到断口会缠住袖口的绒线，没算到值班员咽回去的那句'地面浮雪没乱'。乔曼那没送出去的胃药、陆野那场违规的夜滑、戴鸿露台上的十分钟、裴小北打不完的报销单——都是这条雪廊里来来去去的雪雾，风一停，就看清了。"
+    "keyEvidenceIds": [
+      "lanangan",
+      "xuejing_sui",
+      "xunzha_rizhi",
+      "laoshucang",
+      "banshou"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_1",
+        "clueIds": [
+          "lanangan"
+        ],
+        "conclusion": "栏杆"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "xuejing_sui"
+        ],
+        "conclusion": "雪镜"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "xunzha_rizhi"
+        ],
+        "conclusion": "巡查日志"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "laoshucang"
+        ],
+        "conclusion": "老鼠仓"
+      },
+      {
+        "id": "evidence_5",
+        "clueIds": [
+          "banshou"
+        ],
+        "conclusion": "内六角"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是方屿。十六年的影子，在影子要被拆穿的前一夜伸手推了主人一把。他下午拧松的螺栓，是他给傅崇礼准备的'意外'；18:50 那通给自首机会的电话，成了最后的确认——傅崇礼要的是认罪，他交出去的是命。他算准了雪夜、算准了耳罩、算准了 19:32 的威士忌，只没算到断口会缠住袖口的绒线，没算到值班员咽回去的那句'地面浮雪没乱'。乔曼那没送出去的胃药、陆野那场违规的夜滑、戴鸿露台上的十分钟、裴小北打不完的报销单——都是这条雪廊里来来去去的雪雾，风一停，就看清了。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -232,6 +2218,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

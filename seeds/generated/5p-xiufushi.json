@@ -1,34 +1,213 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "修复室",
     "minPlayers": 5,
     "maxPlayers": 5,
     "durationMin": 180,
     "difficulty": "硬核",
-    "tags": ["本格", "硬核推理", "现代", "博物馆", "职场"],
+    "tags": [
+      "本格",
+      "硬核推理",
+      "现代",
+      "博物馆",
+      "职场"
+    ],
     "intro": "云溪博物院的修复楼亮到深夜。首席修复师岑松年为明早九点的验收赶最后一道工序，防护面具戴得一丝不苟。22:40，保安进屋送签到表，看见他伏在操作台前——面具还罩在脸上，排风机却在两小时前就停了。急性溶剂蒸气中毒，防护意外。可内院窗边，为什么坐着一个穿他背心的人体模型？他手机里那句'别等我'，又为什么会出现在他已经死去的时间里？"
   },
-  "background": "云溪博物院文物保护中心，修复楼二层，抢救性修复成果验收定在明早九点，头号成果是三个月前'外借归来'的战国青铜壶（馆藏编号云博0-2-117）。首席修复师岑松年，五十八岁，青铜器修复大家，长年接触溶剂导致嗅觉退化——换滤毒罐从来只看日历不看气味，全院皆知。今晚他独自加班，为青铜壶做最后的封护层拆除，需要大量丙酮混合液，全院只有修复操作间可以作业。20:30至21:30，修复楼排风系统例行'停机检修'——工单批示：保管部副主任程砚。22:40，保安队长魏武巡馆进屋送签到表，发现岑松年伏在操作台前，面具罩在脸上，滤罐接口崭新。急救确认：急性溶剂蒸气中毒，初判'防护意外的工伤'。但内院窗边坐着一个穿岑松年反光背心的等身人体模型（展袍修复用品），从监控室望出去，正是'有人伏案干活'的剪影；而他手机里21:30在工作群回复的'别等我'，与尸僵程度提示的死亡时间彼此矛盾。修复楼门禁记录完整，走廊监控一直在录——这栋楼里发生过什么，纸都记得，只是没人去翻。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "云溪博物院文物保护中心，修复楼二层，抢救性修复成果验收定在明早九点，头号成果是三个月前'外借归来'的战国青铜壶（馆藏编号云博0-2-117）。首席修复师岑松年，五十八岁，青铜器修复大家，长年接触溶剂导致嗅觉退化——换滤毒罐从来只看日历不看气味，全院皆知。今晚他独自加班，为青铜壶做最后的封护层拆除，需要大量丙酮混合液，全院只有修复操作间可以作业。20:30至21:30，修复楼排风系统例行'停机检修'——工单批示：保管部副主任程砚。22:40，保安队长魏武巡馆进屋送签到表，发现岑松年伏在操作台前，面具罩在脸上，滤罐接口崭新。急救确认：急性溶剂蒸气中毒，初判'防护意外的工伤'。但内院窗边坐着一个穿岑松年反光背心的等身人体模型（展袍修复用品），从监控室望出去，正是'有人伏案干活'的剪影；而他手机里21:30在工作群回复的'别等我'，与尸僵程度提示的死亡时间彼此矛盾。修复楼门禁记录完整，走廊监控一直在录——这栋楼里发生过什么，纸都记得，只是没人去翻。"
+    }
+  ],
   "characters": [
     {
       "id": "chengyan",
       "name": "程砚",
       "gender": "男",
       "age": 52,
-      "publicBio": "保管部副主任，守库房二十六年，岑松年二十六年的搭档。今晚签批了排风停机工单，门禁记录两次进出修复楼。",
-      "card": {
-        "backstory": "你叫程砚，守了库房二十六年，搭档岑松年也二十六年。儿子染上网赌，半年滚出二百六十万，催收电话打进办公室那天，你的手第一次碰了不该碰的东西：三个月前借展归来的战国青铜壶，你把真壶质押给周老板，入库复检单替师父签了名，你盘算着秋拍后借新还旧赎回来。直到今晚，你看见岑松年蹲在操作台前，对着壶底那道被磨掉的微刻编号一张接一张地拍，嘴里念着'明早九点，我先跟馆长说'。你送宵夜的手是稳的——修复楼的排风今晚停机，师父的鼻子，早就坏了。",
-        "secret": "你就是凶手。真壶被你质押（借条藏在柜里），你调包滤毒罐、批停排风，借师父嗅觉退化设下'溶剂中毒的意外'；21:15进修复室确认后摆人体模型造'还在干活'的剪影，21:30用他的手机在工作群回'别等我'，把发现时间拖到22:40。",
-        "goal": "你的门禁只有两段干净记录（20:10-20:15、21:15-21:25），这是底气也是死穴——21:15那十分钟你在做什么，你要编出'问验收用车、顺手帮忙搬托盘'并让细节自洽。策略：抢先把借条和儿子的债哭出来（主动认'质押'，哭'我本来就打算赎回来'），把排风工单推成'例行检修'；'模型'与'21:30消息'这两个词横在所有人面前，你只要不碰它们就行。",
-        "isCulprit": true,
-        "timeline": "10:40 在器材库领用两只丁型滤毒罐（签领用单）。上午把排风停机工单送到设备部并催'今晚就办'。20:10-20:15 修复室送宵夜与'新到的滤毒罐'（门禁可证），看师父换罐、开液。21:15-21:25 再进修复楼（门禁可证），取走台边旧罐、摆模型、用师父手机群回消息。之后回库房值班室整理台账。22:40 被保安呼叫赶到。",
-        "knowledge": [
-          "师父的鼻子早就坏了——长年溶剂熏的，他换滤罐只看日历不看气味，全院只有你把这个'习惯'当回事过。",
-          "排风一停，操作间的浓度二十分钟就能压倒一个闻不到味的人——这笔账你算过不止一遍。",
-          "岑松年手机不设密码，屏保是院庆合影；他的短句习惯是从来连发两条——所以21:30那条消息，你替他补成了一条。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "保管部副主任，守库房二十六年，岑松年二十六年的搭档。今晚签批了排风停机工单，门禁记录两次进出修复楼。"
+          }
         ],
-        "persona": "温吞客气，句句带'按规程'。唯独提'壶''台账'时语速加快。哭起来不算可怜，像在还账。习惯用袖口擦手，哪怕手是干的。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫程砚，守了库房二十六年，搭档岑松年也二十六年。儿子染上网赌，半年滚出二百六十万，催收电话打进办公室那天，你的手第一次碰了不该碰的东西：三个月前借展归来的战国青铜壶，你把真壶质押给周老板，入库复检单替师父签了名，你盘算着秋拍后借新还旧赎回来。直到今晚，你看见岑松年蹲在操作台前，对着壶底那道被磨掉的微刻编号一张接一张地拍，嘴里念着'明早九点，我先跟馆长说'。你送宵夜的手是稳的——修复楼的排风今晚停机，师父的鼻子，早就坏了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_chengyan_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。真壶被你质押（借条藏在柜里），你调包滤毒罐、批停排风，借师父嗅觉退化设下'溶剂中毒的意外'；21:15进修复室确认后摆人体模型造'还在干活'的剪影，21:30用他的手机在工作群回'别等我'，把发现时间拖到22:40。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_chengyan_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的门禁只有两段干净记录（20:10-20:15、21:15-21:25），这是底气也是死穴——21:15那十分钟你在做什么，你要编出'问验收用车、顺手帮忙搬托盘'并让细节自洽。策略：抢先把借条和儿子的债哭出来（主动认'质押'，哭'我本来就打算赎回来'），把排风工单推成'例行检修'；'模型'与'21:30消息'这两个词横在所有人面前，你只要不碰它们就行。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_chengyan_event_1",
+            "time": {
+              "display": "10:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "10:40"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在器材库领用两只丁型滤毒罐（签领用单）。上午把排风停机工单送到设备部并催'今晚就办'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyan_event_2",
+            "time": {
+              "display": "20:10–20:15",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "20:15"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "修复室送宵夜与'新到的滤毒罐'（门禁可证），看师父换罐、开液。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyan_event_3",
+            "time": {
+              "display": "21:15–21:25",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:25"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "再进修复楼（门禁可证），取走台边旧罐、摆模型、用师父手机群回消息。之后回库房值班室整理台账。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_chengyan_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被保安呼叫赶到。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_chengyan_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "师父的鼻子早就坏了——长年溶剂熏的，他换滤罐只看日历不看气味，全院只有你把这个'习惯'当回事过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_chengyan_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "排风一停，操作间的浓度二十分钟就能压倒一个闻不到味的人——这笔账你算过不止一遍。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_chengyan_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "岑松年手机不设密码，屏保是院庆合影；他的短句习惯是从来连发两条——所以21:30那条消息，你替他补成了一条。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "温吞客气，句句带'按规程'。唯独提'壶''台账'时语速加快。哭起来不算可怜，像在还账。习惯用袖口擦手，哪怕手是干的。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +215,199 @@
       "name": "苏杳",
       "gender": "女",
       "age": 29,
-      "publicBio": "修复助理，岑松年的徒弟，白班，每晚下班给师父送一盅汤是师徒惯例。今晚21:30收到师父'别等我'的回复。",
-      "card": {
-        "backstory": "你叫苏杳，跟了师父岑松年五年，每晚下班给他送一盅汤是师徒惯例。今晚21:00你在群里问'送汤吗'，21:30他回'赶工，今晚别等我，汤不用送'——你盯着这句话看了很久：师父从来连发两条，也从不说'不用送'。你没多想，回了'好的师父早点休息'。22:40保安的电话打来时，你正给汤保温。你差一点就成了发现人——如果21:45你照旧上楼，这一切会不一样。这个念头，会缠你一辈子。",
-        "secret": "你21:00到21:30之间在家，没有不在场证人；你还私自留了师父20:05所拍照片的云备份——你帮他整理手机时瞥见过壶底的照片，你没敢问，也没告诉任何人。",
-        "goal": "你对师父的用语习惯最熟，'21:30那条消息'的反常由你提出最有分量——但你会被反问'你怎么知道是别人发的'。策略：先交照片备份（壶的生死簿），再讲'连发两条'的习惯，把死亡时间钉在21:30之前；主动交代21:45没上楼的原因，别等人问。",
-        "isCulprit": false,
-        "timeline": "20:15 白班下班离开修复楼（打卡，当时排风还在响）。21:00 在家发群消息问送汤。21:30 收到'别等我'的回复。21:45 本该送汤，因回复没去。22:40 接保安电话赶到。",
-        "knowledge": [
-          "师父回消息从来连发两条，哪怕一个字也发两遍——'别等我'三个字一条发完，五年来头一次。",
-          "20:05你帮他倒液时瞥见手机屏上壶底的照片，编号的位置有新鲜的磨痕——当时没敢问。",
-          "修复楼20:30后排风就没了声——骆铎白天贴过停机通知（20:30-21:30），你当时想，师父戴着面具怕什么。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "修复助理，岑松年的徒弟，白班，每晚下班给师父送一盅汤是师徒惯例。今晚21:30收到师父'别等我'的回复。"
+          }
         ],
-        "persona": "轻声细语，记性极好，说起师父的习惯如数家珍——'他连擦手都先擦左手'。被质疑时声音会抖但内容不退：'我可以记错日子，不会记错师父说话的样子。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫苏杳，跟了师父岑松年五年，每晚下班给他送一盅汤是师徒惯例。今晚21:00你在群里问'送汤吗'，21:30他回'赶工，今晚别等我，汤不用送'——你盯着这句话看了很久：师父从来连发两条，也从不说'不用送'。你没多想，回了'好的师父早点休息'。22:40保安的电话打来时，你正给汤保温。你差一点就成了发现人——如果21:45你照旧上楼，这一切会不一样。这个念头，会缠你一辈子。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_suyao_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你21:00到21:30之间在家，没有不在场证人；你还私自留了师父20:05所拍照片的云备份——你帮他整理手机时瞥见过壶底的照片，你没敢问，也没告诉任何人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_suyao_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你对师父的用语习惯最熟，'21:30那条消息'的反常由你提出最有分量——但你会被反问'你怎么知道是别人发的'。策略：先交照片备份（壶的生死簿），再讲'连发两条'的习惯，把死亡时间钉在21:30之前；主动交代21:45没上楼的原因，别等人问。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_suyao_event_1",
+            "time": {
+              "display": "20:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:15"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白班下班离开修复楼（打卡，当时排风还在响）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suyao_event_2",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在家发群消息问送汤。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suyao_event_3",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "收到'别等我'的回复。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suyao_event_4",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "本该送汤，因回复没去。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suyao_event_5",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接保安电话赶到。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_suyao_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "师父回消息从来连发两条，哪怕一个字也发两遍——'别等我'三个字一条发完，五年来头一次。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suyao_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "20:05你帮他倒液时瞥见手机屏上壶底的照片，编号的位置有新鲜的磨痕——当时没敢问。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_suyao_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "修复楼20:30后排风就没了声——骆铎白天贴过停机通知（20:30-21:30），你当时想，师父戴着面具怕什么。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "轻声细语，记性极好，说起师父的习惯如数家珍——'他连擦手都先擦左手'。被质疑时声音会抖但内容不退：'我可以记错日子，不会记错师父说话的样子。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +415,205 @@
       "name": "魏武",
       "gender": "男",
       "age": 56,
-      "publicBio": "保安队长，守博物院十一年，22:40巡馆时发现尸体。监控值守记录在22:00-22:20有一段空白。",
-      "card": {
-        "backstory": "你叫魏武，守云溪博物院十一年，巡馆路线闭着眼能走。上个月布展公司的车半夜进出，你私放了一次，收了两条烟——这事被程砚看见了，他没声张，只说'魏队，人不难为自己'。从那以后他托的事你都好办：今晚检修停机、搬托盘的手推车，你都睁只眼。22:00-22:20你在监控室打了个盹，巡馆记录那一栏填了'正常'。22:40你进修复室送签到表，先看见窗边灯下那个'人影'，走近了才发现，操作台前伏着的才是人——你这一辈子没这么冷过。",
-        "secret": "你22:00-22:20在监控室打盹（值守记录空档，巡馆记录填了'正常'）；你私放过布展车收过两条烟，程砚知道——今晚21:10送到修复楼门口的那辆手推车，是你推的。",
-        "goal": "你是发现者，你的证词决定'剪影'什么时候出现。策略：主动交代打盹（被监控日志抓到更糟），把手推车说成'例行帮忙搬布展托盘'；用'21:15起窗边有剪影、21:05前没有'帮众人锁定模型上场时间——那一刻，门禁记录会自己说话。",
-        "isCulprit": false,
-        "timeline": "20:30 巡第一轮。21:10 帮程砚把手推车送到修复楼门口（未进楼）。22:00-22:20 监控室打盹（值守记录空档）。22:40 巡馆进修复室发现尸体并报警。23:10 急救确认死亡。",
-        "knowledge": [
-          "21:15你送完手推车离开时，窗边还没有那个'坐着的影子'；22:40进门，影子先在，人伏在台前——中间只有门禁能说清。",
-          "监控屏幕上，修复楼走廊21:15-21:25有一个进出的背影，外套下摆撑得很宽，像揣了东西。",
-          "程砚给你看的从来不是把柄，是'人不难为自己'——今晚的排风工单，他签批得像喝水一样平常。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "保安队长，守博物院十一年，22:40巡馆时发现尸体。监控值守记录在22:00-22:20有一段空白。"
+          }
         ],
-        "persona": "嗓门大、话糙理不糙，'我这十一年'挂嘴边。认错认得爽快，护短护得心虚。提到那具'坐着的影子'时手会攥拳：'我当他是活的，我跟他打了个招呼。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫魏武，守云溪博物院十一年，巡馆路线闭着眼能走。上个月布展公司的车半夜进出，你私放了一次，收了两条烟——这事被程砚看见了，他没声张，只说'魏队，人不难为自己'。从那以后他托的事你都好办：今晚检修停机、搬托盘的手推车，你都睁只眼。22:00-22:20你在监控室打了个盹，巡馆记录那一栏填了'正常'。22:40你进修复室送签到表，先看见窗边灯下那个'人影'，走近了才发现，操作台前伏着的才是人——你这一辈子没这么冷过。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_weiwu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你22:00-22:20在监控室打盹（值守记录空档，巡馆记录填了'正常'）；你私放过布展车收过两条烟，程砚知道——今晚21:10送到修复楼门口的那辆手推车，是你推的。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_weiwu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是发现者，你的证词决定'剪影'什么时候出现。策略：主动交代打盹（被监控日志抓到更糟），把手推车说成'例行帮忙搬布展托盘'；用'21:15起窗边有剪影、21:05前没有'帮众人锁定模型上场时间——那一刻，门禁记录会自己说话。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_weiwu_event_1",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "巡第一轮。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_weiwu_event_2",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "帮程砚把手推车送到修复楼门口（未进楼）。"
+              }
+            ],
+            "characterIds": [
+              "chengyan"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_weiwu_event_3",
+            "time": {
+              "display": "22:00–22:20",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:20"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "监控室打盹（值守记录空档）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_weiwu_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "巡馆进修复室发现尸体并报警。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_weiwu_event_5",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "急救确认死亡。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_weiwu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:15你送完手推车离开时，窗边还没有那个'坐着的影子'；22:40进门，影子先在，人伏在台前——中间只有门禁能说清。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_weiwu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "监控屏幕上，修复楼走廊21:15-21:25有一个进出的背影，外套下摆撑得很宽，像揣了东西。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_weiwu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "程砚给你看的从来不是把柄，是'人不难为自己'——今晚的排风工单，他签批得像喝水一样平常。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "嗓门大、话糙理不糙，'我这十一年'挂嘴边。认错认得爽快，护短护得心虚。提到那具'坐着的影子'时手会攥拳：'我当他是活的，我跟他打了个招呼。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +621,183 @@
       "name": "齐悦",
       "gender": "女",
       "age": 44,
-      "publicBio": "陈列部主任，主管验收策展，与岑松年因专著署名积怨已深。今晚19:50进修复室，20:00摔门而出。",
-      "card": {
-        "backstory": "你叫齐悦，陈列部主任，评职称差一部专著。《青铜缓锈录》的策展框架是你熬出来的，岑松年却把署名页写成'技术顾问：齐悦'——你为这四个字在院办拍过桌子。今晚19:50你去修复室做最后一次努力，话赶话说重了：'没了你的名字，那口壶就是口壶。'20:00你摔门而去。22:40的电话响起时，你正在写道歉信——现在没人信这封信是为什么写的了。",
-        "secret": "你与岑松年有署名之争，19:50-20:00你在修复室与他大吵（楼梯口的苏杳听得一清二楚）；你还申请过把验收展期提前——若岑死了，'验收改期、展期照旧'你受益最大。",
-        "goal": "你的动机人人可查，藏着掖着只会坐实。策略：主动交代争吵内容，用'20:00摔门后我一直在写道歉信'（文档自动保存时间可证）锚定20:30后不在场；把署名之争反过来用——你不是要他死，是要他活着认你那一章。",
-        "isCulprit": false,
-        "timeline": "19:50 进修复室争署名。20:00 摔门而去，回陈列部办公室写道歉信（文档保存记录20:10-22:30）。22:40 接电话赶到。",
-        "knowledge": [
-          "你摔门时撞见楼梯口的苏杳——她看你的眼神像看凶手，你也是从那一刻开始怕的。",
-          "验收展不延期是岑松年拍板的，他原话：'壶底的事，明早九点当着馆长说。'你当时以为他说的是署名。",
-          "程砚20:10送宵夜经过陈列部，跟你打了招呼，食盒提手上挂着修复楼的签——他比谁都殷勤。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "陈列部主任，主管验收策展，与岑松年因专著署名积怨已深。今晚19:50进修复室，20:00摔门而出。"
+          }
         ],
-        "persona": "利落强势，句子短，爱用反问收尾。谈及署名会拔高音量，随即又自己压下去。痛处被戳时先冷笑后沉默：'我跟他吵了十年，吵是活人才干的事。'"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫齐悦，陈列部主任，评职称差一部专著。《青铜缓锈录》的策展框架是你熬出来的，岑松年却把署名页写成'技术顾问：齐悦'——你为这四个字在院办拍过桌子。今晚19:50你去修复室做最后一次努力，话赶话说重了：'没了你的名字，那口壶就是口壶。'20:00你摔门而去。22:40的电话响起时，你正在写道歉信——现在没人信这封信是为什么写的了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_qiyue_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与岑松年有署名之争，19:50-20:00你在修复室与他大吵（楼梯口的苏杳听得一清二楚）；你还申请过把验收展期提前——若岑死了，'验收改期、展期照旧'你受益最大。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_qiyue_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的动机人人可查，藏着掖着只会坐实。策略：主动交代争吵内容，用'20:00摔门后我一直在写道歉信'（文档自动保存时间可证）锚定20:30后不在场；把署名之争反过来用——你不是要他死，是要他活着认你那一章。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_qiyue_event_1",
+            "time": {
+              "display": "19:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:50"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "进修复室争署名。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiyue_event_2",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "摔门而去，回陈列部办公室写道歉信（文档保存记录"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiyue_event_3",
+            "time": {
+              "display": "20:10–22:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qiyue_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接电话赶到。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_qiyue_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你摔门时撞见楼梯口的苏杳——她看你的眼神像看凶手，你也是从那一刻开始怕的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qiyue_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "验收展不延期是岑松年拍板的，他原话：'壶底的事，明早九点当着馆长说。'你当时以为他说的是署名。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_qiyue_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "程砚20:10送宵夜经过陈列部，跟你打了招呼，食盒提手上挂着修复楼的签——他比谁都殷勤。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "利落强势，句子短，爱用反问收尾。谈及署名会拔高音量，随即又自己压下去。痛处被戳时先冷笑后沉默：'我跟他吵了十年，吵是活人才干的事。'",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,94 +805,925 @@
       "name": "骆铎",
       "gender": "男",
       "age": 35,
-      "publicBio": "设备工程部技术员，执掌水电气风。今晚按程砚签批的工单对修复楼排风停机检修（20:30-21:30），启停有日志。",
-      "card": {
-        "backstory": "你叫骆铎，设备工程部管水电气风，院里都叫你'骆总工'。今天上午，程砚亲自把排风停机工单送到你手上，批示栏签得端端正正，还塞给你一包烟：'今晚办，别声张，老岑赶验收。'你觉得不对——例检从不停机——但签批合规，你照办了：20:30停，21:30启。21:30你按下启动键时，风机的声音回来了，你的心却一直往下沉。你还顺手帮他从器材库取过两只滤毒罐。现在你满脑子都是一个词：停机的那一小时，修复室里是什么浓度。",
-        "secret": "你执行了停机工单，还代取过滤毒罐——若被认定'共同过失'，你的执业资格就完了；你把20:30-21:30的停机交底记录藏在自己抽屉里，不敢上交。",
-        "goal": "你掌握排风与浓度的全部技术细节，是能把'意外'讲成'设计'的人。策略：主动上交交底记录与工单原件，复述程砚'催今晚办'的原话——这句话的分量别人替代不了；先坦白代取滤罐（领用单可查），别让程砚把它变成你的罪。",
-        "isCulprit": false,
-        "timeline": "17:30 排风检修停机准备。20:30 按工单停机。21:30 按时启动排风（启停日志可证）。之后在设备间值守。22:40 接警后随魏武查看设备。",
-        "knowledge": [
-          "启停日志写死在主机里：20:30:07停，21:30:00启——中间那一个小时，修复楼像被捂住了嘴。",
-          "例检从不停机，只有换主机才停；主机好好的，工单却批了——这单子本身就是证词。",
-          "操作间换气设计是每小时十八次，排风一停，丙酮蒸气十分钟就能过临界值——这数字是你验收时亲手写进报告的。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "设备工程部技术员，执掌水电气风。今晚按程砚签批的工单对修复楼排风停机检修（20:30-21:30），启停有日志。"
+          }
         ],
-        "persona": "技术宅口吻，爱报数字，'日志不会骗人'是口头禅。怕背锅，说话绕，被逼急了会赌咒发誓并掏出手机翻记录。提到浓度报告时指关节发白。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫骆铎，设备工程部管水电气风，院里都叫你'骆总工'。今天上午，程砚亲自把排风停机工单送到你手上，批示栏签得端端正正，还塞给你一包烟：'今晚办，别声张，老岑赶验收。'你觉得不对——例检从不停机——但签批合规，你照办了：20:30停，21:30启。21:30你按下启动键时，风机的声音回来了，你的心却一直往下沉。你还顺手帮他从器材库取过两只滤毒罐。现在你满脑子都是一个词：停机的那一小时，修复室里是什么浓度。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luoduo_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你执行了停机工单，还代取过滤毒罐——若被认定'共同过失'，你的执业资格就完了；你把20:30-21:30的停机交底记录藏在自己抽屉里，不敢上交。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luoduo_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你掌握排风与浓度的全部技术细节，是能把'意外'讲成'设计'的人。策略：主动上交交底记录与工单原件，复述程砚'催今晚办'的原话——这句话的分量别人替代不了；先坦白代取滤罐（领用单可查），别让程砚把它变成你的罪。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luoduo_event_1",
+            "time": {
+              "display": "17:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "17:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "排风检修停机准备。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luoduo_event_2",
+            "time": {
+              "display": "20:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "按工单停机。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luoduo_event_3",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "按时启动排风（启停日志可证）。之后在设备间值守。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luoduo_event_4",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接警后随魏武查看设备。"
+              }
+            ],
+            "characterIds": [
+              "weiwu"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luoduo_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "启停日志写死在主机里：20:30:07停，21:30:00启——中间那一个小时，修复楼像被捂住了嘴。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luoduo_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "例检从不停机，只有换主机才停；主机好好的，工单却批了——这单子本身就是证词。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luoduo_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "操作间换气设计是每小时十八次，排风一停，丙酮蒸气十分钟就能过临界值——这数字是你验收时亲手写进报告的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "技术宅口吻，爱报数字，'日志不会骗人'是口头禅。怕背锅，说话绕，被逼急了会赌咒发誓并掏出手机翻记录。提到浓度报告时指关节发白。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["修复操作间", "器材库", "设备间", "库房值班室", "监控室", "陈列部办公室"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "修复操作间",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "器材库",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "设备间",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "库房值班室",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "监控室",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "陈列部办公室",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "xiandai_kanyan",
-      "location": "修复操作间",
+      "locationId": "location_1",
       "name": "修复室现场勘验记录",
-      "content": "死者伏于操作台，面具罩于面部，滤罐接口有新鲜拧痕；操作槽敞口，丙酮混合液约剩三分之一。内院窗边坐着一个穿反光背心的等身人体模型（展袍修复用品），膝头积灰、双手沾石粉。死因初判急性溶剂蒸气中毒；但尸斑与尸僵程度提示死亡不晚于21:30——与21:30工作群那条'别等我'的消息矛盾。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者伏于操作台，面具罩于面部，滤罐接口有新鲜拧痕；操作槽敞口，丙酮混合液约剩三分之一。内院窗边坐着一个穿反光背心的等身人体模型（展袍修复用品），膝头积灰、双手沾石粉。死因初判急性溶剂蒸气中毒；但尸斑与尸僵程度提示死亡不晚于21:30——与21:30工作群那条'别等我'的消息矛盾。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "lingyong_dan",
-      "location": "器材库",
+      "locationId": "location_2",
       "name": "器材库领用单",
-      "content": "案发当日10:40领用'滤毒罐（丁型）两只'，领用人签名：程砚；旧罐回收栏空白——按规程，换下的废罐应即时回收登记。库房底账显示，当日出库的两只丁型罐中，一只生产日期为七年前，早已超期停用，属展示品罐，外观簇新如初。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "案发当日10:40领用'滤毒罐（丁型）两只'，领用人签名：程砚；旧罐回收栏空白——按规程，换下的废罐应即时回收登记。库房底账显示，当日出库的两只丁型罐中，一只生产日期为七年前，早已超期停用，属展示品罐，外观簇新如初。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "paifeng_gongdan",
-      "location": "设备间",
+      "locationId": "location_3",
       "name": "排风停机检修工单",
-      "content": "修复楼排风系统20:30-21:30停机检修，批示栏签名：程砚，执行人：骆铎。检修内容栏空着——例检从不停机，只有'更换主机'才停机，而主机完好无损。骆铎的交底记录：程砚上午亲手把工单送来，原话'今晚办，别声张，老岑赶验收'。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "修复楼排风系统20:30-21:30停机检修，批示栏签名：程砚，执行人：骆铎。检修内容栏空着——例检从不停机，只有'更换主机'才停机，而主机完好无损。骆铎的交底记录：程砚上午亲手把工单送来，原话'今晚办，别声张，老岑赶验收'。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "shouji_qunliao",
-      "location": "修复操作间",
+      "locationId": "location_1",
       "name": "死者的手机与工作群",
-      "content": "'云博修复一群'21:00苏杳：'师父，晚上送汤吗？'21:30该机回复：'赶工，今晚别等我，汤不用送。'——句式与岑松年平日的习惯不合（他从来连发两条）。相册最新十七张照片（20:05拍摄）：战国青铜壶壶底内壁，馆藏微刻编号处有新鲜磨除痕，边缘还留着一点旧漆金。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "'云博修复一群'21:00苏杳：'师父，晚上送汤吗？'21:30该机回复：'赶工，今晚别等我，汤不用送。'——句式与岑松年平日的习惯不合（他从来连发两条）。相册最新十七张照片（20:05拍摄）：战国青铜壶壶底内壁，馆藏微刻编号处有新鲜磨除痕，边缘还留着一点旧漆金。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "taitai_bianhao",
-      "location": "库房值班室",
+      "locationId": "location_4",
       "name": "器物台账与编号核对",
-      "content": "器物总台账：战国青铜壶'云博0-2-117'，三个月前'外借归来'，入库验收人程砚（代岑松年签名）。但展厅展签同一编号对应器物的重量比台账轻八十四克，壶底无微刻编号——真壶的去向，台账上一个字都没有。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "器物总台账：战国青铜壶'云博0-2-117'，三个月前'外借归来'，入库验收人程砚（代岑松年签名）。但展厅展签同一编号对应器物的重量比台账轻八十四克，壶底无微刻编号——真壶的去向，台账上一个字都没有。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "jietiao_daijia",
-      "location": "库房值班室",
+      "locationId": "location_4",
       "name": "私人借条与催收短信",
-      "content": "程砚办公柜夹层里的一张私人借条：'今借到周老板人民币二百六十万元整，以云博0-2-117作抵，言明秋拍后赎回。'落款是三个月前。旁边压着儿子网贷催收短信的打印截图，累计逾期十九万，措辞不堪入目。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "程砚办公柜夹层里的一张私人借条：'今借到周老板人民币二百六十万元整，以云博0-2-117作抵，言明秋拍后赎回。'落款是三个月前。旁边压着儿子网贷催收短信的打印截图，累计逾期十九万，措辞不堪入目。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "moxing_beixin",
-      "location": "修复操作间",
+      "locationId": "location_1",
       "name": "人体模型与反光背心",
-      "content": "那件反光背心是岑松年的（领口绣名）。模型坐姿正对内院窗——从监控室望出去，正是'有人伏案干活'的剪影。模型双手沾的石粉与操作台上的取样石屑同批，说明有人当晚摆弄过它；膝头积灰分布不匀，臀部一圈无灰——它是被人从库房搬来不久。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "那件反光背心是岑松年的（领口绣名）。模型坐姿正对内院窗——从监控室望出去，正是'有人伏案干活'的剪影。模型双手沾的石粉与操作台上的取样石屑同批，说明有人当晚摆弄过它；膝头积灰分布不匀，臀部一圈无灰——它是被人从库房搬来不久。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "menjian_kongbai",
-      "location": "监控室",
+      "locationId": "location_5",
       "name": "监控值守记录与门禁流水",
-      "content": "修复楼门禁：20:10程砚进（送宵夜）、20:15出；21:15进、21:25出。走廊监控全程在录：21:15-21:25的背影外套下摆撑得很宽；21:05之前，内院窗内只有操作台一盏灯，21:15起窗边出现'坐着的剪影'。监控值守记录22:00-22:20空白，魏武自认打盹。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "修复楼门禁：20:10程砚进（送宵夜）、20:15出；21:15进、21:25出。走廊监控全程在录：21:15-21:25的背影外套下摆撑得很宽；21:05之前，内院窗内只有操作台一盏灯，21:15起窗边出现'坐着的剪影'。监控值守记录22:00-22:20空白，魏武自认打盹。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "shuming_youjian",
-      "location": "陈列部办公室",
+      "locationId": "location_6",
       "name": "署名之争的往来邮件",
-      "content": "齐悦与院办的往来邮件：她以'验收策展统筹'为由申请在《青铜缓锈录》增补联合署名，昨日被院办退回，回函措辞冷淡。今晚19:50她进修复室，20:00摔门而出——楼梯口的苏杳听得一清二楚。道歉信文档的自动保存记录：20:10至22:30，四十一稿。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "齐悦与院办的往来邮件：她以'验收策展统筹'为由申请在《青铜缓锈录》增补联合署名，昨日被院办退回，回函措辞冷淡。今晚19:50她进修复室，20:00摔门而出——楼梯口的苏杳听得一清二楚。道歉信文档的自动保存记录：20:10至22:30，四十一稿。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "chengyan",
-    "method": "程砚把真青铜壶质押给私人老板抵儿子网赌的债，岑松年却在修复中发现壶底馆藏微刻编号被磨除，约好明早九点报馆长。程砚上午在器材库领走两只丁型滤毒罐——其中一只是超期七年的展示品空芯罐；他以'例检'为名签批修复楼排风20:30-21:30停机。20:10送宵夜时把空芯罐谎称'新到'递给岑松年（师父嗅觉退化，只按日历换罐），岑戴上面具拆除封护层，丙酮蒸气在停风的操作间积聚，21:05前后昏迷伏台，21:30前死亡。21:15程砚再进修复楼，取走台边尚有效的旧滤罐（外套下摆撑宽被监控拍下）、把穿反光背心的人体模型摆到内院窗边造'还在干活'的剪影，21:30用死者不设密的手机在工作群回'别等我'，打消苏杳21:45送汤的惯例，把发现时间拖到22:40。破绽：空芯滤罐的出厂日期、无人签收的旧罐回收栏、'例检却停机'的工单、模型臀部的灰、以及死亡时间与那条消息的矛盾。",
-    "fullTimeline": "17:30 骆铎做排风停机准备（工单批示：程砚）。上午 程砚在器材库领用两只丁型滤毒罐，其中一只是超期七年的展示品空芯罐。18:00 岑松年在修复操作间做前置准备：配液、摆青铜壶。19:50-20:00 齐悦进修复室与岑松年争署名，话赶话说重，20:00摔门而去（楼梯口的苏杳听见）。20:05 岑松年用手机拍壶底微刻编号磨痕十七张，存云备份，计划明早九点报馆长。20:10-20:15 程砚送宵夜与'新到的滤毒罐'（实为空芯过期罐），门禁可证；岑松年换罐、开液。20:15 苏杳白班下班离开修复楼（排风还在响）。20:30:07 排风停机。20:30起 岑松年戴面具大面积作业，丙酮蒸气积聚。21:05 岑松年伏在操作台昏迷。21:15-21:25 程砚再进修复楼（门禁可证）：确认死亡、取走台边尚有效的旧罐（监控拍下外套下摆撑宽）、从库房搬来人体模型穿上师父的反光背心摆到内院窗边。21:30:00 骆铎按时启动排风。21:30 程砚用死者手机在工作群回复'赶工，今晚别等我，汤不用送'。21:45 苏杳看到回复，没去送汤。22:00-22:20 魏武在监控室打盹（值守记录空档）。22:40 魏武巡馆进修复室送签到表，发现尸体并报警。23:10 急救确认死亡，初判'防护意外的工伤'。破案链：现场勘验（死亡时间与21:30消息矛盾、模型剪影）→ 器材库领用单（程砚签名+超期展示品空芯罐+旧罐回收栏空白）→ 排风工单（例检不停机却停机、'今晚办别声张'）→ 工作群消息句式反常 + 壶底照片（编号磨除）→ 台账与重量差（真壶被换）→ 私人借条与催收短信（质押与债务）→ 门禁流水与监控背影（21:15-21:25 十分钟）。红鲱鱼：齐悦的署名之争与19:50的争吵、苏杳'差一点成为发现人'的独处空档、魏武打盹与私放布展车的把柄、骆铎执行停机的'共犯嫌疑'——人人有秘密，无人是第二凶手。",
-    "keyEvidence": ["滤毒罐", "排风", "模型", "编号", "门禁"],
-    "reveal": "真相：凶手是保管部副主任程砚。二十六年的搭档情分，抵不过一纸催收短信——他把师父守护了一辈子的编号磨掉，把师父也一并'封护'进了那间停了风的操作间。他不需要碰师父一根手指：一只超期的空芯滤罐、一张合规的停机工单、一个闻不见味的鼻子，就够了。杀人之后他还替师父'加班'了两个小时——模型穿着师父的背心坐在窗边，师父的手机回了'别等我'，直到保安的手电照亮那具不会眨眼的剪影。他的破绽都在纸上：领用单上空白的回收栏，工单上'今晚办别声张'的原话，台账上轻掉八十四克的编号，还有那张以壶作抵的借条。齐悦吵的是活人的名字，苏杳没送的那盅汤救不了人，魏武的盹与骆铎的工单都只是灯罩——灯泡是程砚拧的。师父一生修了三百件器物，最后一件，是自己的死因。"
+    "culpritId": "chengyan",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "程砚把真青铜壶质押给私人老板抵儿子网赌的债，岑松年却在修复中发现壶底馆藏微刻编号被磨除，约好明早九点报馆长。程砚上午在器材库领走两只丁型滤毒罐——其中一只是超期七年的展示品空芯罐；他以'例检'为名签批修复楼排风20:30-21:30停机。20:10送宵夜时把空芯罐谎称'新到'递给岑松年（师父嗅觉退化，只按日历换罐），岑戴上面具拆除封护层，丙酮蒸气在停风的操作间积聚，21:05前后昏迷伏台，21:30前死亡。21:15程砚再进修复楼，取走台边尚有效的旧滤罐（外套下摆撑宽被监控拍下）、把穿反光背心的人体模型摆到内院窗边造'还在干活'的剪影，21:30用死者不设密的手机在工作群回'别等我'，打消苏杳21:45送汤的惯例，把发现时间拖到22:40。破绽：空芯滤罐的出厂日期、无人签收的旧罐回收栏、'例检却停机'的工单、模型臀部的灰、以及死亡时间与那条消息的矛盾。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "程砚把真青铜壶质押给私人老板抵儿子网赌的债，岑松年却在修复中发现壶底馆藏微刻编号被磨除，约好明早九点报馆长。程砚上午在器材库领走两只丁型滤毒罐——其中一只是超期七年的展示品空芯罐；他以'例检'为名签批修复楼排风20:30-21:30停机。20:10送宵夜时把空芯罐谎称'新到'递给岑松年（师父嗅觉退化，只按日历换罐），岑戴上面具拆除封护层，丙酮蒸气在停风的操作间积聚，21:05前后昏迷伏台，21:30前死亡。21:15程砚再进修复楼，取走台边尚有效的旧滤罐（外套下摆撑宽被监控拍下）、把穿反光背心的人体模型摆到内院窗边造'还在干活'的剪影，21:30用死者不设密的手机在工作群回'别等我'，打消苏杳21:45送汤的惯例，把发现时间拖到22:40。破绽：空芯滤罐的出厂日期、无人签收的旧罐回收栏、'例检却停机'的工单、模型臀部的灰、以及死亡时间与那条消息的矛盾。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "17:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "17:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "骆铎做排风停机准备（工单批示：程砚）。上午 程砚在器材库领用两只丁型滤毒罐，其中一只是超期七年的展示品空芯罐。"
+          }
+        ],
+        "characterIds": [
+          "chengyan",
+          "luoduo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan",
+          "luoduo"
+        ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "18:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:00"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "岑松年在修复操作间做前置准备：配液、摆青铜壶。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "19:50–20:00",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "齐悦进修复室与岑松年争署名，话赶话说重，"
+          }
+        ],
+        "characterIds": [
+          "qiyue"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiyue"
+        ]
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "摔门而去（楼梯口的苏杳听见）。"
+          }
+        ],
+        "characterIds": [
+          "suyao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suyao"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "20:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:05"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "岑松年用手机拍壶底微刻编号磨痕十七张，存云备份，计划明早九点报馆长。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "20:10–20:15",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:10"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "20:15"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "程砚送宵夜与'新到的滤毒罐'（实为空芯过期罐），门禁可证；岑松年换罐、开液。"
+          }
+        ],
+        "characterIds": [
+          "chengyan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "20:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:15"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "苏杳白班下班离开修复楼（排风还在响）。"
+          }
+        ],
+        "characterIds": [
+          "suyao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suyao"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": ":07 排风停机。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "20:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "起 岑松年戴面具大面积作业，丙酮蒸气积聚。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "岑松年伏在操作台昏迷。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:15–21:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "程砚再进修复楼（门禁可证）：确认死亡、取走台边尚有效的旧罐（监控拍下外套下摆撑宽）、从库房搬来人体模型穿上师父的反光背心摆到内院窗边。"
+          }
+        ],
+        "characterIds": [
+          "chengyan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": ":00 骆铎按时启动排风。"
+          }
+        ],
+        "characterIds": [
+          "luoduo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luoduo"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "程砚用死者手机在工作群回复'赶工，今晚别等我，汤不用送'。"
+          }
+        ],
+        "characterIds": [
+          "chengyan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:45"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "苏杳看到回复，没去送汤。"
+          }
+        ],
+        "characterIds": [
+          "suyao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suyao"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "22:00–22:20",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:20"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "魏武在监控室打盹（值守记录空档）。"
+          }
+        ],
+        "characterIds": [
+          "weiwu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "weiwu"
+        ]
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "魏武巡馆进修复室送签到表，发现尸体并报警。"
+          }
+        ],
+        "characterIds": [
+          "weiwu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "weiwu"
+        ]
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "急救确认死亡，初判'防护意外的工伤'。破案链：现场勘验（死亡时间与"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "消息矛盾、模型剪影）→ 器材库领用单（程砚签名+超期展示品空芯罐+旧罐回收栏空白）→ 排风工单（例检不停机却停机、'今晚办别声张'）→ 工作群消息句式反常 + 壶底照片（编号磨除）→ 台账与重量差（真壶被换）→ 私人借条与催收短信（质押与债务）→ 门禁流水与监控背影（"
+          }
+        ],
+        "characterIds": [
+          "chengyan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan"
+        ]
+      },
+      {
+        "id": "truth_event_19",
+        "time": {
+          "display": "21:15–21:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 19",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "十分钟）。红鲱鱼：齐悦的署名之争与"
+          }
+        ],
+        "characterIds": [
+          "qiyue"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qiyue"
+        ]
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "19:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:50"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "的争吵、苏杳'差一点成为发现人'的独处空档、魏武打盹与私放布展车的把柄、骆铎执行停机的'共犯嫌疑'——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [
+          "suyao",
+          "weiwu",
+          "luoduo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suyao",
+          "weiwu",
+          "luoduo"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "paifeng_gongdan",
+      "moxing_beixin",
+      "taitai_bianhao",
+      "menjian_kongbai"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "paifeng_gongdan"
+        ],
+        "conclusion": "排风"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "moxing_beixin"
+        ],
+        "conclusion": "模型"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "taitai_bianhao"
+        ],
+        "conclusion": "编号"
+      },
+      {
+        "id": "evidence_5",
+        "clueIds": [
+          "menjian_kongbai"
+        ],
+        "conclusion": "门禁"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是保管部副主任程砚。二十六年的搭档情分，抵不过一纸催收短信——他把师父守护了一辈子的编号磨掉，把师父也一并'封护'进了那间停了风的操作间。他不需要碰师父一根手指：一只超期的空芯滤罐、一张合规的停机工单、一个闻不见味的鼻子，就够了。杀人之后他还替师父'加班'了两个小时——模型穿着师父的背心坐在窗边，师父的手机回了'别等我'，直到保安的手电照亮那具不会眨眼的剪影。他的破绽都在纸上：领用单上空白的回收栏，工单上'今晚办别声张'的原话，台账上轻掉八十四克的编号，还有那张以壶作抵的借条。齐悦吵的是活人的名字，苏杳没送的那盅汤救不了人，魏武的盹与骆铎的工单都只是灯罩——灯泡是程砚拧的。师父一生修了三百件器物，最后一件，是自己的死因。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -193,6 +1733,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

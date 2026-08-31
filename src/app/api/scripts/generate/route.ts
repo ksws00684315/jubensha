@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { chat, extractJson } from "@/core/llm/client";
 import { cacheFriendlyMessages, GENERATOR_SYSTEM } from "@/core/agents/context";
-import { parseScriptDoc } from "@/core/script/schema";
-import { migrateV1ToV2 } from "@/core/script/v2/migrate-v1";
+import { ingestScriptDoc } from "@/core/script/compat";
 import { parseScriptDocV2, scriptDocV2Schema } from "@/core/script/v2/schema";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { requireAdmin } from "@/lib/admin";
@@ -70,14 +69,7 @@ export async function POST(req: Request) {
     const doc = extractJson(res.text);
     if (!doc) return NextResponse.json({ error: "模型未返回合法 JSON，请重试" }, { status: 502 });
 
-    let normalized;
-    let migrationIssues: Array<{ level: "warning"; message: string }> = [];
-    if (typeof doc === "object" && doc !== null && (doc as { version?: unknown }).version === 1) {
-      const v1 = parseScriptDoc(doc);
-      const migrated = migrateV1ToV2(v1);
-      normalized = migrated.doc;
-      migrationIssues = migrated.warnings.map((warning) => ({ level: "warning" as const, message: `${warning.path}: ${warning.message}` }));
-    } else {
+    if (typeof doc === "object" && doc !== null && (doc as { version?: unknown }).version !== 1) {
       try {
         const anyDoc = doc as { characters?: Array<{ id?: string; privateCard?: { isCulprit?: boolean } }>; truth?: { culpritId?: string } };
         const culpritChar = anyDoc.characters?.find((c) => c.privateCard?.isCulprit === true);
@@ -100,9 +92,18 @@ export async function POST(req: Request) {
           { status: 422 },
         );
       }
-      normalized = parseScriptDocV2(check.data);
+      const normalized = parseScriptDocV2(check.data);
+      return NextResponse.json({ doc: normalized, issues: validateScriptV2(normalized) });
     }
-    return NextResponse.json({ doc: normalized, issues: [...migrationIssues, ...validateScriptV2(normalized)] });
+
+    const ingested = ingestScriptDoc(doc);
+    return NextResponse.json({
+      doc: ingested.doc,
+      issues: [
+        ...ingested.migrationWarnings.map((warning) => ({ level: "warning" as const, path: warning.path, message: warning.message })),
+        ...validateScriptV2(ingested.doc),
+      ],
+    });
   } catch (err) {
     return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 502 });
   }

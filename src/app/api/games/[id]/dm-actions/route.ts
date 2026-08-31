@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { legacyScriptDocOf, parseAnyScriptDoc } from "@/core/script/compat";
+import { clueText, locationNameOf, narrativeToText, parseScriptForRuntime, publicBioText, timelineToText } from "@/core/script/compat";
 import { GameEngine } from "@/core/engine/engine";
 
 const actionSchema = z.object({
@@ -42,32 +42,43 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     return NextResponse.json({ error: "DM 鉴权失败" }, { status: 403 });
   }
 
-  const parsed = parseAnyScriptDoc(game.script.content);
-  const doc = legacyScriptDocOf(parsed.doc);
+  const doc = parseScriptForRuntime(game.script.content);
   return NextResponse.json({
-    truth: doc.truth,
+    truth: {
+      culprit: doc.truth.culpritId,
+      method: narrativeToText(doc.truth.method.summary),
+      fullTimeline: doc.truth.timeline.map((entry) => `${entry.time.display} ${entry.title}：${narrativeToText(entry.content)}`).join("\n"),
+      keyEvidence: doc.truth.keyEvidenceIds.map((id) => doc.clues.find((clue) => clue.id === id)?.name ?? id),
+      reveal: narrativeToText(doc.truth.reveal),
+    },
     characters: doc.characters.map((c) => ({
       id: c.id,
       name: c.name,
-      publicBio: c.publicBio,
-      secret: c.card.secret,
-      goal: c.card.goal,
-      timeline: c.card.timeline,
-      isCulprit: c.card.isCulprit,
+      publicBio: publicBioText(c),
+      secret: c.privateCard.secrets.map((secret) => `${secret.title}：${narrativeToText(secret.content)}`).join("\n\n"),
+      goal: c.privateCard.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n\n"),
+      timeline: timelineToText(c.privateCard.timeline),
+      isCulprit: c.privateCard.isCulprit,
       seatIndex: game.room.seats.find((s) => s.characterId === c.id)?.index ?? null,
     })),
-    clues: doc.clues,
-    structured: parsed.version === 2 ? {
-      truth: parsed.doc.truth,
-      characters: parsed.doc.characters.map((character) => ({
+    clues: doc.clues.map((clue) => ({
+      id: clue.id,
+      location: locationNameOf(doc, clue.locationId),
+      name: clue.name,
+      content: clueText(clue),
+      policy: clue.policy,
+    })),
+    structured: {
+      truth: doc.truth,
+      characters: doc.characters.map((character) => ({
         id: character.id,
         name: character.name,
         publicProfile: character.publicProfile,
         privateCard: character.privateCard,
         seatIndex: game.room.seats.find((seat) => seat.characterId === character.id)?.index ?? null,
       })),
-      clues: parsed.doc.clues,
-    } : null,
+      clues: doc.clues,
+    },
     votes: game.votes.map((v) => ({ seatIndex: v.seatIndex, targetIndex: v.targetIndex, reason: v.reason })),
   });
 }

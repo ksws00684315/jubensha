@@ -1,35 +1,268 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "报馆风云·夜印号外",
     "minPlayers": 5,
     "maxPlayers": 5,
     "durationMin": 120,
     "difficulty": "新手",
-    "tags": ["民国", "报馆", "本格", "新手友好"],
+    "tags": [
+      "民国",
+      "报馆",
+      "本格",
+      "新手友好"
+    ],
     "intro": "民国二十五年夏，江州城《正言报》连日连载《官米案始末》，把官仓与米行搅得人仰马翻。今夜加印号外，主编顾正纲亲自下排字房校大样。23:40，校对送样时看见他伏在字架旁，右手搭在台灯铜底座上，指尖一片焦痕——触电身亡。是线路老化，还是有人借一盏灯递刀？天亮之前，号外要出门，凶手也要现形。"
   },
-  "background": "《正言报》在江州城经营了十二年，靠的是主编顾正纲那支敢写的笔。这一回他捅的是马蜂窝：官仓亏空四千石，赈米从斗级的算盘上走进丰裕米行的船舱，连环单据他攥了一整月。号外连夜加印，全馆灯火通明。23:40，主编被发现死于排字房——触电。馆里的老电工早两年回乡了，如今管电机的是机师牛德山：白日里他刚'整修'过排字房的线路。主笔沈书城与主编为稿子拍过桌子，女记者林佩秋的恋人在米行做事，经理童伯衡正被纸行堵着门要账，排字领班郭一手偷卖铅字的事也快瞒不住了。一盏半明半灭的台灯，一根灯绳，一屋子各怀心事的读书人——今夜的《正言报》，要印的不是号外，是命。"
-  ,
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "《正言报》在江州城经营了十二年，靠的是主编顾正纲那支敢写的笔。这一回他捅的是马蜂窝：官仓亏空四千石，赈米从斗级的算盘上走进丰裕米行的船舱，连环单据他攥了一整月。号外连夜加印，全馆灯火通明。23:40，主编被发现死于排字房——触电。馆里的老电工早两年回乡了，如今管电机的是机师牛德山：白日里他刚'整修'过排字房的线路。主笔沈书城与主编为稿子拍过桌子，女记者林佩秋的恋人在米行做事，经理童伯衡正被纸行堵着门要账，排字领班郭一手偷卖铅字的事也快瞒不住了。一盏半明半灭的台灯，一根灯绳，一屋子各怀心事的读书人——今夜的《正言报》，要印的不是号外，是命。"
+    }
+  ],
   "characters": [
     {
       "id": "niudeshan",
       "name": "牛德山",
       "gender": "男",
       "age": 41,
-      "publicBio": "报馆机师，管电机房与全馆电灯线路，兼修印刷机。白日里他刚登记'整修排字房线路'，整夜守着预热中的印刷机。",
-      "card": {
-        "backstory": "你叫牛德山，《正言报》机师，管全馆的电。你的内弟周仓儿在官仓当斗级，官米案见报头一天就被点了名：'仓吏周仓儿收米行封口银'。你替他跑了腿：两笔共二百元'封口银'经你妻子的户头汇给报社的账房打点——汇票存根落在了主编手里。三天前主编把你叫进主编室，话只有两句：'写自白书，官仓后头的人我连带扳倒；不写，明天的号外连你一起登。'你嘴上应了，心里落了闸。白日整修线路，你把主编专用的那盏绿罩台灯换了铜壳开关，火线搭壳、灯泡拧松半圈——灯半明半灭，他必然伸手。",
-        "secret": "你就是凶手。你替内弟送封口银被主编拿住，佯写自白书实设杀局：白日整修时在台灯铜底座做了触电的机关，又穿上新胶底鞋绝缘。主编 23:18 按灯触电身亡，你当时就在排字房窗外，听着那声闷响，回机房开机印报。",
-        "goal": "把'线路老化漏电'坐实：检修登记簿是你一人的字、学徒离馆两刻是你支的、胶底鞋是'脚气'。若汇票存根被翻出，就说'那是我替内弟垫的冤枉钱，我才是被牵连的'。你要抢着'修灯验线'，第一个碰现场——手套在你工具房，今晚没戴，是想不起来还是想得起来，你自己清楚。",
-        "isCulprit": true,
-        "timeline": "8:00-12:00 你登记'整修排字房线路'，10:30 支学徒出去买烟（请假条在簿上），独自布设台灯机关、剥开一处胶皮伪装老化漏电。18:00 晚饭后你在电机房'等零件'。22:30 你借口'印刷机预热'守在机器房。23:10-23:20 你从机器房侧门溜到排字房窗外——23:18 你听见灯下'咚'的一声闷响与椅子腿的刮地声。23:25 回机器房。23:30 你开动印刷机，满馆都听见机器响。23:40 校对老宋发现尸体，你随众赶到，第一个伸手去'关电闸'。",
-        "knowledge": [
-          "排字房的电闸你白天锁进了配电间——今晚现场断电的钥匙只有你带在身上，'关电闸'这个动作只有你能做，也正好由你做。",
-          "台灯灯泡你拧松了半圈：灯半明半灭，主编校样到夜深必然伸手去拧——机关不打人，人自己伸手。",
-          "你的胶底鞋底沾着排字房的铅屑——铅屑亮闪闪，落在黑橡胶上格外扎眼，鞋今晚必须刷。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "报馆机师，管电机房与全馆电灯线路，兼修印刷机。白日里他刚登记'整修排字房线路'，整夜守着预热中的印刷机。"
+          }
         ],
-        "persona": "手艺人做派，开口'电机的事，隔行如隔山'闭口'我这就修'。爱蹲着抽烟袋，烟锅敲鞋帮。被问线路时讲得头头是道，问到'白天为何整修'会先叹气：'老馆子，线都酥了。'袖口永远沾着机油。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫牛德山，《正言报》机师，管全馆的电。你的内弟周仓儿在官仓当斗级，官米案见报头一天就被点了名：'仓吏周仓儿收米行封口银'。你替他跑了腿：两笔共二百元'封口银'经你妻子的户头汇给报社的账房打点——汇票存根落在了主编手里。三天前主编把你叫进主编室，话只有两句：'写自白书，官仓后头的人我连带扳倒；不写，明天的号外连你一起登。'你嘴上应了，心里落了闸。白日整修线路，你把主编专用的那盏绿罩台灯换了铜壳开关，火线搭壳、灯泡拧松半圈——灯半明半灭，他必然伸手。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_niudeshan_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你就是凶手。你替内弟送封口银被主编拿住，佯写自白书实设杀局：白日整修时在台灯铜底座做了触电的机关，又穿上新胶底鞋绝缘。主编 23:18 按灯触电身亡，你当时就在排字房窗外，听着那声闷响，回机房开机印报。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_niudeshan_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'线路老化漏电'坐实：检修登记簿是你一人的字、学徒离馆两刻是你支的、胶底鞋是'脚气'。若汇票存根被翻出，就说'那是我替内弟垫的冤枉钱，我才是被牵连的'。你要抢着'修灯验线'，第一个碰现场——手套在你工具房，今晚没戴，是想不起来还是想得起来，你自己清楚。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_niudeshan_event_2",
+            "time": {
+              "display": "10:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "10:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "支学徒出去买烟（请假条在簿上），独自布设台灯机关、剥开一处胶皮伪装老化漏电。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_3",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚饭后你在电机房'等零件'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_4",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你借口'印刷机预热'守在机器房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_5",
+            "time": {
+              "display": "23:10–23:20",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:20"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从机器房侧门溜到排字房窗外——23:18 你听见灯下'咚'的一声闷响与椅子腿的刮地声。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_6",
+            "time": {
+              "display": "23:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:25"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回机器房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_7",
+            "time": {
+              "display": "23:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你开动印刷机，满馆都听见机器响。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niudeshan_event_8",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "校对老宋发现尸体，你随众赶到，第一个伸手去'关电闸'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_niudeshan_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "排字房的电闸你白天锁进了配电间——今晚现场断电的钥匙只有你带在身上，'关电闸'这个动作只有你能做，也正好由你做。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_niudeshan_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "台灯灯泡你拧松了半圈：灯半明半灭，主编校样到夜深必然伸手去拧——机关不打人，人自己伸手。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_niudeshan_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的胶底鞋底沾着排字房的铅屑——铅屑亮闪闪，落在黑橡胶上格外扎眼，鞋今晚必须刷。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "手艺人做派，开口'电机的事，隔行如隔山'闭口'我这就修'。爱蹲着抽烟袋，烟锅敲鞋帮。被问线路时讲得头头是道，问到'白天为何整修'会先叹气：'老馆子，线都酥了。'袖口永远沾着机油。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -37,19 +270,223 @@
       "name": "沈书城",
       "gender": "男",
       "age": 38,
-      "publicBio": "《正言报》主笔，一支笔撑起半个头版，社论却总署主编的名。今夜他留馆赶写社论，22:40 曾与主编在走廊拍桌。",
-      "card": {
-        "backstory": "你叫沈书城，《正言报》主笔。馆里人都说'正言的笔是顾正纲的'——只有你知道那支笔的墨是从你砚台里出的：他署名，你熬夜，稿费他领。你吞了半年，直到家中药罐见底。三个月前起，你把馆论初稿私卖给对家《江声晚报》，一篇二十元，救的是你娘的药钱。今晚 22:40 你抱社论稿进主编室，他又一次当众训你'馆论是报馆的脸，你当是流水席？'你拍了桌子，撂下半句'你等着'——撂完就后悔了。你没杀他。可满馆都听见你那句'你等着'。",
-        "secret": "你私卖馆论给《江声晚报》换药钱，汇款条藏在宿舍铺底；22:40 你与主编拍桌、撂话'你等着'，是死前与他有过公开冲突的人。",
-        "goal": "把'卖稿'的把柄捂住，把'你等着'解释成'等你的社论改稿'。主动承认笔名之争、署名之怨，用'文人的怨'稀释'杀人的嫌'。你的硬证词：23:15 你路过排字房，听见里面水烟咕噜声——主编那时还活着。这张牌要先打，占住'我在写作'的位置。",
-        "isCulprit": false,
-        "timeline": "18:00 晚饭后你在主笔室写社论。20:00 你到储纸库取稿纸，顺手把明日的'私活'底稿夹进了自己的皮包。22:40 你到主编室交社论稿，被训、拍桌、撂话。23:00-23:30 你回主笔室'写社论'（无证人，桌上的稿子确实厚了两页）。23:15 你去排字房借五号铅字，路过听见水烟咕噜声，没进去。23:40 闻惊赶到。",
-        "knowledge": [
-          "23:15 排字房里水烟咕噜响——主编的水烟袋你认得，铜嘴玉身的那个。那时他活着，你听见的是他，不是别人。",
-          "22:40 你看见主编案头压着一叠钱庄的单据，红笔圈了又圈——他最近在查账，查的不止官米案的账。",
-          "《江声晚报》汇款条的附言写'馆论稿资'四个字——你留了字，是想有朝一日凭这个讨回署名，如今它是绳子。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "《正言报》主笔，一支笔撑起半个头版，社论却总署主编的名。今夜他留馆赶写社论，22:40 曾与主编在走廊拍桌。"
+          }
         ],
-        "persona": "清瘦斯文，开口'依我看'闭口'稿为凭'。惯用文人讥诮，急了咬文嚼字。护着铺底的皮箱，人可以走、箱不离手。提起'署名'二字，喉头会顿一下。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫沈书城，《正言报》主笔。馆里人都说'正言的笔是顾正纲的'——只有你知道那支笔的墨是从你砚台里出的：他署名，你熬夜，稿费他领。你吞了半年，直到家中药罐见底。三个月前起，你把馆论初稿私卖给对家《江声晚报》，一篇二十元，救的是你娘的药钱。今晚 22:40 你抱社论稿进主编室，他又一次当众训你'馆论是报馆的脸，你当是流水席？'你拍了桌子，撂下半句'你等着'——撂完就后悔了。你没杀他。可满馆都听见你那句'你等着'。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_shenshucheng_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你私卖馆论给《江声晚报》换药钱，汇款条藏在宿舍铺底；22:40 你与主编拍桌、撂话'你等着'，是死前与他有过公开冲突的人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_shenshucheng_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'卖稿'的把柄捂住，把'你等着'解释成'等你的社论改稿'。主动承认笔名之争、署名之怨，用'文人的怨'稀释'杀人的嫌'。你的硬证词：23:15 你路过排字房，听见里面水烟咕噜声——主编那时还活着。这张牌要先打，占住'我在写作'的位置。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_shenshucheng_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚饭后你在主笔室写社论。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenshucheng_event_2",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你到储纸库取稿纸，顺手把明日的'私活'底稿夹进了自己的皮包。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenshucheng_event_3",
+            "time": {
+              "display": "22:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你到主编室交社论稿，被训、拍桌、撂话。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenshucheng_event_4",
+            "time": {
+              "display": "23:00–23:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回主笔室'写社论'（无证人，桌上的稿子确实厚了两页）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenshucheng_event_5",
+            "time": {
+              "display": "23:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:15"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去排字房借五号铅字，路过听见水烟咕噜声，没进去。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenshucheng_event_6",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊赶到。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_shenshucheng_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:15 排字房里水烟咕噜响——主编的水烟袋你认得，铜嘴玉身的那个。那时他活着，你听见的是他，不是别人。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_shenshucheng_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:40 你看见主编案头压着一叠钱庄的单据，红笔圈了又圈——他最近在查账，查的不止官米案的账。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_shenshucheng_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "《江声晚报》汇款条的附言写'馆论稿资'四个字——你留了字，是想有朝一日凭这个讨回署名，如今它是绳子。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "清瘦斯文，开口'依我看'闭口'稿为凭'。惯用文人讥诮，急了咬文嚼字。护着铺底的皮箱，人可以走、箱不离手。提起'署名'二字，喉头会顿一下。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -57,19 +494,223 @@
       "name": "林佩秋",
       "gender": "女",
       "age": 26,
-      "publicBio": "《正言报》唯一的女记者，跑社会版，官米案的原始单据是她连夜抄的。今夜她本已下班，22:50 却折回了报馆。",
-      "card": {
-        "backstory": "你叫林佩秋，《正言报》女记者，官米案的原始单据是你一手抄的。没人知道丰裕米行的少东家与你私订过终身——官米案见报，你第一个念头是'完了，佩佩嫁的是仇家'。白天主编当众撕了你的稿子，骂你'笔下留情，留着给谁看？'你哭了一场，做了两手准备：单据抄件藏进储纸库的白报纸垛，'若报馆有事，此为退路'。今晚你越想越怕：抄件若被搜出，少东家完了，你也完了。22:50 你折回报馆，从储纸库抽出一份抄件揣进怀里，23:10 从后门走——被门房看见了个背影。你没杀他，你甚至没见过他最后一面。",
-        "secret": "你与丰裕米行少东家有私情，官米案原始单据你抄了两份副本藏起'保命'；今晚 22:50-23:10 你折回报馆从储纸库取走一份抄件，从后门离开——鬼祟的行踪、恋人的立场，桩桩都往你身上引。",
-        "goal": "把'退路'的真相讲成'自保'而非'通敌'：你可以承认折返取件，但要说清'取的是自己抄的抄件，主编室一步没进'。你手里有最要紧的时间证词之一：23:10 你从后门离开时，排字房的灯还亮着，机器还没响——机器 23:30 才开机，机关若在'电'上，那就是 23:10 之后的事。",
-        "isCulprit": false,
-        "timeline": "18:00 你下班离开报馆（门房登记）。20:00 你在家为少东家的事落泪，撕了两封信。22:50 你折回报馆，直奔储纸库。22:55-23:05 你从白报纸垛抽出一份抄件揣进怀里。23:10 你从后门离开，门房看见背影。23:40 闻讯赶回，在排字房门口吐了。",
-        "knowledge": [
-          "23:10 你离开时排字房灯亮着、印刷机未响——机器是 23:30 才开的，号外要人校完才印，那之后主编出的事。",
-          "主编撕你稿子时说过一句你记到现在的：'丰裕的单据我记得是你抄的，原稿呢？'——他早疑你藏了原件。",
-          "储纸库的白报纸垛第三层是你惯放'待查件'的地方——今晚你抽走一份，抽缝里的散纸骗不过细心人。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "《正言报》唯一的女记者，跑社会版，官米案的原始单据是她连夜抄的。今夜她本已下班，22:50 却折回了报馆。"
+          }
         ],
-        "persona": "语速快、眼风利，开口'有单据为证'闭口'记者只认事实'。护着怀里的纸包像护着心口。提及'丰裕'两个字会僵住。哭的时候不出声，只掉眼泪。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫林佩秋，《正言报》女记者，官米案的原始单据是你一手抄的。没人知道丰裕米行的少东家与你私订过终身——官米案见报，你第一个念头是'完了，佩佩嫁的是仇家'。白天主编当众撕了你的稿子，骂你'笔下留情，留着给谁看？'你哭了一场，做了两手准备：单据抄件藏进储纸库的白报纸垛，'若报馆有事，此为退路'。今晚你越想越怕：抄件若被搜出，少东家完了，你也完了。22:50 你折回报馆，从储纸库抽出一份抄件揣进怀里，23:10 从后门走——被门房看见了个背影。你没杀他，你甚至没见过他最后一面。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_linpeiqiu_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与丰裕米行少东家有私情，官米案原始单据你抄了两份副本藏起'保命'；今晚 22:50-23:10 你折回报馆从储纸库取走一份抄件，从后门离开——鬼祟的行踪、恋人的立场，桩桩都往你身上引。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_linpeiqiu_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'退路'的真相讲成'自保'而非'通敌'：你可以承认折返取件，但要说清'取的是自己抄的抄件，主编室一步没进'。你手里有最要紧的时间证词之一：23:10 你从后门离开时，排字房的灯还亮着，机器还没响——机器 23:30 才开机，机关若在'电'上，那就是 23:10 之后的事。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_linpeiqiu_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你下班离开报馆（门房登记）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_linpeiqiu_event_2",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在家为少东家的事落泪，撕了两封信。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_linpeiqiu_event_3",
+            "time": {
+              "display": "22:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:50"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你折回报馆，直奔储纸库。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_linpeiqiu_event_4",
+            "time": {
+              "display": "22:55–23:05",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:55"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "23:05"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从白报纸垛抽出一份抄件揣进怀里。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_linpeiqiu_event_5",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从后门离开，门房看见背影。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_linpeiqiu_event_6",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻讯赶回，在排字房门口吐了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_linpeiqiu_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:10 你离开时排字房灯亮着、印刷机未响——机器是 23:30 才开的，号外要人校完才印，那之后主编出的事。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_linpeiqiu_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "主编撕你稿子时说过一句你记到现在的：'丰裕的单据我记得是你抄的，原稿呢？'——他早疑你藏了原件。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_linpeiqiu_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "储纸库的白报纸垛第三层是你惯放'待查件'的地方——今晚你抽走一份，抽缝里的散纸骗不过细心人。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "语速快、眼风利，开口'有单据为证'闭口'记者只认事实'。护着怀里的纸包像护着心口。提及'丰裕'两个字会僵住。哭的时候不出声，只掉眼泪。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -77,19 +718,199 @@
       "name": "童伯衡",
       "gender": "男",
       "age": 48,
-      "publicBio": "《正言报》经理，管账管发行，馆里欠着纸行三千大洋。今夜他 22:20 从家赶来馆里，23:10 曾进排字房催号外。",
-      "card": {
-        "backstory": "你叫童伯衡，《正言报》经理。报馆的脸面是主编的，账是你的：纸行三千大洋的欠款被催到第三封信，你挪了报馆'公积金'两千去填你在申庄的亏空——窟窿眼看盖不住。白日机师递条子要'停电半日整修线路'，你大笔一挥准了：停电半日，印务停摆，正好给纸行一个'报馆艰难'的样子。今晚纸行的信追到你家里，你 22:20 赶来馆里翻账，23:10 进排字房催'号外几时开机'——主编头也不抬挥挥手，那是你见他最后一面。你要是真知道那一挥意味着什么，你打死也不会去催那一趟。",
-        "secret": "你挪用报馆公积金两千元填私账；白日'停电半日整修线路'是你签批的条子——真凶正是借这半日布的局，你签的字成了凶手的路条。23:10 你进过排字房，是死前最后见主编的人之一。",
-        "goal": "把'签批停电'说成寻常公务、把'催号外'说成经理本分，别让自己背'失察'更别背'同谋'。公积金的账要抢在搜证前'理平'——可纸行的催款信就压在账房抽屉里。你要主动牵头查案：经理出面，最像主持公道，也最能盯着别人别翻你那本账。",
-        "isCulprit": false,
-        "timeline": "18:00 你在家收到纸行第三封催款信。22:20 你赶到报馆，直奔账房翻账对窟窿。23:10 你进排字房催号外，主编挥挥手没抬头，你在门口站了半分钟。23:15 回账房。23:40 闻惊赶到，第一个喊'快请医生'，随手把账房抽屉锁了。",
-        "knowledge": [
-          "23:10 你看见主编案头摆着号外大样与一盏半明半灭的台灯，灯闪得厉害——你说了一句'灯也该修了'，他没理你。",
-          "白日停电整修是你签批的：'准机师牛德山整修排字房线路，停电半日'——条子压在账房抽屉，那半日里馆里只有他一个人在排字房动过电。",
-          "纸行催款信三封、公积金亏空两千——账一翻就露，你锁抽屉锁的是自己的命。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "《正言报》经理，管账管发行，馆里欠着纸行三千大洋。今夜他 22:20 从家赶来馆里，23:10 曾进排字房催号外。"
+          }
         ],
-        "persona": "商人做派裹着文人壳，开口'馆里艰难'闭口'下月一定'。惯用怀表看时间，看一眼擦一下。被追问账目会掏手帕擦汗。谁提'停电半日'，他的怀表就停在哪一刻。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫童伯衡，《正言报》经理。报馆的脸面是主编的，账是你的：纸行三千大洋的欠款被催到第三封信，你挪了报馆'公积金'两千去填你在申庄的亏空——窟窿眼看盖不住。白日机师递条子要'停电半日整修线路'，你大笔一挥准了：停电半日，印务停摆，正好给纸行一个'报馆艰难'的样子。今晚纸行的信追到你家里，你 22:20 赶来馆里翻账，23:10 进排字房催'号外几时开机'——主编头也不抬挥挥手，那是你见他最后一面。你要是真知道那一挥意味着什么，你打死也不会去催那一趟。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_tongboheng_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你挪用报馆公积金两千元填私账；白日'停电半日整修线路'是你签批的条子——真凶正是借这半日布的局，你签的字成了凶手的路条。23:10 你进过排字房，是死前最后见主编的人之一。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_tongboheng_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'签批停电'说成寻常公务、把'催号外'说成经理本分，别让自己背'失察'更别背'同谋'。公积金的账要抢在搜证前'理平'——可纸行的催款信就压在账房抽屉里。你要主动牵头查案：经理出面，最像主持公道，也最能盯着别人别翻你那本账。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_tongboheng_event_1",
+            "time": {
+              "display": "18:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在家收到纸行第三封催款信。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongboheng_event_2",
+            "time": {
+              "display": "22:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:20"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你赶到报馆，直奔账房翻账对窟窿。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongboheng_event_3",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你进排字房催号外，主编挥挥手没抬头，你在门口站了半分钟。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongboheng_event_4",
+            "time": {
+              "display": "23:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:15"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回账房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tongboheng_event_5",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊赶到，第一个喊'快请医生'，随手把账房抽屉锁了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_tongboheng_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:10 你看见主编案头摆着号外大样与一盏半明半灭的台灯，灯闪得厉害——你说了一句'灯也该修了'，他没理你。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tongboheng_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白日停电整修是你签批的：'准机师牛德山整修排字房线路，停电半日'——条子压在账房抽屉，那半日里馆里只有他一个人在排字房动过电。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_tongboheng_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "纸行催款信三封、公积金亏空两千——账一翻就露，你锁抽屉锁的是自己的命。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "商人做派裹着文人壳，开口'馆里艰难'闭口'下月一定'。惯用怀表看时间，看一眼擦一下。被追问账目会掏手帕擦汗。谁提'停电半日'，他的怀表就停在哪一刻。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -97,94 +918,811 @@
       "name": "郭一手",
       "gender": "男",
       "age": 45,
-      "publicBio": "排字房领班，一手拣字绝活，人称'郭一手'。案发时段他就在排字房后排——可他偏偏出去解了二十分钟手。",
-      "card": {
-        "backstory": "你叫郭一手，排字房领班，拣字三十年，手上功夫江州头一份。可烟瘾也三十年：烟馆的账滚到三十七块五，馆里的月钱填不上，你干了蠢事——把库里的五号铅字偷出两盘卖了铅。铅账对不上，主编已在查：'库里五号铅短了两盘，谁的手？'你夜里睡不踏实。今晚你一直在排字房后排拣字，23:05 你肚子疼去后院茅房——就这二十分钟，前头出了人命。你 23:25 回来，想看看主编的大样校完没有，一抬头看见灯下人伏着不动。你吓得腿软，却在慌乱中碰翻了字架——把现场碰了个乱七八糟。",
-        "secret": "你偷卖馆里的五号铅字还烟账，小账本藏在排字房后间草席下；主编正查铅字短少，你怕查到自己头上；案发时你恰好离场二十分钟，是'最可能动手却最无辜'的人。",
-        "goal": "把'偷铅'的事捂到最后一刻，把'离场二十分钟'的行踪说清——茅房没人证，这是你的死穴。你要主动交代'碰乱字架'换'慌乱'而非'毁证'的解读。你手上有全案最妙的证词：23:05 你离场时，主编还在灯下拧那盏半明半灭的台灯——嘴里骂着'灯又坏了'。",
-        "isCulprit": false,
-        "timeline": "20:00 你在排字房领活、备号外的字。22:30 前排主编开始校大样，你在后排拣字。23:05 你腹疼去后院茅房（无人作证）。23:25 你回来，看见灯下人伏着不动，慌乱中碰翻字架。23:40 校对老宋进房惊叫，你抢上去探鼻息，人已经凉了。23:45 你被众人架到一边——手上的铅灰还没洗。",
-        "knowledge": [
-          "23:05 你离场时亲眼看见：主编正伸手去拧那盏半明半灭的台灯，嘴里骂'灯又坏了'——灯泡拧松的样子，行家一看就知道不是自己松的。",
-          "你偷的铅字从水门出去过两回——水门夜里不锁，后门的位置你比谁都熟，这话你不敢说，可万一凶手也从那儿来呢？",
-          "小账本'廿一，五号铅两盘，售洋六元'——卖铅的贩子认得你，搜出来你就完了，不搜出来你天天怕。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "排字房领班，一手拣字绝活，人称'郭一手'。案发时段他就在排字房后排——可他偏偏出去解了二十分钟手。"
+          }
         ],
-        "persona": "老师傅的倔，开口'拣字三十年'闭口'手上的活不会错'。护着字架像护着祖坟。提到主编查铅字就搓手上的铅灰。吓破了胆时反而啰嗦，一句'我就去了趟茅房'说三遍。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫郭一手，排字房领班，拣字三十年，手上功夫江州头一份。可烟瘾也三十年：烟馆的账滚到三十七块五，馆里的月钱填不上，你干了蠢事——把库里的五号铅字偷出两盘卖了铅。铅账对不上，主编已在查：'库里五号铅短了两盘，谁的手？'你夜里睡不踏实。今晚你一直在排字房后排拣字，23:05 你肚子疼去后院茅房——就这二十分钟，前头出了人命。你 23:25 回来，想看看主编的大样校完没有，一抬头看见灯下人伏着不动。你吓得腿软，却在慌乱中碰翻了字架——把现场碰了个乱七八糟。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_guoyishou_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷卖馆里的五号铅字还烟账，小账本藏在排字房后间草席下；主编正查铅字短少，你怕查到自己头上；案发时你恰好离场二十分钟，是'最可能动手却最无辜'的人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_guoyishou_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把'偷铅'的事捂到最后一刻，把'离场二十分钟'的行踪说清——茅房没人证，这是你的死穴。你要主动交代'碰乱字架'换'慌乱'而非'毁证'的解读。你手上有全案最妙的证词：23:05 你离场时，主编还在灯下拧那盏半明半灭的台灯——嘴里骂着'灯又坏了'。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_guoyishou_event_1",
+            "time": {
+              "display": "20:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在排字房领活、备号外的字。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guoyishou_event_2",
+            "time": {
+              "display": "22:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "前排主编开始校大样，你在后排拣字。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guoyishou_event_3",
+            "time": {
+              "display": "23:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你腹疼去后院茅房（无人作证）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guoyishou_event_4",
+            "time": {
+              "display": "23:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:25"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回来，看见灯下人伏着不动，慌乱中碰翻字架。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guoyishou_event_5",
+            "time": {
+              "display": "23:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "校对老宋进房惊叫，你抢上去探鼻息，人已经凉了。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guoyishou_event_6",
+            "time": {
+              "display": "23:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:45"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你被众人架到一边——手上的铅灰还没洗。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_guoyishou_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "23:05 你离场时亲眼看见：主编正伸手去拧那盏半明半灭的台灯，嘴里骂'灯又坏了'——灯泡拧松的样子，行家一看就知道不是自己松的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guoyishou_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷的铅字从水门出去过两回——水门夜里不锁，后门的位置你比谁都熟，这话你不敢说，可万一凶手也从那儿来呢？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_guoyishou_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "小账本'廿一，五号铅两盘，售洋六元'——卖铅的贩子认得你，搜出来你就完了，不搜出来你天天怕。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "老师傅的倔，开口'拣字三十年'闭口'手上的活不会错'。护着字架像护着祖坟。提到主编查铅字就搓手上的铅灰。吓破了胆时反而啰嗦，一句'我就去了趟茅房'说三遍。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["排字房", "电机房", "主编室", "账房与经理室", "馆员宿舍", "储纸库", "排字房后间"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "排字房",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "电机房",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "主编室",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "账房与经理室",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "馆员宿舍",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "储纸库",
+      "description": []
+    },
+    {
+      "id": "location_7",
+      "name": "排字房后间",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "c_yanshi",
-      "location": "排字房",
+      "locationId": "location_1",
       "name": "验尸草单",
-      "content": "死者伏于字架旁矮凳，右手搭在绿罩台灯铜底座上：右手掌心与食、中二指指腹有灰白色隆起的电流斑，边缘充血如烙。死亡时刻约 23:10 至 23:25。馆内电路当夜时断时续，排字房那盏灯半明半灭——众人皆言'线路老化漏电'。草单边角有一行补记：'死者指腹灼痕深，非瞬间脱离，是握而不放。'",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "死者伏于字架旁矮凳，右手搭在绿罩台灯铜底座上：右手掌心与食、中二指指腹有灰白色隆起的电流斑，边缘充血如烙。死亡时刻约 23:10 至 23:25。馆内电路当夜时断时续，排字房那盏灯半明半灭——众人皆言'线路老化漏电'。草单边角有一行补记：'死者指腹灼痕深，非瞬间脱离，是握而不放。'"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_tongxian",
-      "location": "排字房",
+      "locationId": "location_1",
       "name": "台灯底座里的裸铜线",
-      "content": "台灯铜底座的旋钮开关被拆开过：开关一极的线头直接绕焊在铜壳内壁，螺丝口有新旋的亮痕；铜壳内侧干干净净——用了十年的灯，壳内早该积灰包浆，干净才是最大的不对。灯泡被拧松半圈，一碰即亮。门口泥地上印着一枚带棱的胶底鞋印，纹路与机师平日那双胶鞋同款——胶底绝缘，做贼心虚的人才穿得上。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "台灯铜底座的旋钮开关被拆开过：开关一极的线头直接绕焊在铜壳内壁，螺丝口有新旋的亮痕；铜壳内侧干干净净——用了十年的灯，壳内早该积灰包浆，干净才是最大的不对。灯泡被拧松半圈，一碰即亮。门口泥地上印着一枚带棱的胶底鞋印，纹路与机师平日那双胶鞋同款——胶底绝缘，做贼心虚的人才穿得上。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_dayang",
-      "location": "排字房",
+      "locationId": "location_1",
       "name": "赶印的大样",
-      "content": "字架上钳着号外大样：《官米案始末》之三，标题被红笔加粗。大样边角有主编的批注：'仓吏周仓儿收米行封口银，经手何人？另：牛记电机行承揽本馆线路十年，回扣几何——明日一并登。'批注墨色极新，笔画潦草，是死前半个时辰内写的。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "字架上钳着号外大样：《官米案始末》之三，标题被红笔加粗。大样边角有主编的批注：'仓吏周仓儿收米行封口银，经手何人？另：牛记电机行承揽本馆线路十年，回扣几何——明日一并登。'批注墨色极新，笔画潦草，是死前半个时辰内写的。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_dengjibu",
-      "location": "电机房",
+      "locationId": "location_2",
       "name": "检修登记簿",
-      "content": "当日上午登记：'整修排字房线路，机师牛德山，一人作业'；学徒名下只有一句'购烟，午前出馆两刻'的请假条——支开人的时候，正是接线的时候。往前翻：三个月前'电机异响检修'也是牛德山一人。配电间的备用钥匙两把，一把在机师身上，另一把去年就'锈死取不出'了。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "当日上午登记：'整修排字房线路，机师牛德山，一人作业'；学徒名下只有一句'购烟，午前出馆两刻'的请假条——支开人的时候，正是接线的时候。往前翻：三个月前'电机异响检修'也是牛德山一人。配电间的备用钥匙两把，一把在机师身上，另一把去年就'锈死取不出'了。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_huipiao",
-      "location": "主编室",
+      "locationId": "location_3",
       "name": "钱庄汇票存根",
-      "content": "主编抽屉暗格里两联广济钱庄汇票存根：收款人'牛王氏'（牛德山之妻），两笔共二百元，日期都在官米案见报之后。附言栏一行主编的小字：'封口银？取死之道。'存根是从钱庄抄来的底——主编查账查到了谁头上，一目了然。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "主编抽屉暗格里两联广济钱庄汇票存根：收款人'牛王氏'（牛德山之妻），两笔共二百元，日期都在官米案见报之后。附言栏一行主编的小字：'封口银？取死之道。'存根是从钱庄抄来的底——主编查账查到了谁头上，一目了然。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_maijia",
-      "location": "馆员宿舍",
+      "locationId": "location_5",
       "name": "卖稿的汇款条",
-      "content": "主笔沈书城铺底皮箱夹层：《江声晚报》编辑部汇款条三张，每张二十元，附言'馆论稿资'；同夹层一封未寄出的自辩信：'书城非贪，家中有药罐……署名事，望先生体谅。'皮箱里另有一叠退稿信，信封上的馆名被人用指甲掐出了月牙印。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "主笔沈书城铺底皮箱夹层：《江声晚报》编辑部汇款条三张，每张二十元，附言'馆论稿资'；同夹层一封未寄出的自辩信：'书城非贪，家中有药罐……署名事，望先生体谅。'皮箱里另有一叠退稿信，信封上的馆名被人用指甲掐出了月牙印。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_fuben",
-      "location": "储纸库",
+      "locationId": "location_6",
       "name": "白报纸堆里的抄件",
-      "content": "白报纸垛第三层抽缝里塞着一个牛皮纸夹：官米案原始单据的抄件两份，只剩一份，页脚有林佩秋的小楷'存照'；夹内一张便笺：'若报馆有事，此为退路。'抽缝里有新抽动的散纸，纸卷的压痕还是热的——今晚有人刚从这儿取走一份。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "白报纸垛第三层抽缝里塞着一个牛皮纸夹：官米案原始单据的抄件两份，只剩一份，页脚有林佩秋的小楷'存照'；夹内一张便笺：'若报馆有事，此为退路。'抽缝里有新抽动的散纸，纸卷的压痕还是热的——今晚有人刚从这儿取走一份。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_qianzi",
-      "location": "账房与经理室",
+      "locationId": "location_4",
       "name": "经理的债信与签条",
-      "content": "账房抽屉：纸行催款信三封，最晚一封措辞严厉'年底不结，照会商会'；一本公积金流水，'申庄往来'一项亏空两千。另一张是童伯衡签批的条子：'准机师牛德山，廿八日晨整修排字房线路，停电半日。'——停电半日，一人作业，条子是他签的。抽屉上了锁，钥匙在他怀表链上。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "账房抽屉：纸行催款信三封，最晚一封措辞严厉'年底不结，照会商会'；一本公积金流水，'申庄往来'一项亏空两千。另一张是童伯衡签批的条子：'准机师牛德山，廿八日晨整修排字房线路，停电半日。'——停电半日，一人作业，条子是他签的。抽屉上了锁，钥匙在他怀表链上。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_qianbao",
-      "location": "排字房后间",
+      "locationId": "location_7",
       "name": "席下的铅字流水",
-      "content": "排字房后间草席下有一本小账：'廿一，五号铅两盘，售洋六元；廿四，同。'末页夹着烟馆的赊账单：'烟资累计三十七元五角。'字迹与领班郭一手的拣字单同出一手。字架旁还有一只碰倒的字盘，五号铅字撒了半地——有人慌乱中碰的，撞翻的时刻在发现尸体之前。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "排字房后间草席下有一本小账：'廿一，五号铅两盘，售洋六元；廿四，同。'末页夹着烟馆的赊账单：'烟资累计三十七元五角。'字迹与领班郭一手的拣字单同出一手。字架旁还有一只碰倒的字盘，五号铅字撒了半地——有人慌乱中碰的，撞翻的时刻在发现尸体之前。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "niudeshan",
-    "method": "牛德山替内弟（官仓斗级周仓儿）向米行传递封口银，被主编查账拿住——主编逼他写自白书，否则号外连他一起登。他佯写自白书，借白日'整修排字房线路、停电半日'（经理签批）的机会，在主编专用的绿罩台灯铜底座内把火线搭壳、拧松灯泡半圈，并剥开一处胶皮伪装线路老化。深夜主编校样，灯半明半灭，伸手拧灯即触电，握而不放——23:18 亡。为何只有他：全馆电路只有机师动得了，停电半日里排字房只有他一人作业；铜壳机关藏在灯内，'意外'由他一手做成；案发后'关电闸、验线路'的解释权也在他。",
-    "fullTimeline": "8:00-12:00 牛德山登记'整修排字房线路'，10:30 支学徒买烟离馆两刻，独自布设台灯机关与假'老化'破皮——检修登记簿与请假条为证；停电半日由经理童伯衡签批。18:00 各人晚饭。20:00 主编进排字房备号外；沈书城到储纸库取稿纸；郭一手领活拣字。22:20 童伯衡被纸行催款信追到馆里，在账房翻账。22:40 沈书城到主编室交社论稿，拍桌撂话'你等着'。22:50-23:10 林佩秋折回报馆，从储纸库抽走一份抄件，23:10 从后门离开（门房见背影；排字房灯亮、机器未响）。23:05 郭一手腹疼去后院茅房，离场二十分钟——排字房内只剩主编。23:10 童伯衡进排字房催号外，见灯半明半灭，主编挥挥手。23:15 沈书城路过排字房，听见水烟咕噜声——主编尚活。23:18 主编伸手拧灯触电，握而不放，伏于字架旁；窗外机器房侧门处，牛德山听见闷响。23:25 郭一手回来，慌乱中碰翻字盘。23:30 牛德山开动印刷机。23:40 校对老宋送大样发现尸体；牛德山随众赶到，第一个'关电闸'。破案链：验尸草单（电流斑、握而不放）→ 台灯底座裸铜线（新旋亮痕、无尘铜壳、胶底鞋印）→ 检修登记簿（一人作业、支开学徒）→ 大样批注与汇票存根（动机）→ 各人行踪与秘密（卖稿汇款条、抄件、债信签条、铅字流水）。红鲱鱼：沈书城的'你等着'与卖稿、林佩秋的折返取件与恋人立场、童伯衡的签批停电与亏空、郭一手的偷铅与二十分钟空白——人人有秘密，无人是凶手。",
-    "keyEvidence": ["电流斑", "裸铜线", "汇票", "官米案", "胶底鞋"],
-    "reveal": "真相：凶手是机师牛德山。他替内弟送封口银的汇票存根落进了主编的暗格，主编给了他两条路：自白书，或者号外上见。他选了第三条路——白日里光明正大走进排字房'整修线路'，把主编那盏灯改成了刑具：火线搭壳、灯泡拧松，灯半明半灭，等人伸手。他连鞋都换成了胶底的。夜里他守在机器房，侧门出去看了最后一眼：23:18，灯下闷响一声，握而不放。他回身开动印刷机——满馆的机器轰鸣，盖住了他的心跳。他算准了线路老化人人会信，没算到用了十年的灯壳里不该一尘不染，没算到死者的批注还压在大样上——'回扣几何'四个字没来得及登报，却把封口银的汇票、白日停电的签条、支开学徒的请假条，一环扣一环地锁回了电机房。一盏灯杀人，灭口的却是人自己的账。"
+    "culpritId": "niudeshan",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "牛德山替内弟（官仓斗级周仓儿）向米行传递封口银，被主编查账拿住——主编逼他写自白书，否则号外连他一起登。他佯写自白书，借白日'整修排字房线路、停电半日'（经理签批）的机会，在主编专用的绿罩台灯铜底座内把火线搭壳、拧松灯泡半圈，并剥开一处胶皮伪装线路老化。深夜主编校样，灯半明半灭，伸手拧灯即触电，握而不放——23:18 亡。为何只有他：全馆电路只有机师动得了，停电半日里排字房只有他一人作业；铜壳机关藏在灯内，'意外'由他一手做成；案发后'关电闸、验线路'的解释权也在他。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "牛德山替内弟（官仓斗级周仓儿）向米行传递封口银，被主编查账拿住——主编逼他写自白书，否则号外连他一起登。他佯写自白书，借白日'整修排字房线路、停电半日'（经理签批）的机会，在主编专用的绿罩台灯铜底座内把火线搭壳、拧松灯泡半圈，并剥开一处胶皮伪装线路老化。深夜主编校样，灯半明半灭，伸手拧灯即触电，握而不放——23:18 亡。为何只有他：全馆电路只有机师动得了，停电半日里排字房只有他一人作业；铜壳机关藏在灯内，'意外'由他一手做成；案发后'关电闸、验线路'的解释权也在他。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "10:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "10:30"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "支学徒买烟离馆两刻，独自布设台灯机关与假'老化'破皮——检修登记簿与请假条为证；停电半日由经理童伯衡签批。"
+          }
+        ],
+        "characterIds": [
+          "tongboheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tongboheng"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "18:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:00"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "各人晚饭。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "20:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "主编进排字房备号外；沈书城到储纸库取稿纸；郭一手领活拣字。"
+          }
+        ],
+        "characterIds": [
+          "shenshucheng",
+          "guoyishou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenshucheng",
+          "guoyishou"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "22:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:20"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "童伯衡被纸行催款信追到馆里，在账房翻账。"
+          }
+        ],
+        "characterIds": [
+          "tongboheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tongboheng"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈书城到主编室交社论稿，拍桌撂话'你等着'。"
+          }
+        ],
+        "characterIds": [
+          "shenshucheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenshucheng"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "22:50–23:10",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "林佩秋折回报馆，从储纸库抽走一份抄件，"
+          }
+        ],
+        "characterIds": [
+          "linpeiqiu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "linpeiqiu"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "从后门离开（门房见背影；排字房灯亮、机器未响）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "23:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:05"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郭一手腹疼去后院茅房，离场二十分钟——排字房内只剩主编。"
+          }
+        ],
+        "characterIds": [
+          "guoyishou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guoyishou"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "童伯衡进排字房催号外，见灯半明半灭，主编挥挥手。"
+          }
+        ],
+        "characterIds": [
+          "tongboheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tongboheng"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "23:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:15"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈书城路过排字房，听见水烟咕噜声——主编尚活。"
+          }
+        ],
+        "characterIds": [
+          "shenshucheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenshucheng"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "23:18",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:18"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "主编伸手拧灯触电，握而不放，伏于字架旁；窗外机器房侧门处，牛德山听见闷响。"
+          }
+        ],
+        "characterIds": [
+          "niudeshan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niudeshan"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "23:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:25"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郭一手回来，慌乱中碰翻字盘。"
+          }
+        ],
+        "characterIds": [
+          "guoyishou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guoyishou"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "23:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:30"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "牛德山开动印刷机。"
+          }
+        ],
+        "characterIds": [
+          "niudeshan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niudeshan"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "23:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:40"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "校对老宋送大样发现尸体；牛德山随众赶到，第一个'关电闸'。破案链：验尸草单（电流斑、握而不放）→ 台灯底座裸铜线（新旋亮痕、无尘铜壳、胶底鞋印）→ 检修登记簿（一人作业、支开学徒）→ 大样批注与汇票存根（动机）→ 各人行踪与秘密（卖稿汇款条、抄件、债信签条、铅字流水）。红鲱鱼：沈书城的'你等着'与卖稿、林佩秋的折返取件与恋人立场、童伯衡的签批停电与亏空、郭一手的偷铅与二十分钟空白——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "niudeshan",
+          "shenshucheng",
+          "linpeiqiu",
+          "tongboheng",
+          "guoyishou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "niudeshan",
+          "shenshucheng",
+          "linpeiqiu",
+          "tongboheng",
+          "guoyishou"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "c_tongxian",
+      "c_huipiao"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "c_tongxian"
+        ],
+        "conclusion": "裸铜线"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "c_huipiao"
+        ],
+        "conclusion": "汇票"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [
+      {
+        "type": "paragraph",
+        "text": "8:00-12:00 牛德山登记'整修排字房线路'，"
+      }
+    ],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是机师牛德山。他替内弟送封口银的汇票存根落进了主编的暗格，主编给了他两条路：自白书，或者号外上见。他选了第三条路——白日里光明正大走进排字房'整修线路'，把主编那盏灯改成了刑具：火线搭壳、灯泡拧松，灯半明半灭，等人伸手。他连鞋都换成了胶底的。夜里他守在机器房，侧门出去看了最后一眼：23:18，灯下闷响一声，握而不放。他回身开动印刷机——满馆的机器轰鸣，盖住了他的心跳。他算准了线路老化人人会信，没算到用了十年的灯壳里不该一尘不染，没算到死者的批注还压在大样上——'回扣几何'四个字没来得及登报，却把封口银的汇票、白日停电的签条、支开学徒的请假条，一环扣一环地锁回了电机房。一盏灯杀人，灭口的却是人自己的账。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -194,6 +1732,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

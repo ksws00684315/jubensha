@@ -1,34 +1,332 @@
 {
-  "version": 1,
+  "version": 2,
   "meta": {
     "title": "雾锁戏班·万年台",
     "minPlayers": 6,
     "maxPlayers": 6,
     "durationMin": 180,
     "difficulty": "进阶",
-    "tags": ["民国", "戏班", "本格", "密闭空间"],
+    "tags": [
+      "民国",
+      "戏班",
+      "本格",
+      "密闭空间"
+    ],
     "intro": "民国二十六年冬，川江边的青栀镇起了三天大雾。戏班庆云班在万年台唱夜戏《长坂坡》，台柱子柳惊鸿落幕回后台卸妆，一刻钟后，学徒端参汤进来，看见他仰倒在戏箱边，血糊了半张脸。雾封了江面，官船进不来。天亮之前，后台这六个人里，必须交出一个凶手。"
   },
-  "background": "青栀镇万年台，临江而立，三日大雾把水路封得死死的。庆云班在此连演五天，今晚是最后一场：大轴《长坂坡》，台柱子柳惊鸿一亮相，满堂彩能掀了瓦。戏罢亥初，柳惊鸿照例回后台衣箱间卸靠洗脸——戏班铁规，衣箱重地，非管箱师傅不得擅入。21:45，学徒小满端参汤掀帘，看见柳惊鸿仰倒在戏箱铜包角旁，后脑一片血污，人已没气。人人第一句话都是：摔的。醉酒失足，磕在铜角上。可镇上请来的老仵作只看了一眼就皱了眉。柳惊鸿出身永春科班，二十年前靠一场高台戏红遍川东，架子大、手面狠：班主怕他拆班，女伶的卖身契捏在他手里，富商买角被他泼茶折辱，连琴师都要敬他三分。大雾封江，万年台这方后台，就是今夜的公堂。死者自己说过：'我这条命，是踩着人的骨头换的。'——今晚，骨头来讨债了。",
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "青栀镇万年台，临江而立，三日大雾把水路封得死死的。庆云班在此连演五天，今晚是最后一场：大轴《长坂坡》，台柱子柳惊鸿一亮相，满堂彩能掀了瓦。戏罢亥初，柳惊鸿照例回后台衣箱间卸靠洗脸——戏班铁规，衣箱重地，非管箱师傅不得擅入。21:45，学徒小满端参汤掀帘，看见柳惊鸿仰倒在戏箱铜包角旁，后脑一片血污，人已没气。人人第一句话都是：摔的。醉酒失足，磕在铜角上。可镇上请来的老仵作只看了一眼就皱了眉。柳惊鸿出身永春科班，二十年前靠一场高台戏红遍川东，架子大、手面狠：班主怕他拆班，女伶的卖身契捏在他手里，富商买角被他泼茶折辱，连琴师都要敬他三分。大雾封江，万年台这方后台，就是今夜的公堂。死者自己说过：'我这条命，是踩着人的骨头换的。'——今晚，骨头来讨债了。"
+    }
+  ],
   "characters": [
     {
       "id": "gujiujin",
       "name": "古九斤",
       "gender": "男",
       "age": 48,
-      "publicBio": "庆云班管箱师傅，掌三口衣箱，寡言手稳。戏班铁规'衣箱重地，闲人免进'的执守者，案发时段是唯一能名正言顺守在死者身边之人。",
-      "card": {
-        "backstory": "你叫古九斤，本名古雁声，是永春科班的大师兄。二十年前冬夜，你弟弟雁翎——科班最好的武生——在《四杰村》翻高台时坠台，三日后咽气。你被派去汉口跑码头，回来只见一口薄皮棺材。班里说雁翎失手，你信了十年。去年，一个流落的老检场人临终塞给你一页科班日志：那夜垫台的毡垫被人挪薄了半寸，脚印通向柳惊鸿的铺位。你改了名字，投进庆云班当管箱的，夜夜给他卸靠提靴，等一个他毫无防备的时刻。今晚，他洗着脸，把后脑勺交给了你。",
-        "secret": "你是二十年前坠台而死的武生古雁翎的兄长，隐姓埋名进班三年。昨晚 21:22 你用青龙刀把子击杀柳惊鸿，伪装成醉酒磕死。你铺盖里藏着一页记着'毡垫被挪'的科班日志残页。",
-        "goal": "把旧案和昨夜一起埋进土里。你用'衣箱重地'的规矩天然挡人：凶手不可能进衣箱间，而你是唯一'能进的人'，最安全也最危险。你主动维持秩序、清点行头，显得最尽心。若有人问 21:10 到 21:40 的行踪，咬定'在前厅账桌帮班主清戏码牌'——班主会含糊替你作证。把水往白慕笙（买角被辱）和月照影（赎身银票）身上引。",
-        "isCulprit": true,
-        "timeline": "19:30 开锣，你在侧幕把场。20:35 死者与班主在侧幕争执拆班，你在幔后听得真切。21:05 死者回衣箱间，你随入伺候卸靠卸盔。21:10 你支小满去前街打参汤——衣箱间自此只有你与死者。21:15 死者俯身铜盆洗脸，21:22 你取把子架上的青龙刀从后击其枕部，那声闷响陆弦在乐池也听见了。21:22-21:35 你拖尸磕上戏箱铜角、灌下定神酒、摆好烟袋，布置'醉酒失足'。21:35 洗手整衣。21:40 绕到前厅账桌与班主搭话留人证。21:45 闻惊喊，随众奔后台。",
-        "knowledge": [
-          "21:22 那声闷响的真相当晚只有你知道；陆弦听见了却当是搬戏箱——你赌这个老实人不会往深处想。",
-          "死者指甲缝里的点翠金粉，是他抓扯你袖口时蹭下的；你那件棉袄袖口还沾着金粉，此刻就浸在管箱房的皂角水盆边。",
-          "班主的两本账、月照影的赎身银票、白慕笙的后巷之会、小满怀里的点翠——人人有把柄，你早替他们排好了嫌疑的次序。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "庆云班管箱师傅，掌三口衣箱，寡言手稳。戏班铁规'衣箱重地，闲人免进'的执守者，案发时段是唯一能名正言顺守在死者身边之人。"
+          }
         ],
-        "persona": "话极少，答话不过三句，爱说'行头上的事，问我就对了'。手稳眼稳，替人整理衣领的习惯动作做得极自然。被问到旧科班的事，会顿一瞬再摇头。夜里独自擦戏箱时会出神，指腹摩挲箱角。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫古九斤，本名古雁声，是永春科班的大师兄。二十年前冬夜，你弟弟雁翎——科班最好的武生——在《四杰村》翻高台时坠台，三日后咽气。你被派去汉口跑码头，回来只见一口薄皮棺材。班里说雁翎失手，你信了十年。去年，一个流落的老检场人临终塞给你一页科班日志：那夜垫台的毡垫被人挪薄了半寸，脚印通向柳惊鸿的铺位。你改了名字，投进庆云班当管箱的，夜夜给他卸靠提靴，等一个他毫无防备的时刻。今晚，他洗着脸，把后脑勺交给了你。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_gujiujin_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你是二十年前坠台而死的武生古雁翎的兄长，隐姓埋名进班三年。昨晚 21:22 你用青龙刀把子击杀柳惊鸿，伪装成醉酒磕死。你铺盖里藏着一页记着'毡垫被挪'的科班日志残页。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_gujiujin_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "把旧案和昨夜一起埋进土里。你用'衣箱重地'的规矩天然挡人：凶手不可能进衣箱间，而你是唯一'能进的人'，最安全也最危险。你主动维持秩序、清点行头，显得最尽心。若有人问 21:10 到 21:40 的行踪，咬定'在前厅账桌帮班主清戏码牌'——班主会含糊替你作证。把水往白慕笙（买角被辱）和月照影（赎身银票）身上引。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_gujiujin_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开锣，你在侧幕把场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_2",
+            "time": {
+              "display": "20:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:35"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死者与班主在侧幕争执拆班，你在幔后听得真切。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_3",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死者回衣箱间，你随入伺候卸靠卸盔。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_4",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你支小满去前街打参汤——衣箱间自此只有你与死者。"
+              }
+            ],
+            "characterIds": [
+              "xiaoman"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_5",
+            "time": {
+              "display": "21:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死者俯身铜盆洗脸，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_6",
+            "time": {
+              "display": "21:22",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:22"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你取把子架上的青龙刀从后击其枕部，那声闷响陆弦在乐池也听见了。"
+              }
+            ],
+            "characterIds": [
+              "luxian"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_7",
+            "time": {
+              "display": "21:22–21:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:22"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你拖尸磕上戏箱铜角、灌下定神酒、摆好烟袋，布置'醉酒失足'。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_8",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "洗手整衣。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_9",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "绕到前厅账桌与班主搭话留人证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gujiujin_event_10",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 10",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊喊，随众奔后台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_gujiujin_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:22 那声闷响的真相当晚只有你知道；陆弦听见了却当是搬戏箱——你赌这个老实人不会往深处想。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_gujiujin_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死者指甲缝里的点翠金粉，是他抓扯你袖口时蹭下的；你那件棉袄袖口还沾着金粉，此刻就浸在管箱房的皂角水盆边。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_gujiujin_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "班主的两本账、月照影的赎身银票、白慕笙的后巷之会、小满怀里的点翠——人人有把柄，你早替他们排好了嫌疑的次序。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "话极少，答话不过三句，爱说'行头上的事，问我就对了'。手稳眼稳，替人整理衣领的习惯动作做得极自然。被问到旧科班的事，会顿一瞬再摇头。夜里独自擦戏箱时会出神，指腹摩挲箱角。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": true
       }
     },
     {
@@ -36,19 +334,227 @@
       "name": "洪庆奎",
       "gender": "男",
       "age": 55,
-      "publicBio": "庆云班班主，五十岁上拿棺材本组的班子。案发当夜他在账房清账到深夜，与死者生前为'拆班分账'拍过桌子。",
-      "card": {
-        "backstory": "你叫洪庆奎，半生跑江湖，五十岁散尽家财组了庆云班。班是你的命，账是你的胆：近一年你吃空了班里的戏份子四百多块大洋，明账摆给班员看，暗账收在账房夹墙里，自以为天衣无缝。三个月前柳惊鸿进班，戏好、架子大，昨晚他当众撂话：要么分他三成干股，要么带人去重庆搭新班。你把他哄上台，心里盘算等这轮码头演完就'请'他走。你没出手，人先死在你后台——如今全城都会说：洪班主杀台柱子。你比谁都急着找出真凶。",
-        "secret": "你挪用班里戏份子四百余元，暗账藏在账房夹墙。死者生前逼你分干股，20:35 你们在侧幕拍过桌子，半个后台都听得见。",
-        "goal": "找出真凶，更要紧的是别让暗账露光。你手账里记着 21:40 后古九斤来账桌搭过话——这条证词你说不说、怎么说，得掂量。必要时抛出'柳惊鸿得罪的人太多'来挡。天亮前你要找'清账'的由头再进一次账房，把暗账挪走。",
-        "isCulprit": false,
-        "timeline": "19:30 开锣你在台口把场。20:35 与死者在侧幕争执拆班分账，拍桌而散。21:00 起你在账房抹账，明账暗账各理一遍（21:00-21:40 无人进出账房）。21:40 古九斤来账桌搭话问'戏码牌清了没'，你答'清了'——这是你对他当晚唯一的记忆。21:45 小满惊喊，你第一个冲到衣箱间门口。",
-        "knowledge": [
-          "21:40 古九斤确实在你账桌旁站了一刻钟，可 21:10 到 21:40 他在哪，你说不上来——你只记得他手是湿的，像是刚洗过。",
-          "你无意间看见月照影散场后往后巷去了，回来时袖口沉甸甸的，走路都护着。",
-          "柳惊鸿的私匣放在他自己戏箱底层，钥匙从不离身——他死前托付过你：'班主，我那匣子，替我看着。'"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "庆云班班主，五十岁上拿棺材本组的班子。案发当夜他在账房清账到深夜，与死者生前为'拆班分账'拍过桌子。"
+          }
         ],
-        "persona": "江湖气，开口'班里的娃儿们'闭口'规矩'。护短，护得更护钱袋。被逼急了红脖子吼人，转头又给人递烟。深夜对账时手指一直在拨算盘珠，停不下来。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫洪庆奎，半生跑江湖，五十岁散尽家财组了庆云班。班是你的命，账是你的胆：近一年你吃空了班里的戏份子四百多块大洋，明账摆给班员看，暗账收在账房夹墙里，自以为天衣无缝。三个月前柳惊鸿进班，戏好、架子大，昨晚他当众撂话：要么分他三成干股，要么带人去重庆搭新班。你把他哄上台，心里盘算等这轮码头演完就'请'他走。你没出手，人先死在你后台——如今全城都会说：洪班主杀台柱子。你比谁都急着找出真凶。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_hongqingkui_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你挪用班里戏份子四百余元，暗账藏在账房夹墙。死者生前逼你分干股，20:35 你们在侧幕拍过桌子，半个后台都听得见。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_hongqingkui_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "找出真凶，更要紧的是别让暗账露光。你手账里记着 21:40 后古九斤来账桌搭过话——这条证词你说不说、怎么说，得掂量。必要时抛出'柳惊鸿得罪的人太多'来挡。天亮前你要找'清账'的由头再进一次账房，把暗账挪走。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_hongqingkui_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开锣你在台口把场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hongqingkui_event_2",
+            "time": {
+              "display": "20:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:35"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "与死者在侧幕争执拆班分账，拍桌而散。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hongqingkui_event_3",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你在账房抹账，明账暗账各理一遍（"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hongqingkui_event_4",
+            "time": {
+              "display": "21:00–21:40",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "无人进出账房）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_hongqingkui_event_5",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "古九斤来账桌搭话问'戏码牌清了没'，你答'清了'——这是你对他当晚唯一的记忆。"
+              }
+            ],
+            "characterIds": [
+              "gujiujin"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_hongqingkui_event_6",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "小满惊喊，你第一个冲到衣箱间门口。"
+              }
+            ],
+            "characterIds": [
+              "xiaoman"
+            ],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_hongqingkui_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:40 古九斤确实在你账桌旁站了一刻钟，可 21:10 到 21:40 他在哪，你说不上来——你只记得他手是湿的，像是刚洗过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hongqingkui_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你无意间看见月照影散场后往后巷去了，回来时袖口沉甸甸的，走路都护着。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_hongqingkui_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "柳惊鸿的私匣放在他自己戏箱底层，钥匙从不离身——他死前托付过你：'班主，我那匣子，替我看着。'"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "江湖气，开口'班里的娃儿们'闭口'规矩'。护短，护得更护钱袋。被逼急了红脖子吼人，转头又给人递烟。深夜对账时手指一直在拨算盘珠，停不下来。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -56,19 +562,271 @@
       "name": "月照影",
       "gender": "女",
       "age": 24,
-      "publicBio": "庆云班旦角台柱，一出《天女散花》唱红三座码头。班规最严的闺门旦，近来却传出与富商议'赎身'的风声。",
-      "card": {
-        "backstory": "你叫月照影，本名幺妹，十岁被卖进戏班。三年前柳惊鸿挖角，连你的卖身契一起挖了过来。契在他手里，你就是他的私产：不许嫁人，不许搭别的班，包银他领一半。你攒了三年私房，遇上肯出钱的白慕笙——他答应三百大洋赎身，外加一纸婚书。今晚散场，你在后巷收了他的银票和草帖，约好明早交银放契。你没杀柳惊鸿，可你确实在心里咒过他一千次——咒他摔死在台上。如今他真死了，你第一个念头是：契呢？",
-        "secret": "你的卖身契锁在死者戏箱底层的私匣里，钥匙他从不离身。今晚你刚收下白慕笙三百大洋的赎身银票与婚书草帖——私会富商犯了班规，你起初不敢认。",
-        "goal": "拿回卖身契，保住银票，洗清嫌疑。可以先认'收过帖子'，再慢慢认'后巷见了人'。银票若被搜出，就说'是白老板还我的头面垫钱'。你手里最有分量的牌：21:22 你路过衣箱间，见帘垂灯亮、听见古九斤在里面哼西皮——这条证词能害人，也能保人。",
-        "isCulprit": false,
-        "timeline": "20:15-20:35 你演《天女散花》，20:40 大轴《长坂坡》开演时你在妆箱间卸妆。21:05 落幕，你让茶房给白慕笙递口信。21:20 你从妆箱间出来往后巷走，21:22 路过衣箱间，见帘垂灯亮，里面有哼西皮的声音。21:25-21:35 你与白慕笙在后巷交接银票与婚书草帖。21:35 回后台。21:45 闻惊。",
-        "knowledge": [
-          "21:22 衣箱间帘子放得整整齐齐、灯亮着，里面只有哼声没有说话声——事后想想，正在卸妆的柳惊鸿为什么从头到尾一声不吭？",
-          "白慕笙给你的是汇票，抬头写着他商号的名讳——这东西在你袖袋里，搜出来就是'买凶钱'。",
-          "柳惊鸿的私匣钥匙挂在他贴身的汗巾上，入殓前谁都不许动那口箱子——契离你只有三步，又隔着生死。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "庆云班旦角台柱，一出《天女散花》唱红三座码头。班规最严的闺门旦，近来却传出与富商议'赎身'的风声。"
+          }
         ],
-        "persona": "妆前慢条斯理，妆后眼神会说话。习惯拿戏文应答，问急了就垂泪不语。只有说到'契'字，指节会攥白。对班主和管箱师傅执礼极恭——多年的规矩刻进了骨头。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫月照影，本名幺妹，十岁被卖进戏班。三年前柳惊鸿挖角，连你的卖身契一起挖了过来。契在他手里，你就是他的私产：不许嫁人，不许搭别的班，包银他领一半。你攒了三年私房，遇上肯出钱的白慕笙——他答应三百大洋赎身，外加一纸婚书。今晚散场，你在后巷收了他的银票和草帖，约好明早交银放契。你没杀柳惊鸿，可你确实在心里咒过他一千次——咒他摔死在台上。如今他真死了，你第一个念头是：契呢？"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_yuezhaoying_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你的卖身契锁在死者戏箱底层的私匣里，钥匙他从不离身。今晚你刚收下白慕笙三百大洋的赎身银票与婚书草帖——私会富商犯了班规，你起初不敢认。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_yuezhaoying_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拿回卖身契，保住银票，洗清嫌疑。可以先认'收过帖子'，再慢慢认'后巷见了人'。银票若被搜出，就说'是白老板还我的头面垫钱'。你手里最有分量的牌：21:22 你路过衣箱间，见帘垂灯亮、听见古九斤在里面哼西皮——这条证词能害人，也能保人。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_yuezhaoying_event_1",
+            "time": {
+              "display": "20:15–20:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:15"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "20:35"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你演《天女散花》，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_2",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "大轴《长坂坡》开演时你在妆箱间卸妆。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_3",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "落幕，你让茶房给白慕笙递口信。"
+              }
+            ],
+            "characterIds": [
+              "baimusheng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_4",
+            "time": {
+              "display": "21:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从妆箱间出来往后巷走，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_5",
+            "time": {
+              "display": "21:22",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:22"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "路过衣箱间，见帘垂灯亮，里面有哼西皮的声音。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_6",
+            "time": {
+              "display": "21:25–21:35",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:25"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你与白慕笙在后巷交接银票与婚书草帖。"
+              }
+            ],
+            "characterIds": [
+              "baimusheng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_7",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回后台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_yuezhaoying_event_8",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_yuezhaoying_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:22 衣箱间帘子放得整整齐齐、灯亮着，里面只有哼声没有说话声——事后想想，正在卸妆的柳惊鸿为什么从头到尾一声不吭？"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_yuezhaoying_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "白慕笙给你的是汇票，抬头写着他商号的名讳——这东西在你袖袋里，搜出来就是'买凶钱'。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_yuezhaoying_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "柳惊鸿的私匣钥匙挂在他贴身的汗巾上，入殓前谁都不许动那口箱子——契离你只有三步，又隔着生死。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "妆前慢条斯理，妆后眼神会说话。习惯拿戏文应答，问急了就垂泪不语。只有说到'契'字，指节会攥白。对班主和管箱师傅执礼极恭——多年的规矩刻进了骨头。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -76,19 +834,245 @@
       "name": "白慕笙",
       "gender": "男",
       "age": 34,
-      "publicBio": "跑重庆航线的绸缎商，出名的戏迷票友，出手阔绰。散场后滞留后台，案发时段自称'在后巷等人'，不肯说等谁。",
-      "card": {
-        "backstory": "你叫白慕笙，绸缎生意做了半条江。你迷戏，更迷月照影——迷到肯拿三百大洋给她赎身。上月你托茶房递帖求见柳惊鸿，想'让个角儿'，被他当众泼了一脸茶：'我的角儿，也配你买？'满堂哄笑，你记到今天。今晚你做成了两件事：赎身银票出了手，'让贤帖'也写好了。你没想害他——可你确实当人说过狠话：'姓柳的挡人财路，总有一天有人替天行道。'如今人死了，你是全后台唯一'又给钱又放话'的人。",
-        "secret": "案发时段（21:25-21:35）你在后巷与月照影私会，交接三百大洋银票与婚书草帖；上月你被死者当众泼茶折辱、扬言过狠话。两件事撞在一起，你百口莫辩。",
-        "goal": "保住'赎人'的名分——私会旦角一旦坐实，你的太太能撕了你；银票若被当作买凶钱，你在商会就完了。你咬定 21:20 到 21:40 '在后巷等人'，不说等谁；除非有人先拿住你放狠话的把柄，你再徐徐图之、和盘托出换月照影的清白。",
-        "isCulprit": false,
-        "timeline": "19:30 起你在台下头排听戏。21:05 散场，你到后巷茶棚落座写帖（21:05-21:20）。21:25 月照影来了，你们交接银票与婚书草帖至 21:35。她走后你又独坐一刻，21:40 起身去码头看船。21:45 闻讯赶回后台。",
-        "knowledge": [
-          "21:22 你看见月照影从后台侧门出来，神色仓促、袖口压着什么——她 21:25 才到巷口。她的说法与这个对得上，她没说谎。",
-          "茶房说你的'让贤帖'送去后台被撕了，纸团还在茶棚桌角——那是你此生最丢脸的一张纸。",
-          "你雇的船老大能作证你 21:40 到码头，船 21:55 开——你没上船，因为听见后台乱起来，你折了回来。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "跑重庆航线的绸缎商，出名的戏迷票友，出手阔绰。散场后滞留后台，案发时段自称'在后巷等人'，不肯说等谁。"
+          }
         ],
-        "persona": "客气得过分，开口'承情'闭口'失敬'。谈戏文头头是道，谈钱斤斤计较。被戳到'泼茶旧辱'会突然冷下来。手上转两颗核桃，紧张时捏得咯咯响。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫白慕笙，绸缎生意做了半条江。你迷戏，更迷月照影——迷到肯拿三百大洋给她赎身。上月你托茶房递帖求见柳惊鸿，想'让个角儿'，被他当众泼了一脸茶：'我的角儿，也配你买？'满堂哄笑，你记到今天。今晚你做成了两件事：赎身银票出了手，'让贤帖'也写好了。你没想害他——可你确实当人说过狠话：'姓柳的挡人财路，总有一天有人替天行道。'如今人死了，你是全后台唯一'又给钱又放话'的人。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_baimusheng_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "案发时段（21:25-21:35）你在后巷与月照影私会，交接三百大洋银票与婚书草帖；上月你被死者当众泼茶折辱、扬言过狠话。两件事撞在一起，你百口莫辩。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_baimusheng_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "保住'赎人'的名分——私会旦角一旦坐实，你的太太能撕了你；银票若被当作买凶钱，你在商会就完了。你咬定 21:20 到 21:40 '在后巷等人'，不说等谁；除非有人先拿住你放狠话的把柄，你再徐徐图之、和盘托出换月照影的清白。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_baimusheng_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起你在台下头排听戏。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_2",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "散场，你到后巷茶棚落座写帖（"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_3",
+            "time": {
+              "display": "21:05–21:20",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:20"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_4",
+            "time": {
+              "display": "21:25",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:25"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "月照影来了，你们交接银票与婚书草帖至"
+              }
+            ],
+            "characterIds": [
+              "yuezhaoying"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_5",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "。她走后你又独坐一刻，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_6",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起身去码头看船。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baimusheng_event_7",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻讯赶回后台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_baimusheng_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:22 你看见月照影从后台侧门出来，神色仓促、袖口压着什么——她 21:25 才到巷口。她的说法与这个对得上，她没说谎。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimusheng_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "茶房说你的'让贤帖'送去后台被撕了，纸团还在茶棚桌角——那是你此生最丢脸的一张纸。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_baimusheng_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你雇的船老大能作证你 21:40 到码头，船 21:55 开——你没上船，因为听见后台乱起来，你折了回来。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "客气得过分，开口'承情'闭口'失敬'。谈戏文头头是道，谈钱斤斤计较。被戳到'泼茶旧辱'会突然冷下来。手上转两颗核桃，紧张时捏得咯咯响。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -96,19 +1080,309 @@
       "name": "陆弦",
       "gender": "男",
       "age": 46,
-      "publicBio": "庆云班琴师，一把京胡拉了三十年，人称'陆一弓'。案发时段他守在乐池，21:22 有人听见后台一声闷响。",
-      "card": {
-        "backstory": "你叫陆弦，永春科班的文场出身。师兄古雁翎坠台那年，你在科班抄账——你隐约记得那夜'毡垫薄得反常'，可你人微言轻，话没出口就被班主按下了。后来柳惊鸿红了，红在你师兄摔断的腰上。你留了心，三年前把他俩的旧事写成大鼓词《武生叹》——'两张桌，一方毡，二十年前雪没脚'——你想找机会唱给他听，吓他一吓，替雁翎讨一句'对不住'。今晚散场，你趁乱把抄本塞进了他的私箱。你没打算杀他，你只想要他夜里睡不着。",
-        "secret": "你写了暗讽死者旧案的大鼓词《武生叹》，今晚 21:15 塞进了死者私箱；你知道二十年前坠台案的疑点（毡垫被挪过），是能为旧案作证的人。",
-        "goal": "逼出'旧案'两个字，又不能让自己变成'挟私报复'的凶手。你若先说出塞抄本的事，嫌疑立刻烧到你身上；不说，抄本早晚被搜出。你打算看风向：有人先提旧案，你再把《武生叹》当证词讲。",
-        "isCulprit": false,
-        "timeline": "19:30 开锣你在乐池操琴。20:40 大轴你伴奏，21:05 落幕收弓。21:05-21:30 你在乐池收琴理谱；其中 21:12-21:16 你离席一次，趁后台人乱把《武生叹》抄本塞进死者虚掩的私箱。21:22 你听见后台一声闷响，当是搬戏箱。21:30 你背琴出后门，21:35 在后巷口看见白慕笙独立巷口。21:40 回乐池锁琴箱。21:45 闻惊。",
-        "knowledge": [
-          "21:22 后台那一声闷响短促、发闷，不像戏箱落地的两声响——你当时心里就咯噔了一下。",
-          "死者私箱常虚掩——他刚换了行头，锁孔都没关严。你塞抄本时手都是抖的。",
-          "你在科班抄过账：雁翎坠台那夜的'毡垫领用簿'被人撕过一页，撕痕是新的。这事你从没对人说过。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "庆云班琴师，一把京胡拉了三十年，人称'陆一弓'。案发时段他守在乐池，21:22 有人听见后台一声闷响。"
+          }
         ],
-        "persona": "文人气带琴师腔，开口'依弓法而言'。爱引鼓词戏文。提到'雁翎'二字会先沉默再转话头。对'旧科班'三个字极敏感，会反问对方从哪里听来。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫陆弦，永春科班的文场出身。师兄古雁翎坠台那年，你在科班抄账——你隐约记得那夜'毡垫薄得反常'，可你人微言轻，话没出口就被班主按下了。后来柳惊鸿红了，红在你师兄摔断的腰上。你留了心，三年前把他俩的旧事写成大鼓词《武生叹》——'两张桌，一方毡，二十年前雪没脚'——你想找机会唱给他听，吓他一吓，替雁翎讨一句'对不住'。今晚散场，你趁乱把抄本塞进了他的私箱。你没打算杀他，你只想要他夜里睡不着。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_luxian_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你写了暗讽死者旧案的大鼓词《武生叹》，今晚 21:15 塞进了死者私箱；你知道二十年前坠台案的疑点（毡垫被挪过），是能为旧案作证的人。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_luxian_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "逼出'旧案'两个字，又不能让自己变成'挟私报复'的凶手。你若先说出塞抄本的事，嫌疑立刻烧到你身上；不说，抄本早晚被搜出。你打算看风向：有人先提旧案，你再把《武生叹》当证词讲。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_luxian_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开锣你在乐池操琴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_2",
+            "time": {
+              "display": "20:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "大轴你伴奏，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_3",
+            "time": {
+              "display": "21:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "落幕收弓。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_4",
+            "time": {
+              "display": "21:05–21:30",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:05"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在乐池收琴理谱；其中"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_5",
+            "time": {
+              "display": "21:12–21:16",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:12"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:16"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你离席一次，趁后台人乱把《武生叹》抄本塞进死者虚掩的私箱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_6",
+            "time": {
+              "display": "21:22",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:22"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你听见后台一声闷响，当是搬戏箱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_7",
+            "time": {
+              "display": "21:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你背琴出后门，"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_8",
+            "time": {
+              "display": "21:35",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:35"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在后巷口看见白慕笙独立巷口。"
+              }
+            ],
+            "characterIds": [
+              "baimusheng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_9",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 9",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回乐池锁琴箱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxian_event_10",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 10",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_luxian_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:22 后台那一声闷响短促、发闷，不像戏箱落地的两声响——你当时心里就咯噔了一下。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxian_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "死者私箱常虚掩——他刚换了行头，锁孔都没关严。你塞抄本时手都是抖的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_luxian_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在科班抄过账：雁翎坠台那夜的'毡垫领用簿'被人撕过一页，撕痕是新的。这事你从没对人说过。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "文人气带琴师腔，开口'依弓法而言'。爱引鼓词戏文。提到'雁翎'二字会先沉默再转话头。对'旧科班'三个字极敏感，会反问对方从哪里听来。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     },
     {
@@ -116,94 +1390,888 @@
       "name": "小满",
       "gender": "男",
       "age": 16,
-      "publicBio": "庆云班的小学徒，端茶送水跑腿打杂。案发时段他奉命去前街打参汤，来回近半个时辰，是发现尸体的人。",
-      "card": {
-        "backstory": "你叫小满，八岁被卖进戏班，关书押在班主手里。你嘴笨手勤，全班的茶水参汤夜宵都归你。柳惊鸿平时赏你最多、骂你也最多——他答应过年底给你添一件棉袍。今晚 21:10 管箱师傅打发你去前街打参汤，你路上贪看江雾摔了一跤，洒了半盏，怕挨打，躲进柴房抹眼泪，21:40 才回灶上重舀。21:45 你端汤掀帘，看见师父仰在戏箱边，血糊了半张脸——你手一松，参汤泼了一地，尖叫声震得瓦上的雾都在抖。",
-        "secret": "你偷偷捡了死者散落的点翠蓝羽饰揣进怀里——他从前说过，头面碎料攒够一撮'换个糖吃'；打参汤你摔了跤、躲了半个时辰。这两件事你都不敢说。",
-        "goal": "别被当成偷东西的小贼，更别被当成凶手。把摔倒躲哭的事说出来能补上时间，但'偷懒'要挨班规；点翠在怀里，一搜一个准。你可以先认摔跤、后认点翠，用'我 21:45 才端汤进后台'保命。",
-        "isCulprit": false,
-        "timeline": "19:30 开锣你前后台跑腿。20:40-21:05 大轴你在台侧伺候饮场。21:08 大轴落幕，你跟在死者身后上后台，看见他盔头上的点翠散了一地。21:10 古九斤支你去前街打参汤。21:15-21:38 你在路上摔跤、躲柴房抹泪。21:40 回灶重舀。21:45 掀帘发现尸体，泼了参汤，喊惊全后台。",
-        "knowledge": [
-          "21:40 你在灶间撞见古九斤，他棉袖口湿了一块，像是刚洗过手——你当时只顾怕挨骂，没多想。",
-          "你捡点翠是在 21:08，那时死者刚落幕上后台，还骂你'死盯着做什么'——那时他活得好好的。",
-          "你躲在柴房那会儿，听见外头有人踩着碎步往后巷去，是女人绣鞋的响——约莫 21:20 前后。"
+      "publicProfile": {
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "庆云班的小学徒，端茶送水跑腿打杂。案发时段他奉命去前街打参汤，来回近半个时辰，是发现尸体的人。"
+          }
         ],
-        "persona": "胆小嘴快，问一句答三句，动不动'小的不敢'。提到血就腿软。被冤枉时急得赌咒发誓：'小的拿脑袋担保！'手里永远攥着块抹布。"
+        "relationships": []
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你叫小满，八岁被卖进戏班，关书押在班主手里。你嘴笨手勤，全班的茶水参汤夜宵都归你。柳惊鸿平时赏你最多、骂你也最多——他答应过年底给你添一件棉袍。今晚 21:10 管箱师傅打发你去前街打参汤，你路上贪看江雾摔了一跤，洒了半盏，怕挨打，躲进柴房抹眼泪，21:40 才回灶上重舀。21:45 你端汤掀帘，看见师父仰在戏箱边，血糊了半张脸——你手一松，参汤泼了一地，尖叫声震得瓦上的雾都在抖。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_xiaoman_1",
+            "title": "核心秘密",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷偷捡了死者散落的点翠蓝羽饰揣进怀里——他从前说过，头面碎料攒够一撮'换个糖吃'；打参汤你摔了跤、躲了半个时辰。这两件事你都不敢说。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "objective_xiaoman_1",
+            "title": "本局目标",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "别被当成偷东西的小贼，更别被当成凶手。把摔倒躲哭的事说出来能补上时间，但'偷懒'要挨班规；点翠在怀里，一搜一个准。你可以先认摔跤、后认点翠，用'我 21:45 才端汤进后台'保命。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "character_xiaoman_event_1",
+            "time": {
+              "display": "19:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "19:30"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开锣你前后台跑腿。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_2",
+            "time": {
+              "display": "20:40–21:05",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:40"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:05"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "大轴你在台侧伺候饮场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_3",
+            "time": {
+              "display": "21:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:08"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "大轴落幕，你跟在死者身后上后台，看见他盔头上的点翠散了一地。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_4",
+            "time": {
+              "display": "21:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:10"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "古九斤支你去前街打参汤。"
+              }
+            ],
+            "characterIds": [
+              "gujiujin"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_5",
+            "time": {
+              "display": "21:15–21:38",
+              "precision": "range",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:38"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在路上摔跤、躲柴房抹泪。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_6",
+            "time": {
+              "display": "21:40",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:40"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回灶重舀。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaoman_event_7",
+            "time": {
+              "display": "21:45",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "掀帘发现尸体，泼了参汤，喊惊全后台。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_xiaoman_1",
+            "title": "情报 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:40 你在灶间撞见古九斤，他棉袖口湿了一块，像是刚洗过手——你当时只顾怕挨骂，没多想。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xiaoman_2",
+            "title": "情报 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你捡点翠是在 21:08，那时死者刚落幕上后台，还骂你'死盯着做什么'——那时他活得好好的。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xiaoman_3",
+            "title": "情报 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你躲在柴房那会儿，听见外头有人踩着碎步往后巷去，是女人绣鞋的响——约莫 21:20 前后。"
+              }
+            ],
+            "source": "other",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": [],
+          "speechStyle": "胆小嘴快，问一句答三句，动不动'小的不敢'。提到血就腿软。被冤枉时急得赌咒发誓：'小的拿脑袋担保！'手里永远攥着块抹布。",
+          "habits": [],
+          "taboos": []
+        },
+        "isCulprit": false
       }
     }
   ],
-  "locations": ["衣箱间", "万年台与把子架", "后台账房", "后巷茶棚", "女伶的妆箱间", "琴师的乐池座", "管箱铺房", "学徒的柴房铺"],
+  "locations": [
+    {
+      "id": "location_1",
+      "name": "衣箱间",
+      "description": []
+    },
+    {
+      "id": "location_2",
+      "name": "万年台与把子架",
+      "description": []
+    },
+    {
+      "id": "location_3",
+      "name": "后台账房",
+      "description": []
+    },
+    {
+      "id": "location_4",
+      "name": "后巷茶棚",
+      "description": []
+    },
+    {
+      "id": "location_5",
+      "name": "女伶的妆箱间",
+      "description": []
+    },
+    {
+      "id": "location_6",
+      "name": "琴师的乐池座",
+      "description": []
+    },
+    {
+      "id": "location_7",
+      "name": "管箱铺房",
+      "description": []
+    },
+    {
+      "id": "location_8",
+      "name": "学徒的柴房铺",
+      "description": []
+    }
+  ],
   "clues": [
     {
       "id": "c_yanshi",
-      "location": "衣箱间",
+      "locationId": "location_1",
       "name": "老仵作的验看格目",
-      "content": "后脑一处挫裂创，斜行，创缘不齐，创腔内嵌细小木刺两枚；枕下另有铜角压痕，血自创口流向上颌——血向倒行，分明是人死后被摆弄磕碰的。唇与衣襟有酒渍，流向自下颌向上翻卷：酒是死后灌的。右手指甲缝里嵌着金粉与蓝翠屑。死亡时刻约在 21:00 至 21:30 之间。",
-      "policy": "auto_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "后脑一处挫裂创，斜行，创缘不齐，创腔内嵌细小木刺两枚；枕下另有铜角压痕，血自创口流向上颌——血向倒行，分明是人死后被摆弄磕碰的。唇与衣襟有酒渍，流向自下颌向上翻卷：酒是死后灌的。右手指甲缝里嵌着金粉与蓝翠屑。死亡时刻约在 21:00 至 21:30 之间。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_xixiang",
-      "location": "衣箱间",
+      "locationId": "location_1",
       "name": "戏箱铜包角",
-      "content": "铜包角上的血迹蹭成扇面，箱面有两道拖拽蹭痕；箱顶的点翠盔头歪斜着，压折了一支翎子。死者倒卧处三步之外，地上有一小摊洒翻的定神酒，酒香还没散尽。箱子底层那口上锁的私匣完好无损。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "铜包角上的血迹蹭成扇面，箱面有两道拖拽蹭痕；箱顶的点翠盔头歪斜着，压折了一支翎子。死者倒卧处三步之外，地上有一小摊洒翻的定神酒，酒香还没散尽。箱子底层那口上锁的私匣完好无损。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_bazi",
-      "location": "万年台与把子架",
+      "locationId": "location_2",
       "name": "青龙刀把子豁口",
-      "content": "把子架上的青龙偃月刀，枣木刀柄近格处有一个新鲜豁口，木茬泛白，豁口缝里一点暗褐污渍。武行的把子用后各归各架，青龙刀归位齐整，只这个豁口对不上旧账——老仵作比对过：创腔里的木刺与此豁口茬口吻合。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "把子架上的青龙偃月刀，枣木刀柄近格处有一个新鲜豁口，木茬泛白，豁口缝里一点暗褐污渍。武行的把子用后各归各架，青龙刀归位齐整，只这个豁口对不上旧账——老仵作比对过：创腔里的木刺与此豁口茬口吻合。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_liangzhangben",
-      "location": "后台账房",
+      "locationId": "location_3",
       "name": "班主的两本账",
-      "content": "账房夹墙里翻出两本账：明账记'本季进项六百二十元，支给班员五百八十'；暗账记'实收一千零二十，支五百八十'。另有一张撕剩的批条，笔迹是班主的：'柳老板要三成，做梦。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "账房夹墙里翻出两本账：明账记'本季进项六百二十元，支给班员五百八十'；暗账记'实收一千零二十，支五百八十'。另有一张撕剩的批条，笔迹是班主的：'柳老板要三成，做梦。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_yinpiao",
-      "location": "女伶的妆箱间",
+      "locationId": "location_5",
       "name": "赎身银票与婚书帖",
-      "content": "妆箱夹层里：一张三百大洋的汇票，抬头'白记绸庄'；一纸婚书草帖，'两姓联姻'字样，未落款；还有半页写给'白老板'未寄出的信——'契在他手里，早一日放契，早一日活人。'",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "妆箱夹层里：一张三百大洋的汇票，抬头'白记绸庄'；一纸婚书草帖，'两姓联姻'字样，未落款；还有半页写给'白老板'未寄出的信——'契在他手里，早一日放契，早一日活人。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_chapeng",
-      "location": "后巷茶棚",
+      "locationId": "location_4",
       "name": "揉皱的让贤帖",
-      "content": "茶棚桌上两个纸团：一张是给柳惊鸿的'让贤帖'——'愿以三百大洋请柳老板让贤，另议'——揉得死皱，是被人掷回来的；旁边一份写给月照影的婚书草帖底稿，字迹与白慕笙留在柜上的赊茶签同出一手。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "茶棚桌上两个纸团：一张是给柳惊鸿的'让贤帖'——'愿以三百大洋请柳老板让贤，另议'——揉得死皱，是被人掷回来的；旁边一份写给月照影的婚书草帖底稿，字迹与白慕笙留在柜上的赊茶签同出一手。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_wushengtan",
-      "location": "琴师的乐池座",
+      "locationId": "location_6",
       "name": "《武生叹》鼓词抄本",
-      "content": "琴箱谱夹里一页鼓词《武生叹》：'两张桌，一方毡，二十年前雪没脚；师兄纵有腾云步，难防毡下鬼手脚。'末行小字：'此段旧事，永春科班皆知，柳某敢赌无人敢唱？'笔迹经认，是琴师陆弦的手稿。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "琴箱谱夹里一页鼓词《武生叹》：'两张桌，一方毡，二十年前雪没脚；师兄纵有腾云步，难防毡下鬼手脚。'末行小字：'此段旧事，永春科班皆知，柳某敢赌无人敢唱？'笔迹经认，是琴师陆弦的手稿。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_kebanrizhi",
-      "location": "管箱铺房",
+      "locationId": "location_7",
       "name": "科班日志残页",
-      "content": "管箱师傅铺盖夹层里一页发黄的绵纸，抄录科班旧账：'冬月十四夜，雁翎坠台。毡垫领用一页被人撕去。检场老四亲眼见毡垫薄半寸，脚印自武行铺位出。'纸角一个'雁'字被烟头烫了个洞，烫痕已旧，这一页被人摩挲过千百遍。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "管箱师傅铺盖夹层里一页发黄的绵纸，抄录科班旧账：'冬月十四夜，雁翎坠台。毡垫领用一页被人撕去。检场老四亲眼见毡垫薄半寸，脚印自武行铺位出。'纸角一个'雁'字被烟头烫了个洞，烫痕已旧，这一页被人摩挲过千百遍。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     },
     {
       "id": "c_diancui",
-      "location": "学徒的柴房铺",
+      "locationId": "location_8",
       "name": "草枕头里的点翠",
-      "content": "小满柴房铺的草枕头里藏着一撮蓝翠羽饰与两粒米珠，正是死者盔头上散落的点翠；枕边破棉袍上有个刚缝的新补丁，针脚歪歪扭扭。散落的时间要对得上：大轴落幕（21:05）前后，盔头曾磕在台口——点翠落地，旁观者众。",
-      "policy": "manual_public"
+      "category": "other",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "小满柴房铺的草枕头里藏着一撮蓝翠羽饰与两粒米珠，正是死者盔头上散落的点翠；枕边破棉袍上有个刚缝的新补丁，针脚歪歪扭扭。散落的时间要对得上：大轴落幕（21:05）前后，盔头曾磕在台口——点翠落地，旁观者众。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
-    "culprit": "gujiujin",
-    "method": "古九斤为二十年前坠台惨死的胞弟古雁翎复仇。他借'伺候卸妆'的名分成为唯一能单独近身之人：21:10 支走学徒、封闭衣箱间；21:22 趁死者俯身洗脸，用青龙刀枣木刀柄从后击碎其枕部，再拖尸磕上戏箱铜包角、灌下定神酒，伪装成醉酒失足。破绽：创内木刺与刀柄豁口吻合、血向倒行与死后灌酒的流向、死者指甲缝里的点翠金粉（抓扯凶手衣袖所留）、以及他袖口没来得及洗净的湿痕与金粉。",
-    "fullTimeline": "19:30 万年台开锣。20:35 柳惊鸿上场前与班主洪庆奎在侧幕争执'拆班分账'，古九斤在幔后听见。20:40 大轴《长坂坡》。21:05 落幕，死者回衣箱间卸靠，古九斤随入伺候；班主回账房抹两本账；陆弦在乐池收琴。21:08 死者盔头磕在台口，点翠散落，小满捡起藏入怀中。21:10 古九斤支小满去前街打参汤——衣箱间自此只有他与死者。21:12-21:16 陆弦离席，把《武生叹》抄本塞进死者虚掩的私箱。21:22 古九斤趁死者俯身洗脸，以青龙刀把子击其枕部——乐池的陆弦听见闷响，误作搬箱。21:22-21:35 古九斤拖尸磕上铜角、灌定神酒、摆好烟袋；21:22 月照影路过衣箱间外，见帘垂灯亮、闻哼声（实为凶手哼西皮稳住自己），未疑。21:25-21:35 月照影与白慕笙在后巷交接三百大洋银票与婚书草帖。21:35 古九斤洗手，21:40 绕至前厅账桌与班主搭话留人证。21:40-21:45 白慕笙去码头看船未及登船。21:45 小满端参汤回来掀帘发现尸体，全后台惊乱。破案链：验看格目（血向倒行+木刺+金粉）→ 把子豁口（凶器）→ 各人行踪与动机（两本账、赎身银票、让贤帖、武生叹）→ 科班日志残页（旧案动机的根）。红鲱鱼：班主的暗账与拍桌之仇、月照影的银票与私会、白慕笙的泼茶旧辱与狠话、陆弦的《武生叹》与旧案知情、小满的藏匿点翠——人人有秘密，无人是凶手。",
-    "keyEvidence": ["木刺", "金粉", "两本账", "武生叹", "点翠"],
-    "reveal": "真相：凶手是管箱师傅古九斤。二十年前，柳惊鸿挪薄了高台下的毡垫，害死古九斤的胞弟古雁翎，踩着一口棺材成了名角。古九斤改名换姓进班三年，夜夜替仇人卸靠提靴，等的就是衣箱间这个外人不得擅入的死地：支走学徒、击杀、拖尸、灌酒、摆烟袋，一套行云流水，把凶案做成了'醉酒失足'。他算准了规矩护身、算准了满后台人人有把柄，唯独没算到老仵作验出血向倒行、木刺对上刀柄豁口，更没算到死者临死那一抓，把盔头上的点翠金粉抓进了指甲缝，也蹭上了他的袖口。戏台上一句'难防毡下鬼手脚'，唱的是二十年前；今夜收这笔账的，是另一只鬼手脚。证词矛盾：月照影 21:22 听见的'哼声'与死者'全程无话'相矛盾——当时箱内只有凶手；陆弦 21:22 的闷响与古九斤'在前厅账桌'的口供冲突；小满 21:40 所见'袖口湿痕'补上最后一环。"
+    "culpritId": "gujiujin",
+    "motive": [],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "古九斤为二十年前坠台惨死的胞弟古雁翎复仇。他借'伺候卸妆'的名分成为唯一能单独近身之人：21:10 支走学徒、封闭衣箱间；21:22 趁死者俯身洗脸，用青龙刀枣木刀柄从后击碎其枕部，再拖尸磕上戏箱铜包角、灌下定神酒，伪装成醉酒失足。破绽：创内木刺与刀柄豁口吻合、血向倒行与死后灌酒的流向、死者指甲缝里的点翠金粉（抓扯凶手衣袖所留）、以及他袖口没来得及洗净的湿痕与金粉。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "method_step_1",
+          "title": "作案手法",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "古九斤为二十年前坠台惨死的胞弟古雁翎复仇。他借'伺候卸妆'的名分成为唯一能单独近身之人：21:10 支走学徒、封闭衣箱间；21:22 趁死者俯身洗脸，用青龙刀枣木刀柄从后击碎其枕部，再拖尸磕上戏箱铜包角、灌下定神酒，伪装成醉酒失足。破绽：创内木刺与刀柄豁口吻合、血向倒行与死后灌酒的流向、死者指甲缝里的点翠金粉（抓扯凶手衣袖所留）、以及他袖口没来得及洗净的湿痕与金粉。"
+            }
+          ],
+          "clueIds": []
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_event_1",
+        "time": {
+          "display": "19:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:30"
+          }
+        },
+        "title": "事件 1",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "万年台开锣。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "20:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:35"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "柳惊鸿上场前与班主洪庆奎在侧幕争执'拆班分账'，古九斤在幔后听见。"
+          }
+        ],
+        "characterIds": [
+          "gujiujin",
+          "hongqingkui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin",
+          "hongqingkui"
+        ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "20:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:40"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "大轴《长坂坡》。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_4",
+        "time": {
+          "display": "21:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          }
+        },
+        "title": "事件 4",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "落幕，死者回衣箱间卸靠，古九斤随入伺候；班主回账房抹两本账；陆弦在乐池收琴。"
+          }
+        ],
+        "characterIds": [
+          "gujiujin",
+          "luxian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin",
+          "luxian"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "21:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:08"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "死者盔头磕在台口，点翠散落，小满捡起藏入怀中。"
+          }
+        ],
+        "characterIds": [
+          "xiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_6",
+        "time": {
+          "display": "21:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:10"
+          }
+        },
+        "title": "事件 6",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古九斤支小满去前街打参汤——衣箱间自此只有他与死者。"
+          }
+        ],
+        "characterIds": [
+          "gujiujin",
+          "xiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin",
+          "xiaoman"
+        ]
+      },
+      {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:12–21:16",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:12"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:16"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆弦离席，把《武生叹》抄本塞进死者虚掩的私箱。"
+          }
+        ],
+        "characterIds": [
+          "luxian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luxian"
+        ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "21:22",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:22"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古九斤趁死者俯身洗脸，以青龙刀把子击其枕部——乐池的陆弦听见闷响，误作搬箱。"
+          }
+        ],
+        "characterIds": [
+          "gujiujin",
+          "luxian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin",
+          "luxian"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:22–21:35",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:22"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古九斤拖尸磕上铜角、灌定神酒、摆好烟袋；"
+          }
+        ],
+        "characterIds": [
+          "gujiujin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin"
+        ]
+      },
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "21:22",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:22"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "月照影路过衣箱间外，见帘垂灯亮、闻哼声（实为凶手哼西皮稳住自己），未疑。"
+          }
+        ],
+        "characterIds": [
+          "yuezhaoying"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yuezhaoying"
+        ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:25–21:35",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:25"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "月照影与白慕笙在后巷交接三百大洋银票与婚书草帖。"
+          }
+        ],
+        "characterIds": [
+          "yuezhaoying",
+          "baimusheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yuezhaoying",
+          "baimusheng"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:35"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古九斤洗手，"
+          }
+        ],
+        "characterIds": [
+          "gujiujin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gujiujin"
+        ]
+      },
+      {
+        "id": "truth_event_13",
+        "time": {
+          "display": "21:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "绕至前厅账桌与班主搭话留人证。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:40–21:45",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:45"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白慕笙去码头看船未及登船。"
+          }
+        ],
+        "characterIds": [
+          "baimusheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baimusheng"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "21:45",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:45"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "小满端参汤回来掀帘发现尸体，全后台惊乱。破案链：验看格目（血向倒行+木刺+金粉）→ 把子豁口（凶器）→ 各人行踪与动机（两本账、赎身银票、让贤帖、武生叹）→ 科班日志残页（旧案动机的根）。红鲱鱼：班主的暗账与拍桌之仇、月照影的银票与私会、白慕笙的泼茶旧辱与狠话、陆弦的《武生叹》与旧案知情、小满的藏匿点翠——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "yuezhaoying",
+          "baimusheng",
+          "luxian",
+          "xiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yuezhaoying",
+          "baimusheng",
+          "luxian",
+          "xiaoman"
+        ]
+      }
+    ],
+    "keyEvidenceIds": [
+      "c_liangzhangben",
+      "c_wushengtan",
+      "c_diancui"
+    ],
+    "evidenceChain": [
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "c_liangzhangben"
+        ],
+        "conclusion": "两本账"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "c_wushengtan"
+        ],
+        "conclusion": "武生叹"
+      },
+      {
+        "id": "evidence_5",
+        "clueIds": [
+          "c_diancui"
+        ],
+        "conclusion": "点翠"
+      }
+    ],
+    "redHerrings": [],
+    "supplemental": [],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是管箱师傅古九斤。二十年前，柳惊鸿挪薄了高台下的毡垫，害死古九斤的胞弟古雁翎，踩着一口棺材成了名角。古九斤改名换姓进班三年，夜夜替仇人卸靠提靴，等的就是衣箱间这个外人不得擅入的死地：支走学徒、击杀、拖尸、灌酒、摆烟袋，一套行云流水，把凶案做成了'醉酒失足'。他算准了规矩护身、算准了满后台人人有把柄，唯独没算到老仵作验出血向倒行、木刺对上刀柄豁口，更没算到死者临死那一抓，把盔头上的点翠金粉抓进了指甲缝，也蹭上了他的袖口。戏台上一句'难防毡下鬼手脚'，唱的是二十年前；今夜收这笔账的，是另一只鬼手脚。证词矛盾：月照影 21:22 听见的'哼声'与死者'全程无话'相矛盾——当时箱内只有凶手；陆弦 21:22 的闷响与古九斤'在前厅账桌'的口供冲突；小满 21:40 所见'袖口湿痕'补上最后一环。"
+      }
+    ]
   },
   "flow": {
     "selfIntroRounds": 1,
@@ -213,6 +2281,27 @@
     "privateChatMessageLimit": 3
   },
   "ending": {
-    "winText": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真凶被捕",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "真凶逃脱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+          }
+        ]
+      }
+    ]
   }
 }

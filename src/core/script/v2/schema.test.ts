@@ -36,19 +36,28 @@ describe("剧本输入标准 V2", () => {
 });
 
 describe("V1 → V2 迁移", () => {
-  it("现有全部种子都能转换且不产生结构错误", () => {
+  it("V1 固定件能转换且不产生结构错误", () => {
+    const file = path.join(process.cwd(), "seeds/fixtures/script-v1.sample.json");
+    const v1 = parseScriptDoc(JSON.parse(readFileSync(file, "utf8")));
+    const { doc } = migrateV1ToV2(v1);
+    expect(() => parseScriptDocV2(doc)).not.toThrow();
+    expect(validateScriptV2(doc).filter((issue) => issue.level === "error")).toEqual([]);
+    const serialized = JSON.stringify(doc);
+    expect(serialized).toContain(v1.characters[0].card.backstory.slice(0, 20));
+    expect(serialized).toContain(v1.characters[0].card.secret.slice(0, 20));
+  });
+});
+
+describe("现有种子都是可开局的 V2", () => {
+  it("seeds 与 seeds/generated 全部 version=2 且无 error", () => {
     const roots = [path.join(process.cwd(), "seeds"), path.join(process.cwd(), "seeds/generated")];
     const files = roots.flatMap((root) => readdirSync(root).filter((file) => file.endsWith(".json")).map((file) => path.join(root, file)));
     expect(files.length).toBeGreaterThanOrEqual(33);
 
     for (const file of files) {
-      const v1 = parseScriptDoc(JSON.parse(readFileSync(file, "utf8")));
-      const { doc } = migrateV1ToV2(v1);
-      expect(() => parseScriptDocV2(doc), file).not.toThrow();
+      const doc = parseScriptDocV2(JSON.parse(readFileSync(file, "utf8")));
+      expect(doc.version, file).toBe(2);
       expect(validateScriptV2(doc).filter((issue) => issue.level === "error"), file).toEqual([]);
-      const serialized = JSON.stringify(doc);
-      expect(serialized).toContain(v1.characters[0].card.backstory.slice(0, 20));
-      expect(serialized).toContain(v1.characters[0].card.secret.slice(0, 20));
     }
   });
 });

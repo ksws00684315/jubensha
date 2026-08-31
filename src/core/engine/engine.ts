@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import type { Room, Seat } from "@prisma/client";
-import { parseScriptForRuntime } from "@/core/script/compat";
-import type { ScriptDoc } from "@/core/script/schema";
+import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveLocation, revealText, winText } from "@/core/script/compat";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
@@ -33,7 +33,7 @@ export interface GameAction {
 
 export class GameEngine {
   readonly gameId: string;
-  script: ScriptDoc;
+  script: ScriptDocV2;
   state: GameState;
   events: EngineEvent[] = [];
   private busy = false;
@@ -44,7 +44,7 @@ export class GameEngine {
   private searchAsked = new Set<number>();
   private publishAsked = new Set<number>();
 
-  private constructor(gameId: string, script: ScriptDoc, state: GameState, events: EngineEvent[]) {
+  private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[]) {
     this.gameId = gameId;
     this.script = script;
     this.state = state;
@@ -364,7 +364,7 @@ export class GameEngine {
     if (this.state.voteResult) return; // 同步守卫：防真人投票与 tick 并发双触发
     const counts: Record<string, number> = {};
     for (const v of Object.values(this.state.votes)) counts[String(v.target)] = (counts[String(v.target)] ?? 0) + 1;
-    const culpritSeat = this.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === this.script.truth.culprit);
+    const culpritSeat = this.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === this.script.truth.culpritId);
     let topSeat = -1;
     let topCount = -1;
     for (const [k, n] of Object.entries(counts)) {
@@ -389,7 +389,7 @@ export class GameEngine {
       fromSeat: null,
       toSeat: null,
       visibility: "public",
-      content: { culpritSeat, culpritName: caughtName, caught: this.state.voteResult.caught, counts, method: this.script.truth.method, fullTimeline: this.script.truth.fullTimeline, reveal: this.script.truth.reveal, winText: this.script.ending.winText },
+      content: { culpritSeat, culpritName: caughtName, caught: this.state.voteResult.caught, counts, method: methodText(this.script), fullTimeline: fullTimelineText(this.script), reveal: revealText(this.script), winText: winText(this.script) },
     });
     this.state.phase = "ENDED";
     await this.recordEvent({
@@ -477,7 +477,7 @@ export class GameEngine {
               try {
                 loc = await agent.playerChooseLocation(this.ctx(), seat, locations);
               } catch {
-                loc = locations[Math.floor(Math.random() * locations.length)] ?? this.script.locations[0];
+                loc = locations[Math.floor(Math.random() * locations.length)] ?? this.script.locations[0]?.name ?? "";
               }
               state.searchChoices[String(seat)] = loc;
               await this.systemSay(`你选择了「${loc}」搜证。`, seat);
@@ -486,7 +486,7 @@ export class GameEngine {
               this.armHumanTimeout(seat, "选搜证地点", async () => {
                 if (this.state.searchChoices[String(seat)]) return;
                 const locs = this.availableLocations();
-                const loc = locs[Math.floor(Math.random() * locs.length)] ?? this.script.locations[0];
+                const loc = locs[Math.floor(Math.random() * locs.length)] ?? this.script.locations[0]?.name ?? "";
                 this.state.searchChoices[String(seat)] = loc;
                 await this.systemSay(`（系统已代为选择「${loc}」。）`, seat);
                 await persistState(this.gameId, this.state);
@@ -586,16 +586,22 @@ export class GameEngine {
   }
 
   private availableLocations(): string[] {
-    return this.script.locations.filter((loc) =>
-      this.script.clues.some((c) => c.location === loc && this.state.clueStates[c.id] === undefined)
-    );
+    return this.script.locations
+      .filter((loc) => this.script.clues.some((c) => c.locationId === loc.id && this.state.clueStates[c.id] === undefined))
+      .map((loc) => loc.name);
+  }
+
+  private cluesAt(locationKey: string) {
+    const loc = resolveLocation(this.script, locationKey);
+    if (!loc) return [];
+    return this.script.clues.filter((c) => c.locationId === loc.id && this.state.clueStates[c.id] === undefined);
   }
 
   private async dispatchClues(): Promise<void> {
     for (const seat of activeSeats(this.state)) {
       const loc = this.state.searchChoices[String(seat)];
       if (!loc) continue;
-      const candidates = this.script.clues.filter((c) => c.location === loc && this.state.clueStates[c.id] === undefined);
+      const candidates = this.cluesAt(loc);
       if (!candidates.length) {
         await this.systemSay(`你翻遍了「${loc}」，一无所获。`, seat);
         continue;
@@ -611,7 +617,7 @@ export class GameEngine {
         fromSeat: seat,
         toSeat: null,
         visibility: `seat:${seat}`,
-        content: { clueId: clue.id, clueName: clue.name, clueContent: clue.content, location: loc, private: !autoPublic },
+        content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), location: loc, private: !autoPublic },
       });
       await this.systemSay(`你在「${loc}」搜到了线索卡【${clue.name}】。${autoPublic ? "该线索为公开线索，已向全场公示。" : "你可以选择当场公开或私藏。"}`, seat);
       if (autoPublic) {
@@ -622,7 +628,7 @@ export class GameEngine {
           fromSeat: seat,
           toSeat: null,
           visibility: "public",
-          content: { clueId: clue.id, clueName: clue.name, clueContent: clue.content, publicBy: seat },
+          content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), publicBy: seat },
         });
       } else if (clue.policy !== "keep_private") {
         this.state.pendingPublish[String(seat)] = [...(this.state.pendingPublish[String(seat)] ?? []), clue.id];
@@ -689,7 +695,7 @@ export class GameEngine {
         fromSeat: seat,
         toSeat: null,
         visibility: "public",
-        content: { clueId, clueName: clue.name, clueContent: clue.content, publicBy: seat },
+        content: { clueId, clueName: clue.name, clueContent: clueText(clue), publicBy: seat },
       });
     } else {
       await this.systemSay(`你决定私藏线索【${clue.name}】。`, seat);
@@ -835,11 +841,11 @@ export class GameEngine {
       case "choose_location": {
         if (this.state.phase !== "SEARCH") return { ok: false, error: "当前不在搜证环节" };
         if (this.state.searchChoices[String(seatIndex)]) return { ok: false, error: "本轮已经选过地点" };
-        const loc = this.script.locations.find((l) => l === action.location);
+        const loc = resolveLocation(this.script, action.location ?? "");
         if (!loc) return { ok: false, error: "地点不合法" };
-        this.state.searchChoices[String(seatIndex)] = loc;
+        this.state.searchChoices[String(seatIndex)] = loc.name;
         this.clearTimers(`turn:${seatIndex}`);
-        await this.systemSay(`你选择了「${loc}」搜证。`, seatIndex);
+        await this.systemSay(`你选择了「${loc.name}」搜证。`, seatIndex);
         await persistState(this.gameId, this.state);
         this.continueTick();
         return { ok: true };

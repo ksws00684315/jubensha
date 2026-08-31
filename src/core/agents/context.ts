@@ -1,7 +1,19 @@
 import type { ChatMessage } from "@/core/llm/types";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import { renderEventLog } from "@/core/engine/state";
-import type { ScriptDoc } from "@/core/script/schema";
+import {
+  clueText,
+  fullTimelineText,
+  keyEvidenceNames,
+  locationNameOf,
+  locationNames,
+  methodText,
+  narrativeToText,
+  publicBioText,
+  revealText,
+  timelineToText,
+} from "@/core/script/compat";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
 
 /**
  * ★ 信息防火墙 ★
@@ -18,12 +30,12 @@ export function seatOf(state: GameState, seatIndex: number) {
   return state.seats[seatIndex];
 }
 
-export function characterOf(script: ScriptDoc, state: GameState, seatIndex: number) {
+export function characterOf(script: ScriptDocV2, state: GameState, seatIndex: number) {
   const seat = seatOf(state, seatIndex);
   return script.characters.find((c) => c.id === seat.characterId);
 }
 
-export function heldCluesOf(script: ScriptDoc, state: GameState, seatIndex: number) {
+export function heldCluesOf(script: ScriptDocV2, state: GameState, seatIndex: number) {
   return (state.heldClues[seatIndex] ?? []).map((id) => script.clues.find((c) => c.id === id)).filter(Boolean);
 }
 
@@ -35,7 +47,7 @@ export function cacheFriendlyMessages(system: string, growingLog: string, tail: 
   ];
 }
 
-function phaseInstruction(_script: ScriptDoc, state: GameState, _seatIndex: number, hint?: string): string {
+function phaseInstruction(_script: ScriptDocV2, state: GameState, _seatIndex: number, hint?: string): string {
   switch (state.phase) {
     case "SELF_INTRO":
       return `现在是【自我介绍】环节。请以第一人称做一段 80-150 字的自我介绍：你是谁、与死者的关系、今晚大致做了什么（按你的角色卡时间线，注意保护你的秘密）。不要剧透游戏机制。`;
@@ -50,19 +62,19 @@ function phaseInstruction(_script: ScriptDoc, state: GameState, _seatIndex: numb
   }
 }
 
-function publicRoster(script: ScriptDoc, state: GameState): string {
+function publicRoster(script: ScriptDocV2, state: GameState): string {
   return state.seats
     .filter((s) => s.kind !== "empty")
     .map((s) => {
       const c = script.characters.find((ch) => ch.id === s.characterId);
-      return `· 座位${s.index + 1} ${s.kind === "ai" ? "AI" : "真人"} ${s.playerName}${c ? ` 公开身份：${c.name}，${c.publicBio}` : ""}`;
+      return `· 座位${s.index + 1} ${s.kind === "ai" ? "AI" : "真人"} ${s.playerName}${c ? ` 公开身份：${c.name}，${publicBioText(c)}` : ""}`;
     })
     .join("\n");
 }
 
 /** 玩家 agent 的完整上下文（防火墙出口） */
 export function buildPlayerContext(
-  script: ScriptDoc,
+  script: ScriptDocV2,
   state: GameState,
   seatIndex: number,
   events: EngineEvent[],
@@ -71,7 +83,8 @@ export function buildPlayerContext(
   const character = characterOf(script, state, seatIndex);
   if (!character) throw new Error(`座位 ${seatIndex} 未绑定角色`);
 
-  const isCulprit = character.card.isCulprit;
+  const card = character.privateCard;
+  const isCulprit = card.isCulprit;
   const clues = heldCluesOf(script, state, seatIndex);
   const publicClues = clues.filter((c) => c && state.clueStates[c.id]?.isPublic);
 
@@ -89,21 +102,21 @@ export function buildPlayerContext(
   const system = `你正在参加一场文字剧本杀游戏《${script.meta.title}》，扮演其中一名角色。全程以第一人称、在戏内说话。
 
 【公开背景】
-${script.background}
+${narrativeToText(script.background)}
 
 【在场人物（仅公开身份）】
 ${publicRoster(script, state)}
 
-【可搜证地点】${script.locations.join("、")}
+【可搜证地点】${locationNames(script).join("、")}
 
 【你的角色】${character.name}${character.gender ? `（${character.gender}）` : ""}${character.age ? ` ${character.age} 岁` : ""}
-公开身份：${character.publicBio}
-角色背景：${character.card.backstory}
-你的秘密（绝不能主动告诉任何人）：${character.card.secret}
-你的目标：${character.card.goal}
-你的时间线（你自己的经历，可按此陈述）：${character.card.timeline}
-你额外知道的事：${character.card.knowledge.map((k) => `· ${k}`).join("\n") || "（无）"}
-你的说话风格：${character.card.persona}
+公开身份：${publicBioText(character)}
+角色背景：${narrativeToText(card.backstory)}
+你的秘密（绝不能主动告诉任何人）：${card.secrets.map((secret) => `${secret.title}：${narrativeToText(secret.content)}`).join("\n")}
+你的目标：${card.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n")}
+你的时间线（你自己的经历，可按此陈述）：${timelineToText(card.timeline)}
+你额外知道的事：${card.knowledge.map((item) => `· ${item.title}：${narrativeToText(item.content)}`).join("\n") || "（无）"}
+你的说话风格：${[card.persona.speechStyle, ...card.persona.traits].filter(Boolean).join("；")}
 
 ${strategy}
 
@@ -115,7 +128,7 @@ ${strategy}
   const clueBlock =
     clues.length === 0
       ? "（暂无）"
-      : clues.map((c) => `· ${c!.name}（${publicClues.includes(c!) ? "已公开" : "仅你可见"}）: ${c!.content}`).join("\n");
+      : clues.map((c) => `· ${c!.name}（${publicClues.includes(c!) ? "已公开" : "仅你可见"}）: ${clueText(c!)}`).join("\n");
 
   const growingLog = `【到目前为止的现场记录】
 ${renderEventLog(events, seatIndex, { includePrivate: true })}`;
@@ -132,7 +145,7 @@ ${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
 
 /** DM agent：system 放完整剧本（整局不变）；现场记录只追加；任务/线索状态放尾部。 */
 export function buildDmContext(
-  script: ScriptDoc,
+  script: ScriptDocV2,
   state: GameState,
   events: EngineEvent[],
   opts: { task: string; requireJson?: string }
@@ -142,29 +155,29 @@ export function buildDmContext(
     .map((s) => {
       const c = script.characters.find((ch) => ch.id === s.characterId);
       const card = c
-        ? `秘密：${c.card.secret}；目标：${c.card.goal}；时间线：${c.card.timeline}${c.card.isCulprit ? "（真凶）" : ""}`
+        ? `秘密：${c.privateCard.secrets.map((secret) => narrativeToText(secret.content)).join("；")}；目标：${c.privateCard.objectives.map((objective) => narrativeToText(objective.content)).join("；")}；时间线：${timelineToText(c.privateCard.timeline)}${c.privateCard.isCulprit ? "（真凶）" : ""}`
         : "";
       return `· 座位${s.index + 1} ${s.kind === "ai" ? "[AI]" : "[真人]"} ${s.playerName} 扮演 ${c?.name ?? "?"}。${card}`;
     })
     .join("\n");
 
   const clueCatalog = script.clues
-    .map((c) => `· [${c.location}] ${c.name}（${c.policy}）：${c.content}`)
+    .map((c) => `· [${locationNameOf(script, c.locationId)}] ${c.name}（${c.policy}）：${clueText(c)}`)
     .join("\n");
 
-  const culprit = script.characters.find((c) => c.id === script.truth.culprit);
+  const culprit = script.characters.find((c) => c.id === script.truth.culpritId);
 
   const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你的话要保持"主持人"身份：不引导投票倾向。复盘前旁白严禁出现真凶姓名、作案手法细节、未公开线索原文。
 
 【公开背景】
-${script.background}
+${narrativeToText(script.background)}
 
 【仅你可见的真相，旁白中禁止说出（复盘任务除外）】
-真凶：${culprit?.name ?? script.truth.culprit}
-手法：${script.truth.method}
-完整时间线：${script.truth.fullTimeline}
-关键证据：${script.truth.keyEvidence.join("、")}
-复盘底稿：${script.truth.reveal}
+真凶：${culprit?.name ?? script.truth.culpritId}
+手法：${methodText(script)}
+完整时间线：${fullTimelineText(script)}
+关键证据：${keyEvidenceNames(script).join("、")}
+复盘底稿：${revealText(script)}
 
 【各座位与角色卡】
 ${seatLines}

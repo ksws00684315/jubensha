@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { parseScriptForRuntime } from "@/core/script/compat";
+import { parseScriptForRuntime, publicBioText } from "@/core/script/compat";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 
 async function loadRoom(code: string) {
@@ -36,10 +36,10 @@ export async function GET(_req: Request, ctx: { params: Promise<{ code: string }
         kind: s.kind,
         playerName: s.playerName,
         hasToken: Boolean(s.token),
-        character: c ? { id: c.id, name: c.name, publicBio: c.publicBio } : null,
+        character: c ? { id: c.id, name: c.name, publicBio: publicBioText(c) } : null,
       };
     }),
-    characters: doc.characters.map((c) => ({ id: c.id, name: c.name, publicBio: c.publicBio })),
+    characters: doc.characters.map((c) => ({ id: c.id, name: c.name, publicBio: publicBioText(c) })),
   });
 }
 
