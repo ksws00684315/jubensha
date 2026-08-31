@@ -3,6 +3,7 @@ import { createAnthropic } from "@ai-sdk/anthropic";
 import { generateText, streamText, type LanguageModel } from "ai";
 import { db } from "@/lib/db";
 import { decryptSecret } from "@/lib/crypto";
+import { candidateModelListUrls, normalizeProviderBaseUrl } from "./provider-url";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
@@ -39,13 +40,14 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
 }
 
 function toLanguageModel(b: ResolvedBinding): LanguageModel {
+  const baseURL = normalizeProviderBaseUrl(b.baseUrl, b.protocol);
   if (b.protocol === "anthropic") {
-    const p = createAnthropic({ apiKey: b.apiKey, baseURL: b.baseUrl || undefined });
+    const p = createAnthropic({ apiKey: b.apiKey, baseURL: baseURL || undefined });
     return p(b.modelId);
   }
   const p = createOpenAICompatible({
     name: b.providerName,
-    baseURL: b.baseUrl,
+    baseURL,
     apiKey: b.apiKey,
   });
   return p(b.modelId);
@@ -239,30 +241,50 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   }
 }
 
-/** 测试某 Provider 连通性：拉取模型列表 */
+function modelIdsFrom(json: unknown): string[] {
+  if (!json || typeof json !== "object") return [];
+  const data = (json as { data?: Array<{ id?: string }> }).data;
+  if (!Array.isArray(data)) return [];
+  return data.map((m) => m.id ?? "").filter(Boolean);
+}
+
+async function fetchJson(
+  url: string,
+  headers: Record<string, string>
+): Promise<{ ok: boolean; status: number; json: unknown; text: string }> {
+  const res = await fetch(url, { headers, signal: AbortSignal.timeout(8_000) });
+  const text = await res.text();
+  let json: unknown = null;
+  try {
+    json = JSON.parse(text) as unknown;
+  } catch {
+    json = null;
+  }
+  return { ok: res.ok, status: res.status, json, text };
+}
+
+/** 测试连通性：同源沿路径向上探测 /models，不按厂商写死地址。 */
 export async function testProviderConnection(input: {
   protocol: string;
   baseUrl: string;
   apiKey: string;
 }): Promise<{ ok: true; models: string[] } | { ok: false; error: string }> {
+  const headers = {
+    Authorization: `Bearer ${input.apiKey}`,
+    "api-key": input.apiKey,
+    "x-api-key": input.apiKey,
+    "anthropic-version": "2023-06-01",
+  };
+  const urls = candidateModelListUrls(normalizeProviderBaseUrl(input.baseUrl, input.protocol));
+  const errors: string[] = [];
   try {
-    if (input.protocol === "anthropic") {
-      const res = await fetch(`${input.baseUrl.replace(/\/$/, "")}/v1/models`, {
-        headers: { "x-api-key": input.apiKey, "anthropic-version": "2023-06-01" },
-        signal: AbortSignal.timeout(15_000),
-      });
-      if (!res.ok) return { ok: false, error: `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}` };
-      const data = (await res.json()) as { data?: Array<{ id?: string }> };
-      return { ok: true, models: (data.data ?? []).map((m) => m.id ?? "").filter(Boolean) };
+    for (const url of urls) {
+      const r = await fetchJson(url, headers);
+      if (r.ok) return { ok: true, models: modelIdsFrom(r.json) };
+      if (r.status !== 404) errors.push(`${r.status} ${url.replace(/https?:\/\/[^/]+/, "")}`);
     }
-    const base = input.baseUrl.replace(/\/$/, "");
-    const res = await fetch(`${base}/models`, {
-      headers: { Authorization: `Bearer ${input.apiKey}` },
-      signal: AbortSignal.timeout(15_000),
-    });
-    if (!res.ok) return { ok: false, error: `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}` };
-    const data = (await res.json()) as { data?: Array<{ id?: string }> };
-    return { ok: true, models: (data.data ?? []).map((m) => m.id ?? "").filter(Boolean) };
+    const detail = errors.slice(0, 3).join("; ") || "all 404";
+    return { ok: false, error: `未找到模型列表（${detail}）。请把 Base URL 填成 API 根地址，一般以 /v1 结尾。` };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }

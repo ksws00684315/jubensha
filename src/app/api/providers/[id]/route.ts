@@ -24,10 +24,6 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   }
   const existing = await db.aiProvider.findUnique({ where: { id } });
   if (!existing) return NextResponse.json({ error: "Provider 不存在" }, { status: 404 });
-  if (parsed.data.baseUrl !== undefined && parsed.data.apiKey === undefined) {
-    return NextResponse.json({ error: "更改 API 地址时必须同时提供新的 API Key" }, { status: 400 });
-  }
-
   const provider = await db.aiProvider.update({
     where: { id },
     data: {

@@ -270,9 +270,12 @@ function DatabaseTab() {
   );
 }
 
+const emptyProviderForm = { name: "", protocol: "openai_compatible", baseUrl: "", apiKey: "", note: "" };
+
 function ProvidersTab() {
   const [providers, setProviders] = useState<ProviderView[]>([]);
-  const [form, setForm] = useState({ name: "", protocol: "openai_compatible", baseUrl: "", apiKey: "", note: "" });
+  const [form, setForm] = useState(emptyProviderForm);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [preset, setPreset] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -290,14 +293,38 @@ function ProvidersTab() {
     if (p) setForm((f) => ({ ...f, name: p.label, protocol: p.protocol, baseUrl: p.baseUrl, note: p.note ?? "" }));
   };
 
-  const create = async () => {
+  const resetForm = () => {
+    setEditingId(null);
+    setPreset("");
+    setForm(emptyProviderForm);
+  };
+
+  const startEdit = (p: ProviderView) => {
+    setEditingId(p.id);
+    setPreset("");
+    setForm({ name: p.name, protocol: p.protocol, baseUrl: p.baseUrl, apiKey: "", note: p.note ?? "" });
+    setMsg({ ok: true, text: `正在编辑「${p.name}」。API Key 留空表示不改。` });
+  };
+
+  const save = async () => {
     setBusy(true);
     setMsg(null);
     try {
-      await api("/api/providers", { method: "POST", body: JSON.stringify(form) });
-      setMsg({ ok: true, text: "已保存。建议点击「测试」验证连通性。" });
-      setForm({ name: "", protocol: "openai_compatible", baseUrl: "", apiKey: "", note: "" });
-      setPreset("");
+      if (editingId) {
+        const body: Record<string, unknown> = {
+          name: form.name,
+          protocol: form.protocol,
+          baseUrl: form.baseUrl,
+          note: form.note || null,
+        };
+        if (form.apiKey.trim()) body.apiKey = form.apiKey.trim();
+        await api(`/api/providers/${editingId}`, { method: "PATCH", body: JSON.stringify(body) });
+        setMsg({ ok: true, text: "已更新。建议再点一次「测试」。" });
+      } else {
+        await api("/api/providers", { method: "POST", body: JSON.stringify(form) });
+        setMsg({ ok: true, text: "已保存。建议点击「测试」验证连通性。" });
+      }
+      resetForm();
       await load();
     } catch (err) {
       setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) });
@@ -310,7 +337,10 @@ function ProvidersTab() {
     setMsg(null);
     setBusy(true);
     try {
-      const body = providerId ? { providerId } : { protocol: form.protocol, baseUrl: form.baseUrl, apiKey: form.apiKey };
+      const useSaved = Boolean(providerId || (editingId && !form.apiKey.trim()));
+      const body = useSaved
+        ? { providerId: providerId ?? editingId }
+        : { protocol: form.protocol, baseUrl: form.baseUrl, apiKey: form.apiKey };
       const res = await api<{ ok: boolean; models: string[] }>("/api/providers/test", { method: "POST", body: JSON.stringify(body) });
       setMsg({ ok: true, text: `连接成功，可用模型 ${res.models.length} 个：${res.models.slice(0, 6).join("、")}${res.models.length > 6 ? " …" : ""}` });
     } catch (err) {
@@ -346,7 +376,10 @@ function ProvidersTab() {
               </p>
             </div>
             <div className="flex gap-2 text-sm">
-              <button onClick={() => test(p.id)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
+              <button onClick={() => startEdit(p)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
+                编辑
+              </button>
+              <button onClick={() => void test(p.id)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
                 测试
               </button>
               <button onClick={() => toggle(p)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
@@ -366,7 +399,7 @@ function ProvidersTab() {
       </div>
 
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-        <h3 className="font-semibold">添加 Provider</h3>
+        <h3 className="font-semibold">{editingId ? "编辑 Provider" : "添加 Provider"}</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <label className="text-sm text-zinc-400">
             快速模板
@@ -395,8 +428,8 @@ function ProvidersTab() {
             <input value={form.baseUrl} onChange={(e) => setForm((f) => ({ ...f, baseUrl: e.target.value }))} placeholder="https://api.deepseek.com/v1" className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500" />
           </label>
           <label className="text-sm text-zinc-400">
-            API Key
-            <input value={form.apiKey} onChange={(e) => setForm((f) => ({ ...f, apiKey: e.target.value }))} type="password" className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+            API Key{editingId ? "（留空不改）" : ""}
+            <input value={form.apiKey} onChange={(e) => setForm((f) => ({ ...f, apiKey: e.target.value }))} type="password" placeholder={editingId ? "不修改则留空" : ""} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
           </label>
           <label className="text-sm text-zinc-400">
             备注（可选）
@@ -405,12 +438,25 @@ function ProvidersTab() {
         </div>
         {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-emerald-400" : "text-red-400"}`}>{msg.text}</p>}
         <div className="mt-4 flex gap-3">
-          <button onClick={create} disabled={busy || !form.name || !form.baseUrl || !form.apiKey} className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40">
-            保存
+          <button
+            onClick={() => void save()}
+            disabled={busy || !form.name || !form.baseUrl || (!editingId && !form.apiKey)}
+            className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+          >
+            {editingId ? "保存修改" : "保存"}
           </button>
-          <button onClick={() => test()} disabled={busy || !form.baseUrl || !form.apiKey} className="rounded-lg border border-zinc-700 px-5 py-2 text-sm hover:border-zinc-500 disabled:opacity-40">
+          <button
+            onClick={() => void test()}
+            disabled={busy || !form.baseUrl || (!editingId && !form.apiKey)}
+            className="rounded-lg border border-zinc-700 px-5 py-2 text-sm hover:border-zinc-500 disabled:opacity-40"
+          >
             先测试连通性
           </button>
+          {editingId && (
+            <button onClick={resetForm} className="rounded-lg px-3 py-2 text-sm text-zinc-500 hover:text-zinc-300">
+              取消编辑
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -55,6 +55,14 @@ export const PROVIDER_PRESETS: ProviderPreset[] = [
     note: "一个 key 聚合数百家模型",
   },
   {
+    key: "xiaomi_mimo",
+    label: "小米 MiMo",
+    protocol: "openai_compatible",
+    baseUrl: "https://api.xiaomimimo.com/v1",
+    commonModels: ["mimo-v2.5-pro", "mimo-v2.5"],
+    note: "按量付费用此地址；Token Plan 把 Base URL 换成 https://token-plan-cn.xiaomimimo.com/v1（Key 以 tp- 开头）。协议选 OpenAI 兼容。",
+  },
+  {
     key: "ollama",
     label: "Ollama 本地模型",
     protocol: "openai_compatible",
