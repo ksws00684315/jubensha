@@ -99,7 +99,7 @@ function AdminGate({ children }: { children: ReactNode }) {
 }
 
 export default function SettingsPage() {
-  const [tab, setTab] = useState<"providers" | "bindings" | "usage">("providers");
+  const [tab, setTab] = useState<"database" | "providers" | "bindings" | "usage">("database");
   return (
     <AdminGate>
     <div className="space-y-6">
@@ -108,6 +108,7 @@ export default function SettingsPage() {
         <div className="mt-4 flex gap-2">
           {(
             [
+              ["database", "数据库"],
               ["providers", "AI 接入"],
               ["bindings", "模型绑定"],
               ["usage", "用量统计"],
@@ -125,11 +126,145 @@ export default function SettingsPage() {
           ))}
         </div>
       </div>
+      {tab === "database" && <DatabaseTab />}
       {tab === "providers" && <ProvidersTab />}
       {tab === "bindings" && <BindingsTab />}
       {tab === "usage" && <UsageTab />}
     </div>
     </AdminGate>
+  );
+}
+
+interface DatabaseView {
+  configured: boolean;
+  source: "file" | "env" | "none";
+  urlMasked: string | null;
+  ok?: boolean;
+  hasSchema?: boolean;
+  error?: string;
+}
+
+function DatabaseTab() {
+  const [info, setInfo] = useState<DatabaseView | null>(null);
+  const [url, setUrl] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const load = useCallback(async () => {
+    const data = await api<DatabaseView>("/api/settings/database");
+    setInfo(data);
+  }, []);
+  useEffect(() => {
+    void load().catch((err) => setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) }));
+  }, [load]);
+
+  const test = async () => {
+    setBusy(true);
+    setMsg(null);
+    try {
+      const res = await api<{ ok: boolean; hasSchema: boolean }>("/api/settings/database", {
+        method: "POST",
+        body: JSON.stringify({ url }),
+      });
+      setMsg({
+        ok: true,
+        text: res.hasSchema ? "连接成功，已检测到剧本表。" : "连接成功，但还没有表结构。保存后请在项目目录执行 npm run db:deploy。",
+      });
+    } catch (err) {
+      setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const save = async () => {
+    setBusy(true);
+    setMsg(null);
+    try {
+      const res = await api<{ ok: boolean; hasSchema: boolean; urlMasked: string }>("/api/settings/database", {
+        method: "PUT",
+        body: JSON.stringify({ url }),
+      });
+      setUrl("");
+      await load();
+      setMsg({
+        ok: true,
+        text: res.hasSchema
+          ? "已保存并切换到该数据库。"
+          : "已保存并切换。库是空的，请在项目目录执行 npm run db:deploy 建表。",
+      });
+    } catch (err) {
+      setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const sourceLabel = info?.source === "file" ? "管理后台（local.app.json）" : info?.source === "env" ? ".env / DATABASE_URL" : "未配置";
+
+  return (
+    <div className="space-y-6">
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <h3 className="font-semibold">当前连接</h3>
+        {!info && <p className="mt-2 text-sm text-zinc-500">加载中…</p>}
+        {info && (
+          <div className="mt-3 space-y-1 text-sm">
+            <p>
+              状态：
+              {info.configured ? (
+                info.ok ? (
+                  <span className="text-emerald-400">已连通</span>
+                ) : (
+                  <span className="text-red-400">连不上</span>
+                )
+              ) : (
+                <span className="text-zinc-400">未配置</span>
+              )}
+              {info.hasSchema === false && info.ok && <span className="ml-2 text-amber-400">缺表结构</span>}
+            </p>
+            <p className="text-zinc-500">来源：{sourceLabel}</p>
+            {info.urlMasked && <p className="font-mono text-xs text-zinc-400 break-all">{info.urlMasked}</p>}
+            {info.error && <p className="text-red-400">{info.error}</p>}
+          </div>
+        )}
+      </div>
+
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <h3 className="font-semibold">填写 PostgreSQL 连接串</h3>
+        <p className="mt-1 text-sm text-zinc-500">
+          支持本机或远端。云厂商库通常要加 <code className="text-zinc-300">sslmode=require</code>。保存后写入项目根目录{" "}
+          <code className="text-zinc-300">local.app.json</code>（已 gitignore），并立即切换，无需改 .env。
+        </p>
+        <label className="mt-4 block text-sm text-zinc-400">
+          DATABASE_URL
+          <input
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            type="password"
+            autoComplete="off"
+            placeholder="postgresql://USER:PASSWORD@HOST:5432/jubensha?schema=public&sslmode=require"
+            className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 font-mono text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500"
+          />
+        </label>
+        {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-emerald-400" : "text-red-400"}`}>{msg.text}</p>}
+        <div className="mt-4 flex gap-3">
+          <button
+            onClick={() => void save()}
+            disabled={busy || !url.trim()}
+            className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+          >
+            {busy ? "处理中…" : "测试并保存"}
+          </button>
+          <button
+            onClick={() => void test()}
+            disabled={busy || !url.trim()}
+            className="rounded-lg border border-zinc-700 px-5 py-2 text-sm hover:border-zinc-500 disabled:opacity-40"
+          >
+            只测试、不保存
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

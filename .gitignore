@@ -36,6 +36,11 @@ yarn-error.log*
 # local LLM keys for smoke / live play
 /local.llm.json
 
+# admin-saved runtime config (database URL, etc.)
+/local.app.json
+# DB init snapshot (contains encrypted provider keys)
+/local.init.json
+
 # vercel
 .vercel
 

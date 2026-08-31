@@ -19,8 +19,10 @@ Next.js 16 (App Router) · React 19 · TypeScript · PostgreSQL + Prisma · Verc
 ## 快速开始
 
 ```bash
-# 1. 启动 PostgreSQL（或使用已有实例，修改 .env 的 DATABASE_URL）
+# 1. 准备 PostgreSQL（本机 Docker，或直接用远端实例）
 docker run -d --name jbs-pg -e POSTGRES_PASSWORD=jubensha -e POSTGRES_DB=jubensha -p 5432:5432 -v jbs_pgdata:/var/lib/postgresql/data postgres:16-alpine
+# 远端库也可稍后在「设置 → 数据库」填写连接串（写入 local.app.json，优先于 .env）
+# 换库初始化：npm run db:deploy && npm run db:import（需先在旧库 npm run db:export）
 
 # 2. 安装依赖 + 建表
 npm install
@@ -34,10 +36,11 @@ npm run dev
 
 打开 http://localhost:3000 后：
 
-1. **设置 → AI 接入**：添加 Provider（DeepSeek / 智谱 / Qwen / Moonshot / OpenAI / Ollama 等，OpenAI 兼容协议一键填模板），测试连通性
-2. **设置 → 模型绑定**：为 `DM 主持人`、`凶手玩家`、`普通 AI 玩家` 绑定模型（必配）；`剧本生成`、`语音合成` 按需
-3. **剧本库**：内置原创样例本《云澜山庄的雪夜》（5 人本格）在 `seeds/` 下，可通过「导入 JSON」入库；也可用「AI 生成剧本」
-4. **开房间**：选剧本 → 座位配置（AI / 真人）→ 创建 → 分享房间码给朋友入座 → 开始游戏
+1. **设置 → 数据库**：填写本机或远端 `postgresql://…` 连接串，测试并保存（空库再执行 `npm run db:deploy`）
+2. **设置 → AI 接入**：添加 Provider（DeepSeek / 智谱 / Qwen / Moonshot / OpenAI / Ollama 等，OpenAI 兼容协议一键填模板），测试连通性
+3. **设置 → 模型绑定**：为 `DM 主持人`、`凶手玩家`、`普通 AI 玩家` 绑定模型（必配）；`剧本生成`、`语音合成` 按需
+4. **剧本库**：内置原创样例本《云澜山庄的雪夜》（5 人本格）在 `seeds/` 下，可通过「导入 JSON」入库；也可用「AI 生成剧本」
+5. **开房间**：选剧本 → 座位配置（AI / 真人）→ 创建 → 分享房间码给朋友入座 → 开始游戏
 
 ## 剧本 Schema
 
