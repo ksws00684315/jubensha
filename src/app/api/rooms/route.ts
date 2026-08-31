@@ -39,6 +39,11 @@ export async function POST(req: Request) {
   const play = isScriptPlayable(doc);
   if (!play.ok) return NextResponse.json({ error: "剧本校验失败", issues: play.errors }, { status: 400 });
 
+  const validCharacterIds = new Set(doc.characters.map((c) => c.id));
+  if (parsed.data.seats.some((s) => s.kind !== "empty" && s.characterId && !validCharacterIds.has(s.characterId))) {
+    return NextResponse.json({ error: "座位角色不属于该剧本" }, { status: 400 });
+  }
+
   const characterIds = assignCharacterIds(parsed.data.seats, doc.characters.map((c) => c.id));
   if (hasDuplicateCharacterIds(characterIds)) {
     return NextResponse.json({ error: "座位角色不能重复" }, { status: 400 });

@@ -61,11 +61,13 @@ describe("信息防火墙", () => {
     const before = buildDmContext(doc, state, events, { task: "test" }).map((m) => m.content).join("\n");
     expect(before).toContain("严禁出现真凶姓名");
     expect(before).not.toContain(doc.truth.method.slice(0, 8));
+    expect(before).not.toContain("衣箱底一部手写账本");
     const revealState = { ...state, phase: "REVEAL" as const };
     const after = buildDmContext(doc, revealState, events, { task: "test" }).map((m) => m.content).join("\n");
     const culprit = doc.characters.find((c) => c.id === doc.truth.culprit)!;
     expect(after).toContain(culprit.name);
     expect(after).toContain(doc.truth.method.slice(0, 8));
+    expect(after).toContain("衣箱底一部手写账本");
   });
 });
 

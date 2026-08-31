@@ -35,7 +35,9 @@ export function isAdminSync(opts: {
   if (session && opts.cookie === session) return true;
   const password = adminPassword();
   if (password && opts.tokenHeader && opts.tokenHeader === password) return true;
-  // 本机直接访问视为管理员。必须 Host 也是回环，避免伪造 X-Forwarded-For。
+  // 仅开发环境允许本机免登录。生产环境不能仅凭 Host 判断来源，
+  // 因为客户端可以伪造 Host: localhost。
+  if (process.env.NODE_ENV === "production") return false;
   const xff = opts.xff?.split(",")[0]?.trim() ?? "";
   const xffLoopback =
     !xff || xff === "127.0.0.1" || xff === "::1" || xff === "::ffff:127.0.0.1" || isLoopbackHost(xff);

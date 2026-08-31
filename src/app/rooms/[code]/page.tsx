@@ -23,8 +23,8 @@ export default function RoomPage() {
   }, [code]);
 
   useEffect(() => {
-    void load();
-    const t = setInterval(() => void load(), 2500);
+    void Promise.resolve().then(() => load());
+    const t = setInterval(() => void Promise.resolve().then(() => load()), 2500);
     return () => clearInterval(t);
   }, [load]);
 

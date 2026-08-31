@@ -1,14 +1,18 @@
 import { db } from "@/lib/db";
-import type { Game, Room, Seat } from "@prisma/client";
+import type { Room, Seat } from "@prisma/client";
 import { parseScriptDoc, type ScriptDoc } from "@/core/script/schema";
 import { publish } from "./bus";
-import { activeSeats, appendEvent, initialState, nextSeat, persistState } from "./state";
+import { activeSeats, appendEvent, initialState, persistState } from "./state";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, seatPurpose, type AgentCtx } from "@/core/agents";
 import type { Purpose } from "@/core/llm/types";
 
-const g = globalThis as unknown as { __jbsEngines?: Map<string, GameEngine> };
+const g = globalThis as unknown as {
+  __jbsEngines?: Map<string, GameEngine>;
+  __jbsEngineLoads?: Map<string, Promise<GameEngine>>;
+};
 const engines = (g.__jbsEngines ??= new Map<string, GameEngine>());
+const engineLoads = (g.__jbsEngineLoads ??= new Map<string, Promise<GameEngine>>());
 
 const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const TYPEWRITER_CHUNK = 3;
@@ -54,36 +58,46 @@ export class GameEngine {
   static async load(gameId: string): Promise<GameEngine> {
     const cached = engines.get(gameId);
     if (cached) return cached;
-    const game = await db.game.findUnique({ where: { id: gameId } });
-    if (!game) throw new Error("对局不存在");
-    const scriptRow = await db.script.findUnique({ where: { id: game.scriptId } });
-    if (!scriptRow) throw new Error("剧本不存在");
-    const eventRows = await db.gameEvent.findMany({ where: { gameId }, orderBy: { seq: "asc" } });
-    const events: EngineEvent[] = eventRows.map((r) => ({
-      seq: r.seq.toString(),
-      type: r.type as EngineEvent["type"],
-      phase: r.phase as GameState["phase"],
-      round: r.round,
-      fromSeat: r.fromSeat,
-      toSeat: r.toSeat,
-      visibility: r.visibility,
-      content: r.content as EngineEvent["content"],
-      createdAt: r.createdAt.toISOString(),
-    }));
-    const state = (game.state as unknown as GameState | null) ?? initialState([]);
-    // 兼容旧快照：缺字段补默认值
-    state.pendingPublish ??= {};
-    state.heldClues ??= {};
-    state.searchChoices ??= {};
-    state.votes ??= {};
-    state.privateChat ??= {};
-    state.readySeats ??= [];
-    state.spokenSeats ??= [];
-    state.searchDealtRound ??= 0;
-    const engine = new GameEngine(gameId, parseScriptDoc(scriptRow.content), state, events);
-    engines.set(gameId, engine);
-    engine.resumeAfterLoad();
-    return engine;
+    const loading = engineLoads.get(gameId);
+    if (loading) return loading;
+    const promise = (async () => {
+      const game = await db.game.findUnique({ where: { id: gameId } });
+      if (!game) throw new Error("对局不存在");
+      const scriptRow = await db.script.findUnique({ where: { id: game.scriptId } });
+      if (!scriptRow) throw new Error("剧本不存在");
+      const eventRows = await db.gameEvent.findMany({ where: { gameId }, orderBy: { seq: "asc" } });
+      const events: EngineEvent[] = eventRows.map((r) => ({
+        seq: r.seq.toString(),
+        type: r.type as EngineEvent["type"],
+        phase: r.phase as GameState["phase"],
+        round: r.round,
+        fromSeat: r.fromSeat,
+        toSeat: r.toSeat,
+        visibility: r.visibility,
+        content: r.content as EngineEvent["content"],
+        createdAt: r.createdAt.toISOString(),
+      }));
+      const state = (game.state as unknown as GameState | null) ?? initialState([]);
+      // 兼容旧快照：缺字段补默认值
+      state.pendingPublish ??= {};
+      state.heldClues ??= {};
+      state.searchChoices ??= {};
+      state.votes ??= {};
+      state.privateChat ??= {};
+      state.readySeats ??= [];
+      state.spokenSeats ??= [];
+      state.searchDealtRound ??= 0;
+      const engine = new GameEngine(gameId, parseScriptDoc(scriptRow.content), state, events);
+      engines.set(gameId, engine);
+      engine.resumeAfterLoad();
+      return engine;
+    })();
+    engineLoads.set(gameId, promise);
+    try {
+      return await promise;
+    } finally {
+      engineLoads.delete(gameId);
+    }
   }
 
   /** 创建并开始一局（房间开局时调用） */
@@ -131,7 +145,8 @@ export class GameEngine {
   }
 
   private schedule(key: string, fn: () => void | Promise<void>, ms: number): void {
-    this.timers.get(key) && clearTimeout(this.timers.get(key));
+    const existing = this.timers.get(key);
+    if (existing) clearTimeout(existing);
     const t = setTimeout(() => {
       this.timers.delete(key);
       void this.exclusive(async () => {
@@ -226,7 +241,7 @@ export class GameEngine {
         content: { text, phase, round },
       });
       return text;
-    } catch (err) {
+    } catch {
       const fallback = `（主持人正在准备：${task}）`;
       await this.recordEvent({
         type: "phase",
@@ -756,10 +771,6 @@ export class GameEngine {
     if (this.state.phase === "ENDED") return { ok: false, error: "对局已结束" };
     const seat = this.state.seats[seatIndex];
     if (!seat || seat.kind !== "human") return { ok: false, error: "无权操作该座位" };
-    // 只清除该座位的回合/决策超时定时器，不动 AI 读本等其他定时器
-    this.clearTimers(`turn:${seatIndex}`);
-    this.clearTimers(`pub:${seatIndex}`);
-
     switch (action.type) {
       case "ready": {
         if (this.state.phase !== "READING") return { ok: false, error: "当前不在读本环节" };
@@ -782,12 +793,14 @@ export class GameEngine {
           content: { text, speakerName: this.speakerName(seatIndex) },
         });
         if (this.state.phase === "SELF_INTRO" && this.state.turnSeat === seatIndex) {
+          this.clearTimers(`turn:${seatIndex}`);
           this.markSpoken(seatIndex);
           await this.nextTurnOrAdvance();
           return { ok: true };
         }
         if (this.state.phase === "DISCUSSION") {
           if (this.state.turnSeat === seatIndex) {
+            this.clearTimers(`turn:${seatIndex}`);
             this.markSpoken(seatIndex);
             await this.nextTurnOrAdvance();
             return { ok: true };
@@ -819,6 +832,7 @@ export class GameEngine {
         const loc = this.script.locations.find((l) => l === action.location);
         if (!loc) return { ok: false, error: "地点不合法" };
         this.state.searchChoices[String(seatIndex)] = loc;
+        this.clearTimers(`turn:${seatIndex}`);
         await this.systemSay(`你选择了「${loc}」搜证。`, seatIndex);
         await persistState(this.gameId, this.state);
         this.continueTick();
@@ -835,6 +849,7 @@ export class GameEngine {
         if (clue?.policy === "keep_private" && action.publish) return { ok: false, error: "该线索必须私藏" };
         await this.applyPublish(seatIndex, clueId, action.publish ?? false);
         this.state.pendingPublish[String(seatIndex)] = pending.filter((id) => id !== clueId);
+        if (this.state.pendingPublish[String(seatIndex)]?.length === 0) this.clearTimers(`pub:${seatIndex}`);
         await persistState(this.gameId, this.state);
         this.continueTick();
         return { ok: true };
@@ -846,6 +861,7 @@ export class GameEngine {
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
         await this.recordVote(seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
+        this.clearTimers(`turn:${seatIndex}`);
         this.continueTick();
         return { ok: true };
       }

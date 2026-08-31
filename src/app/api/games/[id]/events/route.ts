@@ -78,19 +78,20 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         }
       };
 
-      // 1) 补发历史事件（> lastSeq，按视角过滤）
-      const history = await db.gameEvent.findMany({ where: { gameId: id, seq: { gt: lastSeq } }, orderBy: { seq: "asc" } });
-      for (const row of history) {
-        const ev = rowToEvent(row);
+      // 先订阅再查询历史，避免查询与订阅之间产生事件丢失。
+      // 历史查询期间暂存实时事件，回放完成后按序发送并去重。
+      const delivered = new Set<string>();
+      const pending: EngineEvent[] = [];
+      let replaying = true;
+      const sendEvent = (ev: EngineEvent) => {
+        if (delivered.has(ev.seq)) return;
+        delivered.add(ev.seq);
         if (dmView || visibleTo(ev, seatIndex)) send({ kind: "event", event: ev }, ev.seq);
-      }
-      send({ kind: "hello", lastSeq: history.length ? history[history.length - 1].seq.toString() : lastSeq.toString() });
-
-      // 2) 订阅总线
+      };
       unsubscribe = subscribe(id, (msg: BusMessage) => {
         if (msg.kind === "event") {
-          if (!dmView && !visibleTo(msg.event, seatIndex)) return;
-          send(msg, msg.event.seq);
+          if (replaying) pending.push(msg.event);
+          else sendEvent(msg.event);
         } else if (msg.kind === "delta" || msg.kind === "thinking") {
           if (msg.audience !== "public" && !dmView && seatIndex !== msg.audience) return;
           send(msg);
@@ -99,7 +100,18 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         }
       });
 
-      // 3) 心跳保活
+      // 1) 补发历史事件（> lastSeq，按视角过滤）
+      const history = await db.gameEvent.findMany({ where: { gameId: id, seq: { gt: lastSeq } }, orderBy: { seq: "asc" } });
+      for (const row of history) {
+        sendEvent(rowToEvent(row));
+      }
+      replaying = false;
+      pending.sort((a, b) => (BigInt(a.seq) < BigInt(b.seq) ? -1 : BigInt(a.seq) > BigInt(b.seq) ? 1 : 0));
+      for (const ev of pending) sendEvent(ev);
+      const lastDelivered = history.length ? history[history.length - 1].seq.toString() : lastSeq.toString();
+      send({ kind: "hello", lastSeq: lastDelivered });
+
+      // 2) 心跳保活
       heartbeat = setInterval(() => {
         if (!closed) {
           try {

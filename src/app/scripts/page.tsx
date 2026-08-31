@@ -21,7 +21,7 @@ export default function ScriptsPage() {
     }
   };
   useEffect(() => {
-    void load();
+    void Promise.resolve().then(() => load());
   }, []);
 
   const doImport = async () => {

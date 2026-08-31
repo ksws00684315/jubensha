@@ -54,6 +54,7 @@ export function guardDmSpeech(script: ScriptDoc, state: GameState, text: string)
   for (const clue of script.clues) {
     if (state.clueStates[clue.id]?.isPublic) continue;
     markers.push({ label: clue.name, value: clue.name });
+    for (const frag of uniqueNgrams(clue.content, 6)) markers.push({ label: clue.name, value: frag });
   }
   for (const m of markers) {
     if (m.value && sanitized.includes(m.value)) {

@@ -55,7 +55,7 @@ export async function reconnectDatabase(url: string): Promise<void> {
 
 /** 代理到当前连接，保存新地址后下次访问自动切到新 client。 */
 export const db: PrismaClient = new Proxy({} as PrismaClient, {
-  get(_target, prop, _receiver) {
+  get(_target, prop) {
     const client = currentClient();
     const value = Reflect.get(client, prop, client) as unknown;
     return typeof value === "function" ? (value as (...args: unknown[]) => unknown).bind(client) : value;

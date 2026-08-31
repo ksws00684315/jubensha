@@ -69,6 +69,10 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ code: string 
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
   const doc = parseScriptDoc(scriptRow.content);
   const ordered = parsed.data.seats.slice().sort((a, b) => a.index - b.index);
+  const validCharacterIds = new Set(doc.characters.map((c) => c.id));
+  if (parsed.data.seats.some((s) => s.kind !== "empty" && s.characterId && !validCharacterIds.has(s.characterId))) {
+    return NextResponse.json({ error: "座位角色不属于该剧本" }, { status: 400 });
+  }
   const characterIds = assignCharacterIds(ordered, doc.characters.map((c) => c.id));
   if (hasDuplicateCharacterIds(characterIds)) {
     return NextResponse.json({ error: "座位角色不能重复" }, { status: 400 });

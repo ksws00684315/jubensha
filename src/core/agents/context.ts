@@ -47,14 +47,12 @@ export function buildPlayerContext(
   events: EngineEvent[],
   opts: { hint?: string; extraInstruction?: string; requireJson?: string }
 ): ChatMessage[] {
-  const seat = seatOf(state, seatIndex);
   const character = characterOf(script, state, seatIndex);
   if (!character) throw new Error(`座位 ${seatIndex} 未绑定角色`);
 
   const isCulprit = character.card.isCulprit;
   const clues = heldCluesOf(script, state, seatIndex);
   const publicClues = clues.filter((c) => c && state.clueStates[c.id]?.isPublic);
-  const privateClues = clues.filter((c) => c && !state.clueStates[c.id]?.isPublic);
 
   const strategy = isCulprit
     ? `【你的处境】你就是真凶。你的首要目标是活过今晚：绝不能承认、绝不能供出手法细节。
@@ -120,7 +118,9 @@ export function buildDmContext(
   const allClues = script.clues
     .map((c) => {
       const st = state.clueStates[c.id];
-      return `· [${c.location}] ${c.name}${st?.isPublic ? "（已公开）" : st?.discoveredBy != null ? `（已被座位${st.discoveredBy + 1}获得，未公开）` : "（未被发现）"}: ${c.content}`;
+      const status = st?.isPublic ? "（已公开）" : st?.discoveredBy != null ? `（已被座位${st.discoveredBy + 1}获得，未公开）` : "（未被发现）";
+      const content = reveal || st?.isPublic ? `: ${c.content}` : "（内容在公开后提供）";
+      return `· [${c.location}] ${c.name}${status}${content}`;
     })
     .join("\n");
 

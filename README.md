@@ -28,7 +28,7 @@ docker run -d --name jbs-pg -e POSTGRES_PASSWORD=jubensha -e POSTGRES_DB=jubensh
 npm install
 npm run db:migrate
 
-# 3. 配置密钥：复制 .env.example 到 .env，设置 SECRET_MASTER_KEY（加密 API Key；localhost 自动视为管理员）
+# 3. 配置密钥：复制 .env.example 到 .env，设置 SECRET_MASTER_KEY（加密 API Key；生产环境还需 ADMIN_TOKEN 或管理会话）
 
 # 4. 启动
 npm run dev

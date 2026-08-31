@@ -156,16 +156,19 @@ export default function PlayPage() {
     [gameId, mySeat, myToken]
   );
 
-  const speakText = useCallback(
-    async (text: string) => {
+  const speakEvent = useCallback(
+    async (eventSeq: string) => {
       try {
-        const r = await api<{ url: string }>("/api/tts", { method: "POST", body: JSON.stringify({ text }) });
+        const r = await api<{ url: string }>("/api/tts", {
+          method: "POST",
+          body: JSON.stringify({ gameId, eventSeq }),
+        });
         void new Audio(r.url).play();
       } catch (err) {
         setError(`语音生成失败：${err instanceof Error ? err.message : String(err)}`);
       }
     },
-    []
+    [gameId]
   );
 
   const sendDm = useCallback(
@@ -425,7 +428,7 @@ export default function PlayPage() {
               mySeat={mySeat}
               seatName={seatName}
               ttsSeats={aiSeatSet}
-              onSpeak={speakText}
+              onSpeak={speakEvent}
             />
           ))}
 
@@ -671,7 +674,7 @@ function EventBubble({
   mySeat: number | null;
   seatName: (i: number) => string;
   ttsSeats: Set<number>;
-  onSpeak: (text: string) => void;
+  onSpeak: (eventSeq: string) => void;
 }) {
   const mine = ev.fromSeat !== null && ev.fromSeat === mySeat;
   switch (ev.type) {
@@ -704,7 +707,7 @@ function EventBubble({
               {ev.content.speakerName ?? seatName(ev.fromSeat ?? 0)}
               {canSpeak && (
                 <button
-                  onClick={() => onSpeak(text)}
+                  onClick={() => onSpeak(ev.seq)}
                   title="播放语音"
                   className="ml-2 rounded px-1 text-zinc-500 transition hover:bg-zinc-800 hover:text-amber-400"
                 >

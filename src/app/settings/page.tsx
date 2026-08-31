@@ -75,7 +75,7 @@ function AdminGate({ children }: { children: ReactNode }) {
     <div className="mx-auto max-w-md space-y-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
       <h2 className="text-lg font-semibold">解锁管理面</h2>
       <p className="text-sm text-zinc-400">
-        本机 <code className="text-zinc-300">localhost</code> 访问会自动解锁。从局域网或公网打开时，请输入{" "}
+        开发环境下本机 <code className="text-zinc-300">localhost</code> 访问会自动解锁；生产环境请输入{" "}
         <code className="text-zinc-300">.env</code> 里的 <code className="text-zinc-300">ADMIN_TOKEN</code> 或{" "}
         <code className="text-zinc-300">SECRET_MASTER_KEY</code>。
       </p>
@@ -155,7 +155,9 @@ function DatabaseTab() {
     setInfo(data);
   }, []);
   useEffect(() => {
-    void load().catch((err) => setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) }));
+    void Promise.resolve()
+      .then(() => load())
+      .catch((err) => setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) }));
   }, [load]);
 
   const test = async () => {
@@ -279,7 +281,7 @@ function ProvidersTab() {
     setProviders(await api<ProviderView[]>("/api/providers"));
   }, []);
   useEffect(() => {
-    void load();
+    void Promise.resolve().then(() => load());
   }, [load]);
 
   const applyPreset = (key: string) => {
@@ -433,7 +435,7 @@ function BindingsTab() {
     setDraft(d);
   }, []);
   useEffect(() => {
-    void load();
+    void Promise.resolve().then(() => load());
   }, [load]);
 
   const save = async (slot: string) => {

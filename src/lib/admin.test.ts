@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { isAdminSync } from "./admin";
 
 describe("isAdminSync", () => {
@@ -13,5 +13,14 @@ describe("isAdminSync", () => {
 
   it("伪造的 x-forwarded-for 不能把公网 Host 变成管理员", () => {
     expect(isAdminSync({ host: "example.com", xff: "127.0.0.1" })).toBe(false);
+  });
+
+  it("生产环境不信任伪造的 loopback Host", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    try {
+      expect(isAdminSync({ host: "localhost:3000" })).toBe(false);
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 });
