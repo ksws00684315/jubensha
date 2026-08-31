@@ -1,0 +1,84 @@
+# 剧本杀 · AI 演绎
+
+网页版剧本杀游戏：**真人玩家 + AI 玩家混合对局**。AI 主持人（DM）控场，AI 玩家会读本、搜证、圆桌对线、隐瞒自己的秘密；凑不齐人时由 AI 补位，随时开局。
+
+## 功能
+
+- **房间制对局**：创建房间 → 选剧本 → 每个座位配置真人或 AI → 凭房间码入座 → 开局
+- **完整流程**：读本 → 自我介绍 → 搜证（线索公开/私藏）→ 圆桌讨论（可插话、可私聊）→ 投票 → 真相复盘
+- **信息防火墙**：AI 玩家只看得到公开事件流 + 自己的角色卡；全局真相仅 DM 可见；发言经泄露检测，防止 AI 剧透
+- **多模型调度**：DM / 凶手 / 普通 AI 玩家 / 剧本生成 / TTS 分槽位绑定不同模型（凶手与 DM 建议用强模型），支持故障自动降级
+- **剧本管理**：结构化 Schema（Zod 校验 + 逻辑校验器）、JSON 导入导出、AI 两阶段生成原创剧本
+- **用量记账**：每次 LLM 调用按 Provider/模型/用途记账，设置页可看板
+- **TTS 语音**：AI 发言可点击播放（OpenAI `/audio/speech` 兼容协议），本地文件缓存
+
+## 技术栈
+
+Next.js 16 (App Router) · React 19 · TypeScript · PostgreSQL + Prisma · Vercel AI SDK（OpenAI 兼容 / Anthropic）· Tailwind CSS · Vitest · SSE 实时推送（事件溯源，断线续传）
+
+## 快速开始
+
+```bash
+# 1. 启动 PostgreSQL（或使用已有实例，修改 .env 的 DATABASE_URL）
+docker run -d --name jbs-pg -e POSTGRES_PASSWORD=jubensha -e POSTGRES_DB=jubensha -p 5432:5432 -v jbs_pgdata:/var/lib/postgresql/data postgres:16-alpine
+
+# 2. 安装依赖 + 建表
+npm install
+npm run db:migrate
+
+# 3. 配置密钥：复制 .env.example 到 .env，设置 SECRET_MASTER_KEY（加密 API Key；localhost 自动视为管理员）
+
+# 4. 启动
+npm run dev
+```
+
+打开 http://localhost:3000 后：
+
+1. **设置 → AI 接入**：添加 Provider（DeepSeek / 智谱 / Qwen / Moonshot / OpenAI / Ollama 等，OpenAI 兼容协议一键填模板），测试连通性
+2. **设置 → 模型绑定**：为 `DM 主持人`、`凶手玩家`、`普通 AI 玩家` 绑定模型（必配）；`剧本生成`、`语音合成` 按需
+3. **剧本库**：内置原创样例本《云澜山庄的雪夜》（5 人本格）在 `seeds/` 下，可通过「导入 JSON」入库；也可用「AI 生成剧本」
+4. **开房间**：选剧本 → 座位配置（AI / 真人）→ 创建 → 分享房间码给朋友入座 → 开始游戏
+
+## 剧本 Schema
+
+核心契约见 `src/core/script/schema.ts`。一个剧本文档包含：
+
+- `meta`：标题、人数、时长、难度、标签
+- `background`：公开背景（全员可见）
+- `characters[]`：公开简介 + 私有卡（背景、**秘密**、目标、个人时间线、已知情报、说话风格、`isCulprit`）
+- `locations[]` / `clues[]`：搜证地点与线索卡（`auto_public` 自动公开 / `manual_public` 可公开 / `keep_private` 必私藏）
+- `truth`（仅 DM 可见）：真凶、手法、完整时间线、关键证据、复盘底稿
+- `flow`：各阶段轮数、是否开私聊
+
+逻辑校验器（`src/core/script/validate.ts`）检查真凶一致性、线索地点合法性、证据链呼应等，error 级问题会阻止开局。
+
+## 测试
+
+```bash
+npm test          # Vitest：剧本校验 / 防火墙 / 输出守卫 单测
+node scripts/smoke-m3.mjs   # 端到端冒烟：1 真人 + 4 AI 走完全场（需 dev server 运行中；未配模型时 AI 发言降级为提示，流程仍应闭环）
+```
+
+## 目录结构
+
+```
+src/core/script/    剧本 Schema + 逻辑校验器
+src/core/llm/       LLM 客户端（槽位绑定 / 重试 / 降级 / 用量记账）
+src/core/tts/       TTS 合成 + 缓存
+src/core/engine/    游戏引擎：状态机、发言调度、事件溯源（game_events append-only）
+src/core/agents/    DM / 玩家智能体、信息防火墙（context.ts 唯一取数入口）、输出守卫
+src/app/api/        REST + SSE 接口
+src/app/            页面：剧本库 / 设置 / 房间 / 对局
+seeds/              内置样例剧本
+```
+
+## 版权说明
+
+内置与 AI 生成的剧本均为原创内容。外部导入功能请仅用于**自创或已获授权**的剧本；商用剧本受版权保护。
+
+## 已知限制（MVP）
+
+- 单实例部署（引擎状态在内存 + DB 快照，重启后自动恢复对局，但不支持多副本）
+- 私聊仅真人发起（AI 不会主动发起私聊）
+- 真人回合 3 分钟无操作自动跳过；搜证公开决策超时自动私藏
+- TTS 依赖 OpenAI 兼容 `/audio/speech` 协议的服务商

@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// 剧本。content 为完整剧本文档（结构见 src/core/script/schema.ts），元数据列用于列表查询。
+model Script {
+  id          String   @id @default(cuid())
+  title       String
+  minPlayers  Int
+  maxPlayers  Int
+  durationMin Int
+  difficulty  String // 新手 | 进阶 | 硬核
+  tags        String[]
+  intro       String
+  content     Json
+  source      String   @default("manual") // manual | ai | import
+  deleted     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  games Game[]
+
+  @@map("scripts")
+}
+
+/// AI 接入方。protocol: openai_compatible | anthropic
+model AiProvider {
+  id           String   @id @default(cuid())
+  name         String
+  protocol     String   @default("openai_compatible")
+  baseUrl      String
+  apiKeyCipher String // AES-GCM 密文（master key 来自 .env）
+  enabled      Boolean  @default(true)
+  note         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bindings  ModelBinding[]
+  usageLogs UsageLog[]
+
+  @@map("ai_providers")
+}
+
+/// 用途绑定：一个 slot 绑定某 provider 的某 model。
+/// slot: dm | culprit | player | generator | tts
+/// fallbackSlot: 主调用失败时降级到的同表 slot 名（纯字符串，运行时解析）
+model ModelBinding {
+  id           String  @id @default(cuid())
+  slot         String  @unique
+  providerId   String
+  modelId      String // provider 侧的模型标识，如 deepseek-chat
+  temperature  Float?
+  fallbackSlot String?
+
+  provider AiProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@map("model_bindings")
+}
+
+/// 游戏房间。真人凭 code + 座位 token 加入。
+model Room {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  scriptId  String
+  status    String   @default("lobby") // lobby | playing | ended | aborted
+  humanDm   Boolean  @default(false) // 开启后由真人担任 DM
+  dmToken   String? // 真人 DM 的身份凭证
+  dmName    String?
+  hostToken String? // 创建者凭证，大厅改座位 / 开局需要
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  seats Seat[]
+  game  Game?
+
+  @@map("rooms")
+}
+
+/// 座位。kind: human | ai | empty
+model Seat {
+  id          String  @id @default(cuid())
+  roomId      String
+  index       Int
+  kind        String
+  playerName  String? // 真人昵称 / AI 显示名
+  characterId String? // 绑定的剧本角色
+  token       String? // 真人座位的轻量身份凭证
+  ready       Boolean @default(false)
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, index])
+  @@map("seats")
+}
+
+/// 一局对局。state 为引擎快照（座位运行时状态、线索状态等），可由事件重放重建。
+model Game {
+  id        String    @id @default(cuid())
+  roomId    String    @unique
+  scriptId  String
+  status    String    @default("running") // running | ended | aborted
+  phase     String    @default("LOBBY")
+  round     Int       @default(0)
+  state     Json      @default("{}")
+  createdAt DateTime  @default(now())
+  endedAt   DateTime?
+
+  events       GameEvent[]
+  seatStates   SeatState[]
+  votes        Vote[]
+  privateChats PrivateMessage[]
+
+  room  Room  @relation(fields: [roomId], references: [id])
+  script Script @relation(fields: [scriptId], references: [id])
+
+  @@map("games")
+}
+
+/// 对局事件流（append-only，事件溯源）。seq 为全局递增序号，SSE 按 seq 续传。
+/// visibility: public | seat:<n> | dm
+model GameEvent {
+  seq        BigInt   @id @default(autoincrement())
+  gameId     String
+  type       String // phase | speech | system | clue | vote | private | reveal
+  phase      String
+  round      Int      @default(0)
+  fromSeat   Int? // null = 系统 / DM
+  toSeat     Int? // 定向（私聊对象）
+  visibility String   @default("public")
+  content    Json // { text, ...meta }
+  createdAt  DateTime @default(now())
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([gameId, seq])
+  @@map("game_events")
+}
+
+/// 每局每座的私有状态：持有的线索、已读标记等。
+model SeatState {
+  id        String @id @default(cuid())
+  gameId    String
+  seatIndex Int
+  data      Json   @default("{}") // { clueIds: string[], readScript: boolean, ... }
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, seatIndex])
+  @@map("seat_states")
+}
+
+model Vote {
+  id          String   @id @default(cuid())
+  gameId      String
+  seatIndex   Int
+  targetIndex Int
+  reason      String?
+  createdAt   DateTime @default(now())
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, seatIndex])
+  @@map("votes")
+}
+
+/// 私聊消息。仅双方可见（seat_private）。
+model PrivateMessage {
+  seq        BigInt   @id @default(autoincrement())
+  gameId     String
+  fromSeat   Int
+  toSeat     Int
+  content    String
+  createdAt  DateTime @default(now())
+
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@index([gameId, seq])
+  @@map("private_messages")
+}
+
+/// LLM/TTS 调用记账。
+model UsageLog {
+  id               String   @id @default(cuid())
+  providerId       String?
+  providerName     String
+  modelId          String
+  purpose          String // dm | culprit | player | generator | tts
+  gameId           String?
+  promptTokens     Int      @default(0)
+  completionTokens Int      @default(0)
+  totalTokens      Int      @default(0)
+  latencyMs        Int?
+  ok               Boolean  @default(true)
+  error            String?
+  createdAt        DateTime @default(now())
+
+  provider AiProvider? @relation(fields: [providerId], references: [id], onDelete: SetNull)
+
+  @@map("usage_logs")
+}
+
+/// TTS 合成缓存，按 文本+音色+provider 哈希去重。
+model TtsCache {
+  id        String   @id @default(cuid())
+  hash      String   @unique
+  provider  String
+  voice     String
+  filePath  String
+  createdAt DateTime @default(now())
+
+  @@map("tts_cache")
+}

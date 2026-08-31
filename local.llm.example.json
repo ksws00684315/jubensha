@@ -1,0 +1,17 @@
+{
+  "providers": [
+    {
+      "name": "DeepSeek",
+      "protocol": "openai_compatible",
+      "baseUrl": "https://api.deepseek.com/v1",
+      "apiKey": "sk-...",
+      "note": ""
+    }
+  ],
+  "bindings": [
+    { "slot": "dm", "provider": "DeepSeek", "modelId": "deepseek-reasoner" },
+    { "slot": "culprit", "provider": "DeepSeek", "modelId": "deepseek-chat" },
+    { "slot": "player", "provider": "DeepSeek", "modelId": "deepseek-chat" },
+    { "slot": "generator", "provider": "DeepSeek", "modelId": "deepseek-chat" }
+  ]
+}

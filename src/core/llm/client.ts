@@ -1,0 +1,269 @@
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { generateText, streamText, type LanguageModel } from "ai";
+import { db } from "@/lib/db";
+import { decryptSecret } from "@/lib/crypto";
+import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
+
+export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
+export { extractJson } from "./json";
+
+/** 读取某用途槽位的绑定（含 fallback 链），运行时解析 apiKey */
+export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
+  let current: string = slot;
+  for (let i = 0; i < 3; i++) {
+    const binding = await db.modelBinding.findUnique({ where: { slot: current }, include: { provider: true } });
+    if (binding) {
+      if (!binding.provider.enabled) {
+        if (binding.fallbackSlot) {
+          current = binding.fallbackSlot;
+          continue;
+        }
+        throw new Error(`绑定槽位 "${slot}" 的 Provider「${binding.provider.name}」已被禁用，请到设置页检查`);
+      }
+      return {
+        providerId: binding.providerId,
+        providerName: binding.provider.name,
+        protocol: binding.provider.protocol,
+        baseUrl: binding.provider.baseUrl,
+        apiKey: decryptSecret(binding.provider.apiKeyCipher),
+        modelId: binding.modelId,
+        temperature: binding.temperature ?? null,
+        fallbackSlot: binding.fallbackSlot ?? null,
+      };
+    }
+    // 该槽位无绑定，沿 fallbackSlot 找
+    throw new Error(`用途槽位 "${slot}" 尚未绑定模型，请到「设置 → AI 接入」完成配置`);
+  }
+  throw new Error(`槽位 "${slot}" 的 fallback 链解析失败`);
+}
+
+function toLanguageModel(b: ResolvedBinding): LanguageModel {
+  if (b.protocol === "anthropic") {
+    const p = createAnthropic({ apiKey: b.apiKey, baseURL: b.baseUrl || undefined });
+    return p(b.modelId);
+  }
+  const p = createOpenAICompatible({
+    name: b.providerName,
+    baseURL: b.baseUrl,
+    apiKey: b.apiKey,
+  });
+  return p(b.modelId);
+}
+
+function normalizeUsage(usage: unknown): { prompt: number; completion: number } {
+  const u = usage as { inputTokens?: number; outputTokens?: number; promptTokens?: number; completionTokens?: number } | undefined;
+  return {
+    prompt: u?.inputTokens ?? u?.promptTokens ?? 0,
+    completion: u?.outputTokens ?? u?.completionTokens ?? 0,
+  };
+}
+
+async function logUsage(args: {
+  b: ResolvedBinding;
+  purpose: string;
+  gameId?: string | null;
+  prompt: number;
+  completion: number;
+  latencyMs: number;
+  ok: boolean;
+  error?: string;
+}): Promise<void> {
+  try {
+    await db.usageLog.create({
+      data: {
+        providerId: args.b.providerId,
+        providerName: args.b.providerName,
+        modelId: args.b.modelId,
+        purpose: args.purpose,
+        gameId: args.gameId ?? null,
+        promptTokens: args.prompt,
+        completionTokens: args.completion,
+        totalTokens: args.prompt + args.completion,
+        latencyMs: args.latencyMs,
+        ok: args.ok,
+        error: args.error?.slice(0, 500),
+      },
+    });
+  } catch {
+    // 记账失败不影响主流程
+  }
+}
+
+const RETRY_DELAYS_MS = [800, 2000];
+const REQUEST_TIMEOUT_MS = 180_000;
+
+function isRetryable(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  return /timeout|ECONNRESET|ECONNREFUSED|fetch failed|network|socket|502|503|504|429|rate.?limit|overloaded/i.test(
+    msg
+  );
+}
+
+/** 部分网关（如 DeepSeek V4）拒绝 system 角色，把系统提示并进第一条 user。 */
+function toCompatibleMessages(messages: ChatMessage[]): Array<{ role: "user" | "assistant"; content: string }> {
+  const system = messages.filter((m) => m.role === "system").map((m) => m.content).join("\n\n");
+  const rest = messages
+    .filter((m) => m.role !== "system")
+    .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
+  if (!system) return rest;
+  const firstUser = rest.findIndex((m) => m.role === "user");
+  if (firstUser >= 0) {
+    rest[firstUser] = { role: "user", content: `${system}\n\n${rest[firstUser].content}` };
+    return rest;
+  }
+  return [{ role: "user", content: system }, ...rest];
+}
+
+/** 单次绑定调用（不重试），返回 { text, usage } */
+async function callOnce(
+  b: ResolvedBinding,
+  purpose: string,
+  opts: ChatOptions
+): Promise<{ text: string; prompt: number; completion: number; latencyMs: number }> {
+  const model = toLanguageModel(b);
+  const messages = toCompatibleMessages(opts.messages);
+  const started = Date.now();
+  const result = await generateText({
+    model,
+    messages,
+    temperature: opts.temperature ?? b.temperature ?? 0.8,
+    maxOutputTokens: opts.maxTokens ?? 2048,
+    abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+  });
+  const usage = normalizeUsage(result.usage);
+  return {
+    text: result.text,
+    prompt: usage.prompt,
+    completion: usage.completion,
+    latencyMs: Date.now() - started,
+  };
+}
+
+/** 非流式对话：重试 + fallback + 用量记账 */
+export async function chat(opts: ChatOptions): Promise<ChatResult> {
+  let binding: ResolvedBinding;
+  try {
+    binding = await resolveBinding(opts.purpose);
+  } catch (err) {
+    throw err;
+  }
+
+  const slotsToTry: ResolvedBinding[] = [binding];
+  if (binding.fallbackSlot) {
+    try {
+      slotsToTry.push(await resolveBinding(binding.fallbackSlot as Purpose));
+    } catch {
+      // fallback 不可用就只用主绑定
+    }
+  }
+
+  let lastErr: unknown = null;
+  for (const b of slotsToTry) {
+    for (const delay of [0, ...RETRY_DELAYS_MS]) {
+      if (delay) await new Promise((r) => setTimeout(r, delay));
+      try {
+        const r = await callOnce(b, opts.purpose, opts);
+        await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true });
+        return {
+          text: r.text,
+          promptTokens: r.prompt,
+          completionTokens: r.completion,
+          providerName: b.providerName,
+          modelId: b.modelId,
+        };
+      } catch (err) {
+        lastErr = err;
+        if (!isRetryable(err)) break;
+      }
+    }
+  }
+  const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
+  // 记一条失败日志
+  try {
+    await logUsage({
+      b: slotsToTry[0],
+      purpose: opts.purpose,
+      gameId: opts.gameId,
+      prompt: 0,
+      completion: 0,
+      latencyMs: 0,
+      ok: false,
+      error: msg,
+    });
+  } catch {
+    /* ignore */
+  }
+  throw new Error(`LLM 调用失败（${slotsToTry[0].providerName}/${slotsToTry[0].modelId}）: ${msg}`);
+}
+
+/** 流式对话：逐 token 产出文本；结束时记账。失败时抛出。 */
+export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
+  const b = await resolveBinding(opts.purpose);
+  const model = toLanguageModel(b);
+  const messages = toCompatibleMessages(opts.messages);
+  const started = Date.now();
+  try {
+    const result = streamText({
+      model,
+      messages,
+      temperature: opts.temperature ?? b.temperature ?? 0.8,
+      maxOutputTokens: opts.maxTokens ?? 2048,
+      abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+    for await (const chunk of result.textStream) {
+      yield chunk;
+    }
+    const usage = normalizeUsage(await result.usage);
+    await logUsage({
+      b,
+      purpose: opts.purpose,
+      gameId: opts.gameId,
+      ...usage,
+      latencyMs: Date.now() - started,
+      ok: true,
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    await logUsage({
+      b,
+      purpose: opts.purpose,
+      gameId: opts.gameId,
+      prompt: 0,
+      completion: 0,
+      latencyMs: Date.now() - started,
+      ok: false,
+      error: msg,
+    });
+    throw new Error(`LLM 流式调用失败（${b.providerName}/${b.modelId}）: ${msg}`);
+  }
+}
+
+/** 测试某 Provider 连通性：拉取模型列表 */
+export async function testProviderConnection(input: {
+  protocol: string;
+  baseUrl: string;
+  apiKey: string;
+}): Promise<{ ok: true; models: string[] } | { ok: false; error: string }> {
+  try {
+    if (input.protocol === "anthropic") {
+      const res = await fetch(`${input.baseUrl.replace(/\/$/, "")}/v1/models`, {
+        headers: { "x-api-key": input.apiKey, "anthropic-version": "2023-06-01" },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!res.ok) return { ok: false, error: `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}` };
+      const data = (await res.json()) as { data?: Array<{ id?: string }> };
+      return { ok: true, models: (data.data ?? []).map((m) => m.id ?? "").filter(Boolean) };
+    }
+    const base = input.baseUrl.replace(/\/$/, "");
+    const res = await fetch(`${base}/models`, {
+      headers: { Authorization: `Bearer ${input.apiKey}` },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) return { ok: false, error: `HTTP ${res.status}: ${(await res.text()).slice(0, 200)}` };
+    const data = (await res.json()) as { data?: Array<{ id?: string }> };
+    return { ok: true, models: (data.data ?? []).map((m) => m.id ?? "").filter(Boolean) };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
