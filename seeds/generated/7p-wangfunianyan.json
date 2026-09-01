@@ -1011,7 +1011,12 @@
   ],
   "truth": {
     "culpritId": "guyannian",
-    "motive": [],
+    "motive": [
+      {
+        "type": "paragraph",
+        "text": "你叫古延年，靖王府长史，管了二十年的印与账。丙戌年你经手王府粮台，短了一万四千两——银子填了你在江南的田庄。"
+      }
+    ],
     "method": {
       "summary": [
         {
@@ -1022,14 +1027,59 @@
       "steps": [
         {
           "id": "method_step_1",
-          "title": "作案手法",
+          "title": "察觉危机、预备伪证",
           "content": [
             {
               "type": "paragraph",
-              "text": "长史古延年为灭口粮台亏空旧案，于亥时二刻（约21时30分）持府务册入凝晖堂书房，见王爷案头折子已写「粮台」二字；亥时三刻（约22时）用腰间靛青丝绦勒毙王爷（死者指甲抓落绦上絮屑），解下《寒江独钓图》画轴绦绳悬尸梁下伪装自缢，并铺开集字钩摹的「自陈折」，借「畏罪自尽」把亏空坐实到死者头上。"
+              "text": "古延年发现王爷灯下问起「粮台的账」、案头折子已落「粮台」二字，且开春将世子接府、长史交割对账——二十年的亏空即将败露。他提前以账房裁纸案上的高丽贡笺集字钩摹了一道「自陈折」，将亏空罪名嫁祸于王爷。"
             }
           ],
-          "clueIds": []
+          "clueIds": [
+            "liangtaijiuzhang",
+            "anzishizhenzhe"
+          ]
+        },
+        {
+          "id": "method_step_2",
+          "title": "借口回事、伺机行凶",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "亥时二刻（约21时30分），古延年持开春府务册入凝晖堂书房回事；白蕴珠路过廊下时望见窗上两人影对坐。亥时三刻（约22时），趁王爷俯身拨炭之机，古延年解下腰间靛青丝绦勒毙王爷——死者挣扎时指甲抓落丝绦絮屑。"
+            }
+          ],
+          "clueIds": [
+            "changshisitao",
+            "ninghuitangshishen"
+          ]
+        },
+        {
+          "id": "method_step_3",
+          "title": "伪装自缢、铺陈伪折",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "古延年解下梁上《寒江独钓图》的画轴绦绳，将尸体悬于铜钩伪装自缢；翻倒杌凳造成挣扎假象；在案头铺开集字钩摹的「自陈折」，借「畏罪自尽」将粮台亏空永远钉在死者头上。"
+            }
+          ],
+          "clueIds": [
+            "duantaodehuazhou",
+            "anzishizhenzhe"
+          ]
+        },
+        {
+          "id": "method_step_4",
+          "title": "趁雪夜离开、主持封府",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "子时初（约23时），古延年出书房经西廊回长史院，雪地留下一行朝外的官靴印（铁保巡夜时目击）。萧令仪此时至书房外听见杌凳挪动与绳索绷紧的轻响，唤「哥哥」无人应。子时末桂嬷嬷发现尸身，古延年「闻惊」而出，以长史身份主持封府——将灭口坐实为「畏罪自尽」。"
+            }
+          ],
+          "clueIds": [
+            "xunyebu",
+            "ninghuitangshishen"
+          ]
         }
       ]
     },
@@ -1078,33 +1128,78 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "anzishizhenzhe"
+          "anzishizhenzhe",
+          "duantaodehuazhou"
         ],
-        "conclusion": "自陈折"
+        "conclusion": "自陈折用高丽贡笺（非王爷惯用的内府旧奏本），全篇字迹端稳而王爷风疾手抖连福字都写不圆，且案头习字笔笔发颤——结合'罪'字顿笔有重描痕，证明'自陈折'系集字钩摹伪造，非王爷亲笔。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "liangtaijiuzhang"
+          "liangtaijiuzhang",
+          "changshisitao"
         ],
-        "conclusion": "粮台"
+        "conclusion": "萧令仪房中炭盆未烧尽的旧账残页载明'丙戌年粮台，短白银一万四千两，经手……'，结合长史靛青丝绦断口与死者指甲缝靛青絮屑同色同质，揭示古延年二十年贪墨粮台的亏空，以及王爷除夕夜灯下追问'粮台的账'时他不得不灭口的动机。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "yutaohuan"
+          "yutaohuan",
+          "xunyebu"
         ],
-        "conclusion": "玉绦环"
+        "conclusion": "西角门墙根的羊脂玉绦环证实二阿哥戌时三刻私自出府、子时二刻翻墙回来，而巡夜簿'戌时三刻至子时二刻西角门平安'系一笔并签——铁保收银私放的空当与二阿哥出府的时间互相印证，将两人的'秘密'锁定为红鲱鱼而非杀人证据。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "duipaicungen"
+          "duipaicungen",
+          "zhuangqidangpiao"
         ],
-        "conclusion": "对牌"
+        "conclusion": "世子对牌存根缺腊月十九那页（三千两补贴旧部）与侧福晋妆匣中八千两庄契当票，分别说明府中各人瞒着王爷的亏空与窘迫——但这些'秘密'恰恰证明他们都需要王爷活着而非死去，从而排除其作案动机。"
       }
     ],
-    "redHerrings": [],
+    "redHerrings": [
+      {
+        "id": "red_herring_1",
+        "clueIds": [],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "世子的对牌缺页"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_2",
+        "clueIds": [],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "二阿哥的出府空白"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_3",
+        "clueIds": [],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "侧福晋的当票"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_4",
+        "clueIds": [],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "铁保的巡夜空当"
+          }
+        ]
+      }
+    ],
     "supplemental": [],
     "reveal": [
       {
@@ -1124,21 +1219,21 @@
     "outcomes": [
       {
         "result": "culprit_caught",
-        "title": "真凶被捕",
+        "title": "凝晖堂的灯灭了",
         "content": [
           {
             "type": "paragraph",
-            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+            "text": "桂嬷嬷三十年伺候笔砚的眼力没有骗她——那页'自陈折'的字太稳了，稳得不像一个连福字都写不圆的病人。当萧令仪把炭盆里没烧尽的旧账残页摊在桌上，白蕴珠说出了窗上两个人影的时辰，铁保指着雪地里那行官靴印，古延年拨了二十年算盘的手，终于停了。除夕的爆竹声早已散尽，凝晖堂的灯，在天亮前灭了。"
           }
         ]
       },
       {
         "result": "culprit_escaped",
-        "title": "真凶逃脱",
+        "title": "王府的年过了",
         "content": [
           {
             "type": "paragraph",
-            "text": "投票指认真凶成功：除凶手外的所有人胜利；指认失败：凶手独自胜利。"
+            "text": "天亮开府门，古延年以长史之尊拟好了呈报的文书：'靖王畏罪自尽，粮台亏空属实。'满府的人各有各的秘密——世子的对牌、二阿哥的出府、侧福晋的当票、铁保的巡夜簿——谁也没敢先开口。旧账烧不干净，可也没人敢翻。王府的年照过，只是从此再没人提起'粮台'两个字。"
           }
         ]
       }
