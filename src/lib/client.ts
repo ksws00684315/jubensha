@@ -91,6 +91,7 @@ export interface GameSummary {
   background: string;
   flow: { searchRounds: number; discussionRounds: number; allowPrivateChat: boolean; privateChatMessageLimit: number };
   locations: string[];
+  availableLocations: string[];
   seats: Array<{
     index: number;
     kind: "human" | "ai" | "empty";

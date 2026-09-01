@@ -16,7 +16,17 @@ export default function RoomPage() {
   const [hostToken, setHostToken] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    const r = await api<RoomView>(`/api/rooms/${code}`);
+    const stored = Object.values(getIdentity()).find((value) => value.code?.toUpperCase() === code.toUpperCase());
+    const query = new URLSearchParams();
+    const host = getHostToken(code);
+    if (host) query.set("hostToken", host);
+    if (stored?.seatIndex === "dm") {
+      query.set("dmToken", stored.token);
+    } else if (stored) {
+      query.set("seat", String(stored.seatIndex));
+      query.set("token", stored.token);
+    }
+    const r = await api<RoomView>(`/api/rooms/${code}${query.size ? `?${query}` : ""}`);
     const mine = getIdentity()[r.id];
     if (mine) saveIdentity(r.id, mine.seatIndex, mine.token, mine.name, { code: r.code, gameId: r.gameId });
     setRoom(r);
@@ -58,7 +68,12 @@ export default function RoomPage() {
         "/api/rooms/join",
         {
           method: "POST",
-          body: JSON.stringify({ code: room.code, name: joinName.trim() }),
+          body: JSON.stringify({
+            code: room.code,
+            name: joinName.trim(),
+            token: my?.seatIndex !== "dm" ? my?.token : undefined,
+            hostToken: hostToken ?? undefined,
+          }),
         }
       );
       persistSeat(room.id, res.seatIndex, res.token, joinName.trim(), res.gameId, room.code);
@@ -83,7 +98,7 @@ export default function RoomPage() {
         "/api/rooms/dm-join",
         {
           method: "POST",
-          body: JSON.stringify({ code: room.code, name: dmName.trim() }),
+          body: JSON.stringify({ code: room.code, name: dmName.trim(), token: my?.seatIndex === "dm" ? my.token : undefined, hostToken: hostToken ?? undefined }),
         }
       );
       persistSeat(res.roomId, "dm", res.token, dmName.trim(), res.gameId, room.code);
@@ -168,7 +183,7 @@ export default function RoomPage() {
               )}
               <span className="flex-1 text-sm">
                 {s.character ? <span className="text-zinc-200">{s.character.name}</span> : <span className="text-zinc-600">未分配</span>}
-                {s.playerName && <span className="ml-2 text-xs text-zinc-500">{s.playerName}{isMe ? "（你）" : ""}</span>}
+                {s.playerName && s.kind !== "ai" && <span className="ml-2 text-xs text-zinc-500">{s.playerName}{isMe ? "（你）" : ""}</span>}
               </span>
             </div>
           );
@@ -194,7 +209,7 @@ export default function RoomPage() {
               <div className="mt-3 space-y-3">
                 <p className="text-sm text-zinc-400">
                   {reclaim
-                    ? `DM 已由「${room.dmName ?? "他人"}」担任。若是你本人，填写认领时用的昵称即可回到本局。`
+                    ? `DM 已有人担任。若是你本人，请使用原设备凭证恢复，或请房主确认。`
                     : "本房间由真人担任 DM，认领后进入对局可全知视角主持。"}
                 </p>
                 <div className="flex gap-2">
@@ -263,7 +278,7 @@ export default function RoomPage() {
           ) : (
             <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
               <h4 className="text-sm font-medium text-zinc-300">回到本局</h4>
-              <p className="mt-1 text-sm text-zinc-500">对局已开始。填写入座时用的昵称即可认领座位。</p>
+              <p className="mt-1 text-sm text-zinc-500">对局已开始。请使用原设备凭证恢复，或让房主用房主凭证确认。</p>
               <div className="mt-3 flex gap-2">
                 <input
                   value={joinName}

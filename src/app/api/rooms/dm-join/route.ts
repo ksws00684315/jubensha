@@ -7,9 +7,11 @@ import { decideDmJoin } from "@/lib/join";
 const schema = z.object({
   code: z.string().min(3),
   name: z.string().min(1).max(20),
+  token: z.string().min(1).optional(),
+  hostToken: z.string().min(1).optional(),
 });
 
-/** 真人 DM 加入：认领房间的 DM 身份；同名可换设备认领回。 */
+/** 真人 DM 加入：首次认领后，恢复必须提供旧 token 或房主明确确认。 */
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
   });
   if (!room) return NextResponse.json({ error: "房间不存在" }, { status: 404 });
   const name = parsed.data.name.trim();
-  const decision = decideDmJoin(room.humanDm, room.dmToken, room.dmName, name);
+  const decision = decideDmJoin(room.humanDm, room.dmToken, room.dmName, name, parsed.data.token, parsed.data.hostToken, room.hostToken);
   if (decision === "not-human-dm") {
     return NextResponse.json({ error: "该房间未开启真人 DM 模式" }, { status: 400 });
   }
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ roomId: room.id, token, gameId: room.game?.id ?? null, resumed: true });
   }
   if (decision === "taken") {
-    return NextResponse.json({ error: "本房间的 DM 已有人担任。若是你本人，请填写认领时用的昵称。" }, { status: 400 });
+    return NextResponse.json({ error: "本房间的 DM 已有人担任，恢复需要原设备凭证，或请房主确认。" }, { status: 403 });
   }
 
   const claimed = await db.room.updateMany({

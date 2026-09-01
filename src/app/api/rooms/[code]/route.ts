@@ -14,11 +14,17 @@ async function loadRoom(code: string) {
 
 export async function GET(_req: Request, ctx: { params: Promise<{ code: string }> }) {
   const { code } = await ctx.params;
+  const url = new URL(_req.url);
   const room = await loadRoom(code);
   if (!room) return NextResponse.json({ error: "房间不存在" }, { status: 404 });
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
   const doc = parseScriptForRuntime(scriptRow.content);
+  const hostAuthorized = Boolean(room.hostToken && url.searchParams.get("hostToken") === room.hostToken);
+  const seatIndex = Number(url.searchParams.get("seat"));
+  const seatAuthorized = Number.isInteger(seatIndex) && room.seats.some((s) => s.index === seatIndex && s.token && s.token === url.searchParams.get("token"));
+  const dmAuthorized = Boolean(room.dmToken && room.dmToken === url.searchParams.get("dmToken"));
+  const canSeeNames = hostAuthorized || dmAuthorized;
   return NextResponse.json({
     id: room.id,
     code: room.code,
@@ -27,14 +33,14 @@ export async function GET(_req: Request, ctx: { params: Promise<{ code: string }
     gamePhase: room.game?.phase ?? null,
     humanDm: room.humanDm,
     dmTaken: Boolean(room.dmToken),
-    dmName: room.dmName,
+    dmName: canSeeNames ? room.dmName : null,
     script: { id: scriptRow.id, title: doc.meta.title, intro: doc.meta.intro, difficulty: doc.meta.difficulty, durationMin: doc.meta.durationMin },
     seats: room.seats.map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);
       return {
         index: s.index,
         kind: s.kind,
-        playerName: s.playerName,
+        playerName: canSeeNames || (seatAuthorized && s.index === seatIndex) ? s.playerName : null,
         hasToken: Boolean(s.token),
         character: c ? { id: c.id, name: c.name, publicBio: publicBioText(c) } : null,
       };

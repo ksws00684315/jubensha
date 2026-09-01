@@ -52,7 +52,7 @@ function toLanguageModel(b: ResolvedBinding, extraBody?: Record<string, unknown>
     baseURL,
     apiKey: b.apiKey,
     ...(extraBody
-      ? { transformRequestBody: (args: Record<string, any>) => ({ ...args, ...extraBody }) }
+      ? { transformRequestBody: (args: Record<string, unknown>) => ({ ...args, ...extraBody }) }
       : {}),
   });
   return p(b.modelId);

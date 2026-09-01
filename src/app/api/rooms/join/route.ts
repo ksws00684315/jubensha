@@ -7,13 +7,15 @@ import { decideJoin } from "@/lib/join";
 const joinSchema = z.object({
   code: z.string().min(3),
   name: z.string().min(1).max(20),
+  token: z.string().min(1).optional(),
+  hostToken: z.string().min(1).optional(),
 });
 
 function newToken() {
   return crypto.randomBytes(16).toString("hex");
 }
 
-/** 大厅入座；对局已开始则凭房间码 + 原昵称认领回座位（换设备/清缓存后恢复）。 */
+/** 大厅入座；恢复已有座位必须提供旧 token，或由房主 token 明确确认。 */
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
   const parsed = joinSchema.safeParse(body);
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
   });
   if (!room) return NextResponse.json({ error: "房间不存在" }, { status: 404 });
 
-  const decision = decideJoin(room.status, room.seats, name);
+  const decision = decideJoin(room.status, room.seats, name, parsed.data.token, parsed.data.hostToken, room.hostToken);
   if (decision.type === "ambiguous") {
     return NextResponse.json({ error: "该昵称对应多个座位，请换一个更独特的名字" }, { status: 400 });
   }
@@ -43,7 +45,10 @@ export async function POST(req: Request) {
     });
   }
   if (decision.type === "started") {
-    return NextResponse.json({ error: "对局已开始。请填写你入座时用的昵称以回到本局。" }, { status: 400 });
+    return NextResponse.json({ error: "对局已开始。恢复座位需要原设备凭证，或请房主确认。" }, { status: 403 });
+  }
+  if (decision.type === "taken") {
+    return NextResponse.json({ error: "该昵称已被占用，恢复座位需要原设备凭证，或请房主确认。" }, { status: 403 });
   }
   if (decision.type === "full") {
     return NextResponse.json({ error: "房间已满（没有空的真人座位）" }, { status: 400 });

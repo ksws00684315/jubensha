@@ -69,10 +69,11 @@ model Room {
   code      String   @unique
   scriptId  String
   status    String   @default("lobby") // lobby | playing | ended | aborted
-  humanDm   Boolean  @default(false) // 开启后由真人担任 DM
-  dmToken   String? // 真人 DM 的身份凭证
-  dmName    String?
-  hostToken String? // 创建者凭证，大厅改座位 / 开局需要
+  humanDm              Boolean  @default(false) // 开启后由真人担任 DM
+  unlimitedHumanTurns  Boolean  @default(true) // 真人发言/搜证/投票不限时；关闭则 3 分钟后自动跳过
+  dmToken              String? // 真人 DM 的身份凭证
+  dmName               String?
+  hostToken            String? // 创建者凭证，大厅改座位 / 开局需要
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { ingestScriptDoc, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, toLegacyScriptDoc } from "./compat";
+import { ingestScriptDoc, locationNames, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, resolveLocation, toLegacyScriptDoc } from "./compat";
 import { parseScriptDoc } from "./schema";
 import { parseScriptDocV2, publicScriptViewV2 } from "./v2/schema";
 
@@ -36,5 +36,14 @@ describe("V1/V2 剧本兼容层", () => {
 
   it("内容块投影保留段落和列表的阅读顺序", () => {
     expect(narrativeToText([{ type: "paragraph", text: "第一段" }, { type: "list", style: "ordered", items: ["第二段", "第三段"] }])).toBe("第一段\n\n1. 第二段\n2. 第三段");
+  });
+
+  it("搜证地点可用名称或 id 解析", () => {
+    const v2 = parseScriptDocV2(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf8")));
+    const byName = resolveLocation(v2, "书房");
+    const byId = resolveLocation(v2, "location_1");
+    expect(byName?.id).toBe("location_1");
+    expect(byId?.name).toBe("书房");
+    expect(locationNames(v2)).toContain("书房");
   });
 });

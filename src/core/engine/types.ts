@@ -79,7 +79,7 @@ export interface EngineEvent {
 export type BusMessage =
   | { kind: "event"; event: EngineEvent }
   | { kind: "delta"; seat: number; text: string; audience: "public" | number }
-  | { kind: "thinking"; seat: number | null; audience: "public" | number }
+  | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number }
   | { kind: "end" };
 
 export interface EngineContext {

@@ -19,11 +19,12 @@ describe("decideJoin", () => {
     if (d.type === "claim") expect(d.open.map((s) => s.index)).toEqual([0]);
   });
 
-  it("同名已入座则 resume，不占新座", () => {
+  it("同名已入座且带旧 token 才能 resume", () => {
     const d = decideJoin(
       "playing",
       [seat({ index: 0, playerName: "阿黄", token: "old" }), seat({ index: 1 })],
-      "阿黄"
+      "阿黄",
+      "old",
     );
     expect(d).toEqual({
       type: "resume",
@@ -31,8 +32,20 @@ describe("decideJoin", () => {
     });
   });
 
+  it("同名但没有旧 token 不能接管座位", () => {
+    expect(
+      decideJoin("playing", [seat({ index: 0, playerName: "阿黄", token: "old" })], "阿黄"),
+    ).toEqual({ type: "started" });
+  });
+
+  it("房主 token 可作为人工确认恢复凭证", () => {
+    expect(
+      decideJoin("playing", [seat({ index: 0, playerName: "阿黄", token: "old" })], "阿黄", null, "host", "host"),
+    ).toEqual({ type: "resume", seat: expect.objectContaining({ index: 0 }) });
+  });
+
   it("昵称去空格后匹配", () => {
-    const d = decideJoin("playing", [seat({ index: 0, playerName: "阿黄", token: "t" })], "  阿黄  ");
+    const d = decideJoin("playing", [seat({ index: 0, playerName: "阿黄", token: "t" })], "  阿黄  ", "t");
     expect(d.type).toBe("resume");
   });
 
@@ -50,11 +63,21 @@ describe("decideJoin", () => {
     const d = decideJoin("lobby", [seat({ index: 0, kind: "ai" }), seat({ index: 1, token: "t", playerName: "乙" })], "甲");
     expect(d).toEqual({ type: "full" });
   });
+
+  it("大厅同名座位没有凭证也不能覆盖", () => {
+    expect(decideJoin("lobby", [seat({ index: 0, playerName: "阿黄", token: "old" }), seat({ index: 1 })], "阿黄")).toEqual({
+      type: "taken",
+    });
+  });
 });
 
 describe("decideDmJoin", () => {
   it("同名认领已占用的 DM", () => {
-    expect(decideDmJoin(true, "tok", "主持人", "主持人")).toBe("resume");
+    expect(decideDmJoin(true, "tok", "主持人", "主持人", "tok")).toBe("resume");
+  });
+
+  it("没有 DM token 不能接管同名 DM", () => {
+    expect(decideDmJoin(true, "tok", "主持人", "主持人")).toBe("taken");
   });
 
   it("他人已占用", () => {

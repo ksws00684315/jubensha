@@ -33,6 +33,8 @@ function NewRoomContent() {
   const [seats, setSeats] = useState<Array<{ kind: SeatKind; characterId: string | null }>>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [humanDm, setHumanDm] = useState(false);
+  const [unlimitedHumanTurns, setUnlimitedHumanTurns] = useState(true);
 
   useEffect(() => {
     void api<ScriptSummary[]>("/api/scripts").then((list) => {
@@ -70,7 +72,7 @@ function NewRoomContent() {
       while (payload.length && payload[payload.length - 1].kind === "empty") payload.pop();
       const res = await api<{ code: string; hostToken: string }>("/api/rooms", {
         method: "POST",
-        body: JSON.stringify({ scriptId, seats: payload }),
+        body: JSON.stringify({ scriptId, seats: payload, humanDm, unlimitedHumanTurns }),
       });
       saveHostToken(res.code, res.hostToken);
       router.push(`/rooms/${res.code}`);
@@ -145,6 +147,29 @@ function NewRoomContent() {
           </div>
         ))}
       </div>
+
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-purple-500/30 bg-purple-500/5 p-4 text-sm">
+        <input type="checkbox" checked={humanDm} onChange={(e) => setHumanDm(e.target.checked)} className="mt-0.5" />
+        <span>
+          <span className="font-medium text-purple-200">启用真人 DM</span>
+          <span className="mt-1 block text-xs text-zinc-500">开局后由一位真人负责旁白、催促和跳过回合，并可查看完整真相。</span>
+        </span>
+      </label>
+
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-sm">
+        <input
+          type="checkbox"
+          checked={unlimitedHumanTurns}
+          onChange={(e) => setUnlimitedHumanTurns(e.target.checked)}
+          className="mt-0.5"
+        />
+        <span>
+          <span className="font-medium text-zinc-200">真人操作不限时</span>
+          <span className="mt-1 block text-xs text-zinc-500">
+            勾选后，真人发言、搜证、投票都一直等到本人操作。取消勾选则 3 分钟无操作会自动跳过，避免整局卡住。
+          </span>
+        </span>
+      </label>
 
       {error && <p className="text-sm text-red-400">{error}</p>}
       <button

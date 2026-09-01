@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cluesVisibleToSeat, initialState } from "./state";
+import { cluesVisibleToSeat, initialState, sanitizeEventContent } from "./state";
 
 describe("cluesVisibleToSeat", () => {
   const clues = [
@@ -21,5 +21,14 @@ describe("cluesVisibleToSeat", () => {
     state.heldClues[0] = ["a"];
     const visible = cluesVisibleToSeat(clues, state, 0);
     expect(visible.map((c) => c.id).sort()).toEqual(["a", "b"]);
+  });
+});
+
+describe("事件内容脱敏", () => {
+  it("不论新写入还是历史投影都不能带出 AI purpose", () => {
+    expect(sanitizeEventContent({ text: "发言", speakerName: "角色", purpose: "culprit" })).toEqual({
+      text: "发言",
+      speakerName: "角色",
+    });
   });
 });

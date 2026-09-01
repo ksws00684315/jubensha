@@ -24,12 +24,14 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
   }
 
   const seatStates = await db.seatState.findMany({ where: { gameId: id } });
+  const runtimeState = (game.state as unknown as GameState) ?? { clueStates: {}, heldClues: {} };
+  const clueStates = runtimeState.clueStates ?? {};
   const myState = mySeat !== null ? seatStates.find((s) => s.seatIndex === mySeat)?.data : null;
 
   const visibleClues = mySeat !== null
     ? cluesVisibleToSeat(
         doc.clues.map((clue) => ({ id: clue.id, name: clue.name, location: locationNameOf(doc, clue.locationId) })),
-        (game.state as unknown as GameState) ?? { clueStates: {}, heldClues: {} },
+        runtimeState,
         mySeat,
       )
     : [];
@@ -45,6 +47,9 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     background: narrativeToText(doc.background),
     flow: doc.flow,
     locations: locationNames(doc),
+    availableLocations: doc.locations
+      .filter((location) => doc.clues.some((clue) => clue.locationId === location.id && clueStates[clue.id] === undefined))
+      .map((location) => location.name),
     seats: game.room.seats.map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);
       const isMine = mySeat === s.index;
@@ -73,6 +78,6 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     clues: visibleClues,
     scriptV2: { background: v2.background, characters: v2.characters, locations: v2.locations },
     myCluesV2: doc.clues.filter((clue) => visibleClues.some((visible) => visible.id === clue.id)),
-    voteResult: (game.state as { voteResult?: unknown }).voteResult ?? null,
+    voteResult: mySeat !== null ? runtimeState.voteResult ?? null : null,
   });
 }

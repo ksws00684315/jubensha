@@ -25,6 +25,13 @@ export function initialState(seats: SeatInfo[]): GameState {
   };
 }
 
+/** 事件写入/输出的安全投影：LLM 路由用途属于服务端元数据，不能进入玩家事件流。 */
+export function sanitizeEventContent(content: Record<string, unknown>): Record<string, unknown> {
+  const { purpose: _purpose, ...safe } = content;
+  void _purpose;
+  return safe;
+}
+
 /** 从 DB 事件流重建状态（服务重启/恢复用）。事件中带 phase/round 快照 + 关键动作。 */
 export function rebuildStateFromEvents(base: GameState, events: GameEvent[]): GameState {
   const state: GameState = { ...base, clueStates: { ...base.clueStates }, heldClues: { ...base.heldClues } };
@@ -83,7 +90,7 @@ export async function appendEvent(
       fromSeat: ev.fromSeat,
       toSeat: ev.toSeat,
       visibility: ev.visibility,
-      content: ev.content as Prisma.InputJsonValue,
+      content: sanitizeEventContent(ev.content) as Prisma.InputJsonValue,
     },
   });
   const event: EngineEvent = {

@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { subscribe } from "@/core/engine/bus";
 import type { BusMessage, EngineEvent } from "@/core/engine/types";
 import type { Prisma } from "@prisma/client";
+import { sanitizeEventContent } from "@/core/engine/state";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -32,7 +33,7 @@ function rowToEvent(r: {
     fromSeat: r.fromSeat,
     toSeat: r.toSeat,
     visibility: r.visibility,
-    content: r.content as EngineEvent["content"],
+    content: sanitizeEventContent(r.content as Record<string, unknown>) as EngineEvent["content"],
     createdAt: r.createdAt.toISOString(),
   };
 }

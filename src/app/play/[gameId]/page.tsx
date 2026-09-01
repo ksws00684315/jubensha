@@ -37,6 +37,7 @@ export default function PlayPage() {
   const [events, setEvents] = useState<GameEventView[]>([]);
   const [deltas, setDeltas] = useState<Record<number, string>>({});
   const [thinking, setThinking] = useState<Record<number, boolean>>({});
+  const [dmThinking, setDmThinking] = useState(false);
   const [input, setInput] = useState("");
   const [tab, setTab] = useState<"script" | "clues" | "timeline">("script");
   const [voteTarget, setVoteTarget] = useState<number | null>(null);
@@ -45,11 +46,14 @@ export default function PlayPage() {
   const [privateText, setPrivateText] = useState("");
   const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [sendingLabel, setSendingLabel] = useState("正在提交…");
   const [soundEnabled, setSoundEnabled] = useState(false);
   const lastSeq = useRef("0");
   const soundedSeq = useRef("0");
   const audioContext = useRef<AudioContext | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
+  const sendNoticeTimer = useRef<NodeJS.Timeout | null>(null);
   const [streamKey, setStreamKey] = useState<string | null>(null);
 
   const playCue = useCallback(
@@ -137,7 +141,7 @@ export default function PlayPage() {
       const msg = JSON.parse(m.data) as
         | { kind: "event"; event: GameEventView }
         | { kind: "delta"; seat: number; text: string }
-        | { kind: "thinking"; seat: number | null }
+        | { kind: "thinking"; seat: number | "dm" | null }
         | { kind: "end" }
         | { kind: "hello" };
       if (msg.kind === "event") {
@@ -161,23 +165,27 @@ export default function PlayPage() {
           });
         }
         if (ev.type === "phase" || ev.type === "reveal") {
+          setDmThinking(false);
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" && ev.visibility === `seat:${mySeat}`) {
+        if (ev.type === "clue" && (mySeat !== null || isDm)) {
           void api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}&token=${myToken ?? ""}`).then(setSummary).catch(() => null);
         }
       } else if (msg.kind === "delta") {
         setDeltas((d) => ({ ...d, [msg.seat]: (d[msg.seat] ?? "") + msg.text }));
       } else if (msg.kind === "thinking") {
-        setThinking((t) => {
-          const next = { ...t };
-          if (msg.seat === null) {
+        if (msg.seat === "dm") {
+          setDmThinking(true);
+        } else if (msg.seat === null) {
+          setDmThinking(false);
+          setThinking((t) => {
+            const next = { ...t };
             for (const k of Object.keys(next)) next[Number(k)] = false;
-          } else {
-            next[msg.seat] = true;
-          }
-          return next;
-        });
+            return next;
+          });
+        } else {
+          setThinking((t) => ({ ...t, [msg.seat as number]: true }));
+        }
       }
     };
     es.onerror = () => {
@@ -211,6 +219,11 @@ export default function PlayPage() {
     async (action: Record<string, unknown>) => {
       if (mySeat === null) return;
       setError(null);
+      setSending(true);
+      const type = action.type;
+      setSendingLabel(type === "choose_location" ? "正在提交地点，AI 正在后台搜证…" : type === "vote" ? "正在提交投票…" : "正在提交操作…");
+      if (sendNoticeTimer.current) clearTimeout(sendNoticeTimer.current);
+      sendNoticeTimer.current = setTimeout(() => setSendingLabel("服务器响应较慢，仍在处理，请勿重复点击…"), 1500);
       try {
         const res = await api<{ ok: boolean; error?: string }>(`/api/games/${gameId}/actions`, {
           method: "POST",
@@ -219,6 +232,9 @@ export default function PlayPage() {
         if (!res.ok) setError(res.error ?? "操作失败");
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        if (sendNoticeTimer.current) clearTimeout(sendNoticeTimer.current);
+        setSending(false);
       }
     },
     [gameId, mySeat, myToken]
@@ -369,6 +385,7 @@ export default function PlayPage() {
               <h3 className="text-sm font-medium text-gold-400">你的行动</h3>
               <span className="size-1.5 animate-pulse rounded-full bg-gold-400 shadow-[0_0_10px_rgba(238,185,88,.8)]" />
             </div>
+            {error && <p className="text-xs text-danger-400">{error}</p>}
             {phase === "READING" && (
               <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400">
                 我已读完剧本
@@ -376,12 +393,18 @@ export default function PlayPage() {
             )}
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
-                <p className="text-xs text-paper-400">选择搜证地点：</p>
+                <p className="text-xs text-paper-400">{sending ? sendingLabel : "选择搜证地点："}</p>
                 {summary.locations.map((loc) => (
-                  <button key={loc} onClick={() => void send({ type: "choose_location", location: loc })} className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400">
-                    {loc}
+                  <button
+                    key={loc}
+                    disabled={sending || (summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc))}
+                    onClick={() => void send({ type: "choose_location", location: loc })}
+                    className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400 disabled:opacity-50"
+                  >
+                    {loc}{summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc) ? "（已搜完）" : ""}
                   </button>
                 ))}
+                {summary.availableLocations.length === 0 && <p className="pt-1 text-xs text-paper-500">所有地点的线索都已搜完，本轮仍可选择任意地点完成流程。</p>}
               </div>
             )}
             {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
@@ -458,6 +481,15 @@ export default function PlayPage() {
                 </div>
               </div>
             )}
+            {(phase === "SELF_INTRO" || phase === "DISCUSSION") && (
+              <button
+                onClick={() => void send({ type: "skip" })}
+                disabled={sending}
+                className="w-full rounded-lg border border-paper-500/30 px-3 py-2 text-sm text-paper-300 hover:border-gold-400/50 hover:text-gold-400 disabled:opacity-40"
+              >
+                跳过本轮发言
+              </button>
+            )}
           </div>
         )}
         {/* 真人 DM 控制台 */}
@@ -526,9 +558,13 @@ export default function PlayPage() {
             <p className="text-[10px] font-semibold tracking-[0.18em] text-paper-500">LIVE SCENE</p>
             <h2 className="text-sm font-medium text-paper-200">现场记录</h2>
           </div>
-          <span className="flex items-center gap-2 text-[10px] font-semibold tracking-widest text-success-400">
-            <span className="size-1.5 rounded-full bg-success-400 shadow-[0_0_8px_rgba(102,196,154,.75)]" /> LIVE
-          </span>
+          {dmThinking ? (
+            <span className="thinking-dots text-xs font-medium text-gold-400">主持人正在撰写旁白</span>
+          ) : (
+            <span className="flex items-center gap-2 text-[10px] font-semibold tracking-widest text-success-400">
+              <span className="size-1.5 rounded-full bg-success-400 shadow-[0_0_8px_rgba(102,196,154,.75)]" /> LIVE
+            </span>
+          )}
         </div>
         <div ref={chatRef} className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5" style={{ maxHeight: "72vh" }}>
           <div className="case-briefing p-4 text-sm leading-relaxed text-paper-300">
@@ -550,6 +586,13 @@ export default function PlayPage() {
               onSpeak={speakEvent}
             />
           ))}
+
+          {dmThinking && (
+            <div className="fade-up rounded-2xl rounded-tl-sm border border-gold-400/25 bg-gold-400/5 px-4 py-3 text-sm">
+              <p className="eyebrow">DM · 主持人</p>
+              <p className="thinking-dots mt-1 text-paper-400">正在组织旁白，请稍候</p>
+            </div>
+          )}
 
           {/* 流式中的 AI 发言 */}
           {Object.entries(deltas).map(([seatStr, text]) =>

@@ -15,12 +15,13 @@ const createSchema = z.object({
   scriptId: z.string().min(1),
   seats: z.array(seatSchema).min(3).max(8),
   humanDm: z.boolean().optional(),
+  unlimitedHumanTurns: z.boolean().optional(),
 });
 
 function genRoomCode(): string {
   const chars = "ACDEFGHJKLMNPQRTUVWXY34679"; // 去掉易混淆字符
   let code = "";
-  for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  for (let i = 0; i < 5; i++) code += chars[crypto.randomInt(chars.length)];
   return code;
 }
 
@@ -62,6 +63,7 @@ export async function POST(req: Request) {
       code,
       scriptId: scriptRow.id,
       humanDm: parsed.data.humanDm ?? false,
+      unlimitedHumanTurns: parsed.data.unlimitedHumanTurns ?? true,
       hostToken,
       seats: {
         create: parsed.data.seats.map((s, index) => ({

@@ -4,9 +4,9 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
+import { nextAfterDiscussion, nextAfterSearch } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
-import { agent, seatPurpose, type AgentCtx } from "@/core/agents";
-import type { Purpose } from "@/core/llm/types";
+import { agent, type AgentCtx } from "@/core/agents";
 
 const g = globalThis as unknown as {
   __jbsEngines?: Map<string, GameEngine>;
@@ -19,9 +19,10 @@ const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const TYPEWRITER_CHUNK = 3;
 const TYPEWRITER_INTERVAL_MS = 18;
 const MAX_INTERJECTIONS_PER_ROUND = 3;
+const AI_DECISION_TIMEOUT_MS = 90_000;
 
 export interface GameAction {
-  type: "ready" | "speak" | "choose_location" | "publish" | "vote" | "private_chat" | "rush";
+  type: "ready" | "speak" | "skip" | "choose_location" | "publish" | "vote" | "private_chat" | "rush";
   text?: string;
   location?: string;
   clueId?: string;
@@ -43,12 +44,15 @@ export class GameEngine {
   private turnAsked = new Set<string>();
   private searchAsked = new Set<number>();
   private publishAsked = new Set<number>();
+  private aiVoteAsked = new Set<number>();
+  private unlimitedHumanTurns = true;
 
-  private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[]) {
+  private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[], unlimitedHumanTurns = true) {
     this.gameId = gameId;
     this.script = script;
     this.state = state;
     this.events = events;
+    this.unlimitedHumanTurns = unlimitedHumanTurns;
   }
 
   static get(gameId: string): GameEngine | undefined {
@@ -62,7 +66,7 @@ export class GameEngine {
     const loading = engineLoads.get(gameId);
     if (loading) return loading;
     const promise = (async () => {
-      const game = await db.game.findUnique({ where: { id: gameId } });
+      const game = await db.game.findUnique({ where: { id: gameId }, include: { room: true } });
       if (!game) throw new Error("对局不存在");
       const scriptRow = await db.script.findUnique({ where: { id: game.scriptId } });
       if (!scriptRow) throw new Error("剧本不存在");
@@ -88,7 +92,7 @@ export class GameEngine {
       state.readySeats ??= [];
       state.spokenSeats ??= [];
       state.searchDealtRound ??= 0;
-      const engine = new GameEngine(gameId, parseScriptForRuntime(scriptRow.content), state, events);
+      const engine = new GameEngine(gameId, parseScriptForRuntime(scriptRow.content), state, events, game.room.unlimitedHumanTurns);
       engines.set(gameId, engine);
       engine.resumeAfterLoad();
       return engine;
@@ -115,7 +119,7 @@ export class GameEngine {
     for (const s of seats.filter((x) => x.kind !== "empty")) {
       await db.seatState.create({ data: { gameId: game.id, seatIndex: s.index, data: { clueIds: [], readScript: false } } }).catch(() => null);
     }
-    const engine = new GameEngine(game.id, script, state, []);
+    const engine = new GameEngine(game.id, script, state, [], room.unlimitedHumanTurns);
     engines.set(game.id, engine);
     await engine.beginGame();
     return engine;
@@ -130,10 +134,6 @@ export class GameEngine {
     const event = await appendEvent(this.gameId, ev);
     this.events.push(event);
     return event;
-  }
-
-  private purposeFor(seatIndex: number): Purpose {
-    return seatPurpose(this.script, this.state, seatIndex);
   }
 
   private exclusiveTail: Promise<unknown> = Promise.resolve();
@@ -152,6 +152,19 @@ export class GameEngine {
       this.timers.delete(key);
       void this.exclusive(async () => {
         await fn();
+      });
+    }, ms);
+    this.timers.set(key, t);
+  }
+
+  /** 慢速 AI 决策不能占用引擎互斥锁；完成后只把短暂状态提交重新排队。 */
+  private scheduleBackground(key: string, fn: () => void | Promise<void>, ms: number): void {
+    const existing = this.timers.get(key);
+    if (existing) clearTimeout(existing);
+    const t = setTimeout(() => {
+      this.timers.delete(key);
+      void Promise.resolve(fn()).catch((err) => {
+        void this.exclusive(() => this.systemSay(`（后台 AI 操作失败：${msgOf(err)}）`));
       });
     }, ms);
     this.timers.set(key, t);
@@ -230,11 +243,12 @@ export class GameEngine {
       fromSeat: seatIndex,
       toSeat: null,
       visibility: "public",
-      content: { text, speakerName: this.speakerName(seatIndex), purpose: this.purposeFor(seatIndex) },
+      content: { text, speakerName: this.speakerName(seatIndex) },
     });
   }
 
   private async dmSay(task: string, phase: GameState["phase"] = this.state.phase, round = this.state.round): Promise<string> {
+    publish(this.gameId, { kind: "thinking", seat: "dm", audience: "public" });
     try {
       const text = await agent.dmNarrate(this.ctx(), task);
       await this.recordEvent({
@@ -259,6 +273,8 @@ export class GameEngine {
         content: { text: fallback, phase, round },
       });
       return fallback;
+    } finally {
+      publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
     }
   }
 
@@ -349,6 +365,7 @@ export class GameEngine {
     this.state.phase = "VOTE";
     this.state.round = 1;
     this.state.votes = {};
+    this.aiVoteAsked.clear();
     this.turnAsked.clear();
     this.state.turnSeat = activeSeats(this.state)[0];
     await this.dmSay(
@@ -472,15 +489,7 @@ export class GameEngine {
         if (missing.length) {
           for (const seat of missing) {
             if (state.seats[seat].kind === "ai") {
-              const locations = this.availableLocations();
-              let loc: string;
-              try {
-                loc = await agent.playerChooseLocation(this.ctx(), seat, locations);
-              } catch {
-                loc = locations[Math.floor(Math.random() * locations.length)] ?? this.script.locations[0]?.name ?? "";
-              }
-              state.searchChoices[String(seat)] = loc;
-              await this.systemSay(`你选择了「${loc}」搜证。`, seat);
+              this.queueAiSearchChoice(seat);
             } else if (!this.searchAsked.has(seat)) {
               this.searchAsked.add(seat);
               this.armHumanTimeout(seat, "选搜证地点", async () => {
@@ -496,7 +505,6 @@ export class GameEngine {
             }
           }
           await persistState(this.gameId, state);
-          if (!seats.some((i) => !state.searchChoices[String(i)])) return this.step();
           return;
         }
         // 所有人已选 → 分派线索（每轮只发一次）
@@ -515,15 +523,10 @@ export class GameEngine {
       case "DISCUSSION": {
         if (state.turnSeat === null) {
           // 本轮讨论结束：SEARCH/DISCUSSION 交替，讨论轮用尽后进入投票
-          if (state.round < this.script.flow.discussionRounds) {
-            if (state.round < this.script.flow.searchRounds) {
-              await this.transitionSearch(state.round + 1);
-            } else {
-              await this.transitionDiscussion(state.round + 1);
-            }
-          } else {
-            await this.transitionVote();
-          }
+          const next = nextAfterDiscussion(state.round, this.script.flow.searchRounds, this.script.flow.discussionRounds);
+          if (next === "SEARCH") await this.transitionSearch(state.round + 1);
+          else if (next === "DISCUSSION") await this.transitionDiscussion(state.round + 1);
+          else await this.transitionVote();
           return;
         }
         const seat = state.turnSeat;
@@ -550,13 +553,7 @@ export class GameEngine {
         for (const seat of missing) {
           if (state.seats[seat].kind === "ai") {
             const candidates = seats.filter((i) => i !== seat);
-            let vote: { target: number; reason: string };
-            try {
-              vote = await agent.playerVote(this.ctx(), seat, candidates);
-            } catch {
-              vote = { target: candidates[Math.floor(Math.random() * candidates.length)], reason: "" };
-            }
-            await this.recordVote(seat, vote.target, vote.reason);
+            this.queueAiVote(seat, candidates);
           } else {
             const askKey = `ask:VOTE:${seat}`;
             if (!this.turnAsked.has(askKey)) {
@@ -585,10 +582,58 @@ export class GameEngine {
     }
   }
 
+  /** AI 选点放到互斥队列外的定时器里，避免卡住真人点击地点的 HTTP。 */
+  private queueAiSearchChoice(seat: number): void {
+    if (this.searchAsked.has(seat)) return;
+    this.searchAsked.add(seat);
+    this.scheduleBackground(`search-ai:${this.state.round}:${seat}`, async () => {
+      if (this.state.phase !== "SEARCH") return;
+      if (this.state.searchChoices[String(seat)]) return;
+      const locations = this.availableLocations();
+      let loc: string;
+      try {
+        loc = await withTimeout(agent.playerChooseLocation(this.ctx(), seat, locations), AI_DECISION_TIMEOUT_MS);
+      } catch {
+        loc = locations[Math.floor(Math.random() * locations.length)] ?? this.script.locations[0]?.name ?? "";
+      }
+      const resolved = resolveLocation(this.script, loc);
+      if (!resolved) loc = locations[Math.floor(Math.random() * locations.length)] ?? this.script.locations[0]?.name ?? "";
+      else if (locations.length > 0 && !locations.includes(resolved.name)) loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
+      if (!loc) return;
+      await this.exclusive(async () => {
+        if (this.state.phase !== "SEARCH" || this.state.searchChoices[String(seat)]) return;
+        this.state.searchChoices[String(seat)] = loc;
+        await this.systemSay(`你选择了「${loc}」搜证。`, seat);
+        await persistState(this.gameId, this.state);
+        await this.tickInner();
+      });
+    }, 50 + seat * 40);
+  }
+
   private availableLocations(): string[] {
     return this.script.locations
       .filter((loc) => this.script.clues.some((c) => c.locationId === loc.id && this.state.clueStates[c.id] === undefined))
       .map((loc) => loc.name);
+  }
+
+  private queueAiVote(seat: number, candidates: number[]): void {
+    if (this.aiVoteAsked.has(seat)) return;
+    this.aiVoteAsked.add(seat);
+    this.scheduleBackground(`vote-ai:${seat}`, async () => {
+      let vote: { target: number; reason: string };
+      try {
+        vote = await withTimeout(agent.playerVote(this.ctx(), seat, candidates), AI_DECISION_TIMEOUT_MS);
+      } catch {
+        vote = { target: candidates[Math.floor(Math.random() * candidates.length)], reason: "" };
+      }
+      await this.exclusive(async () => {
+        if (this.state.phase !== "VOTE" || this.state.votes[String(seat)]) return;
+        const target = candidates.includes(vote.target) ? vote.target : candidates[0];
+        if (target === undefined) return;
+        await this.recordVote(seat, target, vote.reason);
+        await this.tickInner();
+      });
+    }, 50 + seat * 40);
   }
 
   private cluesAt(locationKey: string) {
@@ -649,37 +694,63 @@ export class GameEngine {
   private async collectPublishDecisions(): Promise<void> {
     for (const seatStr of Object.keys(this.state.pendingPublish)) {
       const seat = Number(seatStr);
+      if (!(this.state.pendingPublish[seatStr] ?? []).length) continue;
       if (this.state.seats[seat]?.kind !== "ai") {
         if (!this.publishAsked.has(seat)) {
           this.publishAsked.add(seat);
-          await this.systemSay(`请决定：是否公开你刚获得的线索？（左侧"我的线索"中操作，超时将自动私藏）`, seat);
-          // 超时自动私藏，避免永久卡住
-          this.schedule(`pub:${seat}`, async () => {
-            if (this.state.phase !== "SEARCH") return;
-            const pending = this.state.pendingPublish[String(seat)] ?? [];
-            if (!pending.length) return;
-            for (const clueId of pending) await this.applyPublish(seat, clueId, false);
-            this.state.pendingPublish[String(seat)] = [];
-            await persistState(this.gameId, this.state);
-            if (Object.values(this.state.pendingPublish).every((arr) => !arr.length)) {
-              await this.afterSearchPhase();
-            }
-          }, HUMAN_TURN_TIMEOUT_MS);
+          await this.systemSay(
+            this.unlimitedHumanTurns
+              ? `请决定：是否公开你刚获得的线索？（左侧"我的线索"中操作）`
+              : `请决定：是否公开你刚获得的线索？（左侧"我的线索"中操作，超时将自动私藏）`,
+            seat,
+          );
+          if (!this.unlimitedHumanTurns) {
+            this.schedule(`pub:${seat}`, async () => {
+              if (this.state.phase !== "SEARCH") return;
+              const pending = this.state.pendingPublish[String(seat)] ?? [];
+              if (!pending.length) return;
+              for (const clueId of pending) await this.applyPublish(seat, clueId, false);
+              this.state.pendingPublish[String(seat)] = [];
+              await persistState(this.gameId, this.state);
+              if (Object.values(this.state.pendingPublish).every((arr) => !arr.length)) {
+                await this.afterSearchPhase();
+              }
+            }, HUMAN_TURN_TIMEOUT_MS);
+          }
         }
         continue;
       }
-      const clueIds = this.state.pendingPublish[seatStr] ?? [];
+      this.queueAiPublish(seat);
+    }
+  }
+
+  private queueAiPublish(seat: number): void {
+    if (this.publishAsked.has(seat)) return;
+    this.publishAsked.add(seat);
+    this.scheduleBackground(`pub-ai:${this.state.round}:${seat}`, async () => {
+      if (this.state.phase !== "SEARCH") return;
+      const clueIds = this.state.pendingPublish[String(seat)] ?? [];
+      const decisions: Array<[string, boolean]> = [];
       for (const clueId of clueIds) {
         let publish = false;
         try {
-          publish = await agent.playerChoosePublish(this.ctx(), seat, clueId);
+          publish = await withTimeout(agent.playerChoosePublish(this.ctx(), seat, clueId), AI_DECISION_TIMEOUT_MS);
         } catch {
-          publish = false; // LLM 不可用时默认私藏，流程不中断
+          publish = false;
         }
-        await this.applyPublish(seat, clueId, publish);
+        decisions.push([clueId, publish]);
       }
-      this.state.pendingPublish[seatStr] = [];
-    }
+      await this.exclusive(async () => {
+        if (this.state.phase !== "SEARCH") return;
+        for (const [clueId, publish] of decisions) {
+          const pending = this.state.pendingPublish[String(seat)] ?? [];
+          if (pending.includes(clueId)) await this.applyPublish(seat, clueId, publish);
+        }
+        this.state.pendingPublish[String(seat)] = [];
+        await persistState(this.gameId, this.state);
+        await this.tickInner();
+      });
+    }, 50 + seat * 40);
   }
 
   private async applyPublish(seat: number, clueId: string, publish: boolean): Promise<void> {
@@ -704,7 +775,10 @@ export class GameEngine {
 
   private async afterSearchPhase(): Promise<void> {
     if (this.state.phase !== "SEARCH") return;
-    await this.transitionDiscussion(this.state.round);
+    const next = nextAfterSearch(this.state.round, this.script.flow.searchRounds, this.script.flow.discussionRounds);
+    if (next === "DISCUSSION") await this.transitionDiscussion(this.state.round);
+    else if (next === "SEARCH") await this.transitionSearch(this.state.round + 1);
+    else await this.transitionVote();
   }
 
   private markSpoken(seat: number): void {
@@ -739,6 +813,7 @@ export class GameEngine {
   }
 
   private armHumanTimeout(seat: number, label: string, auto?: () => Promise<void>): void {
+    if (this.unlimitedHumanTurns) return;
     this.schedule(`turn:${seat}`, async () => {
       await this.systemSay(
         `（超时提醒：${label}环节等待「${this.state.seats[seat]?.playerName ?? `座位${seat + 1}`}」已超过 3 分钟${auto ? "，已自动处理。" : "，已自动跳过。"}）`
@@ -822,12 +897,15 @@ export class GameEngine {
             this.state.interjections += 1;
             let respond: number[] = [];
             let hint = "";
+            publish(this.gameId, { kind: "thinking", seat: "dm", audience: "public" });
             try {
               const moderated = await agent.dmModerate(this.ctx(), seatIndex);
               respond = moderated.respond;
               hint = moderated.hint;
             } catch {
               // DM 不可用时不安排 AI 接话
+            } finally {
+              publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
             }
             for (const aiSeat of respond) {
               await this.aiSpeak(aiSeat, { hint: hint || undefined });
@@ -838,11 +916,25 @@ export class GameEngine {
         }
         return { ok: true };
       }
+      case "skip": {
+        if (this.state.phase !== "SELF_INTRO" && this.state.phase !== "DISCUSSION") {
+          return { ok: false, error: "当前没有可跳过的发言回合" };
+        }
+        if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在还没轮到你发言" };
+        this.clearTimers(`turn:${seatIndex}`);
+        this.markSpoken(seatIndex);
+        await this.systemSay("（你跳过了本轮发言。）", seatIndex);
+        await this.nextTurnOrAdvance();
+        return { ok: true };
+      }
       case "choose_location": {
         if (this.state.phase !== "SEARCH") return { ok: false, error: "当前不在搜证环节" };
         if (this.state.searchChoices[String(seatIndex)]) return { ok: false, error: "本轮已经选过地点" };
         const loc = resolveLocation(this.script, action.location ?? "");
         if (!loc) return { ok: false, error: "地点不合法" };
+        if (this.availableLocations().length > 0 && this.cluesAt(loc.name).length === 0) {
+          return { ok: false, error: `「${loc.name}」的线索已搜完，请选择其他地点` };
+        }
         this.state.searchChoices[String(seatIndex)] = loc.name;
         this.clearTimers(`turn:${seatIndex}`);
         await this.systemSay(`你选择了「${loc.name}」搜证。`, seatIndex);
@@ -990,4 +1082,18 @@ export class GameEngine {
 
 function msgOf(err: unknown): string {
   return (err instanceof Error ? err.message : String(err)).slice(0, 200);
+}
+
+async function withTimeout<T>(task: Promise<T>, ms: number): Promise<T> {
+  let timer: NodeJS.Timeout | undefined;
+  try {
+    return await Promise.race([
+      task,
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("AI 决策超时")), ms);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }

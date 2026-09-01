@@ -31,7 +31,7 @@ export async function POST(req: Request) {
   if (denied) return denied;
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "请求体不是合法 JSON" }, { status: 400 });
-  const docInput = "doc" in body ? body.doc : body;
+  const docInput = typeof body === "object" && body !== null && "doc" in body ? body.doc : body;
   const source = typeof body?.source === "string" && ["manual", "ai", "import"].includes(body.source) ? body.source : "import";
 
   const ingested = ingestScriptDocSafe(docInput);
