@@ -94,6 +94,11 @@ export class GameEngine {
       state.searchDealtRound ??= 0;
       state.questionsLeft ??= {};
       state.pendingAnswer ??= null;
+      state.humanDeadlines ??= {};
+      // 服务重启后内存定时器已丢失，过期截止时间一并清掉，避免前端挂着永不跳转的倒计时
+      for (const k of Object.keys(state.humanDeadlines)) {
+        if (state.humanDeadlines[k] <= Date.now()) delete state.humanDeadlines[k];
+      }
       const engine = new GameEngine(gameId, parseScriptForRuntime(scriptRow.content), state, events, game.room.unlimitedHumanTurns);
       engines.set(gameId, engine);
       engine.resumeAfterLoad();
@@ -194,6 +199,31 @@ export class GameEngine {
     ) {
       this.state.searchDealtRound = this.state.round;
     }
+    // 重启后重 arm 未过期的真人超时定时器（auto 回调已丢失，只能走跳过降级）
+    for (const [k, deadline] of Object.entries(this.state.humanDeadlines ?? {})) {
+      const seat = Number(k);
+      if (!Number.isFinite(seat)) continue;
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) continue;
+      this.schedule(`turn:${seat}`, async () => {
+        this.clearHumanTimeout(seat);
+        await persistState(this.gameId, this.state);
+        await this.systemSay(
+          `（你已超过 3 分钟未操作，本轮发言已自动跳过。）`,
+          seat,
+          { timeoutSkip: true }
+        );
+        await this.systemSay(
+          `（超时提醒：等待「${this.state.seats[seat]?.playerName ?? `座位${seat + 1}`}」已超过 3 分钟，已自动跳过。）`
+        );
+        if (this.state.phase === "SELF_INTRO" || this.state.phase === "DISCUSSION") {
+          this.markSpoken(seat);
+          await this.nextTurnOrAdvance();
+        } else {
+          await this.tickInner();
+        }
+      }, remaining);
+    }
     void this.exclusive(() => this.tickInner());
   }
 
@@ -226,7 +256,7 @@ export class GameEngine {
     publish(this.gameId, { kind: "thinking", seat: seatIndex, audience: "public" });
     let text: string;
     try {
-      text = await agent.playerSpeak(this.ctx(), seatIndex, opts);
+      text = await withTimeout(agent.playerSpeak(this.ctx(), seatIndex, opts), AI_DECISION_TIMEOUT_MS);
     } catch (err) {
       await this.systemSay(`（AI 玩家「${this.speakerName(seatIndex)}」思考时遇到问题：${msgOf(err)}。场内玩家可稍作等待或继续。）`);
       publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
@@ -252,7 +282,7 @@ export class GameEngine {
   private async dmSay(task: string, phase: GameState["phase"] = this.state.phase, round = this.state.round): Promise<string> {
     publish(this.gameId, { kind: "thinking", seat: "dm", audience: "public" });
     try {
-      const text = await agent.dmNarrate(this.ctx(), task);
+      const text = await withTimeout(agent.dmNarrate(this.ctx(), task), AI_DECISION_TIMEOUT_MS * 2);
       await this.recordEvent({
         type: "phase",
         phase,
@@ -280,7 +310,7 @@ export class GameEngine {
     }
   }
 
-  private async systemSay(text: string, toSeat: number | null = null): Promise<void> {
+  private async systemSay(text: string, toSeat: number | null = null, extra?: Record<string, unknown>): Promise<void> {
     await this.recordEvent({
       type: "system",
       phase: this.state.phase,
@@ -288,7 +318,7 @@ export class GameEngine {
       fromSeat: null,
       toSeat,
       visibility: toSeat === null ? "public" : `seat:${toSeat}`,
-      content: { text },
+      content: { text, ...extra },
     });
   }
 
@@ -484,7 +514,7 @@ export class GameEngine {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
           if (!this.turnAsked.has(askKey)) {
             this.turnAsked.add(askKey);
-            this.armHumanTimeout(seat, "自我介绍");
+            await this.armHumanTimeout(seat, "自我介绍");
             await this.systemSay(`轮到你自我介绍了。请在输入框发言，或点击"跳过"。`, seat);
           }
         }
@@ -498,7 +528,7 @@ export class GameEngine {
               this.queueAiSearchChoice(seat);
             } else if (!this.searchAsked.has(seat)) {
               this.searchAsked.add(seat);
-              this.armHumanTimeout(seat, "选搜证地点", async () => {
+              await this.armHumanTimeout(seat, "选搜证地点", async () => {
                 if (this.state.searchChoices[String(seat)]) return;
                 const locs = this.availableLocations();
                 const loc = locs[Math.floor(Math.random() * locs.length)] ?? this.script.locations[0]?.name ?? "";
@@ -546,7 +576,7 @@ export class GameEngine {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
           if (!this.turnAsked.has(askKey)) {
             this.turnAsked.add(askKey);
-            this.armHumanTimeout(seat, "圆桌发言");
+            await this.armHumanTimeout(seat, "圆桌发言");
             const left = state.questionsLeft[String(seat)] ?? 0;
             await this.systemSay(`轮到你发言。你可以当众陈述，也可以提问（剩余 ${left} 次）。结束后请点「结束发言」。`, seat);
           }
@@ -567,7 +597,7 @@ export class GameEngine {
             const askKey = `ask:VOTE:${seat}`;
             if (!this.turnAsked.has(askKey)) {
               this.turnAsked.add(askKey);
-              this.armHumanTimeout(seat, "投票", async () => {
+              await this.armHumanTimeout(seat, "投票", async () => {
                 const candidates = activeSeats(this.state).filter((i) => i !== seat);
                 const target = candidates[Math.floor(Math.random() * candidates.length)];
                 if (this.state.votes[String(seat)]) return;
@@ -718,6 +748,11 @@ export class GameEngine {
               if (this.state.phase !== "SEARCH") return;
               const pending = this.state.pendingPublish[String(seat)] ?? [];
               if (!pending.length) return;
+              await this.systemSay(
+                `（你已超过 3 分钟未操作，线索已全部自动私藏。）`,
+                seat,
+                { timeoutSkip: true }
+              );
               for (const clueId of pending) await this.applyPublish(seat, clueId, false);
               this.state.pendingPublish[String(seat)] = [];
               await persistState(this.gameId, this.state);
@@ -814,6 +849,8 @@ export class GameEngine {
     if (!text) return { ok: false, error: "问题不能为空" };
     this.state.questionsLeft[String(fromSeat)] = left - 1;
     this.state.pendingAnswer = { fromSeat, toSeat, question: text };
+    // 提问 = 证明在参与，暂停提问者超时；答完后 tick 会重新 arm
+    this.clearHumanTimeout(fromSeat);
     await this.recordEvent({
       type: "speech",
       phase: this.state.phase,
@@ -843,7 +880,7 @@ export class GameEngine {
     const askKey = `answer:${pending.fromSeat}:${target}:${this.state.round}`;
     if (!this.turnAsked.has(askKey)) {
       this.turnAsked.add(askKey);
-      this.armHumanTimeout(target, "回答提问", async () => {
+      await this.armHumanTimeout(target, "回答提问", async () => {
         if (!this.state.pendingAnswer) return;
         await this.systemSay(`（${this.speakerName(target)} 没有回答，「${pending.question}」作废。）`);
         this.state.pendingAnswer = null;
@@ -898,9 +935,20 @@ export class GameEngine {
     });
   }
 
-  private armHumanTimeout(seat: number, label: string, auto?: () => Promise<void>): void {
+  private async armHumanTimeout(seat: number, label: string, auto?: () => Promise<void>): Promise<void> {
     if (this.unlimitedHumanTurns) return;
+    this.state.humanDeadlines ??= {};
+    this.state.humanDeadlines[String(seat)] = Date.now() + HUMAN_TURN_TIMEOUT_MS;
+    // 先落库再提示：紧跟其后的「轮到你」事件会触发前端刷新概要，必须能读到截止时间
+    await persistState(this.gameId, this.state);
     this.schedule(`turn:${seat}`, async () => {
+      this.clearHumanTimeout(seat);
+      await persistState(this.gameId, this.state);
+      await this.systemSay(
+        `（你已超过 3 分钟未操作，${auto ? `${label}已由系统自动处理。` : "本轮发言已自动跳过。"}）`,
+        seat,
+        { timeoutSkip: true }
+      );
       await this.systemSay(
         `（超时提醒：${label}环节等待「${this.state.seats[seat]?.playerName ?? `座位${seat + 1}`}」已超过 3 分钟${auto ? "，已自动处理。" : "，已自动跳过。"}）`
       );
@@ -915,6 +963,12 @@ export class GameEngine {
         await this.tickInner();
       }
     }, HUMAN_TURN_TIMEOUT_MS);
+  }
+
+  /** 真人行动到达时解除限时：清定时器 + 清截止时间（调用点随后都会 persistState）。 */
+  private clearHumanTimeout(seat: number): void {
+    this.clearTimers(`turn:${seat}`);
+    if (this.state.humanDeadlines) delete this.state.humanDeadlines[String(seat)];
   }
 
   private async recordVote(seat: number, target: number, reason?: string): Promise<void> {
@@ -967,7 +1021,7 @@ export class GameEngine {
             visibility: "public",
             content: { text, speakerName: this.speakerName(seatIndex) },
           });
-          this.clearTimers(`turn:${seatIndex}`);
+          this.clearHumanTimeout(seatIndex);
           this.markSpoken(seatIndex);
           await this.nextTurnOrAdvance();
           return { ok: true };
@@ -983,7 +1037,7 @@ export class GameEngine {
               visibility: "public",
               content: { text, speakerName: this.speakerName(seatIndex) },
             });
-            this.clearTimers(`turn:${seatIndex}`);
+            this.clearHumanTimeout(seatIndex);
             this.state.pendingAnswer = null;
             await persistState(this.gameId, this.state);
             return { ok: true };
@@ -1013,7 +1067,7 @@ export class GameEngine {
         }
         if (this.state.phase === "DISCUSSION" && this.state.pendingAnswer) {
           if (this.state.pendingAnswer.toSeat === seatIndex) {
-            this.clearTimers(`turn:${seatIndex}`);
+            this.clearHumanTimeout(seatIndex);
             await this.systemSay("（你拒绝回答这个问题。）");
             this.state.pendingAnswer = null;
             await persistState(this.gameId, this.state);
@@ -1023,7 +1077,7 @@ export class GameEngine {
           return { ok: false, error: "请先等待对方回答" };
         }
         if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在还没轮到你发言" };
-        this.clearTimers(`turn:${seatIndex}`);
+        this.clearHumanTimeout(seatIndex);
         this.markSpoken(seatIndex);
         await this.systemSay("（你结束了本轮发言。）", seatIndex);
         await this.nextTurnOrAdvance();
@@ -1038,7 +1092,7 @@ export class GameEngine {
           return { ok: false, error: `「${loc.name}」的线索已搜完，请选择其他地点` };
         }
         this.state.searchChoices[String(seatIndex)] = loc.name;
-        this.clearTimers(`turn:${seatIndex}`);
+        this.clearHumanTimeout(seatIndex);
         await this.systemSay(`你选择了「${loc.name}」搜证。`, seatIndex);
         await persistState(this.gameId, this.state);
         this.continueTick();
@@ -1067,7 +1121,7 @@ export class GameEngine {
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
         await this.recordVote(seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
-        this.clearTimers(`turn:${seatIndex}`);
+        this.clearHumanTimeout(seatIndex);
         this.continueTick();
         return { ok: true };
       }

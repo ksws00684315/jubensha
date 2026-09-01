@@ -82,5 +82,6 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     turnSeat: runtimeState.turnSeat ?? null,
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
     pendingAnswer: runtimeState.pendingAnswer ?? null,
+    humanDeadline: mySeat !== null ? runtimeState.humanDeadlines?.[String(mySeat)] ?? null : null,
   });
 }

@@ -117,6 +117,8 @@ export interface GameSummary {
   turnSeat: number | null;
   questionsLeft: number;
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
+  /** 本座位限时截止时间（epoch ms）；不限时或未在计时为 null */
+  humanDeadline: number | null;
 }
 
 export interface DmStructuredView {

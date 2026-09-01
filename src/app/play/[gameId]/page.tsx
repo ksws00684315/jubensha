@@ -15,6 +15,7 @@ import {
   type DmStructuredView,
 } from "@/lib/client";
 import { gameEventsUrl } from "@/lib/join";
+import { countdownRemaining, formatCountdown } from "@/lib/human-timeout";
 
 interface DmView {
   truth: { culprit: string; method: string; fullTimeline: string; keyEvidence: string[]; reveal: string };
@@ -49,6 +50,7 @@ export default function PlayPage() {
   const [sending, setSending] = useState(false);
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
   const lastSeq = useRef("0");
   const soundedSeq = useRef("0");
   const audioContext = useRef<AudioContext | null>(null);
@@ -216,6 +218,15 @@ export default function PlayPage() {
     []
   );
 
+  // 限时倒计时：仅在截止时间进入最后 60 秒窗口后才需要每秒刷新
+  useEffect(() => {
+    const deadline = summary?.humanDeadline ?? null;
+    if (deadline === null) return;
+    setNow(Date.now());
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [summary?.humanDeadline]);
+
   const send = useCallback(
     async (action: Record<string, unknown>) => {
       if (mySeat === null) return;
@@ -303,6 +314,18 @@ export default function PlayPage() {
       : mySpeakTurn
         ? "当众陈述（提问请用左侧）…"
         : "还没轮到你发言";
+
+  // 限时倒计时（最后 60 秒起）与「已被自动跳过」横幅（OPT-01）
+  const deadlineLeft = countdownRemaining(summary.humanDeadline, now);
+  const deadlinePassed = summary.humanDeadline !== null && summary.humanDeadline <= now;
+  const lastNoticeToMe =
+    mySeat !== null ? (events.findLast((e) => e.type === "system" && e.visibility === `seat:${mySeat}`) ?? null) : null;
+  const timedOutSkipped =
+    !ended &&
+    lastNoticeToMe?.content.timeoutSkip === true &&
+    !canSpeak &&
+    !(phase === "SEARCH" && !iChoseLocation) &&
+    !(phase === "VOTE" && !iVoted);
 
   // 我的线索卡（从私发线索事件中取内容）
   const myClueCards = events
@@ -408,6 +431,21 @@ export default function PlayPage() {
               <span className="size-1.5 animate-pulse rounded-full bg-gold-400 shadow-[0_0_10px_rgba(238,185,88,.8)]" />
             </div>
             {error && <p className="text-xs text-danger-400">{error}</p>}
+            {deadlineLeft !== null && (
+              <p className="rounded-lg border border-danger-400/40 bg-danger-400/10 px-3 py-2 text-xs font-medium text-danger-400">
+                ⏱ 剩 {formatCountdown(deadlineLeft)}，超时将自动跳过
+              </p>
+            )}
+            {deadlinePassed && deadlineLeft === null && !timedOutSkipped && (
+              <p className="rounded-lg border border-danger-400/40 bg-danger-400/10 px-3 py-2 text-xs font-medium text-danger-400">
+                ⏱ 时间已到，系统即将自动处理…
+              </p>
+            )}
+            {timedOutSkipped && (
+              <p className="rounded-lg border border-danger-400/40 bg-danger-400/10 px-3 py-2 text-xs font-medium text-danger-400">
+                ⏱ {lastNoticeToMe?.content.text}
+              </p>
+            )}
             {phase === "READING" && (
               <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400">
                 我已读完剧本

@@ -53,6 +53,8 @@ export interface GameState {
   questionsLeft: Record<string, number>;
   /** 等待被提问者当众回答 */
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
+  /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */
+  humanDeadlines?: Record<string, number>;
 }
 
 export interface EngineEvent {
