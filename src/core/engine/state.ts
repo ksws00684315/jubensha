@@ -22,6 +22,8 @@ export function initialState(seats: SeatInfo[]): GameState {
     searchDealtRound: 0,
     voteResult: null,
     interjections: 0,
+    questionsLeft: {},
+    pendingAnswer: null,
   };
 }
 

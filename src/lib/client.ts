@@ -114,6 +114,9 @@ export interface GameSummary {
   clues: Array<{ id: string; name: string; location: string }>;
   scriptV2: Pick<PublicScriptViewV2, "background" | "characters" | "locations"> | null;
   myCluesV2: ClueV2[];
+  turnSeat: number | null;
+  questionsLeft: number;
+  pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
 }
 
 export interface DmStructuredView {

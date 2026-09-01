@@ -4,7 +4,7 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
-import { nextAfterDiscussion, nextAfterSearch } from "./flow";
+import { ensureDiscussionState, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
 
@@ -18,11 +18,10 @@ const engineLoads = (g.__jbsEngineLoads ??= new Map<string, Promise<GameEngine>>
 const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const TYPEWRITER_CHUNK = 3;
 const TYPEWRITER_INTERVAL_MS = 18;
-const MAX_INTERJECTIONS_PER_ROUND = 3;
 const AI_DECISION_TIMEOUT_MS = 90_000;
 
 export interface GameAction {
-  type: "ready" | "speak" | "skip" | "choose_location" | "publish" | "vote" | "private_chat" | "rush";
+  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush";
   text?: string;
   location?: string;
   clueId?: string;
@@ -45,6 +44,7 @@ export class GameEngine {
   private searchAsked = new Set<number>();
   private publishAsked = new Set<number>();
   private aiVoteAsked = new Set<number>();
+  private aiDiscussionAsked = new Set<number>();
   private unlimitedHumanTurns = true;
 
   private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[], unlimitedHumanTurns = true) {
@@ -92,6 +92,8 @@ export class GameEngine {
       state.readySeats ??= [];
       state.spokenSeats ??= [];
       state.searchDealtRound ??= 0;
+      state.questionsLeft ??= {};
+      state.pendingAnswer ??= null;
       const engine = new GameEngine(gameId, parseScriptForRuntime(scriptRow.content), state, events, game.room.unlimitedHumanTurns);
       engines.set(gameId, engine);
       engine.resumeAfterLoad();
@@ -349,11 +351,14 @@ export class GameEngine {
     this.state.round = round;
     this.state.spokenSeats = [];
     this.state.interjections = 0;
+    this.state.pendingAnswer = null;
+    ensureDiscussionState(this.state);
     this.searchAsked.clear();
     this.turnAsked.clear();
+    this.aiDiscussionAsked.clear();
     this.state.turnSeat = activeSeats(this.state)[0];
     await this.dmSay(
-      `宣布进入【第 ${round} 轮圆桌讨论】：请大家结合刚搜到的线索自由讨论，质疑与自证。本轮按座位顺序每人至少发言一次，也可以随时插话。`,
+      `宣布进入【第 ${round} 轮圆桌讨论】：按座位顺序轮流发言，每人可当众提问三次。轮到你时请陈述或提问，被问到的人需要当场回答。本局暂不开放私聊。`,
       "DISCUSSION",
       round
     );
@@ -419,7 +424,8 @@ export class GameEngine {
       content: { phase: "ENDED", round: 0, text: "" },
     });
     await persistState(this.gameId, this.state);
-    await db.game.update({ where: { id: this.gameId }, data: { status: "ended", endedAt: new Date() } });
+    const ended = await db.game.update({ where: { id: this.gameId }, data: { status: "ended", endedAt: new Date() } });
+    await db.room.update({ where: { id: ended.roomId }, data: { status: "ended" } });
     publish(this.gameId, { kind: "end" });
   }
 
@@ -521,8 +527,12 @@ export class GameEngine {
         return;
       }
       case "DISCUSSION": {
+        ensureDiscussionState(state);
+        if (state.pendingAnswer) {
+          await this.resolvePendingAnswer();
+          return;
+        }
         if (state.turnSeat === null) {
-          // 本轮讨论结束：SEARCH/DISCUSSION 交替，讨论轮用尽后进入投票
           const next = nextAfterDiscussion(state.round, this.script.flow.searchRounds, this.script.flow.discussionRounds);
           if (next === "SEARCH") await this.transitionSearch(state.round + 1);
           else if (next === "DISCUSSION") await this.transitionDiscussion(state.round + 1);
@@ -531,15 +541,14 @@ export class GameEngine {
         }
         const seat = state.turnSeat;
         if (state.seats[seat]?.kind === "ai") {
-          await this.aiSpeak(seat, { hint: `这是第 ${state.round} 轮讨论，请接续现场讨论或抛出你的质疑。` });
-          this.markSpoken(seat);
-          await this.nextTurnOrAdvance();
+          await this.runAiDiscussionTurn(seat);
         } else {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
           if (!this.turnAsked.has(askKey)) {
             this.turnAsked.add(askKey);
             this.armHumanTimeout(seat, "圆桌发言");
-            await this.systemSay(`轮到你发言（第 ${state.round} 轮讨论）。`, seat);
+            const left = state.questionsLeft[String(seat)] ?? 0;
+            await this.systemSay(`轮到你发言。你可以当众陈述，也可以提问（剩余 ${left} 次）。结束后请点「结束发言」。`, seat);
           }
         }
         return;
@@ -797,6 +806,83 @@ export class GameEngine {
     this.continueTick();
   }
 
+  private async submitQuestion(fromSeat: number, toSeat: number, question: string): Promise<{ ok: boolean; error?: string }> {
+    const invalid = validateDiscussionAsk(this.state, fromSeat, toSeat);
+    if (invalid) return { ok: false, error: invalid };
+    const left = this.state.questionsLeft[String(fromSeat)] ?? 0;
+    const text = question.trim().slice(0, 200);
+    if (!text) return { ok: false, error: "问题不能为空" };
+    this.state.questionsLeft[String(fromSeat)] = left - 1;
+    this.state.pendingAnswer = { fromSeat, toSeat, question: text };
+    await this.recordEvent({
+      type: "speech",
+      phase: this.state.phase,
+      round: this.state.round,
+      fromSeat,
+      toSeat,
+      visibility: "public",
+      content: { text: `我问${this.speakerName(toSeat)}：${text}`, speakerName: this.speakerName(fromSeat) },
+    });
+    await persistState(this.gameId, this.state);
+    return { ok: true };
+  }
+
+  private async resolvePendingAnswer(): Promise<void> {
+    const pending = this.state.pendingAnswer;
+    if (!pending) return;
+    const target = pending.toSeat;
+    if (this.state.seats[target]?.kind === "ai") {
+      await this.aiSpeak(target, {
+        hint: `${this.speakerName(pending.fromSeat)} 当众问你：「${pending.question}」。请正面回答这个问题；可以藏秘密，但不能装作没听见。`,
+      });
+      this.state.pendingAnswer = null;
+      await persistState(this.gameId, this.state);
+      await this.tickInner();
+      return;
+    }
+    const askKey = `answer:${pending.fromSeat}:${target}:${this.state.round}`;
+    if (!this.turnAsked.has(askKey)) {
+      this.turnAsked.add(askKey);
+      this.armHumanTimeout(target, "回答提问", async () => {
+        if (!this.state.pendingAnswer) return;
+        await this.systemSay(`（${this.speakerName(target)} 没有回答，「${pending.question}」作废。）`);
+        this.state.pendingAnswer = null;
+        await persistState(this.gameId, this.state);
+        await this.tickInner();
+      });
+      await this.systemSay(`请当场回答「${this.speakerName(pending.fromSeat)}」的提问：${pending.question}`, target);
+    }
+  }
+
+  private async runAiDiscussionTurn(seat: number): Promise<void> {
+    if (!this.aiDiscussionAsked.has(seat)) {
+      this.aiDiscussionAsked.add(seat);
+      const left = this.state.questionsLeft[String(seat)] ?? 0;
+      if (left > 0) {
+        try {
+          const asked = await withTimeout(
+            agent.playerConsiderQuestion(this.ctx(), seat, activeSeats(this.state).filter((i) => i !== seat)),
+            AI_DECISION_TIMEOUT_MS,
+          );
+          if (asked) {
+            const result = await this.submitQuestion(seat, asked.toSeat, asked.question);
+            if (result.ok) {
+              this.pendingTick = true;
+              return;
+            }
+          }
+        } catch {
+          /* 不问，直接发言 */
+        }
+      }
+    }
+    await this.aiSpeak(seat, {
+      hint: `现在轮到你当众发言。根据公开信息和你愿意拿出的情报做一段陈述，不要连珠炮质问，也不要替别人作答。`,
+    });
+    this.markSpoken(seat);
+    await this.nextTurnOrAdvance();
+  }
+
   /** 已在 tick 内则记 pending；否则等当前互斥释放后再推进，避免挡住 HTTP。 */
   private continueTick(): void {
     if (this.busy) {
@@ -870,60 +956,76 @@ export class GameEngine {
       case "speak": {
         const text = (action.text ?? "").trim().slice(0, 800);
         if (!text) return { ok: false, error: "发言不能为空" };
-        await this.recordEvent({
-          type: "speech",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: seatIndex,
-          toSeat: null,
-          visibility: "public",
-          content: { text, speakerName: this.speakerName(seatIndex) },
-        });
-        if (this.state.phase === "SELF_INTRO" && this.state.turnSeat === seatIndex) {
+        if (this.state.phase === "SELF_INTRO") {
+          if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在不是你的发言回合" };
+          await this.recordEvent({
+            type: "speech",
+            phase: this.state.phase,
+            round: this.state.round,
+            fromSeat: seatIndex,
+            toSeat: null,
+            visibility: "public",
+            content: { text, speakerName: this.speakerName(seatIndex) },
+          });
           this.clearTimers(`turn:${seatIndex}`);
           this.markSpoken(seatIndex);
           await this.nextTurnOrAdvance();
           return { ok: true };
         }
         if (this.state.phase === "DISCUSSION") {
-          if (this.state.turnSeat === seatIndex) {
+          if (this.state.pendingAnswer?.toSeat === seatIndex) {
+            await this.recordEvent({
+              type: "speech",
+              phase: this.state.phase,
+              round: this.state.round,
+              fromSeat: seatIndex,
+              toSeat: this.state.pendingAnswer.fromSeat,
+              visibility: "public",
+              content: { text, speakerName: this.speakerName(seatIndex) },
+            });
             this.clearTimers(`turn:${seatIndex}`);
-            this.markSpoken(seatIndex);
-            await this.nextTurnOrAdvance();
+            this.state.pendingAnswer = null;
+            await persistState(this.gameId, this.state);
             return { ok: true };
           }
-          // 插话：DM 评估 AI 接话
-          if (this.state.interjections < MAX_INTERJECTIONS_PER_ROUND) {
-            this.state.interjections += 1;
-            let respond: number[] = [];
-            let hint = "";
-            publish(this.gameId, { kind: "thinking", seat: "dm", audience: "public" });
-            try {
-              const moderated = await agent.dmModerate(this.ctx(), seatIndex);
-              respond = moderated.respond;
-              hint = moderated.hint;
-            } catch {
-              // DM 不可用时不安排 AI 接话
-            } finally {
-              publish(this.gameId, { kind: "thinking", seat: null, audience: "public" });
-            }
-            for (const aiSeat of respond) {
-              await this.aiSpeak(aiSeat, { hint: hint || undefined });
-            }
-          }
+          if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在不是你的发言回合" };
+          if (this.state.pendingAnswer) return { ok: false, error: "请先等待对方回答你的提问" };
+          await this.recordEvent({
+            type: "speech",
+            phase: this.state.phase,
+            round: this.state.round,
+            fromSeat: seatIndex,
+            toSeat: null,
+            visibility: "public",
+            content: { text, speakerName: this.speakerName(seatIndex) },
+          });
           await persistState(this.gameId, this.state);
           return { ok: true };
         }
-        return { ok: true };
+        return { ok: false, error: "当前不能自由发言" };
+      }
+      case "ask": {
+        return this.submitQuestion(seatIndex, action.toSeat ?? -1, action.text ?? "");
       }
       case "skip": {
         if (this.state.phase !== "SELF_INTRO" && this.state.phase !== "DISCUSSION") {
           return { ok: false, error: "当前没有可跳过的发言回合" };
         }
+        if (this.state.phase === "DISCUSSION" && this.state.pendingAnswer) {
+          if (this.state.pendingAnswer.toSeat === seatIndex) {
+            this.clearTimers(`turn:${seatIndex}`);
+            await this.systemSay("（你拒绝回答这个问题。）");
+            this.state.pendingAnswer = null;
+            await persistState(this.gameId, this.state);
+            this.continueTick();
+            return { ok: true };
+          }
+          return { ok: false, error: "请先等待对方回答" };
+        }
         if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在还没轮到你发言" };
         this.clearTimers(`turn:${seatIndex}`);
         this.markSpoken(seatIndex);
-        await this.systemSay("（你跳过了本轮发言。）", seatIndex);
+        await this.systemSay("（你结束了本轮发言。）", seatIndex);
         await this.nextTurnOrAdvance();
         return { ok: true };
       }
@@ -970,63 +1072,7 @@ export class GameEngine {
         return { ok: true };
       }
       case "private_chat": {
-        if (!this.script.flow.allowPrivateChat || this.state.phase !== "DISCUSSION") return { ok: false, error: "当前无法私聊" };
-        const toSeat = action.toSeat;
-        if (toSeat === undefined || !activeSeats(this.state).includes(toSeat) || toSeat === seatIndex) return { ok: false, error: "私聊对象不合法" };
-        const key = `${seatIndex}-${toSeat}`;
-        const count = this.state.privateChat[key] ?? 0;
-        if (count >= this.script.flow.privateChatMessageLimit) return { ok: false, error: "私聊条数已达上限" };
-        this.state.privateChat[key] = count + 1;
-        const text = (action.text ?? "").trim().slice(0, 300);
-        if (!text) return { ok: false, error: "私聊内容不能为空" };
-        await this.recordEvent({
-          type: "private",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: seatIndex,
-          toSeat,
-          visibility: `seat:${seatIndex}`,
-          content: { text },
-        });
-        await this.recordEvent({
-          type: "private",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: seatIndex,
-          toSeat,
-          visibility: `seat:${toSeat}`,
-          content: { text },
-        });
-        if (this.state.seats[toSeat].kind === "ai") {
-          void (async () => {
-            try {
-              const reply = await agent.privateReply(this.ctx(), toSeat, seatIndex, text);
-              await this.typewriter(toSeat, reply, seatIndex);
-              await this.recordEvent({
-                type: "private",
-                phase: this.state.phase,
-                round: this.state.round,
-                fromSeat: toSeat,
-                toSeat: seatIndex,
-                visibility: `seat:${toSeat}`,
-                content: { text: reply },
-              });
-              await this.recordEvent({
-                type: "private",
-                phase: this.state.phase,
-                round: this.state.round,
-                fromSeat: toSeat,
-                toSeat: seatIndex,
-                visibility: `seat:${seatIndex}`,
-                content: { text: reply },
-              });
-            } catch (err) {
-              await this.systemSay(`（私聊回复失败：${msgOf(err)}）`, seatIndex);
-            }
-          })();
-        }
-        await persistState(this.gameId, this.state);
-        return { ok: true };
+        return { ok: false, error: "本局讨论暂不开放私聊，请在公屏轮流提问" };
       }
       case "rush": {
         this.continueTick();

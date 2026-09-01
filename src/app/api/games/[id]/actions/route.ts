@@ -7,7 +7,7 @@ const actionSchema = z.object({
   seatIndex: z.number().int().min(0),
   token: z.string().min(1),
   action: z.object({
-    type: z.enum(["ready", "speak", "skip", "choose_location", "publish", "vote", "private_chat", "rush"]),
+    type: z.enum(["ready", "speak", "skip", "ask", "choose_location", "publish", "vote", "private_chat", "rush"]),
     text: z.string().optional(),
     location: z.string().optional(),
     clueId: z.string().optional(),

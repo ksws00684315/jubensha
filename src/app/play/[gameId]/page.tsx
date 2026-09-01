@@ -42,8 +42,8 @@ export default function PlayPage() {
   const [tab, setTab] = useState<"script" | "clues" | "timeline">("script");
   const [voteTarget, setVoteTarget] = useState<number | null>(null);
   const [voteReason, setVoteReason] = useState("");
-  const [privateTarget, setPrivateTarget] = useState<number | null>(null);
-  const [privateText, setPrivateText] = useState("");
+  const [askTarget, setAskTarget] = useState<number | null>(null);
+  const [askText, setAskText] = useState("");
   const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -168,8 +168,9 @@ export default function PlayPage() {
           setDmThinking(false);
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" && (mySeat !== null || isDm)) {
-          void api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}&token=${myToken ?? ""}`).then(setSummary).catch(() => null);
+        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase") {
+          const q = mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : "";
+          void api<GameSummary>(`/api/games/${gameId}${q}`).then(setSummary).catch(() => null);
         }
       } else if (msg.kind === "delta") {
         setDeltas((d) => ({ ...d, [msg.seat]: (d[msg.seat] ?? "") + msg.text }));
@@ -230,6 +231,10 @@ export default function PlayPage() {
           body: JSON.stringify({ seatIndex: mySeat, token: myToken, action }),
         });
         if (!res.ok) setError(res.error ?? "操作失败");
+        else {
+          const mine = await api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}&token=${myToken ?? ""}`);
+          setSummary(mine);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -287,6 +292,17 @@ export default function PlayPage() {
   );
   const iVoted = events.some((e) => e.type === "vote" && e.fromSeat === mySeat);
   const reveal = events.findLast((e) => e.type === "reveal");
+  const answering = phase === "DISCUSSION" && summary.pendingAnswer?.toSeat === mySeat;
+  const mySpeakTurn =
+    (phase === "SELF_INTRO" || phase === "DISCUSSION") && summary.turnSeat === mySeat && !summary.pendingAnswer;
+  const canSpeak = Boolean(answering || mySpeakTurn);
+  const speakPlaceholder = answering
+    ? "当众回答这个问题…"
+    : phase === "SELF_INTRO"
+      ? "以角色的身份介绍自己…"
+      : mySpeakTurn
+        ? "当众陈述（提问请用左侧）…"
+        : "还没轮到你发言";
 
   // 我的线索卡（从私发线索事件中取内容）
   const myClueCards = events
@@ -371,7 +387,13 @@ export default function PlayPage() {
                       {s.index === mySeat ? "（你）" : s.kind === "ai" ? "AI" : s.playerName}
                     </span>
                   </span>
-                  {thinking[s.index] && <span className="thinking-dots shrink-0 text-xs text-secret-400">思考中</span>}
+                  {thinking[s.index] ? (
+                    <span className="thinking-dots shrink-0 text-xs text-secret-400">思考中</span>
+                  ) : summary.pendingAnswer?.toSeat === s.index ? (
+                    <span className="shrink-0 text-[10px] text-danger-400">需作答</span>
+                  ) : summary.turnSeat === s.index && (phase === "DISCUSSION" || phase === "SELF_INTRO") ? (
+                    <span className="shrink-0 text-[10px] text-gold-400">发言中</span>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -394,16 +416,21 @@ export default function PlayPage() {
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
                 <p className="text-xs text-paper-400">{sending ? sendingLabel : "选择搜证地点："}</p>
-                {summary.locations.map((loc) => (
+                {summary.locations.map((loc) => {
+                  const desc = summary.scriptV2?.locations.find((item) => item.name === loc)?.description?.find((block) => block.type === "paragraph")?.text;
+                  const emptied = summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc);
+                  return (
                   <button
                     key={loc}
-                    disabled={sending || (summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc))}
+                    disabled={sending || emptied}
                     onClick={() => void send({ type: "choose_location", location: loc })}
                     className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400 disabled:opacity-50"
                   >
-                    {loc}{summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc) ? "（已搜完）" : ""}
+                    <span className="block">{loc}{emptied ? "（已搜完）" : ""}</span>
+                    {desc && <span className="mt-0.5 block text-[11px] leading-snug text-paper-500">{desc}</span>}
                   </button>
-                ))}
+                  );
+                })}
                 {summary.availableLocations.length === 0 && <p className="pt-1 text-xs text-paper-500">所有地点的线索都已搜完，本轮仍可选择任意地点完成流程。</p>}
               </div>
             )}
@@ -440,54 +467,91 @@ export default function PlayPage() {
               </div>
             )}
             {phase === "VOTE" && iVoted && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
-            {phase === "DISCUSSION" && summary.flow.allowPrivateChat && (
-              <div className="space-y-2 border-t border-secret-400/20 pt-3">
-                <p className="text-xs text-secret-400">私聊（每对象限 {summary.flow.privateChatMessageLimit} 条）：</p>
-                <select
-                  value={privateTarget ?? ""}
-                  onChange={(e) => setPrivateTarget(Number(e.target.value))}
-                  className="w-full rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
-                >
-                  <option value="" disabled>
-                    选择对象…
-                  </option>
-                  {activeSeats
-                    .filter((s) => s.index !== mySeat)
-                    .map((s) => (
-                      <option key={s.index} value={s.index}>
-                        {s.characterName}
-                      </option>
-                    ))}
-                </select>
-                <div className="flex gap-2">
-                  <input
-                    value={privateText}
-                    onChange={(e) => setPrivateText(e.target.value)}
-                    placeholder="悄悄话…"
-                    className="min-w-0 flex-1 rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
-                  />
-                  <button
-                    onClick={() => {
-                      if (privateTarget !== null && privateText.trim()) {
-                        void send({ type: "private_chat", toSeat: privateTarget, text: privateText });
-                        setPrivateText("");
-                      }
-                    }}
-                    disabled={privateTarget === null || !privateText.trim()}
-                    className="rounded-lg bg-secret-400/20 px-3 text-sm text-secret-400 hover:bg-secret-400/30 disabled:opacity-40"
-                  >
-                    发送
-                  </button>
-                </div>
+            {phase === "DISCUSSION" && (
+              <div className="space-y-2">
+                {summary.pendingAnswer?.toSeat === mySeat ? (
+                  <p className="text-xs text-danger-400">
+                    {seatName(summary.pendingAnswer.fromSeat)} 问你：「{summary.pendingAnswer.question}」请在输入框当众回答，或拒绝作答。
+                  </p>
+                ) : summary.pendingAnswer?.fromSeat === mySeat ? (
+                  <p className="text-xs text-paper-400">等待 {seatName(summary.pendingAnswer.toSeat)} 回答你的提问…</p>
+                ) : summary.turnSeat === mySeat ? (
+                  <>
+                    <p className="text-xs text-paper-400">轮到你发言。可当众陈述，也可提问（剩余 {summary.questionsLeft} 次）。结束后请点「结束发言」。</p>
+                    {summary.questionsLeft > 0 && (
+                      <div className="space-y-2 border-t border-gold-400/20 pt-3">
+                        <p className="text-xs text-gold-400">当众提问（全场讨论共 {summary.questionsLeft} 次）：</p>
+                        <select
+                          value={askTarget ?? ""}
+                          onChange={(e) => setAskTarget(Number(e.target.value))}
+                          className="w-full rounded-lg border border-gold-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-gold-400"
+                        >
+                          <option value="" disabled>
+                            选择提问对象…
+                          </option>
+                          {activeSeats
+                            .filter((s) => s.index !== mySeat)
+                            .map((s) => (
+                              <option key={s.index} value={s.index}>
+                                {s.characterName}
+                              </option>
+                            ))}
+                        </select>
+                        <div className="flex gap-2">
+                          <input
+                            value={askText}
+                            onChange={(e) => setAskText(e.target.value)}
+                            placeholder="一个具体问题…"
+                            className="min-w-0 flex-1 rounded-lg border border-gold-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-gold-400"
+                          />
+                          <button
+                            onClick={() => {
+                              if (askTarget !== null && askText.trim()) {
+                                void send({ type: "ask", toSeat: askTarget, text: askText });
+                                setAskText("");
+                              }
+                            }}
+                            disabled={sending || askTarget === null || !askText.trim()}
+                            className="rounded-lg bg-gold-500 px-3 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
+                          >
+                            提问
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-xs text-paper-400">
+                    等待 {summary.turnSeat !== null ? seatName(summary.turnSeat) : "下一位"} 发言。本局讨论不开放私聊，也不能插话。
+                  </p>
+                )}
               </div>
             )}
-            {(phase === "SELF_INTRO" || phase === "DISCUSSION") && (
+            {phase === "SELF_INTRO" && summary.turnSeat === mySeat && (
               <button
                 onClick={() => void send({ type: "skip" })}
                 disabled={sending}
                 className="w-full rounded-lg border border-paper-500/30 px-3 py-2 text-sm text-paper-300 hover:border-gold-400/50 hover:text-gold-400 disabled:opacity-40"
               >
                 跳过本轮发言
+              </button>
+            )}
+            {phase === "DISCUSSION" && summary.pendingAnswer?.toSeat === mySeat && (
+              <button
+                onClick={() => void send({ type: "skip" })}
+                disabled={sending}
+                className="w-full rounded-lg border border-danger-400/30 px-3 py-2 text-sm text-danger-400 hover:border-danger-400/60 disabled:opacity-40"
+              >
+                拒绝回答
+              </button>
+            )}
+            {phase === "DISCUSSION" && summary.turnSeat === mySeat && !summary.pendingAnswer && (
+              <button
+                onClick={() => void send({ type: "skip" })}
+                disabled={sending}
+                className="w-full rounded-lg border border-paper-500/30 px-3 py-2 text-sm text-paper-300 hover:border-gold-400/50 hover:text-gold-400 disabled:opacity-40"
+              >
+                结束发言
               </button>
             )}
           </div>
@@ -637,25 +701,26 @@ export default function PlayPage() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && input.trim()) {
+                  if (e.key === "Enter" && input.trim() && canSpeak) {
                     void send({ type: "speak", text: input });
                     setInput("");
                   }
                 }}
-                placeholder={phase === "SELF_INTRO" ? "以角色的身份介绍自己…" : "以角色的身份发言…（随时可以插话）"}
-                className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2.5 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400"
+                disabled={!canSpeak || sending}
+                placeholder={speakPlaceholder}
+                className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2.5 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400 disabled:opacity-50"
               />
               <button
                 onClick={() => {
-                  if (input.trim()) {
+                  if (input.trim() && canSpeak) {
                     void send({ type: "speak", text: input });
                     setInput("");
                   }
                 }}
-                disabled={!input.trim()}
+                disabled={!canSpeak || sending || !input.trim()}
                 className="rounded-lg bg-gold-500 px-5 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
               >
-                发言
+                {answering ? "回答" : "发言"}
               </button>
             </div>
           </div>

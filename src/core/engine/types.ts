@@ -47,8 +47,12 @@ export interface GameState {
   searchDealtRound: number;
   /** 投票结果 */
   voteResult: { counts: Record<string, number>; culpritSeat: number; caught: boolean } | null;
-  /** 讨论阶段本轮已发生的插话次数 */
+  /** @deprecated 插话已取消，仅兼容旧存档 */
   interjections: number;
+  /** 讨论阶段每人剩余提问次数 */
+  questionsLeft: Record<string, number>;
+  /** 等待被提问者当众回答 */
+  pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
 }
 
 export interface EngineEvent {

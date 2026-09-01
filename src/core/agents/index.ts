@@ -102,6 +102,35 @@ export const agent = {
     return false;
   },
 
+  /** 讨论阶段：决定是否当众提问。无必要则返回 null。 */
+  async playerConsiderQuestion(
+    ctx: AgentCtx,
+    seatIndex: number,
+    candidates: number[],
+  ): Promise<{ toSeat: number; question: string } | null> {
+    if (!candidates.length) return null;
+    const roster = candidates
+      .map((i) => {
+        const seat = ctx.state.seats[i];
+        const name = ctx.script.characters.find((c) => c.id === seat?.characterId)?.name ?? seat?.playerName ?? `座位${i + 1}`;
+        return `${i + 1}:${name}`;
+      })
+      .join("、");
+    const requireJson = `现在轮到你发言。若有一个具体疑点需要对方当众回答，可提问一次；没有必要就不要问。请只输出 JSON：{"ask":false} 或 {"ask":true,"target":座位号,"question":"一个具体问题"}。可问：${roster}。不要一次抛多个问题，也不要审问式连问。`;
+    const res = await chat({
+      purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
+      gameId: ctx.gameId,
+      messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }),
+      temperature: 0.5,
+    });
+    const parsed = extractJson<{ ask?: boolean; target?: number; question?: string }>(res.text);
+    if (!parsed?.ask || parsed.target === undefined) return null;
+    const toSeat = parsed.target - 1;
+    const question = (parsed.question ?? "").trim();
+    if (!candidates.includes(toSeat) || !question) return null;
+    return { toSeat, question: question.slice(0, 200) };
+  },
+
   /** 玩家投票 */
   async playerVote(ctx: AgentCtx, seatIndex: number, candidates: number[]): Promise<{ target: number; reason: string }> {
     const character = characterOf(ctx.script, ctx.state, seatIndex);

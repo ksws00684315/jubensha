@@ -51,7 +51,7 @@ function phaseInstruction(_script: ScriptDocV2, state: GameState, _seatIndex: nu
     case "SELF_INTRO":
       return `现在是【自我介绍】环节。请以第一人称做一段 80-150 字的自我介绍：你是谁、与死者的关系、今晚大致做了什么（按你的角色卡时间线，注意保护你的秘密）。不要剧透游戏机制。`;
     case "DISCUSSION":
-      return `现在是【第 ${state.round} 轮圆桌讨论】。${hint ? `主持人提示：${hint}` : "请继续讨论：可以陈述你的时间线、质疑别人的说法、或说出你的推理。"}`;
+      return `现在是【第 ${state.round} 轮圆桌讨论】，按座位轮流发言，禁止插话、禁止私聊。轮到你时做一段陈述；有人向你提问时请正面回答。不要连珠炮质问，不要替别人作答，也不要打断别人的回合。${hint ? `主持人提示：${hint}` : ""}`;
     case "SEARCH":
       return `现在是【第 ${state.round} 轮搜证】。`;
     case "VOTE":

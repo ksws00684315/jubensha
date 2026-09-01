@@ -79,5 +79,8 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     scriptV2: { background: v2.background, characters: v2.characters, locations: v2.locations },
     myCluesV2: doc.clues.filter((clue) => visibleClues.some((visible) => visible.id === clue.id)),
     voteResult: mySeat !== null ? runtimeState.voteResult ?? null : null,
+    turnSeat: runtimeState.turnSeat ?? null,
+    questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
+    pendingAnswer: runtimeState.pendingAnswer ?? null,
   });
 }

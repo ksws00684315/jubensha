@@ -28,7 +28,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ code: string }
   return NextResponse.json({
     id: room.id,
     code: room.code,
-    status: room.status,
+    status: room.game?.status === "ended" || room.game?.phase === "ENDED" ? "ended" : room.status,
     gameId: room.game?.id ?? null,
     gamePhase: room.game?.phase ?? null,
     humanDm: room.humanDm,

@@ -12,6 +12,12 @@ import {
   type RoomView,
 } from "@/lib/client";
 
+export function isContinuableSession(status: string, gamePhase: string | null): boolean {
+  if (status === "ended" || status === "aborted") return false;
+  if (gamePhase === "ENDED") return false;
+  return status === "lobby" || status === "playing";
+}
+
 interface ContinueItem {
   roomId: string;
   code: string;
@@ -42,7 +48,11 @@ export default function ContinueGames() {
         try {
           const room = await api<RoomView>(`/api/rooms/${code}`);
           const mine = sessions.find((s) => s.roomId === room.id || s.code === room.code);
-          if (room.status !== "lobby" && room.status !== "playing") return null;
+          if (!isContinuableSession(room.status, room.gamePhase ?? null)) {
+            removeIdentity(room.id);
+            removeHostToken(room.code);
+            return null;
+          }
           const seatLabel =
             mine?.seatIndex === "dm" ? "DM" : typeof mine?.seatIndex === "number" ? `座位 ${mine.seatIndex + 1}` : "房主";
           return {

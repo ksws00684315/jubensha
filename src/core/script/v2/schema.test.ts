@@ -6,6 +6,7 @@ import { parseScriptDoc } from "../schema";
 import { migrateV1ToV2 } from "./migrate-v1";
 import { parseScriptDocV2, scriptDocV2Schema } from "./schema";
 import { validateScriptV2 } from "./validate";
+import { narrativeToText } from "../compat";
 
 const examplePath = path.join(process.cwd(), "seeds/examples/script-v2.example.json");
 
@@ -59,5 +60,16 @@ describe("现有种子都是可开局的 V2", () => {
       expect(doc.version, file).toBe(2);
       expect(validateScriptV2(doc).filter((issue) => issue.level === "error"), file).toEqual([]);
     }
+  });
+
+  it("天池雪会关键物证卡不直接点名真凶", () => {
+    const doc = parseScriptDocV2(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/generated/06p-tianchixuehui.json"), "utf8")));
+    for (const id of ["laoshucang", "banshou", "lanangan", "xieyin", "jianduanxiu"]) {
+      const clue = doc.clues.find((item) => item.id === id);
+      expect(clue, id).toBeTruthy();
+      expect(narrativeToText(clue!.content), id).not.toContain("方屿");
+    }
+    expect(doc.flow.searchRounds).toBe(3);
+    expect(doc.flow.allowPrivateChat).toBe(false);
   });
 });
