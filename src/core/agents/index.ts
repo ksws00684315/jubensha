@@ -35,23 +35,23 @@ export const agent = {
   async dmModerate(ctx: AgentCtx, humanSeat: number): Promise<{ respond: number[]; hint: string }> {
     const seats = ctx.state.seats.filter((s) => s.kind === "ai" && s.index !== humanSeat);
     if (!seats.length) return { respond: [], hint: "" };
-    const requireJson = `一位玩家刚发言。请决定哪些 AI 玩家接话。请只输出 JSON：{"respond":[座位号...],"hint":"给接话者的提示(20字内)"}。respond 从这些座位里挑 0-2 个最适合接话的（被点名/被质疑/最相关）：${seats
+    const requireJson = `一位玩家刚发言。请只根据公开记录决定哪些 AI 接话。请只输出 JSON：{"respond":[座位号...]}。respond 从这些座位里挑 0-2 个（被点名/被质疑/刚被问到的人）：${seats
       .map((s) => `${s.index + 1}`)
-      .join("、")}。没有合适人选就输出空数组。`;
+      .join("、")}。不要因为「谁更像真凶」来挑人。没有合适人选就输出空数组。`;
     const res = await chat({
       purpose: "dm",
       gameId: ctx.gameId,
       messages: buildDmContext(ctx.script, ctx.state, ctx.events, {
-        task: "评估讨论局面并决定 AI 接话人选。",
+        task: "评估公开讨论并决定 AI 接话人选。不要暗示谁是真凶。",
         requireJson,
       }),
       temperature: 0.3,
     });
-    const parsed = extractJson<{ respond?: number[]; hint?: string }>(res.text);
+    const parsed = extractJson<{ respond?: number[] }>(res.text);
     const valid = new Set(seats.map((s) => s.index));
     return {
       respond: (parsed?.respond ?? []).map((n) => n - 1).filter((n) => valid.has(n)).slice(0, 2),
-      hint: parsed?.hint ?? "",
+      hint: "",
     };
   },
 
@@ -74,7 +74,11 @@ export const agent = {
 
   /** 玩家选择搜证地点 */
   async playerChooseLocation(ctx: AgentCtx, seatIndex: number, locations: string[]): Promise<string> {
-    const requireJson = `请只输出 JSON：{"location":"你选择的地点"}。候选地点：${locations.join("、")}。结合你的目标与已知情报选择（若某地可能藏着对你不利的证据，凶手应倾向先去拿走它）。`;
+    const character = characterOf(ctx.script, ctx.state, seatIndex);
+    const asCulprit = character?.privateCard.isCulprit
+      ? "若某地可能藏着对你不利的证据，优先去拿走它。"
+      : "按你自己的目标和已知情报选择，不必像侦探一样搜遍所有关键地点。";
+    const requireJson = `请只输出 JSON：{"location":"你选择的地点"}。候选地点：${locations.join("、")}。${asCulprit}`;
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     for (let i = 0; i < 3; i++) {
       const res = await chat({ purpose, gameId: ctx.gameId, messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }), temperature: 0.6 });
@@ -100,7 +104,11 @@ export const agent = {
 
   /** 玩家投票 */
   async playerVote(ctx: AgentCtx, seatIndex: number, candidates: number[]): Promise<{ target: number; reason: string }> {
-    const requireJson = `请只输出 JSON：{"target":座位号,"reason":"一句话理由"}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。综合全场发言与线索，投给你认为最可能是真凶的人。`;
+    const character = characterOf(ctx.script, ctx.state, seatIndex);
+    const asCulprit = character?.privateCard.isCulprit;
+    const requireJson = asCulprit
+      ? `请只输出 JSON：{"target":座位号,"reason":"一句话理由"}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。把票投给一个能让你脱身的人，理由必须听起来像基于公开讨论。`
+      : `请只输出 JSON：{"target":座位号,"reason":"一句话理由"}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。你不是全知侦探：只根据公开发言和已公开线索投票，不要把只有你知道的私密情报当成全场共识。证据并不充分时，投疑点较大的人即可，不要表现得像已经知道答案。`;
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     for (let i = 0; i < 3; i++) {
       const res = await chat({ purpose, gameId: ctx.gameId, messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }), temperature: 0.4 });

@@ -42,11 +42,13 @@ describe("信息防火墙", () => {
     }
   });
 
-  it("凶手玩家的上下文包含隐瞒策略，好人上下文包含诚实策略", () => {
+  it("凶手玩家的上下文包含隐瞒策略，好人上下文以自保为主而不是全能侦探", () => {
     const culpritMsgs = buildPlayerContext(doc, state, 0, events, {}).map((m) => m.content).join("\n");
     expect(culpritMsgs).toContain("你就是真凶");
     const goodMsgs = buildPlayerContext(doc, state, 2, events, {}).map((m) => m.content).join("\n");
     expect(goodMsgs).toContain("你是无辜者之一");
+    expect(goodMsgs).toContain("第一目标是保护自己的秘密");
+    expect(goodMsgs).not.toContain("你的目标是找出真凶并让大家相信你");
   });
 
   it("玩家上下文包含自己的角色卡但不含别人的", () => {
@@ -109,13 +111,27 @@ describe("信息防火墙", () => {
     const c = buildDmContext(doc, s3, [ev], { task: "揭晓真相" });
     expect(a[0].content).toBe(b[0].content);
     expect(b[0].content).toBe(c[0].content);
-    expect(a[0].content).toContain(methodText(doc).slice(0, 8));
     expect(a[0].content).not.toContain("开场旁白");
     expect(b[1].content).toContain("转入搜证");
     expect(c[1].content).toContain("揭晓真相");
     const logB = b[1].content.split("\n\n【当前局面】")[0];
     const logC = c[1].content.split("\n\n【当前局面】")[0];
     expect(logC.startsWith(logB.trimEnd())).toBe(true);
+  });
+
+  it("复盘前 DM 上下文不含真相和角色私卡，复盘时才在尾部给出", () => {
+    const s1 = makeState();
+    const before = buildDmContext(doc, s1, [], { task: "开场旁白" }).map((m) => m.content).join("\n");
+    expect(before).not.toContain("真凶：");
+    expect(before).not.toContain(methodText(doc).slice(0, 12));
+    expect(before).not.toContain("（真凶）");
+    const suwan = doc.characters.find((c) => c.id === "suwan")!;
+    expect(before).not.toContain(narrativeToText(suwan.privateCard.secrets[0].content).slice(0, 12));
+    const revealState = { ...s1, phase: "REVEAL" as const };
+    const after = buildDmContext(doc, revealState, [], { task: "揭晓真相" }).map((m) => m.content).join("\n");
+    expect(after).toContain("真凶：");
+    expect(after).toContain(methodText(doc).slice(0, 8));
+    expect(after.split("【可以宣读的真相】")[0]).not.toContain(methodText(doc).slice(0, 12));
   });
 
   it("玩家现场记录只追加，不改写已有前缀", () => {

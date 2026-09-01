@@ -5,7 +5,6 @@ import {
   clueText,
   fullTimelineText,
   keyEvidenceNames,
-  locationNameOf,
   locationNames,
   methodText,
   narrativeToText,
@@ -94,10 +93,11 @@ export function buildPlayerContext(
 - 当有线索指向你时，用职业/性格上说得通的解释带过，并自然地把讨论引向其他人（有动机、有秘密的人）。
 - 不要撒连自己都记不住的谎；少说细节，多反问。
 - 你的一切发言都在伪造的"好人"身份下进行，语气要符合你的人设。`
-    : `【你的处境】你是无辜者之一。你的目标是找出真凶并让大家相信你。
-- 基于公开信息与你自己掌握的线索推理，敢于质疑别人的时间线漏洞。
-- 保护好你自己的秘密（每个角色都有不可告人之事），被逼问时可以回避或部分承认，但不要撒与案件时间线有关的硬谎。
-- 该亮出对你有利的线索时果断亮出。`;
+    : `【你的处境】你是无辜者之一，同时也是局中人：你有自己的秘密和把柄。
+- 第一目标是保护自己的秘密、别把自己洗成最大嫌疑人；找出真凶是次要的。
+- 发言只使用已经公开的信息和你愿意拿出来的那部分私密情报。不要把只有你看见的细节讲成全场共识，更不要做完整的案情复盘。
+- 信息不足时可以同时怀疑好几个人，不要表现得胸有成竹。
+- 被逼问自己的秘密时可以回避或部分承认，但不要撒与自己时间线硬冲突的谎。`;
 
   const system = `你正在参加一场文字剧本杀游戏《${script.meta.title}》，扮演其中一名角色。全程以第一人称、在戏内说话。
 
@@ -143,55 +143,45 @@ ${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
   return cacheFriendlyMessages(system, growingLog, tail);
 }
 
-/** DM agent：system 放完整剧本（整局不变）；现场记录只追加；任务/线索状态放尾部。 */
+function isRevealPhase(state: GameState) {
+  return state.phase === "REVEAL" || state.phase === "ENDED";
+}
+
+function truthBrief(script: ScriptDocV2): string {
+  const culprit = script.characters.find((c) => c.id === script.truth.culpritId);
+  return `【可以宣读的真相】
+真凶：${culprit?.name ?? script.truth.culpritId}
+手法：${methodText(script)}
+完整时间线：${fullTimelineText(script)}
+关键证据：${keyEvidenceNames(script).join("、")}
+复盘底稿：${revealText(script)}`;
+}
+
+/** DM：system 只放公开信息（整局不变，供前缀缓存）；真相仅在复盘任务的尾部出现。 */
 export function buildDmContext(
   script: ScriptDocV2,
   state: GameState,
   events: EngineEvent[],
   opts: { task: string; requireJson?: string }
 ): ChatMessage[] {
-  const seatLines = state.seats
-    .filter((s) => s.kind !== "empty")
-    .map((s) => {
-      const c = script.characters.find((ch) => ch.id === s.characterId);
-      const card = c
-        ? `秘密：${c.privateCard.secrets.map((secret) => narrativeToText(secret.content)).join("；")}；目标：${c.privateCard.objectives.map((objective) => narrativeToText(objective.content)).join("；")}；时间线：${timelineToText(c.privateCard.timeline)}${c.privateCard.isCulprit ? "（真凶）" : ""}`
-        : "";
-      return `· 座位${s.index + 1} ${s.kind === "ai" ? "[AI]" : "[真人]"} ${s.playerName} 扮演 ${c?.name ?? "?"}。${card}`;
-    })
-    .join("\n");
-
-  const clueCatalog = script.clues
-    .map((c) => `· [${locationNameOf(script, c.locationId)}] ${c.name}（${c.policy}）：${clueText(c)}`)
-    .join("\n");
-
-  const culprit = script.characters.find((c) => c.id === script.truth.culpritId);
-
-  const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你的话要保持"主持人"身份：不引导投票倾向。复盘前旁白严禁出现真凶姓名、作案手法细节、未公开线索原文。
+  const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你只根据公开记录控场和渲染氛围。
+复盘前严禁：说出或暗示谁是真凶、点名该怀疑谁、引导投票、复述未公开线索原文、泄露任何角色的秘密。不要给玩家「正确答案」。
 
 【公开背景】
 ${narrativeToText(script.background)}
 
-【仅你可见的真相，旁白中禁止说出（复盘任务除外）】
-真凶：${culprit?.name ?? script.truth.culpritId}
-手法：${methodText(script)}
-完整时间线：${fullTimelineText(script)}
-关键证据：${keyEvidenceNames(script).join("、")}
-复盘底稿：${revealText(script)}
+【在场人物（仅公开身份）】
+${publicRoster(script, state)}
 
-【各座位与角色卡】
-${seatLines}
+【可搜证地点】${locationNames(script).join("、")}
 
-【全部线索原文】
-${clueCatalog}
-
-【发言要求】中文，符合主持人身份的旁白口吻，100-300 字（除非另有说明）。`;
+【发言要求】中文，主持人旁白口吻，100-300 字（除非另有说明）。`;
 
   const clueStatus = script.clues
     .map((c) => {
       const st = state.clueStates[c.id];
       if (st?.isPublic) return `· ${c.name}：已公开`;
-      if (st?.discoveredBy != null) return `· ${c.name}：座位${st.discoveredBy + 1}持有、未公开`;
+      if (st?.discoveredBy != null) return `· ${c.name}：已被发现、未公开`;
       return `· ${c.name}：未发现`;
     })
     .join("\n");
@@ -200,9 +190,10 @@ ${clueCatalog}
 ${renderEventLog(events, null)}`;
 
   const tail = `【当前局面】${state.phase} 第${state.round}轮${state.turnSeat != null ? ` 轮到座位${state.turnSeat + 1}` : ""}
-【线索状态】
+【线索公开状态】
 ${clueStatus}
 
+${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
 【你的任务】${opts.task}
 ${opts.requireJson ? opts.requireJson : ""}`;
 
