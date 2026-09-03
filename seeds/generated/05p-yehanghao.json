@@ -1,0 +1,1256 @@
+{
+  "version": 2,
+  "meta": {
+    "title": "夜航号",
+    "minPlayers": 5,
+    "maxPlayers": 5,
+    "durationMin": 150,
+    "difficulty": "进阶",
+    "tags": ["现代", "游艇", "本格", "密室"],
+    "intro": "远洋贸易集团董事长沈万钧在豪华游艇上举办私密晚宴。次日清晨，他被发现死在底舱保险库内。船上只有五个人，凶手就在其中。"
+  },
+  "background": [
+    {
+      "type": "paragraph",
+      "text": "远洋贸易集团董事长沈万钧在自己的豪华游艇'夜航号'上举办了一场私密晚宴，邀请了四位客人。游艇在离岸二十海里处抛锚过夜。次日清晨六点，家庭医生方敏在底舱保险库内发现了沈万钧的尸体——后脑遭钝器击打，当场死亡。保险库的密码锁记录显示，最后一次正确开启是前一晚22:17。船上没有救生艇可以单独离开，海警需要至少两小时才能赶到。五个人，一个凶手，无处可逃。"
+    },
+    {
+      "type": "list",
+      "style": "unordered",
+      "items": [
+        "死因：后脑遭钝器击打，凶器为书房的铜镇纸",
+        "案发地点：底舱保险库，密码锁最后一次开启22:17",
+        "船上共五人：合伙人周铭、前员工许政、秘书李薇、女儿陈捷、医生方敏"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "id": "study",
+      "name": "书房",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "沈万钧的私人书房，位于主甲板。书桌上摆着文件和一枚青铜镇纸，墙上挂着一幅旧照片。"
+        }
+      ]
+    },
+    {
+      "id": "vault",
+      "name": "保险库",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "底舱的保险库，需要六位密码才能开启。库内有保险柜、监控屏幕和一张工作台。沈万钧的尸体就在工作台旁。"
+        }
+      ]
+    },
+    {
+      "id": "cargo",
+      "name": "货舱",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "底舱另一端的货舱，堆放着行李箱和货物。灯光昏暗，有股柴油味。"
+        }
+      ]
+    },
+    {
+      "id": "cabin_chen",
+      "name": "陈捷客舱",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "位于下层甲板的客舱，床铺整洁。床头柜上有一个上了锁的小箱子。"
+        }
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "zhouming",
+      "name": "周铭",
+      "gender": "男",
+      "age": 52,
+      "publicProfile": {
+        "identity": "远洋贸易集团副董事长",
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈万钧的多年合伙人，持有集团30%股份。近年来两人在公司发展方向上分歧越来越大，最近一次董事会上，沈万钧提出稀释周铭的股份，两人当场翻脸。"
+          }
+        ],
+        "relationships": [
+          { "characterId": "liwei", "label": "下属" }
+        ]
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你和沈万钧二十年前一起创办远洋贸易。五年前你儿子查出白血病，你卖了房子、借了高利贷，医药费像个无底洞。你开始从公司账上借钱——不是贪污，是借。沈万钧发现了，没有报警，但条件是：你的股份逐步转让给他。你恨他趁火打劫，但你更需要钱。上周你听说他准备在新遗嘱里彻底把你踢出去。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_zhou_1",
+            "title": "挪用公款",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从公司账上挪了三百万给儿子治病。沈万钧知道这件事，这是他要挟你的把柄。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_zhou_1",
+            "title": "保住股份",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "阻止沈万钧修改遗嘱稀释你的股份。如果他死了，现有遗嘱对你最有利。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "zhou_e1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:30" },
+              "end": { "dayOffset": 0, "time": "21:50" }
+            },
+            "title": "书房谈话",
+            "locationId": "study",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你跟沈万钧在书房谈股权的事。他态度很强硬，说新遗嘱已经写好了。你拍了桌子，铜镇纸被震落在地——你弯腰捡起来放回桌上。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": [],
+            "truthEventId": "truth_e1"
+          },
+          {
+            "id": "zhou_e2",
+            "time": {
+              "display": "21:50–22:00",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:50" },
+              "end": { "dayOffset": 0, "time": "22:00" }
+            },
+            "title": "离开书房",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你气冲冲离开书房，去了前甲板的吧台，倒了一杯威士忌。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "zhou_e3",
+            "time": {
+              "display": "22:00–22:30",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "22:00" },
+              "end": { "dayOffset": 0, "time": "22:30" }
+            },
+            "title": "甲板喝酒",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在前甲板独自喝酒。海风很大，你没注意有没有人经过。大约22:20，你看到李薇从后甲板走过来。"
+              }
+            ],
+            "characterIds": ["liwei"],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_zhou_1",
+            "title": "书房争吵",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:50你离开书房时，沈万钧还活着——他在打电话，语气很急。"
+              }
+            ],
+            "source": "witnessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_zhou_2",
+            "title": "李薇的行踪",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:20左右你看到李薇从后甲板方向走来，神色有些慌张。"
+              }
+            ],
+            "source": "witnessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": ["强势", "固执"],
+          "speechStyle": "说话直来直去，喜欢用反问句",
+          "habits": ["喝酒时喜欢摇杯子"],
+          "taboos": ["不愿提儿子的病"]
+        },
+        "isCulprit": false
+      }
+    },
+    {
+      "id": "xuzheng",
+      "name": "许政",
+      "gender": "男",
+      "age": 35,
+      "publicProfile": {
+        "identity": "远洋贸易前运营总监",
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "三个月前被沈万钧开除。起因是一笔海外订单出了问题，沈万钧认为是许政的失职，许政认为是沈万钧的决策失误。被开除后，许政多次给沈万钧发短信要求赔偿，均被拒绝。这次晚宴是沈万钧主动邀请的——说是'好聚好散'。"
+          }
+        ],
+        "relationships": [
+          { "characterId": "liwei", "label": "前同事" }
+        ]
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你在远洋贸易干了八年，从基层做到运营总监。三个月前那笔海外订单——你手里有邮件记录，证明最终决策是沈万钧做的。但他不认。你被开除后，试过仲裁，输了。你发过几条威胁短信，但你真正想做的不是杀人——你想拿回属于你的东西。沈万钧收藏了一枚清代古玉佩，值两百万，那是你该得的赔偿。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_xu_1",
+            "title": "偷玉佩",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你打算趁这次晚宴，溜进底舱货舱偷走沈万钧收藏的古玉佩。你已经摸清了游艇的布局。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_xu_1",
+            "title": "拿到玉佩",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "趁晚宴期间溜进货舱，拿走古玉佩。不要被发现。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "xu_e1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:30" },
+              "end": { "dayOffset": 0, "time": "21:50" }
+            },
+            "title": "离开餐厅",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴结束后你离开餐厅，在走廊遇到方医生。你往船尾方向走。"
+              }
+            ],
+            "characterIds": ["fangmin"],
+            "clueIds": []
+          },
+          {
+            "id": "xu_e2",
+            "time": {
+              "display": "21:50–22:00",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:50" },
+              "end": { "dayOffset": 0, "time": "22:00" }
+            },
+            "title": "前往底舱",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你从船尾楼梯下到底舱。经过保险库门口时，门是关着的。你继续往货舱走。"
+              }
+            ],
+            "locationId": "vault",
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "xu_e3",
+            "time": {
+              "display": "22:00–22:20",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "22:00" },
+              "end": { "dayOffset": 0, "time": "22:20" }
+            },
+            "title": "货舱找玉佩",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在沈万钧的行李箱夹层里找到了古玉佩。你把它藏在自己的外套内袋里。"
+              }
+            ],
+            "locationId": "cargo",
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_xu_1",
+            "title": "保险库门",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:55你经过保险库门口时，门是关着的。你没有听到里面有声音。"
+              }
+            ],
+            "source": "witnessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_xu_2",
+            "title": "走廊人影",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:00你刚进货舱时，听到走廊有脚步声往保险库方向去。"
+              }
+            ],
+            "source": "heard",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": ["精明", "记仇"],
+          "speechStyle": "语速快，喜欢用数据和事实说话",
+          "habits": ["紧张时摸下巴"],
+          "taboos": ["不愿承认被开除的事实"]
+        },
+        "isCulprit": false
+      }
+    },
+    {
+      "id": "liwei",
+      "name": "李薇",
+      "gender": "女",
+      "age": 29,
+      "publicProfile": {
+        "identity": "沈万钧的私人秘书",
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "跟了沈万钧三年，负责他的日程安排和私人事务。沈万钧对她很信任，保险库密码也告诉了她。最近沈万钧开始疏远她，据说是因为发现了什么。"
+          }
+        ],
+        "relationships": [
+          { "characterId": "zhouming", "label": "副董事长" }
+        ]
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你大学毕业后就跟着沈万钧做秘书。他对你很好——好到让你以为他把你当女儿看。直到你发现，他之所以信任你，是因为他在利用你监视周铭。你无意中看到了沈万钧的笔记：'李薇——周铭身边的眼线'。你心寒了。你开始偷偷帮周铭——把沈万钧的动向告诉他。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_li_1",
+            "title": "双面间谍",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你一边给沈万钧做秘书，一边给周铭通风报信。沈万钧要稀释周铭股份的事，就是你告诉周铭的。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_li_1",
+            "title": "保护周铭",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "确保周铭不会因为沈万钧的遗嘱修改而失去一切。如果沈万钧死了，现有遗嘱对周铭有利。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "li_e1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:30" },
+              "end": { "dayOffset": 0, "time": "21:50" }
+            },
+            "title": "甲板透气",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴后你去后甲板透气。方医生也在甲板上，你们聊了几句。"
+              }
+            ],
+            "characterIds": ["fangmin"],
+            "clueIds": []
+          },
+          {
+            "id": "li_e2",
+            "time": {
+              "display": "21:50–22:10",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:50" },
+              "end": { "dayOffset": 0, "time": "22:10" }
+            },
+            "title": "甲板散步",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在后甲板散步，大约22:00看到陈捷从甲板楼梯往下走。22:10你决定回客舱。"
+              }
+            ],
+            "characterIds": ["chenjie"],
+            "clueIds": []
+          },
+          {
+            "id": "li_e3",
+            "time": {
+              "display": "22:10–22:30",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "22:10" },
+              "end": { "dayOffset": 0, "time": "22:30" }
+            },
+            "title": "回客舱发短信",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回到客舱，给周铭发了一条短信：'遗嘱可能要改，小心。'然后你一直在客舱里。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_li_1",
+            "title": "陈捷下楼",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:00你看到陈捷从甲板楼梯往下层走。她说她回客舱休息。"
+              }
+            ],
+            "source": "witnessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_li_2",
+            "title": "方医生的话",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "21:40在甲板上，方医生说了一句：'沈总的身体……唉，能撑一天是一天。'你没追问。"
+              }
+            ],
+            "source": "heard",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": ["细心", "隐忍"],
+          "speechStyle": "说话温和，很少直接表态",
+          "habits": ["习惯性整理衣角"],
+          "taboos": ["不愿承认自己在帮周铭"]
+        },
+        "isCulprit": false
+      }
+    },
+    {
+      "id": "chenjie",
+      "name": "陈捷",
+      "gender": "女",
+      "age": 32,
+      "publicProfile": {
+        "identity": "沈万钧的女儿",
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "沈万钧与前妻所生的女儿，幼年随母亲离开，近年才与父亲相认。沈万钧对她很好，带她参加各种社交场合。这次晚宴是她第一次上游艇。"
+          }
+        ],
+        "relationships": [
+          { "characterId": "fangmin", "label": "父亲的医生" }
+        ]
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你六岁那年，妈妈带你离开了'家'。她说爸爸去了很远的地方。十八岁那年，你在阁楼找到了一个铁盒子，里面是你亲生父亲陈正邦的日记。最后一页写着：'沈万钧吞了我的公司，我走投无路了。小捷，爸爸对不起你。'第二天，陈正邦跳楼自杀。你查了十年，终于确认：远洋贸易的前身就是你父亲的公司。沈万钧用一份伪造的合同吞并了它。你改了姓，整了容，花了三年接近沈万钧，成了他的'女儿'。一周前，沈万钧拿着一份DNA报告看着你，说：'你不是我女儿。'你知道，你的机会不多了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_chen_1",
+            "title": "真实身份",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你不是沈万钧的亲生女儿。你是陈正邦的女儿——被沈万钧逼死的那个人的女儿。你改姓、整容、伪造身份，花了三年成为他的'女儿'。"
+              }
+            ],
+            "disclosure": "never"
+          },
+          {
+            "id": "secret_chen_2",
+            "title": "DNA报告",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "沈万钧一周前拿到了DNA报告，知道你不是亲生的。他当时说要'重新安排一切'。"
+              }
+            ],
+            "disclosure": "conditional",
+            "condition": "如果有人提到DNA报告或沈万钧发现了什么"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_chen_1",
+            "title": "隐藏身份",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "不要让任何人知道你是陈正邦的女儿。如果这个秘密暴露，你的杀人动机就暴露了。"
+              }
+            ],
+            "priority": "primary"
+          },
+          {
+            "id": "obj_chen_2",
+            "title": "嫁祸许政",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "许政有威胁短信、去了底舱、有前科——他是最好的替罪羊。把嫌疑引向他。"
+              }
+            ],
+            "priority": "secondary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "chen_e1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:30" },
+              "end": { "dayOffset": 0, "time": "21:50" }
+            },
+            "title": "甲板看海",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴后你去了前甲板看海。周铭在吧台喝酒，你们没有说话。"
+              }
+            ],
+            "characterIds": ["zhouming"],
+            "clueIds": []
+          },
+          {
+            "id": "chen_e2",
+            "time": {
+              "display": "21:50–22:00",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:50" },
+              "end": { "dayOffset": 0, "time": "22:00" }
+            },
+            "title": "从甲板下来",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "22:00你从甲板楼梯往下层走。李薇在甲板上看到你。你说你回客舱休息。"
+              }
+            ],
+            "characterIds": ["liwei"],
+            "clueIds": []
+          },
+          {
+            "id": "chen_e3",
+            "time": {
+              "display": "22:00–22:20",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "22:00" },
+              "end": { "dayOffset": 0, "time": "22:20" }
+            },
+            "title": "前往保险库",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你没有回客舱。你去了保险库——你早就偷看到了密码。你用提前准备好的短信把沈万钧约到保险库。他来了。你用书房的铜镇纸击打他的后脑，一击致死。你擦掉了自己的指纹，把镇纸放回原处。"
+              }
+            ],
+            "locationId": "vault",
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_chen_1",
+            "title": "保险库密码",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你偷看过李薇记录的密码备忘，知道保险库密码是196708。"
+              }
+            ],
+            "source": "possessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_chen_2",
+            "title": "许政的威胁",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你听沈万钧提起过许政的威胁短信。如果需要嫁祸，这是最好的素材。"
+              }
+            ],
+            "source": "heard",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": ["冷静", "隐忍"],
+          "speechStyle": "说话柔声细语，偶尔会露出不合时宜的微笑",
+          "habits": ["习惯性低头看手机"],
+          "taboos": ["不愿谈童年和家庭"]
+        },
+        "isCulprit": true
+      }
+    },
+    {
+      "id": "fangmin",
+      "name": "方敏",
+      "gender": "女",
+      "age": 45,
+      "publicProfile": {
+        "identity": "沈万钧的家庭医生",
+        "bio": [
+          {
+            "type": "paragraph",
+            "text": "跟随沈万钧多年的私人医生，这次受邀随船出行。她知道沈万钧的很多秘密，包括他的健康状况。"
+          }
+        ],
+        "relationships": [
+          { "characterId": "chenjie", "label": "雇主的女儿" }
+        ]
+      },
+      "privateCard": {
+        "backstory": [
+          {
+            "type": "paragraph",
+            "text": "你做了沈万钧十年的家庭医生。你知道他的身体——肝癌晚期，最多还有三个月。你也知道陈捷不是他的亲生女儿——一周前你帮沈万钧做的DNA检测。沈万钧看完报告后脸色铁青，说了一句：'我养了三年的狼。'你没有追问。你自己的秘密是：你给沈万钧开的止痛药里，有一味药会加速癌细胞扩散——不是你故意的，是你用药失误。如果尸检发现这一点，你的执照就完了。"
+          }
+        ],
+        "secrets": [
+          {
+            "id": "secret_fang_1",
+            "title": "用药失误",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你给沈万钧开的止痛药配方有误，一味药会加速癌细胞扩散。如果尸检详细检查药物成分，你会被追责。"
+              }
+            ],
+            "disclosure": "never"
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_fang_1",
+            "title": "保护自己",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "不要让尸检发现药物问题。尽快确认死因是钝器击打，而不是药物。"
+              }
+            ],
+            "priority": "primary"
+          }
+        ],
+        "timeline": [
+          {
+            "id": "fang_e1",
+            "time": {
+              "display": "21:30–21:50",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:30" },
+              "end": { "dayOffset": 0, "time": "21:50" }
+            },
+            "title": "甲板散步",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "晚宴后你去后甲板散步，遇到李薇。你们聊了几句，你提到沈总的身体不太好。"
+              }
+            ],
+            "characterIds": ["liwei"],
+            "clueIds": []
+          },
+          {
+            "id": "fang_e2",
+            "time": {
+              "display": "21:50–22:30",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "21:50" },
+              "end": { "dayOffset": 0, "time": "22:30" }
+            },
+            "title": "医疗室整理",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你回到医疗室整理药品。这期间没有人来找你。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "fang_e3",
+            "time": {
+              "display": "23:00–23:05",
+              "precision": "range",
+              "start": { "dayOffset": 0, "time": "23:00" },
+              "end": { "dayOffset": 0, "time": "23:05" }
+            },
+            "title": "发现尸体",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去底舱找沈万钧拿药。保险库的门虚掩着——你推开它，看到了沈万钧的尸体。你喊了起来。"
+              }
+            ],
+            "locationId": "vault",
+            "characterIds": [],
+            "clueIds": []
+          }
+        ],
+        "knowledge": [
+          {
+            "id": "knowledge_fang_1",
+            "title": "DNA报告",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你知道陈捷不是沈万钧的亲生女儿——你亲手做的检测。沈万钧一周前看到报告后说了一句：'我养了三年的狼。'"
+              }
+            ],
+            "source": "possessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          },
+          {
+            "id": "knowledge_fang_2",
+            "title": "沈万钧的死期",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "沈万钧的肝癌已经是晚期，最多还有三个月。这件事只有你知道。"
+              }
+            ],
+            "source": "possessed",
+            "relatedCharacterIds": [],
+            "relatedClueIds": []
+          }
+        ],
+        "relationships": [],
+        "persona": {
+          "traits": ["沉稳", "守口如瓶"],
+          "speechStyle": "说话简洁专业，很少带感情",
+          "habits": ["习惯性推眼镜"],
+          "taboos": ["不愿谈沈万钧的病情细节"]
+        },
+        "isCulprit": false
+      }
+    }
+  ],
+  "clues": [
+    {
+      "id": "tongzhenzhi",
+      "locationId": "vault",
+      "name": "铜镇纸",
+      "category": "object",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书房的青铜镇纸，底部有血迹和毛发。上面有两组指纹——一组清晰（经比对是周铭的），一组被擦拭过，只留下模糊痕迹。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": ["zhouming"],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "menjin_jilu",
+      "locationId": "vault",
+      "name": "保险库门禁记录",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "保险库密码锁的电子记录显示：22:17正确开启一次，23:05正确开启一次。22:17是案发时间，23:05是方医生发现尸体的时间。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "niming_duanxin",
+      "locationId": "study",
+      "name": "匿名短信",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "沈万钧手机里有一条20:15收到的短信：'今晚来保险库，有重要的事跟你说。'发送号码是一张不记名SIM卡。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "weixie_duanxin",
+      "locationId": "study",
+      "name": "许政的威胁短信",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "沈万钧手机里保存着三条许政发来的短信。最近一条是两周前：'你会后悔的，我保证。'再往前是：'不给赔偿我就让你身败名裂。'"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": ["xuzheng"],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "guyupei",
+      "locationId": "cargo",
+      "name": "古玉佩",
+      "category": "object",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "在许政行李箱的夹层里发现一枚清代古玉佩。经比对，与沈万钧私人收藏清单中编号J-037的藏品描述完全吻合。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": ["xuzheng"],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "shouyang_wenjian",
+      "locationId": "cabin_chen",
+      "name": "收养文件",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "陈捷客舱的小箱子里有一份二十年前的收养协议复印件。养父一栏写着'沈万钧'，生父一栏的名字被黑色记号笔涂掉了，但依稀可以看出是两个字。收养机构的公章清晰可辨。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": ["chenjie"],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "dna_baogao",
+      "locationId": "vault",
+      "name": "DNA检测报告",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "保险柜里有一份DNA比对报告。结论栏写着：'送检样本A（沈万钧）与样本B（陈捷）无生物学亲子关系。'报告日期是一周前。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": ["chenjie"],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "jiaban_jiandu",
+      "locationId": "study",
+      "name": "甲板监控片段",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "甲板摄像头21:58拍到一个穿深色外套的人影从甲板楼梯往下层走。画面模糊，只能看出身高约一米六五，无法辨认面部。周铭身高一米八，许政一米七八，李薇一米六三，陈捷一米六六，方医生一米六零。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    }
+  ],
+  "truth": {
+    "culpritId": "chenjie",
+    "motive": [
+      {
+        "type": "paragraph",
+        "text": "陈捷是陈正邦的女儿。二十年前沈万钧用伪造合同吞并了陈正邦的公司，陈正邦破产自杀。陈捷改姓整容，花三年接近沈万钧，成为他的'女儿'。一周前沈万钧拿到DNA报告，发现陈捷不是亲生的，准备修改遗嘱。陈捷得知后决定先下手为强。"
+      },
+      {
+        "type": "paragraph",
+        "text": "她的计划是：用匿名短信约沈万钧到保险库，趁其不备用铜镇纸击杀，然后嫁祸给有威胁短信和盗窃行为的许政。"
+      }
+    ],
+    "method": {
+      "summary": [
+        {
+          "type": "paragraph",
+          "text": "陈捷提前偷看保险库密码，用不记名SIM卡发短信约沈万钧22:17在保险库见面。她从甲板下来后直接前往保险库，趁沈万钧不备用书房的铜镇纸击打其后脑，一击致死。随后她擦掉指纹，原路返回客舱。"
+        }
+      ],
+      "steps": [
+        {
+          "id": "step_1",
+          "title": "发送约见短信",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "20:15，陈捷用提前购买的不记名SIM卡给沈万钧发短信，约他22:17在保险库见面。"
+            }
+          ],
+          "clueIds": ["niming_duanxin"]
+        },
+        {
+          "id": "step_2",
+          "title": "前往保险库",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "22:00陈捷从甲板楼梯下来，经走廊前往保险库。甲板监控拍到了她下楼的身影。"
+            }
+          ],
+          "clueIds": ["jiaban_jiandu"]
+        },
+        {
+          "id": "step_3",
+          "title": "击杀",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "22:17陈捷在保险库内用铜镇纸击打沈万钧后脑，一击致死。"
+            }
+          ],
+          "clueIds": ["tongzhenzhi", "menjin_jilu"]
+        },
+        {
+          "id": "step_4",
+          "title": "善后",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "陈捷擦掉镇纸上的指纹（但无法完全擦干净），把镇纸留在现场，原路返回客舱。"
+            }
+          ],
+          "clueIds": ["tongzhenzhi"]
+        }
+      ]
+    },
+    "timeline": [
+      {
+        "id": "truth_e1",
+        "time": {
+          "display": "21:30–21:50",
+          "precision": "range",
+          "start": { "dayOffset": 0, "time": "21:30" },
+          "end": { "dayOffset": 0, "time": "21:50" }
+        },
+        "title": "书房争吵",
+        "locationId": "study",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "周铭在书房与沈万钧争论股权问题。沈万钧态度强硬，说新遗嘱已经写好。周铭拍桌时铜镇纸掉落在地——他弯腰捡起来放回桌上，留下了指纹。"
+          }
+        ],
+        "characterIds": ["zhouming"],
+        "participantIds": ["zhouming"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e2",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "21:50" }
+        },
+        "title": "许政前往底舱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许政从船尾楼梯下到底舱，经过保险库门口（门关着），继续往货舱走去偷玉佩。"
+          }
+        ],
+        "characterIds": ["xuzheng"],
+        "participantIds": ["xuzheng"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e3",
+        "time": {
+          "display": "22:00",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "22:00" }
+        },
+        "title": "陈捷下楼",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陈捷从甲板楼梯下到下层。李薇在甲板上看到她，陈捷说回客舱休息。但陈捷没有回客舱——她转向了底舱方向。"
+          }
+        ],
+        "characterIds": ["chenjie", "liwei"],
+        "participantIds": ["chenjie", "liwei"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e4",
+        "time": {
+          "display": "22:00–22:20",
+          "precision": "range",
+          "start": { "dayOffset": 0, "time": "22:00" },
+          "end": { "dayOffset": 0, "time": "22:20" }
+        },
+        "title": "许政偷玉佩",
+        "locationId": "cargo",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许政在货舱的行李箱夹层里找到了古玉佩，藏在自己外套内袋里。"
+          }
+        ],
+        "characterIds": ["xuzheng"],
+        "participantIds": ["xuzheng"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e5",
+        "time": {
+          "display": "22:10",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "22:10" }
+        },
+        "title": "李薇回客舱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "李薇从甲板回到客舱，给周铭发了一条短信。"
+          }
+        ],
+        "characterIds": ["liwei"],
+        "participantIds": ["liwei"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e6",
+        "time": {
+          "display": "22:17",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "22:17" }
+        },
+        "title": "案发",
+        "locationId": "vault",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈万钧按约定来到保险库。陈捷已经在里面等他。她用铜镇纸击打他的后脑，一击致死。门禁记录显示22:17开启。"
+          }
+        ],
+        "characterIds": ["chenjie"],
+        "participantIds": ["chenjie"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e7",
+        "time": {
+          "display": "22:20",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "22:20" }
+        },
+        "title": "许政离开底舱",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "许政拿到玉佩后离开货舱，回到自己的客舱。"
+          }
+        ],
+        "characterIds": ["xuzheng"],
+        "participantIds": ["xuzheng"],
+        "clueIds": []
+      },
+      {
+        "id": "truth_e8",
+        "time": {
+          "display": "23:05",
+          "precision": "exact",
+          "start": { "dayOffset": 0, "time": "23:05" }
+        },
+        "title": "发现尸体",
+        "locationId": "vault",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "方医生去底舱找沈万钧拿药。保险库门虚掩着，她推开后发现沈万钧的尸体。她喊了起来，所有人赶到现场。"
+          }
+        ],
+        "characterIds": ["fangmin"],
+        "participantIds": ["fangmin"],
+        "clueIds": []
+      }
+    ],
+    "keyEvidenceIds": ["tongzhenzhi", "menjin_jilu", "niming_duanxin", "dna_baogao", "shouyang_wenjian", "jiaban_jiandu"],
+    "evidenceChain": [
+      {
+        "id": "chain_1",
+        "clueIds": ["tongzhenzhi", "menjin_jilu"],
+        "conclusion": "凶器上的指纹是白天留下的（被擦拭过），结合22:17的门禁记录，说明凶手是有计划地进入保险库作案。"
+      },
+      {
+        "id": "chain_2",
+        "clueIds": ["niming_duanxin", "jiaban_jiandu"],
+        "conclusion": "有人用匿名短信约沈万钧22:17去保险库，而21:58甲板监控拍到一个身高约一米六五的人下楼——排除了周铭和许政，指向李薇或陈捷。"
+      },
+      {
+        "id": "chain_3",
+        "clueIds": ["shouyang_wenjian", "dna_baogao"],
+        "conclusion": "陈捷不是沈万钧的亲生女儿，而沈万钧一周前发现了这件事。陈捷有隐瞒身世的动机，也有失去继承权的紧迫感。"
+      }
+    ],
+    "redHerrings": [
+      {
+        "id": "rh_1",
+        "clueIds": ["tongzhenzhi", "weixie_duanxin"],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "周铭的指纹在凶器上，且有股权纠纷——看起来最像凶手。但指纹是白天留下的，凶器被人从书房移到了保险库。"
+          }
+        ]
+      },
+      {
+        "id": "rh_2",
+        "clueIds": ["menjin_jilu", "guyupei", "weixie_duanxin"],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "许政去了底舱、有威胁短信、偷了玉佩——看起来像凶手兼小偷。但他去的是货舱，不是保险库。"
+          }
+        ]
+      },
+      {
+        "id": "rh_3",
+        "clueIds": ["menjin_jilu"],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "李薇知道保险库密码，且22:10-22:30独自一人。但她22:00-22:10有不在场证明，且监控中的人影身高更接近陈捷。"
+          }
+        ]
+      }
+    ],
+    "reveal": [
+      {
+        "type": "paragraph",
+        "text": "真相：凶手是陈捷——或者更准确地说，是陈正邦的女儿。二十年前，沈万钧用一份伪造的合同吞并了合伙人陈正邦的公司。陈正邦走投无路，从十二楼跳下。他的女儿那年十二岁。"
+      },
+      {
+        "type": "paragraph",
+        "text": "她改了姓，整了容，花十年查清真相，花三年成为沈万钧的'女儿'。一周前沈万钧拿到DNA报告，发现三年的父女是假的。他说要'重新安排一切'——她知道，遗嘱要改了，机会要没了。"
+      },
+      {
+        "type": "paragraph",
+        "text": "那晚在保险库，沈万钧看到女儿手里举起铜镇纸时，眼睛里没有恐惧——只有困惑。他到死都不明白，为什么'女儿'要杀他。而真正的破绽，是那条匿名短信、是甲板监控里一米六五的身影、是一份二十年前的收养协议。许政偷了玉佩，周铭丢了股份，李薇两面为难——但杀了人的，是那个看起来最无辜的女儿。"
+      }
+    ]
+  },
+  "flow": {
+    "selfIntroRounds": 1,
+    "searchRounds": 2,
+    "discussionRounds": 2,
+    "allowPrivateChat": true,
+    "privateChatMessageLimit": 3
+  },
+  "ending": {
+    "outcomes": [
+      {
+        "result": "culprit_caught",
+        "title": "真相浮出水面",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票指认陈捷成功。当收养协议和DNA报告被摆上桌面时，陈捷沉默了很久。她没有辩解，只是说：'我爸爸从十二楼跳下来的时候，你们谁在乎过？'"
+          }
+        ]
+      },
+      {
+        "result": "culprit_escaped",
+        "title": "夜航号的秘密",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "投票未能指认陈捷。许政因盗窃被追究，周铭因挪用公款被调查，沈万钧的死成了悬案。陈捷站在甲板上看着海面——她赢了，但她的眼神里没有胜利者的光。"
+          }
+        ]
+      }
+    ]
+  }
+}
