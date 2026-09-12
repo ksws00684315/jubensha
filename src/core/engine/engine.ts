@@ -7,8 +7,9 @@ import { activeSeats, appendEvent, initialState, persistState, renderEventLog, c
 import { computeQuizResult, ensureDiscussionState, finaleMissing, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, QUESTIONS_PER_PLAYER, unlockedActs, validateDiscussionAsk, validateTransfer, validateUseSkill } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
-import { SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
+import { SUMMARY_MIN_INTERVAL_ROUNDS, SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
 import { MAX_INTERJECTIONS_PER_ROUND, mentionedAiSeats } from "@/core/agents/mention";
+import { needsHumanDeadline } from "@/lib/human-timeout";
 import { embedTexts } from "@/core/llm/client";
 
 const g = globalThis as unknown as {
@@ -56,6 +57,8 @@ export class GameEngine {
   /** 待向量化的公共事件批次（embedding 槽位未绑定时静默丢弃） */
   private embedQueue: Array<{ seq: string; text: string }> = [];
   private unlimitedHumanTurns = true;
+  /** 终局收尾失败后的自动重试次数（成功推进后归零） */
+  private revealRetries = 0;
 
   private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[], unlimitedHumanTurns = true) {
     this.gameId = gameId;
@@ -109,6 +112,9 @@ export class GameEngine {
       state.usedSkills ??= [];
       state.quizAnswers ??= {};
       state.quizResult ??= null;
+      // 旧快照可能没有这个字段：不补默认会让 `undefined++` 变成 NaN，
+      // 而 `NaN >= 上限` 恒为假 → 该轮插话上限彻底失效。字段虽标 deprecated，但仍在读写。
+      state.interjections ??= 0;
       // 服务重启后内存定时器已丢失，过期截止时间一并清掉，避免前端挂着永不跳转的倒计时
       for (const k of Object.keys(state.humanDeadlines)) {
         if (state.humanDeadlines[k] <= Date.now()) delete state.humanDeadlines[k];
@@ -168,15 +174,22 @@ export class GameEngine {
     const text = String(event.content.text ?? "");
     if (!text.trim()) return;
     this.embedQueue.push({ seq: event.seq, text: `${this.speakerName(event.fromSeat ?? 0)}说：${text}`.slice(0, 512) });
+    // 同一 key 的定时器会被后面的 push 重置 → 一波密集发言只跑最后一次；
+    // 因此这里必须把队列排空，否则超过 8 条的积压要等下一次新发言才可能被取出，对局结束时永久滞留。
     this.scheduleBackground("embed", async () => {
-      const batch = this.embedQueue.splice(0, 8);
-      if (!batch.length) return;
-      const vectors = await embedTexts(batch.map((b) => b.text));
-      if (!vectors) return; // embedding 未绑定或失败：静默降级
-      for (let i = 0; i < batch.length; i++) {
-        await db.eventVector
-          .create({ data: { gameId: this.gameId, seq: BigInt(batch[i].seq), vector: vectors[i] } })
-          .catch(() => null); // 重复写入等场景直接忽略
+      while (this.embedQueue.length) {
+        const batch = this.embedQueue.splice(0, 8);
+        const vectors = await embedTexts(batch.map((b) => b.text));
+        if (!vectors) {
+          // embedding 未绑定或调用失败：整层静默降级，丢弃积压避免无界增长
+          this.embedQueue.length = 0;
+          return;
+        }
+        for (let i = 0; i < batch.length; i++) {
+          await db.eventVector
+            .create({ data: { gameId: this.gameId, seq: BigInt(batch[i].seq), vector: vectors[i] } })
+            .catch(() => null); // 重复写入等场景直接忽略
+        }
       }
     }, 1500);
   }
@@ -191,7 +204,9 @@ export class GameEngine {
     if (this.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
     const target = mentionedAiSeats(this.script, this.state, text, fromSeat)[0];
     if (target === undefined) return;
-    this.scheduleBackground(`interject`, async () => {
+    // key 带上双方座位：单一 key 会让同轮内的第二次点名取消并替换前一次的插话任务，
+    // 名义上限是 3 次、实际每轮最多 1 次落地。上限仍由 interjections 计数守住。
+    this.scheduleBackground(`interject:${fromSeat}:${target}`, async () => {
       if (this.state.phase !== "DISCUSSION" || this.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
       await this.exclusive(async () => {
         if (this.state.phase !== "DISCUSSION" || this.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
@@ -307,6 +322,11 @@ export class GameEngine {
       }
       if (!items.length) return;
       await this.exclusive(async () => {
+        // 提交前确认"现在仍然是该座位的发言回合"：真人可能已经发言/跳过，
+        // 甚至已经切到下一个阶段——不能把过期的建议写回状态（否则 UI 会重新冒出建议按钮）。
+        if (this.state.phase !== "SELF_INTRO" && this.state.phase !== "DISCUSSION") return;
+        if (this.state.turnSeat !== seat) return;
+        if (this.state.spokenSeats.includes(seat)) return;
         if (!this.state.suggestions) this.state.suggestions = {};
         this.state.suggestions[String(seat)] = items;
         await persistState(this.gameId, this.state);
@@ -315,6 +335,7 @@ export class GameEngine {
   }
 
   private clearSuggestions(seat: number): void {
+    this.clearTimers(`suggest:${seat}`);
     if (this.state.suggestions) delete this.state.suggestions[String(seat)];
   }
 
@@ -326,9 +347,14 @@ export class GameEngine {
    */
   private maybeScheduleSummarize(): void {
     if (this.state.phase === "REVEAL" || this.state.phase === "ENDED") return;
+    // 降频门槛：摘要重写会把全场（含 DM）的前缀缓存整体打掉，而轮次边界恰好就是 DM 调用之前，
+    // 所以限制「至少隔 SUMMARY_MIN_INTERVAL_ROUNDS 个边界才更新一次」，用略旧的摘要换一半的失效次数。
+    this.summaryBoundaries++;
+    if (this.summaryBoundaries - this.lastSummaryBoundary < SUMMARY_MIN_INTERVAL_ROUNDS) return;
     const pending = pendingHeadChars(this.events, this.state.memory?.anchorSeq ?? "");
     if (pending < SUMMARY_TRIGGER_CHARS) return;
     const boundary = { phase: this.state.phase, round: this.state.round };
+    const boundaryIndex = this.summaryBoundaries;
     this.scheduleBackground("memory", async () => {
       if (this.state.phase !== boundary.phase || this.state.round !== boundary.round) return; // 已进入下一边界,留给下次
       const { head } = planMemorySplit(this.events);
@@ -346,10 +372,15 @@ export class GameEngine {
         if (this.state.phase !== boundary.phase || this.state.round !== boundary.round) return;
         if (!isNewerSeq(anchor.seq, this.state.memory?.anchorSeq)) return;
         this.state.memory = { anchorSeq: anchor.seq, summary };
+        this.lastSummaryBoundary = boundaryIndex;
         await persistState(this.gameId, this.state);
       });
     }, 100);
   }
+
+  /** 轮次边界计数与上次摘要所处的边界（控制摘要更新频率，见 maybeScheduleSummarize） */
+  private summaryBoundaries = 0;
+  private lastSummaryBoundary = Number.NEGATIVE_INFINITY;
 
   private exclusiveTail: Promise<unknown> = Promise.resolve();
 
@@ -365,8 +396,12 @@ export class GameEngine {
     if (existing) clearTimeout(existing);
     const t = setTimeout(() => {
       this.timers.delete(key);
+      // 显式 catch：不要依赖 exclusive 内部 then(fn, fn) 顺带吞掉 rejection，
+      // 那样一旦 exclusive 重构就会变成 unhandled rejection 打崩进程。
       void this.exclusive(async () => {
         await fn();
+      }).catch((err) => {
+        console.error(`[engine] 定时任务 ${key} 失败:`, err);
       });
     }, ms);
     this.timers.set(key, t);
@@ -807,8 +842,15 @@ export class GameEngine {
       if (iterations >= 200) {
         await this.systemSay("（引擎连续推进超过 200 步，已暂停以防失控。请稍后重试。）").catch(() => null);
       }
+      this.revealRetries = 0;
     } catch (err) {
       await this.systemSay(`（引擎遇到问题：${msgOf(err)}。你可以稍后重试或继续操作。）`).catch(() => null);
+      // REVEAL/ENDED 的收尾本应幂等重入，但触发下一次 tick 的来源只剩"玩家动作/重启"——
+      // 给它一次定时兜底，避免终局卡在 REVEAL 只能靠真人点 nudge。上限 3 次防死循环。
+      if ((this.state.phase === "REVEAL" || this.state.phase === "ENDED") && this.revealRetries < 3) {
+        this.revealRetries++;
+        this.schedule("reveal-retry", () => this.tickInner(), 5000);
+      }
     } finally {
       this.busy = false;
     }
@@ -837,9 +879,12 @@ export class GameEngine {
           await this.nextTurnOrAdvance();
         } else {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
-          if (!this.turnAsked.has(askKey)) {
-            this.turnAsked.add(askKey);
-            await this.armHumanTimeout(seat, "自我介绍");
+          const firstPrompt = !this.turnAsked.has(askKey);
+          if (firstPrompt) this.turnAsked.add(askKey);
+          // 以「截止时间是否存在」为准重新武装，而不是「是否已提示过」——
+          // 提问会清掉提问者的定时器，只认记忆位会让限时模式永久停在讨论环节。
+          await this.ensureHumanTimeout(seat, "自我介绍");
+          if (firstPrompt) {
             await this.systemSay(`轮到你自我介绍了。请在输入框发言，或点击"跳过"。`, seat);
             this.queueSuggestReply(seat);
           }
@@ -900,9 +945,12 @@ export class GameEngine {
           await this.runAiDiscussionTurn(seat);
         } else {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
-          if (!this.turnAsked.has(askKey)) {
-            this.turnAsked.add(askKey);
-            await this.armHumanTimeout(seat, "圆桌发言");
+          const firstPrompt = !this.turnAsked.has(askKey);
+          if (firstPrompt) this.turnAsked.add(askKey);
+          // 同上：提问（ask / use_skill 质询 / skip 作答）都会清掉提问者的截止时间，
+          // 回到提问者回合时必须重新武装，否则对方作答后该座位挂机就再也没人跳过它。
+          await this.ensureHumanTimeout(seat, "圆桌发言");
+          if (firstPrompt) {
             const left = state.questionsLeft[String(seat)] ?? 0;
             await this.systemSay(`轮到你发言。你可以当众陈述，也可以提问（剩余 ${left} 次）。结束后请点「结束发言」。`, seat);
             this.queueSuggestReply(seat);
@@ -1264,7 +1312,7 @@ export class GameEngine {
     if (!text) return { ok: false, error: "问题不能为空" };
     this.state.questionsLeft[String(fromSeat)] = left - 1;
     this.state.pendingAnswer = { fromSeat, toSeat, question: text };
-    // 提问 = 证明在参与，暂停提问者超时；答完后 tick 会重新 arm
+    // 提问 = 证明在参与，暂停提问者超时；作答结束后 step() 会经 ensureHumanTimeout 重新武装
     this.clearHumanTimeout(fromSeat);
     await this.recordEvent({
       type: "speech",
@@ -1382,6 +1430,20 @@ export class GameEngine {
         await this.tickInner();
       }
     }, HUMAN_TURN_TIMEOUT_MS);
+  }
+
+  /**
+   * 确保该座位此刻存在有效的超时截止时间。
+   *
+   * 限时模式的目的是"真人挂机不卡住流程"，但「提问」会刻意清掉提问者的定时器
+   * （提问本身就证明在参与）。若回到提问者回合时只依赖 turnAsked 记忆位，
+   * 就不会重新武装——对方作答后提问者挂机将永久停在讨论环节。
+   * 因此一律以「截止时间是否存在」为判据，而不是「是否已经提示过」。
+   */
+  private async ensureHumanTimeout(seat: number, label: string): Promise<void> {
+    if (this.unlimitedHumanTurns) return;
+    if (!needsHumanDeadline(this.state.humanDeadlines, seat)) return;
+    await this.armHumanTimeout(seat, label);
   }
 
   /** 真人行动到达时解除限时：清定时器 + 清截止时间（调用点随后都会 persistState）。 */

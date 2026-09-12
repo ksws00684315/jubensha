@@ -83,6 +83,9 @@ export function validateUseSkill(
   if (skill.once && (state.usedSkills ?? []).includes(`${fromSeat}:${skillId}`)) return "该技能已经用过";
   if (skill.cost > (state.actionPoints?.[String(fromSeat)] ?? 0)) return "行动点不足";
   if (skill.effect === "verify") {
+    // 质询靠「被质询者当众作答」闭环，而这套机制只在圆桌讨论阶段存在：
+    // 搜证阶段设了 pendingAnswer 也没人消费（会被 transitionDiscussion 抹掉），等于白扣行动点。
+    if (state.phase !== "DISCUSSION") return "【质询】只能在圆桌讨论阶段发动";
     if (toSeat === undefined || !activeSeats(state).includes(toSeat)) return "质询对象不合法";
     if (toSeat === fromSeat) return "不能质询自己";
     if (state.seats[toSeat]?.kind !== "ai") return "质询技能只能对 AI 玩家使用";
