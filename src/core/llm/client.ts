@@ -294,6 +294,7 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
   } catch {
     return null;
   }
+  const started = Date.now();
   try {
     const url = `${normalizeProviderBaseUrl(b.baseUrl, "openai_compatible")}/embeddings`;
     const res = await fetch(url, {
@@ -302,14 +303,19 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
       body: JSON.stringify({ model: b.modelId, input: texts }),
       signal: AbortSignal.timeout(60_000),
     });
-    if (!res.ok) return null;
-    const json = (await res.json()) as { data?: Array<{ embedding?: unknown; index?: number }> };
+    if (!res.ok) {
+      await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: `HTTP ${res.status}` });
+      return null;
+    }
+    const json = (await res.json()) as { data?: Array<{ embedding?: unknown; index?: number }>; usage?: { prompt_tokens?: number } };
     const data = (json.data ?? []).slice().sort((x, y) => (x.index ?? 0) - (y.index ?? 0));
     const out = data
       .map((d) => (Array.isArray(d.embedding) ? (d.embedding as number[]) : null))
       .filter((v): v is number[] => v !== null);
+    await logUsage({ b, purpose: "embedding", prompt: json.usage?.prompt_tokens ?? 0, completion: 0, latencyMs: Date.now() - started, ok: out.length === texts.length });
     return out.length === texts.length ? out : null;
-  } catch {
+  } catch (err) {
+    await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: err instanceof Error ? err.message : String(err) }).catch(() => undefined);
     return null;
   }
 }

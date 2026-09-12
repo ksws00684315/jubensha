@@ -120,6 +120,16 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
     // 行业共识：单条线索不锁凶，证据链至少两条线索交叉
     if (chain.clueIds.length < 2) {
       issue(issues, "warning", `truth.evidenceChain.${index}.clueIds`, "证据链只有一条线索支撑，容易单线索锁凶（建议人证+物证交叉）");
+    } else {
+      // 人证物证交叉：证词/文书类与实物类至少各一；全同类的链容易被整体推翻
+      const categories = chain.clueIds
+        .map((id) => doc.clues.find((c) => c.id === id)?.category)
+        .filter((c): c is NonNullable<typeof c> => Boolean(c));
+      const hasTestimony = categories.some((c) => c === "testimony" || c === "document");
+      const hasPhysical = categories.some((c) => c === "object" || c === "trace" || c === "medical" || c === "digital");
+      if (categories.length >= 2 && !(hasTestimony && hasPhysical)) {
+        issue(issues, "warning", `truth.evidenceChain.${index}.clueIds`, "证据链缺少人证/物证交叉（全部为同类线索，容易被整体推翻）");
+      }
     }
   }
   for (const [index, herring] of doc.truth.redHerrings.entries()) checkRefs(issues, herring.clueIds, clueIds, `truth.redHerrings.${index}.clueIds`);

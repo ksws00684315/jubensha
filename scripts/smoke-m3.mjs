@@ -22,7 +22,7 @@ const post = (p, b) =>
       signal: AbortSignal.timeout(120_000),
     }).then((r) => r.json())
   );
-const get = (p) => withRetry(() => fetch(BASE + p).then((r) => r.json()));
+const get = (p) => withRetry(() => fetch(BASE + p, { signal: AbortSignal.timeout(30_000) }).then((r) => r.json()));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PHASE_ORDER = ["LOBBY", "READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL", "ENDED"];
