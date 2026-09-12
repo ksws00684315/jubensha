@@ -1,4 +1,6 @@
-import type { ScriptDocV2, TimelineTime } from "./schema";
+import type { Narrative, ScriptDocV2, TimelineTime } from "./schema";
+import { isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
+import { narrativeToText } from "../compat";
 
 export interface ScriptV2Issue {
   level: "error" | "warning";
@@ -48,6 +50,8 @@ function checkTimelineOrder(issues: ScriptV2Issue[], entries: Array<{ time: Time
 
 type TimelineEntryLike = {
   id: string;
+  title: string;
+  content: Narrative;
   time: TimelineTime;
   locationId?: string;
   characterIds: string[];
@@ -55,9 +59,31 @@ type TimelineEntryLike = {
   truthEventId?: string;
 };
 
+/**
+ * 时间线内容完整性（此前只校验了顺序，导致全库 99.7% 的「事件 N」占位标题一路过关）：
+ *  - 占位标题 → 会原样进入 AI prompt 与 DM 复盘宣读，必须报；
+ *  - 首尾明显被切断的条目 → 渲染层无法还原，报出来交作者重写。
+ */
+function checkTimelineContent(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string) {
+  for (const [index, entry] of entries.entries()) {
+    if (isPlaceholderTimelineTitle(entry.title)) {
+      issue(
+        issues,
+        "warning",
+        `${path}.${index}.title`,
+        `时间线标题是机械占位「${entry.title.trim()}」，不含任何信息；它会被念进 AI 上下文与复盘宣读，请改为事件摘要`
+      );
+    }
+    if (isTruncatedTimelineText(narrativeToText(entry.content))) {
+      issue(issues, "warning", `${path}.${index}.content`, "时间线条目首尾被截断（缺上一句或下一句），建议重写为完整叙述");
+    }
+  }
+}
+
 function checkTimelineEntries(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string, locationIds: Set<string>, clueIds: Set<string>, characterIds: Set<string>, truthEventIds?: Set<string>) {
   checkUniqueIds(issues, entries, path);
   checkTimelineOrder(issues, entries, path);
+  checkTimelineContent(issues, entries, path);
   for (const [index, entry] of entries.entries()) {
     if (entry.locationId && !locationIds.has(entry.locationId)) issue(issues, "error", `${path}.${index}.locationId`, `地点不存在: ${entry.locationId}`);
     checkRefs(issues, entry.clueIds, clueIds, `${path}.${index}.clueIds`);
@@ -187,8 +213,8 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
       if (skill.cost > doc.flow.actionPointsPerRound) {
         issue(issues, "warning", `characters.${index}.privateCard.skills.${sIndex}.cost`, `技能「${skill.name}」消耗(${skill.cost})超过每轮行动点(${doc.flow.actionPointsPerRound})，将永远无法使用`);
       }
-      if (skill.effect === "verify" && skill.phase === "SEARCH") {
-        issue(issues, "warning", `characters.${index}.privateCard.skills.${sIndex}.phase`, `质询技能「${skill.name}」建议设在讨论阶段（搜证阶段没有当众作答机制）`);
+      if (skill.effect === "verify" && skill.phase !== "DISCUSSION") {
+        issue(issues, "warning", `characters.${index}.privateCard.skills.${sIndex}.phase`, `质询技能「${skill.name}」设在 ${skill.phase} 阶段，但质询依赖「当众作答」机制、只在讨论阶段可用，该卡将永远无法发动`);
       }
     }
   }

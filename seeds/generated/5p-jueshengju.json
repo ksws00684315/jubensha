@@ -84,7 +84,7 @@
                 "time": "21:40"
               }
             },
-            "title": "事件 1",
+            "title": "书房摊牌",
             "content": [
               {
                 "type": "paragraph",
@@ -104,7 +104,7 @@
                 "time": "21:55"
               }
             },
-            "title": "事件 2",
+            "title": "直播间启动训练回放循环",
             "content": [
               {
                 "type": "paragraph",
@@ -128,7 +128,7 @@
                 "time": "22:25"
               }
             },
-            "title": "事件 3",
+            "title": "书房行凶与清理",
             "content": [
               {
                 "type": "paragraph",
@@ -148,7 +148,7 @@
                 "time": "22:28"
               }
             },
-            "title": "事件 4",
+            "title": "直播间切回实时镜头",
             "content": [
               {
                 "type": "paragraph",
@@ -168,7 +168,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 5",
+            "title": "敲书房门'发现'尸体",
             "content": [
               {
                 "type": "paragraph",
@@ -188,7 +188,7 @@
                 "time": "22:45"
               }
             },
-            "title": "事件 6",
+            "title": "呼叫众人",
             "content": [
               {
                 "type": "paragraph",
@@ -208,7 +208,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 7",
+            "title": "陪方晴报警",
             "content": [
               {
                 "type": "paragraph",
@@ -330,7 +330,7 @@
                 "time": "21:50"
               }
             },
-            "title": "事件 1",
+            "title": "书房门外讨薪被骂",
             "content": [
               {
                 "type": "paragraph",
@@ -354,7 +354,7 @@
                 "time": "22:38"
               }
             },
-            "title": "事件 2",
+            "title": "训练房单排一局",
             "content": [
               {
                 "type": "paragraph",
@@ -374,7 +374,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 3",
+            "title": "被闻声拽掉耳机叫上楼",
             "content": [
               {
                 "type": "paragraph",
@@ -396,7 +396,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 4",
+            "title": "陪队报警",
             "content": [
               {
                 "type": "paragraph",
@@ -516,7 +516,7 @@
                 "time": "21:10"
               }
             },
-            "title": "事件 1",
+            "title": "送茶进书房",
             "content": [
               {
                 "type": "paragraph",
@@ -540,7 +540,7 @@
                 "time": "22:30"
               }
             },
-            "title": "事件 2",
+            "title": "食堂对账",
             "content": [
               {
                 "type": "paragraph",
@@ -560,7 +560,7 @@
                 "time": "21:40"
               }
             },
-            "title": "事件 3",
+            "title": "听见摔门并记备忘",
             "content": [
               {
                 "type": "paragraph",
@@ -580,7 +580,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 4",
+            "title": "闻声赶来",
             "content": [
               {
                 "type": "paragraph",
@@ -602,7 +602,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 5",
+            "title": "报警",
             "content": [
               {
                 "type": "paragraph",
@@ -722,7 +722,7 @@
                 "time": "22:25"
               }
             },
-            "title": "事件 1",
+            "title": "送水进直播间",
             "content": [
               {
                 "type": "paragraph",
@@ -742,7 +742,7 @@
                 "time": "22:27"
               }
             },
-            "title": "事件 3",
+            "title": "拨他手机无人接",
             "content": [
               {
                 "type": "paragraph",
@@ -762,7 +762,7 @@
                 "time": "22:27"
               }
             },
-            "title": "事件 4",
+            "title": "下楼回工作室",
             "content": [
               {
                 "type": "paragraph",
@@ -782,7 +782,7 @@
                 "time": "22:30"
               }
             },
-            "title": "事件 5",
+            "title": "刷到直播恢复实时",
             "content": [
               {
                 "type": "paragraph",
@@ -802,7 +802,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 6",
+            "title": "拽掉许冲耳机",
             "content": [
               {
                 "type": "paragraph",
@@ -928,7 +928,7 @@
                 "time": "21:50"
               }
             },
-            "title": "事件 1",
+            "title": "三楼自习文化课",
             "content": [
               {
                 "type": "paragraph",
@@ -948,7 +948,7 @@
                 "time": "21:53"
               }
             },
-            "title": "事件 2",
+            "title": "一楼售货机买可乐",
             "content": [
               {
                 "type": "paragraph",
@@ -968,7 +968,7 @@
                 "time": "22:00"
               }
             },
-            "title": "事件 3",
+            "title": "回三楼小间",
             "content": [
               {
                 "type": "paragraph",
@@ -988,7 +988,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 4",
+            "title": "闻声跑上三楼报信",
             "content": [
               {
                 "type": "paragraph",
@@ -1301,7 +1301,7 @@
             "time": "19:00"
           }
         },
-        "title": "事件 1",
+        "title": "备战会结束",
         "content": [
           {
             "type": "paragraph",
@@ -1322,7 +1322,7 @@
             "time": "20:47"
           }
         },
-        "title": "事件 2",
+        "title": "快递员送审计预约函进大门",
         "content": [
           {
             "type": "paragraph",
@@ -1347,7 +1347,7 @@
             "time": "20:47"
           }
         },
-        "title": "事件 3",
+        "title": "蒋万川写审计邮件草稿",
         "content": [
           {
             "type": "paragraph",
@@ -1368,7 +1368,7 @@
             "time": "21:10"
           }
         },
-        "title": "事件 4",
+        "title": "方晴送两杯茶进书房",
         "content": [
           {
             "type": "paragraph",
@@ -1393,7 +1393,7 @@
             "time": "21:20"
           }
         },
-        "title": "事件 5",
+        "title": "方晴送完茶回食堂",
         "content": [
           {
             "type": "paragraph",
@@ -1418,7 +1418,7 @@
             "time": "21:40"
           }
         },
-        "title": "事件 6",
+        "title": "蒋万川与陆骁书房摊牌",
         "content": [
           {
             "type": "paragraph",
@@ -1443,7 +1443,7 @@
             "time": "21:40"
           }
         },
-        "title": "事件 7",
+        "title": "陆骁摔门而出",
         "content": [
           {
             "type": "paragraph",
@@ -1472,7 +1472,7 @@
             "time": "21:50"
           }
         },
-        "title": "事件 8",
+        "title": "许冲书房门外讨薪被骂",
         "content": [
           {
             "type": "paragraph",
@@ -1497,7 +1497,7 @@
             "time": "21:53"
           }
         },
-        "title": "事件 9",
+        "title": "齐小满在一楼售货机前目击灰色连帽衫背影上…",
         "content": [
           {
             "type": "paragraph",
@@ -1522,7 +1522,7 @@
             "time": "21:53"
           }
         },
-        "title": "事件 25",
+        "title": "目击",
         "content": [
           {
             "type": "paragraph",
@@ -1553,7 +1553,7 @@
             "time": "21:55"
           }
         },
-        "title": "事件 10",
+        "title": "陆骁在直播间启动训练回放循环",
         "content": [
           {
             "type": "paragraph",
@@ -1578,7 +1578,7 @@
             "time": "21:55"
           }
         },
-        "title": "事件 22",
+        "title": "启动循环、22:28:41 切回实时——…",
         "content": [
           {
             "type": "paragraph",
@@ -1599,7 +1599,7 @@
             "time": "22:00"
           }
         },
-        "title": "事件 11",
+        "title": "蒋万川独自在书房核材料",
         "content": [
           {
             "type": "paragraph",
@@ -1624,11 +1624,11 @@
             "time": "22:30"
           }
         },
-        "title": "事件 21",
+        "title": "剑鞘血滴与蓝色纤维",
         "content": [
           {
             "type": "paragraph",
-            "text": "）→ 剑鞘血滴与蓝色纤维（凶器归位却留下痕迹）→ 推流后台与录屏（"
+            "text": "行凶后：纪念剑归位，剑鞘却留下血滴与蓝色纤维；直播后台的录屏起止（21:55:12 启动、22:28:41 切回）顶替了这段时间的在场证明。"
           }
         ],
         "characterIds": [],
@@ -1649,7 +1649,7 @@
             "time": "22:38"
           }
         },
-        "title": "事件 12",
+        "title": "许冲在训练房单排一局",
         "content": [
           {
             "type": "paragraph",
@@ -1678,7 +1678,7 @@
             "time": "22:25"
           }
         },
-        "title": "事件 13",
+        "title": "陆骁从消防梯潜回二楼进书房",
         "content": [
           {
             "type": "paragraph",
@@ -1703,7 +1703,7 @@
             "time": "22:08"
           }
         },
-        "title": "事件 14",
+        "title": "行凶",
         "content": [
           {
             "type": "paragraph",
@@ -1728,7 +1728,7 @@
             "time": "22:27"
           }
         },
-        "title": "事件 15",
+        "title": "–22:27 闻声送水进直播间",
         "content": [
           {
             "type": "paragraph",
@@ -1753,7 +1753,7 @@
             "time": "22:25"
           }
         },
-        "title": "事件 24",
+        "title": "闻声的通话记录",
         "content": [
           {
             "type": "paragraph",
@@ -1778,7 +1778,7 @@
             "time": "22:27"
           }
         },
-        "title": "事件 16",
+        "title": "下楼",
         "content": [
           {
             "type": "paragraph",
@@ -1799,7 +1799,7 @@
             "time": "22:28"
           }
         },
-        "title": "事件 17",
+        "title": "陆骁回直播间切回实时镜头",
         "content": [
           {
             "type": "paragraph",
@@ -1824,7 +1824,7 @@
             "time": "22:28"
           }
         },
-        "title": "事件 23",
+        "title": "切回实时",
         "content": [
           {
             "type": "paragraph",
@@ -1849,7 +1849,7 @@
             "time": "22:30"
           }
         },
-        "title": "事件 18",
+        "title": "弹幕回复'在的",
         "content": [
           {
             "type": "paragraph",
@@ -1870,7 +1870,7 @@
             "time": "22:40"
           }
         },
-        "title": "事件 19",
+        "title": "陆骁敲书房门'发现'尸体",
         "content": [
           {
             "type": "paragraph",
@@ -1899,7 +1899,7 @@
             "time": "23:00"
           }
         },
-        "title": "事件 20",
+        "title": "方晴报警",
         "content": [
           {
             "type": "paragraph",

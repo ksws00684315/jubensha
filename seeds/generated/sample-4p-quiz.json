@@ -82,7 +82,7 @@
                 "time": "21:30"
               }
             },
-            "title": "事件 1",
+            "title": "上蹄髈",
             "content": [
               {
                 "type": "paragraph",
@@ -102,7 +102,7 @@
                 "time": "22:50"
               }
             },
-            "title": "事件 2",
+            "title": "看见小隋钻缝进店",
             "content": [
               {
                 "type": "paragraph",
@@ -122,7 +122,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 3",
+            "title": "打烊",
             "content": [
               {
                 "type": "paragraph",
@@ -146,7 +146,7 @@
                 "time": "23:04"
               }
             },
-            "title": "事件 4",
+            "title": "收取暖器入库",
             "content": [
               {
                 "type": "paragraph",
@@ -166,7 +166,7 @@
                 "time": "23:06"
               }
             },
-            "title": "事件 5",
+            "title": "打开排风扇",
             "content": [
               {
                 "type": "paragraph",
@@ -186,7 +186,7 @@
                 "time": "23:08"
               }
             },
-            "title": "事件 6",
+            "title": "把卷帘拉至一掌缝",
             "content": [
               {
                 "type": "paragraph",
@@ -206,7 +206,7 @@
                 "time": "23:10"
               }
             },
-            "title": "事件 7",
+            "title": "反锁侧门离开",
             "content": [
               {
                 "type": "paragraph",
@@ -230,7 +230,7 @@
                 "time": "23:40"
               }
             },
-            "title": "事件 8",
+            "title": "便利店消费",
             "content": [
               {
                 "type": "paragraph",
@@ -250,7 +250,7 @@
                 "time": "23:40"
               }
             },
-            "title": "事件 9",
+            "title": "回家",
             "content": [
               {
                 "type": "paragraph",
@@ -370,7 +370,7 @@
                 "time": "23:05"
               }
             },
-            "title": "事件 1",
+            "title": "收车路过店门口：店内灯半亮",
             "content": [
               {
                 "type": "paragraph",
@@ -390,7 +390,7 @@
                 "time": "23:10"
               }
             },
-            "title": "事件 2",
+            "title": "店家出店",
             "content": [
               {
                 "type": "paragraph",
@@ -510,7 +510,7 @@
                 "time": "23:20"
               }
             },
-            "title": "事件 1",
+            "title": "下夜班路过店门",
             "content": [
               {
                 "type": "paragraph",
@@ -530,7 +530,7 @@
                 "time": "23:22"
               }
             },
-            "title": "事件 2",
+            "title": "离开回宿舍",
             "content": [
               {
                 "type": "paragraph",
@@ -550,7 +550,7 @@
                 "time": "23:25"
               }
             },
-            "title": "事件 3",
+            "title": "刷卡",
             "content": [
               {
                 "type": "paragraph",
@@ -670,7 +670,7 @@
                 "time": "22:50"
               }
             },
-            "title": "事件 1",
+            "title": "钻缝入店翻包：拿账本、撕自家那页、抽走两…",
             "content": [
               {
                 "type": "paragraph",
@@ -690,7 +690,7 @@
                 "time": "23:52"
               }
             },
-            "title": "事件 2",
+            "title": "钻缝出店离开",
             "content": [
               {
                 "type": "paragraph",
@@ -959,7 +959,7 @@
             "time": "21:30"
           }
         },
-        "title": "事件 1",
+        "title": "老陈自带泡酒独酌",
         "content": [
           {
             "type": "paragraph",
@@ -984,7 +984,7 @@
             "time": "22:50"
           }
         },
-        "title": "事件 2",
+        "title": "隋亮钻卷帘缝入店翻包：拿账本、撕自家那页…",
         "content": [
           {
             "type": "paragraph",
@@ -1009,7 +1009,7 @@
             "time": "23:00"
           }
         },
-        "title": "事件 3",
+        "title": "打烊",
         "content": [
           {
             "type": "paragraph",
@@ -1034,11 +1034,11 @@
             "time": "23:00"
           }
         },
-        "title": "事件 16",
+        "title": "起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌…",
         "content": [
           {
             "type": "paragraph",
-            "text": "起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（"
+            "text": "23:00 起，老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（她 23:10 离店后每分钟都有不在场记录）→ 反锁的侧门（店内无人能救）——失温的每一环都是人为。"
           }
         ],
         "characterIds": [],
@@ -1059,7 +1059,7 @@
             "time": "23:04"
           }
         },
-        "title": "事件 4",
+        "title": "她收走取暖器入库",
         "content": [
           {
             "type": "paragraph",
@@ -1080,7 +1080,7 @@
             "time": "23:05"
           }
         },
-        "title": "事件 5",
+        "title": "蒋春来收车路过：店内灯半亮、老陈伏桌、取…",
         "content": [
           {
             "type": "paragraph",
@@ -1105,7 +1105,7 @@
             "time": "23:06"
           }
         },
-        "title": "事件 6",
+        "title": "她打开排风扇",
         "content": [
           {
             "type": "paragraph",
@@ -1126,7 +1126,7 @@
             "time": "23:08"
           }
         },
-        "title": "事件 7",
+        "title": "她把卷帘拉至一掌缝",
         "content": [
           {
             "type": "paragraph",
@@ -1151,7 +1151,7 @@
             "time": "23:40"
           }
         },
-        "title": "事件 17",
+        "title": "她每一步都在镜头里",
         "content": [
           {
             "type": "paragraph",
@@ -1180,7 +1180,7 @@
             "time": "23:10"
           }
         },
-        "title": "事件 8",
+        "title": "反锁侧门离开",
         "content": [
           {
             "type": "paragraph",
@@ -1205,7 +1205,7 @@
             "time": "23:40"
           }
         },
-        "title": "事件 9",
+        "title": "便利店买热饮租充电宝",
         "content": [
           {
             "type": "paragraph",
@@ -1230,7 +1230,7 @@
             "time": "23:20"
           }
         },
-        "title": "事件 11",
+        "title": "隋亮仍在店内翻欠条",
         "content": [
           {
             "type": "paragraph",
@@ -1255,7 +1255,7 @@
             "time": "23:20"
           }
         },
-        "title": "事件 13",
+        "title": "许亦然下夜班路过敲窗",
         "content": [
           {
             "type": "paragraph",
@@ -1280,7 +1280,7 @@
             "time": "23:20"
           }
         },
-        "title": "事件 18",
+        "title": "敲窗无人应的犹豫——人人有秘密",
         "content": [
           {
             "type": "paragraph",
@@ -1301,7 +1301,7 @@
             "time": "23:22"
           }
         },
-        "title": "事件 14",
+        "title": "离开",
         "content": [
           {
             "type": "paragraph",
@@ -1322,7 +1322,7 @@
             "time": "23:40"
           }
         },
-        "title": "事件 10",
+        "title": "步行回家",
         "content": [
           {
             "type": "paragraph",
@@ -1343,7 +1343,7 @@
             "time": "23:52"
           }
         },
-        "title": "事件 12",
+        "title": "钻缝离开",
         "content": [
           {
             "type": "paragraph",

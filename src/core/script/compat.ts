@@ -1,6 +1,7 @@
 import { parseScriptDoc, type ScriptDoc } from "./schema";
 import { migrateV1ToV2, type MigrationWarning } from "./v2/migrate-v1";
 import { parseScriptDocV2, type CharacterV2, type ClueV2, type LocationV2, type Narrative, type ScriptDocV2 } from "./v2/schema";
+import { isPlaceholderTimelineTitle } from "./v2/timeline";
 
 export type AnyScriptDoc = ScriptDoc | ScriptDocV2;
 export type ParsedScriptDoc =
@@ -36,8 +37,20 @@ export function narrativeToText(blocks: Narrative): string {
     .join("\n\n");
 }
 
+/**
+ * 时间线 → 文本（AI 玩家 system prompt / DM 复盘宣读共用）。
+ * 占位标题（「事件 N」）直接丢弃，退化为「时刻 + 正文」——
+ * prompt 与宣读里绝不应该出现「事件 1」这种无信息量标签。
+ */
 export function timelineToText(entries: Array<{ time: { display: string }; title: string; content: Narrative }>) {
-  return entries.map((entry) => `${entry.time.display} ${entry.title}：${narrativeToText(entry.content)}`).join("\n");
+  return entries
+    .map((entry) => {
+      const body = narrativeToText(entry.content);
+      const title = entry.title.trim();
+      if (!title || isPlaceholderTimelineTitle(title)) return `${entry.time.display} ${body}`;
+      return `${entry.time.display} ${title}：${body}`;
+    })
+    .join("\n");
 }
 
 export function publicBioText(character: CharacterV2): string {

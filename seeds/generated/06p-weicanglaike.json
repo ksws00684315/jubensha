@@ -80,7 +80,7 @@
                 "time": "15:00"
               }
             },
-            "title": "事件 1",
+            "title": "借 40 号钥匙'通风",
             "content": [
               {
                 "type": "paragraph",
@@ -100,7 +100,7 @@
                 "time": "16:00"
               }
             },
-            "title": "事件 2",
+            "title": "拨挂锁成虚挂",
             "content": [
               {
                 "type": "paragraph",
@@ -120,7 +120,7 @@
                 "time": "16:30"
               }
             },
-            "title": "事件 3",
+            "title": "归还钥匙",
             "content": [
               {
                 "type": "paragraph",
@@ -140,7 +140,7 @@
                 "time": "20:30"
               }
             },
-            "title": "事件 4",
+            "title": "宴会入席",
             "content": [
               {
                 "type": "paragraph",
@@ -160,7 +160,7 @@
                 "time": "20:40"
               }
             },
-            "title": "事件 5",
+            "title": "递字条约",
             "content": [
               {
                 "type": "paragraph",
@@ -180,7 +180,7 @@
                 "time": "20:45"
               }
             },
-            "title": "事件 7",
+            "title": "离席赴医务室预写",
             "content": [
               {
                 "type": "paragraph",
@@ -200,7 +200,7 @@
                 "time": "20:52"
               }
             },
-            "title": "事件 9",
+            "title": "刷卡进 9 层员工门",
             "content": [
               {
                 "type": "paragraph",
@@ -220,7 +220,7 @@
                 "time": "20:55"
               }
             },
-            "title": "事件 10",
+            "title": "经布草滑道滑降至 3 层洗衣房",
             "content": [
               {
                 "type": "paragraph",
@@ -240,7 +240,7 @@
                 "time": "20:58"
               }
             },
-            "title": "事件 11",
+            "title": "拉开虚挂挂锁入艺术品库房",
             "content": [
               {
                 "type": "paragraph",
@@ -260,7 +260,7 @@
                 "time": "21:00"
               }
             },
-            "title": "事件 6",
+            "title": "库房",
             "content": [
               {
                 "type": "paragraph",
@@ -280,7 +280,7 @@
                 "time": "21:00"
               }
             },
-            "title": "事件 12",
+            "title": "晏起予入库",
             "content": [
               {
                 "type": "paragraph",
@@ -300,7 +300,7 @@
                 "time": "21:03"
               }
             },
-            "title": "事件 13",
+            "title": "以画框打包带勒杀",
             "content": [
               {
                 "type": "paragraph",
@@ -320,7 +320,7 @@
                 "time": "21:08"
               }
             },
-            "title": "事件 8",
+            "title": "取药登记",
             "content": [
               {
                 "type": "paragraph",
@@ -340,7 +340,7 @@
                 "time": "21:10"
               }
             },
-            "title": "事件 14",
+            "title": "伪装自缢、插死密码门内闩、扣死检修门挂锁",
             "content": [
               {
                 "type": "paragraph",
@@ -360,7 +360,7 @@
                 "time": "21:12"
               }
             },
-            "title": "事件 15",
+            "title": "员工梯上 9 层刷卡出",
             "content": [
               {
                 "type": "paragraph",
@@ -380,7 +380,7 @@
                 "time": "21:15"
               }
             },
-            "title": "事件 16",
+            "title": "入席至散席",
             "content": [
               {
                 "type": "paragraph",
@@ -500,7 +500,7 @@
                 "time": "20:30"
               }
             },
-            "title": "事件 1",
+            "title": "宴会入席主桌侧位",
             "content": [
               {
                 "type": "paragraph",
@@ -520,7 +520,7 @@
                 "time": "20:55"
               }
             },
-            "title": "事件 2",
+            "title": "目送养父离席",
             "content": [
               {
                 "type": "paragraph",
@@ -544,7 +544,7 @@
                 "time": "21:35"
               }
             },
-            "title": "事件 3",
+            "title": "刷卡进出 9 层员工门",
             "content": [
               {
                 "type": "paragraph",
@@ -564,7 +564,7 @@
                 "time": "21:40"
               }
             },
-            "title": "事件 4",
+            "title": "回席",
             "content": [
               {
                 "type": "paragraph",
@@ -584,7 +584,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 5",
+            "title": "与洛之梧走廊密谈",
             "content": [
               {
                 "type": "paragraph",
@@ -711,7 +711,7 @@
                 "time": "21:00"
               }
             },
-            "title": "事件 1",
+            "title": "赌场值台",
             "content": [
               {
                 "type": "paragraph",
@@ -731,7 +731,7 @@
                 "time": "21:05"
               }
             },
-            "title": "事件 2",
+            "title": "下班走 3 层员工通道回更衣柜",
             "content": [
               {
                 "type": "paragraph",
@@ -755,7 +755,7 @@
                 "time": "22:30"
               }
             },
-            "title": "事件 3",
+            "title": "更衣、在员工休息舱",
             "content": [
               {
                 "type": "paragraph",
@@ -775,7 +775,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 4",
+            "title": "路过 9 层走廊目击晏承与洛之梧密谈",
             "content": [
               {
                 "type": "paragraph",
@@ -898,7 +898,7 @@
                 "time": "20:30"
               }
             },
-            "title": "事件 1",
+            "title": "宴会入席",
             "content": [
               {
                 "type": "paragraph",
@@ -918,7 +918,7 @@
                 "time": "20:50"
               }
             },
-            "title": "事件 2",
+            "title": "离席取请柬",
             "content": [
               {
                 "type": "paragraph",
@@ -938,7 +938,7 @@
                 "time": "20:52"
               }
             },
-            "title": "事件 3",
+            "title": "9 层服务通道目击有人刷卡进员工门",
             "content": [
               {
                 "type": "paragraph",
@@ -960,7 +960,7 @@
                 "time": "21:00"
               }
             },
-            "title": "事件 4",
+            "title": "回席",
             "content": [
               {
                 "type": "paragraph",
@@ -980,7 +980,7 @@
                 "time": "21:20"
               }
             },
-            "title": "事件 5",
+            "title": "在场听讲《寒江》",
             "content": [
               {
                 "type": "paragraph",
@@ -1000,7 +1000,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 6",
+            "title": "与晏承走廊密谈",
             "content": [
               {
                 "type": "paragraph",
@@ -1123,7 +1123,7 @@
                 "time": "20:00"
               }
             },
-            "title": "事件 1",
+            "title": "起尾舱走廊监控黑屏",
             "content": [
               {
                 "type": "paragraph",
@@ -1143,7 +1143,7 @@
                 "time": "21:35"
               }
             },
-            "title": "事件 2",
+            "title": "例行巡检刷卡进出 3 层员工区",
             "content": [
               {
                 "type": "paragraph",
@@ -1163,7 +1163,7 @@
                 "time": "22:00"
               }
             },
-            "title": "事件 3",
+            "title": "-0:00 主甲板安保值守",
             "content": [
               {
                 "type": "paragraph",
@@ -1283,7 +1283,7 @@
                 "time": "20:00"
               }
             },
-            "title": "事件 1",
+            "title": "书吧与死者争执'画来路",
             "content": [
               {
                 "type": "paragraph",
@@ -1307,7 +1307,7 @@
                 "time": "21:15"
               }
             },
-            "title": "事件 2",
+            "title": "宴会入席",
             "content": [
               {
                 "type": "paragraph",
@@ -1327,7 +1327,7 @@
                 "time": "21:15"
               }
             },
-            "title": "事件 3",
+            "title": "注意到那个人入席",
             "content": [
               {
                 "type": "paragraph",
@@ -1353,7 +1353,7 @@
                 "time": "21:35"
               }
             },
-            "title": "事件 4",
+            "title": "主讲《寒江独钓图》",
             "content": [
               {
                 "type": "paragraph",
@@ -1377,7 +1377,7 @@
                 "time": "22:30"
               }
             },
-            "title": "事件 5",
+            "title": "散场寒暄",
             "content": [
               {
                 "type": "paragraph",
@@ -1694,7 +1694,7 @@
             "time": "15:00"
           }
         },
-        "title": "事件 1",
+        "title": "聂怀远借 40 号钥匙'通风",
         "content": [
           {
             "type": "paragraph",
@@ -1719,7 +1719,7 @@
             "time": "16:00"
           }
         },
-        "title": "事件 2",
+        "title": "拨挂锁成虚挂",
         "content": [
           {
             "type": "paragraph",
@@ -1740,7 +1740,7 @@
             "time": "16:30"
           }
         },
-        "title": "事件 3",
+        "title": "归还钥匙",
         "content": [
           {
             "type": "paragraph",
@@ -1761,7 +1761,7 @@
             "time": "20:00"
           }
         },
-        "title": "事件 4",
+        "title": "闻笛与晏起予书吧争执'画来路不正",
         "content": [
           {
             "type": "paragraph",
@@ -1786,7 +1786,7 @@
             "time": "20:30"
           }
         },
-        "title": "事件 5",
+        "title": "船长欢迎宴开幕",
         "content": [
           {
             "type": "paragraph",
@@ -1817,7 +1817,7 @@
             "time": "20:40"
           }
         },
-        "title": "事件 6",
+        "title": "聂怀远递字条",
         "content": [
           {
             "type": "paragraph",
@@ -1842,7 +1842,7 @@
             "time": "20:45"
           }
         },
-        "title": "事件 8",
+        "title": "聂怀远离席赴医务室预写",
         "content": [
           {
             "type": "paragraph",
@@ -1867,7 +1867,7 @@
             "time": "20:50"
           }
         },
-        "title": "事件 10",
+        "title": "洛之梧离席取请柬",
         "content": [
           {
             "type": "paragraph",
@@ -1892,7 +1892,7 @@
             "time": "20:52"
           }
         },
-        "title": "事件 11",
+        "title": "洛之梧目击聂怀远刷卡进 9 层员工门",
         "content": [
           {
             "type": "paragraph",
@@ -1919,7 +1919,7 @@
             "time": "20:52"
           }
         },
-        "title": "事件 25",
+        "title": "进",
         "content": [
           {
             "type": "paragraph",
@@ -1940,7 +1940,7 @@
             "time": "20:55"
           }
         },
-        "title": "事件 12",
+        "title": "晏起予向船长告假'取件好东西",
         "content": [
           {
             "type": "paragraph",
@@ -1965,7 +1965,7 @@
             "time": "20:58"
           }
         },
-        "title": "事件 13",
+        "title": "晏起予刷卡进员工门、入密码门",
         "content": [
           {
             "type": "paragraph",
@@ -1990,7 +1990,7 @@
             "time": "21:00"
           }
         },
-        "title": "事件 7",
+        "title": "库房看《寒江》",
         "content": [
           {
             "type": "paragraph",
@@ -2011,7 +2011,7 @@
             "time": "21:03"
           }
         },
-        "title": "事件 14",
+        "title": "晏起予俯身看《寒江》时被聂怀远以画框打包…",
         "content": [
           {
             "type": "paragraph",
@@ -2036,11 +2036,11 @@
             "time": "21:03"
           }
         },
-        "title": "事件 24",
+        "title": "停摆+表底'松年'=死亡时刻与仇家姓氏）…",
         "content": [
           {
             "type": "paragraph",
-            "text": "停摆+表底'松年'=死亡时刻与仇家姓氏）→ 门禁刷卡清单（"
+            "text": "怀表停摆于 21:03、表底镌着'松年'——死亡时刻与仇家姓氏同时被记录；门禁刷卡清单则留住了案发时段进出三层的每一个人。"
           }
         ],
         "characterIds": [],
@@ -2057,7 +2057,7 @@
             "time": "21:05"
           }
         },
-        "title": "事件 15",
+        "title": "邬双下班过 3 层员工通道",
         "content": [
           {
             "type": "paragraph",
@@ -2082,7 +2082,7 @@
             "time": "21:08"
           }
         },
-        "title": "事件 9",
+        "title": "取药登记并取药",
         "content": [
           {
             "type": "paragraph",
@@ -2103,7 +2103,7 @@
             "time": "21:08"
           }
         },
-        "title": "事件 27",
+        "title": "行系预写伪证）→ 钥匙借用登记+检修门勘…",
         "content": [
           {
             "type": "paragraph",
@@ -2136,7 +2136,7 @@
             "time": "21:10"
           }
         },
-        "title": "事件 16",
+        "title": "聂怀远伪装自缢",
         "content": [
           {
             "type": "paragraph",
@@ -2161,7 +2161,7 @@
             "time": "21:12"
           }
         },
-        "title": "事件 17",
+        "title": "聂怀远员工梯上 9 层刷卡出",
         "content": [
           {
             "type": "paragraph",
@@ -2186,11 +2186,11 @@
             "time": "21:12"
           }
         },
-        "title": "事件 26",
+        "title": "出的 20 分钟空窗）→ 医务室登记本",
         "content": [
           {
             "type": "paragraph",
-            "text": "出的 20 分钟空窗）→ 医务室登记本（"
+            "text": "聂怀远 21:12 刷卡出员工梯、21:32 入席——这 20 分钟空窗他解释为'去医务室取药'，而医务室登记本上的取药记录是案发前就预写好的。"
           }
         ],
         "characterIds": [],
@@ -2207,7 +2207,7 @@
             "time": "21:15"
           }
         },
-        "title": "事件 18",
+        "title": "聂怀远入席",
         "content": [
           {
             "type": "paragraph",
@@ -2238,7 +2238,7 @@
             "time": "21:35"
           }
         },
-        "title": "事件 19",
+        "title": "闻笛讲《寒江独钓图》",
         "content": [
           {
             "type": "paragraph",
@@ -2269,7 +2269,7 @@
             "time": "21:35"
           }
         },
-        "title": "事件 20",
+        "title": "晏承在 9 层走廊徘徊",
         "content": [
           {
             "type": "paragraph",
@@ -2294,7 +2294,7 @@
             "time": "21:35"
           }
         },
-        "title": "事件 21",
+        "title": "佟肃巡检刷卡过 3 层",
         "content": [
           {
             "type": "paragraph",
@@ -2319,7 +2319,7 @@
             "time": "22:30"
           }
         },
-        "title": "事件 22",
+        "title": "散席",
         "content": [
           {
             "type": "paragraph",
@@ -2340,11 +2340,11 @@
             "time": "22:40"
           }
         },
-        "title": "事件 23",
+        "title": "晏承与洛之梧走廊密谈'保底可转",
         "content": [
           {
             "type": "paragraph",
-            "text": "晏承与洛之梧走廊密谈'保底可转'（邬双目击）。0:30 库房恒温柜电源被翻倒木箱碰脱，温度漂移告警。0:40 佟肃与轮机员下 3 层，密码门内闩敲不开，走检修门发现悬尸；船医初判自缢。1:30 船医复验改判'先勒后悬'。破案链：船医复验（索沟水平环绕=勒杀后悬尸）→ 木箱下的怀表（"
+            "text": "晏承与洛之梧走廊密谈'保底可转'（邬双目击）。0:30 库房恒温柜电源被翻倒木箱碰脱，温度漂移告警。0:40 佟肃与轮机员下 3 层，密码门内闩敲不开，走检修门发现悬尸；船医初判自缢，1:30 复验改判'先勒后悬'。破案链：船医复验（索沟水平环绕=勒杀后悬尸）→ 木箱下的怀表（停摆 21:03、表底'松年'——时刻与姓氏的双署名）→ 检修门挂锁与密码门门闩（从内侧布死的密室）→ 浆糊与陈年绢纸味（邬双的鼻证）——链路闭合，锁定聂怀远。"
           }
         ],
         "characterIds": [

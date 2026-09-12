@@ -80,7 +80,7 @@
                 "time": "21:30"
               }
             },
-            "title": "事件 1",
+            "title": "雷师傅收车进店",
             "content": [
               {
                 "type": "paragraph",
@@ -100,7 +100,7 @@
                 "time": "21:50"
               }
             },
-            "title": "事件 2",
+            "title": "有人拎着两瓶酸梅汤进店赔罪",
             "content": [
               {
                 "type": "paragraph",
@@ -120,7 +120,7 @@
                 "time": "22:00"
               }
             },
-            "title": "事件 3",
+            "title": "你到门口收最后一张桌的现金",
             "content": [
               {
                 "type": "paragraph",
@@ -140,7 +140,7 @@
                 "time": "22:05"
               }
             },
-            "title": "事件 4",
+            "title": "你瞥见有人起身去调料台",
             "content": [
               {
                 "type": "paragraph",
@@ -160,7 +160,7 @@
                 "time": "22:35"
               }
             },
-            "title": "事件 5",
+            "title": "听到老雷那边响动",
             "content": [
               {
                 "type": "paragraph",
@@ -180,7 +180,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 6",
+            "title": "他闺女雷婷进店",
             "content": [
               {
                 "type": "paragraph",
@@ -302,7 +302,7 @@
                 "time": "21:30"
               }
             },
-            "title": "事件 1",
+            "title": "你给雷师傅续了茶",
             "content": [
               {
                 "type": "paragraph",
@@ -322,7 +322,7 @@
                 "time": "21:45"
               }
             },
-            "title": "事件 2",
+            "title": "曹姐支你去后厨切明日备货的毛肚",
             "content": [
               {
                 "type": "paragraph",
@@ -348,7 +348,7 @@
                 "time": "22:15"
               }
             },
-            "title": "事件 3",
+            "title": "你在后厨倒垃圾、洗碗",
             "content": [
               {
                 "type": "paragraph",
@@ -368,7 +368,7 @@
                 "time": "22:10"
               }
             },
-            "title": "事件 4",
+            "title": "隔着传菜口瞥见有人在调料台前站了很久",
             "content": [
               {
                 "type": "paragraph",
@@ -388,7 +388,7 @@
                 "time": "22:35"
               }
             },
-            "title": "事件 5",
+            "title": "前厅响动你后知后觉",
             "content": [
               {
                 "type": "paragraph",
@@ -410,7 +410,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 6",
+            "title": "你帮雷婷搬椅子",
             "content": [
               {
                 "type": "paragraph",
@@ -532,7 +532,7 @@
                 "time": "21:50"
               }
             },
-            "title": "事件 1",
+            "title": "你拎两瓶酸梅汤进店赔罪——昨晚曹姐在你摊…",
             "content": [
               {
                 "type": "paragraph",
@@ -554,7 +554,7 @@
                 "time": "22:00"
               }
             },
-            "title": "事件 2",
+            "title": "你看曹姐去门口收钱",
             "content": [
               {
                 "type": "paragraph",
@@ -576,7 +576,7 @@
                 "time": "22:10"
               }
             },
-            "title": "事件 3",
+            "title": "阿亮在传菜口探头",
             "content": [
               {
                 "type": "paragraph",
@@ -598,7 +598,7 @@
                 "time": "22:20"
               }
             },
-            "title": "事件 4",
+            "title": "雷师傅咂嘴说今晚的碟儿有点鲜",
             "content": [
               {
                 "type": "paragraph",
@@ -618,7 +618,7 @@
                 "time": "22:35"
               }
             },
-            "title": "事件 5",
+            "title": "他起身结账时栽倒",
             "content": [
               {
                 "type": "paragraph",
@@ -638,7 +638,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 6",
+            "title": "之后你一直坐原位",
             "content": [
               {
                 "type": "paragraph",
@@ -758,7 +758,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 1",
+            "title": "你进店",
             "content": [
               {
                 "type": "paragraph",
@@ -780,7 +780,7 @@
                 "time": "22:45"
               }
             },
-            "title": "事件 3",
+            "title": "你申请跟车去医院被民警拦下",
             "content": [
               {
                 "type": "paragraph",
@@ -800,7 +800,7 @@
                 "time": "22:50"
               }
             },
-            "title": "事件 2",
+            "title": "你借口去后厨洗手",
             "content": [
               {
                 "type": "paragraph",
@@ -820,7 +820,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 4",
+            "title": "你开始帮大家理时间线",
             "content": [
               {
                 "type": "paragraph",
@@ -1101,7 +1101,7 @@
             "time": "21:30"
           }
         },
-        "title": "事件 1",
+        "title": "雷师傅收车进店",
         "content": [
           {
             "type": "paragraph",
@@ -1126,7 +1126,7 @@
             "time": "21:45"
           }
         },
-        "title": "事件 2",
+        "title": "阿亮在茶水间窗台架起手机录打烊实况",
         "content": [
           {
             "type": "paragraph",
@@ -1151,7 +1151,7 @@
             "time": "21:50"
           }
         },
-        "title": "事件 3",
+        "title": "老周拎两瓶酸梅汤进店赔罪——昨晚曹姐在他…",
         "content": [
           {
             "type": "paragraph",
@@ -1178,7 +1178,7 @@
             "time": "22:00"
           }
         },
-        "title": "事件 4",
+        "title": "曹姐到门口收钱",
         "content": [
           {
             "type": "paragraph",
@@ -1207,7 +1207,7 @@
             "time": "22:15"
           }
         },
-        "title": "事件 5",
+        "title": "老周借帮忙收摊换盐罐、调油碟",
         "content": [
           {
             "type": "paragraph",
@@ -1232,7 +1232,7 @@
             "time": "22:10"
           }
         },
-        "title": "事件 6",
+        "title": "阿亮隔传菜口看见他手里的小袋子",
         "content": [
           {
             "type": "paragraph",
@@ -1257,7 +1257,7 @@
             "time": "22:20"
           }
         },
-        "title": "事件 7",
+        "title": "雷师傅咂嘴说碟儿有点鲜",
         "content": [
           {
             "type": "paragraph",
@@ -1278,7 +1278,7 @@
             "time": "22:35"
           }
         },
-        "title": "事件 8",
+        "title": "雷师傅起身结账时高钾血症发作栽倒",
         "content": [
           {
             "type": "paragraph",
@@ -1305,7 +1305,7 @@
             "time": "22:40"
           }
         },
-        "title": "事件 9",
+        "title": "雷婷进店",
         "content": [
           {
             "type": "paragraph",
@@ -1332,7 +1332,7 @@
             "time": "22:55"
           }
         },
-        "title": "事件 10",
+        "title": "救护车宣布死亡",
         "content": [
           {
             "type": "paragraph",
@@ -1353,7 +1353,7 @@
             "time": "23:10"
           }
         },
-        "title": "事件 11",
+        "title": "警方封锁小店",
         "content": [
           {
             "type": "paragraph",

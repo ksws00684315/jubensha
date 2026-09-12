@@ -80,7 +80,7 @@
                 "time": "23:05"
               }
             },
-            "title": "事件 1",
+            "title": "潜入药房窃药",
             "content": [
               {
                 "type": "paragraph",
@@ -100,7 +100,7 @@
                 "time": "23:10"
               }
             },
-            "title": "事件 2",
+            "title": "经后廊上石阶道",
             "content": [
               {
                 "type": "paragraph",
@@ -120,7 +120,7 @@
                 "time": "23:15"
               }
             },
-            "title": "事件 3",
+            "title": "药粉入酒壶",
             "content": [
               {
                 "type": "paragraph",
@@ -140,7 +140,7 @@
                 "time": "23:25"
               }
             },
-            "title": "事件 4",
+            "title": "女将摇铃入池",
             "content": [
               {
                 "type": "paragraph",
@@ -160,7 +160,7 @@
                 "time": "23:30"
               }
             },
-            "title": "事件 5",
+            "title": "女将饮酒",
             "content": [
               {
                 "type": "paragraph",
@@ -180,7 +180,7 @@
                 "time": "23:40"
               }
             },
-            "title": "事件 6",
+            "title": "相见",
             "content": [
               {
                 "type": "paragraph",
@@ -200,7 +200,7 @@
                 "time": "23:45"
               }
             },
-            "title": "事件 7",
+            "title": "摆正木屐、放回酒壶",
             "content": [
               {
                 "type": "paragraph",
@@ -220,7 +220,7 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 8",
+            "title": "翻回汤札",
             "content": [
               {
                 "type": "paragraph",
@@ -240,7 +240,7 @@
                 "time": "23:52"
               }
             },
-            "title": "事件 9",
+            "title": "下山",
             "content": [
               {
                 "type": "paragraph",
@@ -260,7 +260,7 @@
                 "time": "23:58"
               }
             },
-            "title": "事件 10",
+            "title": "回房",
             "content": [
               {
                 "type": "paragraph",
@@ -380,7 +380,7 @@
                 "time": "23:00"
               }
             },
-            "title": "事件 1",
+            "title": "广播闭汤",
             "content": [
               {
                 "type": "paragraph",
@@ -404,7 +404,7 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 2",
+            "title": "在账房核账",
             "content": [
               {
                 "type": "paragraph",
@@ -424,7 +424,7 @@
                 "time": "23:20"
               }
             },
-            "title": "事件 3",
+            "title": "送毛巾至男汤更衣区",
             "content": [
               {
                 "type": "paragraph",
@@ -446,7 +446,7 @@
                 "time": "23:55"
               }
             },
-            "title": "事件 4",
+            "title": "查汤发现女将遗体",
             "content": [
               {
                 "type": "paragraph",
@@ -566,7 +566,7 @@
                 "time": "23:05"
               }
             },
-            "title": "事件 1",
+            "title": "端夜宵至女将处",
             "content": [
               {
                 "type": "paragraph",
@@ -586,7 +586,7 @@
                 "time": "23:10"
               }
             },
-            "title": "事件 2",
+            "title": "与女将争执'卖店",
             "content": [
               {
                 "type": "paragraph",
@@ -610,7 +610,7 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 3",
+            "title": "独自在料理间腌梅",
             "content": [
               {
                 "type": "paragraph",
@@ -630,7 +630,7 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 4",
+            "title": "封坛",
             "content": [
               {
                 "type": "paragraph",
@@ -650,7 +650,7 @@
                 "time": "23:55"
               }
             },
-            "title": "事件 5",
+            "title": "闻哨声赶往后山",
             "content": [
               {
                 "type": "paragraph",
@@ -770,7 +770,7 @@
                 "time": "22:00"
               }
             },
-            "title": "事件 1",
+            "title": "大堂饮酒",
             "content": [
               {
                 "type": "paragraph",
@@ -794,7 +794,7 @@
                 "time": "22:50"
               }
             },
-            "title": "事件 2",
+            "title": "账房最后谈判",
             "content": [
               {
                 "type": "paragraph",
@@ -818,11 +818,11 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 3",
+            "title": "男汤泡浴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "男汤泡浴（"
+                "text": "男汤独自泡浴近五十分钟。"
               }
             ],
             "characterIds": [],
@@ -838,11 +838,11 @@
                 "time": "23:20"
               }
             },
-            "title": "事件 4",
+            "title": "贺四喜送毛巾照面",
             "content": [
               {
                 "type": "paragraph",
-                "text": "贺四喜送毛巾照面，更衣柜钥匙记录可查）。"
+                "text": "其间贺四喜送毛巾与你照面，更衣柜钥匙记录可查——构成你的不在场证明。"
               }
             ],
             "characterIds": [
@@ -860,7 +860,7 @@
                 "time": "23:55"
               }
             },
-            "title": "事件 5",
+            "title": "闻哨赶往后山",
             "content": [
               {
                 "type": "paragraph",
@@ -980,7 +980,7 @@
                 "time": "22:40"
               }
             },
-            "title": "事件 1",
+            "title": "后山违规飞行",
             "content": [
               {
                 "type": "paragraph",
@@ -1002,7 +1002,7 @@
                 "time": "23:15"
               }
             },
-            "title": "事件 2",
+            "title": "溜入储物间取回设备",
             "content": [
               {
                 "type": "paragraph",
@@ -1022,7 +1022,7 @@
                 "time": "23:20"
               }
             },
-            "title": "事件 3",
+            "title": "上后院雪坡取机位",
             "content": [
               {
                 "type": "paragraph",
@@ -1046,7 +1046,7 @@
                 "time": "23:49"
               }
             },
-            "title": "事件 4",
+            "title": "雪坡飞行拍摄",
             "content": [
               {
                 "type": "paragraph",
@@ -1066,7 +1066,7 @@
                 "time": "23:43"
               }
             },
-            "title": "事件 5",
+            "title": "拍到石阶道上行身影",
             "content": [
               {
                 "type": "paragraph",
@@ -1086,7 +1086,7 @@
                 "time": "23:50"
               }
             },
-            "title": "事件 6",
+            "title": "回房",
             "content": [
               {
                 "type": "paragraph",
@@ -1106,7 +1106,7 @@
                 "time": "23:55"
               }
             },
-            "title": "事件 7",
+            "title": "闻哨声携设备赶往",
             "content": [
               {
                 "type": "paragraph",
@@ -1230,7 +1230,7 @@
                 "time": "23:45"
               }
             },
-            "title": "事件 1",
+            "title": "理疗室碾配温灸散",
             "content": [
               {
                 "type": "paragraph",
@@ -1250,7 +1250,7 @@
                 "time": "23:55"
               }
             },
-            "title": "事件 2",
+            "title": "哨声后第一个赶往后山验看遗体",
             "content": [
               {
                 "type": "paragraph",
@@ -1552,7 +1552,7 @@
             "time": "22:00"
           }
         },
-        "title": "事件 1",
+        "title": "程鹜大堂饮酒",
         "content": [
           {
             "type": "paragraph",
@@ -1581,7 +1581,7 @@
             "time": "22:50"
           }
         },
-        "title": "事件 2",
+        "title": "程鹜与女将账房最后谈判",
         "content": [
           {
             "type": "paragraph",
@@ -1606,7 +1606,7 @@
             "time": "23:00"
           }
         },
-        "title": "事件 3",
+        "title": "贺四喜广播闭汤",
         "content": [
           {
             "type": "paragraph",
@@ -1633,7 +1633,7 @@
             "time": "23:05"
           }
         },
-        "title": "事件 5",
+        "title": "阮月潜入药房窃药",
         "content": [
           {
             "type": "paragraph",
@@ -1660,7 +1660,7 @@
             "time": "23:10"
           }
         },
-        "title": "事件 6",
+        "title": "阮月上石阶道翻'星'字汤札、藏身更衣棚",
         "content": [
           {
             "type": "paragraph",
@@ -1687,7 +1687,7 @@
             "time": "23:15"
           }
         },
-        "title": "事件 8",
+        "title": "阮月药粉入酒壶",
         "content": [
           {
             "type": "paragraph",
@@ -1714,7 +1714,7 @@
             "time": "23:20"
           }
         },
-        "title": "事件 9",
+        "title": "贺四喜送毛巾至男汤",
         "content": [
           {
             "type": "paragraph",
@@ -1743,7 +1743,7 @@
             "time": "23:25"
           }
         },
-        "title": "事件 10",
+        "title": "女将提满壶摇铃入池",
         "content": [
           {
             "type": "paragraph",
@@ -1764,7 +1764,7 @@
             "time": "23:30"
           }
         },
-        "title": "事件 11",
+        "title": "女将饮酒",
         "content": [
           {
             "type": "paragraph",
@@ -1789,7 +1789,7 @@
             "time": "23:49"
           }
         },
-        "title": "事件 12",
+        "title": "向芸飞行拍摄",
         "content": [
           {
             "type": "paragraph",
@@ -1814,7 +1814,7 @@
             "time": "23:40"
           }
         },
-        "title": "事件 13",
+        "title": "相见",
         "content": [
           {
             "type": "paragraph",
@@ -1839,7 +1839,7 @@
             "time": "23:43"
           }
         },
-        "title": "事件 14",
+        "title": "向芸拍到提灯上行身影",
         "content": [
           {
             "type": "paragraph",
@@ -1866,7 +1866,7 @@
             "time": "23:43"
           }
         },
-        "title": "事件 19",
+        "title": "上行身影、店内羽织）→ 耳后的月牙痕",
         "content": [
           {
             "type": "paragraph",
@@ -1899,7 +1899,7 @@
             "time": "23:45"
           }
         },
-        "title": "事件 15",
+        "title": "阮月摆正木屐、放回酒壶",
         "content": [
           {
             "type": "paragraph",
@@ -1924,7 +1924,7 @@
             "time": "23:50"
           }
         },
-        "title": "事件 16",
+        "title": "阮月翻回汤札",
         "content": [
           {
             "type": "paragraph",
@@ -1951,7 +1951,7 @@
             "time": "23:52"
           }
         },
-        "title": "事件 17",
+        "title": "阮月下山",
         "content": [
           {
             "type": "paragraph",
@@ -1976,11 +1976,11 @@
             "time": "23:55"
           }
         },
-        "title": "事件 18",
+        "title": "贺四喜查汤发现遗体",
         "content": [
           {
             "type": "paragraph",
-            "text": "贺四喜查汤发现遗体，吹哨集众；程鹜更衣闻声赶至。0:10 莫问津验看并盘点药房，发现缺药。破案链：验看记录（按入水中而非滑倒）→ 清酒壶沉渣（药与酒的合谋）→ 药房缺板（药物来源与窃药路径）→ 挂反的汤札（伪装离池的破绽）→ 无人机的存储卡（"
+            "text": "贺四喜查汤发现遗体，吹哨集众；程鹜更衣闻声赶至。0:10 莫问津验看并盘点药房，发现缺药。破案链：验看记录（按入水中而非滑倒）→ 清酒壶沉渣（药与酒的合谋）→ 药房缺板（药物来源与窃药路径）→ 挂反的汤札（伪装离池的破绽）→ 无人机的存储卡（拍下池面异常与更衣动线）——链路闭合，锁定程鹜。"
           }
         ],
         "characterIds": [
