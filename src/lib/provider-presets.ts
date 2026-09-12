@@ -1,3 +1,5 @@
+import type { BindingSlot } from "@/core/llm/types";
+
 export interface ProviderPreset {
   key: string;
   label: string;
@@ -80,7 +82,7 @@ export const PROVIDER_PRESETS: ProviderPreset[] = [
 ];
 
 export const BINDING_SLOTS: Array<{
-  key: "dm" | "culprit" | "player" | "generator" | "tts";
+  key: BindingSlot;
   label: string;
   description: string;
 }> = [
@@ -89,4 +91,16 @@ export const BINDING_SLOTS: Array<{
   { key: "player", label: "普通 AI 玩家", description: "推理与表演，可用性价比模型" },
   { key: "generator", label: "剧本生成", description: "AI 生成原创剧本，建议用强模型" },
   { key: "tts", label: "语音合成", description: "AI 发言配音（OpenAI /audio/speech 兼容协议）" },
+  {
+    key: "embedding",
+    label: "向量检索（记忆）",
+    description:
+      "长局记忆召回所需的文本向量。需选支持 /embeddings 的服务商与模型（如 text-embedding-3-small、bge-m3）；不绑定则记忆召回整层停用，不影响主流程。",
+  },
 ];
+
+/**
+ * 槽位 key 的单一事实来源：API 入参校验（`/api/bindings`）与设置页渲染都读这里，
+ * 避免再出现「运行时支持 embedding、枚举里却没有」的漂移。
+ */
+export const BINDING_SLOT_KEYS = BINDING_SLOTS.map((s) => s.key) as [BindingSlot, ...BindingSlot[]];

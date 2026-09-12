@@ -11,7 +11,18 @@ export function appConfigPath(): string {
   return path.join(process.cwd(), APP_CONFIG_FILE);
 }
 
-export function readAppConfig(): AppConfig {
+/**
+ * 配置读缓存。
+ *
+ * 注意 `db` 代理每次属性访问都会走 `resolveDatabaseUrl() → readAppConfig()`，
+ * 也就是一次 AI 回合里几十次 DB 调用 → 几十次 existsSync+readFileSync 同步 syscall。
+ * 这里加一层短 TTL 缓存把 syscall 摊平，同时保住"保存后立即生效"的语义：
+ * `writeAppConfig` 写完直接刷新缓存，手工改文件则最多 1 秒后生效。
+ */
+const APP_CONFIG_TTL_MS = 1000;
+let configCache: { at: number; value: AppConfig } | null = null;
+
+function readAppConfigFromDisk(): AppConfig {
   const file = appConfigPath();
   if (!existsSync(file)) return {};
   try {
@@ -24,9 +35,18 @@ export function readAppConfig(): AppConfig {
   }
 }
 
+export function readAppConfig(): AppConfig {
+  const now = Date.now();
+  if (configCache && now - configCache.at < APP_CONFIG_TTL_MS) return configCache.value;
+  const value = readAppConfigFromDisk();
+  configCache = { at: now, value };
+  return value;
+}
+
 export function writeAppConfig(patch: AppConfig): AppConfig {
   const next: AppConfig = { ...readAppConfig(), ...patch };
   writeFileSync(appConfigPath(), JSON.stringify(next, null, 2) + "\n", "utf8");
+  configCache = { at: Date.now(), value: next };
   return next;
 }
 

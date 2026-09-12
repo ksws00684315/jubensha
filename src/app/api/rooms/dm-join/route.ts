@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import crypto from "node:crypto";
 import { decideDmJoin } from "@/lib/join";
+import { checkJoinRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({
   code: z.string().min(3),
@@ -13,6 +14,14 @@ const schema = z.object({
 
 /** 真人 DM 加入：首次认领后，恢复必须提供旧 token 或房主明确确认。 */
 export async function POST(req: Request) {
+  // 与座位加入共用同一限流桶：DM 一旦被抢占就等于全量事件可见
+  const limited = checkJoinRateLimit(req);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: `尝试过于频繁，请 ${limited.retryAfterSec} 秒后再试` },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfterSec) } }
+    );
+  }
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });

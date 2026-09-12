@@ -2,15 +2,18 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
+import { BINDING_SLOT_KEYS } from "@/lib/provider-presets";
 import { MAX_BINDING_OUTPUT_TOKENS, MIN_BINDING_OUTPUT_TOKENS } from "@/core/llm/output-tokens";
 
+const slotSchema = z.enum(BINDING_SLOT_KEYS);
+
 const upsertSchema = z.object({
-  slot: z.enum(["dm", "culprit", "player", "generator", "tts"]),
+  slot: slotSchema,
   providerId: z.string().min(1),
   modelId: z.string().min(1),
   temperature: z.number().min(0).max(2).nullable().optional(),
   maxTokens: z.number().int().min(MIN_BINDING_OUTPUT_TOKENS).max(MAX_BINDING_OUTPUT_TOKENS).nullable().optional(),
-  fallbackSlot: z.enum(["dm", "culprit", "player", "generator", "tts"]).nullable().optional(),
+  fallbackSlot: slotSchema.nullable().optional(),
 });
 
 export async function GET(req: Request) {

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import crypto from "node:crypto";
 import { decideJoin } from "@/lib/join";
+import { checkJoinRateLimit } from "@/lib/rate-limit";
 
 const joinSchema = z.object({
   code: z.string().min(3),
@@ -17,6 +18,14 @@ function newToken() {
 
 /** 大厅入座；恢复已有座位必须提供旧 token，或由房主 token 明确确认。 */
 export async function POST(req: Request) {
+  // 限流放在查库之前：房间码只有 5 位，无限制时可被在线枚举并抢占真人座位
+  const limited = checkJoinRateLimit(req);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: `尝试过于频繁，请 ${limited.retryAfterSec} 秒后再试` },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfterSec) } }
+    );
+  }
   const body = await req.json().catch(() => null);
   const parsed = joinSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });
