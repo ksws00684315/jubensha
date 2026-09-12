@@ -93,30 +93,6 @@ export const agent = {
     }
   },
 
-  /** DM 评估人类发言后哪些 AI 接话 */
-  async dmModerate(ctx: AgentCtx, humanSeat: number): Promise<{ respond: number[]; hint: string }> {
-    const seats = ctx.state.seats.filter((s) => s.kind === "ai" && s.index !== humanSeat);
-    if (!seats.length) return { respond: [], hint: "" };
-    const requireJson = `一位玩家刚发言。请只根据公开记录决定哪些 AI 接话。请只输出 JSON：{"respond":[座位号...]}。respond 从这些座位里挑 0-2 个（被点名/被质疑/刚被问到的人）：${seats
-      .map((s) => `${s.index + 1}`)
-      .join("、")}。不要因为「谁更像真凶」来挑人。没有合适人选就输出空数组。`;
-    const res = await chat({
-      purpose: "dm",
-      gameId: ctx.gameId,
-      messages: buildDmContext(ctx.script, ctx.state, ctx.events, {
-        task: "评估公开讨论并决定 AI 接话人选。不要暗示谁是真凶。",
-        requireJson,
-      }),
-      temperature: 0.3,
-    });
-    const parsed = extractJson<{ respond?: number[] }>(res.text);
-    const valid = new Set(seats.map((s) => s.index));
-    return {
-      respond: (parsed?.respond ?? []).map((n) => n - 1).filter((n) => valid.has(n)).slice(0, 2),
-      hint: "",
-    };
-  },
-
   /** 玩家自我介绍 / 发言（带泄密守卫与一次重试） */
   async playerSpeak(ctx: AgentCtx, seatIndex: number, opts: { intro?: boolean; hint?: string; recall?: string } = {}): Promise<string> {
     const build = () =>

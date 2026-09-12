@@ -286,12 +286,22 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
 
 /** 批量文本向量：OpenAI 兼容 POST /embeddings。
  * 未绑定 embedding 槽位或调用失败一律返回 null——向量检索层整体静默降级，不影响主流程。 */
+let embedUnboundWarned = false;
+
 export async function embedTexts(texts: string[]): Promise<number[][] | null> {
   if (!texts.length) return [];
   let b: ResolvedBinding;
   try {
     b = await resolveBinding("embedding");
-  } catch {
+  } catch (err) {
+    // 每次发言都会走这里，只提示一次，避免刷屏
+    if (!embedUnboundWarned) {
+      embedUnboundWarned = true;
+      console.warn(
+        "[llm] embedding 槽位未绑定，向量检索记忆层已停用（可在「设置 → AI 接入」绑定）：",
+        err instanceof Error ? err.message : err
+      );
+    }
     return null;
   }
   const started = Date.now();

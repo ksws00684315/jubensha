@@ -12,15 +12,25 @@ import type { ClueV2, ScriptDocV2 } from "@/core/script/v2/schema";
  *  - 摘要是全场公共视角，不包含任何座位的私密事件（防火墙不变式）；
  *    玩家自己的私密情报始终逐字出现在其上下文尾部【你持有的线索卡】，不会因摘要丢失。
  * 代价与策略：摘要文本位于 prompt 用户消息开头，更新一次即全场缓存失效一次；
- * 引擎因此把更新锚定在轮次边界（transitionSearch/transitionDiscussion），轮内前缀稳定。
+ * 引擎因此把更新锚定在轮次边界（transitionSearch/transitionDiscussion），轮内前缀稳定，
+ * 并按 SUMMARY_MIN_INTERVAL_ROUNDS 限制边界上的更新频率（实测命中率偏低的主因就是它）。
  */
 
 /** 逐字保留的近期窗口大小（按渲染后字符数估算） */
 export const RECENT_WINDOW_CHARS = 6000;
 /** 近期窗口至少保留的事件条数（防止窗口内全是短事件时把关键发言切进摘要） */
 export const MIN_RECENT_EVENTS = 8;
-/** 摘要锚点之后新增内容超过该字符数才值得再调一次 LLM 更新摘要 */
-export const SUMMARY_TRIGGER_CHARS = 2500;
+/**
+ * 摘要锚点之后新增内容超过该字符数才值得再调一次 LLM 更新摘要。
+ * 实测（近 7 天 UsageLog）整体前缀命中率仅 32%、DM 侧只有 6.6%，根因就是摘要重写会整体打掉前缀；
+ * 把阈值从 2500 提到 4000 可减少同步频次，代价是摘要略旧——仍在 RECENT_WINDOW_CHARS 逐字窗口之内。
+ */
+export const SUMMARY_TRIGGER_CHARS = 4000;
+/**
+ * 摘要更新之间的最小轮次边界间隔（1 = 每个边界都可更新）。
+ * 轮次边界恰好是 DM 每次调用之前，所以边界越频繁命中率越低；设为 2 等于把失效次数砍半。
+ */
+export const SUMMARY_MIN_INTERVAL_ROUNDS = 2;
 
 export interface MemoryPlan {
   /** 等待被摘要的公共事件前缀 */

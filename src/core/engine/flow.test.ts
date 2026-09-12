@@ -134,6 +134,21 @@ describe("技能发动校验 validateUseSkill 与质询提示", () => {
     expect(validateUseSkill(skillScript, skillState(), 0, "confront", 1, "你那晚在哪")).toBeNull();
   });
 
+  // 回归 A1：搜证阶段没有"当众作答"机制，质询会白扣行动点且永不被消费。
+  it("质询卡即使写成搜证阶段也不可发动（搜证阶段无人消费 pendingAnswer）", () => {
+    const searchSkill = { ...skill, phase: "SEARCH" as const };
+    const searchScript = {
+      flow: { actionPointsPerRound: 2 },
+      characters: [
+        { id: "char_a", privateCard: { skills: [searchSkill] } },
+        { id: "char_b", privateCard: { skills: [] } },
+      ],
+    };
+    const state = skillState();
+    state.phase = "SEARCH";
+    expect(validateUseSkill(searchScript, state, 0, "confront", 1, "你那晚在哪")).toBe("【质询】只能在圆桌讨论阶段发动");
+  });
+
   it("forcedAnswerHint 包含强制正面回答的约束", () => {
     const hint = forcedAnswerHint("张三 当众问你：「案发时你在哪？」。");
     expect(hint).toContain("【技能质询】");
@@ -161,6 +176,14 @@ describe("终局完成判定 finaleMissing", () => {
     const partial = { votes: { "0": { target: 1 } }, quizAnswers: { "1": { q: "a" } } };
     expect(finaleMissing(partial, { voteMode: "hybrid", seats, hasQuiz: true })).toEqual({ votes: [1, 2], quiz: [0, 2] });
     expect(finaleMissing(empty, { voteMode: "hybrid", seats, hasQuiz: false })).toEqual({ votes: seats, quiz: [] });
+  });
+
+  // 固化设计意图：culprit 模式下即便剧本带了 quiz（校验器只报 warning），也绝不要求答题——
+  // 否则会出现"必须答题但界面不做题"的永久卡死。
+  it("culprit 带 quiz 时依然不要求答题（防卡死）", () => {
+    expect(finaleMissing(empty, { voteMode: "culprit", seats, hasQuiz: true }).quiz).toEqual([]);
+    const voted = { votes: { "0": { target: 1 }, "1": { target: 0 }, "2": { target: 1 } }, quizAnswers: {} };
+    expect(finaleMissing(voted, { voteMode: "culprit", seats, hasQuiz: true })).toEqual({ votes: [], quiz: [] });
   });
 });
 
