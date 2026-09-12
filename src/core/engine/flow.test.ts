@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { ensureDiscussionState, QUESTIONS_PER_PLAYER, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk } from "./flow";
+import {
+  ensureDiscussionState,
+  QUESTIONS_PER_PLAYER,
+  nextAfterDiscussion,
+  nextAfterSearch,
+  validateDiscussionAsk,
+  validateTransfer,
+} from "./flow";
 import { initialState } from "./state";
 
 describe("阶段轮次推进", () => {
@@ -43,5 +50,38 @@ describe("阶段轮次推进", () => {
     state.questionsLeft["0"] = 2;
     state.pendingAnswer = { fromSeat: 0, toSeat: 1, question: "你当时在哪？" };
     expect(validateDiscussionAsk(state, 0, 1)).toBe("请先等待当前提问被回答");
+  });
+});
+
+describe("线索转交校验 validateTransfer", () => {
+  const script = { flow: { allowClueTransfer: true }, clues: [{ id: "a" }, { id: "b" }] };
+
+  function transferState() {
+    const state = initialState([
+      { index: 0, kind: "human", characterId: "a", playerName: "A" },
+      { index: 1, kind: "ai", characterId: "b", playerName: "B" },
+      { index: 2, kind: "empty", characterId: "", playerName: "" },
+    ]);
+    state.phase = "DISCUSSION";
+    state.heldClues[0] = ["a"];
+    state.clueStates.a = { discoveredBy: 0, isPublic: false };
+    state.clueStates.b = { discoveredBy: 0, isPublic: true };
+    state.heldClues[0].push("b");
+    return state;
+  }
+
+  it("flow 关闭 / 非讨论期 / 未持有 / 已公开 / 目标非法 均拒绝", () => {
+    expect(validateTransfer({ ...script, flow: { allowClueTransfer: false } }, transferState(), 0, "a", 1)).toBe("本局不支持线索转交");
+    const search = transferState();
+    search.phase = "SEARCH";
+    expect(validateTransfer(script, search, 0, "a", 1)).toBe("当前不在讨论环节");
+    expect(validateTransfer(script, transferState(), 0, "nope", 1)).toBe("你没有这张线索卡");
+    expect(validateTransfer(script, transferState(), 0, "b", 1)).toBe("公开线索无需转交");
+    expect(validateTransfer(script, transferState(), 0, "a", 0)).toBe("不能转交给自己");
+    expect(validateTransfer(script, transferState(), 0, "a", 2)).toBe("转交对象不合法");
+  });
+
+  it("讨论期转交未公开持有线索给其他活跃座位 → 通过", () => {
+    expect(validateTransfer(script, transferState(), 0, "a", 1)).toBeNull();
   });
 });

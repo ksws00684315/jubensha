@@ -11,7 +11,7 @@ function visibleTo(event: EngineEvent, seatIndex: number | null): boolean {
   if (event.visibility === "public") return true;
   if (seatIndex === null) return false;
   if (event.visibility === `seat:${seatIndex}`) return true;
-  if (event.type === "private" && event.fromSeat === seatIndex) return true;
+  if ((event.type === "private" || event.type === "transfer") && event.fromSeat === seatIndex) return true;
   return false;
 }
 

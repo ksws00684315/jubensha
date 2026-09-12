@@ -52,7 +52,7 @@ export interface RoomView {
 
 export interface GameEventView {
   seq: string;
-  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking";
+  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer";
   phase: string;
   round: number;
   fromSeat: number | null;
@@ -89,7 +89,7 @@ export interface GameSummary {
   round: number;
   scriptTitle: string;
   background: string;
-  flow: { searchRounds: number; discussionRounds: number; allowPrivateChat: boolean; privateChatMessageLimit: number };
+  flow: { searchRounds: number; discussionRounds: number; allowPrivateChat: boolean; privateChatMessageLimit: number; allowClueTransfer: boolean };
   locations: string[];
   availableLocations: string[];
   seats: Array<{

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { cluesVisibleToSeat, initialState, sanitizeEventContent } from "./state";
+import { cluesVisibleToSeat, initialState, renderEventLog, sanitizeEventContent, visibleTo } from "./state";
+import type { EngineEvent } from "./types";
 
 describe("cluesVisibleToSeat", () => {
   const clues = [
@@ -30,5 +31,31 @@ describe("事件内容脱敏", () => {
       text: "发言",
       speakerName: "角色",
     });
+  });
+});
+
+describe("线索转交事件的可见性与渲染", () => {
+  const transferEvent = (fromSeat: number, toSeat: number): EngineEvent => ({
+    seq: "1",
+    type: "transfer",
+    phase: "DISCUSSION",
+    round: 1,
+    fromSeat,
+    toSeat,
+    visibility: `seat:${toSeat}`,
+    content: { clueId: "a", clueName: "银簪", clueContent: "抽屉深处的一支银簪", text: "悄悄把一张线索卡交给了你。" },
+    createdAt: "",
+  });
+
+  it("收卡人看到「你收到」，转出方看到「你交出」，无关座位与观战不可见", () => {
+    const ev = transferEvent(0, 1);
+    expect(renderEventLog([ev], 1)).toContain("【线索转交】你收到「银簪」");
+    expect(renderEventLog([ev], 1)).toContain("抽屉深处的一支银簪");
+    expect(renderEventLog([ev], 0)).toContain("【线索转交】你交出「银簪」");
+    expect(renderEventLog([ev], 2)).toBe("");
+    expect(renderEventLog([ev], null)).toBe("");
+    expect(visibleTo(ev, 1)).toBe(true);
+    expect(visibleTo(ev, 0)).toBe(true);
+    expect(visibleTo(ev, 2)).toBe(false);
   });
 });

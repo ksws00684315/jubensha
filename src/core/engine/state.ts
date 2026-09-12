@@ -66,6 +66,17 @@ export function rebuildStateFromEvents(base: GameState, events: GameEvent[]): Ga
         }
         break;
       }
+      case "transfer": {
+        // 持有权迁移：转出方移除、转入方获得（发现者 discoveredBy 不变）
+        const clueId = (ev.content as { clueId?: string }).clueId;
+        const from = ev.fromSeat;
+        const to = ev.toSeat;
+        if (clueId && from !== null && to !== null) {
+          state.heldClues[from] = (state.heldClues[from] ?? []).filter((id) => id !== clueId);
+          state.heldClues[to] = [...(state.heldClues[to] ?? []), clueId];
+        }
+        break;
+      }
       case "phase":
         state.spokenSeats = [];
         state.searchChoices = {};
@@ -115,13 +126,13 @@ export async function persistState(gameId: string, state: GameState): Promise<vo
   await db.game.update({ where: { id: gameId }, data: { phase: state.phase, round: state.round, state: state as unknown as Prisma.InputJsonValue } });
 }
 
-/** 事件可见性过滤：玩家视角只看 public + 自己座位 + 自己发出的私聊 */
+/** 事件可见性过滤：玩家视角只看 public + 自己座位 + 自己发出的私聊/转交 */
 export function visibleTo(event: EngineEvent, seatIndex: number | null): boolean {
   if (event.visibility === "public") return true;
   if (seatIndex === null) return false; // null = 纯观战：仅 public
   if (event.visibility === `seat:${seatIndex}`) return true;
   if (event.type === "speech" && event.fromSeat === seatIndex) return true;
-  if (event.type === "private" && event.fromSeat === seatIndex) return true;
+  if ((event.type === "private" || event.type === "transfer") && event.fromSeat === seatIndex) return true;
   return false;
 }
 
@@ -163,6 +174,11 @@ export function renderEventLog(events: EngineEvent[], seatIndex: number | null, 
         const from = ev.fromSeat === seatIndex ? "你" : `玩家${(ev.fromSeat ?? 0) + 1}`;
         const to = ev.toSeat === seatIndex ? "你" : `玩家${(ev.toSeat ?? 0) + 1}`;
         lines.push(`【私聊 ${from} → ${to}】${ev.content.text ?? ""}`);
+        break;
+      }
+      case "transfer": {
+        const dir = ev.fromSeat === seatIndex ? "你交出" : "你收到";
+        lines.push(`【线索转交】${dir}「${ev.content.clueName ?? ev.content.clueId ?? "?"}」: ${ev.content.clueContent ?? ""}`);
         break;
       }
       case "thinking":
@@ -209,7 +225,7 @@ export function clueReachable(
 }
 
 /** 座位人数与存活座位（MVP 全员存活） */
-export function activeSeats(state: GameState): number[] {
+export function activeSeats(state: Pick<GameState, "seats">): number[] {
   return state.seats.filter((s) => s.kind !== "empty").map((s) => s.index);
 }
 

@@ -2684,6 +2684,10 @@
           "minimum": 2,
           "maximum": 6
         },
+        "allowClueTransfer": {
+          "default": false,
+          "type": "boolean"
+        },
         "acts": {
           "default": [],
           "type": "array",
@@ -2798,6 +2802,7 @@
         "discussionRounds",
         "allowPrivateChat",
         "privateChatMessageLimit",
+        "allowClueTransfer",
         "acts"
       ],
       "additionalProperties": false

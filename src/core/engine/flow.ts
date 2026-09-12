@@ -37,6 +37,26 @@ export function validateDiscussionAsk(state: GameState, fromSeat: number, toSeat
   return null;
 }
 
+/**
+ * 线索转交前置校验（讨论阶段，把未公开的持有线索面交给其他座位）。
+ * 返回错误文案，通过则为 null。持有权唯一事实源是 heldClues。
+ */
+export function validateTransfer(
+  script: { flow: { allowClueTransfer: boolean }; clues: ReadonlyArray<{ id: string }> },
+  state: Pick<GameState, "phase" | "seats" | "heldClues" | "clueStates">,
+  fromSeat: number,
+  clueId: string,
+  toSeat: number
+): string | null {
+  if (state.phase !== "DISCUSSION") return "当前不在讨论环节";
+  if (script.flow.allowClueTransfer !== true) return "本局不支持线索转交";
+  if (toSeat === fromSeat) return "不能转交给自己";
+  if (!activeSeats(state).includes(toSeat)) return "转交对象不合法";
+  if (!(state.heldClues[fromSeat] ?? []).includes(clueId)) return "你没有这张线索卡";
+  if (state.clueStates[clueId]?.isPublic === true) return "公开线索无需转交";
+  return null;
+}
+
 /** 已解锁的幕：搜证/讨论阶段按 roundStart ≤ 当前轮次解锁；投票阶段视为全部解锁（投票必在所有搜证轮之后）。 */
 export function unlockedActs(acts: ActV2[], state: Pick<GameState, "phase" | "round">): ActV2[] {
   if (!acts.length) return [];

@@ -48,6 +48,7 @@ export default function PlayPage() {
   const [askTarget, setAskTarget] = useState<number | null>(null);
   const [askText, setAskText] = useState("");
   const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
+  const [transferClueId, setTransferClueId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
@@ -173,7 +174,7 @@ export default function PlayPage() {
           setDmDelta("");
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private") {
+        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer") {
           const q = mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : "";
           void api<GameSummary>(`/api/games/${gameId}${q}`).then(setSummary).catch(() => null);
         }
@@ -365,12 +366,31 @@ export default function PlayPage() {
     !(phase === "SEARCH" && !iChoseLocation) &&
     !(phase === "VOTE" && !iVoted);
 
-  // 我的线索卡（从私发线索事件中取内容）
-  const myClueCards = events
-    .filter((e) => e.type === "clue" && e.visibility === `seat:${mySeat}` && e.content.clueId)
-    .map((e) => ({ id: e.content.clueId!, name: e.content.clueName!, content: e.content.clueContent!, private: e.content.private as boolean, structured: summary.myCluesV2.find((clue) => clue.id === e.content.clueId) ?? null }));
-  const seen = new Set<string>();
-  const myClueCardsUnique = myClueCards.filter((c) => !seen.has(c.id) && seen.add(c.id));
+  // 我的线索卡（持有权 = 我发现的 + 转给我的 − 最近一次转出的）
+  const lastTransferByClue = new Map<string, GameEventView>();
+  for (const e of events) {
+    if (e.type === "transfer" && e.content.clueId) lastTransferByClue.set(e.content.clueId, e);
+  }
+  const clueCardOf = (id: string, name: string, content: string, isPrivate: boolean) => ({
+    id,
+    name,
+    content,
+    private: isPrivate,
+    structured: summary.myCluesV2.find((clue) => clue.id === id) ?? null,
+  });
+  const myClueMap = new Map<string, ReturnType<typeof clueCardOf>>();
+  for (const e of events) {
+    if (e.type === "clue" && e.visibility === `seat:${mySeat}` && e.content.clueId) {
+      myClueMap.set(e.content.clueId, clueCardOf(e.content.clueId, e.content.clueName ?? "", e.content.clueContent ?? "", e.content.private === true));
+    }
+    if (e.type === "transfer" && e.toSeat === mySeat && e.content.clueId) {
+      myClueMap.set(e.content.clueId, clueCardOf(e.content.clueId, e.content.clueName ?? "", e.content.clueContent ?? "", true));
+    }
+  }
+  for (const [id, ev] of lastTransferByClue) {
+    if (ev.toSeat !== mySeat) myClueMap.delete(id);
+  }
+  const myClueCardsUnique = [...myClueMap.values()];
 
   const phaseSteps = ["READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL"];
   const phaseIdx = phaseSteps.indexOf(phase === "ENDED" ? "REVEAL" : phase);
@@ -992,6 +1012,7 @@ export default function PlayPage() {
               {myClueCardsUnique.map((c) => {
                 const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
                 const needDecision = phase === "SEARCH" && c.private && !isPublic && !decidedClues.has(c.id);
+                const canTransfer = Boolean(summary.flow?.allowClueTransfer) && phase === "DISCUSSION" && !isPublic && !ended;
                 return (
                   <div key={c.id} className="clue-card evidence-reveal p-3">
                     <div className="flex items-center justify-between">
@@ -1019,6 +1040,43 @@ export default function PlayPage() {
                         >
                           私藏
                         </button>
+                      </div>
+                    )}
+                    {canTransfer && !needDecision && (
+                      <div className="mt-2 space-y-1.5">
+                        {transferClueId === c.id ? (
+                          <>
+                            <p className="text-[11px] text-paper-500">悄悄转交给谁（仅双方可见）：</p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {activeSeats
+                                .filter((s) => s.index !== mySeat)
+                                .map((s) => (
+                                  <button
+                                    key={s.index}
+                                    onClick={() => {
+                                      setTransferClueId(null);
+                                      void send({ type: "transfer", clueId: c.id, toSeat: s.index });
+                                    }}
+                                    disabled={sending}
+                                    className="rounded-lg border border-secret-400/40 px-2.5 py-1 text-xs text-secret-400 hover:bg-secret-400/10 disabled:opacity-40"
+                                  >
+                                    {s.characterName}
+                                  </button>
+                                ))}
+                              <button onClick={() => setTransferClueId(null)} className="rounded-lg border border-paper-500/30 px-2.5 py-1 text-xs text-paper-400 hover:text-paper-200">
+                                取消
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <button
+                            onClick={() => setTransferClueId(c.id)}
+                            disabled={sending}
+                            className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60 disabled:opacity-40"
+                          >
+                            转交这张线索
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1143,6 +1201,18 @@ function EventBubble({
               私聊 · {ev.fromSeat === mySeat ? "你对" : `${seatName(ev.fromSeat ?? 0)} 对`} {ev.toSeat === mySeat ? "你" : seatName(ev.toSeat ?? 0)}
             </p>
             <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{ev.content.text}</p>
+          </div>
+        </div>
+      );
+    case "transfer":
+      return (
+        <div className={`flex ${ev.fromSeat === mySeat ? "justify-end" : "justify-start"}`}>
+          <div className="max-w-[85%] rounded-2xl border border-dashed border-secret-400/40 bg-secret-400/5 px-4 py-2.5 text-sm">
+            <p className="text-xs text-secret-400">
+              线索转交 · {ev.fromSeat === mySeat ? `你悄悄交给了 ${seatName(ev.toSeat ?? 0)}` : `${seatName(ev.fromSeat ?? 0)} 悄悄把一张线索卡交给了你`}
+            </p>
+            <p className="mt-1 font-semibold text-paper-100">「{ev.content.clueName}」</p>
+            {ev.content.clueContent && <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{ev.content.clueContent}</p>}
           </div>
         </div>
       );

@@ -256,6 +256,8 @@ export const flowV2Schema = z
     discussionRounds: z.number().int().min(1).max(4).default(2),
     allowPrivateChat: z.boolean().default(false),
     privateChatMessageLimit: z.number().int().min(2).max(6).default(3),
+    /** 讨论阶段允许把未公开线索卡私下面交给其他座位 */
+    allowClueTransfer: z.boolean().default(false),
     /** 分幕：进入对应搜证轮时由 DM 宣幕，角色 stages 同步解锁 */
     acts: z.array(actSchema).default([]),
   })

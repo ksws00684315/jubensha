@@ -31,6 +31,7 @@ describe("Schema v2.x 新字段（向后兼容）", () => {
   it("旧剧本（无新字段）仍可解析", () => {
     expect(doc.version).toBe(2);
     expect(doc.flow.acts).toEqual([]);
+    expect(doc.flow.allowClueTransfer).toBe(false);
     expect(doc.characters.every((c) => c.privateCard.violation.length === 0)).toBe(true);
     expect(doc.clues.every((c) => c.forbiddenCharacterIds.length === 0)).toBe(true);
   });

@@ -4,7 +4,7 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState, renderEventLog, clueReachable } from "./state";
-import { ensureDiscussionState, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, unlockedActs } from "./flow";
+import { ensureDiscussionState, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, unlockedActs } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
 import { SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
@@ -22,7 +22,7 @@ const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const AI_DECISION_TIMEOUT_MS = 90_000;
 
 export interface GameAction {
-  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush";
+  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer";
   text?: string;
   location?: string;
   clueId?: string;
@@ -989,14 +989,19 @@ export class GameEngine {
     }
     // 更新 seatStates
     for (const seat of activeSeats(this.state)) {
-      await db.seatState
-        .upsert({
-          where: { gameId_seatIndex: { gameId: this.gameId, seatIndex: seat } },
-          create: { gameId: this.gameId, seatIndex: seat, data: { clueIds: this.state.heldClues[seat] ?? [] } },
-          update: { data: { clueIds: this.state.heldClues[seat] ?? [] } },
-        })
-        .catch(() => null);
+      await this.syncSeatClueIds(seat);
     }
+  }
+
+  /** 把某座位的持有线索写回 seatState（概要接口 myClues 的数据源） */
+  private async syncSeatClueIds(seat: number): Promise<void> {
+    await db.seatState
+      .upsert({
+        where: { gameId_seatIndex: { gameId: this.gameId, seatIndex: seat } },
+        create: { gameId: this.gameId, seatIndex: seat, data: { clueIds: this.state.heldClues[seat] ?? [] } },
+        update: { data: { clueIds: this.state.heldClues[seat] ?? [] } },
+      })
+      .catch(() => null);
   }
 
   private async collectPublishDecisions(): Promise<void> {
@@ -1401,6 +1406,36 @@ export class GameEngine {
         await this.recordVote(seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
         this.clearHumanTimeout(seatIndex);
         this.continueTick();
+        return { ok: true };
+      }
+      case "transfer": {
+        // ★ 线索转交 ★：讨论阶段把未公开的持有线索私下面交给其他座位，双方可见。
+        const toSeat = action.toSeat;
+        const clueId = action.clueId ?? "";
+        if (toSeat === undefined) return { ok: false, error: "转交对象不合法" };
+        const invalid = validateTransfer(this.script, this.state, seatIndex, clueId, toSeat);
+        if (invalid) return { ok: false, error: invalid };
+        const clue = this.script.clues.find((c) => c.id === clueId);
+        if (!clue) return { ok: false, error: "你没有这张线索卡" };
+        this.state.heldClues[seatIndex] = (this.state.heldClues[seatIndex] ?? []).filter((id) => id !== clueId);
+        this.state.heldClues[toSeat] = [...(this.state.heldClues[toSeat] ?? []), clueId];
+        await this.recordEvent({
+          type: "transfer",
+          phase: this.state.phase,
+          round: this.state.round,
+          fromSeat: seatIndex,
+          toSeat,
+          visibility: `seat:${toSeat}`,
+          content: {
+            clueId,
+            clueName: clue.name,
+            clueContent: clueText(clue),
+            text: `${this.speakerName(seatIndex)} 悄悄把一张线索卡交给了你。`,
+          },
+        });
+        await this.syncSeatClueIds(seatIndex);
+        await this.syncSeatClueIds(toSeat);
+        await persistState(this.gameId, this.state);
         return { ok: true };
       }
       case "private_chat": {

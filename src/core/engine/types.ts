@@ -67,7 +67,7 @@ export interface GameState {
 
 export interface EngineEvent {
   seq: string;
-  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking";
+  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer";
   phase: Phase;
   round: number;
   fromSeat: number | null;
