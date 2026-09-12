@@ -1,4 +1,4 @@
-/* M3 真人混合流程冒烟测试：1 真人 + 4 AI，走完全场 */
+/* M3 真人混合流程冒烟测试：1 真人 + AI 补位，走完全场 */
 import { writeSync } from "node:fs";
 const log = (...a) => writeSync(1, a.map(String).join(" ") + "\n");
 
@@ -26,33 +26,7 @@ const get = (p) => withRetry(() => fetch(BASE + p).then((r) => r.json()));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PHASE_ORDER = ["LOBBY", "READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL", "ENDED"];
-
-function phaseReached(g, phase, round) {
-  const gi = PHASE_ORDER.indexOf(g.phase);
-  const ti = PHASE_ORDER.indexOf(phase);
-  if (gi < 0 || ti < 0) return false;
-  if (gi > ti) return true;
-  if (g.phase !== phase) return false;
-  if (round === undefined) return true;
-  return g.round >= round;
-}
-
-async function waitPhase(id, phase, round, timeout = 420000) {
-  const t0 = Date.now();
-  let last = "";
-  while (Date.now() - t0 < timeout) {
-    const g = await get(`/api/games/${id}`);
-    if (g.error) throw new Error(`wait ${phase}: ${g.error}`);
-    const tag = `${g.phase} r${g.round}`;
-    if (tag !== last) {
-      log(`  .. ${tag} (waiting ${phase}${round != null ? " r" + round : ""})`);
-      last = tag;
-    }
-    if (phaseReached(g, phase, round)) return g;
-    await sleep(800);
-  }
-  throw new Error(`timeout waiting phase=${phase} round=${round} last=${last}`);
-}
+const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
 
 (async () => {
   const scripts = await get("/api/scripts");
@@ -76,33 +50,71 @@ async function waitPhase(id, phase, round, timeout = 420000) {
     if (!r.ok && !/已经选过/.test(r.error || "")) log("  !! action failed:", JSON.stringify(action), r.error);
     return r;
   };
+  const myStatus = () => get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+
+  /** 等到谓词成立。SEARCH/DISCUSSION 交替出现，阶段序号不代表先后，谓词必须写清楚等什么。
+   *  等待期间若被当众点名提问则先作答——真人不作答会停摆整局。 */
+  const waitUntil = async (label, pred, timeout = 420000) => {
+    const t0 = Date.now();
+    let last = "";
+    while (Date.now() - t0 < timeout) {
+      const g = await get(`/api/games/${gid}`);
+      if (g.error) throw new Error(`wait ${label}: ${g.error}`);
+      const tag = `${g.phase} r${g.round}`;
+      if (tag !== last) {
+        log(`  .. ${tag} (waiting ${label})`);
+        last = tag;
+      }
+      if (g.pendingAnswer && g.pendingAnswer.toSeat === join.seatIndex) {
+        log("  .. 被点名提问，当众作答");
+        await act({ type: "speak", text: "这个问题我记下了：稍后结合大家的时间线一起回应，先把我知道的情况摆出来。" });
+        await sleep(600);
+        continue;
+      }
+      if (pred(g, Date.now() - t0)) return g;
+      await sleep(800);
+    }
+    throw new Error(`timeout waiting ${label} last=${last}`);
+  };
+
+  /** 轮到我发言时说一句并结束发言；等待期间若被当众点名提问则先作答（否则流程停摆）。 */
+  const speakMyTurn = async (text, phases) => {
+    const okPhases = phases ?? ["DISCUSSION"];
+    for (let i = 0; i < 400; i++) {
+      const g = await myStatus();
+      if (g.pendingAnswer && g.pendingAnswer.toSeat === join.seatIndex) {
+        log("  .. 被点名提问，先当众作答");
+        await act({ type: "speak", text: "这个问题我记下了，容我对照时间线再详细回应，先把已知的情况说清楚。" });
+        await sleep(600);
+        continue;
+      }
+      if (g.turnSeat === join.seatIndex) {
+        log("speak:", JSON.stringify(await act({ type: "speak", text })));
+        await act({ type: "skip" });
+        return true;
+      }
+      if (!okPhases.includes(g.phase)) return false;
+      await sleep(800);
+    }
+    return false;
+  };
+
   const pickLocation = async (location) => {
     let r = await act({ type: "choose_location", location });
     if (!r.ok && /已经选过/.test(r.error || "")) return { ok: true, skipped: true };
     // 目标地点不存在/线索被搜完时，改为选择第一个还有线索的地点
     if (!r.ok) {
-      const g = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+      const g = await myStatus();
       const alt = (g.availableLocations ?? [])[0];
       if (alt) r = await act({ type: "choose_location", location: alt });
     }
     return r;
   };
-  log("game", gid);
 
-  await waitPhase(gid, "READING");
-  log("ready:", JSON.stringify(await act({ type: "ready" })));
-  await act({ type: "rush" });
-
-  await waitPhase(gid, "SELF_INTRO", 1);
-  log("speak:", JSON.stringify(await act({ type: "speak", text: "各位好，我是沈青禾，叔叔的侄女。晚宴后我回房休息了，听到喊声才赶来。" })));
-  await act({ type: "rush" });
-
-  await waitPhase(gid, "SEARCH", 1);
-  log("location:", JSON.stringify(await pickLocation("书房")));
-  // 等待获得新线索（数量从 0 增加）后做公开/私藏决定
+  // 等待获得新线索（数量从 0 增加）后做私藏决定
   const publishWhenNewClues = async (prevCount) => {
     for (let i = 0; i < 25; i++) {
-      const g = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+      const g = await myStatus();
       if (g.myClues.length > prevCount) {
         const fresh = g.myClues.slice(prevCount);
         for (const clueId of fresh) await act({ type: "publish", clueId, publish: false });
@@ -112,31 +124,45 @@ async function waitPhase(id, phase, round, timeout = 420000) {
     }
     return prevCount;
   };
+
+  log("game", gid);
+
+  await waitUntil("READING", (g) => phaseIdx(g.phase) >= 1);
+  log("ready:", JSON.stringify(await act({ type: "ready" })));
+  await act({ type: "rush" });
+
+  await waitUntil("SELF_INTRO r1", (g) => phaseIdx(g.phase) >= 2);
+  await speakMyTurn("各位好，我是今晚的到场者之一。晚宴后我回房休息了，听到喊声才赶来。", ["SELF_INTRO", "DISCUSSION", "SEARCH"]);
+  await act({ type: "rush" });
+
+  await waitUntil("SEARCH r1", (g) => g.phase === "SEARCH" && g.round >= 1);
+  log("location:", JSON.stringify(await pickLocation("书房")));
   const clueCount = await publishWhenNewClues(0);
 
-  await waitPhase(gid, "DISCUSSION", 1);
-  log("private:", JSON.stringify(await act({ type: "private_chat", toSeat: 1, text: "周伯，21:15 是你送的茶吗？茶有没有被动过？" })));
-  log("discuss:", JSON.stringify(await act({ type: "speak", text: "我发现书房的钥匙挂板上少了一把备用钥匙，谁能解释？" })));
-  // 轮流发言制：真人发言后需显式「结束发言」（skip）才轮到下一位
-  log("skip:", JSON.stringify(await act({ type: "skip" })));
+  await waitUntil("DISCUSSION r1", (g) => g.phase === "DISCUSSION" && g.round >= 1);
+  log("private:", JSON.stringify(await act({ type: "private_chat", toSeat: 1, text: "问一句：案发前后你都在哪里？" })));
+  await speakMyTurn("我发现现场少了一件关键东西，谁能解释？");
   await act({ type: "rush" });
 
-  await waitPhase(gid, "SEARCH", 2);
-  log("location2:", JSON.stringify(await pickLocation("门廊雪地")));
-  await publishWhenNewClues(clueCount);
-
-  const at = await waitPhase(gid, "DISCUSSION", 2);
-  if (at.phase === "DISCUSSION") {
-    // 部分剧本流程（如 discussionRounds=searchRounds）在第 2 轮搜证后直接进入投票
-    log("discuss2:", JSON.stringify(await act({ type: "speak", text: "雪地上有 37 码的女靴脚印，山庄里穿 37 码的有两位。21:15 到 21:25 之间谁去过书房？" })));
-    log("skip2:", JSON.stringify(await act({ type: "skip" })));
+  // 第 2 轮搜证（若剧本流程跳过则直接等到讨论 2 / 投票）
+  await waitUntil(
+    "SEARCH r2 / DISCUSSION r2 / VOTE",
+    (g) => (g.phase === "SEARCH" && g.round >= 2) || (g.phase === "DISCUSSION" && g.round >= 2) || phaseIdx(g.phase) >= 5
+  );
+  const s2 = await myStatus();
+  if (s2.phase === "SEARCH") {
+    log("location2:", JSON.stringify(await pickLocation("门廊雪地")));
+    await publishWhenNewClues(clueCount);
   } else {
-    log("  .. 本剧本第 2 轮搜证后直接进入投票，跳过 discuss2");
+    log("  .. 本剧本第 2 轮搜证后直接进入讨论/投票，跳过 location2");
   }
+
+  await waitUntil("DISCUSSION r2 / VOTE", (g) => (g.phase === "DISCUSSION" && g.round >= 2) || phaseIdx(g.phase) >= 5);
+  await speakMyTurn("综合大家的时间线，案发窗口期里行踪存疑的人该给个说法了。");
   await act({ type: "rush" });
 
-  await waitPhase(gid, "VOTE", 1);
-  const me = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+  await waitUntil("VOTE", (g) => phaseIdx(g.phase) >= 5);
+  const me = await myStatus();
   if (me.quiz && Array.isArray(me.quiz.questions) && me.quiz.questions.length > 0) {
     // 复盘答题：每题选第一项（冒烟只验证链路，不追求答对）
     const answers = me.quiz.questions.map((q) => ({ questionId: q.id, optionId: q.options[0].id }));
@@ -146,7 +172,7 @@ async function waitPhase(id, phase, round, timeout = 420000) {
     log("vote:", JSON.stringify(await act({ type: "vote", target: seatCount > 4 ? 3 : 1, reason: "综合讨论与线索，此人的疑点最大" })));
   }
 
-  const final = await waitPhase(gid, "ENDED", undefined, 300000);
+  const final = await waitUntil("ENDED", (g) => g.phase === "ENDED", 300000);
   log("ENDED ✓ voteResult:", JSON.stringify(final.voteResult));
   if (final.quizResult) log("ENDED ✓ quizResult perSeat:", JSON.stringify(final.quizResult.perSeat));
   log("M3 SMOKE TEST PASSED");
