@@ -10,8 +10,10 @@ import { visibleTo } from "@/core/engine/state";
  * 把最相关的几条以【旧事重提】注回上下文——摘要管"大意"，检索管"原话"，两层互补。
  */
 
-/** 相关度低于该阈值的旧事不注入（经验值，相似语料下防噪声） */
-const SIMILARITY_THRESHOLD = 0.3;
+/** 相关度低于该阈值的旧事不注入。
+ * 用本机 Ollama bge-m3 对真实对局标定：无关 query 的噪声地板约 0.34（同域中文基线就高），
+ * 语义相关命中约 0.55-1.0。0.45 恰在两者之间；换向量模型后建议重新标定。 */
+const SIMILARITY_THRESHOLD = 0.45;
 const TOP_K = 3;
 
 export interface RecallLine {
