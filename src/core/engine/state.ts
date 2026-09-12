@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import { publish } from "./bus";
 import type { EngineEvent, GameState, Phase, SeatInfo } from "./types";
 import type { Prisma } from "@prisma/client";
-import type { GameEvent } from "@prisma/client";
 
 /** 初始状态 */
 export function initialState(seats: SeatInfo[]): GameState {
@@ -34,60 +33,12 @@ export function sanitizeEventContent(content: Record<string, unknown>): Record<s
   return safe;
 }
 
-/** 从 DB 事件流重建状态（服务重启/恢复用）。事件中带 phase/round 快照 + 关键动作。 */
-export function rebuildStateFromEvents(base: GameState, events: GameEvent[]): GameState {
-  const state: GameState = { ...base, clueStates: { ...base.clueStates }, heldClues: { ...base.heldClues } };
-  for (const ev of events) {
-    const phase = ev.phase as Phase;
-    state.phase = phase;
-    state.round = ev.round;
-    switch (ev.type) {
-      case "clue": {
-        const clueId = (ev.content as { clueId?: string }).clueId;
-        const seat = ev.fromSeat ?? -1;
-        const isPublic = ev.visibility === "public";
-        if (clueId) {
-          if (state.clueStates[clueId] === undefined) {
-            state.clueStates[clueId] = { discoveredBy: seat, isPublic: false };
-          }
-          if (isPublic) state.clueStates[clueId].isPublic = true;
-          if (!isPublic && seat >= 0) {
-            state.heldClues[seat] = [...(state.heldClues[seat] ?? []), clueId];
-          }
-        }
-        break;
-      }
-      case "vote": {
-        if (ev.fromSeat !== null) {
-          const content = ev.content as { target?: number; reason?: string };
-          if (content.target !== undefined) {
-            state.votes[String(ev.fromSeat)] = { target: content.target, reason: content.reason };
-          }
-        }
-        break;
-      }
-      case "transfer": {
-        // 持有权迁移：转出方移除、转入方获得（发现者 discoveredBy 不变）
-        const clueId = (ev.content as { clueId?: string }).clueId;
-        const from = ev.fromSeat;
-        const to = ev.toSeat;
-        if (clueId && from !== null && to !== null) {
-          state.heldClues[from] = (state.heldClues[from] ?? []).filter((id) => id !== clueId);
-          state.heldClues[to] = [...(state.heldClues[to] ?? []), clueId];
-        }
-        break;
-      }
-      case "phase":
-        state.spokenSeats = [];
-        state.searchChoices = {};
-        state.interjections = 0;
-        break;
-      default:
-        break;
-    }
-  }
-  return state;
-}
+/**
+ * 状态恢复路径说明：权威来源是 `games.state` 快照（`GameEngine.load()` 直接读取并补默认值）。
+ * 事件流 `game_events` 是 append-only 的，用于 SSE 断线续传与事后审计，**不用于重建状态**——
+ * 早期这里有一个 `rebuildStateFromEvents`，但它既不覆盖技能/答题/限时/提问等新状态、也没有任何调用者，
+ * 只会让人误以为"重启靠重放事件恢复"。重放协议若要补齐，须与"锁外生成"重构同期做。
+ */
 
 /** 追加事件：落库 + 总线广播。返回完整事件。 */
 export async function appendEvent(

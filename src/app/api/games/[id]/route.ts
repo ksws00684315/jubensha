@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, publicBioText } from "@/core/script/compat";
+import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, publicBioText, timelineToText } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
 import { clueReachable, cluesVisibleToSeat } from "@/core/engine/state";
 import { unlockedActs } from "@/core/engine/flow";
@@ -54,7 +54,10 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     flow: doc.flow,
     locations: locationNames(doc),
     availableLocations: (() => {
-      const myChar = mySeat !== null ? doc.characters.find((c) => c.id === game.room.seats.find((s2) => s2.index === mySeat)?.characterId) : null;
+      // 观战（无有效座位 token）视角一律不下发搜证地点：
+      // 否则"还有哪些地点有货、还剩几个"会变成一个免费的情报优势。
+      if (mySeat === null) return [];
+      const myChar = doc.characters.find((c) => c.id === game.room.seats.find((s2) => s2.index === mySeat)?.characterId);
       const seatChar = myChar?.id ?? null;
       const publicClueIds = new Set(Object.entries(clueStates).filter(([, st]) => (st as { isPublic?: boolean }).isPublic).map(([id]) => id));
       const round = game.round;
@@ -85,7 +88,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
               secret: c.privateCard.secrets.map((secret) => `${secret.title}：${narrativeToText(secret.content)}`).join("\n\n"),
               goal: c.privateCard.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n\n"),
               isCulprit: c.privateCard.isCulprit,
-              timeline: c.privateCard.timeline.map((entry) => `${entry.time.display} ${entry.title}：${narrativeToText(entry.content)}`).join("\n"),
+              timeline: timelineToText(c.privateCard.timeline),
               knowledge: c.privateCard.knowledge.map((item) => `${item.title}：${narrativeToText(item.content)}`),
               persona: [c.privateCard.persona.speechStyle, ...c.privateCard.persona.traits].filter(Boolean).join("；"),
             }
@@ -122,7 +125,8 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     quizResult: runtimeState.phase === "ENDED" ? runtimeState.quizResult ?? null : null,
     turnSeat: runtimeState.turnSeat ?? null,
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
-    pendingAnswer: runtimeState.pendingAnswer ?? null,
+    // 在途质询只发给有座位的参与者：题干本身在公开发言里，但"谁被问、还没答"不该给观战者看
+    pendingAnswer: mySeat !== null ? runtimeState.pendingAnswer ?? null : null,
     // 技能卡（仅本人可见自己的卡）：阶段/点数/once 计算可用性
     skills: (() => {
       if (mySeat === null || doc.flow.actionPointsPerRound <= 0) return [];

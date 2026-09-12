@@ -2,19 +2,11 @@ import { db } from "@/lib/db";
 import { subscribe } from "@/core/engine/bus";
 import type { BusMessage, EngineEvent } from "@/core/engine/types";
 import type { Prisma } from "@prisma/client";
-import { sanitizeEventContent } from "@/core/engine/state";
+import { sanitizeEventContent, visibleTo } from "@/core/engine/state";
 import { GameEngine } from "@/core/engine/engine";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
-
-function visibleTo(event: EngineEvent, seatIndex: number | null): boolean {
-  if (event.visibility === "public") return true;
-  if (seatIndex === null) return false;
-  if (event.visibility === `seat:${seatIndex}`) return true;
-  if ((event.type === "private" || event.type === "transfer") && event.fromSeat === seatIndex) return true;
-  return false;
-}
 
 function rowToEvent(r: {
   seq: bigint;

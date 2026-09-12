@@ -198,6 +198,10 @@ export default function PlayPage() {
         } else {
           setThinking((t) => ({ ...t, [msg.seat as number]: true }));
         }
+      } else if (msg.kind === "end") {
+        // 终局：服务端不会再推事件，主动收掉这条长连接（否则 EventSource 会一直空转重连）
+        setSummary((s) => (s ? { ...s, status: "ended", phase: "ENDED" } : s));
+        es.close();
       }
     };
     es.onerror = () => {
@@ -270,14 +274,22 @@ export default function PlayPage() {
       try {
         const r = await api<{ url: string }>("/api/tts", {
           method: "POST",
-          body: JSON.stringify({ gameId, eventSeq }),
+          body: JSON.stringify({
+            gameId,
+            eventSeq,
+            // 合成接口需要本局凭证（玩家座位 token 或真人主持 token）
+            seat: mySeat ?? undefined,
+            token: myToken ?? undefined,
+            dm: isDm || undefined,
+            dmToken: dmToken ?? undefined,
+          }),
         });
         void new Audio(r.url).play();
       } catch (err) {
         setError(`语音生成失败：${err instanceof Error ? err.message : String(err)}`);
       }
     },
-    [gameId]
+    [gameId, mySeat, myToken, isDm, dmToken]
   );
 
   // ★ AI 主动私信的回复 ★：仅当对方窗口开着且这是最新一条往来消息时显示回复框
