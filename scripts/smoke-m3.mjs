@@ -58,7 +58,8 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
     const t0 = Date.now();
     let last = "";
     while (Date.now() - t0 < timeout) {
-      const g = await get(`/api/games/${gid}`);
+      // 必须带座位凭证:未鉴权概要的 pendingAnswer 恒为 null,"被点名自动作答"守卫会失效
+      const g = await myStatus();
       if (g.error) throw new Error(`wait ${label}: ${g.error}`);
       const tag = `${g.phase} r${g.round}`;
       if (tag !== last) {
