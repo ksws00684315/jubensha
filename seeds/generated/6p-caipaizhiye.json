@@ -2003,14 +2003,17 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "menjin_jilu"
+          "menjin_jilu",
+          "zhuideng_deng",
+          "sucai"
         ],
         "conclusion": "19:18-19:36 期间钱进独自刷工牌登上检修天桥，近一个月无任何巡检登记，消防巡检本应两人同行——案发前十八分钟只有他一人进入吊灯上方区域。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "banshou"
+          "banshou",
+          "zhuideng_deng"
         ],
         "conclusion": "钱进长期保管的活动扳手齿口嵌着黄铜屑（与吊环材质一致），手柄残留胶带残胶——正是拧松保险销并用胶带临时缠固的作案工具。"
       }

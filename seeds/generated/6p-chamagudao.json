@@ -2243,7 +2243,9 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "c_yanguo"
+          "c_yanguo",
+          "c_caowugao",
+          "c_yanshi"
         ],
         "conclusion": "烟锅膛壁与衔口残留草乌膏（猎户涂弩箭之毒），烟灰被倒得干干净净——毒不在食物而在烟锅，烟一锅一锅烫、毒一口一口进，只有专司装烟的二锅头能在膛壁涂膏而不被察觉。"
       },
@@ -2257,14 +2259,16 @@
       {
         "id": "evidence_4",
         "clueIds": [
-          "c_fenhuozhang"
+          "c_fenhuozhang",
+          "c_guohuoshan"
         ],
         "conclusion": "分货账白纸黑字记着「腊月十六后队驮十一得九、前山不动」——五年前锅头为保自夹烟土把断后队走线卖给土匪的铁证，许踏山的兄长许拴柱正是死在那条线上。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "c_renzi"
+          "c_renzi",
+          "c_qiaozhaxin"
         ],
         "conclusion": "认子文书半写未完、墨迹洇开，说明锅头死前正在书写——他打算给私生子分股三厘的善念，与敲诈信里「五年前野人山之事」的恐吓形成一善一恶的对照，佐证当晚锅头心神已乱。"
       }

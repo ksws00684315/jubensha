@@ -1885,14 +1885,17 @@
       {
         "id": "evidence_3",
         "clueIds": [
-          "shouji_sousuo"
+          "shouji_sousuo",
+          "diancan_cungen",
+          "huanjiu_bianqian"
         ],
         "conclusion": "赵凯一周前反复搜索头孢加酒的致死后果和拒酒借口，证明他早已蓄谋利用双硫仑样反应杀害郑国栋，而非聚会现场的临时冲动。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "diqifengheka"
+          "diqifengheka",
+          "liaotian_jilu"
         ],
         "conclusion": "第七封贺卡与志愿表存根揭示了赵凯的灭口动机——班长要在同学会上当众念出贺卡，那封信会曝光赵凯三十年前偷换林素芬保送名额的真相，而明年儿子政审表上绝不能出现这桩旧案。"
       }

@@ -1733,14 +1733,18 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "c_tongxian"
+          "c_tongxian",
+          "c_yanshi",
+          "c_qianzi",
+          "c_dengjibu"
         ],
         "conclusion": "台灯铜底座内火线被故意搭焊在铜壳上，灯泡被拧松半圈，铜壳内壁干干净净无积灰——这不是线路老化，而是有人在停电半日的整修期间精心布设的触电陷阱，让主编伸手拧灯时触电身亡。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "c_huipiao"
+          "c_huipiao",
+          "c_dayang"
         ],
         "conclusion": "主编暗格里的汇票存根显示，官米案见报后牛德山之妻'牛王氏'收到两笔共二百元封口银——主编查账查到了牛德山头上，逼他写自白书，否则号外连他一起登。灭口动机成立。"
       }

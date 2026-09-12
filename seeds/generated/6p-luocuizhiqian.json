@@ -2157,21 +2157,24 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "beiyong_zhidai"
+          "beiyong_zhidai",
+          "xianchang_kanyan"
         ],
         "conclusion": "消防栓柜里的展品绑带受力磨痕与死者指甲缝纤维同批同色，说明凶器经过双臂对拉使用——这不是醉酒失足，而是有人从身后用织带辅助按压的蓄意溺杀。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "kufang_menjin"
+          "kufang_menjin",
+          "qin_mujiben"
         ],
         "conclusion": "货梯监控证明高原在死亡时刻全程未离打包区，排除其作案可能；而涂一鸣21:47-21:51的打包区进出记录，恰好与她取走凶器织带的时间窗口吻合。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "weituopai_008"
+          "weituopai_008",
+          "yunheng_didang"
         ],
         "conclusion": "008号备用委托牌出现在涂一鸣的办公桌抽屉里，云衡贸易注册底档的对接人签字也是她——自托自抬洗钱三年的闭环由此坐实，这正是她不惜在审计进场前杀人的根本动机。"
       }

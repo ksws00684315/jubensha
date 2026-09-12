@@ -2191,35 +2191,43 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "lanangan"
+          "lanangan",
+          "jianduanxiu",
+          "yanshang_jilu"
         ],
         "conclusion": "栏杆断口螺栓被人工拧退到只剩一圈螺纹，断口缠着的深灰抓绒纤维断面齐整，证明有人蓄意制造'失足坠落'陷阱，且事后修剪过一件同色抓绒外套。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "xuejing_sui"
+          "xuejing_sui",
+          "yanshang_jilu"
         ],
         "conclusion": "雪镜碎片下层压着19:50之前的间歇细雪、上层是20:00后的密雪，证明坠落发生在19:50之前，死者在雪中昏迷不足十分钟即死亡，并非长时间暴露。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "xunzha_rizhi"
+          "xunzha_rizhi",
+          "xuejing_sui",
+          "xieyin"
         ],
         "conclusion": "谷雨19:10-19:45在东侧室外戴耳罩检修（雪廊门内侧为盲区），结合雪镜落雪分层，将作案窗口压缩到19:15-19:45这三十分钟内，且地面浮雪未乱说明死者昏迷极快。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "laoshucang"
+          "laoshucang",
+          "xuebangui"
         ],
         "conclusion": "审计草稿揭示内部通道账户与基金头寸'同进同出'浮亏约四千万，姓名被涂黑；通话备忘把单独谈话约在 19:15 缆车站。它说明当晚有人将被停职报案，但公开文本不能直接指认是谁。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "banshou"
+          "banshou",
+          "lanangan",
+          "yanshang_jilu"
         ],
         "conclusion": "管理层预留的雪具包里内六角扳手插袋空着，袋底金属锈痕与白色漆屑和栏杆断口旧漆接近，证明有人用这只扳手松动过栏杆螺栓，事后扳手被拿走。挂牌没有写名字，需要结合谁在雪廊出现过才能对上人。"
       }

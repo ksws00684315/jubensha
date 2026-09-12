@@ -2242,14 +2242,16 @@
       {
         "id": "evidence_4",
         "clueIds": [
-          "c_wushengtan"
+          "c_wushengtan",
+          "c_kebanrizhi"
         ],
         "conclusion": "《武生叹》暗指二十年前毡垫被挪致武生坠台，笔迹属琴师陆弦——旧案知情者并非凶手，但旧案本身才是真正的杀人动机。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "c_diancui"
+          "c_diancui",
+          "c_yanshi"
         ],
         "conclusion": "小满藏匿的点翠是死者落幕时散落的，与命案无关；但死者指甲缝里的点翠金粉来自抓扯凶手衣袖——金粉只沾在管箱师傅的棉袄袖口上。"
       }

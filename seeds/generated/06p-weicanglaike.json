@@ -2371,21 +2371,25 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "huaibiao"
+          "huaibiao",
+          "chuyan_jilu"
         ],
         "conclusion": "怀表停在21:03且表底錾刻'松年'二字，证明晏起予在21:03即已死亡而非船医初判的22:30-23:30，'松年'即聂家祖父之名，将死亡时刻与五十年前的仇怨直接挂钩。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "menjin_qingdan"
+          "menjin_qingdan",
+          "huaibiao",
+          "yaodeng_jilu"
         ],
         "conclusion": "门禁记录显示聂怀远20:52刷卡进9层员工门、21:12刷卡出，中间20分钟无任何其他刷卡记录进入3层库房——这20分钟空窗精准覆盖21:03的死亡时刻，而他声称的'21:08医务室取药'已被登记本墨迹鉴定证伪。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "jianxiu_kanyan"
+          "jianxiu_kanyan",
+          "yaoshi_jieyong"
         ],
         "conclusion": "检修门挂锁搭扣内侧有新鲜蹭亮划痕（锁当日被动过）、布草滑道出口防回弹门内侧有戴手套掌印、洗衣房自检修门缝逸出浆糊味——三处物证共同指向一条'只去不回'的密道：从9层布草间滑降至3层洗衣房，经检修门进入库房。"
       }

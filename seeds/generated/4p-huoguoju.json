@@ -1379,14 +1379,17 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "dinaxian_dai"
+          "dinaxian_dai",
+          "youdie_yaohe",
+          "su_cai"
         ],
         "conclusion": "调料台泔水桶边发现的低钠盐袋来路不明，店内库存只有井盐——有人将雷师傅常用的井盐罐替换为低钠盐（氯化钾型），配合其正在服用的保钾利尿剂螺内酯，制造了高钾血症致死的条件。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "jishiben"
+          "jishiben",
+          "shouji_zhaopian"
         ],
         "conclusion": "雷师傅的记事本记录了周五将带市场监管所老宋上门查周记烧烤用油的计划，老周的烧烤摊油料来路不正——灭口动机指向老周。"
       }

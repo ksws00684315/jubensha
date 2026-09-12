@@ -2161,28 +2161,34 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "danke"
+          "danke",
+          "yanshi_jilu",
+          "qianggui_dengji"
         ],
         "conclusion": "行军床下的弹壳批号与枪柜弹药盒吻合，弹道指向床尾近距离射击——死者至死未起，凶手是熟人，枪来自营地内部而非'流寇'。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "xingye_guangdian"
+          "xingye_guangdian",
+          "dianming_ben",
+          "yanshi_jilu"
         ],
         "conclusion": "21:51星野连拍中死者帐篷方向的橘红色光点符合枪口焰亮度衰减曲线而非烟头反光——枪响发生在22:00前后，比点名记录所暗示的23:40'沙暴最烈时'早了近两小时。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "dianming_ben"
+          "dianming_ben",
+          "yanshi_jilu"
         ],
         "conclusion": "值班本22:00栏'沈应答（灯亮，声低哑）'与24:00栏'沈睡，咳一声代应'均为呼德笔迹，而死者22:00前已死——'应答'只存在于执笔人的一支笔里，代答者就是凶手。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "weixing_dianhua"
+          "weixing_dianhua",
+          "heishi_zhaopian"
         ],
         "conclusion": "21:47呼德替死者拨通文物站电话4分12秒，死者便条底稿'明早八点，照片和人一起带下去，呼德的事当面说'——向导的旧案身份即将暴露，这是案发前13分钟的杀人动机。"
       },

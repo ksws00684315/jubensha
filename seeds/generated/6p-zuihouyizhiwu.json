@@ -2363,21 +2363,24 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "c_anpao"
+          "c_anpao",
+          "c_yanshi"
         ],
         "conclusion": "痰盂里的安瓿贴着白纸手签而非法印油印仿宋，药渣残液洋地黄含量近三倍——死者临终'灯怎么是黄绿的'正是洋地黄中毒的幻视，有人用自制高剂量安瓿替换了药房真药。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "c_qingling"
+          "c_qingling",
+          "c_yaozhang"
         ],
         "conclusion": "药房请领单显示上月廿八新批毛地黄到货，药童口录证实白秋池当天独锁药房半小时——这半小时就是调包针剂的唯一窗口，同批真药安瓿数目齐全，唯独缺了被换走的那一支。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "c_baoxiangui"
+          "c_baoxiangui",
+          "c_dengji"
         ],
         "conclusion": "保险柜三道新划痕与金妈的铜丝吻合，她22:30上楼试图取'养老字据'未遂——她是动机之外的闯入者，却意外成为'22:35大夫从内间出来'的关键目击证人。"
       }

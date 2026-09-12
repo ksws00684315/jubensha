@@ -1365,28 +1365,32 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "qunuanqi_yu"
+          "qunuanqi_yu",
+          "xianchang_kanyan"
         ],
         "conclusion": "库房里那台'小太阳'取暖器插头尚有余温、机身新落灰处被蹭亮，但三年来每晚都留在老陈脚边的惯例在今夜中断——有人故意收走了取暖器，让醉睡的老陈失去唯一的热源。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "paifeng_juanlian"
+          "paifeng_juanlian",
+          "xianchang_kanyan"
         ],
         "conclusion": "排风扇停在'开'档、卷帘只留一掌宽的缝，形成冷风贯通的对流风道——寒潮夜外界仅两度，店堂温度被人为降至六度以下，这不是排潮气的老规矩，而是精心制造的失温陷阱。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "zhangben_sijiao"
+          "zhangben_sijiao",
+          "panjueshu_fuyinjian"
         ],
         "conclusion": "账本末页'梧桐街，芳记，壹万贰'的记录与'白吃两年，记着呢'的批注，揭露老陈以十二年前肇事逃逸案要挟芳姐，白吃白喝两年欠下一万二——芳姐的仇恨有据可查。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "panjueshu_fuyinjian"
+          "panjueshu_fuyinjian",
+          "zhangben_sijiao"
         ],
         "conclusion": "芳姐手机加密相册里存着十二年前的刑事判决书照片，死者正是她的丈夫，肇事者就是陈广发——她认了他两年，忍了两年，今夜借寒潮的风完成了迟到的审判。"
       }

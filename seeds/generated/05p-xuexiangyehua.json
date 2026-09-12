@@ -1704,35 +1704,40 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "yankan_jilu"
+          "yankan_jilu",
+          "xunqin_kuaijian"
         ],
         "conclusion": "崔九安的验看记录揭示四处反常（无挣扎脱衣、睫毛无霜、后脑淤血、覆雪厚度与时间矛盾），排除「醉后冻毙」的意外结论，证明死因另有隐情。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "changguang_sheying"
+          "changguang_sheying",
+          "tuozhuai_hen"
         ],
         "conclusion": "21:50的长曝光照片拍到雪面上两道拖拽光影与一束手电光，时间戳与拖尸时段吻合，以影像证据锁定了尸体被移动的事实。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "tuozhuai_hen"
+          "tuozhuai_hen",
+          "dianmu_xue"
         ],
         "conclusion": "院中雪面下两道平行拖拽浅沟与笨拙的扬雪掩盖，证明尸体从柴垛被拖入柴房，柴垛旁才是第一现场，柴房只是伪装的「冻毙」现场。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "xunqin_kuaijian"
+          "xunqin_kuaijian",
+          "dianmu_xue"
         ],
         "conclusion": "寻亲快件证明DNA比对成功、周姓夫妇次日到店，白守业手写草稿「明天爹当面还你」揭示他当晚要摊牌——身世即将曝光是白桦情绪失控的根本动机。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "weijin_muxie"
+          "weijin_muxie",
+          "dianmu_xue"
         ],
         "conclusion": "白桦围巾上嵌着的松木屑与垫木同批，暗红血痂为扫蹭所致——这些微物证据将她与第一现场的柴垛直接关联，暴露了拖尸者的身份。"
       }

@@ -2006,14 +2006,16 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "guafan_tangzha"
+          "guafan_tangzha",
+          "beiyongjin"
         ],
         "conclusion": "挂反的汤札证明有人在案发当晚翻动后匆忙复原，绳结方向与三年磨损痕迹矛盾，伪装'离池'的破绽暴露了店内人作案。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "jiuhu_chen"
+          "jiuhu_chen",
+          "yaofang_queban"
         ],
         "conclusion": "清酒壶底未化尽的白色细粉与残酒过多的事实，证明女将并非单纯饮酒，酒中被投入了药物导致她失去反抗能力。"
       },
@@ -2027,7 +2029,8 @@
       {
         "id": "evidence_5",
         "clueIds": [
-          "wurenji_ka"
+          "wurenji_ka",
+          "guafan_tangzha"
         ],
         "conclusion": "无人机23:43影像中系带结在左肩的瘦小身影，证明案发时段有人穿店内羽织经石阶道上行，而店内男客系右肩，此人必为女性或刻意伪装。"
       }

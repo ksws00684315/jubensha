@@ -1923,14 +1923,16 @@
       {
         "id": "evidence_3",
         "clueIds": [
-          "jiahetong_saomiao"
+          "jiahetong_saomiao",
+          "fangqing_jizhang"
         ],
         "conclusion": "七份顾问协议的签名页均为陆骁手写体，但走账对手公司查无实址，实际受益人是蒋万川——这证明蒋万川十年来利用陆骁的签名构建替罪结构，一旦审计进场，陆骁将独扛全部罪名，这是他被逼到绝路的根本原因。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "jiahetong_saomiao"
+          "jiahetong_saomiao",
+          "shufang_kanyan"
         ],
         "conclusion": "审计邮件草稿显示明早九点审计进场、直接对接蒋万川——这是蒋万川摊牌逼陆骁'体面自首'的最后通牒，也是陆骁决定在决赛前夜动手的直接导火索：他不能让十年的兄弟情谊以替罪收场。"
       }

@@ -993,28 +993,34 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "yanyindidan"
+          "yanyindidan",
+          "xiangtangdacao"
         ],
         "conclusion": "盐引底单抬头有「浪里花」花押，正是戚连波的江湖号——帮主贴身收着的私盐命脉不知何时流入义子铺中，说明帮主已掌握水脊身份。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "shuichengbu"
+          "shuichengbu",
+          "shouyejiuhu",
+          "misese"
         ],
         "conclusion": "水程簿记「亥时三刻帮主上船未下，子时初戚二爷上，子时二刻戚二爷下」——帮主上船后只有戚连波一人上下过金满仓号，他独占了整个作案时间窗口。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "misese"
+          "misese",
+          "jiacangmikang"
         ],
         "conclusion": "米色册三仓「上白改中白」的改痕上盖着郑朝奉的小印，官票存根对票时刻恰是子时二刻——戚连波替帮主挡驾后与郑朝奉对坐吃茶，两人互为对方人证的同时也暴露出官仓与私盐线的勾连。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "langhuawenanxin"
+          "langhuawenanxin",
+          "shuichengbu",
+          "misese"
         ],
         "conclusion": "浪花纹暗信写明「子夜、金满仓、三百引、老规矩」，曹三娘子夜望见舱口灯灭、人影下跳板——暗信接头时辰与水程簿记录的戚连波离船时辰完全吻合。"
       }

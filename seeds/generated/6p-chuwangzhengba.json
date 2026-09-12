@@ -2150,28 +2150,34 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "chahu"
+          "chahu",
+          "xiaoguan"
         ],
         "conclusion": "清口茶壶残茶检出亚硝酸盐、壶嘴内侧有细白粉结块，而 15:50 秦小满布杯时壶是干净的——毒是在布杯之后、16:12 饮茶之前被投入的，投毒窗口恰好是中场十五分钟。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "dengji_ben"
+          "dengji_ben",
+          "zhibo_suzhi"
         ],
         "conclusion": "15:56 领用登记本上「秦小满」的签名满字最后一钩是直的，而秦小满的真迹是回锋——签名系伪造，领硝水的是一个端着奶茶杯的男人，正是郝运来。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "zhuanzhang_jilu"
+          "zhuanzhang_jilu",
+          "duanxin",
+          "shoutiao"
         ],
         "conclusion": "三笔押题费共十五万汇入郝运来个人账户，备注均为「保熟」——袁守味已掌握名单并限其明早交出，卖题败露是郝运来灭口的直接动机。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "zhibo_suzhi"
+          "zhibo_suzhi",
+          "dengji_ben",
+          "chahu"
         ],
         "conclusion": "直播素材拍到 15:58 郝运来端茶壶回来时手在抖、壶嘴在袖口蹭了一下，16:26 主席栽倒后他喊救护车但双脚半步未动——投毒动作与心虚反应被镜头全程锁定。"
       }

@@ -1987,21 +1987,24 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "c_sangpizhi"
+          "c_sangpizhi",
+          "c_yanshi"
         ],
         "conclusion": "暗房通风砖眼被桑皮纸封了三层，浆糊未干透且用的是裱画铺的'包边糊'手法，馆里只有常年替哥嫂糊窗的二先生沈怀民掌握此手艺——通风口被人为封死，煤气无处排出。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "c_shimei"
+          "c_shimei",
+          "c_zhangben"
         ],
         "conclusion": "炭盆里的煤掰开是湿芯，水瓢底部残水冻成冰壳，泼痕由灶间拖向暗房——18:30前后有人故意把煤泼湿，湿煤压火不充分燃烧产生大量一氧化碳，这是蓄意制造煤气中毒的手段。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "c_dangpiao"
+          "c_dangpiao",
+          "c_zhangben"
         ],
         "conclusion": "阁楼房梁上藏着金镯和当票，当票落款画押为'民'字——二先生沈怀民挪用铺款四千六百元替舞女赎金镯的铁证，这正是他被哥哥留字'明日开市对账'逼到墙角、铤而走险的动机根源。"
       },

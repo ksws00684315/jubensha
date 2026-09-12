@@ -1885,14 +1885,16 @@
       {
         "id": "evidence_4",
         "clueIds": [
-          "cehua_yuangao"
+          "cehua_yuangao",
+          "luyin_paiban"
         ],
         "conclusion": "策划原稿证明《午夜直达》的开播案出自沈一诺之手，十年署名被夺、新节目被合并构成强烈杀人动机。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "jianbao_dian"
+          "jianbao_dian",
+          "baoliao_shouka"
         ],
         "conclusion": "老听众的剪报揭示罗夜航十五年前制造过「毒护士」网暴事件，说明死者树敌众多，为其他嫌疑人提供了合理动机但并非真凶指向。"
       }

@@ -1930,14 +1930,16 @@
       {
         "id": "evidence_3",
         "clueIds": [
-          "chuhuo_dan"
+          "chuhuo_dan",
+          "huoqi_shadai"
         ],
         "conclusion": "三日前有财蛇酒坊出库银环蛇壹条、经手人栏空白，且坛口封泥异常——蛇的来源直指岑有财的蛇场，出货时间与案发时间吻合，说明凶器并非意外爬出而是有人蓄意投放。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "jitian_zhangben"
+          "jitian_zhangben",
+          "duanxin"
         ],
         "conclusion": "三年祭田租金四十七万八千，大半流入有财蛇酒坊，岑有财有巨大的贪腐亏空；族老三日前短信定下明晚祠堂大会当众宣读账本——'明晚大会'四个字就是岑有财不惜杀人的动机。"
       }

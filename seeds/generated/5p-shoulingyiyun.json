@@ -861,14 +861,16 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "shoulingbuzhengben"
+          "shoulingbuzhengben",
+          "chunjilidan"
         ],
         "conclusion": "守陵簿正本逐年记录亏空，铜铃、铜坠、灯檠的'旧损'笔笔连着村正阚大川的签押——这证明阚大川长期盗卖陵前明器，而老祭司春祭礼单上朱批'清明点主之日当众开守陵簿'，意味着七天后他的罪行将当众曝光，这就是他铤而走险的动机。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "shangchengbu"
+          "shangchengbu",
+          "huolangshouhuozhang"
         ],
         "conclusion": "上城簿与裴九思的收货账逐日相对，腊月十七、廿二、廿六三笔铜器出村的日子，恰是阚大川三次'上城办公'的日子；亥时一段被撕去半页、撕口是新的——这证明阚大川是销赃链的核心人物，且在案发当晚刻意销毁了自己的行踪记录以掩盖作案时间。"
       }

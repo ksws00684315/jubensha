@@ -1294,28 +1294,32 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "xiaozongping"
+          "xiaozongping",
+          "jijiu_jilu"
         ],
         "conclusion": "死者内袋的小棕瓶里装的是戒烟糖而非硝酸甘油，瓶底钢印一个'苗'字指向苗氏药业周年庆纪念装——急救药在死者不知情时被整瓶替换。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "jijiu_jilu"
+          "jijiu_jilu",
+          "xiaozongping"
         ],
         "conclusion": "汲萍1:56含服时入口发甜、药片偏大、无硝酸甘油灼麻感——药已被调包，含服无效导致死者错过黄金急救窗口，2:20心搏停止。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "fuwu_jiluyi"
+          "fuwu_jiluyi",
+          "fuwu_liushui"
         ],
         "conclusion": "服务记录仪拍到0:50-0:52一名3排靠过道乘客在2排停留42秒呈俯身姿态，1:00-1:15与死者在吧台密谈——这42秒就是调包急救药的作案窗口，全程案发时无人需要接近死者。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "gonggao_caogao"
+          "gonggao_caogao",
+          "chufang_zhipian"
         ],
         "conclusion": "死者平板定稿公告'明早8:30举报络平三期瞒报28例死亡'——苗岁寒必须让死者死在落地前，否则身败名裂，这是调包杀人的确切动机。"
       }

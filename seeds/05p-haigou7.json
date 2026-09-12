@@ -2245,14 +2245,17 @@
       {
         "id": "evidence_4",
         "clueIds": [
-          "fengpian"
+          "fengpian",
+          "zhenjingji"
         ],
         "conclusion": "封片记录仪显示温书声称的16:20-16:35在样品间封片时段无任何操作记录，实际完成时间为15:47-15:50，证明其不在场证明系伪造，案发时段她不在样品间。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "shoutao"
+          "shoutao",
+          "yaoc_e",
+          "mifeng_jian"
         ],
         "conclusion": "温书姓名标签的丁腈手套掌指部位沾有淡黄色阀组润滑脂（与三号气闸加油枪油脂光谱一致），证明她直接接触过三号气闸阀组，将她与'模式谋杀'的技术操作直接关联。"
       }

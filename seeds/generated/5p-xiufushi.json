@@ -1654,28 +1654,32 @@
       {
         "id": "evidence_2",
         "clueIds": [
-          "paifeng_gongdan"
+          "paifeng_gongdan",
+          "xiandai_kanyan"
         ],
         "conclusion": "排风停机工单证明程砚以「例检」为名签批停机一小时，而主机完好无需检修——排风停摆是制造溶剂蒸气积聚的关键条件。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "moxing_beixin"
+          "moxing_beixin",
+          "xiandai_kanyan"
         ],
         "conclusion": "窗边人体模型穿着岑松年的反光背心，从监控室望去正是「有人伏案干活」的剪影——这是凶手为拖延发现时间而刻意制造的伪装。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "taitai_bianhao"
+          "taitai_bianhao",
+          "shouji_qunliao"
         ],
         "conclusion": "展签器物比台账轻八十四克、壶底无微刻编号，证明真壶已被调包——程砚质押真壶抵债的罪行即将被岑松年在验收时揭穿，构成灭口动机。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "menjian_kongbai"
+          "menjian_kongbai",
+          "moxing_beixin"
         ],
         "conclusion": "门禁记录21:15程砚再进修复楼的十分钟窗口，与监控中外套下摆撑宽的背影、以及窗边剪影出现的时间完全吻合——他在这十分钟里完成了摆模型、取旧罐、发假消息的全部善后。"
       }
