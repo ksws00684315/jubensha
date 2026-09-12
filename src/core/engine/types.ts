@@ -22,6 +22,12 @@ export interface VoteRecord {
   reason?: string;
 }
 
+/** 复盘答题统计：每题分布与正确项；每人得分（对/总/加权分） */
+export interface QuizResult {
+  perSeat: Record<string, { correct: number; total: number; score: number }>;
+  perQuestion: Array<{ questionId: string; counts: Record<string, number>; correctOptionId: string }>;
+}
+
 /** 引擎运行时状态。持久化于 games.state，可由事件流重建。 */
 export interface GameState {
   phase: Phase;
@@ -57,6 +63,10 @@ export interface GameState {
   actionPoints?: Record<string, number>;
   /** 已用过的 once 技能（键 `${seat}:${skillId}`，整局有效） */
   usedSkills?: string[];
+  /** 复盘答题：座位索引字符串 → 问题id → 选项id（一次性锁定） */
+  quizAnswers?: Record<string, Record<string, string>>;
+  /** 复盘答题结果（transitionReveal 时计算，随 reveal 事件公布） */
+  quizResult?: QuizResult | null;
   /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */
   humanDeadlines?: Record<string, number>;
   /**

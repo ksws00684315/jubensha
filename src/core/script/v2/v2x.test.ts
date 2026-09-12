@@ -86,6 +86,54 @@ describe("Schema v2.x 新字段（向后兼容）", () => {
     expect(s.once).toBe(true);
     expect(doc.flow.actionPointsPerRound).toBe(0);
   });
+
+  it("voteMode/quiz 默认值：culprit + 空 quiz，旧剧本零改动", () => {
+    expect(doc.flow.voteMode).toBe("culprit");
+    expect(doc.ending.quiz).toEqual([]);
+  });
+
+  it("voteMode=choice + quiz 可解析；choice 无 quiz → error；culprit 带 quiz → warning", () => {
+    const choiceNoQuiz = cloneWith((d) => {
+      d.flow.voteMode = "choice";
+    });
+    expect(validateScriptV2(choiceNoQuiz).some((i) => i.level === "error" && i.message.includes("复盘答题"))).toBe(true);
+    const culpritWithQuiz = cloneWith((d) => {
+      d.ending.quiz = [{ id: "q1", prompt: "凶器？", options: [{ id: "a", label: "簪" }, { id: "b", label: "刀" }], correctOptionId: "a", weight: 1 }];
+    });
+    expect(validateScriptV2(culpritWithQuiz).some((i) => i.level === "warning" && i.message.includes("忽略 quiz"))).toBe(true);
+    const choiceOk = cloneWith((d) => {
+      d.flow.voteMode = "choice";
+      d.ending.quiz = [
+        { id: "q1", prompt: "凶器？", options: [{ id: "a", label: "簪" }, { id: "b", label: "刀" }], correctOptionId: "a", weight: 2 },
+        { id: "q2", prompt: "时刻？", options: [{ id: "x", label: "九点" }, { id: "y", label: "十点" }], correctOptionId: "y" },
+      ];
+    });
+    expect(choiceOk.flow.voteMode).toBe("choice");
+    expect(choiceOk.ending.quiz[0].weight).toBe(2);
+    expect(choiceOk.ending.quiz[1].weight).toBe(1);
+    expect(validateScriptV2(choiceOk).filter((i) => i.level === "error")).toHaveLength(0);
+  });
+
+  it("quiz：correctOptionId 不在选项内 → error；选项 id 重复 → error；题目 id 重复 → error", () => {
+    const badCorrect = cloneWith((d) => {
+      d.flow.voteMode = "hybrid";
+      d.ending.quiz = [{ id: "q1", prompt: "凶器？", options: [{ id: "a", label: "簪" }, { id: "b", label: "刀" }], correctOptionId: "nope", weight: 1 }];
+    });
+    expect(validateScriptV2(badCorrect).some((i) => i.level === "error" && i.message.includes("正确项不在选项内"))).toBe(true);
+    const dupOption = cloneWith((d) => {
+      d.flow.voteMode = "hybrid";
+      d.ending.quiz = [{ id: "q1", prompt: "凶器？", options: [{ id: "a", label: "簪" }, { id: "a", label: "刀" }], correctOptionId: "a", weight: 1 }];
+    });
+    expect(validateScriptV2(dupOption).some((i) => i.level === "error" && i.message.includes("重复选项 id"))).toBe(true);
+    const dupQuestion = cloneWith((d) => {
+      d.flow.voteMode = "hybrid";
+      d.ending.quiz = [
+        { id: "q1", prompt: "凶器？", options: [{ id: "a", label: "簪" }, { id: "b", label: "刀" }], correctOptionId: "a", weight: 1 },
+        { id: "q1", prompt: "时刻？", options: [{ id: "x", label: "九点" }, { id: "y", label: "十点" }], correctOptionId: "y", weight: 1 },
+      ];
+    });
+    expect(validateScriptV2(dupQuestion).some((i) => i.level === "error" && i.message.includes("重复 id: q1"))).toBe(true);
+  });
 });
 
 describe("Validator 新规则", () => {

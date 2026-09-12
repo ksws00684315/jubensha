@@ -143,6 +143,18 @@ export interface GameSummary {
   }>;
   /** 本轮剩余行动点 */
   actionPointsLeft: number;
+  /** 结局模式：culprit 指凶 / hybrid 指凶+答题 / choice 纯答题 */
+  voteMode: string;
+  /** 复盘答题卡（题面公开，不含正确项；myAnswers 仅本人可见） */
+  quiz: {
+    questions: Array<{ id: string; prompt: string; options: Array<{ id: string; label: string }> }>;
+    myAnswers: Record<string, string> | null;
+  } | null;
+  /** 复盘答题统计（ENDED 后公开） */
+  quizResult: {
+    perSeat: Record<string, { correct: number; total: number; score: number }>;
+    perQuestion: Array<{ questionId: string; counts: Record<string, number>; correctOptionId: string }>;
+  } | null;
 }
 
 export interface DmStructuredView {

@@ -4,7 +4,7 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState, renderEventLog, clueReachable } from "./state";
-import { ensureDiscussionState, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, validateUseSkill, unlockedActs } from "./flow";
+import { computeQuizResult, ensureDiscussionState, finaleMissing, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, validateUseSkill, unlockedActs } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
 import { SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
@@ -22,7 +22,7 @@ const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const AI_DECISION_TIMEOUT_MS = 90_000;
 
 export interface GameAction {
-  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill";
+  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill" | "answer_quiz";
   text?: string;
   location?: string;
   clueId?: string;
@@ -31,6 +31,7 @@ export interface GameAction {
   target?: number;
   reason?: string;
   toSeat?: number;
+  answers?: Array<{ questionId: string; optionId: string }>;
 }
 
 export class GameEngine {
@@ -46,6 +47,7 @@ export class GameEngine {
   private searchAsked = new Set<number>();
   private publishAsked = new Set<number>();
   private aiVoteAsked = new Set<number>();
+  private aiQuizAsked = new Set<number>();
   private aiDiscussionAsked = new Set<number>();
   /** AI 主动私信：每个 AI 每轮讨论最多一次 */
   private whisperAsked = new Set<number>();
@@ -105,6 +107,8 @@ export class GameEngine {
       state.humanDeadlines ??= {};
       state.actionPoints ??= {};
       state.usedSkills ??= [];
+      state.quizAnswers ??= {};
+      state.quizResult ??= null;
       // 服务重启后内存定时器已丢失，过期截止时间一并清掉，避免前端挂着永不跳转的倒计时
       for (const k of Object.keys(state.humanDeadlines)) {
         if (state.humanDeadlines[k] <= Date.now()) delete state.humanDeadlines[k];
@@ -646,21 +650,41 @@ export class GameEngine {
     this.state.phase = "VOTE";
     this.state.round = 1;
     this.state.votes = {};
+    this.state.quizAnswers = {};
     this.state.suggestions = {};
     this.aiVoteAsked.clear();
+    this.aiQuizAsked.clear();
     this.turnAsked.clear();
     this.state.turnSeat = activeSeats(this.state)[0];
-    await this.dmSay(
-      "讨论结束，宣布进入【投票】环节：请每位玩家指认你认为的真凶，并说明一句话理由。投票结束后将立即揭晓真相。",
-      "VOTE",
-      1
-    );
+    const voteMode = this.script.flow.voteMode;
+    const task =
+      voteMode === "choice"
+        ? "讨论结束，宣布进入【复盘答题】环节：请每位玩家根据自己收集到的情报完成复盘答题卡（全部提交后立即揭晓答案与真相）。"
+        : voteMode === "hybrid"
+          ? "讨论结束，宣布进入【终局】环节：请每位玩家指认你认为的真凶并说明一句话理由，同时完成复盘答题卡（全部完成后立即揭晓真相与答案）。"
+          : "讨论结束，宣布进入【投票】环节：请每位玩家指认你认为的真凶，并说明一句话理由。投票结束后将立即揭晓真相。";
+    await this.dmSay(task, "VOTE", 1);
     await persistState(this.gameId, this.state);
     await this.tickInner();
   }
 
+  /** 答题复盘简报（DM 任务用）：每题正确答案 + 全场作答分布 */
+  private quizBrief(): string {
+    const quiz = this.state.quizResult;
+    if (!quiz) return "";
+    return this.script.ending.quiz
+      .map((q) => {
+        const stat = quiz.perQuestion.find((p) => p.questionId === q.id);
+        const correctLabel = q.options.find((o) => o.id === stat?.correctOptionId)?.label ?? "?";
+        const dist = q.options.map((o) => `${o.label}×${stat?.counts[o.id] ?? 0}`).join("、");
+        return `「${q.prompt}」正确答案：${correctLabel}（${dist}）`;
+      })
+      .join("；");
+  }
+
   private async transitionReveal(): Promise<void> {
-    if (this.state.voteResult) return; // 同步守卫：防真人投票与 tick 并发双触发
+    if (this.state.voteResult) return; // 同步守卫：防真人投票与 tick 并发双触发（quiz 分支共用同一守卫）
+    const voteMode = this.script.flow.voteMode;
     const counts: Record<string, number> = {};
     for (const v of Object.values(this.state.votes)) counts[String(v.target)] = (counts[String(v.target)] ?? 0) + 1;
     const culpritSeat = this.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === this.script.truth.culpritId);
@@ -672,15 +696,21 @@ export class GameEngine {
         topSeat = Number(k);
       }
     }
-    this.state.voteResult = { counts, culpritSeat, caught: topSeat === culpritSeat };
+    this.state.voteResult = { counts, culpritSeat, caught: voteMode === "choice" ? false : topSeat === culpritSeat };
+    if (this.script.ending.quiz.length) {
+      this.state.quizResult = computeQuizResult(this.script.ending.quiz, this.state.quizAnswers ?? {});
+    }
     const caughtName = this.state.seats[culpritSeat] ? this.speakerName(culpritSeat) : "?";
     this.state.phase = "REVEAL";
     this.state.round = 0;
-    await this.dmSay(
-      `公布投票结果（${Object.entries(counts).map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`).join("，") || "无人投票"}），然后宣布揭晓真相：凶手是 ${caughtName}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`,
-      "REVEAL",
-      0
-    );
+    let task: string;
+    if (voteMode === "choice") {
+      task = `复盘时刻：本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评全场还原度，然后完整宣读真相复盘：手法、完整时间线、关键证据链。`;
+    } else {
+      task = `公布投票结果（${Object.entries(counts).map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`).join("，") || "无人投票"}），然后宣布揭晓真相：凶手是 ${caughtName}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
+      if (this.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评各位玩家的还原度。`;
+    }
+    await this.dmSay(task, "REVEAL", 0);
     await this.recordEvent({
       type: "reveal",
       phase: "REVEAL",
@@ -688,7 +718,17 @@ export class GameEngine {
       fromSeat: null,
       toSeat: null,
       visibility: "public",
-      content: { culpritSeat, culpritName: caughtName, caught: this.state.voteResult.caught, counts, method: methodText(this.script), fullTimeline: fullTimelineText(this.script), reveal: revealText(this.script), winText: winText(this.script) },
+      content: {
+        culpritSeat,
+        culpritName: caughtName,
+        caught: this.state.voteResult.caught,
+        counts,
+        method: methodText(this.script),
+        fullTimeline: fullTimelineText(this.script),
+        reveal: revealText(this.script),
+        winText: winText(this.script),
+        ...(this.state.quizResult ? { quiz: this.state.quizResult } : {}),
+      },
     });
     this.state.phase = "ENDED";
     await this.recordEvent({
@@ -833,36 +873,32 @@ export class GameEngine {
         return;
       }
       case "VOTE": {
-        const missing = seats.filter((i) => !state.votes[String(i)]);
-        if (!missing.length) {
+        const voteMode = this.script.flow.voteMode;
+        const hasQuiz = this.script.ending.quiz.length > 0;
+        const missing = finaleMissing(state, { voteMode, seats, hasQuiz });
+        if (!missing.votes.length && !missing.quiz.length) {
           await this.transitionReveal();
           return;
         }
-        for (const seat of missing) {
+        // AI：投票与答题各自后台决策（锁外 LLM）
+        for (const seat of missing.votes) {
           if (state.seats[seat].kind === "ai") {
             const candidates = seats.filter((i) => i !== seat);
             this.queueAiVote(seat, candidates);
-          } else {
-            const askKey = `ask:VOTE:${seat}`;
-            if (!this.turnAsked.has(askKey)) {
-              this.turnAsked.add(askKey);
-              await this.armHumanTimeout(seat, "投票", async () => {
-                const candidates = activeSeats(this.state).filter((i) => i !== seat);
-                const target = candidates[Math.floor(Math.random() * candidates.length)];
-                if (this.state.votes[String(seat)]) return;
-                await this.recordVote(seat, target, "（超时，系统代投）");
-                if (activeSeats(this.state).every((i) => this.state.votes[String(i)])) {
-                  await this.transitionReveal();
-                } else {
-                  await this.tickInner();
-                }
-              });
-              await this.systemSay(`请投票：选择你认为的真凶（左侧玩家列表点击"投票"）。`, seat);
-            }
+          }
+        }
+        for (const seat of missing.quiz) {
+          if (state.seats[seat].kind === "ai") this.queueAiQuiz(seat);
+        }
+        // 人类：投票+答题共用一个限时；某项完成后 step 会按剩余项重新武装
+        const humanPending = [...new Set([...missing.votes, ...missing.quiz])].filter((i) => state.seats[i].kind === "human");
+        for (const seat of humanPending) {
+          if (!this.turnAsked.has(`ask:VOTE:${seat}`)) {
+            this.turnAsked.add(`ask:VOTE:${seat}`);
+            await this.armVotePhaseHuman(seat);
           }
         }
         await persistState(this.gameId, state);
-        if (seats.every((i) => state.votes[String(i)])) return this.step();
         return;
       }
       default:
@@ -954,6 +990,45 @@ export class GameEngine {
         await this.tickInner();
       });
     }, 50 + seat * 40);
+  }
+
+  /** AI 复盘答题（锁外 LLM）：解析失败/缺题时随机合法选项兜底，保证流程闭环 */
+  private queueAiQuiz(seat: number): void {
+    if (this.aiQuizAsked.has(seat)) return;
+    this.aiQuizAsked.add(seat);
+    const questions = this.script.ending.quiz;
+    this.scheduleBackground(`quiz-ai:${seat}`, async () => {
+      let answers: Record<string, string> = {};
+      try {
+        answers = await withTimeout(agent.quizAnswer(this.ctx(), seat, questions), AI_DECISION_TIMEOUT_MS);
+      } catch {
+        answers = {};
+      }
+      await this.exclusive(async () => {
+        if (this.state.phase !== "VOTE" || this.state.quizAnswers?.[String(seat)]) return;
+        for (const q of questions) {
+          if (!q.options.some((o) => o.id === answers[q.id])) {
+            answers[q.id] = q.options[Math.floor(Math.random() * q.options.length)].id;
+          }
+        }
+        this.state.quizAnswers ??= {};
+        this.state.quizAnswers[String(seat)] = answers;
+        await persistState(this.gameId, this.state);
+        await this.tickInner();
+      });
+    }, 50 + seat * 40);
+  }
+
+  /** 超时兜底：为某座位随机补齐全部答题 */
+  private async randomQuizAnswers(seat: number, notice?: string): Promise<void> {
+    const answers: Record<string, string> = {};
+    for (const q of this.script.ending.quiz) {
+      answers[q.id] = q.options[Math.floor(Math.random() * q.options.length)].id;
+    }
+    this.state.quizAnswers ??= {};
+    this.state.quizAnswers[String(seat)] = answers;
+    if (notice) await this.systemSay(notice, seat);
+    await persistState(this.gameId, this.state);
   }
 
   private cluesAt(locationKey: string, seatIndex?: number) {
@@ -1270,6 +1345,34 @@ export class GameEngine {
     if (this.state.humanDeadlines) delete this.state.humanDeadlines[String(seat)];
   }
 
+  /** VOTE 阶段人类座位的限时与提示（投票+答题合一；某项完成后由 step 按剩余项重新武装） */
+  private async armVotePhaseHuman(seat: number): Promise<void> {
+    const voteMode = this.script.flow.voteMode;
+    const hasQuiz = this.script.ending.quiz.length > 0;
+    const missing = finaleMissing(this.state, { voteMode, seats: activeSeats(this.state), hasQuiz });
+    const needVote = missing.votes.includes(seat);
+    const needQuiz = missing.quiz.includes(seat);
+    await this.armHumanTimeout(seat, "投票/作答", async () => {
+      const now = finaleMissing(this.state, { voteMode, seats: activeSeats(this.state), hasQuiz });
+      if (now.votes.includes(seat)) {
+        const candidates = activeSeats(this.state).filter((i) => i !== seat);
+        const target = candidates[Math.floor(Math.random() * candidates.length)];
+        if (!this.state.votes[String(seat)] && target !== undefined) {
+          await this.recordVote(seat, target, "（超时，系统代投）");
+        }
+      }
+      if (now.quiz.includes(seat)) await this.randomQuizAnswers(seat, "（超时，系统已代为作答。）");
+      await this.tickInner();
+    });
+    const hint =
+      needVote && needQuiz
+        ? `请投票（左侧玩家列表点击"投票"），并完成复盘答题卡（一次性整卷提交）。`
+        : needQuiz
+          ? `请完成复盘答题卡（左侧面板，一次性整卷提交）。`
+          : `请投票：选择你认为的真凶（左侧玩家列表点击"投票"）。`;
+    await this.systemSay(hint, seat);
+  }
+
   private async recordVote(seat: number, target: number, reason?: string): Promise<void> {
     this.state.votes[String(seat)] = { target, reason };
     await db.vote.create({ data: { gameId: this.gameId, seatIndex: seat, targetIndex: target, reason } }).catch(() => null);
@@ -1423,12 +1526,41 @@ export class GameEngine {
       }
       case "vote": {
         if (this.state.phase !== "VOTE") return { ok: false, error: "当前不在投票环节" };
+        if (this.script.flow.voteMode === "choice") return { ok: false, error: "本局为复盘答题模式，无需投票" };
         if (this.state.votes[String(seatIndex)]) return { ok: false, error: "本轮已经投过票" };
         const target = action.target;
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
         await this.recordVote(seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
         this.clearHumanTimeout(seatIndex);
+        // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时
+        this.turnAsked.delete(`ask:VOTE:${seatIndex}`);
+        this.continueTick();
+        return { ok: true };
+      }
+      case "answer_quiz": {
+        // ★ 复盘答题 ★：choice/hybrid 模式整卷一次性提交，提交后锁定。
+        if (this.state.phase !== "VOTE") return { ok: false, error: "当前不在投票/复盘环节" };
+        if (this.script.flow.voteMode === "culprit") return { ok: false, error: "本局没有复盘答题" };
+        const questions = this.script.ending.quiz;
+        if (!questions.length) return { ok: false, error: "本局没有复盘答题" };
+        if (this.state.quizAnswers?.[String(seatIndex)]) return { ok: false, error: "已作答，不能修改" };
+        const answers = Array.isArray(action.answers) ? action.answers : [];
+        const sheet: Record<string, string> = {};
+        for (const a of answers) {
+          const q = questions.find((qq) => qq.id === a?.questionId);
+          if (!q) return { ok: false, error: `题目不存在：${a?.questionId ?? "?"}` };
+          if (!q.options.some((o) => o.id === a.optionId)) return { ok: false, error: `选项不合法：${a.optionId ?? "?"}` };
+          sheet[q.id] = a.optionId;
+        }
+        if (Object.keys(sheet).length !== questions.length) return { ok: false, error: "请答完全部题目后再整卷提交" };
+        this.state.quizAnswers ??= {};
+        this.state.quizAnswers[String(seatIndex)] = sheet;
+        this.clearHumanTimeout(seatIndex);
+        // hybrid：交卷后可能还差投票，允许 step 重新武装剩余限时
+        this.turnAsked.delete(`ask:VOTE:${seatIndex}`);
+        await this.systemSay("（你已提交复盘答题卡，等待其他人作答。）", seatIndex);
+        await persistState(this.gameId, this.state);
         this.continueTick();
         return { ok: true };
       }

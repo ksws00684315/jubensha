@@ -101,6 +101,20 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     scriptV2: { background: v2.background, characters: v2.characters, locations: v2.locations },
     myCluesV2: doc.clues.filter((clue) => visibleClues.some((visible) => visible.id === clue.id)),
     voteResult: mySeat !== null ? runtimeState.voteResult ?? null : null,
+    // 结构化结局：模式 + 答题卡（题面公开不含正确项；myAnswers 仅本人）
+    voteMode: doc.flow.voteMode,
+    quiz:
+      doc.flow.voteMode === "culprit" || doc.ending.quiz.length === 0
+        ? null
+        : {
+            questions: doc.ending.quiz.map((q) => ({
+              id: q.id,
+              prompt: q.prompt,
+              options: q.options.map((o) => ({ id: o.id, label: o.label })),
+            })),
+            myAnswers: mySeat !== null ? runtimeState.quizAnswers?.[String(mySeat)] ?? null : null,
+          },
+    quizResult: runtimeState.phase === "ENDED" ? runtimeState.quizResult ?? null : null,
     turnSeat: runtimeState.turnSeat ?? null,
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
     pendingAnswer: runtimeState.pendingAnswer ?? null,

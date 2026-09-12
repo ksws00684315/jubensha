@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  computeQuizResult,
   ensureDiscussionState,
+  finaleMissing,
   forcedAnswerHint,
   QUESTIONS_PER_PLAYER,
   nextAfterDiscussion,
   nextAfterSearch,
+  quizPrompt,
   validateDiscussionAsk,
   validateTransfer,
   validateUseSkill,
@@ -137,5 +140,66 @@ describe("技能发动校验 validateUseSkill 与质询提示", () => {
     expect(hint).toContain("不得回避");
     expect(hint).toContain("不得反问");
     expect(hint).toContain("案发时你在哪");
+  });
+});
+
+describe("终局完成判定 finaleMissing", () => {
+  const seats = [0, 1, 2];
+  const empty = { votes: {}, quizAnswers: {} };
+  const full = { votes: { "0": { target: 1 }, "1": { target: 2 }, "2": { target: 1 } }, quizAnswers: { "0": { q: "a" }, "1": { q: "b" }, "2": { q: "a" } } };
+
+  it("culprit 只看投票；choice 只看答题；hybrid 两者都要", () => {
+    expect(finaleMissing(empty, { voteMode: "culprit", seats, hasQuiz: true })).toEqual({ votes: seats, quiz: [] });
+    expect(finaleMissing(full, { voteMode: "culprit", seats, hasQuiz: true })).toEqual({ votes: [], quiz: [] });
+    expect(finaleMissing(empty, { voteMode: "choice", seats, hasQuiz: true })).toEqual({ votes: [], quiz: seats });
+    expect(finaleMissing(full, { voteMode: "choice", seats, hasQuiz: true })).toEqual({ votes: [], quiz: [] });
+    expect(finaleMissing(empty, { voteMode: "hybrid", seats, hasQuiz: true })).toEqual({ votes: seats, quiz: seats });
+    expect(finaleMissing(full, { voteMode: "hybrid", seats, hasQuiz: true })).toEqual({ votes: [], quiz: [] });
+  });
+
+  it("部分完成只报缺的座位；hasQuiz=false 时 quiz 视为已交卷", () => {
+    const partial = { votes: { "0": { target: 1 } }, quizAnswers: { "1": { q: "a" } } };
+    expect(finaleMissing(partial, { voteMode: "hybrid", seats, hasQuiz: true })).toEqual({ votes: [1, 2], quiz: [0, 2] });
+    expect(finaleMissing(empty, { voteMode: "hybrid", seats, hasQuiz: false })).toEqual({ votes: seats, quiz: [] });
+  });
+});
+
+describe("复盘答题计分 computeQuizResult", () => {
+  const questions = [
+    { id: "q1", prompt: "凶器是什么？", options: [{ id: "a", label: "银簪" }, { id: "b", label: "匕首" }], correctOptionId: "a", weight: 1 },
+    { id: "q2", prompt: "案发时刻？", options: [{ id: "x", label: "九点" }, { id: "y", label: "十点" }], correctOptionId: "y", weight: 2 },
+  ];
+
+  it("空答：无人得分，分布全零", () => {
+    const r = computeQuizResult(questions, {});
+    expect(r.perSeat).toEqual({});
+    expect(r.perQuestion[0].counts).toEqual({ a: 0, b: 0 });
+  });
+
+  it("全对按 weight 加权计分", () => {
+    const r = computeQuizResult(questions, { "0": { q1: "a", q2: "y" } });
+    expect(r.perSeat["0"]).toEqual({ correct: 2, total: 2, score: 3 });
+    expect(r.perQuestion[0].counts).toEqual({ a: 1, b: 0 });
+  });
+
+  it("答错不计分但计入分布", () => {
+    const r = computeQuizResult(questions, { "0": { q1: "b", q2: "y" }, "1": { q1: "a", q2: "x" } });
+    expect(r.perSeat["0"]).toEqual({ correct: 1, total: 2, score: 2 });
+    expect(r.perSeat["1"]).toEqual({ correct: 1, total: 2, score: 1 });
+    expect(r.perQuestion[0].counts).toEqual({ a: 1, b: 1 });
+    expect(r.perQuestion[1].counts).toEqual({ x: 1, y: 1 });
+  });
+});
+
+describe("复盘答题作答指令 quizPrompt", () => {
+  it("包含题干、选项与 JSON 模板", () => {
+    const questions = [
+      { id: "q1", prompt: "凶手是谁？", options: [{ id: "a", label: "张三" }, { id: "b", label: "李四" }], correctOptionId: "a", weight: 1 },
+    ];
+    const prompt = quizPrompt(questions);
+    expect(prompt).toContain("凶手是谁？");
+    expect(prompt).toContain("张三");
+    expect(prompt).toContain('{"answers":[{"questionId":"...","optionId":"..."}]}');
+    expect(prompt).toContain("必须每题都答");
   });
 });

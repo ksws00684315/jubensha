@@ -120,8 +120,9 @@ function parseOrCanonical(doc: unknown) {
         supplemental: [],
         reveal: [{ type: "paragraph" as const, text: "结构损坏" }],
       },
-      flow: { selfIntroRounds: 1, searchRounds: 2, discussionRounds: 2, allowPrivateChat: false, privateChatMessageLimit: 3, allowClueTransfer: false, actionPointsPerRound: 0, acts: [] },
+      flow: { selfIntroRounds: 1, searchRounds: 2, discussionRounds: 2, allowPrivateChat: false, privateChatMessageLimit: 3, allowClueTransfer: false, actionPointsPerRound: 0, voteMode: "culprit" as const, acts: [] },
       ending: {
+        quiz: [],
         outcomes: [
           { result: "culprit_caught" as const, title: "损坏", content: [{ type: "paragraph" as const, text: "结构损坏" }] },
           { result: "culprit_escaped" as const, title: "损坏", content: [{ type: "paragraph" as const, text: "结构损坏" }] },

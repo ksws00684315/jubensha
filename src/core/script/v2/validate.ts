@@ -198,6 +198,24 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   }
   if (doc.ending.outcomes.length !== results.size) issue(issues, "error", "ending.outcomes", "每种结局只能定义一次");
 
+  // 复盘答题：模式与题目匹配；选项 id / 正确项 / 题目 id 校验
+  if (doc.flow.voteMode === "culprit" && doc.ending.quiz.length > 0) {
+    issue(issues, "warning", "ending.quiz", "culprit 模式忽略 quiz，如需答题请用 hybrid/choice");
+  }
+  if (doc.flow.voteMode !== "culprit" && doc.ending.quiz.length === 0) {
+    issue(issues, "error", "ending.quiz", `voteMode=${doc.flow.voteMode} 需要至少一道复盘答题题`);
+  }
+  checkUniqueIds(issues, doc.ending.quiz, "ending.quiz");
+  for (const [index, question] of doc.ending.quiz.entries()) {
+    const optionIds = new Set(question.options.map((option) => option.id));
+    if (optionIds.size !== question.options.length) {
+      issue(issues, "error", `ending.quiz.${index}.options`, `题目「${question.prompt}」存在重复选项 id`);
+    }
+    if (!optionIds.has(question.correctOptionId)) {
+      issue(issues, "error", `ending.quiz.${index}.correctOptionId`, `题目「${question.prompt}」的正确项不在选项内`);
+    }
+  }
+
   return issues;
 }
 

@@ -1,6 +1,6 @@
-import type { GameState, Phase } from "./types";
+import type { GameState, Phase, QuizResult } from "./types";
 import { activeSeats } from "./state";
-import type { ActV2, SkillV2 } from "@/core/script/v2/schema";
+import type { ActV2, QuizQuestionV2, SkillV2 } from "@/core/script/v2/schema";
 
 export const QUESTIONS_PER_PLAYER = 3;
 
@@ -88,6 +88,55 @@ export function validateUseSkill(
 /** 技能质询的强制回答提示：AI 不允许回避。 */
 export function forcedAnswerHint(question: string): string {
   return `${question}【技能质询】这是被技能强制要求的回答：必须正面回应问题本身，不得回避、不得反问、不得转移话题（可以藏秘密，但答案要对得上问题）。`;
+}
+
+/** 复盘答题的作答指令：题目清单 + JSON 输出模板 */
+export function quizPrompt(questions: ReadonlyArray<QuizQuestionV2>): string {
+  const list = questions
+    .map((q) => `· ${q.id}：${q.prompt}\n  选项：${q.options.map((o) => `${o.id}=${o.label}`).join("；")}`)
+    .join("\n");
+  return `复盘在即，请根据你的情报与推理作答。请只输出 JSON：{"answers":[{"questionId":"...","optionId":"..."}]}。必须每题都答。\n题目：\n${list}`;
+}
+
+/**
+ * 终局完成判定：VOTE 阶段还差谁没投票/没答题。
+ * culprit 只看 votes；choice 只看 quiz；hybrid 两者都要。
+ * hasQuiz=false 时 quiz 永远视为已交卷（防无题模式卡死）。
+ */
+export function finaleMissing(
+  state: Pick<GameState, "votes" | "quizAnswers">,
+  opts: { voteMode: "culprit" | "hybrid" | "choice"; seats: number[]; hasQuiz: boolean }
+): { votes: number[]; quiz: number[] } {
+  const votes = opts.voteMode === "choice" ? [] : opts.seats.filter((i) => !state.votes[String(i)]);
+  const quiz = opts.voteMode === "culprit" || !opts.hasQuiz ? [] : opts.seats.filter((i) => !state.quizAnswers?.[String(i)]);
+  return { votes, quiz };
+}
+
+/** 复盘答题计分：每题作答分布 + 正确项；每人 对/总/加权得分。 */
+export function computeQuizResult(
+  questions: ReadonlyArray<QuizQuestionV2>,
+  answers: Record<string, Record<string, string>>
+): QuizResult {
+  const perSeat: QuizResult["perSeat"] = {};
+  const perQuestion: QuizResult["perQuestion"] = [];
+  for (const question of questions) {
+    const counts: Record<string, number> = {};
+    for (const option of question.options) counts[option.id] = 0;
+    for (const [seat, sheet] of Object.entries(answers)) {
+      const picked = sheet[question.id];
+      if (!picked) continue;
+      if (counts[picked] === undefined) counts[picked] = 0;
+      counts[picked] += 1;
+      const seatStat = (perSeat[seat] ??= { correct: 0, total: 0, score: 0 });
+      seatStat.total += 1;
+      if (picked === question.correctOptionId) {
+        seatStat.correct += 1;
+        seatStat.score += question.weight;
+      }
+    }
+    perQuestion.push({ questionId: question.id, counts, correctOptionId: question.correctOptionId });
+  }
+  return { perSeat, perQuestion };
 }
 
 /** 已解锁的幕：搜证/讨论阶段按 roundStart ≤ 当前轮次解锁；投票阶段视为全部解锁（投票必在所有搜证轮之后）。 */

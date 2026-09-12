@@ -275,6 +275,8 @@ export const flowV2Schema = z
     allowClueTransfer: z.boolean().default(false),
     /** 每轮行动点（0 = 技能系统关闭） */
     actionPointsPerRound: z.number().int().min(0).max(3).default(0),
+    /** 结局模式：culprit=指凶（现状）；hybrid=指凶+答题；choice=纯答题（还原本/情感本） */
+    voteMode: z.enum(["culprit", "hybrid", "choice"]).default("culprit"),
     /** 分幕：进入对应搜证轮时由 DM 宣幕，角色 stages 同步解锁 */
     acts: z.array(actSchema).default([]),
   })
@@ -285,6 +287,22 @@ const outcomeSchema = z
     result: z.enum(["culprit_caught", "culprit_escaped"]),
     title: leafText,
     content: narrativeSchema,
+  })
+  .strict();
+
+/** 复盘答题选项（v1 单选；多选留扩展位） */
+const quizOptionSchema = z
+  .object({ id: idSchema, label: leafText })
+  .strict();
+
+/** 复盘答题：voteMode 为 hybrid/choice 时全场作答，结果进复盘 */
+const quizQuestionSchema = z
+  .object({
+    id: idSchema,
+    prompt: leafText,
+    options: z.array(quizOptionSchema).min(2).max(6),
+    correctOptionId: idSchema,
+    weight: z.number().int().min(1).max(3).default(1),
   })
   .strict();
 
@@ -318,7 +336,14 @@ export const scriptDocV2Schema = z
     clues: z.array(clueV2Schema).min(3),
     truth: truthV2Schema,
     flow: flowV2Schema,
-    ending: z.object({ outcomes: z.array(outcomeSchema).length(2) }).strict(),
+    ending: z
+      .object({
+        /** culprit 两结局；choice 模式下也保留，escaped 文案位承载「复盘总结」语义 */
+        outcomes: z.array(outcomeSchema).length(2),
+        /** 复盘答题（空 = 无答题）；culprit 模式忽略 */
+        quiz: z.array(quizQuestionSchema).default([]),
+      })
+      .strict(),
     hostGuide: hostGuideSchema.optional(),
   })
   .strict();
@@ -332,6 +357,7 @@ export type PrivateCardV2 = z.infer<typeof privateCardSchema>;
 export type KnowledgeV2 = z.infer<typeof knowledgeSchema>;
 export type StageV2 = z.infer<typeof stageSchema>;
 export type SkillV2 = z.infer<typeof skillSchema>;
+export type QuizQuestionV2 = z.infer<typeof quizQuestionSchema>;
 export type ActV2 = z.infer<typeof actSchema>;
 export type HostGuideV2 = z.infer<typeof hostGuideSchema>;
 export type LocationV2 = z.infer<typeof locationV2Schema>;

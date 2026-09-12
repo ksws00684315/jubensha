@@ -7,11 +7,12 @@ const actionSchema = z.object({
   seatIndex: z.number().int().min(0),
   token: z.string().min(1),
   action: z.object({
-    type: z.enum(["ready", "speak", "skip", "ask", "choose_location", "publish", "vote", "private_chat", "rush", "transfer", "use_skill"]),
+    type: z.enum(["ready", "speak", "skip", "ask", "choose_location", "publish", "vote", "private_chat", "rush", "transfer", "use_skill", "answer_quiz"]),
     text: z.string().optional(),
     location: z.string().optional(),
     clueId: z.string().optional(),
     skillId: z.string().optional(),
+    answers: z.array(z.object({ questionId: z.string(), optionId: z.string() })).optional(),
     publish: z.boolean().optional(),
     target: z.number().int().optional(),
     reason: z.string().optional(),

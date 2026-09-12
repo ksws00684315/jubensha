@@ -56,11 +56,14 @@ async function waitPhase(id, phase, round, timeout = 420000) {
 
 (async () => {
   const scripts = await get("/api/scripts");
-  const sample = scripts.find((s) => s.title === "云澜山庄的雪夜") || scripts.find((s) => s.minPlayers <= 5 && s.maxPlayers >= 5);
-  if (!sample) throw new Error("没有可用的 5 人剧本");
+  const wantTitle = process.env.SMOKE_SCRIPT ?? "云澜山庄的雪夜";
+  const sample = scripts.find((s) => s.title === wantTitle) || scripts.find((s) => s.minPlayers <= 5 && s.maxPlayers >= 5);
+  if (!sample) throw new Error(`没有可用的剧本（想要：${wantTitle}）`);
   const scriptId = sample.id;
   log("script", sample.title, scriptId);
-  const room = await post("/api/rooms", { scriptId, seats: [{ kind: "human" }, { kind: "ai" }, { kind: "ai" }, { kind: "ai" }, { kind: "ai" }] });
+  const seatCount = Math.max(3, sample.minPlayers ?? 5);
+  const seats = Array.from({ length: seatCount }, (_, i) => ({ kind: i === 0 ? "human" : "ai" }));
+  const room = await post("/api/rooms", { scriptId, seats });
   log("room", room.code);
   if (!room.hostToken) throw new Error("create room missing hostToken: " + JSON.stringify(room));
   const join = await post("/api/rooms/join", { code: room.code, name: "测试真人" });
@@ -76,8 +79,8 @@ async function waitPhase(id, phase, round, timeout = 420000) {
   const pickLocation = async (location) => {
     let r = await act({ type: "choose_location", location });
     if (!r.ok && /已经选过/.test(r.error || "")) return { ok: true, skipped: true };
-    // 目标地点线索被搜完时，改为选择第一个还有线索的地点
-    if (!r.ok && /线索已搜完/.test(r.error || "")) {
+    // 目标地点不存在/线索被搜完时，改为选择第一个还有线索的地点
+    if (!r.ok) {
       const g = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
       const alt = (g.availableLocations ?? [])[0];
       if (alt) r = await act({ type: "choose_location", location: alt });
@@ -133,10 +136,19 @@ async function waitPhase(id, phase, round, timeout = 420000) {
   await act({ type: "rush" });
 
   await waitPhase(gid, "VOTE", 1);
-  log("vote:", JSON.stringify(await act({ type: "vote", target: 3, reason: "苏医生的脚印和药瓶最可疑" })));
+  const me = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+  if (me.quiz && Array.isArray(me.quiz.questions) && me.quiz.questions.length > 0) {
+    // 复盘答题：每题选第一项（冒烟只验证链路，不追求答对）
+    const answers = me.quiz.questions.map((q) => ({ questionId: q.id, optionId: q.options[0].id }));
+    log("quiz:", JSON.stringify(await act({ type: "answer_quiz", answers })));
+  }
+  if (me.voteMode !== "choice") {
+    log("vote:", JSON.stringify(await act({ type: "vote", target: seatCount > 4 ? 3 : 1, reason: "综合讨论与线索，此人的疑点最大" })));
+  }
 
   const final = await waitPhase(gid, "ENDED", undefined, 300000);
   log("ENDED ✓ voteResult:", JSON.stringify(final.voteResult));
+  if (final.quizResult) log("ENDED ✓ quizResult perSeat:", JSON.stringify(final.quizResult.perSeat));
   log("M3 SMOKE TEST PASSED");
 })().catch((e) => {
   writeSync(2, "FAILED: " + e.message + "\n");

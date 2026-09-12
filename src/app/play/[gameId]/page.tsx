@@ -52,6 +52,7 @@ export default function PlayPage() {
   const [skillActiveId, setSkillActiveId] = useState<string | null>(null);
   const [skillToSeat, setSkillToSeat] = useState<number | null>(null);
   const [skillText, setSkillText] = useState("");
+  const [quizPicks, setQuizPicks] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
@@ -177,7 +178,7 @@ export default function PlayPage() {
           setDmDelta("");
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer") {
+        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer" || ev.type === "vote") {
           const q = mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : "";
           void api<GameSummary>(`/api/games/${gameId}${q}`).then(setSummary).catch(() => null);
         }
@@ -344,6 +345,8 @@ export default function PlayPage() {
     (e) => e.type === "system" && e.visibility === `seat:${mySeat}` && e.round === summary.round && (e.content.text ?? "").startsWith("你选择了")
   );
   const iVoted = events.some((e) => e.type === "vote" && e.fromSeat === mySeat);
+  const voteMode = summary.voteMode ?? "culprit";
+  const quizDone = summary.quiz !== null && summary.quiz.myAnswers !== null;
   const reveal = events.findLast((e) => e.type === "reveal");
   const answering = phase === "DISCUSSION" && summary.pendingAnswer?.toSeat === mySeat;
   const mySpeakTurn =
@@ -367,7 +370,7 @@ export default function PlayPage() {
     lastNoticeToMe?.content.timeoutSkip === true &&
     !canSpeak &&
     !(phase === "SEARCH" && !iChoseLocation) &&
-    !(phase === "VOTE" && !iVoted);
+    !(phase === "VOTE" && (voteMode === "choice" ? summary.quiz !== null && !quizDone : !iVoted));
 
   // 我的线索卡（持有权 = 我发现的 + 转给我的 − 最近一次转出的）
   const lastTransferByClue = new Map<string, GameEventView>();
@@ -534,7 +537,7 @@ export default function PlayPage() {
               </div>
             )}
             {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
-            {phase === "VOTE" && !iVoted && (
+            {phase === "VOTE" && !iVoted && voteMode !== "choice" && (
               <div className="space-y-2">
                 <p className="text-xs text-paper-400">指认真凶：</p>
                 {activeSeats
@@ -565,7 +568,45 @@ export default function PlayPage() {
                 </button>
               </div>
             )}
-            {phase === "VOTE" && iVoted && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
+            {phase === "VOTE" && iVoted && voteMode !== "choice" && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
+            {phase === "VOTE" && summary.quiz && !quizDone && (
+              <div className="space-y-2">
+                <p className="text-xs text-paper-400">复盘答题卡（整卷提交，交卷后不可修改）：</p>
+                {summary.quiz.questions.map((q) => (
+                  <div key={q.id} className="rounded-lg border border-gold-400/15 bg-ink-950/50 p-2">
+                    <p className="text-xs text-paper-200">{q.prompt}</p>
+                    <div className="mt-1.5 space-y-1">
+                      {q.options.map((o) => (
+                        <label key={o.id} className="flex cursor-pointer items-center gap-2 text-xs text-paper-300 hover:text-paper-100">
+                          <input
+                            type="radio"
+                            name={`quiz-${q.id}`}
+                            checked={quizPicks[q.id] === o.id}
+                            onChange={() => setQuizPicks((p) => ({ ...p, [q.id]: o.id }))}
+                            className="accent-gold-400"
+                          />
+                          {o.label}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    if (!summary.quiz) return;
+                    const answers = summary.quiz.questions
+                      .map((q) => ({ questionId: q.id, optionId: quizPicks[q.id] }))
+                      .filter((a): a is { questionId: string; optionId: string } => Boolean(a.optionId));
+                    if (answers.length === summary.quiz.questions.length) void send({ type: "answer_quiz", answers });
+                  }}
+                  disabled={sending || !summary.quiz.questions.every((q) => quizPicks[q.id])}
+                  className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
+                >
+                  交卷
+                </button>
+              </div>
+            )}
+            {phase === "VOTE" && summary.quiz && quizDone && <p className="text-xs text-paper-400">已交卷，等待其他人…</p>}
             {(summary.skills?.length ?? 0) > 0 && (phase === "SEARCH" || phase === "DISCUSSION") && (
               <div className="space-y-2 border-t border-gold-400/20 pt-3">
                 <p className="text-xs text-gold-400">技能（剩余行动点 {summary.actionPointsLeft ?? 0}）：</p>
@@ -873,6 +914,49 @@ export default function PlayPage() {
               </p>
               <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
               <p className="mt-4 text-xs text-paper-500">{reveal.content.winText}</p>
+              {(() => {
+                const quizBoard = (reveal.content.quiz as GameSummary["quizResult"] | undefined) ?? summary.quizResult ?? null;
+                if (!quizBoard || !summary.quiz) return null;
+                const seatScores = Object.values(quizBoard.perSeat);
+                const avg = seatScores.length ? seatScores.reduce((s, v) => s + v.score, 0) / seatScores.length : 0;
+                const mine = mySeat !== null ? quizBoard.perSeat[String(mySeat)] : undefined;
+                return (
+                  <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-gold-400/20 bg-ink-950/60 p-4 text-left">
+                    <p className="text-[10px] font-semibold tracking-[0.16em] text-gold-400">QUIZ · 复盘答题成绩单</p>
+                    <div className="mt-3 space-y-3">
+                      {summary.quiz.questions.map((q) => {
+                        const stat = quizBoard.perQuestion.find((p) => p.questionId === q.id);
+                        return (
+                          <div key={q.id}>
+                            <p className="text-sm text-paper-200">{q.prompt}</p>
+                            <div className="mt-1.5 flex flex-wrap gap-1.5">
+                              {q.options.map((o) => {
+                                const isCorrect = stat?.correctOptionId === o.id;
+                                const n = stat?.counts[o.id] ?? 0;
+                                return (
+                                  <span
+                                    key={o.id}
+                                    className={`rounded-full border px-2.5 py-0.5 text-xs ${
+                                      isCorrect ? "border-success-400/60 bg-success-400/10 text-success-400" : "border-paper-500/20 text-paper-400"
+                                    }`}
+                                  >
+                                    {o.label} ×{n}
+                                    {isCorrect ? " ✓" : ""}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-3 text-xs text-paper-400">
+                      全场平均 {avg.toFixed(1)} 分
+                      {mine ? ` · 我答对 ${mine.correct}/${mine.total}（加权 ${mine.score} 分）` : ""}
+                    </p>
+                  </div>
+                );
+              })()}
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Link href="/rooms/new" className="rounded-lg bg-gold-500 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-gold-400">
                   再来一局

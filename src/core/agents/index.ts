@@ -8,6 +8,8 @@ import { recallRelevantStatements } from "./recall";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { clueText, locationNameOf } from "@/core/script/compat";
+import { quizPrompt } from "@/core/engine/flow";
+import type { QuizQuestionV2 } from "@/core/script/v2/schema";
 
 export interface AgentCtx {
   script: ScriptDocV2;
@@ -294,6 +296,23 @@ export const agent = {
     const question = (parsed.question ?? "").trim();
     if (!candidates.includes(toSeat) || !question) return null;
     return { toSeat, question: question.slice(0, 200) };
+  },
+
+  /** 复盘答题：根据情报与推理作答（问题id→选项id；非法/缺题由引擎随机兜底） */
+  async quizAnswer(ctx: AgentCtx, seatIndex: number, questions: ReadonlyArray<QuizQuestionV2>): Promise<Record<string, string>> {
+    if (!questions.length) return {};
+    const res = await chat({
+      purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
+      gameId: ctx.gameId,
+      messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson: quizPrompt(questions) }),
+      temperature: 0.4,
+    });
+    const parsed = extractJson<{ answers?: Array<{ questionId?: string; optionId?: string }> }>(res.text);
+    const out: Record<string, string> = {};
+    for (const a of parsed?.answers ?? []) {
+      if (typeof a?.questionId === "string" && typeof a?.optionId === "string") out[a.questionId] = a.optionId;
+    }
+    return out;
   },
 
   /** 玩家投票 */
