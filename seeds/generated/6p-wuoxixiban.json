@@ -165,7 +165,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "死者俯身铜盆洗脸，"
+                "text": "死者俯身铜盆洗脸。"
               }
             ],
             "characterIds": [],
@@ -623,7 +623,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你演《天女散花》，"
+                "text": "你演《天女散花》。"
               }
             ],
             "characterIds": [],
@@ -685,7 +685,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你从妆箱间出来往后巷走，"
+                "text": "你从妆箱间出来往后巷走。"
               }
             ],
             "characterIds": [],
@@ -1113,7 +1113,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "大轴你伴奏，"
+                "text": "大轴开演，你在乐池伴奏。"
               }
             ],
             "characterIds": [],
@@ -1221,7 +1221,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你背琴出后门，"
+                "text": "你背琴出后门。"
               }
             ],
             "characterIds": [],
@@ -2133,7 +2133,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "古九斤洗手，"
+            "text": "古九斤洗手。"
           }
         ],
         "characterIds": [

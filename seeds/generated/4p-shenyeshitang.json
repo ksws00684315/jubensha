@@ -148,7 +148,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "收取暖器入库，"
+                "text": "收取暖器入库。"
               }
             ],
             "characterIds": [],
@@ -168,7 +168,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "打开排风扇，"
+                "text": "打开排风扇。"
               }
             ],
             "characterIds": [],
@@ -232,7 +232,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "便利店消费（监控可证），"
+                "text": "你在便利店买热饮、租充电宝（监控可证）。"
               }
             ],
             "characterIds": [],
@@ -1207,7 +1207,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "便利店买热饮租充电宝（小票与监控），"
+            "text": "方小芳在便利店买热饮、租充电宝（留下小票与监控记录）。"
           }
         ],
         "characterIds": [],
@@ -1232,7 +1232,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "隋亮仍在店内翻欠条，"
+            "text": "隋亮仍在店内翻欠条。"
           }
         ],
         "characterIds": [
@@ -1257,7 +1257,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "许亦然下夜班路过敲窗，风声里无人应，"
+            "text": "许亦然下夜班路过敲窗，风声里无人应。"
           }
         ],
         "characterIds": [

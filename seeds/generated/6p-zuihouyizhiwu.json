@@ -1393,27 +1393,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "上、"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_jinma_event_7",
-            "time": {
-              "display": "21:58",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:58"
-              }
-            },
-            "title": "下",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "下）。"
+                "text": "门房登记簿上你那行'21:50 上、21:58 下'，其实是补改的，墨浮在纸面上。"
               }
             ],
             "characterIds": [],
@@ -1942,7 +1922,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "陆云孙在乐池调琴排谱，"
+            "text": "陆云孙在乐池调琴排谱。"
           }
         ],
         "characterIds": [
@@ -2040,7 +2020,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "白秋池携药箱上楼（门房登记），"
+            "text": "白秋池携药箱上楼（门房登记）。"
           }
         ],
         "characterIds": [
@@ -2144,7 +2124,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "侍应回报郑慕韩'上不得楼'，"
+            "text": "侍应回报郑慕韩'上不得楼'。"
           }
         ],
         "characterIds": [
@@ -2169,7 +2149,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "到梯口递话'今夜就走'，"
+            "text": "陆云孙到梯口递话给苏曼丽'今夜就走'。"
           }
         ],
         "characterIds": [],
@@ -2240,7 +2220,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "回乐池，"
+            "text": "陆云孙回乐池。"
           }
         ],
         "characterIds": [],

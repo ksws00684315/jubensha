@@ -214,7 +214,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你盯他脸色越来越白，"
+                "text": "你盯他脸色越来越白。"
               }
             ],
             "characterIds": [],
@@ -896,7 +896,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你去补妆，"
+                "text": "你去补妆。"
               }
             ],
             "characterIds": [],
@@ -1836,7 +1836,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "救护车到达，"
+            "text": "救护车到达。"
           }
         ],
         "characterIds": [],

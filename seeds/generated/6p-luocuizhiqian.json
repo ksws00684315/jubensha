@@ -1210,7 +1210,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "动身，"
+                "text": "你动身前往中庭。"
               }
             ],
             "characterIds": [],
@@ -1250,7 +1250,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "到中庭发现人伏在水中，"
+                "text": "你到中庭，发现人伏在水中。"
               }
             ],
             "characterIds": [],
@@ -2094,7 +2094,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "秦斯年到中庭发现人伏在水中，"
+            "text": "秦斯年到中庭，发现人伏在水中。"
           }
         ],
         "characterIds": [

@@ -1146,7 +1146,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你猫在正房窗根下："
+                "text": "你猫在正房窗根下，窥见屋内动静。"
               }
             ],
             "characterIds": [],
@@ -1412,32 +1412,10 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你在马厩守货押夜，头骡拴在你手边（其间打盹两回，"
+                "text": "你在马厩守货押夜，头骡拴在你手边（其间打盹两回，21:00 前后二锅头来'查料'与你说了几句话）。"
               }
             ],
             "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_yangdinggang_event_3",
-            "time": {
-              "display": "21:00",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:00"
-              }
-            },
-            "title": "前后二锅头来'查料'与你说了几句话",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "前后二锅头来'查料'与你说了几句话）。"
-              }
-            ],
-            "characterIds": [
-              "xutashan"
-            ],
             "clueIds": []
           },
           {
@@ -1965,7 +1943,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "阿黑猫在正房窗根下："
+            "text": "阿黑猫伏在正房窗根下，窥见屋内动静。"
           }
         ],
         "characterIds": [
@@ -1990,7 +1968,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "见许踏山进屋装烟，"
+            "text": "阿黑猫看见许踏山进屋装烟。"
           }
         ],
         "characterIds": [
@@ -2015,7 +1993,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "见其递入一封绵纸信（伪造的敲诈信），"
+            "text": "阿黑猫见其递入一封绵纸信（伪造的敲诈信）。"
           }
         ],
         "characterIds": [],

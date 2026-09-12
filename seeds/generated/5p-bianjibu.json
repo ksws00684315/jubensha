@@ -104,7 +104,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你去打印终稿，"
+                "text": "你去打印终稿。"
               }
             ],
             "characterIds": [],
@@ -164,7 +164,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你在工位改第 14 场的台词，"
+                "text": "你在工位改第 14 场的台词。"
               }
             ],
             "characterIds": [],
@@ -227,7 +227,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你去阳台给影视公司周总打电话求他把名字加回合同，"
+                "text": "你去阳台给影视公司周总打电话，求他把你的名字加回合同。"
               }
             ],
             "characterIds": [],
@@ -955,7 +955,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你去阳台抽烟撞见有人打电话，"
+                "text": "你去阳台抽烟，撞见有人在打电话。"
               }
             ],
             "characterIds": [
@@ -1836,7 +1836,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "江雪在阳台给影视公司周总打电话求他把自己的名字加回合同，"
+            "text": "江雪在阳台给影视公司周总打电话，求他把自己的名字加回合同。"
           }
         ],
         "characterIds": [
@@ -1886,7 +1886,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "冰融释毒，"
+            "text": "可乐里的冰块渐融，胶囊随之释毒。"
           }
         ],
         "characterIds": [],
@@ -1932,7 +1932,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "白灵送签约文件发现主编晕厥，"
+            "text": "白灵送签约文件时发现主编晕厥。"
           }
         ],
         "characterIds": [

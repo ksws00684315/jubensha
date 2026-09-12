@@ -352,7 +352,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你在后厨倒垃圾、洗碗，"
+                "text": "你在后厨倒垃圾、洗碗。"
               }
             ],
             "characterIds": [],
@@ -1211,7 +1211,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "老周借帮忙收摊换盐罐、调油碟，"
+            "text": "老周借帮忙收摊的机会，换了盐罐、调了油碟。"
           }
         ],
         "characterIds": [
@@ -1336,7 +1336,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "救护车宣布死亡，"
+            "text": "救护车到场宣布死亡。"
           }
         ],
         "characterIds": [],

@@ -127,7 +127,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "去食堂吃饭，"
+                "text": "你离席去食堂吃饭。"
               }
             ],
             "characterIds": [],
@@ -147,7 +147,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "发现餐盘下的纸条，"
+                "text": "你在食堂发现餐盘下的匿名纸条。"
               }
             ],
             "characterIds": [],
@@ -187,7 +187,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "警报响起，"
+                "text": "三号气闸低氧警报响起。"
               }
             ],
             "characterIds": [],
@@ -504,7 +504,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你调取三号阀组遥测："
+                "text": "你调取三号阀组遥测：氮洗指令为一次性下发、15 分钟自恢复——这不是故障，是'模式谋杀'。"
               }
             ],
             "characterIds": [],
@@ -1230,7 +1230,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "上浮后减压伤发作（第三次违规潜水后遗症），"
+                "text": "上浮后减压伤发作（第三次违规潜水后遗症）。"
               }
             ],
             "characterIds": [],
@@ -2035,7 +2035,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "方岸离席去食堂（拾到纸条），"
+            "text": "方岸离席去食堂，在餐盘下拾到那张匿名纸条。"
           }
         ],
         "characterIds": [
@@ -2060,7 +2060,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "延迟氮洗触发与自动复位，"
+            "text": "延迟氮洗指令于 16:15 触发，混合阀被切到'氮洗模式'，并在 15 分钟后自动复位。"
           }
         ],
         "characterIds": [],

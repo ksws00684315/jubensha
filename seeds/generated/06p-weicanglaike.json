@@ -84,7 +84,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "借 40 号钥匙'通风'，"
+                "text": "以'通风'为名借走 40 号钥匙。"
               }
             ],
             "characterIds": [],
@@ -104,7 +104,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "拨挂锁成虚挂，"
+                "text": "将 40 号的挂锁拨成虚挂。"
               }
             ],
             "characterIds": [],
@@ -1698,7 +1698,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "聂怀远借 40 号钥匙'通风'，"
+            "text": "聂怀远以'通风'为名借走 40 号钥匙。"
           }
         ],
         "characterIds": [
@@ -1723,7 +1723,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "拨挂锁成虚挂，"
+            "text": "聂怀远将 40 号的挂锁拨成虚挂。"
           }
         ],
         "characterIds": [],

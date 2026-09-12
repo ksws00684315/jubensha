@@ -570,7 +570,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "端夜宵至女将处，"
+                "text": "你端夜宵至女将处。"
               }
             ],
             "characterIds": [],
@@ -614,27 +614,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "独自在料理间腌梅（坛沿水封未干，"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_duro_event_4",
-            "time": {
-              "display": "23:50",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:50"
-              }
-            },
-            "title": "封坛",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "封坛）。"
+                "text": "你独自在料理间腌梅，23:50 才封坛（坛沿水封未干）。"
               }
             ],
             "characterIds": [],

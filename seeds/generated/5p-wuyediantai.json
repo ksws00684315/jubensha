@@ -188,7 +188,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "与白楠一同发现，"
+                "text": "你与白楠一同发现罗夜航倒在播音间。"
               }
             ],
             "characterIds": [
@@ -1331,27 +1331,6 @@
           {
             "type": "paragraph",
             "text": "对讲静音开启。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_27",
-        "time": {
-          "display": "03:41",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:41"
-          }
-        },
-        "title": "-23:",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "-23:"
           }
         ],
         "characterIds": [],
