@@ -6,7 +6,8 @@ export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as { token?: string } | null;
   if (isAdminRequest(req) || (body?.token && adminPassword() && body.token === adminPassword())) {
     const res = NextResponse.json({ ok: true });
-    res.headers.append("Set-Cookie", adminCookieHeader());
+    const secure = req.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() === "https" || new URL(req.url).protocol === "https:";
+    res.headers.append("Set-Cookie", adminCookieHeader(secure));
     return res;
   }
   return NextResponse.json({ error: "口令不正确" }, { status: 401 });

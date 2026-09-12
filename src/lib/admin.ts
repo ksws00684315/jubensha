@@ -8,11 +8,11 @@ function masterSecret(): string {
   return process.env.ADMIN_TOKEN || process.env.SECRET_MASTER_KEY || "";
 }
 
-/** 写入浏览器的会话值，不是明文口令 */
+/** 写入浏览器的会话值，不是明文口令。绑定 ADMIN_TOKEN：轮换口令即失效所有旧会话。 */
 export function adminSessionToken(): string {
   const secret = process.env.SECRET_MASTER_KEY || masterSecret();
   if (!secret) return "";
-  return crypto.createHmac("sha256", secret).update("jbs-admin-session").digest("hex");
+  return crypto.createHmac("sha256", secret).update(`jbs-admin-session:${process.env.ADMIN_TOKEN ?? ""}`).digest("hex");
 }
 
 export function adminPassword(): string {
@@ -35,9 +35,11 @@ export function isAdminSync(opts: {
   if (session && opts.cookie === session) return true;
   const password = adminPassword();
   if (password && opts.tokenHeader && opts.tokenHeader === password) return true;
-  // 仅开发环境允许本机免登录。生产环境不能仅凭 Host 判断来源，
-  // 因为客户端可以伪造 Host: localhost。
-  if (process.env.NODE_ENV === "production") return false;
+  // 本机免登录默认只在开发环境生效。生产构建(next start)里 Host 可被客户端伪造,
+  // 因此需要显式设置 ADMIN_TRUST_LOOPBACK=1 才开启——仅适用于服务只在本机/可信网络使用的部署。
+  const trustLoopback =
+    process.env.ADMIN_TRUST_LOOPBACK === "1" || process.env.ADMIN_TRUST_LOOPBACK === "true";
+  if (process.env.NODE_ENV === "production" && !trustLoopback) return false;
   const xff = opts.xff?.split(",")[0]?.trim() ?? "";
   const xffLoopback =
     !xff || xff === "127.0.0.1" || xff === "::1" || xff === "::ffff:127.0.0.1" || isLoopbackHost(xff);
@@ -79,7 +81,7 @@ export function requireAdmin(req: Request): NextResponse | null {
   return NextResponse.json({ error: "需要管理员身份" }, { status: 401 });
 }
 
-export function adminCookieHeader(): string {
+export function adminCookieHeader(secure = false): string {
   const parts = [
     `${ADMIN_COOKIE}=${adminSessionToken()}`,
     "Path=/",
@@ -87,5 +89,6 @@ export function adminCookieHeader(): string {
     "SameSite=Lax",
     "Max-Age=2592000",
   ];
+  if (secure) parts.push("Secure");
   return parts.join("; ");
 }
