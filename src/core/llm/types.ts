@@ -1,4 +1,4 @@
-export type Purpose = "dm" | "culprit" | "player" | "generator";
+export type Purpose = "dm" | "culprit" | "player" | "generator" | "embedding";
 
 export type BindingSlot = Purpose | "tts";
 

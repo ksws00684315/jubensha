@@ -185,6 +185,16 @@ model PrivateMessage {
   @@map("private_messages")
 }
 
+/// 向量检索记忆层：公开发言的 embedding 缓存（仅当设置页绑定 embedding 模型后写入）。
+model EventVector {
+  gameId String
+  seq    BigInt
+  vector Json
+
+  @@id([gameId, seq])
+  @@map("event_vectors")
+}
+
 /// LLM/TTS 调用记账。
 model UsageLog {
   id               String   @id @default(cuid())

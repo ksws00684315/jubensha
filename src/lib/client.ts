@@ -119,6 +119,10 @@ export interface GameSummary {
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
   /** 本座位限时截止时间（epoch ms）；不限时或未在计时为 null */
   humanDeadline: number | null;
+  /** 推荐回复：轮到我发言时后台生成的建议短句 */
+  suggestions: string[];
+  /** 向我开过私信窗口的 AI 座位（可回复） */
+  openWhispers: number[];
 }
 
 export interface DmStructuredView {

@@ -336,26 +336,6 @@
             "clueIds": []
           },
           {
-            "id": "character_suxiuxiu_event_2",
-            "time": {
-              "display": "20:50",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "20:50"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "，全楼的客人都能作证你一直没离开大堂。你面向楼梯唱，看得见每一个上楼的人："
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_suxiuxiu_event_3",
             "time": {
               "display": "20:05",
@@ -412,6 +392,26 @@
               {
                 "type": "paragraph",
                 "text": "那个人上去，手里拿着一份公文。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_suxiuxiu_event_2",
+            "time": {
+              "display": "20:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "，全楼的客人都能作证你一直没离开大堂。你面向楼梯唱，看得见每一个上楼的人："
               }
             ],
             "characterIds": [],
@@ -1234,37 +1234,72 @@
     {
       "id": "location_1",
       "name": "二楼雅间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "二楼雅间，死者约人对账的地方。茶具翻倒，门闩被人从外带上了。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "柜台大堂",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "柜台大堂。往来账目与宿客名册都在柜上，灯火通宵不熄。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "后院马厩柴房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后院马厩柴房。草料与柴垛堆到梁下，牲口夜里也不得闲。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "苏绣袖的房间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "绣娘苏绣袖的房间。绷架上的活计没收，针线笸箩摆在窗下。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "燕十三的通铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "镖师燕十三的通铺。刀靠入鞘，行囊打的结谁也解不开。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "账房与铁衣的通铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "账房与账房先生铁衣的通铺。算盘册页堆了半床，灯油管够。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "驿站公房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "驿站公房。公文库、印信匣俱在此处，出入须登记。"
+        }
+      ]
     }
   ],
   "clues": [
@@ -1272,7 +1307,7 @@
       "id": "jiuhu",
       "locationId": "location_1",
       "name": "酒壶残酒",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1287,7 +1322,7 @@
       "id": "mixi",
       "locationId": "location_1",
       "name": "死者贴身密信",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1302,7 +1337,7 @@
       "id": "gongwen",
       "locationId": "location_1",
       "name": "拆开的公文封套",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1317,7 +1352,7 @@
       "id": "zhangben",
       "locationId": "location_2",
       "name": "柳掌柜的手账",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1332,7 +1367,7 @@
       "id": "mingtie",
       "locationId": "location_4",
       "name": "琴袋里的旧物",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1347,7 +1382,7 @@
       "id": "weituo",
       "locationId": "location_5",
       "name": "贾记告帖底稿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1362,7 +1397,7 @@
       "id": "anzhang",
       "locationId": "location_6",
       "name": "铺底的暗账",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1377,7 +1412,7 @@
       "id": "cizheng",
       "locationId": "location_6",
       "name": "写了一半的辞呈",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1392,7 +1427,7 @@
       "id": "yaofen",
       "locationId": "location_3",
       "name": "柴房里的白色药末",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1407,7 +1442,7 @@
       "id": "guanxue",
       "locationId": "location_3",
       "name": "官靴泥印与备鞍的马",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1422,7 +1457,7 @@
       "id": "tanpen",
       "locationId": "location_7",
       "name": "没烧透的炭盆",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1439,7 +1474,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫马有禄，雁归镇驿丞。驿站年年亏空，前任给你留了个三百石的粮洞，你拆东墙补西墙挪了三年，眼看就要盖不住了。"
+        "text": "马有禄任驿丞三年，挪用军粮折银三百石，窟窿再也盖不住。死者持账册勒令他画押认罪、随镖车回府城过堂——画押即抄家流放，他选择杀人毁账、铤而走险。"
       }
     ],
     "method": {
@@ -1828,7 +1863,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "anzhang"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1838,7 +1875,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "mingtie"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1848,7 +1887,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "cizheng"
+        ],
         "explanation": [
           {
             "type": "paragraph",

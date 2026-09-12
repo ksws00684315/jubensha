@@ -1345,7 +1345,7 @@
       "id": "yaohe_xiaopiao",
       "locationId": "location_1",
       "name": "药盒与购药小票",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1360,7 +1360,7 @@
       "id": "diancan_cungen",
       "locationId": "location_1",
       "name": "点单存根",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1375,7 +1375,7 @@
       "id": "diqifengheka",
       "locationId": "location_1",
       "name": "第七封贺卡",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1390,7 +1390,7 @@
       "id": "chengji_didan",
       "locationId": "location_1",
       "name": "挎包里的成绩底单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1405,7 +1405,7 @@
       "id": "shouji_sousuo",
       "locationId": "location_1",
       "name": "手机里的搜索记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1420,7 +1420,7 @@
       "id": "qiantiao",
       "locationId": "location_1",
       "name": "相册夹层里的欠条",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1435,7 +1435,7 @@
       "id": "liaotian_jilu",
       "locationId": "location_1",
       "name": "手机里的聊天记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1450,7 +1450,7 @@
       "id": "huanjiu_bianqian",
       "locationId": "location_2",
       "name": "传菜口的换酒便签",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1465,7 +1465,7 @@
       "id": "hongzhang_canhou",
       "locationId": "location_3",
       "name": "车里的红章残页",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1482,7 +1482,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "1995年，中师保送名额本该属于林素芬，班主任收了你家两条烟两瓶酒，让班长郑国栋把志愿表第一志愿改成你的名字。你一路中师、进修、评职称，如今是区实验中学副校长，儿子明年考公，政审表要填社会关系。"
+        "text": "1995 年一桩冒名顶替的保送名额成全了赵凯的仕途，四十年后旧事被翻出、被要求当众认罪——为保住副校长的前程与儿子的政审，他选择让知情人永远闭嘴。"
       }
     ],
     "method": {
@@ -1900,7 +1900,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "chengji_didan",
+          "yaohe_xiaopiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1910,7 +1913,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "qiantiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1920,7 +1925,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "liaotian_jilu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1930,7 +1937,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "hongzhang_canhou"
+        ],
         "explanation": [
           {
             "type": "paragraph",

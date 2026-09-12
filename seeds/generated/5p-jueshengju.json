@@ -733,26 +733,6 @@
             "clueIds": []
           },
           {
-            "id": "character_wensheng_event_2",
-            "time": {
-              "display": "22:26",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "22:26"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "、"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_wensheng_event_3",
             "time": {
               "display": "22:27",
@@ -842,7 +822,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "后台日志你点开过两次：21:55:12启动训练回放循环，22:28:41切回实时——操作帐号是他的，可密码便签就贴在屏幕边上。"
+                "text": "后台日志你点开过两次：21:55:12 启动训练回放循环，22:28:41 切回实时——那晚你没碰过后台；是谁登录的，日志里应该留了账号。"
               }
             ],
             "source": "other",
@@ -1028,7 +1008,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "灰色连帽衫是他的，袖口磨白——队里没人敢穿他的衣服。"
+                "text": "快递架边挂着件灰色连帽衫，袖口磨白，尺码偏大——队里穿得下它的人不止一个，你没记住最近是谁常穿。"
               }
             ],
             "source": "other",
@@ -1105,7 +1085,7 @@
       "id": "shufang_kanyan",
       "locationId": "location_1",
       "name": "书房现场勘验记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1120,7 +1100,7 @@
       "id": "jianqiao_xuedi",
       "locationId": "location_1",
       "name": "剑鞘内的血滴",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1135,7 +1115,7 @@
       "id": "tuiliu_houtai",
       "locationId": "location_2",
       "name": "推流后台日志",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1150,7 +1130,7 @@
       "id": "zhibo_luping",
       "locationId": "location_2",
       "name": "平台录屏切片",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1165,7 +1145,7 @@
       "id": "jiahetong_saomiao",
       "locationId": "location_1",
       "name": "假合同扫描件与审计邮件草稿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1180,7 +1160,7 @@
       "id": "xuchong_taoxin",
       "locationId": "location_3",
       "name": "许冲的讨薪录音与战绩",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1195,7 +1175,7 @@
       "id": "fangqing_jizhang",
       "locationId": "location_4",
       "name": "方晴的记账与送茶时间",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1210,7 +1190,7 @@
       "id": "wensheng_songshui",
       "locationId": "location_2",
       "name": "闻声送水的两分钟",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1225,7 +1205,7 @@
       "id": "damen_menjin",
       "locationId": "location_5",
       "name": "大门门禁与监控报修单",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1242,7 +1222,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫陆骁，破晓建队就是你和蒋万川两个人：他出钱，你出命。十年，你替他签了七份'顾问协议'——他说'名头你背着，钱我兜着'，你签了。"
+        "text": "陆骁替蒋万川签了七份洗钱'顾问协议'，一千二百八十万签约金被对方侵吞；死者反以审计函逼他独自'体面自首'、背负全部罪名。他选择了灭口。"
       }
     ],
     "method": {
@@ -1533,6 +1513,37 @@
         ]
       },
       {
+        "id": "truth_event_25",
+        "time": {
+          "display": "21:53",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:53"
+          }
+        },
+        "title": "事件 25",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "目击（唯一看见教练上楼的人）→ 假合同扫描件（替罪结构，动机）→ 各人不在线证明（许冲战绩、方晴记账、齐小满目击位置）。红鲱鱼：许冲最响的讨薪动机与录音、方晴提前知道审计的知情不报与两万公款、闻声的后台权限与水军旧事、齐小满偷拍的扫描件——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [
+          "xuchong",
+          "fangqing",
+          "wensheng",
+          "qixiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xuchong",
+          "fangqing",
+          "wensheng",
+          "qixiaoman"
+        ]
+      },
+      {
         "id": "truth_event_10",
         "time": {
           "display": "21:55",
@@ -1558,6 +1569,27 @@
         ]
       },
       {
+        "id": "truth_event_22",
+        "time": {
+          "display": "21:55",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:55"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "启动循环、"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_11",
         "time": {
           "display": "22:00",
@@ -1572,6 +1604,31 @@
           {
             "type": "paragraph",
             "text": "蒋万川独自在书房核材料。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_21",
+        "time": {
+          "display": "22:00–22:30",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:30"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "）→ 剑鞘血滴与蓝色纤维（凶器归位却留下痕迹）→ 推流后台与录屏（"
           }
         ],
         "characterIds": [],
@@ -1687,6 +1744,31 @@
         ]
       },
       {
+        "id": "truth_event_24",
+        "time": {
+          "display": "22:25",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:25"
+          }
+        },
+        "title": "事件 24",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "'直播里的教练'不应声不接电话）→ 齐小满"
+          }
+        ],
+        "characterIds": [
+          "qixiaoman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qixiaoman"
+        ]
+      },
+      {
         "id": "truth_event_16",
         "time": {
           "display": "22:27",
@@ -1730,6 +1812,31 @@
         "clueIds": [],
         "participantIds": [
           "luxiao"
+        ]
+      },
+      {
+        "id": "truth_event_23",
+        "time": {
+          "display": "22:28",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:28"
+          }
+        },
+        "title": "事件 23",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "切换，教练帐号操作）→ 闻声的通话记录与外卖杯（"
+          }
+        ],
+        "characterIds": [
+          "wensheng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "wensheng"
         ]
       },
       {
@@ -1806,133 +1913,6 @@
         "participantIds": [
           "fangqing"
         ]
-      },
-      {
-        "id": "truth_event_21",
-        "time": {
-          "display": "22:00–22:30",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:00"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "22:30"
-          }
-        },
-        "title": "事件 21",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）→ 剑鞘血滴与蓝色纤维（凶器归位却留下痕迹）→ 推流后台与录屏（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_22",
-        "time": {
-          "display": "21:55",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:55"
-          }
-        },
-        "title": "事件 22",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "启动循环、"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_23",
-        "time": {
-          "display": "22:28",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:28"
-          }
-        },
-        "title": "事件 23",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "切换，教练帐号操作）→ 闻声的通话记录与外卖杯（"
-          }
-        ],
-        "characterIds": [
-          "wensheng"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "wensheng"
-        ]
-      },
-      {
-        "id": "truth_event_24",
-        "time": {
-          "display": "22:25",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:25"
-          }
-        },
-        "title": "事件 24",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "'直播里的教练'不应声不接电话）→ 齐小满"
-          }
-        ],
-        "characterIds": [
-          "qixiaoman"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "qixiaoman"
-        ]
-      },
-      {
-        "id": "truth_event_25",
-        "time": {
-          "display": "21:53",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:53"
-          }
-        },
-        "title": "事件 25",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "目击（唯一看见教练上楼的人）→ 假合同扫描件（替罪结构，动机）→ 各人不在线证明（许冲战绩、方晴记账、齐小满目击位置）。红鲱鱼：许冲最响的讨薪动机与录音、方晴提前知道审计的知情不报与两万公款、闻声的后台权限与水军旧事、齐小满偷拍的扫描件——人人有秘密，无人是第二凶手。"
-          }
-        ],
-        "characterIds": [
-          "xuchong",
-          "fangqing",
-          "wensheng",
-          "qixiaoman"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "xuchong",
-          "fangqing",
-          "wensheng",
-          "qixiaoman"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -1958,7 +1938,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "xuchong_taoxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1978,7 +1960,10 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "wensheng_songshui",
+          "tuiliu_houtai"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1988,7 +1973,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "jiahetong_saomiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",

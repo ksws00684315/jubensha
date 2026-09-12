@@ -1,7 +1,10 @@
-import { chat, extractJson } from "@/core/llm/client";
+import { chat, chatStream, extractJson } from "@/core/llm/client";
 import type { Purpose } from "@/core/llm/types";
 import { buildDmContext, buildPlayerContext, characterOf } from "./context";
-import { guardDmSpeech, guardPlayerSpeech } from "./guard";
+import { buildSummarizeMessages } from "./memory";
+import { createSpeechRedactor, dmGuardMarkers, guardDmSpeech, guardPlayerSpeech, playerGuardMarkers } from "./guard";
+import { lastOwnSpeechText, shouldReviewSpeech } from "./review";
+import { recallRelevantStatements } from "./recall";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { clueText, locationNameOf } from "@/core/script/compat";
@@ -19,16 +22,73 @@ export function seatPurpose(script: ScriptDocV2, state: GameState, seatIndex: nu
   return character?.privateCard.isCulprit ? "culprit" : "player";
 }
 
+/**
+ * ★ 向量检索注入 ★：用最近几条发言作 query，把被滚动摘要压缩掉的相关旧发言找回来。
+ * 只在已有摘要锚点时才有意义（否则全量日志已在上下文里）；失败/未绑定 embedding 时静默为空。
+ */
+async function recallFor(ctx: AgentCtx, seatIndex: number | null): Promise<string> {
+  try {
+    const anchorSeq = ctx.state.memory?.anchorSeq;
+    if (!anchorSeq) return "";
+    const recent = ctx.events
+      .slice(-4)
+      .filter((e) => e.type === "speech")
+      .map((e) => String(e.content.text ?? ""))
+      .join("\n");
+    if (!recent.trim()) return "";
+    const lines = await recallRelevantStatements({
+      gameId: ctx.gameId,
+      events: ctx.events,
+      seatIndex,
+      anchorSeq,
+      query: recent,
+    });
+    if (!lines.length) return "";
+    return `【旧事重提·与当前话题相关（帮你对照前后说法）】\n${lines.map((l) => `· ${l.label}：${l.text}`).join("\n")}`;
+  } catch {
+    return "";
+  }
+}
+
 export const agent = {
   /** DM 开场白 / 转场旁白 */
   async dmNarrate(ctx: AgentCtx, task: string): Promise<string> {
+    const messages = buildDmContext(ctx.script, ctx.state, ctx.events, { task, recall: await recallFor(ctx, null) });
     const res = await chat({
       purpose: "dm",
       gameId: ctx.gameId,
-      messages: buildDmContext(ctx.script, ctx.state, ctx.events, { task }),
+      messages,
       temperature: 0.7,
     });
     return guardDmSpeech(ctx.script, ctx.state, res.text).text;
+  },
+
+  /** DM 旁白（真流式）：句子级增量守卫，泄露句不会被放出。 */
+  async *streamDmNarrate(ctx: AgentCtx, task: string): AsyncGenerator<string> {
+    const messages = buildDmContext(ctx.script, ctx.state, ctx.events, { task, recall: await recallFor(ctx, null) });
+    const redactor = createSpeechRedactor(dmGuardMarkers(ctx.script, ctx.state));
+    for await (const chunk of chatStream({ purpose: "dm", gameId: ctx.gameId, messages, temperature: 0.7 })) {
+      const delta = redactor.push(chunk);
+      if (delta) yield delta;
+    }
+    const { delta } = redactor.flush();
+    if (delta) yield delta;
+  },
+
+  /** 滚动记忆：把（旧摘要 + 新增公共记录）合并成一份概要。失败返回空串（调用方保留旧摘要）。 */
+  async summarizeHistory(ctx: AgentCtx, prevSummary: string, headLog: string): Promise<string> {
+    try {
+      const res = await chat({
+        purpose: "player",
+        gameId: ctx.gameId,
+        messages: buildSummarizeMessages(prevSummary, headLog),
+        temperature: 0.2,
+        maxTokens: 2048,
+      });
+      return res.text.trim().slice(0, 2000);
+    } catch {
+      return "";
+    }
   },
 
   /** DM 评估人类发言后哪些 AI 接话 */
@@ -56,11 +116,12 @@ export const agent = {
   },
 
   /** 玩家自我介绍 / 发言（带泄密守卫与一次重试） */
-  async playerSpeak(ctx: AgentCtx, seatIndex: number, opts: { intro?: boolean; hint?: string } = {}): Promise<string> {
+  async playerSpeak(ctx: AgentCtx, seatIndex: number, opts: { intro?: boolean; hint?: string; recall?: string } = {}): Promise<string> {
     const build = () =>
       buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, {
         hint: opts.hint,
         extraInstruction: opts.intro ? "这是你的自我介绍环节。" : undefined,
+        recall: opts.recall,
       });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, messages: build(), temperature: 0.85 })).text);
@@ -70,6 +131,110 @@ export const agent = {
       if (guarded2.text.length >= Math.min(20, guarded.text.length)) guarded = guarded2;
     }
     return guarded.text;
+  },
+
+  /** 玩家发言（真流式）：句子级增量守卫，泄露句不会被放出（替代先全文守卫再打字机的旧方案）。 */
+  async *streamPlayerSpeech(
+    ctx: AgentCtx,
+    seatIndex: number,
+    opts: { intro?: boolean; hint?: string; extraInstruction?: string; recall?: string } = {}
+  ): AsyncGenerator<string> {
+    const messages = buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, {
+      hint: opts.hint,
+      extraInstruction: opts.intro ? "这是你的自我介绍环节。" : opts.extraInstruction,
+      recall: opts.recall ?? (await recallFor(ctx, seatIndex)),
+    });
+    const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
+    const redactor = createSpeechRedactor(playerGuardMarkers(ctx.script, ctx.state, seatIndex));
+    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, messages, temperature: 0.85 })) {
+      const delta = redactor.push(chunk);
+      if (delta) yield delta;
+    }
+    const { delta } = redactor.flush();
+    if (delta) yield delta;
+  },
+
+  /**
+   * ★ 二次审查 ★（critique→refine）：启发式怀疑出戏/复读时，用一次廉价调用判定并最小修改。
+   * 通过守卫的台词通常直接返回原文本（零额外成本）；审查失败时保留原文。
+   */
+  async refineSpeech(ctx: AgentCtx, seatIndex: number, text: string): Promise<string> {
+    const ownLast = lastOwnSpeechText(ctx.events, seatIndex);
+    if (!shouldReviewSpeech(text, ownLast)) return text;
+    try {
+      const res = await chat({
+        purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
+        gameId: ctx.gameId,
+        temperature: 0.1,
+        maxTokens: 1024,
+        messages: [
+          {
+            role: "system",
+            content:
+              "你是剧本杀台词审查员。检查给定台词是否违规：1) 出戏（出现 AI/助手/游戏机制/系统提示等元话语，或舞台指示）；2) 与该角色上一段发言几乎重复。只做最小修改、保持角色口吻与原意。只输出 JSON：{\"ok\":true} 或 {\"ok\":false,\"text\":\"修改后的台词\"}。",
+          },
+          {
+            role: "user",
+            content: `【台词】\n${text}\n${ownLast ? `\n【该角色上一段发言】\n${ownLast}` : ""}`,
+          },
+        ],
+      });
+      const parsed = extractJson<{ ok?: boolean; text?: string }>(res.text);
+      if (parsed && parsed.ok === false && typeof parsed.text === "string") {
+        const refined = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, parsed.text.trim());
+        if (refined.text.length >= Math.min(20, text.length)) return refined.text;
+      }
+    } catch {
+      /* 审查失败就用原文 */
+    }
+    return text;
+  },
+
+  /**
+   * ★ AI 主动私聊 ★：讨论轮发言结束后，AI 可审慎决定是否悄悄私信一位真人玩家。
+   * 私信内容同样过泄密守卫；无明确动机时返回 null。
+   */
+  async playerConsiderWhisper(ctx: AgentCtx, seatIndex: number, humanSeats: number[]): Promise<{ toSeat: number; text: string } | null> {
+    if (!humanSeats.length) return null;
+    const roster = humanSeats
+      .map((i) => {
+        const seat = ctx.state.seats[i];
+        const name = ctx.script.characters.find((c) => c.id === seat?.characterId)?.name ?? seat?.playerName ?? `座位${i + 1}`;
+        return `${i + 1}:${name}`;
+      })
+      .join("、");
+    const requireJson = `你有一个私密窗口的机会：可以悄悄私信一位真人玩家，其他玩家看不到这段对话。只在有明确动机时才发（交换情报/试探口风/私下结盟/旁敲侧击的警告），没有就不要发。请只输出 JSON：{"whisper":false} 或 {"whisper":true,"to":座位号,"text":"私信内容，40-120字，符合你的口吻与目的"}。可找：${roster}。私信里可以拿出你愿意交换的情报，但绝不能写出你的秘密原文，也不要替别人传话。`;
+    const res = await chat({
+      purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
+      gameId: ctx.gameId,
+      messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }),
+      temperature: 0.5,
+    });
+    const parsed = extractJson<{ whisper?: boolean; to?: number; text?: string }>(res.text);
+    if (!parsed?.whisper || parsed.to === undefined) return null;
+    const toSeat = parsed.to - 1;
+    const text = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (parsed.text ?? "").trim()).text;
+    if (!humanSeats.includes(toSeat) || !text) return null;
+    return { toSeat, text: text.slice(0, 300) };
+  },
+
+  /** ★ 推荐回复 ★：轮到真人发言时，后台生成 3 条可直接说出口的短句（同样过守卫）。 */
+  async suggestReplies(ctx: AgentCtx, seatIndex: number): Promise<string[]> {
+    const requireJson = `请结合当前局面与你的处境，给出 3 条你现在可以直接说出口的短句，帮助玩家快速接话。要求：每条不超过 40 字，中文口语，符合你的人设、秘密与目标；可以是陈述、反问或试探；不要舞台指示，不要复读别人刚说过的话。请只输出 JSON：{"suggestions":["...","...","..."]}`;
+    const res = await chat({
+      purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
+      gameId: ctx.gameId,
+      messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }),
+      temperature: 0.9,
+    });
+    const parsed = extractJson<{ suggestions?: unknown }>(res.text);
+    if (!Array.isArray(parsed?.suggestions)) return [];
+    const guard = (s: unknown): string | null => {
+      if (typeof s !== "string") return null;
+      const text = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, s.trim().slice(0, 60)).text;
+      return text || null;
+    };
+    return parsed.suggestions.map(guard).filter((s): s is string => s !== null).slice(0, 3);
   },
 
   /** 玩家选择搜证地点 */

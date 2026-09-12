@@ -771,26 +771,6 @@
             "clueIds": []
           },
           {
-            "id": "character_lei_ting_event_2",
-            "time": {
-              "display": "22:50",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "22:50"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "你借口去后厨洗手，把记事本从手包取出塞到了米缸后面——放在身上你不敢。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_lei_ting_event_3",
             "time": {
               "display": "22:45",
@@ -805,6 +785,26 @@
               {
                 "type": "paragraph",
                 "text": "你申请跟车去医院被民警拦下，转为留下配合。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lei_ting_event_2",
+            "time": {
+              "display": "22:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:50"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你借口去后厨洗手，把记事本从手包取出塞到了米缸后面——放在身上你不敢。"
               }
             ],
             "characterIds": [],
@@ -915,7 +915,7 @@
       "id": "youdie_yaohe",
       "locationId": "location_1",
       "name": "油碟与随身药盒",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -930,7 +930,7 @@
       "id": "dinaxian_dai",
       "locationId": "location_2",
       "name": "泔水桶边的低钠盐袋",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -945,7 +945,7 @@
       "id": "su_cai",
       "locationId": "location_3",
       "name": "手机里的素材",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -960,7 +960,7 @@
       "id": "jishiben",
       "locationId": "location_3",
       "name": "米缸后的记事本",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -972,25 +972,10 @@
       "relatedTruthEventIds": []
     },
     {
-      "id": "shou_bao",
-      "locationId": "location_1",
-      "name": "手包里的火柴盒",
-      "category": "other",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "候餐椅上滑落的手包，露出一整盒印着周记烧烤·祖传秘味的火柴盒，和一张旧合影：年轻的雷师傅搂着曹姐站在刚挂牌的小店前，旁边还有个抱孩子的男人，眉眼像老周。手包主人是雷婷。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
       "id": "diliao_zhangben",
       "locationId": "location_4",
       "name": "底料账本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1005,7 +990,7 @@
       "id": "shouji_zhaopian",
       "locationId": "location_5",
       "name": "手机里的照片",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1020,7 +1005,7 @@
       "id": "suanmeitang",
       "locationId": "location_1",
       "name": "两瓶特供酸梅汤",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1035,7 +1020,7 @@
       "id": "lihun_xieyi",
       "locationId": "location_4",
       "name": "离婚协议附页",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1052,7 +1037,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你的祖传秘方其实是每月十五号从曹姐那儿进的底料，你的现熬羊油是外购的桶装复合油——这行的利润就靠这两样见不得光。上个月深夜你去河沟倒废油桶，被收车路过的雷师傅拍了个正着。"
+        "text": "周德发的'祖传秘方'底料靠外购、现熬羊油实为桶装复合油，生意全建立在见不得光的门道上；深夜倒废油桶被拍个正着、又遭对方以上门'坐坐'相要挟，他为保住摊子和名声下了手。"
       }
     ],
     "method": {
@@ -1409,7 +1394,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "lihun_xieyi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1429,7 +1416,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "suanmeitang"
+        ],
         "explanation": [
           {
             "type": "paragraph",

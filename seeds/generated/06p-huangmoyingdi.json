@@ -91,26 +91,6 @@
             "clueIds": []
           },
           {
-            "id": "character_hude_event_2",
-            "time": {
-              "display": "21:47",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:47"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "替沈万钧拨通卫星电话（通话全程旁听）。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_hude_event_3",
             "time": {
               "display": "21:45",
@@ -131,6 +111,26 @@
             "clueIds": []
           },
           {
+            "id": "character_hude_event_2",
+            "time": {
+              "display": "21:47",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:47"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "替沈万钧拨通卫星电话（通话全程旁听）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_hude_event_4",
             "time": {
               "display": "21:52",
@@ -144,7 +144,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "池小满送药离开后，"
+                "text": "池小满送药离开后，你确认帐篷周边无人。"
               }
             ],
             "characterIds": [
@@ -210,7 +210,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "值班帐篷点名，"
+                "text": "22:03–22:10 值班帐篷点名——每声'到'都是你捏着嗓子代答的。"
               }
             ],
             "characterIds": [],
@@ -230,7 +230,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "代答。"
+                "text": "22:06 轮到'死者'的应答——也是你代答的。"
               }
             ],
             "characterIds": [],
@@ -796,7 +796,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "沙脊连拍（"
+                "text": "21:48–21:52 沙脊连拍进行中。"
               }
             ],
             "characterIds": [],
@@ -816,7 +816,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "拍到枪口焰）。"
+                "text": "21:51 一帧拍到枪口焰——击发时刻的铁证。"
               }
             ],
             "characterIds": [],
@@ -1367,7 +1367,7 @@
       "id": "yanshi_jilu",
       "locationId": "location_4",
       "name": "池小满的验尸记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1382,7 +1382,7 @@
       "id": "danke",
       "locationId": "location_1",
       "name": "行军床下的弹壳",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1397,7 +1397,7 @@
       "id": "qianggui_dengji",
       "locationId": "location_2",
       "name": "枪柜登记簿与弹药盒",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1412,7 +1412,7 @@
       "id": "banmai_dengshanxue",
       "locationId": "location_2",
       "name": "半埋的登山靴",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1427,7 +1427,7 @@
       "id": "weixing_dianhua",
       "locationId": "location_3",
       "name": "卫星电话记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1442,7 +1442,7 @@
       "id": "dianming_ben",
       "locationId": "location_3",
       "name": "点名值班本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1457,7 +1457,7 @@
       "id": "heishi_zhaopian",
       "locationId": "location_1",
       "name": "黑市照片与估价单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1472,7 +1472,7 @@
       "id": "xingye_guangdian",
       "locationId": "location_5",
       "name": "星野连拍里的枪口焰",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1487,7 +1487,7 @@
       "id": "dianchi_qianshou",
       "locationId": "location_2",
       "name": "电池领用签",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1504,7 +1504,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫呼德，营地向导。你旧名'小飞'——二十年前盗掘大案望风的少年，改名活下来，暗地里替那伙人卖情报。"
+        "text": "呼德就是二十年前盗掘大案望风的'小飞'，如今仍在替盗掘团伙卖情报。死者查实其底细并约他'把话说完'，旧案新罪并案在即，他必须杀人并坐实'流寇行凶'的说法。"
       }
     ],
     "method": {
@@ -1786,6 +1786,35 @@
         ]
       },
       {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:48–21:52",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:48"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:52"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "关禾沙脊连拍，"
+          }
+        ],
+        "characterIds": [
+          "guanhe"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guanhe"
+        ]
+      },
+      {
         "id": "truth_event_9",
         "time": {
           "display": "21:50",
@@ -1836,6 +1865,27 @@
         ]
       },
       {
+        "id": "truth_event_13",
+        "time": {
+          "display": "21:51",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:51"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "拍到枪口焰。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_11",
         "time": {
           "display": "21:55",
@@ -1861,56 +1911,6 @@
         ]
       },
       {
-        "id": "truth_event_12",
-        "time": {
-          "display": "21:48–21:52",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:48"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:52"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "关禾沙脊连拍，"
-          }
-        ],
-        "characterIds": [
-          "guanhe"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "guanhe"
-        ]
-      },
-      {
-        "id": "truth_event_13",
-        "time": {
-          "display": "21:51",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:51"
-          }
-        },
-        "title": "事件 13",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "拍到枪口焰。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_14",
         "time": {
           "display": "22:00",
@@ -1933,6 +1933,37 @@
         "clueIds": [],
         "participantIds": [
           "hude"
+        ]
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "22:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "22:00 前后风沙正紧，枪声被彻底盖住；营地恢复平静，无人察觉异样。"
+          }
+        ],
+        "characterIds": [
+          "quyiming",
+          "chixiaoman",
+          "wengu",
+          "bagen"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "quyiming",
+          "chixiaoman",
+          "wengu",
+          "bagen"
         ]
       },
       {
@@ -2067,6 +2098,27 @@
         ]
       },
       {
+        "id": "truth_event_21",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "破案链收束：星野照片拍到枪口焰（击发时间锁定在 22:00 前后）→ 点名值班本（死者'应答'均为执笔人代答，死亡时间造假）→ 卫星电话记录与便条底稿（动机：照片与人明早下去）→ 弹壳与弹药盒（枪的来源）→ 枪柜登记簿空白（绕开营规取枪的人）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_20",
         "time": {
           "display": "23:40",
@@ -2095,58 +2147,6 @@
           "quyiming",
           "chixiaoman",
           "guanhe"
-        ]
-      },
-      {
-        "id": "truth_event_21",
-        "time": {
-          "display": "23:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:00"
-          }
-        },
-        "title": "事件 21",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）→ 星野照片枪口焰（击发时间"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_22",
-        "time": {
-          "display": "22:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:00"
-          }
-        },
-        "title": "事件 22",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "前后）→ 点名值班本（死者'应答'均为执笔人代答=死亡时间造假）→ 卫星电话记录与便条底稿（动机：照片与人明早下去）→ 弹壳与弹药盒（枪的来源）→ 枪柜登记簿空白（绕开营规的人）→ 半埋的登山靴（红柳须+外帐纤维+剪去的姓名）→ 巴根的目击（红柳须与旧名'小飞'）。红鲱鱼：瞿一鸣的争吵放话与电池签收、池小满的送药独处与骚扰积怨、温故的黑市照片与旧买家、巴根的知情不报——人人有秘密，真凶只有一个。"
-          }
-        ],
-        "characterIds": [
-          "quyiming",
-          "chixiaoman",
-          "wengu",
-          "bagen"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "quyiming",
-          "chixiaoman",
-          "wengu",
-          "bagen"
         ]
       }
     ],
@@ -2197,7 +2197,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "dianchi_qianshou"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2207,7 +2209,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "yanshi_jilu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2217,7 +2221,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "heishi_zhaopian"
+        ],
         "explanation": [
           {
             "type": "paragraph",

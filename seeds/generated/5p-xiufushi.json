@@ -703,30 +703,6 @@
             "clueIds": []
           },
           {
-            "id": "character_qiyue_event_3",
-            "time": {
-              "display": "20:10–22:30",
-              "precision": "range",
-              "start": {
-                "dayOffset": 0,
-                "time": "20:10"
-              },
-              "end": {
-                "dayOffset": 0,
-                "time": "22:30"
-              }
-            },
-            "title": "事件 3",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "）。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_qiyue_event_4",
             "time": {
               "display": "22:40",
@@ -1018,7 +994,7 @@
       "id": "xiandai_kanyan",
       "locationId": "location_1",
       "name": "修复室现场勘验记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1033,7 +1009,7 @@
       "id": "lingyong_dan",
       "locationId": "location_2",
       "name": "器材库领用单",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1048,7 +1024,7 @@
       "id": "paifeng_gongdan",
       "locationId": "location_3",
       "name": "排风停机检修工单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1063,7 +1039,7 @@
       "id": "shouji_qunliao",
       "locationId": "location_1",
       "name": "死者的手机与工作群",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1078,7 +1054,7 @@
       "id": "taitai_bianhao",
       "locationId": "location_4",
       "name": "器物台账与编号核对",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1093,7 +1069,7 @@
       "id": "jietiao_daijia",
       "locationId": "location_4",
       "name": "私人借条与催收短信",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1108,7 +1084,7 @@
       "id": "moxing_beixin",
       "locationId": "location_1",
       "name": "人体模型与反光背心",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1123,7 +1099,7 @@
       "id": "menjian_kongbai",
       "locationId": "location_5",
       "name": "监控值守记录与门禁流水",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1138,7 +1114,7 @@
       "id": "shuming_youjian",
       "locationId": "location_6",
       "name": "署名之争的往来邮件",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1155,7 +1131,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫程砚，守了库房二十六年，搭档岑松年也二十六年。儿子染上网赌，半年滚出二百六十万，催收电话打进办公室那天，你的手第一次碰了不该碰的东西：三个月前借展归来的战国青铜壶，你把真壶质押给周老板，入库复检单替师父签了名，你盘算着秋拍后借新还旧赎回来。"
+        "text": "程砚为替儿子还赌债，把战国青铜壶真品质押、伪造入库复检单。死者发现壶底微刻编号被磨并扬言明早上报馆长，灭口是保住职位与秘密的唯一办法。"
       }
     ],
     "method": {
@@ -1289,6 +1265,35 @@
         ]
       },
       {
+        "id": "truth_event_20",
+        "time": {
+          "display": "19:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:50"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "的争吵、苏杳'差一点成为发现人'的独处空档、魏武打盹与私放布展车的把柄、骆铎执行停机的'共犯嫌疑'——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [
+          "suyao",
+          "weiwu",
+          "luoduo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suyao",
+          "weiwu",
+          "luoduo"
+        ]
+      },
+      {
         "id": "truth_event_4",
         "time": {
           "display": "20:00",
@@ -1389,27 +1394,6 @@
         ]
       },
       {
-        "id": "truth_event_8",
-        "time": {
-          "display": "20:30",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "20:30"
-          }
-        },
-        "title": "事件 8",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": ":07 排风停机。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_9",
         "time": {
           "display": "20:30",
@@ -1481,28 +1465,32 @@
         ]
       },
       {
-        "id": "truth_event_12",
+        "id": "truth_event_19",
         "time": {
-          "display": "21:30",
-          "precision": "exact",
+          "display": "21:15–21:25",
+          "precision": "range",
           "start": {
             "dayOffset": 0,
-            "time": "21:30"
+            "time": "21:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
           }
         },
-        "title": "事件 12",
+        "title": "事件 19",
         "content": [
           {
             "type": "paragraph",
-            "text": ":00 骆铎按时启动排风。"
+            "text": "十分钟）。红鲱鱼：齐悦的署名之争与"
           }
         ],
         "characterIds": [
-          "luoduo"
+          "qiyue"
         ],
         "clueIds": [],
         "participantIds": [
-          "luoduo"
+          "qiyue"
         ]
       },
       {
@@ -1520,6 +1508,31 @@
           {
             "type": "paragraph",
             "text": "程砚用死者手机在工作群回复'赶工，今晚别等我，汤不用送'。"
+          }
+        ],
+        "characterIds": [
+          "chengyan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyan"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "消息矛盾、模型剪影）→ 器材库领用单（程砚签名+超期展示品空芯罐+旧罐回收栏空白）→ 排风工单（例检不停机却停机、'今晚办别声张'）→ 工作群消息句式反常 + 壶底照片（编号磨除）→ 台账与重量差（真壶被换）→ 私人借条与催收短信（质押与债务）→ 门禁流水与监控背影（"
           }
         ],
         "characterIds": [
@@ -1629,89 +1642,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_18",
-        "time": {
-          "display": "21:30",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:30"
-          }
-        },
-        "title": "事件 18",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "消息矛盾、模型剪影）→ 器材库领用单（程砚签名+超期展示品空芯罐+旧罐回收栏空白）→ 排风工单（例检不停机却停机、'今晚办别声张'）→ 工作群消息句式反常 + 壶底照片（编号磨除）→ 台账与重量差（真壶被换）→ 私人借条与催收短信（质押与债务）→ 门禁流水与监控背影（"
-          }
-        ],
-        "characterIds": [
-          "chengyan"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "chengyan"
-        ]
-      },
-      {
-        "id": "truth_event_19",
-        "time": {
-          "display": "21:15–21:25",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:15"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:25"
-          }
-        },
-        "title": "事件 19",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "十分钟）。红鲱鱼：齐悦的署名之争与"
-          }
-        ],
-        "characterIds": [
-          "qiyue"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "qiyue"
-        ]
-      },
-      {
-        "id": "truth_event_20",
-        "time": {
-          "display": "19:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:50"
-          }
-        },
-        "title": "事件 20",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "的争吵、苏杳'差一点成为发现人'的独处空档、魏武打盹与私放布展车的把柄、骆铎执行停机的'共犯嫌疑'——人人有秘密，无人是第二凶手。"
-          }
-        ],
-        "characterIds": [
-          "suyao",
-          "weiwu",
-          "luoduo"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "suyao",
-          "weiwu",
-          "luoduo"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -1753,7 +1683,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "shuming_youjian"
+        ],
         "explanation": [
           {
             "type": "paragraph",

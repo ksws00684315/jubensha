@@ -736,7 +736,7 @@
         "backstory": [
           {
             "type": "paragraph",
-            "text": "你叫萧令仪，靖王的胞妹，守寡后回府住。丙戌年你替兄长帮办过粮台，那笔一万四千两的亏空你亲手对过数，经手签押的是长史古延年。除夕夜你翻出旧账册想烧——烧了，旧案与你无干；不烧，兄长一问，你也要难堪。子时初你抱着账册到书房外，想请兄长「示下」，却听见杌凳挪动、绳索绷紧的轻响，叫了声哥哥没人应。你没敢进。"
+            "text": "你叫萧令仪，靖王的胞妹，守寡后回府住。丙戌年你替兄长帮办过粮台，那笔一万四千两的亏空你亲手对过数——签押之人的手你隔着案角看清过，只是这桩旧账同样牵着你帮办失察的干系。除夕夜你翻出旧账册想烧——烧了，旧案与你无干；不烧，兄长一问，你也要难堪。子时初你抱着账册到书房外，想请兄长「示下」，却听见杌凳挪动、绳索绷紧的轻响，叫了声哥哥没人应。你没敢进。"
           }
         ],
         "secrets": [
@@ -746,7 +746,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你丙戌年帮办粮台时经手对账，深知亏空一万四千两、经手签押者是古延年；子时初你在书房外听见杌凳挪动与绳索绷紧的轻响却转身离开；当夜你翻找旧账、烧毁未成。"
+                "text": "你丙戌年帮办粮台时经手对账，深知亏空一万四千两、也记得经手签押之人的字迹——那名字牵着你自己的失察，你从不敢提。子时初你在书房外听见杌凳挪动与绳索绷紧的轻响却转身离开；当夜你翻找旧账、烧毁未成。"
               }
             ],
             "disclosure": "never"
@@ -759,7 +759,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你是离真相最近、也最怕走近的人：作证「子时初书房里有响动」，长史必咬你「深夜翻旧账、销毁亏空」——旧账一旦翻出，你帮办失察的旧罪也兜不住。可兄长「畏罪自尽」四个字你咽不下：他若真要自陈，会先召你？你要拉着人一起听你复述那几声轻响，再一点点把粮台的经手人引到明处——让别人的嘴说出古延年三个字。"
+                "text": "你是离真相最近、也最怕走近的人：作证「子时初书房里有响动」，签押之人必咬你「深夜翻旧账、销毁亏空」——旧账一旦翻出，你帮办失察的旧罪也兜不住。可兄长「畏罪自尽」四个字你咽不下：他若真要自陈，会先召你？你要让「签押」二字从别人嘴里说出来——你自己绝不能先开口。"
               }
             ],
             "priority": "primary"
@@ -803,7 +803,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "丙戌年粮台亏空一万四千两，你亲手对过数，经手签押的是古延年。"
+                "text": "丙戌年粮台亏空一万四千两，你亲手对过数——经手签押的那只手，你隔着案角看见过，是谁的手你心里有数，只是不敢说。"
               }
             ],
             "source": "other",
@@ -877,7 +877,7 @@
       "id": "ninghuitangshishen",
       "locationId": "location_1",
       "name": "凝晖堂尸身现场",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -892,7 +892,7 @@
       "id": "changshisitao",
       "locationId": "location_2",
       "name": "长史的丝绦",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -907,7 +907,7 @@
       "id": "anzishizhenzhe",
       "locationId": "location_1",
       "name": "案上自陈折",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -922,7 +922,7 @@
       "id": "duantaodehuazhou",
       "locationId": "location_1",
       "name": "断绦的画轴",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -937,7 +937,7 @@
       "id": "xunyebu",
       "locationId": "location_3",
       "name": "巡夜簿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -952,7 +952,7 @@
       "id": "yutaohuan",
       "locationId": "location_4",
       "name": "墙根玉绦环",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -967,7 +967,7 @@
       "id": "liangtaijiuzhang",
       "locationId": "location_5",
       "name": "粮台旧账残页",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -982,7 +982,7 @@
       "id": "zhuangqidangpiao",
       "locationId": "location_6",
       "name": "庄契当票",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -997,7 +997,7 @@
       "id": "duipaicungen",
       "locationId": "location_7",
       "name": "对牌存根",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1014,7 +1014,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫古延年，靖王府长史，管了二十年的印与账。丙戌年你经手王府粮台，短了一万四千两——银子填了你在江南的田庄。"
+        "text": "古延年经手王府粮台亏空一万四千两，王爷近来神志转清、案头折子已有'粮台'二字，开春对账交割在即。他杀人灭口，还要把亏空永远钉在死人头上。"
       }
     ],
     "method": {
@@ -1161,7 +1161,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "duipaicungen"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1171,7 +1173,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "xunyebu",
+          "yutaohuan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1181,7 +1186,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "zhuangqidangpiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1191,7 +1198,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "xunyebu"
+        ],
         "explanation": [
           {
             "type": "paragraph",

@@ -754,7 +754,7 @@
       "id": "yageshishen",
       "locationId": "location_1",
       "name": "雅阁尸身与残酒",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -769,7 +769,7 @@
       "id": "youtiyaobao",
       "locationId": "location_2",
       "name": "楼梯口的油纸药包",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -784,7 +784,7 @@
       "id": "gengcibu",
       "locationId": "location_2",
       "name": "更次簿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -799,7 +799,7 @@
       "id": "guizhongxinxia",
       "locationId": "location_2",
       "name": "柜中信匣",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -814,7 +814,7 @@
       "id": "yehangchuan",
       "locationId": "location_4",
       "name": "河埠头夜航船",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -829,7 +829,7 @@
       "id": "zoumadengjiapa",
       "locationId": "location_3",
       "name": "走马灯夹帕",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -844,7 +844,7 @@
       "id": "tuihuidgengtie",
       "locationId": "location_2",
       "name": "退回的庚帖",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -859,7 +859,7 @@
       "id": "pankushouling",
       "locationId": "location_2",
       "name": "盘库手令",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -876,7 +876,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫柳承业，锦记绸缎庄的二东家——傅锦堂的结义兄弟。二十年前你落难，他一碗热粥留了你；二十年后你替他管外柜，却越陷越深：外柜的银子拿去放印子钱，窟窿越滚越大。"
+        "text": "柳承业受死者恩惠二十年，却把外柜银两挪去放印子钱，窟窿越大越收不住。盘账在即必露，他趁上元夜结义兄弟唯一肯单独吃酒的机会下了毒。"
       }
     ],
     "method": {
@@ -962,21 +962,35 @@
       }
     ],
     "keyEvidenceIds": [
-      "gengcibu"
+      "youtiyaobao",
+      "yageshishen",
+      "gengcibu",
+      "yehangchuan"
     ],
     "evidenceChain": [
       {
+        "id": "evidence_1",
+        "clueIds": [
+          "youtiyaobao",
+          "yageshishen"
+        ],
+        "conclusion": "死者银簪探残酒即黑、面青指甲青，是鹤顶红入腹之相；而酒坛封泥完好，毒不在坛中——楼梯口条案缝里的油纸药包残粉遇银发黑、且留有'锦记外柜'专用押角，说明毒是在酒提上楼之前、由带外柜封角的人弹入现打的贺灯酒壶里的。"
+      },
+      {
         "id": "evidence_2",
         "clueIds": [
-          "gengcibu"
+          "gengcibu",
+          "yehangchuan"
         ],
-        "conclusion": "更次簿记录亥时初之后三楼只进不去，坛口封泥完好说明毒不在酒坛——下毒必在亥时初那壶贺灯酒提上楼之前，而唯一在楼梯口条案边独站并提壶上楼的人，就是凶手柳承业。"
+        "conclusion": "更次簿一笔一笔记着'亥时初柳二爷上、亥时二刻下、吩咐三楼今夜不待人'——投毒时窗与拖延发现的手法俱在其身；河埠头又泊着连夜双倍船钱雇定的快船、账箱新封条未干，预谋退路坐实蓄意杀人。"
       }
     ],
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "zoumadengjiapa"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -986,7 +1000,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "zoumadengjiapa"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -996,7 +1012,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "tuihuidgengtie"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1006,7 +1024,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "pankushouling",
+          "guizhongxinxia"
+        ],
         "explanation": [
           {
             "type": "paragraph",

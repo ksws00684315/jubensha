@@ -1176,7 +1176,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "验尸草单",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1191,7 +1191,7 @@
       "id": "c_tongxian",
       "locationId": "location_1",
       "name": "台灯底座里的裸铜线",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1206,7 +1206,7 @@
       "id": "c_dayang",
       "locationId": "location_1",
       "name": "赶印的大样",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1221,7 +1221,7 @@
       "id": "c_dengjibu",
       "locationId": "location_2",
       "name": "检修登记簿",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1236,7 +1236,7 @@
       "id": "c_huipiao",
       "locationId": "location_3",
       "name": "钱庄汇票存根",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1251,7 +1251,7 @@
       "id": "c_maijia",
       "locationId": "location_5",
       "name": "卖稿的汇款条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1266,7 +1266,7 @@
       "id": "c_fuben",
       "locationId": "location_6",
       "name": "白报纸堆里的抄件",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1281,7 +1281,7 @@
       "id": "c_qianzi",
       "locationId": "location_4",
       "name": "经理的债信与签条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1296,7 +1296,7 @@
       "id": "c_qianbao",
       "locationId": "location_7",
       "name": "席下的铅字流水",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1313,7 +1313,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "白日整修线路，你把主编专用的那盏绿罩台灯换了铜壳开关，火线搭壳、灯泡拧松半圈——灯半明半灭，他必然伸手。"
+        "text": "牛德山为替内弟打点官米案，两笔封口银经妻子户头汇出，汇票存根落在主编手里；主编逼他写自白书、否则号外连他一起登——他借整修线路之机，把主编的台灯变成了凶器。"
       }
     ],
     "method": {
@@ -1521,27 +1521,6 @@
         ]
       },
       {
-        "id": "truth_event_8",
-        "time": {
-          "display": "23:10",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:10"
-          }
-        },
-        "title": "事件 8",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "从后门离开（门房见背影；排字房灯亮、机器未响）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_9",
         "time": {
           "display": "23:05",
@@ -1565,6 +1544,27 @@
         "participantIds": [
           "guoyishou"
         ]
+      },
+      {
+        "id": "truth_event_8",
+        "time": {
+          "display": "23:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:10"
+          }
+        },
+        "title": "事件 8",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "从后门离开（门房见背影；排字房灯亮、机器未响）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_10",
@@ -1748,7 +1748,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_maijia"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1758,7 +1760,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "c_fuben"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1768,7 +1772,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "c_qianzi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1778,7 +1784,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "c_qianbao"
+        ],
         "explanation": [
           {
             "type": "paragraph",

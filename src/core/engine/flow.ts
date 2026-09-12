@@ -1,5 +1,6 @@
 import type { GameState, Phase } from "./types";
 import { activeSeats } from "./state";
+import type { ActV2 } from "@/core/script/v2/schema";
 
 export const QUESTIONS_PER_PLAYER = 3;
 
@@ -34,4 +35,12 @@ export function validateDiscussionAsk(state: GameState, fromSeat: number, toSeat
   const left = state.questionsLeft[String(fromSeat)] ?? 0;
   if (left <= 0) return "提问次数已用完";
   return null;
+}
+
+/** 已解锁的幕：搜证/讨论阶段按 roundStart ≤ 当前轮次解锁；投票阶段视为全部解锁（投票必在所有搜证轮之后）。 */
+export function unlockedActs(acts: ActV2[], state: Pick<GameState, "phase" | "round">): ActV2[] {
+  if (!acts.length) return [];
+  if (state.phase === "VOTE") return acts;
+  if (state.phase !== "SEARCH" && state.phase !== "DISCUSSION") return [];
+  return acts.filter((a) => a.roundStart <= state.round);
 }

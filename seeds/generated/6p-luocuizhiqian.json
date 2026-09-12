@@ -567,6 +567,26 @@
             "clueIds": []
           },
           {
+            "id": "character_gaoyuan_event_5",
+            "time": {
+              "display": "22:03",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:03"
+              }
+            },
+            "title": "事件 5",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "的报警声你在打包区里间听见过。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_gaoyuan_event_3",
             "time": {
               "display": "22:04",
@@ -601,26 +621,6 @@
               {
                 "type": "paragraph",
                 "text": "回到大厅。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_gaoyuan_event_5",
-            "time": {
-              "display": "22:03",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "22:03"
-              }
-            },
-            "title": "事件 5",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "的报警声你在打包区里间听见过。"
               }
             ],
             "characterIds": [],
@@ -660,7 +660,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "21:51 那人刷卡出打包区时你正在里间，隔着货架看见她抱着件外套——那不是她今晚的穿法。"
+                "text": "21:51 那人刷卡出打包区时你正在里间，隔着货架看见一个抱着外套的背影——个子不矮，步子很急，别的没看清。"
               }
             ],
             "source": "other",
@@ -1064,7 +1064,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "半亮模式下中庭只有应急地灯，正面看不清脸，但从背后看，裙摆与鞋跟的轮廓分得清——21:57 侧廊方向你瞥见过一眼轮廓。"
+                "text": "半亮模式下中庭只有应急地灯，正面看不清脸——21:57 侧廊方向你瞥见过一眼轮廓：个子不矮，步子急，男女莫辨。"
               }
             ],
             "source": "other",
@@ -1361,7 +1361,7 @@
       "id": "xianchang_kanyan",
       "locationId": "location_1",
       "name": "中庭水景现场勘验记录",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1376,7 +1376,7 @@
       "id": "beiyong_zhidai",
       "locationId": "location_5",
       "name": "消防栓柜里的备用织带",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1391,7 +1391,7 @@
       "id": "dengguang_rizhi",
       "locationId": "location_3",
       "name": "灯光台调试日志与耳机登记",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1406,7 +1406,7 @@
       "id": "kufang_menjin",
       "locationId": "location_4",
       "name": "打包区门禁与货梯监控记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1421,7 +1421,7 @@
       "id": "sizhe_shouji",
       "locationId": "location_1",
       "name": "死者的手机与备忘录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1436,7 +1436,7 @@
       "id": "weituopai_008",
       "locationId": "location_3",
       "name": "抽屉里的008号备用委托牌",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1451,7 +1451,7 @@
       "id": "yunheng_didang",
       "locationId": "location_3",
       "name": "云衡贸易的注册底档",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1466,7 +1466,7 @@
       "id": "zhangliwen_liaotian",
       "locationId": "location_2",
       "name": "章立文的转账与聊天记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1481,7 +1481,7 @@
       "id": "qin_mujiben",
       "locationId": "location_2",
       "name": "秦斯年的目击便签",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1498,7 +1498,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫涂一鸣，从举牌小姐做到首席拍卖师，一槌定了十五年的人情与价格。三年前云衡贸易找上门：用备用委托牌自托自抬，把来路不清的钱洗成体面的成交价，你抽一成半。"
+        "text": "涂一鸣替云衡贸易自托自抬、把黑钱洗成体面成交价，抽成一成半。死者当面摊牌明早审计进场、该报警报警——她保住十五年名声与自由的办法只剩一个。"
       }
     ],
     "method": {
@@ -1886,6 +1886,45 @@
         ]
       },
       {
+        "id": "truth_event_24",
+        "time": {
+          "display": "21:47–21:51",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:47"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:51"
+          }
+        },
+        "title": "事件 24",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "涂一鸣进出；高原死亡时刻全程未离打包区）→ 死者手机（审计、008、报警）→ 008备用委托牌与云衡贸易底档（洗钱闭环）。红鲱鱼：章立文的八十万顾问费与'明早'二字、高原在死亡时刻独处打包区、裴砚清'缓一缓'的劝与两笔加急费、唐好页边的签名、秦斯年经办的云衡文书——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "tuyiming",
+          "zhangliwen",
+          "gaoyuan",
+          "peiyanqing",
+          "tanghao",
+          "qinsinian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tuyiming",
+          "zhangliwen",
+          "gaoyuan",
+          "peiyanqing",
+          "tanghao",
+          "qinsinian"
+        ]
+      },
+      {
         "id": "truth_event_14",
         "time": {
           "display": "21:49–22:04",
@@ -1968,31 +2007,6 @@
         "participantIds": [
           "tuyiming",
           "tanghao"
-        ]
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "21:56",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:56"
-          }
-        },
-        "title": "事件 17",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）与高原（"
-          }
-        ],
-        "characterIds": [
-          "gaoyuan"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "gaoyuan"
         ]
       },
       {
@@ -2132,45 +2146,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_24",
-        "time": {
-          "display": "21:47–21:51",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:47"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:51"
-          }
-        },
-        "title": "事件 24",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "涂一鸣进出；高原死亡时刻全程未离打包区）→ 死者手机（审计、008、报警）→ 008备用委托牌与云衡贸易底档（洗钱闭环）。红鲱鱼：章立文的八十万顾问费与'明早'二字、高原在死亡时刻独处打包区、裴砚清'缓一缓'的劝与两笔加急费、唐好页边的签名、秦斯年经办的云衡文书——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [
-          "tuyiming",
-          "zhangliwen",
-          "gaoyuan",
-          "peiyanqing",
-          "tanghao",
-          "qinsinian"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "tuyiming",
-          "zhangliwen",
-          "gaoyuan",
-          "peiyanqing",
-          "tanghao",
-          "qinsinian"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2204,7 +2179,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "zhangliwen_liaotian"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2214,7 +2191,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "kufang_menjin",
+          "beiyong_zhidai"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2224,7 +2204,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "yunheng_didang"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2234,7 +2216,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "dengguang_rizhi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2244,7 +2228,11 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "yunheng_didang",
+          "sizhe_shouji",
+          "qin_mujiben"
+        ],
         "explanation": [
           {
             "type": "paragraph",

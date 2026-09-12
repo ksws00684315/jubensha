@@ -659,19 +659,57 @@
         "timeline": [
           {
             "id": "character_ningshuang_event_1",
+            "title": "接报查验",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "00:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "00:05"
+              }
             },
-            "title": "事件 1",
             "content": [
               {
                 "type": "paragraph",
-                "text": "0:05 接报赶到，检查遗体，误判'心梗'，要求保护现场。0:30 协助移尸时发现后脑伤，当场改口并封锁包厢。之后你写《尸表检验记录》——这是全车最重要的纸。"
+                "text": "0:05 接报赶到，检查遗体，初判“心梗发作”，要求所有人保护现场。"
               }
-            ],
-            "characterIds": [],
-            "clueIds": []
+            ]
+          },
+          {
+            "id": "character_ningshuang_event_2",
+            "title": "改口定性",
+            "time": {
+              "display": "00:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "00:30"
+              }
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "0:30 协助移尸时发现后脑钝器伤，当场改口并封锁包厢，不再让人靠近。"
+              }
+            ]
+          },
+          {
+            "id": "character_ningshuang_event_3",
+            "title": "记录移交",
+            "time": {
+              "display": "00:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "00:50"
+              }
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "0:50 前后完成初步验看记录，将现场移交赶来的车警，并交出了自己的《初验记录》。"
+              }
+            ]
           }
         ],
         "knowledge": [
@@ -774,50 +812,6 @@
         ],
         "timeline": [
           {
-            "id": "character_luxiaoman_event_1",
-            "time": {
-              "display": "23:10",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:10"
-              }
-            },
-            "title": "事件 1",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "送牛奶到 2 号包厢（沈曼房），说了句'3 号车灯还亮着'。"
-              }
-            ],
-            "characterIds": [
-              "shenman"
-            ],
-            "clueIds": []
-          },
-          {
-            "id": "character_luxiaoman_event_2",
-            "time": {
-              "display": "23:30",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:30"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "回值班室做巡检登记。0:05 巡夜发现 3 号包厢门虚掩、尸体，报宁医生。0:30 协助移尸（宁霜发现伤痕）。你的值班记录锚定："
-              }
-            ],
-            "characterIds": [
-              "ningshuang"
-            ],
-            "clueIds": []
-          },
-          {
             "id": "character_luxiaoman_event_3",
             "time": {
               "display": "22:40–23:00",
@@ -840,6 +834,28 @@
             ],
             "characterIds": [
               "baizeyu"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaoman_event_1",
+            "time": {
+              "display": "23:10",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:10"
+              }
+            },
+            "title": "事件 1",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "送牛奶到 2 号包厢（沈曼房），说了句'3 号车灯还亮着'。"
+              }
+            ],
+            "characterIds": [
+              "shenman"
             ],
             "clueIds": []
           },
@@ -886,6 +902,28 @@
             "clueIds": []
           },
           {
+            "id": "character_luxiaoman_event_2",
+            "time": {
+              "display": "23:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回值班室做巡检登记。0:05 巡夜发现 3 号包厢门虚掩、尸体，报宁医生。0:30 协助移尸（宁霜发现伤痕）。你的值班记录锚定："
+              }
+            ],
+            "characterIds": [
+              "ningshuang"
+            ],
+            "clueIds": []
+          },
+          {
             "id": "character_luxiaoman_event_6",
             "time": {
               "display": "23:35",
@@ -900,28 +938,6 @@
               {
                 "type": "paragraph",
                 "text": "有人端餐盘进 3 号；"
-              }
-            ],
-            "characterIds": [
-              "baizeyu"
-            ],
-            "clueIds": []
-          },
-          {
-            "id": "character_luxiaoman_event_7",
-            "time": {
-              "display": "23:52",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:52"
-              }
-            },
-            "title": "事件 7",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "那个人出。"
               }
             ],
             "characterIds": [
@@ -951,6 +967,28 @@
               }
             ],
             "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luxiaoman_event_7",
+            "time": {
+              "display": "23:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:52"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "那个人出。"
+              }
+            ],
+            "characterIds": [
+              "baizeyu"
+            ],
             "clueIds": []
           }
         ],
@@ -1107,46 +1145,6 @@
             "clueIds": []
           },
           {
-            "id": "character_lujiaoshou_event_3",
-            "time": {
-              "display": "23:30",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:30"
-              }
-            },
-            "title": "事件 3",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "你去走廊尽头的热水间接水，回来时（"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_lujiaoshou_event_4",
-            "time": {
-              "display": "23:33",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:33"
-              }
-            },
-            "title": "事件 4",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "）与一个端托盘的瘦高人影在餐车方向擦肩——他自餐车来，往 3 号包厢方向去，步子轻，你只看见侧脸轮廓。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_lujiaoshou_event_5",
             "time": {
               "display": "23:25",
@@ -1161,6 +1159,26 @@
               {
                 "type": "paragraph",
                 "text": "你听见 3 号方向一声闷响（摔门）。0:05 案发后你要求第一个查验'遗嘱'与'账册'——职业本能。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lujiaoshou_event_3",
+            "time": {
+              "display": "23:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你去走廊尽头的热水间接水，回来时与一个端托盘的瘦高人影在餐车方向擦肩——他自餐车来，往 3 号包厢方向去，步子轻，你只看见侧脸轮廓。"
               }
             ],
             "characterIds": [],
@@ -1236,32 +1254,62 @@
     {
       "id": "location_1",
       "name": "3号包厢",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "3号包厢，死者顾云山的包厢。案上文件未收，威士忌只喝了一半。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "2号包厢（沈曼）",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "2号包厢，沈曼的包厢。化妆箱敞着，镜面映着窗外的风雪。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "4号包厢（顾言）",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "4号包厢，顾言的包厢。满桌商务文件，烟灰缸积了小半缸。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "秘书包厢（白泽宇）",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "秘书白泽宇的包厢。公文箱上锁，值班表钉在壁板上。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "餐车与走廊",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "餐车与连接走廊。夜宵刚撤，茶炉上的水还冒着热气。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "值班室与行李车",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "值班室与行李车。签收簿、备品柜一列排开，行李捆扎整齐。"
+        }
+      ]
     }
   ],
   "clues": [
@@ -1269,7 +1317,7 @@
       "id": "shijian_lu",
       "locationId": "location_1",
       "name": "宁霜的尸表检验记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1284,7 +1332,7 @@
       "id": "yaoping",
       "locationId": "location_1",
       "name": "硝酸甘油药瓶",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1299,7 +1347,7 @@
       "id": "yizhu_qian",
       "locationId": "location_1",
       "name": "新遗嘱签批页",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1314,7 +1362,7 @@
       "id": "zhiben_dai",
       "locationId": "location_1",
       "name": "缺失的镇纸",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1329,7 +1377,7 @@
       "id": "cizhen_xue",
       "locationId": "location_4",
       "name": "行李箱夹层的报纸包",
-      "category": "other",
+      "category": "object",
       "content": [
         {
           "type": "paragraph",
@@ -1344,7 +1392,7 @@
       "id": "sizhang",
       "locationId": "location_4",
       "name": "两份不一样的遗嘱",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1359,7 +1407,7 @@
       "id": "sizhang2",
       "locationId": "location_4",
       "name": "私账本与三只锦盒",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1374,7 +1422,7 @@
       "id": "zhiban_jilu",
       "locationId": "location_6",
       "name": "列车员值班记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1389,7 +1437,7 @@
       "id": "niunai_xiaoxi",
       "locationId": "location_2",
       "name": "牛奶杯与手机消息",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1404,7 +1452,7 @@
       "id": "dangju",
       "locationId": "location_3",
       "name": "当票与催款函",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1419,7 +1467,7 @@
       "id": "jianding",
       "locationId": "location_5",
       "name": "陆研秋的鉴定报告（副本）",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1434,7 +1482,7 @@
       "id": "reshui",
       "locationId": "location_5",
       "name": "热水间的目击",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1451,7 +1499,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "门虚掩，是因为你的手抖得扣不上锁舌。"
+        "text": "白泽宇做了十二年秘书，替顾云山经手收藏买卖，私自截留真品十一件、折合九千万。拍卖前的全面鉴定让假账眼看捂不住，灭口是他保住体面与自由唯一想得到的路。"
       }
     ],
     "method": {
@@ -1738,6 +1786,41 @@
         ]
       },
       {
+        "id": "truth_event_13",
+        "time": {
+          "display": "23:35–23:52",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:35"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:52"
+          }
+        },
+        "title": "事件 13",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白泽宇是案发前后唯一独处者）→ 行李箱夹层（带血痂的镇纸）→ 两份遗嘱（删改追责条款 = 动机实锤）→ 私账本与三只空锦盒（十二年的假账）。红鲱鱼：沈曼的遗嘱除名与私交带物、顾言的争吵摔门与赌债——满车隐情，替真凶挡了半夜。"
+          }
+        ],
+        "characterIds": [
+          "shenman",
+          "guyan",
+          "luxiaoman",
+          "lujiaoshou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenman",
+          "guyan",
+          "luxiaoman",
+          "lujiaoshou"
+        ]
+      },
+      {
         "id": "truth_event_9",
         "time": {
           "display": "23:40",
@@ -1826,41 +1909,6 @@
           "ningshuang",
           "luxiaoman"
         ]
-      },
-      {
-        "id": "truth_event_13",
-        "time": {
-          "display": "23:35–23:52",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:35"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "23:52"
-          }
-        },
-        "title": "事件 13",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "唯一独处者）→ 行李箱夹层（带血痂的镇纸）→ 两份遗嘱（删改追责条款 = 动机实锤）→ 私账本与三只空锦盒（十二年的假账）。红鲱鱼：沈曼的遗嘱除名与私交带物、顾言的争吵摔门与赌债、陆研秋'我出事报告怎么办'的对话、郑晓满收跑腿费——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [
-          "shenman",
-          "guyan",
-          "luxiaoman",
-          "lujiaoshou"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "shenman",
-          "guyan",
-          "luxiaoman",
-          "lujiaoshou"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -1897,7 +1945,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu_qian",
+          "sizhang"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1917,7 +1968,11 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "jianding",
+          "zhiben_dai",
+          "reshui"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1927,7 +1982,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "zhiban_jilu",
+          "niunai_xiaoxi"
+        ],
         "explanation": [
           {
             "type": "paragraph",

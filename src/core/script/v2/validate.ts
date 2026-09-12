@@ -115,8 +115,69 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   if (doc.truth.evidenceChain.length === 0) issue(issues, "warning", "truth.evidenceChain", "尚未整理出证据链");
   if (doc.truth.motive.length === 0) issue(issues, "warning", "truth.motive", "尚未提供独立动机段落");
   for (const [index, step] of doc.truth.method.steps.entries()) checkRefs(issues, step.clueIds, clueIds, `truth.method.steps.${index}.clueIds`);
-  for (const [index, chain] of doc.truth.evidenceChain.entries()) checkRefs(issues, chain.clueIds, clueIds, `truth.evidenceChain.${index}.clueIds`);
+  for (const [index, chain] of doc.truth.evidenceChain.entries()) {
+    checkRefs(issues, chain.clueIds, clueIds, `truth.evidenceChain.${index}.clueIds`);
+    // 行业共识：单条线索不锁凶，证据链至少两条线索交叉
+    if (chain.clueIds.length < 2) {
+      issue(issues, "warning", `truth.evidenceChain.${index}.clueIds`, "证据链只有一条线索支撑，容易单线索锁凶（建议人证+物证交叉）");
+    }
+  }
   for (const [index, herring] of doc.truth.redHerrings.entries()) checkRefs(issues, herring.clueIds, clueIds, `truth.redHerrings.${index}.clueIds`);
+
+  // R1 线索池预算：全场最多发现 人数×搜证轮数 张卡，超出必有线索永不出现（按实际角色数计）
+  const maxDiscoverable = doc.characters.length * doc.flow.searchRounds;
+  if (doc.clues.length > maxDiscoverable) {
+    issue(issues, "error", "clues", `线索数(${doc.clues.length})超过可发现上限(${doc.characters.length}人×${doc.flow.searchRounds}轮=${maxDiscoverable})，必有线索永不出现`);
+  }
+
+  // S1 残留检测：无辜者卡片任何通道不得出现真凶姓名（knowledge/秘密/背景/目标/时间线标题/不在场证明）
+  const culpritCharacter = doc.characters.find((c) => c.id === doc.truth.culpritId);
+  if (culpritCharacter) {
+    const name = culpritCharacter.name;
+    for (const [index, character] of doc.characters.entries()) {
+      if (character.id === culpritCharacter.id) continue;
+      const card = character.privateCard;
+      const channels: Array<[string, string]> = [
+        ...card.knowledge.map((k, i) => [`knowledge.${i}`, `${k.title}${JSON.stringify(k.content)}`] as [string, string]),
+        ...card.secrets.map((s, i) => [`secrets.${i}`, `${s.title}${JSON.stringify(s.content)}`] as [string, string]),
+        ...card.objectives.map((o, i) => [`objectives.${i}`, `${o.title}${JSON.stringify(o.content)}`] as [string, string]),
+        ...card.timeline.map((t, i) => [`timeline.${i}`, `${t.title}${JSON.stringify(t.content)}`] as [string, string]),
+        ["backstory", JSON.stringify(card.backstory)],
+        ["alibi", JSON.stringify(card.alibi)],
+      ];
+      for (const [channel, text] of channels) {
+        if (text.includes(name)) {
+          issue(issues, "warning", `characters.${index}.privateCard.${channel}.content`, `无辜角色卡片提及真凶姓名「${name}」，读卡即锁凶`);
+        }
+      }
+    }
+  }
+
+  // 分幕校验：acts 唯一、roundStart 不超过搜证轮数；stages 必须指向已定义的 act
+  const actIds = new Set(doc.flow.acts.map((a) => a.id));
+  checkUniqueIds(issues, doc.flow.acts, "flow.acts");
+  for (const [index, act] of doc.flow.acts.entries()) {
+    if (act.roundStart > doc.flow.searchRounds) {
+      issue(issues, "warning", `flow.acts.${index}.roundStart`, `幕「${act.title}」的 roundStart(${act.roundStart})超过搜证轮数(${doc.flow.searchRounds})，该幕永远不会解锁`);
+    }
+  }
+  for (const [index, character] of doc.characters.entries()) {
+    for (const [sIndex, stage] of character.privateCard.stages.entries()) {
+      if (!actIds.has(stage.actId)) {
+        issue(issues, "error", `characters.${index}.privateCard.stages.${sIndex}.actId`, `幕不存在: ${stage.actId}`);
+      }
+      checkRefs(issues, stage.knowledge.flatMap((k) => k.relatedClueIds), clueIds, `characters.${index}.privateCard.stages.${sIndex}.knowledge.relatedClueIds`);
+    }
+  }
+  for (const [index, clue] of doc.clues.entries()) {
+    checkRefs(issues, clue.forbiddenCharacterIds, characterIds, `clues.${index}.forbiddenCharacterIds`);
+    if (clue.release) checkRefs(issues, clue.release.afterCluePublicIds, clueIds, `clues.${index}.release.afterCluePublicIds`);
+  }
+  for (const [index, location] of doc.locations.entries()) {
+    if (location.ownerCharacterId && !characterIds.has(location.ownerCharacterId)) {
+      issue(issues, "error", `locations.${index}.ownerCharacterId`, `角色不存在: ${location.ownerCharacterId}`);
+    }
+  }
 
   const results = new Set(doc.ending.outcomes.map((outcome) => outcome.result));
   for (const result of ["culprit_caught", "culprit_escaped"] as const) {

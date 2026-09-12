@@ -395,7 +395,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "21:20 你在走廊亲眼看见有人拎着出诊包进了书房，待了约十分钟。"
+                "text": "21:20 你在走廊看见一个背影进了书房，手里提着个包——像医疗箱，也像公文包，离得远，你没看清。那人在里面待了约十分钟。"
               }
             ],
             "source": "other",
@@ -586,7 +586,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你的录音笔证明：20:58 你离开书房时沈万山还活着、还在骂人，21:05 后你独处一室。"
+                "text": "你回房后给自己倒了杯威士忌、开着音响听歌，一直没再出门——你的交代是：20:58 离开书房时，沈万山还活着、还在骂人。"
               }
             ],
             "source": "other",
@@ -1065,7 +1065,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "21:20 有人进书房、21:30 左右你听见她道晚安离开——她是 21:15 之后唯一进过书房的人，这一点周伯可以部分印证。"
+                "text": "21:20 有人进书房、21:30 左右你听见一声道晚安——脚步声听着像女性，可隔着门，你不敢咬定。"
               }
             ],
             "source": "other",
@@ -1114,32 +1114,62 @@
     {
       "id": "location_1",
       "name": "书房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "死者的书房。案上文房未收，座上茶盏犹温；窗台一列盆栽，是为老人亲手侍弄的宝贝。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "门廊雪地",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "连接正厅与客房的回廊雪地。夜雪新霁，雪面平整，谁的脚印落上去都藏不住。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "苏晚的房间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "随行医生的住处。行李齐整，药箱上锁，桌面摊着没抄完的脉案。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "周伯的房间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "老管家的住处。一屋子的账册规矩，床脚压着半本没记完的流水。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "白慕森的房间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "老友白慕森的客房。棋盘残局未收，烟具干净，看得出主人是个有讲究的人。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "陆小开的房间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "年轻后生陆小开的住处。衣帽随意丢着，桌上摊着几份生意上的信笺。"
+        }
+      ]
     }
   ],
   "clues": [
@@ -1147,7 +1177,7 @@
       "id": "teacup",
       "locationId": "location_1",
       "name": "参茶残液",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1162,7 +1192,7 @@
       "id": "diary",
       "locationId": "location_1",
       "name": "沈万山的日记本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1174,25 +1204,10 @@
       "relatedTruthEventIds": []
     },
     {
-      "id": "will",
-      "locationId": "location_1",
-      "name": "遗嘱草稿",
-      "category": "other",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "打印的遗嘱草稿：名下资产的百分之八十捐入慈善基金，沈青禾名下得百分之五，陆小开得百分之五，其余归公司。草稿边角有反复折叠的痕迹，像是被人攥在手里许久。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
       "id": "safe_report",
       "locationId": "location_1",
       "name": "保险柜里的旧文件",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1207,7 +1222,7 @@
       "id": "missing_key",
       "locationId": "location_1",
       "name": "书房钥匙挂板",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1222,7 +1237,7 @@
       "id": "footprint",
       "locationId": "location_2",
       "name": "雪地脚印",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1234,25 +1249,10 @@
       "relatedTruthEventIds": []
     },
     {
-      "id": "cigar",
-      "locationId": "location_2",
-      "name": "雪茄烟头",
-      "category": "other",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "门廊铜缸里有一枚掐灭的高希霸雪茄烟头，雪茄表面落了薄雪——熄灭时间约在雪转小之前（21:10 前）。白慕森的雪茄盒少了一支。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
       "id": "bottle",
       "locationId": "location_3",
       "name": "窗台盆栽里的玻璃瓶",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1267,7 +1267,7 @@
       "id": "newspaper",
       "locationId": "location_3",
       "name": "折起的旧剪报",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1282,7 +1282,7 @@
       "id": "ledger",
       "locationId": "location_4",
       "name": "锁在箱子里的账本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1294,40 +1294,10 @@
       "relatedTruthEventIds": []
     },
     {
-      "id": "recorder",
-      "locationId": "location_5",
-      "name": "录音笔",
-      "category": "other",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "一支录音笔，最后一段录音时间 20:40-21:07：前段为书房内与沈万山的争吵（谈股份放行与两千万欠款），20:58 有摔门声，之后是白慕森独自回房的叹息与倒酒声，21:07 录音停止。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
-      "id": "contract",
-      "locationId": "location_5",
-      "name": "收购意向书",
-      "category": "other",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "公文包内一份《股份收购意向书》：鼎峰资本拟收购白慕森所持合作公司全部股份，生效条件为'沈万山书面同意放行'。签署栏已签白慕森姓名，日期为本周三。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
       "id": "spare_key",
       "locationId": "location_6",
       "name": "私配的书房钥匙",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1342,7 +1312,7 @@
       "id": "love_letter",
       "locationId": "location_6",
       "name": "未寄出的情书",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1356,7 +1326,12 @@
   ],
   "truth": {
     "culpritId": "suwan",
-    "motive": [],
+    "motive": [
+      {
+        "type": "paragraph",
+        "text": "十年前一起医疗事故的签字责任被死者攥在手里，逼她签下'自愿吊销执照'的声明，十年间她成了随叫随到的私人医生。寿宴当众摊牌后，她为保住医生身份与全家的生计下了手。"
+      }
+    ],
     "method": {
       "summary": [
         {
@@ -1452,7 +1427,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "白慕森在书房摊牌失败，摔门而出，在门廊抽雪茄后于"
+            "text": "白慕森在书房摊牌失败，摔门而出，在门廊抽雪茄后于 20:58 回房独处。"
           }
         ],
         "characterIds": [
@@ -1462,27 +1437,6 @@
         "participantIds": [
           "baimusen"
         ]
-      },
-      {
-        "id": "truth_event_3",
-        "time": {
-          "display": "21:05",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:05"
-          }
-        },
-        "title": "事件 3",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "回房独处（有录音笔佐证）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_4",
@@ -1512,6 +1466,27 @@
         "participantIds": [
           "qinghe"
         ]
+      },
+      {
+        "id": "truth_event_3",
+        "time": {
+          "display": "21:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:05"
+          }
+        },
+        "title": "事件 3",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白慕森回房独处，隔墙能听见他的音响声。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_5",
@@ -1556,7 +1531,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "被沈万山隔门骂走；他先后目击周伯送茶（"
+            "text": "陆小开被沈万山隔门骂走；他在二楼先后目击周伯送茶（21:15）与一个提着包的背影（21:20）先后进了书房。"
           }
         ],
         "characterIds": [
@@ -1566,52 +1541,6 @@
         "participantIds": [
           "zhoubo"
         ]
-      },
-      {
-        "id": "truth_event_7",
-        "time": {
-          "display": "21:15",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:15"
-          }
-        },
-        "title": "事件 7",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）与苏晚进书房（"
-          }
-        ],
-        "characterIds": [
-          "suwan"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "suwan"
-        ]
-      },
-      {
-        "id": "truth_event_8",
-        "time": {
-          "display": "21:20",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:20"
-          }
-        },
-        "title": "事件 8",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_9",
@@ -1636,6 +1565,41 @@
         "clueIds": [],
         "participantIds": [
           "zhoubo"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "21:15–21:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:25"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "雪地上只留下唯一一组去书房的脚印（37 码女靴）→ 苏晚房间的乌头碱空瓶。红鲱鱼：周伯的账本与'年后处理'字条、白慕森的两千万欠款与股份放行诉求、陆小开的私配钥匙。"
+          }
+        ],
+        "characterIds": [
+          "zhoubo",
+          "baimusen",
+          "suwan",
+          "luxiaokai"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "zhoubo",
+          "baimusen",
+          "suwan",
+          "luxiaokai"
         ]
       },
       {
@@ -1752,7 +1716,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "周伯发现尸体。苏晚以医生身份第一个接触尸体，宣布死亡并以'保护现场'为由阻止任何人接近书房——实际是防止有人打开保险柜发现那份载有她签名的事故报告。关键破案链：书房日记（要挟动机）→ 保险柜事故报告（十年把柄与签名）→ 雪地 37 码女靴往返脚印（"
+            "text": "周伯发现尸体。苏晚以医生身份第一个接触尸体，宣布死亡并以'保护现场'为由阻止任何人接近书房——实际是防止有人打开保险柜发现那份载有她签名的事故报告。破案链三线合一：书房日记（要挟动机）→ 保险柜事故报告（十年把柄与签名）→ 雪地 37 码女靴往返脚印（结合各人行踪排除后指向唯一一人），锁定苏晚。"
           }
         ],
         "characterIds": [
@@ -1763,41 +1727,6 @@
         "participantIds": [
           "zhoubo",
           "suwan"
-        ]
-      },
-      {
-        "id": "truth_event_15",
-        "time": {
-          "display": "21:15–21:25",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:15"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:25"
-          }
-        },
-        "title": "事件 15",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "唯一去书房的脚印）→ 苏晚房间的乌头碱空瓶。红鲱鱼：周伯的账本与'年后处理'字条、白慕森的两千万欠款与收购意向书、陆小开的私配钥匙。"
-          }
-        ],
-        "characterIds": [
-          "zhoubo",
-          "baimusen",
-          "suwan",
-          "luxiaokai"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "zhoubo",
-          "baimusen",
-          "suwan",
-          "luxiaokai"
         ]
       }
     ],
@@ -1833,7 +1762,43 @@
         "conclusion": "沈万山日记明载'苏晚的事，十年了，这把柄用得顺手'，保险柜中存有苏晚签名的医疗差错事故报告与未签署的认罪声明——十年要挟构成她不惜杀人的深层动机。"
       }
     ],
-    "redHerrings": [],
+    "redHerrings": [
+      {
+        "id": "red_herring_1",
+        "clueIds": [
+          "ledger"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "周伯的账本风波与'年后处理'字条——管家有经济动机，却没有作案的手段与时窗。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_2",
+        "clueIds": [],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "白慕森的两千万欠款与股份放行诉求——他恨死了死者，案发时却在门廊与自己的房间，有人听见他的音响。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_3",
+        "clueIds": [
+          "spare_key",
+          "love_letter"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "陆小开的私配钥匙与未寄出的情书——他能进书房，却不在案发的时窗之内。"
+          }
+        ]
+      }
+    ],
     "supplemental": [],
     "reveal": [
       {

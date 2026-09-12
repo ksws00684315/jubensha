@@ -558,7 +558,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你亥时一刻望见一个人影往享殿方向去，亥时三刻前后有一个人回来——袖口卷着，手上有水渍。"
+                "text": "你亥时一刻望见一个人影往享殿方向去，亥时三刻前后有一个人回来——走得急，你没看清是谁，只记得那人像是从水边过来的。"
               }
             ],
             "source": "other",
@@ -635,7 +635,7 @@
       "id": "xiangdianshishen",
       "locationId": "location_1",
       "name": "享殿尸身",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -650,7 +650,7 @@
       "id": "chunjilidan",
       "locationId": "location_1",
       "name": "春祭礼单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -665,7 +665,7 @@
       "id": "shoulingbuzhengben",
       "locationId": "location_2",
       "name": "守陵簿正本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -680,7 +680,7 @@
       "id": "dangpupiaozi",
       "locationId": "location_2",
       "name": "妆匣当票",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -695,7 +695,7 @@
       "id": "xunyebu",
       "locationId": "location_3",
       "name": "巡夜簿与狐皮",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -710,7 +710,7 @@
       "id": "shaojisipaib",
       "locationId": "location_5",
       "name": "少祭司腰牌",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -725,7 +725,7 @@
       "id": "huolangshouhuozhang",
       "locationId": "location_4",
       "name": "货郎收货账",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -740,7 +740,7 @@
       "id": "shangchengbu",
       "locationId": "location_5",
       "name": "村正的上城簿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -876,7 +876,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "shaojisipaib"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -886,7 +888,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "dangpupiaozi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -896,7 +900,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "xunyebu"
+        ],
         "explanation": [
           {
             "type": "paragraph",

@@ -115,12 +115,13 @@ export async function persistState(gameId: string, state: GameState): Promise<vo
   await db.game.update({ where: { id: gameId }, data: { phase: state.phase, round: state.round, state: state as unknown as Prisma.InputJsonValue } });
 }
 
-/** 事件可见性过滤：玩家视角只看 public + 自己座位 */
+/** 事件可见性过滤：玩家视角只看 public + 自己座位 + 自己发出的私聊 */
 export function visibleTo(event: EngineEvent, seatIndex: number | null): boolean {
   if (event.visibility === "public") return true;
   if (seatIndex === null) return false; // null = 纯观战：仅 public
   if (event.visibility === `seat:${seatIndex}`) return true;
   if (event.type === "speech" && event.fromSeat === seatIndex) return true;
+  if (event.type === "private" && event.fromSeat === seatIndex) return true;
   return false;
 }
 
@@ -187,6 +188,24 @@ export function cluesVisibleToSeat(
     name: c.name,
     location: c.location,
   }));
+}
+
+/**
+ * 线索对某座位是否可达（搜证权限）：
+ *  - forbiddenCharacterIds 含该角色 → 永不可搜；
+ *  - release.round 未到 / afterCluePublicIds 有未公开前置 → 本轮不可搜。
+ */
+export function clueReachable(
+  clue: { forbiddenCharacterIds?: string[]; release?: { round?: number; afterCluePublicIds?: string[] } },
+  opts: { seatCharacterId?: string | null; round: number; publicClueIds: Iterable<string> }
+): boolean {
+  if (opts.seatCharacterId && clue.forbiddenCharacterIds?.includes(opts.seatCharacterId)) return false;
+  if (clue.release?.round !== undefined && clue.release.round > opts.round) return false;
+  const pub = new Set(opts.publicClueIds);
+  for (const id of clue.release?.afterCluePublicIds ?? []) {
+    if (!pub.has(id)) return false;
+  }
+  return true;
 }
 
 /** 座位人数与存活座位（MVP 全员存活） */

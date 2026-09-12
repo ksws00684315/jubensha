@@ -55,6 +55,7 @@ const PURPOSE_LABEL: Record<string, string> = {
   player: "普通 AI 玩家",
   generator: "剧本生成",
   tts: "语音合成",
+  embedding: "向量检索（记忆）",
 };
 
 function AdminGate({ children }: { children: ReactNode }) {

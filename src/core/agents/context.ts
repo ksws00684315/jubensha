@@ -1,6 +1,16 @@
 import type { ChatMessage } from "@/core/llm/types";
 import type { EngineEvent, GameState } from "@/core/engine/types";
-import { renderEventLog } from "@/core/engine/state";
+import { unlockedActs } from "@/core/engine/flow";
+import { clueMentionHints, renderLogWithMemory } from "./memory";
+import type { KnowledgeV2 } from "@/core/script/v2/schema";
+
+/** knowledge 的情报性质前缀：防 AI 把听来的传闻当亲见事实 */
+const KIND_LABEL: Record<string, string> = { fact: "亲见", claim: "传闻", inference: "推断" };
+
+function knowledgeLine(item: KnowledgeV2): string {
+  const kind = KIND_LABEL[item.kind] ?? "亲见";
+  return `· 【${kind}】${item.title}：${narrativeToText(item.content)}`;
+}
 import {
   clueText,
   fullTimelineText,
@@ -23,6 +33,8 @@ import type { ScriptDocV2 } from "@/core/script/v2/schema";
  *
  * ★ 前缀缓存 ★
  * 所有 LLM 消息都走 cacheFriendlyMessages：system 整局不变；user = 只增不改的现场记录 + 每轮才变的尾部。
+ * 开启滚动记忆（state.memory）后，现场记录的前缀会在摘要更新时整体替换一次——这是
+ * 「上下文长度/质量」换「缓存命中」的主动取舍，见 memory.ts。
  */
 
 export function seatOf(state: GameState, seatIndex: number) {
@@ -77,7 +89,7 @@ export function buildPlayerContext(
   state: GameState,
   seatIndex: number,
   events: EngineEvent[],
-  opts: { hint?: string; extraInstruction?: string; requireJson?: string }
+  opts: { hint?: string; extraInstruction?: string; requireJson?: string; recall?: string }
 ): ChatMessage[] {
   const character = characterOf(script, state, seatIndex);
   if (!character) throw new Error(`座位 ${seatIndex} 未绑定角色`);
@@ -99,6 +111,10 @@ export function buildPlayerContext(
 - 信息不足时可以同时怀疑好几个人，不要表现得胸有成竹。
 - 被逼问自己的秘密时可以回避或部分承认，但不要撒与自己时间线硬冲突的谎。`;
 
+  const violationBlock = card.violation.length ? `\n红线（无论如何不能说破、不能做）：${card.violation.join("；")}` : "";
+  const alibiBlock = card.alibi?.length ? `不在场证明（必要时可主动陈述）：${narrativeToText(card.alibi)}\n` : "";
+  const tellBlock = card.tells.length ? `说谎时的小动作（演凶/撒谎时可带）：${card.tells.join("；")}\n` : "";
+
   const system = `你正在参加一场文字剧本杀游戏《${script.meta.title}》，扮演其中一名角色。全程以第一人称、在戏内说话。
 
 【公开背景】
@@ -112,11 +128,14 @@ ${publicRoster(script, state)}
 【你的角色】${character.name}${character.gender ? `（${character.gender}）` : ""}${character.age ? ` ${character.age} 岁` : ""}
 公开身份：${publicBioText(character)}
 角色背景：${narrativeToText(card.backstory)}
-你的秘密（绝不能主动告诉任何人）：${card.secrets.map((secret) => `${secret.title}：${narrativeToText(secret.content)}`).join("\n")}
+${alibiBlock}你的秘密（未标注的绝不能主动告诉任何人；标注〔必须说出去〕的按标注执行）：${card.secrets
+    .map((secret) => `${secret.title}${secret.disclosure === "must_share" ? "〔必须找机会说出去，可以说得含蓄，但不能瞒到底〕" : ""}：${narrativeToText(secret.content)}`)
+    .join("\n")}
 你的目标：${card.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n")}
 你的时间线（你自己的经历，可按此陈述）：${timelineToText(card.timeline)}
-你额外知道的事：${card.knowledge.map((item) => `· ${item.title}：${narrativeToText(item.content)}`).join("\n") || "（无）"}
+你额外知道的事：${card.knowledge.map(knowledgeLine).join("\n") || "（无）"}
 你的说话风格：${[card.persona.speechStyle, ...card.persona.traits].filter(Boolean).join("；")}
+${tellBlock}${violationBlock}
 
 ${strategy}
 
@@ -130,12 +149,36 @@ ${strategy}
       ? "（暂无）"
       : clues.map((c) => `· ${c!.name}（${publicClues.includes(c!) ? "已公开" : "仅你可见"}）: ${clueText(c!)}`).join("\n");
 
+  // 分层记忆：早期公共事件用滚动摘要，近期逐字保留（见 memory.ts）
   const growingLog = `【到目前为止的现场记录】
-${renderEventLog(events, seatIndex, { includePrivate: true })}`;
+${renderLogWithMemory(events, seatIndex, state.memory, true)}`;
+
+  const mentionHints = clueMentionHints(script, state, seatIndex, events);
+  const mentionBlock = mentionHints.length
+    ? `【可打出的牌】刚才大家提到了${mentionHints.map((n) => `「${n}」`).join("、")}——你手里正好有相关线索，可以在合适的时机用你的口吻亮出来（也可以继续藏着，看你的处境）。`
+    : "";
+
+  // 分幕读本：已解锁幕的阶段增量（新知识/新目标）注入尾部
+  const acts = unlockedActs(script.flow.acts, state);
+  let actBlock = "";
+  if (acts.length) {
+    const lines: string[] = [];
+    for (const act of acts) {
+      const stage = card.stages.find((s) => s.actId === act.id);
+      if (!stage) continue;
+      const parts = [
+        ...stage.knowledge.map(knowledgeLine),
+        ...stage.objectives.map((o) => `· 【新目标】${o.title}：${narrativeToText(o.content)}`),
+      ];
+      if (parts.length) lines.push(`（${act.title}）\n${parts.join("\n")}`);
+    }
+    if (lines.length) actBlock = `【本幕新知】\n${lines.join("\n")}\n`;
+  }
 
   const tail = `【你持有的线索卡】
 ${clueBlock}
-
+${mentionBlock ? `\n${mentionBlock}\n` : ""}
+${actBlock}${opts.recall ? `${opts.recall}\n` : ""}
 ${phaseInstruction(script, state, seatIndex, opts.hint)}
 ${opts.extraInstruction ?? ""}
 ${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
@@ -162,7 +205,7 @@ export function buildDmContext(
   script: ScriptDocV2,
   state: GameState,
   events: EngineEvent[],
-  opts: { task: string; requireJson?: string }
+  opts: { task: string; requireJson?: string; recall?: string }
 ): ChatMessage[] {
   const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你只根据公开记录控场和渲染氛围。
 复盘前严禁：说出或暗示谁是真凶、点名该怀疑谁、引导投票、复述未公开线索原文、泄露任何角色的秘密。不要给玩家「正确答案」。
@@ -187,17 +230,30 @@ ${publicRoster(script, state)}
     .join("\n");
 
   const growingLog = `【现场记录】
-${renderEventLog(events, null)}`;
+${renderLogWithMemory(events, null, state.memory, false)}`;
 
   const tail = `【当前局面】${state.phase} 第${state.round}轮${state.turnSeat != null ? ` 轮到座位${state.turnSeat + 1}` : ""}
 【线索公开状态】
 ${clueStatus}
-
+${hostGuideBlock(script, state)}${opts.recall ? `\n${opts.recall}\n` : ""}
 ${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
 【你的任务】${opts.task}
 ${opts.requireJson ? opts.requireJson : ""}`;
 
   return cacheFriendlyMessages(system, growingLog, tail);
+}
+
+/** DM 手册：分阶段提示 + 扶车指南（仅在讨论阶段注入，防卡关） */
+function hostGuideBlock(script: ScriptDocV2, state: GameState): string {
+  const guide = script.hostGuide;
+  if (!guide) return "";
+  const parts: string[] = [];
+  const phaseNotes = guide.perPhase.filter((p) => p.phase === state.phase).map((p) => p.notes);
+  if (phaseNotes.length) parts.push(`【主持人手册·本阶段】\n${phaseNotes.map((n) => `· ${n}`).join("\n")}`);
+  if (state.phase === "DISCUSSION" && guide.stallBreakers.length) {
+    parts.push(`【扶车指南（仅当讨论明显停滞时才可使用）】\n${guide.stallBreakers.map((s) => `· 若${s.condition}：${s.hint}`).join("\n")}`);
+  }
+  return parts.length ? `\n${parts.join("\n")}\n` : "";
 }
 
 export const GENERATOR_SYSTEM = `你是资深剧本杀作者。只输出 JSON，不要 markdown、解释或代码围栏。`;

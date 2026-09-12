@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, publicBioText } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
-import { cluesVisibleToSeat } from "@/core/engine/state";
+import { clueReachable, cluesVisibleToSeat } from "@/core/engine/state";
+import { unlockedActs } from "@/core/engine/flow";
 import type { GameState } from "@/core/engine/types";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
@@ -47,9 +48,23 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     background: narrativeToText(doc.background),
     flow: doc.flow,
     locations: locationNames(doc),
-    availableLocations: doc.locations
-      .filter((location) => doc.clues.some((clue) => clue.locationId === location.id && clueStates[clue.id] === undefined))
-      .map((location) => location.name),
+    availableLocations: (() => {
+      const myChar = mySeat !== null ? doc.characters.find((c) => c.id === game.room.seats.find((s2) => s2.index === mySeat)?.characterId) : null;
+      const seatChar = myChar?.id ?? null;
+      const publicClueIds = new Set(Object.entries(clueStates).filter(([, st]) => (st as { isPublic?: boolean }).isPublic).map(([id]) => id));
+      const round = game.round;
+      return doc.locations
+        .filter((location) => !(seatChar && location.ownerCharacterId === seatChar))
+        .filter((location) =>
+          doc.clues.some(
+            (clue) =>
+              clue.locationId === location.id &&
+              clueStates[clue.id] === undefined &&
+              clueReachable(clue, { seatCharacterId: seatChar, round, publicClueIds }),
+          ),
+        )
+        .map((location) => location.name);
+    })(),
     seats: game.room.seats.map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);
       const isMine = mySeat === s.index;
@@ -70,7 +85,14 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
               persona: [c.privateCard.persona.speechStyle, ...c.privateCard.persona.traits].filter(Boolean).join("；"),
             }
           : null,
-        myCardV2: isMine && c ? c.privateCard : null,
+        myCardV2: isMine && c
+          ? {
+              ...c.privateCard,
+              stages: c.privateCard.stages.filter((st) =>
+                unlockedActs(doc.flow.acts, runtimeState).some((a) => a.id === st.actId),
+              ),
+            }
+          : null,
       };
     }),
     mySeat,
@@ -83,5 +105,14 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
     pendingAnswer: runtimeState.pendingAnswer ?? null,
     humanDeadline: mySeat !== null ? runtimeState.humanDeadlines?.[String(mySeat)] ?? null : null,
+    // 推荐回复：轮到我发言时后台生成的建议短句
+    suggestions: mySeat !== null ? runtimeState.suggestions?.[String(mySeat)] ?? [] : [],
+    // 向我开过私信窗口的 AI 座位列表（可回复）
+    openWhispers:
+      mySeat !== null
+        ? Object.entries(runtimeState.privateChat ?? {})
+            .filter(([key, count]) => Number(count) > 0 && Number(key.split("-")[1]) === mySeat)
+            .map(([key]) => Number(key.split("-")[0]))
+        : [],
   });
 }

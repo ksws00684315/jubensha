@@ -610,7 +610,7 @@
         "backstory": [
           {
             "type": "paragraph",
-            "text": "你叫郭翠，老白家帮工厨娘，三年没结的工钱。20:30 你截住他讨钱，他让你'翻账本去'，你急了拍空一掌。21:20 你看见那丫头往柴房方向去；22:00 白桦端来姜汤说'爸在里屋睡下了'，你犯嘀咕：那酒桶哪回不是喝到灶膛凉？6:40 你发现柴房门虚掩、雪堆旁一只棉鞋尖朝上——你那一嗓子喊醒了整个雪乡。"
+            "text": "你叫郭翠，老白家帮工厨娘，三年没结的工钱。20:30 你截住他讨钱，他让你'翻账本去'，你急了拍空一掌。21:20 你看见有个年轻人往柴房方向去；22:00 端姜汤来的年轻人说'爸在里屋睡下了'，你犯嘀咕：那酒桶哪回不是喝到灶膛凉？6:40 你发现柴房门虚掩、雪堆旁一只棉鞋尖朝上——你那一嗓子喊醒了整个雪乡。"
           }
         ],
         "secrets": [
@@ -633,7 +633,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你是发现人，你的证词从 6:40 开始贯穿全程。策略：先报现场（柴房门虚掩、棉鞋朝向、雪面平整），再交代 20:30 争吵与欠条（主动认，'我巴不得他给钱，没想过要他命'）。21:20 那半眼是全场最重的一句话——你要在那丫头的谎言出现裂缝后再说，说早了，你会变成'构陷'；说晚了，你会变成'隐瞒'。掂好这个时机。"
+                "text": "你是发现人，你的证词从 6:40 开始贯穿全程。策略：先报现场（柴房门虚掩、棉鞋朝向、雪面平整），再交代 20:30 争吵与欠条（主动认，'我巴不得他给钱，没想过要他命'）。21:20 那半眼是全场最重的一句话——你要在那个年轻人的谎言出现裂缝后再说，说早了，你会变成'构陷'；说晚了，你会变成'隐瞒'。掂好这个时机。"
               }
             ],
             "priority": "primary"
@@ -745,7 +745,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "22:00 那丫头端姜汤时手背上有两道红痕，像被柴火燎的——你当时以为是灶上烫的，现在想想，柴房里哪来的火？"
+                "text": "22:00 有人端姜汤时手背上有两道红痕，像被柴火燎的——你当时以为是灶上烫的，现在想想，柴房里哪来的火？只是端汤的人不止一个，你没记住是谁的手。"
               }
             ],
             "source": "other",
@@ -956,7 +956,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "21:05 你在柴房外看见窗纸透出的灯影里有两个人的影子晃——白守业和那丫头，爷俩在里头唠。你掐了烟走的时候，听见里头白守业高了声：'都了了，明天当着人说了。'"
+                "text": "21:05 你在柴房外看见窗纸透出的灯影里有两个人影晃——听声是白守业和同他一起来的那个年轻人，爷俩在里头唠。你掐了烟走的时候，听见里头白守业高了声：'都了了，明天当着人说了。'"
               }
             ],
             "source": "other",
@@ -1033,7 +1033,7 @@
       "id": "yankan_jilu",
       "locationId": "location_1",
       "name": "崔九安的验看记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1048,7 +1048,7 @@
       "id": "changguang_sheying",
       "locationId": "location_2",
       "name": "长曝光照片",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1063,7 +1063,7 @@
       "id": "dianmu_xue",
       "locationId": "location_1",
       "name": "垫木上的血与发",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1078,7 +1078,7 @@
       "id": "tuozhuai_hen",
       "locationId": "location_2",
       "name": "拖拽痕与扬雪",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1093,7 +1093,7 @@
       "id": "xunqin_kuaijian",
       "locationId": "location_3",
       "name": "炕头的寻亲快件",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1108,7 +1108,7 @@
       "id": "weijin_muxie",
       "locationId": "location_1",
       "name": "围巾上的木屑",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1123,7 +1123,7 @@
       "id": "qianpiao_san",
       "locationId": "location_4",
       "name": "三张工钱欠条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1138,7 +1138,7 @@
       "id": "jiebie_fukou",
       "locationId": "location_2",
       "name": "界树的新斧口",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1153,7 +1153,7 @@
       "id": "yanxia_yantou",
       "locationId": "location_5",
       "name": "檐下两个烟头",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1170,7 +1170,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫白桦，二十年前一个雪夜，白守业把你抱回来养大。20:00 你偷看到寻亲会的快件：DNA 比对成功，周姓夫妇明日到店。"
+        "text": "白桦是白守业抱回来的养女，寻亲快件将揭开她的身世与当年'半买半救'的旧耻。柴房对峙中失手致其身亡后，她掩盖真相，为的是保住二十年养女的名分。"
       }
     ],
     "method": {
@@ -1537,6 +1537,37 @@
         ]
       },
       {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "拖尸影像与物证互锁）→ 围巾上的木屑（拖尸者身上带走了柴垛）→ 炕头的寻亲快件（动机：身世即将公开）→ 三张欠条（'桦丫头的事'的注脚）。红鲱鱼：崔九安的界树积怨与摔门、简一舟的偷拍与被夺相机、郭翠的三年欠薪与争吵、马长贵的柴房外密谈与封口钱——人人有秘密，无人是预谋凶手。"
+          }
+        ],
+        "characterIds": [
+          "cuijiuan",
+          "jianyizhou",
+          "guocui",
+          "machanggui"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cuijiuan",
+          "jianyizhou",
+          "guocui",
+          "machanggui"
+        ]
+      },
+      {
         "id": "truth_event_13",
         "time": {
           "display": "22:00",
@@ -1660,37 +1691,6 @@
           "cuijiuan",
           "guocui"
         ]
-      },
-      {
-        "id": "truth_event_18",
-        "time": {
-          "display": "21:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:50"
-          }
-        },
-        "title": "事件 18",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "拖尸影像与物证互锁）→ 围巾上的木屑（拖尸者身上带走了柴垛）→ 炕头的寻亲快件（动机：身世即将公开）→ 三张欠条（'桦丫头的事'的注脚）。红鲱鱼：崔九安的界树积怨与摔门、简一舟的偷拍与被夺相机、郭翠的三年欠薪与争吵、马长贵的柴房外密谈与封口钱——人人有秘密，无人是预谋凶手。"
-          }
-        ],
-        "characterIds": [
-          "cuijiuan",
-          "jianyizhou",
-          "guocui",
-          "machanggui"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "cuijiuan",
-          "jianyizhou",
-          "guocui",
-          "machanggui"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -1740,7 +1740,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "jiebie_fukou",
+          "yankan_jilu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1750,7 +1753,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "changguang_sheying"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1760,7 +1765,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "qianpiao_san"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1770,7 +1777,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "yanxia_yantou"
+        ],
         "explanation": [
           {
             "type": "paragraph",

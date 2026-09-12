@@ -1231,7 +1231,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "章先生的验看草单",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1246,7 +1246,7 @@
       "id": "c_sangpizhi",
       "locationId": "location_1",
       "name": "通风眼上的桑皮纸",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1261,7 +1261,7 @@
       "id": "c_shimei",
       "locationId": "location_1",
       "name": "湿煤与水瓢",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1276,7 +1276,7 @@
       "id": "c_zhangben",
       "locationId": "location_2",
       "name": "账本与留字",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1291,7 +1291,7 @@
       "id": "c_dangpiao",
       "locationId": "location_3",
       "name": "房梁上的当票",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1306,7 +1306,7 @@
       "id": "c_huaibiao",
       "locationId": "location_4",
       "name": "妆匣里的旧怀表",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1321,7 +1321,7 @@
       "id": "c_yaofang",
       "locationId": "location_5",
       "name": "灯座下的药方",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1336,7 +1336,7 @@
       "id": "c_zhaidan",
       "locationId": "location_6",
       "name": "赊账单底联",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1351,7 +1351,7 @@
       "id": "c_dipian",
       "locationId": "location_6",
       "name": "底片保管收据",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1368,7 +1368,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫沈怀民，留真照相馆的二先生。外人看你体面，只有你知道账本底下埋着什么：两年里你从铺款挪了四千六百元，存进上海的钱庄吃利，又替相好的舞女赎了一只金镯——铺子的流动金早被你抽空了。"
+        "text": "沈怀民两年挪用铺款四千六百元，铺子的流动金早被抽空。兄长查账在即、明日对账即是送官，他杀人灭口并伪造失火意外。"
       }
     ],
     "method": {
@@ -1608,6 +1608,35 @@
         ]
       },
       {
+        "id": "truth_event_10",
+        "time": {
+          "display": "20:15–21:30",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "阿禄在店堂偷配显影药。"
+          }
+        ],
+        "characterIds": [
+          "alu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "alu"
+        ]
+      },
+      {
         "id": "truth_event_8",
         "time": {
           "display": "20:30",
@@ -1659,35 +1688,6 @@
         "clueIds": [],
         "participantIds": [
           "baisuqiu"
-        ]
-      },
-      {
-        "id": "truth_event_10",
-        "time": {
-          "display": "20:15–21:30",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "20:15"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:30"
-          }
-        },
-        "title": "事件 10",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "阿禄在店堂偷配显影药。"
-          }
-        ],
-        "characterIds": [
-          "alu"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "alu"
         ]
       },
       {
@@ -1787,6 +1787,27 @@
         ]
       },
       {
+        "id": "truth_event_20",
+        "time": {
+          "display": "21:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "应声与"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_15",
         "time": {
           "display": "21:40",
@@ -1811,6 +1832,60 @@
         "participantIds": [
           "shenhuaimin",
           "alu"
+        ]
+      },
+      {
+        "id": "truth_event_21",
+        "time": {
+          "display": "21:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 21",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "账房行踪（时间锁）。红鲱鱼：白素秋的旧情与烧信、阿禄的私抄药方与"
+          }
+        ],
+        "characterIds": [
+          "baisuqiu",
+          "alu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baisuqiu",
+          "alu"
+        ]
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "21:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:40"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "鬼祟、谈松龄的砒霜赊账单、阮静秋的拍桌撂话与窗下徘徊——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "tansongling",
+          "ruanjingqiu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tansongling",
+          "ruanjingqiu"
         ]
       },
       {
@@ -1900,81 +1975,6 @@
         "participantIds": [
           "baisuqiu"
         ]
-      },
-      {
-        "id": "truth_event_20",
-        "time": {
-          "display": "21:30",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:30"
-          }
-        },
-        "title": "事件 20",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "应声与"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_21",
-        "time": {
-          "display": "21:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:40"
-          }
-        },
-        "title": "事件 21",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "账房行踪（时间锁）。红鲱鱼：白素秋的旧情与烧信、阿禄的私抄药方与"
-          }
-        ],
-        "characterIds": [
-          "baisuqiu",
-          "alu"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "baisuqiu",
-          "alu"
-        ]
-      },
-      {
-        "id": "truth_event_22",
-        "time": {
-          "display": "21:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:40"
-          }
-        },
-        "title": "事件 22",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "鬼祟、谈松龄的砒霜赊账单、阮静秋的拍桌撂话与窗下徘徊——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [
-          "tansongling",
-          "ruanjingqiu"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "tansongling",
-          "ruanjingqiu"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2016,7 +2016,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_huaibiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2026,7 +2028,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "c_yaofang"
+        ],
         "explanation": [
           {
             "type": "paragraph",

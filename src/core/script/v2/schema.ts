@@ -80,7 +80,8 @@ const secretSchema = z
     id: idSchema,
     title: leafText,
     content: narrativeSchema,
-    disclosure: z.enum(["never", "conditional"]).default("never"),
+    /** never=绝不披露；conditional=满足 condition 才可披露；must_share=必须在合适时机主动披露 */
+    disclosure: z.enum(["never", "conditional", "must_share"]).default("never"),
     condition: leafText.optional(),
   })
   .strict()
@@ -104,6 +105,8 @@ const knowledgeSchema = z
     id: idSchema,
     title: leafText,
     content: narrativeSchema,
+    /** 情报性质：fact=亲见/持有，claim=听来的传闻，inference=自己的推断 */
+    kind: z.enum(["fact", "claim", "inference"]).default("fact"),
     source: z.enum(["witnessed", "heard", "possessed", "inferred", "other"]),
     time: timelineTimeSchema.optional(),
     relatedCharacterIds: z.array(idSchema).default([]),
@@ -132,6 +135,25 @@ const privateRelationshipSchema = z
   .object({ characterId: idSchema, label: leafText, notes: optionalNarrativeSchema })
   .strict();
 
+/** 幕：分幕读本。roundStart = 该幕从第几轮搜证开始解锁（含当轮搜证与讨论）。 */
+const actSchema = z
+  .object({
+    id: idSchema,
+    title: leafText,
+    brief: optionalNarrativeSchema,
+    roundStart: z.number().int().min(1),
+  })
+  .strict();
+
+/** 角色在某一幕解锁的增量内容（新知识/新目标），进入该幕时对 AI 生效。 */
+const stageSchema = z
+  .object({
+    actId: idSchema,
+    knowledge: z.array(knowledgeSchema).default([]),
+    objectives: z.array(objectiveSchema).default([]),
+  })
+  .strict();
+
 const privateCardSchema = z
   .object({
     backstory: narrativeSchema,
@@ -142,6 +164,14 @@ const privateCardSchema = z
     relationships: z.array(privateRelationshipSchema).default([]),
     persona: personaSchema,
     isCulprit: z.boolean().default(false),
+    /** 不在场证明：可在必要时主动陈述（通常与 timeline 一致，独立成字段便于审讯对线） */
+    alibi: optionalNarrativeSchema,
+    /** AI 红线：无论被怎么逼问都绝不能说破/做出来的事 */
+    violation: z.array(leafText).default([]),
+    /** 说谎时的小动作（演技抓手，多用于凶手） */
+    tells: z.array(leafText).default([]),
+    /** 分幕增量：进入对应幕后追加的知识/目标 */
+    stages: z.array(stageSchema).default([]),
   })
   .strict();
 
@@ -157,7 +187,13 @@ export const characterV2Schema = z
   .strict();
 
 export const locationV2Schema = z
-  .object({ id: idSchema, name: leafText, description: optionalNarrativeSchema })
+  .object({
+    id: idSchema,
+    name: leafText,
+    description: optionalNarrativeSchema,
+    /** 房间主人：默认本人禁搜自己的房间（行业硬规则） */
+    ownerCharacterId: idSchema.optional(),
+  })
   .strict();
 
 export const clueV2Schema = z
@@ -170,6 +206,16 @@ export const clueV2Schema = z
     policy: z.enum(["auto_public", "manual_public", "keep_private"]).default("manual_public"),
     relatedCharacterIds: z.array(idSchema).default([]),
     relatedTruthEventIds: z.array(idSchema).default([]),
+    /** 禁搜：这些角色永远搜不到这条线索（搜证权限） */
+    forbiddenCharacterIds: z.array(idSchema).default([]),
+    /** 发放计划：不写则任何轮次可被随机搜到；写了则按轮次/前置公开线索过滤 */
+    release: z
+      .object({
+        round: z.number().int().min(1).optional(),
+        afterCluePublicIds: z.array(idSchema).default([]),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -210,6 +256,8 @@ export const flowV2Schema = z
     discussionRounds: z.number().int().min(1).max(4).default(2),
     allowPrivateChat: z.boolean().default(false),
     privateChatMessageLimit: z.number().int().min(2).max(6).default(3),
+    /** 分幕：进入对应搜证轮时由 DM 宣幕，角色 stages 同步解锁 */
+    acts: z.array(actSchema).default([]),
   })
   .strict();
 
@@ -218,6 +266,16 @@ const outcomeSchema = z
     result: z.enum(["culprit_caught", "culprit_escaped"]),
     title: leafText,
     content: narrativeSchema,
+  })
+  .strict();
+
+const PHASE_KEY = z.enum(["READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE"]);
+
+/** DM 手册数据化：分阶段主持人提示 + 扶车指南（卡关应急） */
+const hostGuideSchema = z
+  .object({
+    perPhase: z.array(z.object({ phase: PHASE_KEY, notes: leafText }).strict()).default([]),
+    stallBreakers: z.array(z.object({ condition: leafText, hint: leafText }).strict()).default([]),
   })
   .strict();
 
@@ -242,6 +300,7 @@ export const scriptDocV2Schema = z
     truth: truthV2Schema,
     flow: flowV2Schema,
     ending: z.object({ outcomes: z.array(outcomeSchema).length(2) }).strict(),
+    hostGuide: hostGuideSchema.optional(),
   })
   .strict();
 
@@ -251,6 +310,10 @@ export type TimelineTime = z.infer<typeof timelineTimeSchema>;
 export type TimelineEntry = z.infer<typeof timelineEntrySchema>;
 export type CharacterV2 = z.infer<typeof characterV2Schema>;
 export type PrivateCardV2 = z.infer<typeof privateCardSchema>;
+export type KnowledgeV2 = z.infer<typeof knowledgeSchema>;
+export type StageV2 = z.infer<typeof stageSchema>;
+export type ActV2 = z.infer<typeof actSchema>;
+export type HostGuideV2 = z.infer<typeof hostGuideSchema>;
 export type LocationV2 = z.infer<typeof locationV2Schema>;
 export type ClueV2 = z.infer<typeof clueV2Schema>;
 export type TruthV2 = z.infer<typeof truthV2Schema>;

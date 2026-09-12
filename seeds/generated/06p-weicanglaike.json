@@ -171,26 +171,6 @@
             "clueIds": []
           },
           {
-            "id": "character_niehuaiyuan_event_6",
-            "time": {
-              "display": "21:00",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:00"
-              }
-            },
-            "title": "事件 6",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "库房。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_niehuaiyuan_event_7",
             "time": {
               "display": "20:45",
@@ -205,26 +185,6 @@
               {
                 "type": "paragraph",
                 "text": "离席赴医务室预写"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_niehuaiyuan_event_8",
-            "time": {
-              "display": "21:08",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:08"
-              }
-            },
-            "title": "事件 8",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "取药登记。"
               }
             ],
             "characterIds": [],
@@ -291,6 +251,26 @@
             "clueIds": []
           },
           {
+            "id": "character_niehuaiyuan_event_6",
+            "time": {
+              "display": "21:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "库房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_niehuaiyuan_event_12",
             "time": {
               "display": "21:00",
@@ -325,6 +305,26 @@
               {
                 "type": "paragraph",
                 "text": "以画框打包带勒杀（怀表摔停）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_niehuaiyuan_event_8",
+            "time": {
+              "display": "21:08",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:08"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "取药登记。"
               }
             ],
             "characterIds": [],
@@ -1477,7 +1477,7 @@
       "id": "chuyan_jilu",
       "locationId": "location_1",
       "name": "船医的初验与复验记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1492,7 +1492,7 @@
       "id": "huaibiao",
       "locationId": "location_1",
       "name": "木箱下的怀表",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1507,7 +1507,7 @@
       "id": "menjin_qingdan",
       "locationId": "location_5",
       "name": "门禁刷卡清单",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1522,7 +1522,7 @@
       "id": "yaodeng_jilu",
       "locationId": "location_3",
       "name": "医务室药箱登记本",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1537,7 +1537,7 @@
       "id": "yaoshi_jieyong",
       "locationId": "location_2",
       "name": "钥匙借用登记",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1552,7 +1552,7 @@
       "id": "jianxiu_kanyan",
       "locationId": "location_2",
       "name": "检修门与滑道出口的勘验记录",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1567,7 +1567,7 @@
       "id": "jianding_digao",
       "locationId": "location_6",
       "name": "鉴定底稿的边角",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1582,7 +1582,7 @@
       "id": "yizhu_beiwang",
       "locationId": "location_1",
       "name": "公文包里的捐赠备忘",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1597,7 +1597,7 @@
       "id": "jianggao_pizhu",
       "locationId": "location_4",
       "name": "闻笛的讲稿批注",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1614,7 +1614,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "五十多年前，你的祖父、装裱宗师聂松年，被晏起予用摹本调包了家藏《寒江独钓图》，反被指监守自盗，悬梁自尽。你学鉴定三十年，就为以'掌眼人'的身份站到他身边。"
+        "text": "五十年前装裱宗师聂松年被晏起予用摹本调包家藏名画、反被诬监守自盗而悬梁自尽；其孙聂怀远学鉴定三十年，以'掌眼人'身份登上死者的船——复仇是他半生唯一的功课。"
       }
     ],
     "method": {
@@ -1833,27 +1833,6 @@
         ]
       },
       {
-        "id": "truth_event_7",
-        "time": {
-          "display": "21:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:00"
-          }
-        },
-        "title": "事件 7",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "库房看《寒江》'，死者回'准'。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_8",
         "time": {
           "display": "20:45",
@@ -1877,27 +1856,6 @@
         "participantIds": [
           "niehuaiyuan"
         ]
-      },
-      {
-        "id": "truth_event_9",
-        "time": {
-          "display": "21:08",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:08"
-          }
-        },
-        "title": "事件 9",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "取药登记并取药。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_10",
@@ -1952,6 +1910,27 @@
         ]
       },
       {
+        "id": "truth_event_25",
+        "time": {
+          "display": "20:52",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:52"
+          }
+        },
+        "title": "事件 25",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "进"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_12",
         "time": {
           "display": "20:55",
@@ -2002,6 +1981,27 @@
         ]
       },
       {
+        "id": "truth_event_7",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 7",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "库房看《寒江》'，死者回'准'。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_14",
         "time": {
           "display": "21:03",
@@ -2027,6 +2027,27 @@
         ]
       },
       {
+        "id": "truth_event_24",
+        "time": {
+          "display": "21:03",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:03"
+          }
+        },
+        "title": "事件 24",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "停摆+表底'松年'=死亡时刻与仇家姓氏）→ 门禁刷卡清单（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_15",
         "time": {
           "display": "21:05",
@@ -2049,6 +2070,60 @@
         "clueIds": [],
         "participantIds": [
           "wushuang"
+        ]
+      },
+      {
+        "id": "truth_event_9",
+        "time": {
+          "display": "21:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:08"
+          }
+        },
+        "title": "事件 9",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "取药登记并取药。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_27",
+        "time": {
+          "display": "21:08",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:08"
+          }
+        },
+        "title": "事件 27",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "行系预写伪证）→ 钥匙借用登记+检修门勘验（虚挂挂锁、缎面丝线、滑道掌印=只去不回的路）→ 鉴定底稿边角（'松年长物'印鉴吻合=动机与身份）→ 公文包捐赠备忘（遗产格局，红鲱鱼）→ 闻笛讲稿批注（'存疑如故'=来源疑案的书面回声）。红鲱鱼：晏承的门禁徘徊与保底协议、邬双的停职之恨与浆糊嗅觉、洛之梧的利益目击与深夜密谈、佟肃的黑屏监控与巡检时段——人人有秘密，真凶只有一个。"
+          }
+        ],
+        "characterIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu",
+          "wendi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "yancheng",
+          "wushuang",
+          "luozhiwu",
+          "tongsu",
+          "wendi"
         ]
       },
       {
@@ -2100,6 +2175,27 @@
         "participantIds": [
           "niehuaiyuan"
         ]
+      },
+      {
+        "id": "truth_event_26",
+        "time": {
+          "display": "21:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:12"
+          }
+        },
+        "title": "事件 26",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "出的 20 分钟空窗）→ 医务室登记本（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_18",
@@ -2264,102 +2360,6 @@
           "luozhiwu",
           "tongsu"
         ]
-      },
-      {
-        "id": "truth_event_24",
-        "time": {
-          "display": "21:03",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:03"
-          }
-        },
-        "title": "事件 24",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "停摆+表底'松年'=死亡时刻与仇家姓氏）→ 门禁刷卡清单（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_25",
-        "time": {
-          "display": "20:52",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "20:52"
-          }
-        },
-        "title": "事件 25",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "进"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_26",
-        "time": {
-          "display": "21:12",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:12"
-          }
-        },
-        "title": "事件 26",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "出的 20 分钟空窗）→ 医务室登记本（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_27",
-        "time": {
-          "display": "21:08",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:08"
-          }
-        },
-        "title": "事件 27",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "行系预写伪证）→ 钥匙借用登记+检修门勘验（虚挂挂锁、缎面丝线、滑道掌印=只去不回的路）→ 鉴定底稿边角（'松年长物'印鉴吻合=动机与身份）→ 公文包捐赠备忘（遗产格局，红鲱鱼）→ 闻笛讲稿批注（'存疑如故'=来源疑案的书面回声）。红鲱鱼：晏承的门禁徘徊与保底协议、邬双的停职之恨与浆糊嗅觉、洛之梧的利益目击与深夜密谈、佟肃的黑屏监控与巡检时段——人人有秘密，真凶只有一个。"
-          }
-        ],
-        "characterIds": [
-          "yancheng",
-          "wushuang",
-          "luozhiwu",
-          "tongsu",
-          "wendi"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "yancheng",
-          "wushuang",
-          "luozhiwu",
-          "tongsu",
-          "wendi"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2393,7 +2393,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu_beiwang",
+          "menjin_qingdan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2423,7 +2426,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "menjin_qingdan"
+        ],
         "explanation": [
           {
             "type": "paragraph",

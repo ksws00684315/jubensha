@@ -1273,7 +1273,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "22:58 主编压低声音对你说'署名的事别让她知道'——你知道他说的是谁，你猜他不止对你一个人起了疑。"
+                "text": "散场前有人压着嗓子劝过一句'这事先别声张'——是对谁说的你没听清，只记得那语气低得反常。"
               }
             ],
             "source": "other",
@@ -1345,7 +1345,7 @@
       "id": "jiaonang_ke",
       "locationId": "location_1",
       "name": "融冰里的空胶囊壳",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1360,7 +1360,7 @@
       "id": "bingge",
       "locationId": "location_3",
       "name": "冰箱里的矿泉冰",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1375,7 +1375,7 @@
       "id": "dayin_pi",
       "locationId": "location_2",
       "name": "打印记录与红笔批注",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1390,7 +1390,7 @@
       "id": "yaoping",
       "locationId": "location_1",
       "name": "少了一板的药瓶",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1405,7 +1405,7 @@
       "id": "zhitiao",
       "locationId": "location_2",
       "name": "白板下的匿名纸条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1420,7 +1420,7 @@
       "id": "shouquan_shu",
       "locationId": "location_1",
       "name": "影视公司授权书",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1435,7 +1435,7 @@
       "id": "cuizhi_xin",
       "locationId": "location_2",
       "name": "写了一半的辞职信",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1450,7 +1450,7 @@
       "id": "luyin_bi",
       "locationId": "location_1",
       "name": "沙发缝里的录音笔",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1465,7 +1465,7 @@
       "id": "houqin_ben",
       "locationId": "location_4",
       "name": "后勤账本与便签",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1482,7 +1482,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "今晚你把终稿打印出来做最后一搏，他红笔批了老套，扔还给你，还当众念了你那张内投凶纸条：因为我的名字总是变成他的名字。"
+        "text": "江雪三年心血的大纲被孔维新冒名卖给影视公司，二十万稿费一分未得；当众念出'因为我的名字总是变成他的名字'的羞辱成了最后一根稻草——明早十点的签约，是她最后的窗口。"
       }
     ],
     "method": {
@@ -1715,27 +1715,6 @@
         "participantIds": [
           "bai_ling"
         ]
-      },
-      {
-        "id": "truth_event_8",
-        "time": {
-          "display": "22:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:40"
-          }
-        },
-        "title": "事件 8",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_9",
@@ -2027,7 +2006,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "cuizhi_xin",
+          "zhitiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2037,7 +2019,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "houqin_ben"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2047,7 +2031,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "shouquan_shu"
+        ],
         "explanation": [
           {
             "type": "paragraph",

@@ -55,6 +55,14 @@ export interface GameState {
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
   /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */
   humanDeadlines?: Record<string, number>;
+  /**
+   * 滚动记忆（分层记忆）：anchorSeq 及之前的「公共」事件已被压缩为 summary。
+   * 摘要是全场公共视角，不含任何座位的私密事件；各座位私密情报（持有的线索卡）
+   * 始终逐字出现在其上下文尾部的【你持有的线索卡】里，不会因摘要而丢失。
+   */
+  memory?: { anchorSeq: string; summary: string };
+  /** 推荐回复：座位索引字符串 → 该座位轮到发言时后台生成的建议短句（发言/跳过后清除） */
+  suggestions?: Record<string, string[]>;
 }
 
 export interface EngineEvent {
@@ -81,10 +89,11 @@ export interface EngineEvent {
 }
 
 /** SSE 总线消息：新事件（含补发）或流式 delta。
- * audience 标明流式消息的可见范围："public" 或指定座位号（如私聊仅双方可见）。 */
+ * audience 标明流式消息的可见范围："public" 或指定座位号（如私聊仅双方可见）。
+ * delta.seat 为 "dm" 表示主持人旁白的流式输出。 */
 export type BusMessage =
   | { kind: "event"; event: EngineEvent }
-  | { kind: "delta"; seat: number; text: string; audience: "public" | number }
+  | { kind: "delta"; seat: number | "dm"; text: string; audience: "public" | number }
   | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number }
   | { kind: "end" };
 

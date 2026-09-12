@@ -1001,7 +1001,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "补传记录你昨晚就看到了：23:03:05进、23:08:22出，播音间走廊只进出过一次——你捏了一夜，手心全是汗。"
+                "text": "补传记录你昨晚就看到了：23:03:05 进、23:08:22 出——走廊里那五分钟有一次进出记录。当时还有谁在楼上走动，监控停用，你不知道。"
               }
             ],
             "source": "other",
@@ -1027,7 +1027,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "罗夜航的小睡雷打不动——你知道垫播这十二分钟，整层楼只有导播台和播音间有人。"
+                "text": "罗夜航的小睡雷打不动——垫播这十二分钟，楼下的人多数已经散了；楼上还有谁没走，你真说不好。"
               }
             ],
             "source": "other",
@@ -1078,7 +1078,7 @@
       "id": "xianchang_kanyan",
       "locationId": "location_1",
       "name": "播音间现场勘验记录",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1093,7 +1093,7 @@
       "id": "diaoyintai_rizhi",
       "locationId": "location_2",
       "name": "调音台操作日志",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1108,7 +1108,7 @@
       "id": "menjin_buchuan",
       "locationId": "location_3",
       "name": "门禁补传记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1123,7 +1123,7 @@
       "id": "pajiu_pingzi",
       "locationId": "location_1",
       "name": "泼洒的啤酒与消失的空罐",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1138,7 +1138,7 @@
       "id": "cehua_yuangao",
       "locationId": "location_2",
       "name": "《午夜直达》策划原稿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1153,7 +1153,7 @@
       "id": "baoliao_shouka",
       "locationId": "location_1",
       "name": "23:30的爆料手卡",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1168,7 +1168,7 @@
       "id": "qinke_liushui",
       "locationId": "location_5",
       "name": "广告部排期单与流水",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1183,7 +1183,7 @@
       "id": "jianbao_dian",
       "locationId": "location_3",
       "name": "老听众的剪报与点歌单",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1198,7 +1198,7 @@
       "id": "luyin_paiban",
       "locationId": "location_4",
       "name": "白楠的录音与排班表",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1215,7 +1215,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫沈一诺，《午夜直达》开播那年你二十三岁，策划案是你熬了四十个通宵写的。节目爆红后，署名栏里只有'罗夜航'。"
+        "text": "沈一诺写出《午夜直达》却连名字都没落上，熬成导播后新节目又要被死者强行吞并、报告已递。多年积怨爆发，他要夺回'自己的名字'。"
       }
     ],
     "method": {
@@ -1270,6 +1270,182 @@
       ]
     },
     "timeline": [
+      {
+        "id": "truth_event_10",
+        "time": {
+          "display": "00:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "00:00"
+          }
+        },
+        "title": "事件 10",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "广告垫播启动，十二分钟。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "03:05",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "03:05"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈一诺刷卡进入播音间走廊（缓存次日补传），罗夜航已熟睡；"
+          }
+        ],
+        "characterIds": [
+          "shenyinuo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenyinuo"
+        ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "03:41",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "03:41"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "对讲静音开启。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_27",
+        "time": {
+          "display": "03:41",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "03:41"
+          }
+        },
+        "title": "事件 27",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "-23:"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_17",
+        "time": {
+          "display": "08:22",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "08:22"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "刷卡离开走廊；"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "09:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "09:12"
+          }
+        },
+        "title": "事件 20",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "对讲静音关闭。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_28",
+        "time": {
+          "display": "09:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "09:12"
+          }
+        },
+        "title": "事件 28",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "对讲静音，导播席位）→ 门禁补传记录（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "12:30",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "12:30"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "垫播结束，白楠进播音间接档，发现尸体呼救。"
+          }
+        ],
+        "characterIds": [
+          "baiman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baiman"
+        ]
+      },
       {
         "id": "truth_event_1",
         "time": {
@@ -1344,6 +1520,27 @@
         ]
       },
       {
+        "id": "truth_event_32",
+        "time": {
+          "display": "21:50",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 32",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "失态、老鲍十五年的剪报与"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_4",
         "time": {
           "display": "22:10",
@@ -1368,6 +1565,33 @@
         "participantIds": [
           "shenyinuo",
           "baiman"
+        ]
+      },
+      {
+        "id": "truth_event_31",
+        "time": {
+          "display": "22:10",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:10"
+          }
+        },
+        "title": "事件 31",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "宣言（十年署名被夺+新节目被并，动机）→ 报修工单（对讲、监控两盏灯皆因她而灭）。红鲱鱼：白楠的三段录音与'发现人'身份、秦克的四十七万回扣与"
+          }
+        ],
+        "characterIds": [
+          "baiman",
+          "qinke"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "baiman",
+          "qinke"
         ]
       },
       {
@@ -1463,108 +1687,20 @@
         "participantIds": []
       },
       {
-        "id": "truth_event_10",
+        "id": "truth_event_29",
         "time": {
-          "display": "00:00",
+          "display": "23:03",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "00:00"
+            "time": "23:03"
           }
         },
-        "title": "事件 10",
+        "title": "事件 29",
         "content": [
           {
             "type": "paragraph",
-            "text": "广告垫播启动，十二分钟。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_12",
-        "time": {
-          "display": "03:05",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:05"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "沈一诺刷卡进入播音间走廊（缓存次日补传），罗夜航已熟睡；"
-          }
-        ],
-        "characterIds": [
-          "shenyinuo"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo"
-        ]
-      },
-      {
-        "id": "truth_event_14",
-        "time": {
-          "display": "03:41",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:41"
-          }
-        },
-        "title": "事件 14",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "对讲静音开启。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_15",
-        "time": {
-          "display": "23:06",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:06"
-          }
-        },
-        "title": "事件 15",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "她用沙发靠垫捂压至窒息，摆成侧卧'呕吐'姿势、泼上啤酒，取走一只空罐。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "08:22",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "08:22"
-          }
-        },
-        "title": "事件 17",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "刷卡离开走廊；"
+            "text": "进"
           }
         ],
         "characterIds": [],
@@ -1601,20 +1737,45 @@
         ]
       },
       {
-        "id": "truth_event_20",
+        "id": "truth_event_33",
         "time": {
-          "display": "09:12",
+          "display": "23:05",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "09:12"
+            "time": "23:05"
           }
         },
-        "title": "事件 20",
+        "title": "事件 33",
         "content": [
           {
             "type": "paragraph",
-            "text": "对讲静音关闭。"
+            "text": "被拦、何大有的烟酒与缓存失职——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [
+          "hedayou"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hedayou"
+        ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "23:06",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:06"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她用沙发靠垫捂压至窒息，摆成侧卧'呕吐'姿势、泼上啤酒，取走一只空罐。"
           }
         ],
         "characterIds": [],
@@ -1622,29 +1783,25 @@
         "participantIds": []
       },
       {
-        "id": "truth_event_22",
+        "id": "truth_event_30",
         "time": {
-          "display": "12:30",
+          "display": "23:08",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "12:30"
+            "time": "23:08"
           }
         },
-        "title": "事件 22",
+        "title": "事件 30",
         "content": [
           {
             "type": "paragraph",
-            "text": "垫播结束，白楠进播音间接档，发现尸体呼救。"
+            "text": "出的唯一一人）→ 策划原稿与"
           }
         ],
-        "characterIds": [
-          "baiman"
-        ],
+        "characterIds": [],
         "clueIds": [],
-        "participantIds": [
-          "baiman"
-        ]
+        "participantIds": []
       },
       {
         "id": "truth_event_23",
@@ -1718,163 +1875,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_27",
-        "time": {
-          "display": "03:41",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:41"
-          }
-        },
-        "title": "事件 27",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "-23:"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_28",
-        "time": {
-          "display": "09:12",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "09:12"
-          }
-        },
-        "title": "事件 28",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "对讲静音，导播席位）→ 门禁补传记录（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_29",
-        "time": {
-          "display": "23:03",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:03"
-          }
-        },
-        "title": "事件 29",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "进"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_30",
-        "time": {
-          "display": "23:08",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:08"
-          }
-        },
-        "title": "事件 30",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "出的唯一一人）→ 策划原稿与"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_31",
-        "time": {
-          "display": "22:10",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:10"
-          }
-        },
-        "title": "事件 31",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "宣言（十年署名被夺+新节目被并，动机）→ 报修工单（对讲、监控两盏灯皆因她而灭）。红鲱鱼：白楠的三段录音与'发现人'身份、秦克的四十七万回扣与"
-          }
-        ],
-        "characterIds": [
-          "baiman",
-          "qinke"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "baiman",
-          "qinke"
-        ]
-      },
-      {
-        "id": "truth_event_32",
-        "time": {
-          "display": "21:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:50"
-          }
-        },
-        "title": "事件 32",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "失态、老鲍十五年的剪报与"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_33",
-        "time": {
-          "display": "23:05",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:05"
-          }
-        },
-        "title": "事件 33",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "被拦、何大有的烟酒与缓存失职——人人有秘密，无人是第二凶手。"
-          }
-        ],
-        "characterIds": [
-          "hedayou"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "hedayou"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -1900,7 +1900,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "luyin_paiban"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1910,7 +1912,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "qinke_liushui",
+          "baoliao_shouka"
+        ],
         "explanation": [
           {
             "type": "paragraph",

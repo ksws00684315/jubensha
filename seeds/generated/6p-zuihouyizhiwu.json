@@ -1380,6 +1380,46 @@
             "clueIds": []
           },
           {
+            "id": "character_jinma_event_6",
+            "time": {
+              "display": "21:50",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
+            },
+            "title": "事件 6",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "上、"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jinma_event_7",
+            "time": {
+              "display": "21:58",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:58"
+              }
+            },
+            "title": "事件 7",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_jinma_event_2",
             "time": {
               "display": "22:00",
@@ -1456,46 +1496,6 @@
               {
                 "type": "paragraph",
                 "text": "你下楼（门房登记被改成"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_jinma_event_6",
-            "time": {
-              "display": "21:50",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:50"
-              }
-            },
-            "title": "事件 6",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "上、"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_jinma_event_7",
-            "time": {
-              "display": "21:58",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:58"
-              }
-            },
-            "title": "事件 7",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "下）。"
               }
             ],
             "characterIds": [],
@@ -1631,7 +1631,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "白大夫的初诊记录",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1646,7 +1646,7 @@
       "id": "c_anpao",
       "locationId": "location_1",
       "name": "痰盂里的安瓿碎片",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1661,7 +1661,7 @@
       "id": "c_baoxiangui",
       "locationId": "location_1",
       "name": "保险柜上的新划痕",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1676,7 +1676,7 @@
       "id": "c_qingling",
       "locationId": "location_2",
       "name": "药房请领单存根",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1691,7 +1691,7 @@
       "id": "c_yaozhang",
       "locationId": "location_3",
       "name": "药账与朱笔",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1706,7 +1706,7 @@
       "id": "c_jiazhang",
       "locationId": "location_4",
       "name": "买办的皮包与假账册",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1721,7 +1721,7 @@
       "id": "chuanpiao",
       "locationId": "location_5",
       "name": "琴盒里的两张船票",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1736,7 +1736,7 @@
       "id": "c_zhuangxia",
       "locationId": "location_5",
       "name": "妆匣夹层的金条与合同",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1751,7 +1751,7 @@
       "id": "c_dengji",
       "locationId": "location_6",
       "name": "门房登记与封口小费",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1923,6 +1923,35 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
+      },
+      {
+        "id": "truth_event_16",
+        "time": {
+          "display": "22:00–22:35",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:35"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陆云孙在乐池调琴排谱，"
+          }
+        ],
+        "characterIds": [
+          "luyunsun"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luyunsun"
+        ]
       },
       {
         "id": "truth_event_5",
@@ -2127,6 +2156,27 @@
         ]
       },
       {
+        "id": "truth_event_17",
+        "time": {
+          "display": "22:35",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:35"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "到梯口递话'今夜就走'，"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_13",
         "time": {
           "display": "22:40",
@@ -2177,6 +2227,27 @@
         ]
       },
       {
+        "id": "truth_event_18",
+        "time": {
+          "display": "22:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "回乐池，"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_15",
         "time": {
           "display": "22:45",
@@ -2200,77 +2271,6 @@
         "participantIds": [
           "baiqiuchi"
         ]
-      },
-      {
-        "id": "truth_event_16",
-        "time": {
-          "display": "22:00–22:35",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:00"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "22:35"
-          }
-        },
-        "title": "事件 16",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "陆云孙在乐池调琴排谱，"
-          }
-        ],
-        "characterIds": [
-          "luyunsun"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "luyunsun"
-        ]
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "22:35",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:35"
-          }
-        },
-        "title": "事件 17",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "到梯口递话'今夜就走'，"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_18",
-        "time": {
-          "display": "22:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:40"
-          }
-        },
-        "title": "事件 18",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "回乐池，"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_19",
@@ -2385,7 +2385,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_zhuangxia"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2395,7 +2397,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "chuanpiao",
+          "c_dengji"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2415,7 +2420,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "c_jiazhang",
+          "c_dengji"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2425,7 +2433,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "c_dengji"
+        ],
         "explanation": [
           {
             "type": "paragraph",

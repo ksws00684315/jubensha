@@ -1475,7 +1475,7 @@
       "id": "zhuideng_deng",
       "locationId": "location_1",
       "name": "坠落的追光灯",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1490,7 +1490,7 @@
       "id": "menjin_jilu",
       "locationId": "location_3",
       "name": "检修天桥的门禁记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1505,7 +1505,7 @@
       "id": "banshou",
       "locationId": "location_3",
       "name": "工具间里的活动扳手",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1520,7 +1520,7 @@
       "id": "bianqian",
       "locationId": "location_2",
       "name": "金满堂的手机便签",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1535,7 +1535,7 @@
       "id": "danbao",
       "locationId": "location_5",
       "name": "被撕碎的担保协议",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1550,7 +1550,7 @@
       "id": "maotai",
       "locationId": "location_4",
       "name": "地库里的两瓶茅台",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1565,7 +1565,7 @@
       "id": "sucai",
       "locationId": "location_1",
       "name": "素材卡里的画面",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1580,7 +1580,7 @@
       "id": "cuzhi",
       "locationId": "location_2",
       "name": "辞职信与欠薪条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1595,7 +1595,7 @@
       "id": "tousu",
       "locationId": "location_2",
       "name": "写了一半的投诉信",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1632,7 +1632,10 @@
               "text": "19:18 钱进借消防巡检名义刷工牌登上检修天桥，用长期保管的活动扳手拧松追光灯吊环保险销三圈，再用印有云顶国际水印的透明胶带缠住吊环临时固定，19:36 刷工牌离开。"
             }
           ],
-          "clueIds": ["menjin_jilu", "banshou"]
+          "clueIds": [
+            "menjin_jilu",
+            "banshou"
+          ]
         },
         {
           "id": "method_step_2",
@@ -1643,7 +1646,9 @@
               "text": "20:00 钱进将追光灯调到满堂彩模式全功率预热，嘴上说预热越久效果越好。灯在高温下持续旋转震动，胶带受热逐渐脱开。"
             }
           ],
-          "clueIds": ["zhuideng_deng"]
+          "clueIds": [
+            "zhuideng_deng"
+          ]
         },
         {
           "id": "method_step_3",
@@ -1654,7 +1659,9 @@
               "text": "20:18 金满堂上台致辞站进追光圈，灯架因胶带脱开坠落砸中其头部。钱进第一时间冲配电间拉总闸喊断电防二次事故，拦住要上天桥的人以上面危险为由封锁现场，以安全管理之名拖延吊点检查，企图销毁证据。"
             }
           ],
-          "clueIds": ["zhuideng_deng"]
+          "clueIds": [
+            "zhuideng_deng"
+          ]
         }
       ]
     },
@@ -1763,6 +1770,41 @@
         "clueIds": [],
         "participantIds": [
           "qian_jin"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "19:18–19:36",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:18"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:36"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "唯一登桥者）→ 印有云顶国际水印的透明胶带与保管的扳手 → 金满堂手机里的转账截图（勒索动机）。红鲱鱼：程亦飞的担保协议与债务、米琪的欠薪撕信、苏甜甜的投诉信、铁军的茅台调包。"
+          }
+        ],
+        "characterIds": [
+          "cheng_yifei",
+          "su_tiantian",
+          "tie_jun",
+          "mi_qi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "cheng_yifei",
+          "su_tiantian",
+          "tie_jun",
+          "mi_qi"
         ]
       },
       {
@@ -1951,41 +1993,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_12",
-        "time": {
-          "display": "19:18–19:36",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:18"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "19:36"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "唯一登桥者）→ 印有云顶国际水印的透明胶带与保管的扳手 → 金满堂手机里的转账截图（勒索动机）。红鲱鱼：程亦飞的担保协议与债务、米琪的欠薪撕信、苏甜甜的投诉信、铁军的茅台调包。"
-          }
-        ],
-        "characterIds": [
-          "cheng_yifei",
-          "su_tiantian",
-          "tie_jun",
-          "mi_qi"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "cheng_yifei",
-          "su_tiantian",
-          "tie_jun",
-          "mi_qi"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2011,7 +2018,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "danbao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2021,7 +2030,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "cuzhi",
+          "sucai"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2031,7 +2043,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "tousu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2041,7 +2055,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "maotai"
+        ],
         "explanation": [
           {
             "type": "paragraph",

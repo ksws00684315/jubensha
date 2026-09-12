@@ -453,7 +453,8 @@
                       "type": "string",
                       "enum": [
                         "never",
-                        "conditional"
+                        "conditional",
+                        "must_share"
                       ]
                     },
                     "condition": {
@@ -864,6 +865,15 @@
                         ]
                       }
                     },
+                    "kind": {
+                      "default": "fact",
+                      "type": "string",
+                      "enum": [
+                        "fact",
+                        "claim",
+                        "inference"
+                      ]
+                    },
                     "source": {
                       "type": "string",
                       "enum": [
@@ -959,6 +969,7 @@
                     "id",
                     "title",
                     "content",
+                    "kind",
                     "source",
                     "relatedCharacterIds",
                     "relatedClueIds"
@@ -1110,6 +1121,433 @@
               "isCulprit": {
                 "default": false,
                 "type": "boolean"
+              },
+              "alibi": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "paragraph"
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "list"
+                        },
+                        "style": {
+                          "type": "string",
+                          "enum": [
+                            "ordered",
+                            "unordered"
+                          ]
+                        },
+                        "items": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "style",
+                        "items"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "quote"
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "attribution": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "violation": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "tells": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "stages": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "actId": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "knowledge": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "content": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "paragraph"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "text"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "list"
+                                    },
+                                    "style": {
+                                      "type": "string",
+                                      "enum": [
+                                        "ordered",
+                                        "unordered"
+                                      ]
+                                    },
+                                    "items": {
+                                      "minItems": 1,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "style",
+                                    "items"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "quote"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "attribution": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "text"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            }
+                          },
+                          "kind": {
+                            "default": "fact",
+                            "type": "string",
+                            "enum": [
+                              "fact",
+                              "claim",
+                              "inference"
+                            ]
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": [
+                              "witnessed",
+                              "heard",
+                              "possessed",
+                              "inferred",
+                              "other"
+                            ]
+                          },
+                          "time": {
+                            "type": "object",
+                            "properties": {
+                              "display": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "precision": {
+                                "default": "exact",
+                                "type": "string",
+                                "enum": [
+                                  "exact",
+                                  "approximate",
+                                  "range",
+                                  "relative"
+                                ]
+                              },
+                              "start": {
+                                "type": "object",
+                                "properties": {
+                                  "dayOffset": {
+                                    "default": 0,
+                                    "type": "integer",
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$"
+                                  }
+                                },
+                                "required": [
+                                  "dayOffset",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "end": {
+                                "type": "object",
+                                "properties": {
+                                  "dayOffset": {
+                                    "default": 0,
+                                    "type": "integer",
+                                    "minimum": -9007199254740991,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$"
+                                  }
+                                },
+                                "required": [
+                                  "dayOffset",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              }
+                            },
+                            "required": [
+                              "display",
+                              "precision"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "relatedCharacterIds": {
+                            "default": [],
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_]*$"
+                            }
+                          },
+                          "relatedClueIds": {
+                            "default": [],
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_]*$"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "content",
+                          "kind",
+                          "source",
+                          "relatedCharacterIds",
+                          "relatedClueIds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "objectives": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          },
+                          "title": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "content": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "paragraph"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "text"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "list"
+                                    },
+                                    "style": {
+                                      "type": "string",
+                                      "enum": [
+                                        "ordered",
+                                        "unordered"
+                                      ]
+                                    },
+                                    "items": {
+                                      "minItems": 1,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string",
+                                        "minLength": 1
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "style",
+                                    "items"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "string",
+                                      "const": "quote"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "attribution": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "required": [
+                                    "type",
+                                    "text"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            }
+                          },
+                          "priority": {
+                            "default": "primary",
+                            "type": "string",
+                            "enum": [
+                              "primary",
+                              "secondary"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "title",
+                          "content",
+                          "priority"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "actId",
+                    "knowledge",
+                    "objectives"
+                  ],
+                  "additionalProperties": false
+                }
               }
             },
             "required": [
@@ -1120,7 +1558,11 @@
               "knowledge",
               "relationships",
               "persona",
-              "isCulprit"
+              "isCulprit",
+              "alibi",
+              "violation",
+              "tells",
+              "stages"
             ],
             "additionalProperties": false
           }
@@ -1225,6 +1667,10 @@
                 }
               ]
             }
+          },
+          "ownerCharacterId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
           }
         },
         "required": [
@@ -1367,6 +1813,36 @@
               "type": "string",
               "pattern": "^[a-z][a-z0-9_]*$"
             }
+          },
+          "forbiddenCharacterIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            }
+          },
+          "release": {
+            "type": "object",
+            "properties": {
+              "round": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "afterCluePublicIds": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                }
+              }
+            },
+            "required": [
+              "afterCluePublicIds"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -1377,7 +1853,8 @@
           "content",
           "policy",
           "relatedCharacterIds",
-          "relatedTruthEventIds"
+          "relatedTruthEventIds",
+          "forbiddenCharacterIds"
         ],
         "additionalProperties": false
       }
@@ -2206,6 +2683,113 @@
           "type": "integer",
           "minimum": 2,
           "maximum": 6
+        },
+        "acts": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "brief": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "paragraph"
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "list"
+                        },
+                        "style": {
+                          "type": "string",
+                          "enum": [
+                            "ordered",
+                            "unordered"
+                          ]
+                        },
+                        "items": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "style",
+                        "items"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "quote"
+                        },
+                        "text": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "attribution": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "roundStart": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "brief",
+              "roundStart"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
@@ -2213,7 +2797,8 @@
         "searchRounds",
         "discussionRounds",
         "allowPrivateChat",
-        "privateChatMessageLimit"
+        "privateChatMessageLimit",
+        "acts"
       ],
       "additionalProperties": false
     },
@@ -2328,6 +2913,66 @@
       },
       "required": [
         "outcomes"
+      ],
+      "additionalProperties": false
+    },
+    "hostGuide": {
+      "type": "object",
+      "properties": {
+        "perPhase": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "type": "string",
+                "enum": [
+                  "READING",
+                  "SELF_INTRO",
+                  "SEARCH",
+                  "DISCUSSION",
+                  "VOTE"
+                ]
+              },
+              "notes": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "phase",
+              "notes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "stallBreakers": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hint": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "condition",
+              "hint"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "perPhase",
+        "stallBreakers"
       ],
       "additionalProperties": false
     }

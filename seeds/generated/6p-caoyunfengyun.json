@@ -759,7 +759,7 @@
       "id": "cangdishishen",
       "locationId": "location_1",
       "name": "舱底尸身",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -774,7 +774,7 @@
       "id": "jiacangmikang",
       "locationId": "location_1",
       "name": "夹仓的米糠与盐粒",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -789,7 +789,7 @@
       "id": "yanyindidan",
       "locationId": "location_4",
       "name": "盐引底单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -804,7 +804,7 @@
       "id": "shouyejiuhu",
       "locationId": "location_4",
       "name": "守夜酒壶",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -819,7 +819,7 @@
       "id": "shuichengbu",
       "locationId": "location_3",
       "name": "水程簿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -834,7 +834,7 @@
       "id": "huayajiutiao",
       "locationId": "location_3",
       "name": "花押旧条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -849,7 +849,7 @@
       "id": "misese",
       "locationId": "location_2",
       "name": "米色册",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -864,7 +864,7 @@
       "id": "langhuawenanxin",
       "locationId": "location_5",
       "name": "浪花纹暗信",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -879,7 +879,7 @@
       "id": "xiangtangdacao",
       "locationId": "location_6",
       "name": "香堂大计草帖",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -896,7 +896,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫戚连波，通济漕帮二舵爷，江湖人称「浪里花」。帮里的水脊——私盐线——是你一手喂大的：掺糠的湿粮、官仓改的册子，一年喂饱一河的水手。"
+        "text": "戚连波执掌漕帮私盐线多年，帮主放话三日内开香堂清帮规，水脊暗码里已传出他的名字。杀帮主既是灭口，也是他等了十五年的头把交椅。"
       }
     ],
     "method": {
@@ -916,7 +916,9 @@
               "text": "亥时末（约22时40分），戚连波以帮主赏守夜弟兄之名给铁锁送去掺了蒙汗药的锡壶赏酒，铁锁边守边喝，子时后便睡死过去，为后续上船清除了唯一的目击者。"
             }
           ],
-          "clueIds": ["shouyejiuhu"]
+          "clueIds": [
+            "shouyejiuhu"
+          ]
         },
         {
           "id": "method_step_2",
@@ -927,7 +929,10 @@
               "text": "子时初（约23时）戚连波以「回报官仓票信」为名登上金满仓号，子时一刻趁帮主蹲身查看舱底湿粮时从背后将其按入积水呛毙，指甲缝嵌着青苔麻絮是活人挣扎的痕迹。随后横倒船桨、滚落酒葫芦，布置成醉后失足。"
             }
           ],
-          "clueIds": ["cangdishishen", "shuichengbu"]
+          "clueIds": [
+            "cangdishishen",
+            "shuichengbu"
+          ]
         },
         {
           "id": "method_step_3",
@@ -938,7 +943,10 @@
               "text": "子时二刻（约23时30分）戚连波下船（曹三娘从芦苇荡望见舱口灯灭、人影下跳板），随即入栈桥公房与官仓书办郑朝奉对坐一盏茶。郑朝奉靴底沾着舱底黑油泥却互不点破，两人以「明早对票」为由互为人证。"
             }
           ],
-          "clueIds": ["misese", "langhuawenanxin"]
+          "clueIds": [
+            "misese",
+            "langhuawenanxin"
+          ]
         }
       ]
     },
@@ -1014,7 +1022,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "shouyejiuhu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1024,7 +1034,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "yanyindidan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1034,7 +1046,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "misese"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1044,7 +1058,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "shuichengbu",
+          "huayajiutiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1054,7 +1071,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "langhuawenanxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",

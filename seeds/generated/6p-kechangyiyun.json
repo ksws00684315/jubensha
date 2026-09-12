@@ -765,7 +765,7 @@
       "id": "yuzhucanzhu",
       "locationId": "location_1",
       "name": "御烛残躯与死状",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -780,7 +780,7 @@
       "id": "shoujishouji",
       "locationId": "location_1",
       "name": "主考案头手记",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -795,7 +795,7 @@
       "id": "mifengzongce",
       "locationId": "location_3",
       "name": "弥封总册副本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -810,7 +810,7 @@
       "id": "guanjiezitiao",
       "locationId": "location_4",
       "name": "枕下的关节字条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -825,7 +825,7 @@
       "id": "yaoxiakongge",
       "locationId": "location_6",
       "name": "药匣里的空格",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -840,7 +840,7 @@
       "id": "chengyilidan",
       "locationId": "location_7",
       "name": "程仪礼单底子",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -855,7 +855,7 @@
       "id": "xiangdiyajuan",
       "locationId": "location_5",
       "name": "箱底压卷",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -870,7 +870,7 @@
       "id": "puzhouxiujuan",
       "locationId": "location_3",
       "name": "铺位下的袖卷",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -885,7 +885,7 @@
       "id": "zhuanfengfengtiao",
       "locationId": "location_2",
       "name": "转桶烛匣封条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -988,21 +988,37 @@
       }
     ],
     "keyEvidenceIds": [
+      "zhuanfengfengtiao",
+      "yuzhucanzhu",
+      "mifengzongce",
+      "shoujishouji",
       "chengyilidan"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_4",
+        "id": "evidence_1",
         "clueIds": [
+          "zhuanfengfengtiao",
+          "yuzhucanzhu"
+        ],
+        "conclusion": "御赐金莲烛的烛芯被换成拌了信石封蜡的双股毒芯：死者面青唇紫、口鼻黑烟缕痕与残烛双股丝芯互为因果；而帘门转桶烛匣的封条揭开重贴、粘合用的正是弥封所封蜡料——重封之手，只能是每夜入帘接匣呈烛的弥封官秦九章。"
+      },
+      {
+        "id": "evidence_2",
+        "clueIds": [
+          "mifengzongce",
+          "shoujishouji",
           "chengyilidan"
         ],
-        "conclusion": "万有财的程仪礼单从监临官骆秉衡的门上一路牵到弥封官秦九章的手里——科场舞弊的利益链条由此浮出水面：盐商的银子换了朱卷，而主考手记里的'编号错位'正是这条链上的致命裂痕。"
+        "conclusion": "主考手记亲笔写下'编号错位者三，明日辰时调墨卷亲核'，总册副本上戊字十一号万姓举子的朱卷墨色新于同页——舞弊即将败露，杀人时限由此锁死；程仪礼单底子又显示万有财的银子从监临门上一路牵到弥封官手里，换卷牟利者非秦九章莫属。"
       }
     ],
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "guanjiezitiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1012,7 +1028,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "yaoxiakongge"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1022,7 +1040,10 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "zhuanfengfengtiao",
+          "chengyilidan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1032,7 +1053,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "xiangdiyajuan"
+        ],
         "explanation": [
           {
             "type": "paragraph",

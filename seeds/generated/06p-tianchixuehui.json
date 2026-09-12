@@ -217,26 +217,6 @@
             "clueIds": []
           },
           {
-            "id": "character_fangyu_event_8",
-            "time": {
-              "display": "20:25",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "20:25"
-              }
-            },
-            "title": "事件 8",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_fangyu_event_9",
             "time": {
               "display": "20:05",
@@ -891,26 +871,6 @@
             ],
             "characterIds": [],
             "clueIds": []
-          },
-          {
-            "id": "character_peixiaobei_event_6",
-            "time": {
-              "display": "20:07",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "20:07"
-              }
-            },
-            "title": "事件 6",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "）。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
           }
         ],
         "knowledge": [
@@ -1134,7 +1094,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "傅崇礼砍分成的决定，是副总裁在群里转达的，末尾加了一句'董事长已批'——你怀疑那四个字是他自己加的。"
+                "text": "傅崇礼砍分成的决定，是副总裁在群里转达的，末尾加了句'董事长已批'——批文原件你从没见过；这四个字是谁添上去的，只有转达的人自己清楚。"
               }
             ],
             "source": "other",
@@ -1446,7 +1406,7 @@
       "id": "yanshang_jilu",
       "locationId": "location_1",
       "name": "验伤记录与死亡推定",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1461,7 +1421,7 @@
       "id": "lanangan",
       "locationId": "location_2",
       "name": "松动的栏杆断口",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1476,7 +1436,7 @@
       "id": "xuejing_sui",
       "locationId": "location_1",
       "name": "雪镜碎片与落雪",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1491,7 +1451,7 @@
       "id": "xunzha_rizhi",
       "locationId": "location_3",
       "name": "值班员的巡查日志",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1506,7 +1466,7 @@
       "id": "qiandan",
       "locationId": "location_5",
       "name": "酒吧的拼桌签单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1521,7 +1481,7 @@
       "id": "laoshucang",
       "locationId": "location_6",
       "name": "老鼠仓对账草稿",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1536,7 +1496,7 @@
       "id": "xuebangui",
       "locationId": "location_4",
       "name": "雪板柜的取用牌",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1551,7 +1511,7 @@
       "id": "weiyao",
       "locationId": "location_4",
       "name": "没送出去的胃药",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1566,7 +1526,7 @@
       "id": "banshou",
       "locationId": "location_4",
       "name": "雪具包里缺的内六角",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1581,7 +1541,7 @@
       "id": "xieyin",
       "locationId": "location_2",
       "name": "平台上的两处足迹",
-      "category": "trace",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1628,7 +1588,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫方屿，跟傅崇礼打了十六年天下。三年前起你用基金通道给自己持仓的化工股抬轿，浮亏四千万，上个月被审计抽中。"
+        "text": "方屿借基金通道为自己持仓的化工股抬轿，浮亏四千万且已被审计抽中。死者来电给他'最后一次自首的机会'——自首即倾家荡产、身败名裂。"
       }
     ],
     "method": {
@@ -1733,28 +1693,34 @@
         ]
       },
       {
-        "id": "truth_event_3",
+        "id": "truth_event_23",
         "time": {
-          "display": "19:15",
+          "display": "18:50",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "19:15"
+            "time": "18:50"
           }
         },
-        "title": "事件 3",
+        "title": "事件 23",
         "content": [
           {
             "type": "paragraph",
-            "text": "缆车站单独谈，给自首机会'），对裴小北说'材料按旧版打'。"
+            "text": "电话）。红鲱鱼：乔曼的亏空、协议与二十米雪廊；陆野的夜滑禁令与分成纠纷；戴鸿的抽贷函与露台十分钟；裴小北的报销水分——人人有秘密，无人是凶手。"
           }
         ],
         "characterIds": [
-          "peixiaobei"
+          "qiaoman",
+          "daihong",
+          "peixiaobei",
+          "luye"
         ],
         "clueIds": [],
         "participantIds": [
-          "peixiaobei"
+          "qiaoman",
+          "daihong",
+          "peixiaobei",
+          "luye"
         ]
       },
       {
@@ -1783,27 +1749,6 @@
         ]
       },
       {
-        "id": "truth_event_5",
-        "time": {
-          "display": "19:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:40"
-          }
-        },
-        "title": "事件 5",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "缆车站二层会议室全员）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_6",
         "time": {
           "display": "19:02",
@@ -1829,29 +1774,29 @@
         ]
       },
       {
-        "id": "truth_event_7",
+        "id": "truth_event_3",
         "time": {
-          "display": "19:10–19:45",
-          "precision": "range",
+          "display": "19:15",
+          "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "19:10"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "19:45"
+            "time": "19:15"
           }
         },
-        "title": "事件 7",
+        "title": "事件 3",
         "content": [
           {
             "type": "paragraph",
-            "text": "，耳罩盲区）。"
+            "text": "缆车站单独谈，给自首机会'），对裴小北说'材料按旧版打'。"
           }
         ],
-        "characterIds": [],
+        "characterIds": [
+          "peixiaobei"
+        ],
         "clueIds": [],
-        "participantIds": []
+        "participantIds": [
+          "peixiaobei"
+        ]
       },
       {
         "id": "truth_event_8",
@@ -1880,6 +1825,35 @@
           "fangyu",
           "qiaoman",
           "luye"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "19:15–19:25",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:15"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "19:25"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戴鸿在露台抽雪茄（无人证）。"
+          }
+        ],
+        "characterIds": [
+          "daihong"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "daihong"
         ]
       },
       {
@@ -1958,35 +1932,6 @@
         ]
       },
       {
-        "id": "truth_event_12",
-        "time": {
-          "display": "19:15–19:25",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:15"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "19:25"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "戴鸿在露台抽雪茄（无人证）。"
-          }
-        ],
-        "characterIds": [
-          "daihong"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "daihong"
-        ]
-      },
-      {
         "id": "truth_event_13",
         "time": {
           "display": "19:30",
@@ -2039,6 +1984,52 @@
           "daihong",
           "peixiaobei"
         ]
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "19:32",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:32"
+          }
+        },
+        "title": "事件 22",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "后方屿人证链完整）→ 老鼠仓对账草稿（动机与"
+          }
+        ],
+        "characterIds": [
+          "fangyu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "fangyu"
+        ]
+      },
+      {
+        "id": "truth_event_5",
+        "time": {
+          "display": "19:40",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "19:40"
+          }
+        },
+        "title": "事件 5",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "缆车站二层会议室全员）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_15",
@@ -2187,87 +2178,6 @@
         "participantIds": [
           "peixiaobei"
         ]
-      },
-      {
-        "id": "truth_event_21",
-        "time": {
-          "display": "19:15–19:45",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:15"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "19:45"
-          }
-        },
-        "title": "事件 21",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）→ 酒吧签单（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_22",
-        "time": {
-          "display": "19:32",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "19:32"
-          }
-        },
-        "title": "事件 22",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "后方屿人证链完整）→ 老鼠仓对账草稿（动机与"
-          }
-        ],
-        "characterIds": [
-          "fangyu"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "fangyu"
-        ]
-      },
-      {
-        "id": "truth_event_23",
-        "time": {
-          "display": "18:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "18:50"
-          }
-        },
-        "title": "事件 23",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "电话）。红鲱鱼：乔曼的亏空、协议与二十米雪廊；陆野的夜滑禁令与分成纠纷；戴鸿的抽贷函与露台十分钟；裴小北的报销水分——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [
-          "qiaoman",
-          "daihong",
-          "peixiaobei",
-          "luye"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "qiaoman",
-          "daihong",
-          "peixiaobei",
-          "luye"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2317,7 +2227,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "yanshang_jilu",
+          "weiyao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2327,7 +2240,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "qiandan"
+        ],
         "explanation": [
           {
             "type": "paragraph",

@@ -2,7 +2,7 @@
 import { writeSync } from "node:fs";
 const log = (...a) => writeSync(1, a.map(String).join(" ") + "\n");
 
-const BASE = "http://127.0.0.1:3000";
+const BASE = process.env.SMOKE_BASE ?? "http://127.0.0.1:3000";
 const withRetry = async (fn, tries = 5) => {
   for (let i = 0; i < tries; i++) {
     try {
@@ -74,8 +74,14 @@ async function waitPhase(id, phase, round, timeout = 420000) {
     return r;
   };
   const pickLocation = async (location) => {
-    const r = await act({ type: "choose_location", location });
+    let r = await act({ type: "choose_location", location });
     if (!r.ok && /已经选过/.test(r.error || "")) return { ok: true, skipped: true };
+    // 目标地点线索被搜完时，改为选择第一个还有线索的地点
+    if (!r.ok && /线索已搜完/.test(r.error || "")) {
+      const g = await get(`/api/games/${gid}?seat=${join.seatIndex}&token=${join.token}`);
+      const alt = (g.availableLocations ?? [])[0];
+      if (alt) r = await act({ type: "choose_location", location: alt });
+    }
     return r;
   };
   log("game", gid);
@@ -108,14 +114,22 @@ async function waitPhase(id, phase, round, timeout = 420000) {
   await waitPhase(gid, "DISCUSSION", 1);
   log("private:", JSON.stringify(await act({ type: "private_chat", toSeat: 1, text: "周伯，21:15 是你送的茶吗？茶有没有被动过？" })));
   log("discuss:", JSON.stringify(await act({ type: "speak", text: "我发现书房的钥匙挂板上少了一把备用钥匙，谁能解释？" })));
+  // 轮流发言制：真人发言后需显式「结束发言」（skip）才轮到下一位
+  log("skip:", JSON.stringify(await act({ type: "skip" })));
   await act({ type: "rush" });
 
   await waitPhase(gid, "SEARCH", 2);
   log("location2:", JSON.stringify(await pickLocation("门廊雪地")));
   await publishWhenNewClues(clueCount);
 
-  await waitPhase(gid, "DISCUSSION", 2);
-  log("discuss2:", JSON.stringify(await act({ type: "speak", text: "雪地上有 37 码的女靴脚印，山庄里穿 37 码的有两位。21:15 到 21:25 之间谁去过书房？" })));
+  const at = await waitPhase(gid, "DISCUSSION", 2);
+  if (at.phase === "DISCUSSION") {
+    // 部分剧本流程（如 discussionRounds=searchRounds）在第 2 轮搜证后直接进入投票
+    log("discuss2:", JSON.stringify(await act({ type: "speak", text: "雪地上有 37 码的女靴脚印，山庄里穿 37 码的有两位。21:15 到 21:25 之间谁去过书房？" })));
+    log("skip2:", JSON.stringify(await act({ type: "skip" })));
+  } else {
+    log("  .. 本剧本第 2 轮搜证后直接进入投票，跳过 discuss2");
+  }
   await act({ type: "rush" });
 
   await waitPhase(gid, "VOTE", 1);

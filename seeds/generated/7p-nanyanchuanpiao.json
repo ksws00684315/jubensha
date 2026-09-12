@@ -422,26 +422,6 @@
             "clueIds": []
           },
           {
-            "id": "character_shenyanzhou_event_3",
-            "time": {
-              "display": "20:45",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "20:45"
-              }
-            },
-            "title": "事件 3",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_shenyanzhou_event_4",
             "time": {
               "display": "20:50",
@@ -1070,26 +1050,6 @@
             "clueIds": []
           },
           {
-            "id": "character_baimei_event_2",
-            "time": {
-              "display": "21:20",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:20"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_baimei_event_3",
             "time": {
               "display": "21:20–21:25",
@@ -1707,7 +1667,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "随船医生的初验单",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1722,7 +1682,7 @@
       "id": "c_yishu",
       "locationId": "location_1",
       "name": "案头遗书",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1737,7 +1697,7 @@
       "id": "c_naibei",
       "locationId": "location_1",
       "name": "牛奶杯与银托盘",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1752,7 +1712,7 @@
       "id": "c_guquan",
       "locationId": "location_1",
       "name": "门缝里的股权转让书",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1767,7 +1727,7 @@
       "id": "c_lingyong",
       "locationId": "location_3",
       "name": "电镀间领用登记",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1782,7 +1742,7 @@
       "id": "c_qiandao",
       "locationId": "location_4",
       "name": "查舱签到本",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1797,7 +1757,7 @@
       "id": "c_jiushui",
       "locationId": "location_2",
       "name": "酒水账与侍应口录",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1812,7 +1772,7 @@
       "id": "c_dianbao",
       "locationId": "location_5",
       "name": "匿名电报底稿",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1827,7 +1787,7 @@
       "id": "c_lianzi",
       "locationId": "location_6",
       "name": "舱单废稿与练字纸",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1844,7 +1804,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "十五年你只做一件事：留在这条公司的船上，等陆允中死。"
+        "text": "十五年前死者吞赈粮、骗保险，借土匪的刀害死了发现亏空的水手长——谢望北的父亲。他改名换姓潜伏船上十五年，这一夜用'自尽'的局完成了复仇。"
       }
     ],
     "method": {
@@ -2120,6 +2080,35 @@
         "participantIds": []
       },
       {
+        "id": "truth_event_14",
+        "time": {
+          "display": "21:30–22:00",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "程一苇在电报房拍长电。"
+          }
+        ],
+        "characterIds": [
+          "chengyiwei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "chengyiwei"
+        ]
+      },
+      {
         "id": "truth_event_9",
         "time": {
           "display": "21:35–21:40",
@@ -2138,6 +2127,56 @@
           {
             "type": "paragraph",
             "text": "他在配膳房温奶下毒（氰化钾出自电镀间，多领两磅）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "21:42–21:50",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:42"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
+        },
+        "title": "事件 12",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "顾曼送合约文本，按铃喊话无人应，听见案头轻响（怀表磕桌），放下文件离开——她成了死亡时刻的界碑。"
+          }
+        ],
+        "characterIds": [
+          "guman"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guman"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "21:42",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:42"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "逗留——人人有秘密，无人是凶手。"
           }
         ],
         "characterIds": [],
@@ -2191,31 +2230,37 @@
         ]
       },
       {
-        "id": "truth_event_12",
+        "id": "truth_event_17",
         "time": {
-          "display": "21:42–21:50",
-          "precision": "range",
+          "display": "21:47",
+          "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "21:42"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "21:50"
+            "time": "21:47"
           }
         },
-        "title": "事件 12",
+        "title": "事件 17",
         "content": [
           {
             "type": "paragraph",
-            "text": "顾曼送合约文本，按铃喊话无人应，听见案头轻响（怀表磕桌），放下文件离开——她成了死亡时刻的界碑。"
+            "text": "+门未闩）→ 遗书三疑（公文笺、缺钩、无日期）→ 领用登记（多领氰化钾）→ 签到本与酒水账（补签破绽、支开侍应）→ 练字纸（仿迹与身世）。红鲱鱼：陆小侯的借据与继承、沈砚洲的要挟与匿名电报、白玫的逼婚与五分钟空白、韩汀的药账与吗啡、程一苇的赴约扑空、顾曼的公积金挪款与"
           }
         ],
         "characterIds": [
+          "shenyanzhou",
+          "hanting",
+          "luxiaohou",
+          "baimei",
+          "chengyiwei",
           "guman"
         ],
         "clueIds": [],
         "participantIds": [
+          "shenyanzhou",
+          "hanting",
+          "luxiaohou",
+          "baimei",
+          "chengyiwei",
           "guman"
         ]
       },
@@ -2246,35 +2291,6 @@
         "clueIds": [],
         "participantIds": [
           "xiewangbei"
-        ]
-      },
-      {
-        "id": "truth_event_14",
-        "time": {
-          "display": "21:30–22:00",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:30"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "22:00"
-          }
-        },
-        "title": "事件 14",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "程一苇在电报房拍长电。"
-          }
-        ],
-        "characterIds": [
-          "chengyiwei"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "chengyiwei"
         ]
       },
       {
@@ -2322,62 +2338,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "21:47",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:47"
-          }
-        },
-        "title": "事件 17",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "+门未闩）→ 遗书三疑（公文笺、缺钩、无日期）→ 领用登记（多领氰化钾）→ 签到本与酒水账（补签破绽、支开侍应）→ 练字纸（仿迹与身世）。红鲱鱼：陆小侯的借据与继承、沈砚洲的要挟与匿名电报、白玫的逼婚与五分钟空白、韩汀的药账与吗啡、程一苇的赴约扑空、顾曼的公积金挪款与"
-          }
-        ],
-        "characterIds": [
-          "shenyanzhou",
-          "hanting",
-          "luxiaohou",
-          "baimei",
-          "chengyiwei",
-          "guman"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyanzhou",
-          "hanting",
-          "luxiaohou",
-          "baimei",
-          "chengyiwei",
-          "guman"
-        ]
-      },
-      {
-        "id": "truth_event_18",
-        "time": {
-          "display": "21:42",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:42"
-          }
-        },
-        "title": "事件 18",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "逗留——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       }
     ],
     "keyEvidenceIds": [
@@ -2407,7 +2367,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_jiushui"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2417,7 +2379,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "c_dianbao",
+          "c_guquan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2437,7 +2402,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "c_jiushui"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2447,7 +2414,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "c_dianbao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2461,7 +2430,7 @@
         "explanation": [
           {
             "type": "paragraph",
-            "text": "顾曼的公积金挪款与"
+            "text": "顾曼的公积金挪款与陆小侯的借据同出一本被调的账册——两人同陷末路，谁都有铤而走险的理由。"
           }
         ]
       }

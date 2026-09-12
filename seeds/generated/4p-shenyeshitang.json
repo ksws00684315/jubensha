@@ -773,7 +773,7 @@
       "id": "xianchang_kanyan",
       "locationId": "location_1",
       "name": "店堂现场勘验记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -788,7 +788,7 @@
       "id": "qunuanqi_yu",
       "locationId": "location_2",
       "name": "库房里的取暖器",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -803,7 +803,7 @@
       "id": "paifeng_juanlian",
       "locationId": "location_1",
       "name": "排风扇与卷帘缝",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -818,7 +818,7 @@
       "id": "bianlidian_jiankong",
       "locationId": "location_3",
       "name": "便利店小票与街面监控",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -833,7 +833,7 @@
       "id": "zhangben_sijiao",
       "locationId": "location_2",
       "name": "被撕角的账本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -848,7 +848,7 @@
       "id": "paojiu_tangcai",
       "locationId": "location_1",
       "name": "泡酒壶与剩菜",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -863,7 +863,7 @@
       "id": "panjueshu_fuyinjian",
       "locationId": "location_2",
       "name": "判决书复印件",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -880,7 +880,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫方晓芳，梧桐街口这家小店开了九年，街坊都喊你芳姐。十二年前的雨夜，一辆越野车把下班回家的丈夫撞飞后逃逸，人没抢救回来；判决书轻得像张餐巾纸：缓刑四年，赔了三十万。"
+        "text": "十二年前肇事逃逸夺走了方晓芳的丈夫，死者正是当年的肇事者，判决却轻得像张餐巾纸；近两年他又在她店里白吃白喝、百般羞辱。她等的不是法律，是一个雪夜。"
       }
     ],
     "method": {
@@ -1023,6 +1023,27 @@
         ]
       },
       {
+        "id": "truth_event_16",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_4",
         "time": {
           "display": "23:02–23:04",
@@ -1115,6 +1136,39 @@
         "participantIds": []
       },
       {
+        "id": "truth_event_17",
+        "time": {
+          "display": "23:08–23:40",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:08"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "23:40"
+          }
+        },
+        "title": "事件 17",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "她每一步都在镜头里，唯独不在店里）→ 账本'芳记壹万贰'（两年的白吃白喝）→ 判决书复印件（十二年前的雨夜）。红鲱鱼：隋亮拿走账本撕页抽欠条（现场翻动与最后在场者）、蒋春来十二年的隐忍目击与剪报、许亦然"
+          }
+        ],
+        "characterIds": [
+          "jiangchunlai",
+          "xuyiran",
+          "suiliang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jiangchunlai",
+          "xuyiran",
+          "suiliang"
+        ]
+      },
+      {
         "id": "truth_event_8",
         "time": {
           "display": "23:10",
@@ -1161,27 +1215,6 @@
         "participantIds": []
       },
       {
-        "id": "truth_event_10",
-        "time": {
-          "display": "23:40",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:40"
-          }
-        },
-        "title": "事件 10",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "步行回家，全程未回店。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_11",
         "time": {
           "display": "23:12–23:20",
@@ -1211,27 +1244,6 @@
         ]
       },
       {
-        "id": "truth_event_12",
-        "time": {
-          "display": "23:52",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:52"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "钻缝离开。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_13",
         "time": {
           "display": "23:20",
@@ -1257,6 +1269,27 @@
         ]
       },
       {
+        "id": "truth_event_18",
+        "time": {
+          "display": "23:20",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:20"
+          }
+        },
+        "title": "事件 18",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "敲窗无人应的犹豫——人人有秘密，无人是第二凶手。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_14",
         "time": {
           "display": "23:22",
@@ -1278,95 +1311,41 @@
         "participantIds": []
       },
       {
-        "id": "truth_event_15",
+        "id": "truth_event_10",
         "time": {
-          "display": "23:25",
+          "display": "23:40",
           "precision": "exact",
           "start": {
-            "dayOffset": 0,
-            "time": "23:25"
-          }
-        },
-        "title": "事件 15",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_16",
-        "time": {
-          "display": "23:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:00"
-          }
-        },
-        "title": "事件 16",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "起 老陈醉睡在穿堂寒风里：凌晨一点店堂跌破七度，三点最低六点二度，凌晨二至四时失温死亡。5:10 送菜的王婆发现并报警，急救初判'醉酒猝死'。破案链：现场勘验（冻毙+微醺血检+温湿记录仪曲线）→ 库房余温未散的取暖器（三年惯例今夜中断）→ 排风扇与吊扇停在'开'档、一掌缝卷帘（人为制造风道）→ 便利店小票与街面监控（"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "23:08–23:40",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:08"
-          },
-          "end": {
             "dayOffset": 0,
             "time": "23:40"
           }
         },
-        "title": "事件 17",
+        "title": "事件 10",
         "content": [
           {
             "type": "paragraph",
-            "text": "她每一步都在镜头里，唯独不在店里）→ 账本'芳记壹万贰'（两年的白吃白喝）→ 判决书复印件（十二年前的雨夜）。红鲱鱼：隋亮拿走账本撕页抽欠条（现场翻动与最后在场者）、蒋春来十二年的隐忍目击与剪报、许亦然"
+            "text": "步行回家，全程未回店。"
           }
         ],
-        "characterIds": [
-          "jiangchunlai",
-          "xuyiran",
-          "suiliang"
-        ],
+        "characterIds": [],
         "clueIds": [],
-        "participantIds": [
-          "jiangchunlai",
-          "xuyiran",
-          "suiliang"
-        ]
+        "participantIds": []
       },
       {
-        "id": "truth_event_18",
+        "id": "truth_event_12",
         "time": {
-          "display": "23:20",
+          "display": "23:52",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "23:20"
+            "time": "23:52"
           }
         },
-        "title": "事件 18",
+        "title": "事件 12",
         "content": [
           {
             "type": "paragraph",
-            "text": "敲窗无人应的犹豫——人人有秘密，无人是第二凶手。"
+            "text": "钻缝离开。"
           }
         ],
         "characterIds": [],
@@ -1413,7 +1392,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "zhangben_sijiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1423,7 +1404,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "panjueshu_fuyinjian"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1437,7 +1420,7 @@
         "explanation": [
           {
             "type": "paragraph",
-            "text": "许亦然"
+            "text": "许亦然的夜班动线与敲窗未应——他 23:20 到过窗外、店里却无人应门，是最容易被当成“知情者”的人。"
           }
         ]
       }

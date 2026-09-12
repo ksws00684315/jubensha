@@ -213,26 +213,6 @@
             "clueIds": []
           },
           {
-            "id": "character_leixiaojun_event_2",
-            "time": {
-              "display": "23:12",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:12"
-              }
-            },
-            "title": "事件 2",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "手机收到催收短信。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_leixiaojun_event_3",
             "time": {
               "display": "23:00",
@@ -252,6 +232,26 @@
             "characterIds": [
               "jiping"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_leixiaojun_event_2",
+            "time": {
+              "display": "23:12",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:12"
+              }
+            },
+            "title": "事件 2",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "手机收到催收短信。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           }
         ],
@@ -886,7 +886,7 @@
       "id": "jijiu_jilu",
       "locationId": "location_3",
       "name": "汲萍的急救记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -901,7 +901,7 @@
       "id": "xiaozongping",
       "locationId": "location_4",
       "name": "内袋里的小棕瓶",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -916,7 +916,7 @@
       "id": "fuwu_jiluyi",
       "locationId": "location_2",
       "name": "前舱厨房的服务记录仪调阅单",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -931,7 +931,7 @@
       "id": "fuwu_liushui",
       "locationId": "location_3",
       "name": "乘务长的服务流水",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -946,7 +946,7 @@
       "id": "gonggao_caogao",
       "locationId": "location_4",
       "name": "平板备忘与公告草稿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -961,7 +961,7 @@
       "id": "yizhu_fulu",
       "locationId": "location_1",
       "name": "遗嘱附录",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -976,7 +976,7 @@
       "id": "duzhai_duanxin",
       "locationId": "location_1",
       "name": "赌债催收短信",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -991,7 +991,7 @@
       "id": "chufang_zhipian",
       "locationId": "location_2",
       "name": "吧台遗留的证据页",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1006,7 +1006,7 @@
       "id": "xishoujian_yao",
       "locationId": "location_5",
       "name": "洗手间的药板与残渣",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1023,7 +1023,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "王牌降压药'络平'三期瞒报 28 例死亡，包了三年火。"
+        "text": "苗岁寒的药企靠'络平'三期瞒报28例死亡起死回生，死者所在的基金是最大股东、握有揭盖子的份量。灭口是为保住公司和自己。"
       }
     ],
     "method": {
@@ -1323,7 +1323,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu_fulu",
+          "duzhai_duanxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1333,7 +1336,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "jijiu_jilu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1343,7 +1348,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "fuwu_liushui"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1363,7 +1370,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu_fulu"
+        ],
         "explanation": [
           {
             "type": "paragraph",

@@ -1437,7 +1437,7 @@
       "id": "chihen_shijian",
       "locationId": "location_1",
       "name": "齿痕与尸检初判",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1452,7 +1452,7 @@
       "id": "huoqi_shadai",
       "locationId": "location_1",
       "name": "有财蛇酒坊的火漆蛇袋",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1467,7 +1467,7 @@
       "id": "chuhuo_dan",
       "locationId": "location_3",
       "name": "蛇酒坊出货单",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1482,7 +1482,7 @@
       "id": "duanxin",
       "locationId": "location_1",
       "name": "族老的短信",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1497,7 +1497,7 @@
       "id": "jitian_zhangben",
       "locationId": "location_3",
       "name": "祭田账本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1512,7 +1512,7 @@
       "id": "yizhu",
       "locationId": "location_2",
       "name": "神龛夹层的两份遗嘱",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1527,7 +1527,7 @@
       "id": "shelong",
       "locationId": "location_5",
       "name": "蛇笼与放生记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1542,7 +1542,7 @@
       "id": "gailu_jietu",
       "locationId": "location_5",
       "name": "族谱改录的截图",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1557,7 +1557,7 @@
       "id": "kance_tu",
       "locationId": "location_4",
       "name": "勘测图与朱批",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1574,7 +1574,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "祠堂三年的香烛、三牲、修缮采买都过你的手，祭田租金四十七万八千，真正用在祖宗身上的不到一半——剩下的填了你省城儿子的首付和你家后山的新坟。你以为账做得天衣无缝，直到三日前族老把你叫进账房，拍出厚厚一沓手抄流水：明晚祠堂大会，当着列祖列宗，你自己念。"
+        "text": "岑有财侵吞祭田租金四十七万八千中的大半，族老命他明日当众念出手抄流水。他以银环蛇伪装意外杀人灭口，好让钱案随人死一并了结。"
       }
     ],
     "method": {
@@ -1786,6 +1786,27 @@
         ]
       },
       {
+        "id": "truth_event_11",
+        "time": {
+          "display": "21:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "事件 11",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "的画面。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
         "id": "truth_event_7",
         "time": {
           "display": "21:40",
@@ -1874,27 +1895,6 @@
         ]
       },
       {
-        "id": "truth_event_11",
-        "time": {
-          "display": "21:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:00"
-          }
-        },
-        "title": "事件 11",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "的画面。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_12",
         "time": {
           "display": "23:30",
@@ -1955,7 +1955,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1965,7 +1967,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "shelong"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1975,7 +1979,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "gailu_jietu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1985,7 +1991,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "kance_tu"
+        ],
         "explanation": [
           {
             "type": "paragraph",

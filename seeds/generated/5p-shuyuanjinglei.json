@@ -645,7 +645,7 @@
       "id": "loutixiashishen",
       "locationId": "location_1",
       "name": "楼梯下的尸身",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -660,7 +660,7 @@
       "id": "jinganxuehen",
       "locationId": "location_2",
       "name": "经案血痕与青铜书镇",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -675,7 +675,7 @@
       "id": "zhongsheng",
       "locationId": "location_3",
       "name": "惊雷钟的钟绳",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -690,7 +690,7 @@
       "id": "nianpugaoxia",
       "locationId": "location_6",
       "name": "白鹿年谱稿匣",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -705,7 +705,7 @@
       "id": "tanpenbanban",
       "locationId": "location_4",
       "name": "炭盆里的半页稿",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -720,7 +720,7 @@
       "id": "jieshubu",
       "locationId": "location_1",
       "name": "借书簿",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -735,7 +735,7 @@
       "id": "chaifangjinshu",
       "locationId": "location_5",
       "name": "柴房禁书箱",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -750,7 +750,7 @@
       "id": "fankesongqian",
       "locationId": "location_2",
       "name": "翻刻宋椠批条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -765,7 +765,7 @@
       "id": "sidinggengtie",
       "locationId": "location_7",
       "name": "私订庚帖",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -782,7 +782,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫裴松年，训导，代山长理斋规杂务二十年，晨钟夜板从不假手他人。丙戌年你顶了亡兄的名字入泮——那年家里揭不开锅，可有第二条路。"
+        "text": "裴松年丙戌年冒亡兄之名入泮。死者编《白鹿年谱》执意把这桩旧事写进去，新山长人选又已另定——丑闻与失位两头落空，他杀人灭迹。"
       }
     ],
     "method": {
@@ -878,18 +878,70 @@
       }
     ],
     "keyEvidenceIds": [
-      "jinganxuehen"
+      "jinganxuehen",
+      "loutixiashishen",
+      "zhongsheng",
+      "nianpugaoxia",
+      "tanpenbanban"
     ],
     "evidenceChain": [
       {
+        "id": "evidence_1",
+        "clueIds": [
+          "jinganxuehen",
+          "loutixiashishen"
+        ],
+        "conclusion": "经案血痕一路拖到楼梯口、青铜鹤形书镇鹤喙缝里嵌着未擦净的血痂——凶器与第一现场俱在二层经阁；而尸身无滚落擦碰伤、阶面无血、鞋底却沾二层独有的樟脑灰：死亡地点被搬动，'失足'是伪装。"
+      },
+      {
         "id": "evidence_2",
         "clueIds": [
-          "jinganxuehen"
+          "zhongsheng",
+          "nianpugaoxia",
+          "tanpenbanban"
         ],
-        "conclusion": "经案血痕与书镇血痂证明青铜鹤形书镇是击毙山长的凶器，鹤喙缝隙里未擦净的暗色血痂指向最后接触书镇之人。"
+        "conclusion": "钟绳被用'夫子结'重新系过——亥时鸣钟者只能是司晨钟二十年的训导裴松年，钟声把死亡时刻整整推后了半个时辰；稿匣里山长朱笔提纲直书'松年顶亡兄名入泮，然冒名终'、丙戌页被裁，炭盆里未烧透的余稿尚温——灭证的动机与动作都落在他一人身上。"
       }
     ],
-    "redHerrings": [],
+    "redHerrings": [
+      {
+        "id": "red_herring_1",
+        "clueIds": [
+          "jieshubu",
+          "chaifangjinshu"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "陆鸿飞的禁书与柴房旧刊——'狂生'与山长积怨已深，还顶着朱批领责。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_2",
+        "clueIds": [
+          "fankesongqian"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "钱慕山的伪刻被山长识破——捐款的义名底下是欺世，他怕被揭穿。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_3",
+        "clueIds": [
+          "sidinggengtie"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "顾湘君与陆鸿飞私订庚帖——山长一死，两桩婚事都乱了局。"
+          }
+        ]
+      }
+    ],
     "supplemental": [],
     "reveal": [
       {

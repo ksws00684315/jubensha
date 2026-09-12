@@ -918,30 +918,6 @@
             "clueIds": []
           },
           {
-            "id": "character_baimusheng_event_3",
-            "time": {
-              "display": "21:05–21:20",
-              "precision": "range",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:05"
-              },
-              "end": {
-                "dayOffset": 0,
-                "time": "21:20"
-              }
-            },
-            "title": "事件 3",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "）。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_baimusheng_event_4",
             "time": {
               "display": "21:25",
@@ -961,26 +937,6 @@
             "characterIds": [
               "yuezhaoying"
             ],
-            "clueIds": []
-          },
-          {
-            "id": "character_baimusheng_event_5",
-            "time": {
-              "display": "21:35",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "21:35"
-              }
-            },
-            "title": "事件 5",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "。她走后你又独坐一刻，"
-              }
-            ],
-            "characterIds": [],
             "clueIds": []
           },
           {
@@ -1683,7 +1639,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "老仵作的验看格目",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1698,7 +1654,7 @@
       "id": "c_xixiang",
       "locationId": "location_1",
       "name": "戏箱铜包角",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1713,7 +1669,7 @@
       "id": "c_bazi",
       "locationId": "location_2",
       "name": "青龙刀把子豁口",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1728,7 +1684,7 @@
       "id": "c_liangzhangben",
       "locationId": "location_3",
       "name": "班主的两本账",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1743,7 +1699,7 @@
       "id": "c_yinpiao",
       "locationId": "location_5",
       "name": "赎身银票与婚书帖",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1758,7 +1714,7 @@
       "id": "c_chapeng",
       "locationId": "location_4",
       "name": "揉皱的让贤帖",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1773,7 +1729,7 @@
       "id": "c_wushengtan",
       "locationId": "location_6",
       "name": "《武生叹》鼓词抄本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1788,7 +1744,7 @@
       "id": "c_kebanrizhi",
       "locationId": "location_7",
       "name": "科班日志残页",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1803,7 +1759,7 @@
       "id": "c_diancui",
       "locationId": "location_8",
       "name": "草枕头里的点翠",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1820,7 +1776,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你叫古九斤，本名古雁声，是永春科班的大师兄。二十年前冬夜，你弟弟雁翎——科班最好的武生——在《四杰村》翻高台时坠台，三日后咽气。"
+        "text": "古九斤本名古雁声，二十年前弟弟雁翎坠台身亡、实为死者挪薄毡垫所致。他改名投班潜伏多年，夜夜替死者卸靠提靴，只等一个对方毫无防备的时候。"
       }
     ],
     "method": {
@@ -2301,7 +2257,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_liangzhangben"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2311,7 +2269,10 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "c_chapeng",
+          "c_yinpiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2321,7 +2282,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "c_chapeng"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2331,7 +2294,9 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "c_wushengtan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2341,7 +2306,10 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "c_diancui",
+          "c_xixiang"
+        ],
         "explanation": [
           {
             "type": "paragraph",

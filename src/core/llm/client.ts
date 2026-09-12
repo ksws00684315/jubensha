@@ -284,6 +284,36 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   }
 }
 
+/** 批量文本向量：OpenAI 兼容 POST /embeddings。
+ * 未绑定 embedding 槽位或调用失败一律返回 null——向量检索层整体静默降级，不影响主流程。 */
+export async function embedTexts(texts: string[]): Promise<number[][] | null> {
+  if (!texts.length) return [];
+  let b: ResolvedBinding;
+  try {
+    b = await resolveBinding("embedding");
+  } catch {
+    return null;
+  }
+  try {
+    const url = `${normalizeProviderBaseUrl(b.baseUrl, "openai_compatible")}/embeddings`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${b.apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: b.modelId, input: texts }),
+      signal: AbortSignal.timeout(60_000),
+    });
+    if (!res.ok) return null;
+    const json = (await res.json()) as { data?: Array<{ embedding?: unknown; index?: number }> };
+    const data = (json.data ?? []).slice().sort((x, y) => (x.index ?? 0) - (y.index ?? 0));
+    const out = data
+      .map((d) => (Array.isArray(d.embedding) ? (d.embedding as number[]) : null))
+      .filter((v): v is number[] => v !== null);
+    return out.length === texts.length ? out : null;
+  } catch {
+    return null;
+  }
+}
+
 function modelIdsFrom(json: unknown): string[] {
   if (!json || typeof json !== "object") return [];
   const data = (json as { data?: Array<{ id?: string }> }).data;

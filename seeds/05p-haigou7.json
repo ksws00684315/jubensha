@@ -214,26 +214,6 @@
             "clueIds": []
           },
           {
-            "id": "character_fangan_event_8",
-            "time": {
-              "display": "16:41",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "16:41"
-              }
-            },
-            "title": "事件 8",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "），把周拖出过渡舱。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_fangan_event_9",
             "time": {
               "display": "17:00",
@@ -429,6 +409,26 @@
             "clueIds": []
           },
           {
+            "id": "character_jiangli_event_8",
+            "time": {
+              "display": "16:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:20"
+              }
+            },
+            "title": "事件 8",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起氧浓度断崖下跌——不是缓慢老化，是被人切成了氮气优先输出。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_jiangli_event_4",
             "time": {
               "display": "16:30",
@@ -505,26 +505,6 @@
               {
                 "type": "paragraph",
                 "text": "你调取三号阀组遥测："
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_jiangli_event_8",
-            "time": {
-              "display": "16:20",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "16:20"
-              }
-            },
-            "title": "事件 8",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "起氧浓度断崖下跌——不是缓慢老化，是被人切成了氮气优先输出。"
               }
             ],
             "characterIds": [],
@@ -610,7 +590,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你就是凶手。三年心血被当众折价'共同第一'，你三天前开始布置：锉旧的做旧密封件、调包 B-7、把混合阀切到氮洗模式并设 15 分钟自恢复（事后遥测会显示'故障后自动复位'，完美指向设备老化）。16:20-16:35 监控维护黑屏窗口，你从风道夹层进出，戴手套完成操作。你的不在场证明是伪造的：你说 16:20-16:35 在样品间做固氮菌封片，但封片记录仪显示那批片子 15:50 就做好了。"
+                "text": "你就是凶手。三年心血被当众折价'共同第一'，你三天前开始布置：锉旧的做旧密封件、调包 B-7、把混合阀切到氮洗模式并设 15 分钟自恢复（事后遥测会显示'故障后自动复位'，完美指向设备老化）。真正的现场操作你在 15:50-16:05 借风道夹层进出完成，16:05 收尾、16:15 阀延迟切入氮洗模式——16:20-16:35 的监控维护黑屏窗口你刻意没用，故意留成'凶手利用维护窗口'的干扰项。你的不在场证明：16:20-16:35 你在样品间当着两台记录仪做固氮菌封片，这恰恰是真的——真的才好用。"
               }
             ],
             "disclosure": "never"
@@ -712,7 +692,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你声称在样品间封片——实际"
+                "text": "你声称这二十分钟一直在样品间封片——其实前半段你不在。"
               }
             ],
             "characterIds": [],
@@ -732,7 +712,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "封片已完成（记录仪可查），你在风道夹层与外廊之间完成调件与模式设置，"
+                "text": "封片已完成（记录仪可查）；其余时间你在风道夹层与外廊之间完成调件与模式设置，动作干净。"
               }
             ],
             "characterIds": [],
@@ -759,6 +739,46 @@
             "clueIds": []
           },
           {
+            "id": "character_wenshu_event_8",
+            "time": {
+              "display": "16:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:05"
+              }
+            },
+            "title": "操作收尾",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "风道夹层里的活儿 16:05 就完事了，阀被你设成 15 分钟延迟。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_wenshu_event_9",
+            "time": {
+              "display": "16:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "16:15"
+              }
+            },
+            "title": "延迟触发",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "16:15 阀延迟切入氮洗模式——现场从此只留“设备老化”的假象。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
             "id": "character_wenshu_event_7",
             "time": {
               "display": "16:20–16:35",
@@ -776,47 +796,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "监控维护黑屏——你根本没进外廊，你"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_wenshu_event_8",
-            "time": {
-              "display": "16:05",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "16:05"
-              }
-            },
-            "title": "事件 8",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "就完事了，阀被你设成"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_wenshu_event_9",
-            "time": {
-              "display": "16:15",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "16:15"
-              }
-            },
-            "title": "事件 9",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "延迟切入氮洗模式。"
+                "text": "监控维护黑屏的 16:20–16:35，你根本没进外廊——你在样品间当着两台记录仪做封片。这个被所有人盯着的'干扰项'，正是你留给他们的答案。"
               }
             ],
             "characterIds": [],
@@ -1319,26 +1299,6 @@
             "clueIds": []
           },
           {
-            "id": "character_huoye_event_7",
-            "time": {
-              "display": "16:33",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "16:33"
-              }
-            },
-            "title": "事件 7",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "），看见地漏盖歪斜。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_huoye_event_8",
             "time": {
               "display": "16:35",
@@ -1428,32 +1388,62 @@
     {
       "id": "location_1",
       "name": "三号气闸与过渡舱",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "三号气闸与过渡舱。深海站与外海的门户，气密记录一笔不落。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "主控室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "主控室。全站的神经中枢，遥测屏幕与阀位指示灯昼夜不熄。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "器材间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "器材间。维修手册与工具柜一字排开，检索终端就搁在角落。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "样品间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "样品间。封片台与记录仪对着门，做好的样本按批次入柜。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "医疗舱",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "医疗舱。处置床与药柜一应俱全，验看记录压在台面上。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "周潜的舱室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "死者周潜的舱室。平板还亮着，稿纸与私人物件摊了一桌。"
+        }
+      ]
     }
   ],
   "clues": [
@@ -1461,7 +1451,7 @@
       "id": "yaoc_e",
       "locationId": "location_1",
       "name": "气闸遥测记录",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1476,7 +1466,7 @@
       "id": "mifeng_jian",
       "locationId": "location_1",
       "name": "外廊地漏盖",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1491,7 +1481,7 @@
       "id": "bijian",
       "locationId": "location_3",
       "name": "做旧的 B-7 密封件",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1506,7 +1496,7 @@
       "id": "jianxiu_rizhi",
       "locationId": "location_3",
       "name": "维护排班表与检索日志",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1521,7 +1511,7 @@
       "id": "chaoshengdao",
       "locationId": "location_3",
       "name": "超声刀柄上的金属微屑",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1536,7 +1526,7 @@
       "id": "fengpian",
       "locationId": "location_4",
       "name": "封片记录仪",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1551,7 +1541,7 @@
       "id": "shoutao",
       "locationId": "location_4",
       "name": "实验手套上的润滑脂",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1566,7 +1556,7 @@
       "id": "beiping",
       "locationId": "location_6",
       "name": "周潜的平板备忘",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1581,7 +1571,7 @@
       "id": "zhenjingji",
       "locationId": "location_5",
       "name": "镇静剂取用记录",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1596,7 +1586,7 @@
       "id": "zhiriao",
       "locationId": "location_2",
       "name": "主控室值班日志",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1611,7 +1601,7 @@
       "id": "zhitiao",
       "locationId": "location_2",
       "name": "匿名纸条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1626,7 +1616,7 @@
       "id": "qianming",
       "locationId": "location_6",
       "name": "被撤回的署名邮件草稿",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1643,7 +1633,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "你还做了一件事，你自己都说不清是哪一刻决定的：13:00 午休时，你把器材间待销毁区一枚旧 B-7 组件藏进了风道夹层，把你锉了一晚的'做旧件'放进备件柜——你从三天前拿到撤稿风声就开始锉了。"
+        "text": "三年心血被当众折价成'共同第一'，署名权之争把温书从受害者逼成凶手——他用自己的专业，把谋杀布置成设备老化，让仪器替他闭嘴。"
       }
     ],
     "method": {
@@ -1701,27 +1691,6 @@
       ]
     },
     "timeline": [
-      {
-        "id": "truth_event_2",
-        "time": {
-          "display": "23:47",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:47"
-          }
-        },
-        "title": "事件 2",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "周潜写好署名变更邮件草稿（未发送）。217 日"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
       {
         "id": "truth_event_3",
         "time": {
@@ -1972,33 +1941,6 @@
         ]
       },
       {
-        "id": "truth_event_12",
-        "time": {
-          "display": "15:52",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "15:52"
-          }
-        },
-        "title": "事件 12",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "镇静剂以白鸥账号被'取用'（温书盗用账号埋雷）。"
-          }
-        ],
-        "characterIds": [
-          "wenshu",
-          "baiou"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "wenshu",
-          "baiou"
-        ]
-      },
-      {
         "id": "truth_event_13",
         "time": {
           "display": "15:50–16:05",
@@ -2028,25 +1970,31 @@
         ]
       },
       {
-        "id": "truth_event_14",
+        "id": "truth_event_12",
         "time": {
-          "display": "16:15",
+          "display": "15:52",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "16:15"
+            "time": "15:52"
           }
         },
-        "title": "事件 14",
+        "title": "事件 12",
         "content": [
           {
             "type": "paragraph",
-            "text": "延迟氮洗触发与自动复位，"
+            "text": "镇静剂以白鸥账号被'取用'（温书盗用账号埋雷）。"
           }
         ],
-        "characterIds": [],
+        "characterIds": [
+          "wenshu",
+          "baiou"
+        ],
         "clueIds": [],
-        "participantIds": []
+        "participantIds": [
+          "wenshu",
+          "baiou"
+        ]
       },
       {
         "id": "truth_event_15",
@@ -2097,6 +2045,27 @@
         "participantIds": [
           "fangan"
         ]
+      },
+      {
+        "id": "truth_event_14",
+        "time": {
+          "display": "16:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "16:15"
+          }
+        },
+        "title": "事件 14",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "延迟氮洗触发与自动复位，"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_17",
@@ -2229,7 +2198,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "白鸥宣布死亡。破案链：遥测记录（一次性指令+15 分钟自恢复 = 模式谋杀而非老化）→ 检索日志（手册第七节）→ 做旧锉痕与废料袋矛盾（调包实锤）→ 封片记录仪（不在场证明崩塌）→ 手套润滑脂与超声刀金属屑 → 打印记录与镇静剂盗用（两次嫁祸）。红鲱鱼：方岸的审计危机与匿名纸条、白鸥的海渊咨询费与'符合设备故障'的错误定调、霍野的违规合作与私藏的地漏发现、江离的'唯一能改阀'技术嫌疑。"
+            "text": "白鸥宣布死亡。破案链六环闭合：遥测记录（一次性指令+15 分钟自恢复 = 模式谋杀而非老化）→ 检索日志（手册第七节）→ 做旧锉痕与废料袋矛盾（调包实锤）→ 封片记录仪（不在场证明崩塌）→ 手套润滑脂（只有接触过混合阀的人才会留下）——链路闭合，锁定温书。"
           }
         ],
         "characterIds": [
@@ -2245,6 +2214,27 @@
           "baiou",
           "huoye"
         ]
+      },
+      {
+        "id": "truth_event_2",
+        "time": {
+          "display": "23:47",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:47"
+          }
+        },
+        "title": "事件 2",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "周潜写好署名变更邮件草稿（未发送）。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       }
     ],
     "keyEvidenceIds": [
@@ -2270,7 +2260,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "zhitiao",
+          "beiping"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2312,7 +2305,7 @@
     "supplemental": [
       {
         "type": "paragraph",
-        "text": "216 日"
+        "text": "补充：温书早在 217 天前就查询过走廊监控的维护排期——那次查询是计划的开端，后来窗口被他刻意留作干扰项。"
       }
     ],
     "reveal": [

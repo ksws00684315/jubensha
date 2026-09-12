@@ -1350,7 +1350,7 @@
       "id": "yankan_jilu",
       "locationId": "location_2",
       "name": "莫问津的验看记录",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1365,7 +1365,7 @@
       "id": "jiuhu_chen",
       "locationId": "location_2",
       "name": "清酒壶的沉渣",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1380,7 +1380,7 @@
       "id": "guafan_tangzha",
       "locationId": "location_1",
       "name": "挂反的汤札",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1395,7 +1395,7 @@
       "id": "yueya_hen",
       "locationId": "location_3",
       "name": "耳后的月牙痕",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1410,7 +1410,7 @@
       "id": "wurenji_ka",
       "locationId": "location_6",
       "name": "无人机的存储卡",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1425,7 +1425,7 @@
       "id": "yaofang_queban",
       "locationId": "location_5",
       "name": "药房缺失的药板",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1440,7 +1440,7 @@
       "id": "shougou_han",
       "locationId": "location_4",
       "name": "收购函与红批注",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1455,7 +1455,7 @@
       "id": "yizhu_caogao",
       "locationId": "location_3",
       "name": "遗嘱草稿的误会",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1470,7 +1470,7 @@
       "id": "beiyongjin",
       "locationId": "location_4",
       "name": "备用金与查汤规律",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1624,27 +1624,6 @@
         ]
       },
       {
-        "id": "truth_event_4",
-        "time": {
-          "display": "23:45",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:45"
-          }
-        },
-        "title": "事件 4",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "）。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_5",
         "time": {
           "display": "23:05",
@@ -1697,27 +1676,6 @@
           "ruanyue",
           "duro"
         ]
-      },
-      {
-        "id": "truth_event_7",
-        "time": {
-          "display": "23:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:50"
-          }
-        },
-        "title": "事件 7",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_8",
@@ -1899,6 +1857,39 @@
         ]
       },
       {
+        "id": "truth_event_19",
+        "time": {
+          "display": "23:43",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:43"
+          }
+        },
+        "title": "事件 19",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "上行身影、店内羽织）→ 耳后的月牙痕（假面与杀人动机）→ 值簿规律（店中人作案）。红鲱鱼：贺四喜的备用金、杜若的遗嘱误会、程鹜的收购纠纷与酒话、莫问津的缺药与独处、向芸的偷回设备——人人有秘密，无人是凶手。"
+          }
+        ],
+        "characterIds": [
+          "hesixi",
+          "duro",
+          "chengwu",
+          "xiangyun",
+          "mowenjin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "hesixi",
+          "duro",
+          "chengwu",
+          "xiangyun",
+          "mowenjin"
+        ]
+      },
+      {
         "id": "truth_event_15",
         "time": {
           "display": "23:45",
@@ -2003,39 +1994,6 @@
           "chengwu",
           "mowenjin"
         ]
-      },
-      {
-        "id": "truth_event_19",
-        "time": {
-          "display": "23:43",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:43"
-          }
-        },
-        "title": "事件 19",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "上行身影、店内羽织）→ 耳后的月牙痕（假面与杀人动机）→ 值簿规律（店中人作案）。红鲱鱼：贺四喜的备用金、杜若的遗嘱误会、程鹜的收购纠纷与酒话、莫问津的缺药与独处、向芸的偷回设备——人人有秘密，无人是凶手。"
-          }
-        ],
-        "characterIds": [
-          "hesixi",
-          "duro",
-          "chengwu",
-          "xiangyun",
-          "mowenjin"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "hesixi",
-          "duro",
-          "chengwu",
-          "xiangyun",
-          "mowenjin"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2077,7 +2035,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "beiyongjin",
+          "jiuhu_chen"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2087,7 +2048,9 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "yizhu_caogao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2097,7 +2060,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "shougou_han"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2107,7 +2072,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "yankan_jilu",
+          "yaofang_queban"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2117,7 +2085,9 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "wurenji_ka"
+        ],
         "explanation": [
           {
             "type": "paragraph",

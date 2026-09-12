@@ -1441,28 +1441,6 @@
             "clueIds": []
           },
           {
-            "id": "character_yangdinggang_event_4",
-            "time": {
-              "display": "23:00",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "23:00"
-              }
-            },
-            "title": "事件 4",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "你起夜查料，看见二锅头蹲在料槽边'像在找什么'。"
-              }
-            ],
-            "characterIds": [
-              "xutashan"
-            ],
-            "clueIds": []
-          },
-          {
             "id": "character_yangdinggang_event_5",
             "time": {
               "display": "21:35",
@@ -1503,6 +1481,28 @@
             ],
             "characterIds": [
               "ahei"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_yangdinggang_event_4",
+            "time": {
+              "display": "23:00",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "事件 4",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你起夜查料，看见二锅头蹲在料槽边'像在找什么'。"
+              }
+            ],
+            "characterIds": [
+              "xutashan"
             ],
             "clueIds": []
           }
@@ -1596,7 +1596,7 @@
       "id": "c_yanshi",
       "locationId": "location_1",
       "name": "驿丞的验看草单",
-      "category": "other",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
@@ -1611,7 +1611,7 @@
       "id": "c_yanguo",
       "locationId": "location_1",
       "name": "烟锅膛缝的乌膏",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1626,7 +1626,7 @@
       "id": "c_qiaozhaxin",
       "locationId": "location_1",
       "name": "落款'山里故人'的敲诈信",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1641,7 +1641,7 @@
       "id": "c_renzi",
       "locationId": "location_1",
       "name": "房梁上的认子文书",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1656,7 +1656,7 @@
       "id": "c_caowugao",
       "locationId": "location_2",
       "name": "草料里的兽皮药盒",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1671,7 +1671,7 @@
       "id": "c_guohuoshan",
       "locationId": "location_3",
       "name": "货单与烟土取样",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1686,7 +1686,7 @@
       "id": "c_guosuo",
       "locationId": "location_4",
       "name": "假过所与存底",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1701,7 +1701,7 @@
       "id": "c_dinghuo",
       "locationId": "location_5",
       "name": "账台下的出手字据",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1716,7 +1716,7 @@
       "id": "c_fenhuozhang",
       "locationId": "location_6",
       "name": "匪窟分货账",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1753,7 +1753,9 @@
               "text": "许踏山查明旧案后隐忍一年爬上二锅头位子，专司装烟。20:10 他进屋装第一锅烟时将草乌膏（猎户涂弩箭之毒）抹在烟锅膛壁与衔口内侧，毒随烟丝烫吸经口黏膜渗入。"
             }
           ],
-          "clueIds": ["c_yanguo"]
+          "clueIds": [
+            "c_yanguo"
+          ]
         },
         {
           "id": "method_step_2",
@@ -1764,7 +1766,9 @@
               "text": "20:45 许踏山再进屋装第三锅烟，趁机将伪造的「山里故人」敲诈信递入——信中提及五年前野人山之事，一石二鸟：乱锅头心神使其猛抽烟加速毒发，又给查案者制造假想仇家的歧路。"
             }
           ],
-          "clueIds": ["c_qiaozhaxin"]
+          "clueIds": [
+            "c_qiaozhaxin"
+          ]
         },
         {
           "id": "method_step_3",
@@ -1775,7 +1779,10 @@
               "text": "21:30 三锅烟后草乌膏毒发，锅头口唇青紫倒地，症状全然像「急痧攻心」。21:35 阿月尖叫后许踏山第二个冲入正房「抢救」，趁乱倒净烟膛烟灰销毁残毒证据，又于23:00借起夜将兽皮药盒塞进马厩料槽草把。"
             }
           ],
-          "clueIds": ["c_yanshi", "c_caowugao"]
+          "clueIds": [
+            "c_yanshi",
+            "c_caowugao"
+          ]
         }
       ]
     },
@@ -2141,27 +2148,6 @@
         ]
       },
       {
-        "id": "truth_event_15",
-        "time": {
-          "display": "22:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:00"
-          }
-        },
-        "title": "事件 15",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "锅头咽气。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
         "id": "truth_event_16",
         "time": {
           "display": "21:35–22:00",
@@ -2189,6 +2175,27 @@
         "participantIds": [
           "yangdinggang"
         ]
+      },
+      {
+        "id": "truth_event_15",
+        "time": {
+          "display": "22:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "事件 15",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "锅头咽气。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_17",
@@ -2265,7 +2272,10 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "c_guosuo",
+          "c_yanshi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2285,7 +2295,10 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "c_guohuoshan",
+          "c_dinghuo"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2305,7 +2318,10 @@
       },
       {
         "id": "red_herring_5",
-        "clueIds": [],
+        "clueIds": [
+          "c_qiaozhaxin",
+          "c_fenhuozhang"
+        ],
         "explanation": [
           {
             "type": "paragraph",

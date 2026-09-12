@@ -537,7 +537,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "全场天天捧着奶茶杯的，是那个说话像念广告的总导演。"
+                "text": "下午那壶奶茶是后厨替楼上常点的，具体端到谁手里，传菜的老宋说了算——你只管把茶煮得比谁都要浓。"
               }
             ],
             "source": "other",
@@ -657,26 +657,6 @@
             "clueIds": []
           },
           {
-            "id": "character_jiang_manli_event_3",
-            "time": {
-              "display": "15:55",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "15:55"
-              }
-            },
-            "title": "事件 3",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "你在演员通道补妆，让助理去取隔间沙发上那份补充协议，助理说主席还没走开，不敢拿。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
             "id": "character_jiang_manli_event_4",
             "time": {
               "display": "15:53–15:58",
@@ -700,6 +680,26 @@
             "characterIds": [
               "hao_yunlai"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiang_manli_event_3",
+            "time": {
+              "display": "15:55",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "15:55"
+              }
+            },
+            "title": "事件 3",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "你在演员通道补妆，让助理去取隔间沙发上那份补充协议，助理说主席还没走开，不敢拿。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           },
           {
@@ -1543,7 +1543,7 @@
       "id": "chahu",
       "locationId": "location_2",
       "name": "清口茶壶",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1558,7 +1558,7 @@
       "id": "dengji_ben",
       "locationId": "location_3",
       "name": "硝水的领用登记本",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1573,7 +1573,7 @@
       "id": "xiaoguan",
       "locationId": "location_1",
       "name": "少了一截的硝罐",
-      "category": "other",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
@@ -1588,7 +1588,7 @@
       "id": "zhuanzhang_jilu",
       "locationId": "location_4",
       "name": "转账记录里的押题费",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1603,7 +1603,7 @@
       "id": "duanxin",
       "locationId": "location_2",
       "name": "主席的短信草稿",
-      "category": "other",
+      "category": "digital",
       "content": [
         {
           "type": "paragraph",
@@ -1618,7 +1618,7 @@
       "id": "zhibo_suzhi",
       "locationId": "location_5",
       "name": "江小喵的直播素材",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1633,7 +1633,7 @@
       "id": "shoutiao",
       "locationId": "location_1",
       "name": "揉皱的收条",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1648,7 +1648,7 @@
       "id": "guanming_han",
       "locationId": "location_2",
       "name": "撤冠名函",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1663,7 +1663,7 @@
       "id": "baocai_ben",
       "locationId": "location_2",
       "name": "报菜的小抄本",
-      "category": "other",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1680,7 +1680,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "节目赞助缩水，你想了个稳赚的路子：把决赛考题打包卖给三位选手，一位五万，说是内部资料保熟。上周五收钱时你被袁守味逮个正着——老爷子什么都没说，只把你的手机号存成了名单待交。"
+        "text": "郝运来把决赛考题打包卖给选手牟利，收钱时被袁守味逮个正着；老爷子给他留了一夜体面、限他次晨自交名单，他抢在最后期限之前动了手。"
       }
     ],
     "method": {
@@ -1700,7 +1700,10 @@
               "text": "15:53 郝运来被袁守味单独叫进隔间，限明早九点交出卖题名单。15:56 他趁铁勺王不在工位，冒用秦小满名义在库房领了一勺硝水，模仿其连笔签名但「满」字末钩露了破绽。"
             }
           ],
-          "clueIds": ["dengji_ben", "xiaoguan"]
+          "clueIds": [
+            "dengji_ben",
+            "xiaoguan"
+          ]
         },
         {
           "id": "method_step_2",
@@ -1711,7 +1714,9 @@
               "text": "15:58 郝运来借调话筒之名靠近评委席隔间，将亚硝酸盐倒入主席专属的清口茶壶并搅匀。15:50 秦小满布杯时壶尚干净，投毒发生在布杯之后、主席饮茶之前的二十分钟窗口内。"
             }
           ],
-          "clueIds": ["chahu"]
+          "clueIds": [
+            "chahu"
+          ]
         },
         {
           "id": "method_step_3",
@@ -1722,7 +1727,10 @@
               "text": "16:08 复赛开赛后评委席人来人往，16:12 主席照例饮茶，16:26 亚硝酸盐急性中毒发作——十五分钟中场加二十分钟潜伏期，让所有进出评委席的人都没有单独作案的完整时间线，郝运来用时间差把自己藏进了人群。"
             }
           ],
-          "clueIds": ["chahu", "zhibo_suzhi"]
+          "clueIds": [
+            "chahu",
+            "zhibo_suzhi"
+          ]
         }
       ]
     },
@@ -1951,6 +1959,37 @@
         ]
       },
       {
+        "id": "truth_event_16",
+        "time": {
+          "display": "15:56",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "15:56"
+          }
+        },
+        "title": "事件 16",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "假签名与端奶茶的男人）→ 转账记录与收条（卖题与灭口动机）→ 直播素材（投毒动作与喊救护车不动脚）。红鲱鱼：铁勺王的硝罐与预制汤、蒋曼丽的撤冠名函、何大江的押题费收条、秦小满的报菜秘密。"
+          }
+        ],
+        "characterIds": [
+          "tie_shao_wang",
+          "jiang_manli",
+          "qin_xiaoman",
+          "he_dajiang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tie_shao_wang",
+          "jiang_manli",
+          "qin_xiaoman",
+          "he_dajiang"
+        ]
+      },
+      {
         "id": "truth_event_10",
         "time": {
           "display": "15:58",
@@ -2099,37 +2138,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_16",
-        "time": {
-          "display": "15:56",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "15:56"
-          }
-        },
-        "title": "事件 16",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "假签名与端奶茶的男人）→ 转账记录与收条（卖题与灭口动机）→ 直播素材（投毒动作与喊救护车不动脚）。红鲱鱼：铁勺王的硝罐与预制汤、蒋曼丽的撤冠名函、何大江的押题费收条、秦小满的报菜秘密。"
-          }
-        ],
-        "characterIds": [
-          "tie_shao_wang",
-          "jiang_manli",
-          "qin_xiaoman",
-          "he_dajiang"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "tie_shao_wang",
-          "jiang_manli",
-          "qin_xiaoman",
-          "he_dajiang"
-        ]
       }
     ],
     "keyEvidenceIds": [
@@ -2171,7 +2179,9 @@
     "redHerrings": [
       {
         "id": "red_herring_1",
-        "clueIds": [],
+        "clueIds": [
+          "xiaoguan"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2181,7 +2191,11 @@
       },
       {
         "id": "red_herring_2",
-        "clueIds": [],
+        "clueIds": [
+          "guanming_han",
+          "zhibo_suzhi",
+          "duanxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2191,7 +2205,10 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "zhuanzhang_jilu",
+          "shoutiao"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2201,7 +2218,10 @@
       },
       {
         "id": "red_herring_4",
-        "clueIds": [],
+        "clueIds": [
+          "dengji_ben",
+          "baocai_ben"
+        ],
         "explanation": [
           {
             "type": "paragraph",

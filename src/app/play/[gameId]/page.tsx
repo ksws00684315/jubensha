@@ -39,6 +39,8 @@ export default function PlayPage() {
   const [deltas, setDeltas] = useState<Record<number, string>>({});
   const [thinking, setThinking] = useState<Record<number, boolean>>({});
   const [dmThinking, setDmThinking] = useState(false);
+  const [dmDelta, setDmDelta] = useState("");
+  const [whisperText, setWhisperText] = useState<Record<number, string>>({});
   const [input, setInput] = useState("");
   const [tab, setTab] = useState<"script" | "clues" | "timeline">("script");
   const [voteTarget, setVoteTarget] = useState<number | null>(null);
@@ -142,7 +144,7 @@ export default function PlayPage() {
     es.onmessage = (m) => {
       const msg = JSON.parse(m.data) as
         | { kind: "event"; event: GameEventView }
-        | { kind: "delta"; seat: number; text: string }
+        | { kind: "delta"; seat: number | "dm"; text: string }
         | { kind: "thinking"; seat: number | "dm" | null }
         | { kind: "end" }
         | { kind: "hello" };
@@ -168,14 +170,16 @@ export default function PlayPage() {
         }
         if (ev.type === "phase" || ev.type === "reveal") {
           setDmThinking(false);
+          setDmDelta("");
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase") {
+        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private") {
           const q = mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : "";
           void api<GameSummary>(`/api/games/${gameId}${q}`).then(setSummary).catch(() => null);
         }
       } else if (msg.kind === "delta") {
-        setDeltas((d) => ({ ...d, [msg.seat]: (d[msg.seat] ?? "") + msg.text }));
+        if (msg.seat === "dm") setDmDelta((t) => t + msg.text);
+        else setDeltas((d) => ({ ...d, [msg.seat as number]: (d[msg.seat as number] ?? "") + msg.text }));
       } else if (msg.kind === "thinking") {
         if (msg.seat === "dm") {
           setDmThinking(true);
@@ -269,6 +273,40 @@ export default function PlayPage() {
       }
     },
     [gameId]
+  );
+
+  // ★ AI 主动私信的回复 ★：仅当对方窗口开着且这是最新一条往来消息时显示回复框
+  const openWhispers = summary?.openWhispers ?? [];
+  const isLatestWhisper = (ev: GameEventView): boolean => {
+    if (ev.type !== "private" || ev.toSeat !== mySeat || ev.fromSeat === null) return false;
+    if (!openWhispers.includes(ev.fromSeat)) return false;
+    const last = events.findLast(
+      (e) => e.type === "private" && ((e.fromSeat === ev.fromSeat && e.toSeat === mySeat) || (e.fromSeat === mySeat && e.toSeat === ev.fromSeat))
+    );
+    return last?.seq === ev.seq;
+  };
+  const sendWhisper = useCallback(
+    async (toSeat: number) => {
+      if (mySeat === null) return;
+      const text = (whisperText[toSeat] ?? "").trim();
+      if (!text) return;
+      setError(null);
+      try {
+        const res = await api<{ ok: boolean; error?: string }>(`/api/games/${gameId}/actions`, {
+          method: "POST",
+          body: JSON.stringify({ seatIndex: mySeat, token: myToken, action: { type: "private_chat", toSeat, text } }),
+        });
+        if (!res.ok) setError(res.error ?? "发送失败");
+        setWhisperText((w) => {
+          const next = { ...w };
+          delete next[toSeat];
+          return next;
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err));
+      }
+    },
+    [gameId, mySeat, myToken, whisperText]
   );
 
   const sendDm = useCallback(
@@ -679,20 +717,46 @@ export default function PlayPage() {
           </div>
 
           {events.map((ev) => (
-            <EventBubble
-              key={ev.seq}
-              ev={ev}
-              mySeat={mySeat}
-              seatName={seatName}
-              ttsSeats={aiSeatSet}
-              onSpeak={speakEvent}
-            />
+            <div key={ev.seq}>
+              <EventBubble
+                ev={ev}
+                mySeat={mySeat}
+                seatName={seatName}
+                ttsSeats={aiSeatSet}
+                onSpeak={speakEvent}
+              />
+              {isLatestWhisper(ev) && (
+                <div className="mx-auto mt-1 flex max-w-[85%] gap-1.5">
+                  <input
+                    value={whisperText[ev.fromSeat ?? -1] ?? ""}
+                    onChange={(e) => setWhisperText((w) => ({ ...w, [ev.fromSeat ?? -1]: e.target.value }))}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && (whisperText[ev.fromSeat ?? -1] ?? "").trim()) void sendWhisper(ev.fromSeat ?? -1);
+                    }}
+                    maxLength={300}
+                    placeholder={`悄悄回复 ${seatName(ev.fromSeat ?? 0)}（其他人看不到）…`}
+                    className="min-w-0 flex-1 rounded-lg border border-dashed border-secret-400/30 bg-ink-950 px-3 py-1.5 text-xs text-paper-50 outline-none placeholder:text-paper-500 focus:border-secret-400"
+                  />
+                  <button
+                    onClick={() => void sendWhisper(ev.fromSeat ?? -1)}
+                    disabled={!(whisperText[ev.fromSeat ?? -1] ?? "").trim()}
+                    className="rounded-lg border border-secret-400/40 px-3 text-xs font-semibold text-secret-400 hover:bg-secret-400/10 disabled:opacity-40"
+                  >
+                    回复
+                  </button>
+                </div>
+              )}
+            </div>
           ))}
 
           {dmThinking && (
             <div className="fade-up rounded-2xl rounded-tl-sm border border-gold-400/25 bg-gold-400/5 px-4 py-3 text-sm">
               <p className="eyebrow">DM · 主持人</p>
-              <p className="thinking-dots mt-1 text-paper-400">正在组织旁白，请稍候</p>
+              {dmDelta ? (
+                <p className="typing-caret mt-1 whitespace-pre-wrap leading-relaxed text-paper-300">{dmDelta}</p>
+              ) : (
+                <p className="thinking-dots mt-1 text-paper-400">正在组织旁白，请稍候</p>
+              )}
             </div>
           )}
 
@@ -734,6 +798,21 @@ export default function PlayPage() {
         {me && (phase === "SELF_INTRO" || phase === "DISCUSSION") && !ended && (
           <div className="border-t border-gold-400/10 bg-ink-950/45 p-4">
             {error && <p className="mb-2 text-xs text-danger-400">{error}</p>}
+            {/* 推荐回复：轮到你发言时后台生成的建议短句，点击直接填入 */}
+            {mySpeakTurn && !sending && (summary.suggestions?.length ?? 0) > 0 && (
+              <div className="mb-2 flex flex-wrap items-center gap-1.5">
+                <span className="text-[10px] font-semibold tracking-widest text-paper-500">试试说</span>
+                {summary.suggestions.map((s, i) => (
+                  <button
+                    key={`sug-${i}`}
+                    onClick={() => setInput(s)}
+                    className="rounded-full border border-gold-400/20 bg-gold-400/5 px-2.5 py-1 text-xs text-paper-300 hover:border-gold-400/50 hover:text-paper-100"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
             <div className="flex gap-2">
               <input
                 value={input}
@@ -1006,11 +1085,15 @@ function EventBubble({
     case "speech": {
       const text = ev.content.text ?? "";
       const canSpeak = ev.fromSeat !== null && ttsSeats.has(ev.fromSeat) && text;
+      const isInterjection = ev.content.interjection === true;
       return (
         <div className={`fade-up flex ${mine ? "justify-end" : "justify-start"}`}>
           <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm sm:max-w-[82%] ${mine ? "rounded-tr-sm border border-gold-400/20 bg-gold-400/10" : "rounded-tl-sm border border-gold-400/10 bg-ink-850"}`}>
             <p className={`flex items-center text-xs ${mine ? "justify-end text-gold-400" : "text-paper-500"}`}>
               {ev.content.speakerName ?? seatName(ev.fromSeat ?? 0)}
+              {isInterjection && (
+                <span className="ml-1.5 rounded-full border border-secret-400/30 px-1.5 py-0.5 text-[10px] text-secret-400">插话</span>
+              )}
               {canSpeak && (
                 <button
                   onClick={() => onSpeak(ev.seq)}
