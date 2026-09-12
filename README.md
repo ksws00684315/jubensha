@@ -11,6 +11,9 @@
 - **分层记忆**：长对局自动滚动摘要——近期事件逐字保留，早期公共记录压缩为事实概要；可选绑定 embedding 模型启用向量检索，把与当前话题相关的旧发言原话找回
 - **线索出牌提示**：讨论中有人提到你私藏的线索时，AI 会得到"可打出的牌"提示，避免攥着关键线索全程不用
 - **插话与私聊**：发言点名某位 AI，对方可立即简短插话回应（不占回合、每轮限 3 次）；AI 也会审慎地主动私信真人玩家交换情报，真人可在气泡下悄悄回复
+- **线索交易**：讨论阶段可把未公开的线索卡私下面交给其他座位（`flow.allowClueTransfer` 开启）——仅双方可见，收卡 AI 的上下文自动获得该线索
+- **技能卡与行动点**：角色卡可携带技能（`privateCard.skills` + `flow.actionPointsPerRound`）；【质询】技能消耗行动点，强制目标 AI 当众正面回答（不得回避/反问/转移话题），给真人"点验 AI"的硬工具
+- **结构化结局**：`flow.voteMode` 支持 culprit（指凶，默认）/ hybrid（指凶+答题）/ choice（纯答题，还原本·情感本）；复盘答题整卷提交、weight 加权计分，复盘幕公布全场作答分布与个人得分
 - **发言辅助**：轮到真人发言时后台生成 3 条符合人设的建议短句一键填入；AI 台词经启发式二次审查，自动修正出戏与复读
 - **多模型调度**：DM / 凶手 / 普通 AI 玩家 / 剧本生成 / 向量检索 / TTS 分槽位绑定不同模型（凶手与 DM 建议用强模型），支持故障自动降级
 - **剧本管理**：结构化 Schema（Zod 校验 + 逻辑校验器）、JSON 导入导出、AI 两阶段生成原创剧本
@@ -56,7 +59,8 @@ npm run dev
 - `characters[]`：`publicProfile` + `privateCard`（背景、秘密、目标、个人时间线、已知情报、人设、`isCulprit`）
 - `locations[]` / `clues[]`：地点对象与线索卡（`locationId` 引用；`auto_public` / `manual_public` / `keep_private`）
 - `truth`（仅 DM 可见）：真凶、手法、时间线、证据链、复盘底稿
-- `flow`：各阶段轮数、是否开私聊
+- `flow`：各阶段轮数、是否开私聊、是否开线索转交（`allowClueTransfer`）、每轮行动点（`actionPointsPerRound`）、结局模式（`voteMode`）
+- `ending`：两种结局文案 + 复盘答题（`quiz[]`，hybrid/choice 模式使用）；`characters[].privateCard.skills` 技能卡
 
 运行时与存储以 V2 为准（`src/core/script/v2/`）。逻辑校验器（`validateScriptV2`）检查真凶一致性、线索地点、证据链等，error 级问题会阻止开局。
 
@@ -110,6 +114,9 @@ AI 玩法的工程实现借鉴 SillyTavern / AI Dungeon 等平台的成熟机制
 - 单实例部署（引擎状态在内存 + DB 快照，重启后自动恢复对局，但不支持多副本）
 - 私聊由 AI 主动发起（每 AI 每轮最多一次），真人可回复；AI 之间不私聊
 - 插话仅由真人发言点名 AI 触发（每轮限 3 次）；AI 之间不互相插话
+- 线索转交仅讨论阶段可用、只能转未公开线索（已公开卡无需转交）；持有权只看 `heldClues`，发现者历史（`discoveredBy`）不变
+- 技能系统需 `flow.actionPointsPerRound > 0` 且角色卡配 `skills`；【质询】只能对 AI 座位使用，被质询的真人仍走既有"回答/拒绝"交互（forced 仅作用于 AI 回答提示）
+- choice 模式不指凶：`caught` 恒为 false，结局文案沿用 `ending.outcomes` 的 culprit_escaped 文案位承载"复盘总结"语义（写本时注意）；答题结果只进对局状态与复盘事件，未建独立数据表
 - 向量检索需在「设置 → AI 接入」为 `向量检索（记忆）` 槽位绑定 embedding 模型（OpenAI 兼容 `/embeddings`）；未绑定时该层静默关闭，仅用滚动摘要
-- 真人回合 3 分钟无操作自动跳过（可在房间关闭限时）；搜证公开决策超时自动私藏
+- 真人回合 3 分钟无操作自动跳过（可在房间关闭限时）；搜证公开决策超时自动私藏；投票/答题超时由系统随机代投/代答
 - TTS 依赖 OpenAI 兼容 `/audio/speech` 协议的服务商

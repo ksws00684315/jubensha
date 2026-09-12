@@ -4,6 +4,21 @@
 > 项目根目录:`/Users/hh-mini/Public/dev/jubensha`(Next.js 16 + React 19 + TS + Prisma/PostgreSQL + Vitest,pm2 管理进程)。
 > 决策来源:`docs/script-review-2026-09-round2.md` 第三节 P1 清单与第五节项⑤决策("结构化结局/技能卡/线索交易按需排期"),本计划即其排期落地。
 
+## 执行状态(2026-09-12)
+
+- [x] **M1 线索交易** — commit `5e66000`
+- [x] **M2 技能卡与行动点(质询)** — commit `67a628a`
+- [x] **M3 结构化结局与多选项投票** — commit `99a1248`
+- [x] 3.5 加分项:演示种子 `seeds/generated/sample-4p-quiz.json`(深夜食堂 choice 版,3 道还原题)已入库;`smoke-m3.mjs` 支持 `SMOKE_SCRIPT` 选本
+- 验收:vitest 132 全过 / tsc 0 错误 / eslint 0 输出 / 34 本种子 validator 0 error / schema 已重生成
+
+与计划的偏差(均按"最小侵入 + 向后兼容"处理):
+
+1. `finaleMissing` 增加 `hasQuiz` 参数——hybrid/choice 且无题目的剧本(未过校验的导入)不会卡死终局。
+2. 概要 API 的 `quiz.questions` 对所有视角可见(题面本就是全场公开的答题卡,不含正确项);`myAnswers` 仍仅本人可见。
+3. 基线清理:开工时仓库存在一批未提交的完整功能批次(流式/分层记忆/插话私信等),已先单独提交为 `8cdd51c`,不与里程碑混合。
+4. M2/M3 后 `scripts/[id]/route.ts` 的损坏剧本兜底字面量同步补新字段默认值(tsc 强制)。
+
 ---
 
 ## 0. 必读约束(违反任意一条即返工)
