@@ -11,7 +11,8 @@ import type { ClueV2, ScriptDocV2 } from "@/core/script/v2/schema";
  *  - 滚动摘要：窗口之前的「公共」事件由 LLM 压成一份概要，锚定在 anchorSeq；
  *  - 摘要是全场公共视角，不包含任何座位的私密事件（防火墙不变式）；
  *    玩家自己的私密情报始终逐字出现在其上下文尾部【你持有的线索卡】，不会因摘要丢失。
- * 代价：摘要每次更新会使前缀缓存失效一次（每 SUMMARY_TRIGGER_CHARS 字符至多一次）。
+ * 代价与策略：摘要文本位于 prompt 用户消息开头，更新一次即全场缓存失效一次；
+ * 引擎因此把更新锚定在轮次边界（transitionSearch/transitionDiscussion），轮内前缀稳定。
  */
 
 /** 逐字保留的近期窗口大小（按渲染后字符数估算） */
@@ -73,11 +74,25 @@ export function renderLogWithMemory(
   if (anchorIdx < 0) {
     return renderEventLog(events, seatIndex, { includePrivate });
   }
+  // 座位视角:锚点之前的「非公开且属于自己」事件(私聊/转交/私发提示)不进摘要,
+  // 原样保留为私密备忘——公共摘要只压缩公共历史,绝不吃掉玩家的私密记忆。
+  let privateMemo = "";
+  if (seatIndex !== null) {
+    const memoLines = renderEventLog(
+      events
+        .slice(0, anchorIdx + 1)
+        .filter((e) => visibleTo(e, seatIndex) && e.visibility !== "public" && e.type !== "clue"),
+      seatIndex,
+      { includePrivate: true },
+    );
+    if (memoLines.trim()) privateMemo = `\n\n【此前的私密备忘（仅你可见，仍然有效）】\n${memoLines}`;
+  }
+
   const recent = renderEventLog(events.slice(anchorIdx + 1), seatIndex, { includePrivate });
   if (!recent.trim()) {
-    return `【现场记录·此前概要】\n${memory.summary.trim()}`;
+    return `【现场记录·此前概要】\n${memory.summary.trim()}${privateMemo}`;
   }
-  return `【现场记录·此前概要】\n${memory.summary.trim()}\n\n【最近的现场记录】\n${recent}`;
+  return `【现场记录·此前概要】\n${memory.summary.trim()}${privateMemo}\n\n【最近的现场记录】\n${recent}`;
 }
 
 /** 摘要员 prompt：把（旧摘要 + 新增记录）合并成一份事实条目式概要。 */

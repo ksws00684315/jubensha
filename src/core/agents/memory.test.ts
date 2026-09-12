@@ -132,6 +132,40 @@ describe("分层记忆", () => {
   });
 });
 
+describe("私密备忘保留(M8)", () => {
+  it("锚点前仅自己可见的私聊/转交保留,无关座位与线索卡不进备忘", () => {
+    const whisper = {
+      ...speechEv("1", 2, "私下对你说:我 21 点看见有人上楼。"),
+      type: "private" as const,
+      toSeat: 1,
+      visibility: "seat:1",
+    };
+    const myClue = {
+      ...speechEv("2", 1, ""),
+      type: "clue" as const,
+      visibility: "seat:1",
+      content: { clueId: "ledger", clueName: "锁在箱子里的账本", clueContent: "账本内容", private: true },
+    };
+    const otherClue = {
+      ...speechEv("3", 0, ""),
+      type: "clue" as const,
+      visibility: "seat:2",
+      content: { clueId: "x", clueName: "别人的线索", clueContent: "不该看到", private: true },
+    };
+    const publicSpeech = speechEv("4", 0, "公开发言。");
+    const memory = { anchorSeq: "4", summary: "概要。" };
+    const mine = renderLogWithMemory([whisper, myClue, otherClue, publicSpeech], 1, memory, true);
+    expect(mine).toContain("【此前的私密备忘（仅你可见，仍然有效）】");
+    expect(mine).toContain("私下对你说");
+    expect(mine).not.toContain("别人的线索");
+    // 线索内容不重复进备忘(尾部线索卡已完整列出)
+    expect(mine.split("【此前的私密备忘（仅你可见，仍然有效）】")[1].split("【最近的现场记录】")[0]).not.toContain("账本内容");
+    // 无关座位（非发送/非接收）看不到私聊
+    const other = renderLogWithMemory([whisper, myClue, otherClue, publicSpeech], 3, memory, true);
+    expect(other).not.toContain("私下对你说");
+  });
+});
+
 describe("世界书式线索提示", () => {
   it("别人提到我持有的私藏线索时给出提示", () => {
     const state = makeState();
