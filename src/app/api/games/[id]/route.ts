@@ -104,6 +104,22 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     turnSeat: runtimeState.turnSeat ?? null,
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
     pendingAnswer: runtimeState.pendingAnswer ?? null,
+    // 技能卡（仅本人可见自己的卡）：阶段/点数/once 计算可用性
+    skills: (() => {
+      if (mySeat === null || doc.flow.actionPointsPerRound <= 0) return [];
+      const me = doc.characters.find((c) => c.id === game.room.seats.find((s2) => s2.index === mySeat)?.characterId);
+      if (!me) return [];
+      const left = runtimeState.actionPoints?.[String(mySeat)] ?? 0;
+      const used = runtimeState.usedSkills ?? [];
+      return me.privateCard.skills.map((skill) => ({
+        ...skill,
+        usable:
+          skill.phase === game.phase &&
+          (!skill.once || !used.includes(`${mySeat}:${skill.id}`)) &&
+          skill.cost <= left,
+      }));
+    })(),
+    actionPointsLeft: mySeat !== null && doc.flow.actionPointsPerRound > 0 ? runtimeState.actionPoints?.[String(mySeat)] ?? 0 : 0,
     humanDeadline: mySeat !== null ? runtimeState.humanDeadlines?.[String(mySeat)] ?? null : null,
     // 推荐回复：轮到我发言时后台生成的建议短句
     suggestions: mySeat !== null ? runtimeState.suggestions?.[String(mySeat)] ?? [] : [],

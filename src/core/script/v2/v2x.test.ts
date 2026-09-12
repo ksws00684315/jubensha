@@ -60,6 +60,32 @@ describe("Schema v2.x 新字段（向后兼容）", () => {
     expect(d2.hostGuide?.perPhase[0].notes).toContain("时间线");
     expect(validateScriptV2(d2).filter((i) => i.level === "error")).toHaveLength(0);
   });
+
+  it("技能卡与行动点字段可解析；cost 超过每轮行动点 → warning", () => {
+    const d2 = cloneWith((d) => {
+      d.flow.actionPointsPerRound = 1;
+      d.characters[1].privateCard.skills = [
+        { id: "confront", name: "当场对质", description: "要求一名 AI 当众正面回答", cost: 2, phase: "DISCUSSION", effect: "verify", once: true },
+      ];
+    });
+    expect(d2.flow.actionPointsPerRound).toBe(1);
+    expect(d2.characters[1].privateCard.skills[0].name).toBe("当场对质");
+    const issues = validateScriptV2(d2);
+    expect(issues.some((i) => i.level === "warning" && i.message.includes("超过每轮行动点"))).toBe(true);
+    expect(issues.filter((i) => i.level === "error")).toHaveLength(0);
+  });
+
+  it("技能默认值：cost=1/phase=DISCUSSION/effect=verify/once=true，且默认 actionPointsPerRound=0", () => {
+    const d2 = cloneWith((d) => {
+      d.characters[1].privateCard.skills = [{ id: "probe", name: "试探", description: "问一句" }];
+    });
+    const s = d2.characters[1].privateCard.skills[0];
+    expect(s.cost).toBe(1);
+    expect(s.phase).toBe("DISCUSSION");
+    expect(s.effect).toBe("verify");
+    expect(s.once).toBe(true);
+    expect(doc.flow.actionPointsPerRound).toBe(0);
+  });
 });
 
 describe("Validator 新规则", () => {

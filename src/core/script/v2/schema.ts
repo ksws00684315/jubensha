@@ -154,6 +154,19 @@ const stageSchema = z
   })
   .strict();
 
+/** 技能卡：讨论/搜证阶段消耗行动点发动；v1 仅 verify（质询）效果，预留扩展 */
+const skillSchema = z
+  .object({
+    id: idSchema,
+    name: leafText,
+    description: leafText,
+    cost: z.number().int().min(1).max(3).default(1),
+    phase: z.enum(["SEARCH", "DISCUSSION"]).default("DISCUSSION"),
+    effect: z.enum(["verify"]).default("verify"),
+    once: z.boolean().default(true),
+  })
+  .strict();
+
 const privateCardSchema = z
   .object({
     backstory: narrativeSchema,
@@ -172,6 +185,8 @@ const privateCardSchema = z
     tells: z.array(leafText).default([]),
     /** 分幕增量：进入对应幕后追加的知识/目标 */
     stages: z.array(stageSchema).default([]),
+    /** 技能卡：消耗行动点发动（flow.actionPointsPerRound > 0 才启用） */
+    skills: z.array(skillSchema).default([]),
   })
   .strict();
 
@@ -258,6 +273,8 @@ export const flowV2Schema = z
     privateChatMessageLimit: z.number().int().min(2).max(6).default(3),
     /** 讨论阶段允许把未公开线索卡私下面交给其他座位 */
     allowClueTransfer: z.boolean().default(false),
+    /** 每轮行动点（0 = 技能系统关闭） */
+    actionPointsPerRound: z.number().int().min(0).max(3).default(0),
     /** 分幕：进入对应搜证轮时由 DM 宣幕，角色 stages 同步解锁 */
     acts: z.array(actSchema).default([]),
   })
@@ -314,6 +331,7 @@ export type CharacterV2 = z.infer<typeof characterV2Schema>;
 export type PrivateCardV2 = z.infer<typeof privateCardSchema>;
 export type KnowledgeV2 = z.infer<typeof knowledgeSchema>;
 export type StageV2 = z.infer<typeof stageSchema>;
+export type SkillV2 = z.infer<typeof skillSchema>;
 export type ActV2 = z.infer<typeof actSchema>;
 export type HostGuideV2 = z.infer<typeof hostGuideSchema>;
 export type LocationV2 = z.infer<typeof locationV2Schema>;

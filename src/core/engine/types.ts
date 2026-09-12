@@ -52,7 +52,11 @@ export interface GameState {
   /** 讨论阶段每人剩余提问次数 */
   questionsLeft: Record<string, number>;
   /** 等待被提问者当众回答 */
-  pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
+  pendingAnswer: { fromSeat: number; toSeat: number; question: string; forced?: boolean } | null;
+  /** 每轮行动点（座位索引字符串 → 剩余点；技能系统开启时由阶段流转重置） */
+  actionPoints?: Record<string, number>;
+  /** 已用过的 once 技能（键 `${seat}:${skillId}`，整局有效） */
+  usedSkills?: string[];
   /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */
   humanDeadlines?: Record<string, number>;
   /**

@@ -1,6 +1,6 @@
 import type { GameState, Phase } from "./types";
 import { activeSeats } from "./state";
-import type { ActV2 } from "@/core/script/v2/schema";
+import type { ActV2, SkillV2 } from "@/core/script/v2/schema";
 
 export const QUESTIONS_PER_PLAYER = 3;
 
@@ -55,6 +55,39 @@ export function validateTransfer(
   if (!(state.heldClues[fromSeat] ?? []).includes(clueId)) return "你没有这张线索卡";
   if (state.clueStates[clueId]?.isPublic === true) return "公开线索无需转交";
   return null;
+}
+
+/** 技能发动前置校验（v1 仅 verify/质询）。返回错误文案，通过则为 null。 */
+export function validateUseSkill(
+  script: {
+    flow: { actionPointsPerRound: number };
+    characters: ReadonlyArray<{ id: string; privateCard: { skills: ReadonlyArray<SkillV2> } }>;
+  },
+  state: Pick<GameState, "phase" | "seats" | "actionPoints" | "usedSkills">,
+  fromSeat: number,
+  skillId: string,
+  toSeat: number | undefined,
+  text: string
+): string | null {
+  if (script.flow.actionPointsPerRound <= 0) return "本局未开启技能系统";
+  const charId = state.seats[fromSeat]?.characterId;
+  const skill = script.characters.find((c) => c.id === charId)?.privateCard.skills.find((s) => s.id === skillId);
+  if (!skill) return "你没有这张技能卡";
+  if (skill.phase !== state.phase) return "该技能不能在这个阶段使用";
+  if (skill.once && (state.usedSkills ?? []).includes(`${fromSeat}:${skillId}`)) return "该技能已经用过";
+  if (skill.cost > (state.actionPoints?.[String(fromSeat)] ?? 0)) return "行动点不足";
+  if (skill.effect === "verify") {
+    if (toSeat === undefined || !activeSeats(state).includes(toSeat)) return "质询对象不合法";
+    if (toSeat === fromSeat) return "不能质询自己";
+    if (state.seats[toSeat]?.kind !== "ai") return "质询技能只能对 AI 玩家使用";
+    if (!text) return "请输入质询问题";
+  }
+  return null;
+}
+
+/** 技能质询的强制回答提示：AI 不允许回避。 */
+export function forcedAnswerHint(question: string): string {
+  return `${question}【技能质询】这是被技能强制要求的回答：必须正面回应问题本身，不得回避、不得反问、不得转移话题（可以藏秘密，但答案要对得上问题）。`;
 }
 
 /** 已解锁的幕：搜证/讨论阶段按 roundStart ≤ 当前轮次解锁；投票阶段视为全部解锁（投票必在所有搜证轮之后）。 */

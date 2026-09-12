@@ -169,6 +169,19 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
       checkRefs(issues, stage.knowledge.flatMap((k) => k.relatedClueIds), clueIds, `characters.${index}.privateCard.stages.${sIndex}.knowledge.relatedClueIds`);
     }
   }
+
+  // 技能卡：id 唯一；消耗超过每轮行动点则永远无法使用；质询建议讨论阶段（搜证阶段没有当众作答回合）
+  for (const [index, character] of doc.characters.entries()) {
+    checkUniqueIds(issues, character.privateCard.skills, `characters.${index}.privateCard.skills`);
+    for (const [sIndex, skill] of character.privateCard.skills.entries()) {
+      if (skill.cost > doc.flow.actionPointsPerRound) {
+        issue(issues, "warning", `characters.${index}.privateCard.skills.${sIndex}.cost`, `技能「${skill.name}」消耗(${skill.cost})超过每轮行动点(${doc.flow.actionPointsPerRound})，将永远无法使用`);
+      }
+      if (skill.effect === "verify" && skill.phase === "SEARCH") {
+        issue(issues, "warning", `characters.${index}.privateCard.skills.${sIndex}.phase`, `质询技能「${skill.name}」建议设在讨论阶段（搜证阶段没有当众作答机制）`);
+      }
+    }
+  }
   for (const [index, clue] of doc.clues.entries()) {
     checkRefs(issues, clue.forbiddenCharacterIds, characterIds, `clues.${index}.forbiddenCharacterIds`);
     if (clue.release) checkRefs(issues, clue.release.afterCluePublicIds, clueIds, `clues.${index}.release.afterCluePublicIds`);

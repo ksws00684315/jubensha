@@ -4,7 +4,7 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState, renderEventLog, clueReachable } from "./state";
-import { ensureDiscussionState, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, unlockedActs } from "./flow";
+import { ensureDiscussionState, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, validateUseSkill, unlockedActs } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
 import { SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
@@ -22,10 +22,11 @@ const HUMAN_TURN_TIMEOUT_MS = 180_000;
 const AI_DECISION_TIMEOUT_MS = 90_000;
 
 export interface GameAction {
-  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer";
+  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill";
   text?: string;
   location?: string;
   clueId?: string;
+  skillId?: string;
   publish?: boolean;
   target?: number;
   reason?: string;
@@ -102,6 +103,8 @@ export class GameEngine {
       state.questionsLeft ??= {};
       state.pendingAnswer ??= null;
       state.humanDeadlines ??= {};
+      state.actionPoints ??= {};
+      state.usedSkills ??= [];
       // 服务重启后内存定时器已丢失，过期截止时间一并清掉，避免前端挂着永不跳转的倒计时
       for (const k of Object.keys(state.humanDeadlines)) {
         if (state.humanDeadlines[k] <= Date.now()) delete state.humanDeadlines[k];
@@ -590,6 +593,7 @@ export class GameEngine {
     this.searchAsked.clear();
     this.publishAsked.clear();
     this.turnAsked.clear();
+    this.resetActionPoints();
     await this.dmSay(
       `宣布进入【第 ${round} 轮搜证】：每位玩家选择一个地点进行搜证，找到的线索可以选择当场公开或私藏。轮次共 ${this.script.flow.searchRounds} 轮。`,
       "SEARCH",
@@ -617,6 +621,7 @@ export class GameEngine {
     this.aiDiscussionAsked.clear();
     this.whisperAsked.clear();
     this.suggestAsked.clear();
+    this.resetActionPoints();
     this.state.turnSeat = activeSeats(this.state)[0];
     await this.dmSay(
       `宣布进入【第 ${round} 轮圆桌讨论】：按座位顺序轮流发言，每人可当众提问三次。轮到你时请陈述或提问，被问到的人需要当场回答。发言时点名某位玩家，对方可能会立即插话回应；各位也可能收到其他玩家的悄悄私信，请留意界面提示。`,
@@ -625,6 +630,16 @@ export class GameEngine {
     );
     await persistState(this.gameId, this.state);
     await this.tickInner();
+  }
+
+  /** 每轮行动点重置：仅当技能系统开启（actionPointsPerRound > 0）时按活跃座位发点 */
+  private resetActionPoints(): void {
+    this.state.actionPoints = {};
+    if (this.script.flow.actionPointsPerRound > 0) {
+      for (const seat of activeSeats(this.state)) {
+        this.state.actionPoints[String(seat)] = this.script.flow.actionPointsPerRound;
+      }
+    }
   }
 
   private async transitionVote(): Promise<void> {
@@ -893,6 +908,12 @@ export class GameEngine {
     return this.state.seats[seatIndex]?.characterId || null;
   }
 
+  /** 某座位角色卡上的技能卡 */
+  private skillOf(seatIndex: number, skillId: string) {
+    const charId = this.seatCharacterId(seatIndex);
+    return this.script.characters.find((c) => c.id === charId)?.privateCard.skills.find((s) => s.id === skillId);
+  }
+
   /** 某座位视角下可用的搜证地点（禁搜自己的房间/无可达线索的地点不列） */
   private availableLocations(seatIndex?: number): string[] {
     const seatChar = this.seatCharacterId(seatIndex);
@@ -1143,8 +1164,11 @@ export class GameEngine {
     if (!pending) return;
     const target = pending.toSeat;
     if (this.state.seats[target]?.kind === "ai") {
+      const base = `${this.speakerName(pending.fromSeat)} 当众问你：「${pending.question}」。`;
       await this.aiSpeak(target, {
-        hint: `${this.speakerName(pending.fromSeat)} 当众问你：「${pending.question}」。请正面回答这个问题；可以藏秘密，但不能装作没听见。`,
+        hint: pending.forced
+          ? forcedAnswerHint(base)
+          : `${base}请正面回答这个问题；可以藏秘密，但不能装作没听见。`,
       });
       this.state.pendingAnswer = null;
       await persistState(this.gameId, this.state);
@@ -1406,6 +1430,35 @@ export class GameEngine {
         await this.recordVote(seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
         this.clearHumanTimeout(seatIndex);
         this.continueTick();
+        return { ok: true };
+      }
+      case "use_skill": {
+        // ★ 技能卡·质询（verify）★：消耗行动点，强制目标 AI 当众正面回答。
+        const skillId = action.skillId ?? "";
+        const toSeat = action.toSeat;
+        const text = (action.text ?? "").trim().slice(0, 200);
+        const invalid = validateUseSkill(this.script, this.state, seatIndex, skillId, toSeat, text);
+        if (invalid) return { ok: false, error: invalid };
+        const skill = this.skillOf(seatIndex, skillId);
+        if (!skill || toSeat === undefined) return { ok: false, error: "技能不可用" };
+        this.state.actionPoints ??= {};
+        this.state.actionPoints[String(seatIndex)] = (this.state.actionPoints[String(seatIndex)] ?? 0) - skill.cost;
+        this.state.usedSkills ??= [];
+        if (skill.once) this.state.usedSkills.push(`${seatIndex}:${skill.id}`);
+        this.state.pendingAnswer = { fromSeat: seatIndex, toSeat, question: text, forced: true };
+        await this.recordEvent({
+          type: "system",
+          phase: this.state.phase,
+          round: this.state.round,
+          fromSeat: null,
+          toSeat: null,
+          visibility: "public",
+          content: {
+            text: `${this.speakerName(seatIndex)} 动用了技能【${skill.name}】，要求 ${this.speakerName(toSeat)} 当众正面回答：${text}`,
+            skillId,
+          },
+        });
+        await persistState(this.gameId, this.state);
         return { ok: true };
       }
       case "transfer": {

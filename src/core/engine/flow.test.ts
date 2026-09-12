@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   ensureDiscussionState,
+  forcedAnswerHint,
   QUESTIONS_PER_PLAYER,
   nextAfterDiscussion,
   nextAfterSearch,
   validateDiscussionAsk,
   validateTransfer,
+  validateUseSkill,
 } from "./flow";
 import { initialState } from "./state";
 
@@ -83,5 +85,57 @@ describe("线索转交校验 validateTransfer", () => {
 
   it("讨论期转交未公开持有线索给其他活跃座位 → 通过", () => {
     expect(validateTransfer(script, transferState(), 0, "a", 1)).toBeNull();
+  });
+});
+
+describe("技能发动校验 validateUseSkill 与质询提示", () => {
+  const skill = { id: "confront", name: "当场对质", description: "要求一名 AI 当众正面回答", cost: 1, phase: "DISCUSSION" as const, effect: "verify" as const, once: true };
+  const skillScript = {
+    flow: { actionPointsPerRound: 2 },
+    characters: [
+      { id: "char_a", privateCard: { skills: [skill] } },
+      { id: "char_b", privateCard: { skills: [] } },
+    ],
+  };
+
+  function skillState() {
+    const state = initialState([
+      { index: 0, kind: "human", characterId: "char_a", playerName: "A" },
+      { index: 1, kind: "ai", characterId: "char_b", playerName: "B" },
+      { index: 2, kind: "human", characterId: "char_c", playerName: "C" },
+    ]);
+    state.phase = "DISCUSSION";
+    state.actionPoints = { "0": 2 };
+    state.usedSkills = [];
+    return state;
+  }
+
+  it("功能关闭 / 无此技能 / 阶段错 / once 已用 / 点数不足 / 目标非 AI / 问题为空 均拒绝", () => {
+    expect(validateUseSkill({ ...skillScript, flow: { actionPointsPerRound: 0 } }, skillState(), 0, "confront", 1, "你那晚在哪")).toBe("本局未开启技能系统");
+    expect(validateUseSkill(skillScript, skillState(), 0, "nope", 1, "你那晚在哪")).toBe("你没有这张技能卡");
+    const search = skillState();
+    search.phase = "SEARCH";
+    expect(validateUseSkill(skillScript, search, 0, "confront", 1, "你那晚在哪")).toBe("该技能不能在这个阶段使用");
+    const used = skillState();
+    used.usedSkills = ["0:confront"];
+    expect(validateUseSkill(skillScript, used, 0, "confront", 1, "你那晚在哪")).toBe("该技能已经用过");
+    const broke = skillState();
+    broke.actionPoints = { "0": 0 };
+    expect(validateUseSkill(skillScript, broke, 0, "confront", 1, "你那晚在哪")).toBe("行动点不足");
+    expect(validateUseSkill(skillScript, skillState(), 0, "confront", 2, "你那晚在哪")).toBe("质询技能只能对 AI 玩家使用");
+    expect(validateUseSkill(skillScript, skillState(), 0, "confront", 1, "")).toBe("请输入质询问题");
+    expect(validateUseSkill(skillScript, skillState(), 0, "confront", 0, "你那晚在哪")).toBe("不能质询自己");
+  });
+
+  it("讨论期有技能卡与行动点，质询 AI → 通过", () => {
+    expect(validateUseSkill(skillScript, skillState(), 0, "confront", 1, "你那晚在哪")).toBeNull();
+  });
+
+  it("forcedAnswerHint 包含强制正面回答的约束", () => {
+    const hint = forcedAnswerHint("张三 当众问你：「案发时你在哪？」。");
+    expect(hint).toContain("【技能质询】");
+    expect(hint).toContain("不得回避");
+    expect(hint).toContain("不得反问");
+    expect(hint).toContain("案发时你在哪");
   });
 });

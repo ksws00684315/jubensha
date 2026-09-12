@@ -89,7 +89,14 @@ export interface GameSummary {
   round: number;
   scriptTitle: string;
   background: string;
-  flow: { searchRounds: number; discussionRounds: number; allowPrivateChat: boolean; privateChatMessageLimit: number; allowClueTransfer: boolean };
+  flow: {
+    searchRounds: number;
+    discussionRounds: number;
+    allowPrivateChat: boolean;
+    privateChatMessageLimit: number;
+    allowClueTransfer: boolean;
+    actionPointsPerRound: number;
+  };
   locations: string[];
   availableLocations: string[];
   seats: Array<{
@@ -123,6 +130,19 @@ export interface GameSummary {
   suggestions: string[];
   /** 向我开过私信窗口的 AI 座位（可回复） */
   openWhispers: number[];
+  /** 我的技能卡（usable = 阶段/once/点数全部满足） */
+  skills: Array<{
+    id: string;
+    name: string;
+    description: string;
+    cost: number;
+    phase: string;
+    effect: string;
+    once: boolean;
+    usable: boolean;
+  }>;
+  /** 本轮剩余行动点 */
+  actionPointsLeft: number;
 }
 
 export interface DmStructuredView {

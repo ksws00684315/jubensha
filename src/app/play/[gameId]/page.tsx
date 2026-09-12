@@ -49,6 +49,9 @@ export default function PlayPage() {
   const [askText, setAskText] = useState("");
   const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
   const [transferClueId, setTransferClueId] = useState<string | null>(null);
+  const [skillActiveId, setSkillActiveId] = useState<string | null>(null);
+  const [skillToSeat, setSkillToSeat] = useState<number | null>(null);
+  const [skillText, setSkillText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
@@ -563,6 +566,74 @@ export default function PlayPage() {
               </div>
             )}
             {phase === "VOTE" && iVoted && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
+            {(summary.skills?.length ?? 0) > 0 && (phase === "SEARCH" || phase === "DISCUSSION") && (
+              <div className="space-y-2 border-t border-gold-400/20 pt-3">
+                <p className="text-xs text-gold-400">技能（剩余行动点 {summary.actionPointsLeft ?? 0}）：</p>
+                {summary.skills.map((s) => {
+                  const reason = s.phase !== phase ? "不在可用阶段" : s.cost > (summary.actionPointsLeft ?? 0) ? "行动点不足" : "已使用过";
+                  return (
+                    <div key={s.id} className="space-y-1.5">
+                      <button
+                        onClick={() => {
+                          setSkillActiveId(skillActiveId === s.id ? null : s.id);
+                          setSkillToSeat(null);
+                        }}
+                        disabled={!s.usable || sending}
+                        title={s.usable ? s.description : `${s.description}（${reason}）`}
+                        className={`w-full rounded-lg border px-3 py-2 text-left text-sm transition disabled:opacity-50 ${
+                          skillActiveId === s.id ? "border-secret-400/60 bg-secret-400/10 text-secret-400" : "border-secret-400/20 text-paper-200 hover:border-secret-400/50"
+                        }`}
+                      >
+                        【{s.name}】<span className="ml-1 text-[11px] text-paper-500">{s.cost} 点{s.once ? " · 单次" : ""}</span>
+                      </button>
+                      {skillActiveId === s.id && (
+                        <div className="space-y-1.5 rounded-lg border border-secret-400/20 bg-ink-950/60 p-2">
+                          <select
+                            value={skillToSeat ?? ""}
+                            onChange={(e) => setSkillToSeat(Number(e.target.value))}
+                            className="w-full rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
+                          >
+                            <option value="" disabled>
+                              选择质询对象（仅 AI）…
+                            </option>
+                            {activeSeats
+                              .filter((s2) => s2.index !== mySeat && s2.kind === "ai")
+                              .map((s2) => (
+                                <option key={s2.index} value={s2.index}>
+                                  {s2.characterName}
+                                </option>
+                              ))}
+                          </select>
+                          <div className="flex gap-2">
+                            <input
+                              value={skillText}
+                              onChange={(e) => setSkillText(e.target.value)}
+                              maxLength={200}
+                              placeholder="要对方正面回答的问题…"
+                              className="min-w-0 flex-1 rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
+                            />
+                            <button
+                              onClick={() => {
+                                if (skillToSeat !== null && skillText.trim()) {
+                                  void send({ type: "use_skill", skillId: s.id, toSeat: skillToSeat, text: skillText });
+                                  setSkillActiveId(null);
+                                  setSkillToSeat(null);
+                                  setSkillText("");
+                                }
+                              }}
+                              disabled={sending || skillToSeat === null || !skillText.trim()}
+                              className="rounded-lg bg-secret-400 px-3 text-sm font-semibold text-ink-950 hover:brightness-110 disabled:opacity-40"
+                            >
+                              质询
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {phase === "DISCUSSION" && (
               <div className="space-y-2">
                 {summary.pendingAnswer?.toSeat === mySeat ? (
