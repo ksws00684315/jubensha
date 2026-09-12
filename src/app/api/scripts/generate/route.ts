@@ -41,7 +41,7 @@ const SCHEMA_HINT = `输出必须是一个 JSON 对象，version 固定为 2，�
 5) 无辜者的角色卡任何通道（knowledge / secrets / objectives / backstory / timeline / alibi）都不得出现真凶姓名，否则玩家读卡即锁凶。
 6) 时间线标题必须是该事件的内容摘要，禁止「事件 1」「事件 2」这类占位标题；正文要完整成句，不要截断半句。
 7) voteMode=culprit 时 quiz 留空数组；hybrid/choice 时必须有题，且 correctOptionId 必须在 options 内。
-8) 每个角色都有秘密/目标/时间线/persona。
+8) 每个角色都有秘密/目标/时间线/persona；秘密 1-2 个（可有与案情弱相关的次级秘密增加可演性），至少一个用 disclosure="conditional" 并写清 condition（被逼问到什么/什么时机才承认），与角色 objectives 呼应。
 
 可选增强（写了就生效，不写不影响入库）：分幕读本 acts + 角色 stages、DM 手册 hostGuide、技能卡 skills（需同时把 flow.actionPointsPerRound 设为 >0）、线索转交 allowClueTransfer、线索发放计划 release / forbiddenCharacterIds、房间主人 ownerCharacterId、knowledge.kind 区分亲见/听说/推断、disclosure=must_share 表示"必须在合适时机主动交代"、alibi / violation / tells。
 
