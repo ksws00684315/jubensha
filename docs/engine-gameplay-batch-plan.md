@@ -28,7 +28,7 @@
 1. **信息防火墙**:任何 AI 的玩家/DM prompt 只能经 `src/core/agents/context.ts` 构建(例外:memory.ts 摘要 builder 与 review.ts 审查器是服务端内部压缩/审查文本,不读取剧本真相;引擎拼装的 systemSay/hint 属公开信息)。玩家上下文 = 公开事件流(按座位视角过滤) + 自己的角色卡 + 自己持有的线索 + 与自己相关的私聊。`truth`/他人私卡在类型与代码路径上双重不可达。新功能不得新增绕过 `buildPlayerContext/buildDmContext` 的取数路径。
 2. **前缀缓存不变式**:`cacheFriendlyMessages`(context.ts)要求同一座位 system 消息整局不变。技能/测验等动态指令一律放 user 尾部;hostGuideBlock 的先例可参照。
 3. **并发模型**:`engine.ts` 所有状态变更必须走 `exclusive()`;后台/决策类 LLM 调用走 `scheduleBackground()`(参照 `queueAiVote`/`queueAiWhisper`:锁外调用、锁内短暂提交)。已知债务:正式发言回合的 LLM 调用仍在锁内(见评审记录),重构需 turn 版本协议,单独立项。事件只经 `recordEvent()` 落库(自动 SSE 广播 + 写内存 + 触发摘要/向量化)。
-4. **旧档兼容**:`GameState` 新增字段必须在 `GameEngine.load()` 里 `??=` 补默认(参照 `state.pendingPublish ??= {}` 一段)。Schema 新字段必须全部带 `.default()`,保证 33 本存量剧本零改动可解析,且 `npx tsx scripts/validate-script-v2.ts` 对全部种子保持 **0 error**(这是硬门槛)。
+4. **旧档兼容**:`GameState` 新增字段必须在 `GameEngine.load()` 里 `??=` 补默认(参照 `state.pendingPublish ??= {}` 一段)。Schema 新字段必须全部带 `.default()`,保证全部存量剧本(现为 34 本)零改动可解析,且 `npx tsx scripts/validate-script-v2.ts` 对全部种子保持 **0 error**(这是硬门槛)。
 5. **双视角渲染**:每新增一种 `EngineEvent.type`,必须同时改两处——`src/core/engine/state.ts` 的 `renderEventLog`(给 LLM 看的文本)和 `src/app/play/[gameId]/page.tsx` 的 `EventBubble`(给玩家看的气泡);并把新类型加进 SSE 处理器的概要刷新触发列表(page.tsx 内 `ev.type === "clue" || ...` 那行)。
 6. **验收命令**(每个里程碑结束都要跑):
    ```bash
@@ -50,7 +50,7 @@
 
 ### 1.1 Schema(`src/core/script/v2/schema.ts`)
 - `flowV2Schema` 增加:`allowClueTransfer: z.boolean().default(false)`。
-- 不改 clue/其他结构。33 本不受影响。
+- 不改 clue/其他结构。存量剧本不受影响。
 
 ### 1.2 引擎(`src/core/engine/engine.ts` + `types.ts` + `state.ts`)
 - `GameState` 不需要新字段(`heldClues` 即持有权唯一事实源)。
@@ -223,7 +223,7 @@ ending: z.object({
 ## 通用收尾清单(三个里程碑各自完成后执行)
 
 1. `npx vitest run && npx tsc --noEmit && npx eslint src --quiet` 全绿;
-2. 33 本 validator 0 error;
+2. 全量种子(现为 34 本)validator 0 error;
 3. 改过 Zod → `npm run script:schema` 再生成;
 4. `README.md`:功能清单与「已知限制」更新(choice 模式结局文案语义、verify 仅对 AI、transfer 仅 DISCUSSION 等边界);
 5. 本文档勾选对应里程碑的完成状态;
