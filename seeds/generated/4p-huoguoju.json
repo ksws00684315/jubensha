@@ -275,7 +275,8 @@
                 "text": "你长期偷用后厨食材拍吃播；案发时段你人在后厨，手机在窗台录着大堂——素材里拍到了有人往盐罐里倒东西，但交出手机等于自曝违规，你攥着这支铁证不敢撒手。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当案发时段大堂的动向对不上、或你窗台上那部手机的录像实在瞒不住时，交出素材承认偷拍，同时认下偷用食材拍吃播的事。"
           }
         ],
         "objectives": [
@@ -731,7 +732,8 @@
                 "text": "你隐匿了父亲的记事本，里面写着周五带市场监管所的人查那家烧烤摊——你怕的不是凶手，是雷家告倒那个人的家、你这个新媳妇家破人亡的剧本。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当父亲的记事本下落被追问、或'周五'那场约被摆上台面时，才不情愿地交出本子，认下你把它藏起来、不敢让它见光的事。"
           }
         ],
         "objectives": [
@@ -887,27 +889,52 @@
     {
       "id": "location_1",
       "name": "大堂",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "打烊前的大堂灯还亮着，靠里那张桌上碗碟未收，油碟里残着底；两瓶撕去标签的酸梅汤立在桌角，寒气顺着门缝往里钻。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "调料台",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "自助调料台上一排罐子摆得顺手，最常用的那格却挪动过；台下泔水桶边缘露出半只白色包装袋，撕口很新。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "后厨",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后厨蒸汽未散、灶火刚歇，茶水间窗台上还架着一部手机，镜头正对大堂；米缸后塞着一本黑色记事本，外皮沾着新鲜的米灰。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "收银台",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "收银台抽屉里摞着经年的账册单据，台面磨得油亮；二十三年的老店，每一笔进出账都从这道小小的柜台过。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "店门口停车位",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "店门外的路边车位停着那辆收车的出租车，充电座上的手机还亮着屏；灶火的白气从门缝里飘出来，街灯照得车位雪亮。"
+        }
+      ]
     }
   ],
   "clues": [

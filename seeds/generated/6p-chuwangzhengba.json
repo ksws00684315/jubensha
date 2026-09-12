@@ -825,7 +825,8 @@
                 "text": "师父味觉退化、靠你报菜评审十年的秘密，全国只有你知道。主席一死，这秘密若被翻出，全部历史分数都会被质疑，你的十年就成了共谋造假。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当小抄本被翻出、师门秘密瞒不住时，认下替师父报菜评审十年的事，交出那页'当众还你'的字，说明他本打算赛后公开。"
           }
         ],
         "objectives": [
@@ -1069,7 +1070,8 @@
                 "text": "你花五万买了决赛题，收条还压在工具箱里；主席那句汤底是买的吧让你确信自己已被盯上——卖题的和用买的汤底的，都在他名单上。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当收条被搜出或押题的事瞒不住时，认下花五万买题，把16:00讨退钱的原话与15:53看到的隔间谈判说出来。"
           }
         ],
         "objectives": [
@@ -1515,27 +1517,52 @@
     {
       "id": "location_1",
       "name": "备赛后厨",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "备赛后厨里灶火正旺，卤水台上硝罐敞着盖；工位旁的工具箱半开，料格后塞着两盒高汤块，油烟把灯光熏得发黄。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "评委席",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "评委席隔间铺着绒布，紫砂茶壶温在壶承上；沙发缝里压着文件，抽屉里一本蓝布面小抄本写满报菜词，隔断外就是喧闹的赛场。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "后厨库房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "库房里米面粮油码得整齐，领用登记本挂在门边；当值库管的凳子倒扣在账台上，硝水桶的封条垂着一角。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "导演工作间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "导演工作间里多块屏幕闪着回放画面，工作电脑的聊天窗口还开着；导播台贴满流程便签，对讲机的电流声没停过。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "演员通道",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "演员通道两侧贴满选手海报，应急灯照着昏黄的走廊；角落里架着一台备用机的云台，镜头正对评委席的方向。"
+        }
+      ]
     }
   ],
   "clues": [

@@ -169,7 +169,8 @@
                 "text": "你戌时（约20时）在陵墙东南角与村东姑娘私会，「少祭司」腰牌掉在角门砖缝里不敢去捡——你戌时起的行踪断了人证；发现尸身时殿门未闩，而老祭司辞岁必闩门。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当角门砖缝里的腰牌被翻出、或你戌时的行踪被逼问时，抢先认下与村东姑娘的私会，交代腰牌为何掉在角门不敢回头捡。"
           }
         ],
         "objectives": [
@@ -401,7 +402,8 @@
                 "text": "你近三夜私猎陵区狐鹿、巡夜簿虚记「平安」；昨夜亥时二刻（约21时30分）你巡至享殿外，见殿门虚掩、灯亮，按老规矩「辞岁不打扰」未入——你离凶手离开只差一步。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当巡夜簿三夜'平安'被质疑、或狐皮被搜出时，交出皮子认下私猎虚记，用认下的罪换出亥时二刻在殿外所见的时辰。"
           }
         ],
         "objectives": [
@@ -607,27 +609,52 @@
     {
       "id": "location_1",
       "name": "陵前享殿",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "享殿在雪里立了两百年，供案上灯油未干、奠刀横陈；蒲团的跪痕错开半尺，殿砖缝有擦拭过的水痕，长明灯照着满案祭器。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "桑青梧的西厢房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "西厢房里针线匣与妆匣摆在炕头，针线簸箩未收；窗纸映着雪光，屋角箱笼捆了一半，是准备离村的模样。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "护陵队房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "护陵队房里弩架与灯火用具靠墙立着，巡夜簿摊在案上；墙角挂着几张新剥的皮子，屋里一股烟火混着皮腥气。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "裴九思的客房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "客房里箱笼码得整齐，箱底压着收货的账本；案上摆着几件待验的铜器样货，银戥子没收，外乡人的行装随时能走。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "村公所与陵墙角门",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "村公所的簿册堆满一案，上城簿翻在腊月那页；陵墙东南角门的砖缝里塞得住小物，角门内青苔上留着两处并坐的压痕。"
+        }
+      ]
     }
   ],
   "clues": [

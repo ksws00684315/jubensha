@@ -169,7 +169,8 @@
                 "text": "你与陆鸿飞私订终身，庚帖藏在西厢书匣深处；父亲以逐出院门相逼，你昨夜收拾箱笼决意出走的行踪无人可证。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当西厢将被搜检、或你当夜争吵与收拾箱笼的行踪被逼问时，抢先把庚帖交出来，认下与陆鸿飞的私情与出走的打算。"
           }
         ],
         "objectives": [
@@ -517,7 +518,8 @@
                 "text": "你捐的「宋椠」是花三百两请苏州书坊做的翻刻伪本；昨夜亥时前你曾到奎文楼下想再求一次山长，见阁中有影走动没敢上楼——这一段无人可证。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当有人指你亥时前到过奎文楼下、或那部'宋椠'被当面验破时，才认下求见未遂的那段行踪，承认捐的是苏州书坊的翻刻伪本。"
           }
         ],
         "objectives": [
@@ -607,37 +609,72 @@
     {
       "id": "location_1",
       "name": "奎文楼一层门厅",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "奎文楼一层门厅里楼梯盘旋而上，楼梯下倒着一盏打翻的灯笼，蜡泪凝在阶沿；借书簿摊在案上，朱批旧墨还在页上。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "奎文楼二层经阁",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "二层经阁满架善本，樟脑气息经年不散；经案侧一道拖拭过的痕迹通向楼梯口，案头青铜鹤形书镇静静立着。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "奎文楼顶层钟室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "顶层钟室悬着'惊雷钟'，钟身刻痕经年；钟绳末端新系过，绳身一道新鲜勒痕沾着烛油，凭窗可望见全院灯火。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "训导院",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "训导院里斋舍整洁，案头公文理得一丝不乱；屋里炭盆未熄，盆中纸灰尚温，风一吹就泛起细屑。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "斋夫柴房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "柴房里柴堆码得齐整，柴堆后藏着一只上着火漆封识的木箱；屋里昏暗，只有门缝漏进一线雪光。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "山长院",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "山长院正屋书案上文房齐整，《白鹿年谱》稿匣开着，誊清本的裁口新鲜；朱笔搁在匣边，提纲墨迹未干。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "西厢与客舍",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "西厢是女眷居处，书匣与针线收在案头；廊子那头的客舍住着外来宾朋，夜来灯熄得最晚，晨起门还闩着。"
+        }
+      ]
     }
   ],
   "clues": [

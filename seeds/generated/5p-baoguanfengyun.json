@@ -296,7 +296,8 @@
                 "text": "你私卖馆论给《江声晚报》换药钱，汇款条藏在宿舍铺底；22:40 你与主编拍桌、撂话'你等着'，是死前与他有过公开冲突的人。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当对家晚报的汇款条被翻出、或'你等着'那句撂话被众人逼问时，才承认私卖馆论换药钱，交出23:15路过排字房听见水烟声的证词。"
           }
         ],
         "objectives": [
@@ -944,7 +945,8 @@
                 "text": "你偷卖馆里的五号铅字还烟账，小账本藏在排字房后间草席下；主编正查铅字短少，你怕查到自己头上；案发时你恰好离场二十分钟，是'最可能动手却最无辜'的人。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当草席下的小账被搜出、或铅字短少的追查逼到你头上时，才认下偷卖五号铅字抵烟账，交代23:05离场的二十分钟去向。"
           }
         ],
         "objectives": [
@@ -1138,37 +1140,72 @@
     {
       "id": "location_1",
       "name": "排字房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "字架与字盘排满一屋，号外大样还钳在架上，红批墨迹未干；绿罩台灯半明半灭地亮着，死者伏过的矮凳空在一旁，油墨味混着夜气。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "电机房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "电机房里印刷机与配电闸一字排开，检修登记簿摊在案上；机器预热的嗡鸣不停，电闸与钥匙都归这一屋管。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "主编室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "主编室的桌椅一丝不乱，抽屉暗格里锁着往来底单；案上水烟具未收，灯下的座位今夜空着。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "账房与经理室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "账房里账册与流水排了满架，经理室的抽屉上着锁，钥匙拴在怀表链上；纸行的催款信压在最上面，深夜只剩机器声从墙外传来。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "馆员宿舍",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "狭小的馆员宿舍里，木板床铺底压着随身的皮箱，退稿信与私物塞在箱底；窗外机器声隐隐，灯芯拨得极小。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "储纸库",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "储纸库里白报纸垛得齐胸高，纸卷与纸垛间留着窄缝；夜里库房阴凉，翻动纸垛会扬起细屑，一有人抽动就留痕。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "排字房后间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "排字房后间铺着草席，堆着杂物与备用字盘；席角压得住私物，地上一只字盘翻倒着，五号铅字撒了半地还没拾。"
+        }
+      ]
     }
   ],
   "clues": [

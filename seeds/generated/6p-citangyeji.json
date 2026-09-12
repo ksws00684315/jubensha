@@ -995,7 +995,8 @@
                 "text": "你偷改了族谱记载，被族老抓住把柄，明晚要么当众认错除名，要么身败名裂；改录截图打印出来藏在电动车筐——你想留着证据证明你只是修正不是篡改。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当改录截图被搜出、或'除名'的话被逼到眼前时，认下后台改录之事，坚持是订正讹误而非篡改，交出你整晚守前殿看到的进出。"
           }
         ],
         "objectives": [
@@ -1235,7 +1236,8 @@
                 "text": "你偷拍了祠堂内外多段素材，包括 21:00 有人提布袋进偏殿的特写——火漆印清清楚楚。你是擅闯者、偷拍者，还是全族眼中的拆祠堂的人。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当擅闯与偷拍被指认时，主动交出21:00布袋进偏殿的特写换一个配合调查的定性，但死守与晚晴的合影不松口。"
           }
         ],
         "objectives": [
@@ -1409,27 +1411,52 @@
     {
       "id": "location_1",
       "name": "偏殿",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "偏殿里烛火半明，供桌下的樟木锦盒敞着盖；一只双道火漆印的麻布袋倒在盒旁，灯油味混着香灰气，殿门门槛内还留着拖爬的痕。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "正殿",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "正殿祖宗牌位层层而立，神龛夹层的灰尘有新翻动的痕；香炉里三炷香燃到一半，蒲团上还留着跪过的印。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "账房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "账房里文书堆叠半人高，暗格开着，手抄账本摊在案上；页脚一行小字墨迹未干，算盘珠子拨到一半停着。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "前殿",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "前殿香案上摊着一份勘测图，朱笔划叉的字迹力透纸背；折痕里落着香灰，一张名片被鞋印踩过，石阶外就是夜色。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "后院车棚",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后院车棚里越野车与电动车并肩停着，后备箱敞开，空蛇笼与折叠捕蛇袋洗过未干；车筐文件袋的一角露在灯影外。"
+        }
+      ]
     }
   ],
   "clues": [

@@ -1062,7 +1062,8 @@
                 "text": "你写了暗讽死者旧案的大鼓词《武生叹》，今晚 21:15 塞进了死者私箱；你知道二十年前坠台案的疑点（毡垫被挪过），是能为旧案作证的人。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当有人先提起二十年前坠台旧案时，才交出《武生叹》抄本当证词，说出你21:15塞进私箱的事与毡垫薄半寸的疑点。"
           }
         ],
         "objectives": [
@@ -1372,7 +1373,8 @@
                 "text": "你偷偷捡了死者散落的点翠蓝羽饰揣进怀里——他从前说过，头面碎料攒够一撮'换个糖吃'；打参汤你摔了跤、躲了半个时辰。这两件事你都不敢说。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当时间对不上、或有人要搜你身上时，先认摔跤躲哭的半个时辰，再掏出怀里的点翠，用'我21:45才端汤进后台'保命。"
           }
         ],
         "objectives": [
@@ -1596,42 +1598,82 @@
     {
       "id": "location_1",
       "name": "衣箱间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "衣箱间里三口戏箱靠墙排开，铜包角在灯下泛着冷光；铜盆的水还剩半温，地上洒翻的定神酒气未散，箱顶的点翠盔头歪斜着。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "万年台与把子架",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "万年台临江而立，台板上彩靴印未扫；侧幕把子架上一排刀枪把子各归各架，青龙偃月刀的枣木柄近格处豁着个新口。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "后台账房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后台账房的油灯挑得半明，账桌算盘纸笔俱全；夹墙的暗格开着，明暗两本账摞在一处，批条的碎纸撒了一桌角。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "后巷茶棚",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后巷茶棚的炉子煨着水，粗瓷碗倒扣在案；桌角两个揉得死皱的纸团还没人收拾，巷口雾气一层层往棚里漫。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "女伶的妆箱间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "女伶妆箱间里脂粉香混着油彩味，妆箱夹层藏得住票据书信；镜台上头面码得整齐，半页未寄出的信压在镜脚。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "琴师的乐池座",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "乐池座紧贴台口，琴箱谱夹摞得整齐；一把京胡挂在架子上，鼓词抄本的纸页边角起了毛，雾气把胡弦浸得发闷。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "管箱铺房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "管箱铺房窄小，铺盖卷得方正；夹层里藏得住薄薄一页纸，墙上挂着管箱的钥匙串与油灯，门口贴着'闲人免进'的旧条。"
+        }
+      ]
     },
     {
       "id": "location_8",
       "name": "学徒的柴房铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "柴房铺是半间堆柴的角落，草枕头塞在破棉袍边；枕里藏得住小物件，墙角柴垛齐整，门缝里漏进一线雾白。"
+        }
+      ]
     }
   ],
   "clues": [

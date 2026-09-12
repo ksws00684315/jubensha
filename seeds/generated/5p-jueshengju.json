@@ -303,7 +303,8 @@
                 "text": "你讨薪录音里有'滚，明天说'——你有最直白的动机；你还偷偷在队内群里拉过票，想带动队友集体'停训讨薪'，方晴劝住过你。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当讨薪录音与战绩亮出之后、队内群里的拉票记录被人翻出时，大方认下拉过'停训讨薪'的票，说清是方晴劝住的。"
           }
         ],
         "objectives": [
@@ -489,7 +490,8 @@
                 "text": "你提前一周就知道审计行程（是你对接的事务所），却没告诉任何人——包括明早要被'点名'的那人；你还私自借过两万公款给青训营换空调，账挂在'设备维护'里。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当报销单里那笔'设备维护'被对上空调、或审计话题逼近时，主动认下借两万公款给青训营换空调，交代提前知晓审计行程的原委。"
           }
         ],
         "objectives": [
@@ -1057,27 +1059,52 @@
     {
       "id": "location_1",
       "name": "书房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "书房里书桌对着一排书架，'2021首冠纪念剑'仍插在架上；茶盘上两只茶杯未撤，屏幕停在未发送的邮件草稿，台灯照着伏倒的人。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "直播间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "直播间里补光灯与主机昼夜不关，屏幕边贴着一张手写密码便签；镜头对着教练位，桌上的外卖杯立在灯下，弹幕无声地滚。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "训练房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "训练房里一排机器还亮着，队内平台的战绩记录停在屏上；空椅子没推回去，耳机线垂在隔板边，冷光把屋子照得发青。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "食堂",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "一楼食堂的长桌收拾过半，角落里摊着账册与一叠报销单；消毒柜嗡嗡作响，白炽灯下，对账的手还没停。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "门厅与大门",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "门厅的大门整晚没响过几回，楼道监控探头蒙着灰；报修单压在门边柜台上，签批的墨迹已经旧了，门禁滴声偶尔回荡。"
+        }
+      ]
     }
   ],
   "clues": [

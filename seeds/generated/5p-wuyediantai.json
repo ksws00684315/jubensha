@@ -523,7 +523,8 @@
                 "text": "你收了假药商四十七万回扣，罗夜航23:30的爆料足以让你进去；21:50你在导播台当众失态，有人劝你'今晚设备多，别添乱'——你没听懂那句话的分量。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当23:30爆料环节被提起、或'顾问费'的流向对到你小舅子公司头上时，认下四十七万回扣，摆出配合退赃的姿态，交代21:50失态的原委。"
           }
         ],
         "objectives": [
@@ -892,7 +893,8 @@
                 "text": "门禁22:00-23:30记录缓存未上传是你手滑（收过秦克烟酒，默认'夜访别记细'）；走廊监控22:00-23:30因维保停用，报修单签发当天上午——两盏灯都灭在你班上。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当补传的门禁流水与你的值守记录对不上、或那包烟酒的事被挑明时，认下手滑未同步缓存与收礼松口的事，把秦克的请托交代出来。"
           }
         ],
         "objectives": [
@@ -1050,27 +1052,52 @@
     {
       "id": "location_1",
       "name": "播音间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "播音间的'ON AIR'红灯亮着，沙发里还留着侧卧的凹痕，泼洒的啤酒浸了地毯；调音台上手卡压在话筒架下，垫播早已过去。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "导播间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "导播间里推子与指示灯排成行，调音台的操作日志停在屏幕上；隔音玻璃外走廊灯色发白，导播席的椅子还没推回去。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "门厅与值班室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "门厅值班室的柜台上摊着来访登记，门禁机滴答走着；长凳上放着一个旧帆布包，点歌单在包边叠得整整齐齐。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "休息间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "休息间里挂着夜班主持的外衣，排班表钉在软木板上；化妆镜前的手机与耳机还没收，角落的饮水机咕嘟作响。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "广告部",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "广告部的排期墙贴满黄金档位，窗外是城市的夜色；柜子里立着装合同与流水的保险柜，座机的铃早就不响了。"
+        }
+      ]
     }
   ],
   "clues": [

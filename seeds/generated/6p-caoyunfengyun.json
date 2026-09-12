@@ -288,7 +288,8 @@
                 "text": "你子时前后溜进帮主舱房偷走了贴身的盐引底单，藏在铺位褥下，想卖掉自立门户；帮主死前戌时还拍着你肩膀说「磨三年，帮是你的」，你不信，你等不了。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当搜铺的动静逼近、或你的时辰被追问时，抢先把盐引底单交出来，认下偷看不认行窃，交代你溜进舱房时屋里没人。"
           }
         ],
         "objectives": [
@@ -636,7 +637,8 @@
                 "text": "你私刻过帮主花押、用过两张旧条（替赌债的弟兄平过账）；水程簿上那三行关键时辰是你亲笔记的，你因私押之罪迟迟不敢主动作证。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当水程簿三行字被当众读出、或账房匣被翻时，被迫认下私刻花押的旧罪，用认罪换出你亲笔记下的三个时辰。"
           }
         ],
         "objectives": [
@@ -726,32 +728,62 @@
     {
       "id": "location_1",
       "name": "金满仓号粮船底舱",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "底舱低矮幽暗，积水映着舱口一点灯光；夹仓的双层夹板掀开着，上白米下垫陈米，糠屑与盐粒散在缝隙里，一股陈粮的霉气。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "码头栈桥与公房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "栈桥木板被水汽浸得发滑，公房里一盏油灯未熄；官仓的米色册摊在案上，涂改的墨痕上盖着小小的私印，茶盏还温着。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "香堂账房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "香堂账房里幔帐森然，案上水程簿翻在今夜那页，三次蘸写的墨色深浅不一；账房匣底压着旧条，窗口正对栈桥。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "水手铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "水手铺里通铺挤挤挨挨，褥子卷得松散；铺前地上搁着一支锡壶，壶身系着香堂的红绳，屋里一股酒气混着河腥气。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "芦苇荡桩船",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "桩船泊在芦苇荡深处，舱里香案供着河神，案下压得住薄物；舱口的灯早灭了，苇叶间只听得见水拍船帮的声音。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "帮主舱房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "帮主舱房陈设简朴，案头压着手书草帖，朱笔圈了三圈；墙上挂着帮主的旧蓑衣，灯台里的油还剩小半。"
+        }
+      ]
     }
   ],
   "clues": [

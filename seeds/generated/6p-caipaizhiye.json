@@ -505,7 +505,8 @@
                 "text": "你调包了两瓶茅台，真酒在你汽修店冷柜，库房和地库里都是假货；你还听到了金满堂拿债务威胁新郎。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当两瓶茅台被验出真假、或库房门外偷听的事瞒不住时，主动认下调包换酒，把19:50听到的威胁原样说出来。"
           }
         ],
         "objectives": [
@@ -1213,7 +1214,8 @@
                 "text": "你欠薪三个月、方案被卖，辞职信被撕了两次；今晚你在后台和金满堂大吵，全场都听见动静。你还留着带设计时间戳的方案底稿——那是你翻盘的本钱。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当'后台大吵'的动静被追问时，认下争吵与被撕两次的辞职信，交出带时间戳的方案底稿，说出19:00听到的勒索话。"
           }
         ],
         "objectives": [
@@ -1447,27 +1449,52 @@
     {
       "id": "location_1",
       "name": "宴会厅舞台",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "舞台上方三米高的灯架还悬着一盏追光灯，吊环上缠着透明胶带；地面的追光圈正对站位标记，台布上散着彩排的花瓣与流程册。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "后台化妆间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "后台化妆间的镜前灯还亮着，遗物托盘里搁着一部手机；工位上胶带粘回的辞职信压着工资条，粉饼盒下的信纸露出一角。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "工程部",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "工程部的控制台指示灯成排闪动，检修口工具间的挂架上扳手少了位置；门禁打印条吐在台面，天桥入口的铁门虚掩着。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "地下车库",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "地下车库的婚车扎着花球，后备箱敞着，空瓶与散装酒桶并排放着；便利贴的字迹被灯光照得发白，车库里回声一层压一层。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "库房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "库房里婚庆的物料箱堆到顶棚，喜糖礼盒倒了一地；垃圾篓里纸片撕得很碎，拼得起来的那大半张还沾着糖渍。"
+        }
+      ]
     }
   ],
   "clues": [

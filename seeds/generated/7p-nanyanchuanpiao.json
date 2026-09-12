@@ -592,7 +592,8 @@
                 "text": "你克扣船东安神药水的药料、吃差价半年四十元；药柜暗格私藏自用的吗啡半支与一张当票。这两件事若被翻出，你'随船医生'的饭碗就砸了。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当药账被翻、或那瓶安神药水被送验时，主动认下减料吃差价与私藏吗啡，换出'死者体内另有毒物'的关键证词。"
           }
         ],
         "objectives": [
@@ -800,7 +801,8 @@
                 "text": "你押了船股的借据就揣在贴身口袋，腊月到期；你是船东死后股权的第一顺位继承人，21:05 你进舱借钱被骂出来，是死前最后一个单独见他的人之一。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当'继承阴谋'的指认逼到眼前时，亮出贴身借据自证'我求活不求生'，把21:05借钱被骂与牌友人证一并交代。"
           }
         ],
         "objectives": [
@@ -1634,32 +1636,62 @@
     {
       "id": "location_1",
       "name": "船东头等舱",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "头等舱里灯还亮着，书案上遗书压在茶碟下，翻倒的牛奶杯残奶散着苦杏仁味；舱门未闩未锁，怀表摔停在案角。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "宴会厅与配膳房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "宴会厅里香槟塔还剩半座，乐队的谱架未收；配膳房灶台上温奶的小锅还温着，酒水账摊在吧台，侍应的托盘靠在门边。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "轮机部电镀间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "电镀间里酸气刺鼻，电解池泛着幽蓝；保管柜的两把钥匙挂在一块木板上，领用登记摊开在柜顶，花押的押脚甩成一面小旗。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "三等舱甲板",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "三等舱甲板的通铺灯火早熄，围栏外海风带腥；查舱签到本翻在今夜那页，前后墨色深浅不一，木梯被浪气打得发滑。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "电报房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "电报房的键声滴答未停，发报留底一沓压在台角；玻璃板下压着各舱室的分机表，烟味浸得指头发黄的客人刚走。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "事务长室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "事务长室里文书分格码放，签单与登记簿各归其位；纸篓立在桌脚，废舱单的背面写满了字，墨迹一层叠着一层。"
+        }
+      ]
     }
   ],
   "clues": [

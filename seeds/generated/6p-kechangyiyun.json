@@ -169,7 +169,8 @@
                 "text": "你收过一张托请关节的字条（丙字十号，务取），不敢用也没敢交，压在枕下；今夜你把丙字十号亲手黜落，正要剖白时发现了尸体。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当发现尸体的时辰被反复质疑、或枕下字条有被搜出的风声时，主动交出关节字条自证——'若是我杀的，何必留着把柄'。"
           }
         ],
         "objectives": [
@@ -403,7 +404,8 @@
                 "text": "你是女扮男装顶亡兄差事的誊录书手；亥时二刻在帘门转递窗看见主考伏案、烛焰发青，因顶差之罪不敢声张；还违制抄了一份朱卷藏在铺位下。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当'烛焰发青'到了不得不说的关口，甩出这四个字并抢先自首顶差与违制抄卷，换一份证词而不是罪状。"
           }
         ],
         "objectives": [
@@ -727,37 +729,72 @@
     {
       "id": "location_1",
       "name": "内帘衡文堂",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "衡文堂里灯烛幽幽，案上御赐金莲烛几乎燃尽、烛泪色偏青；砚下压着亲笔手记，炭盆里纸灰可辨官纸纹样，门窗阖然未动。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "内外帘帘门",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "帘门只留一只转桶递送文书，封条是监临官亲笔所书；烛匣的贴口用封蜡料粘合过，帘内外隔着一道不可越的界。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "弥封所与誊录所",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "弥封所里案卷编号成列，总册副本摊在案头；誊录所的书手铺位相连，褥下压得住纸页，差簿记着每夜在值的人名。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "同考官值房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "同考官值房里一几一榻一盏灯，枕下压得住折起的字条；案上半页呈文墨迹被水洇过，房内文书分丙戊两房码放。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "受卷所",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "受卷所里箱笼编号入位，收卷架一层层码到梁下；封箱的火漆完好，盘库的册子摊着，灯下坐着一夜未合眼的人。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "医士值房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "医士值房药匣分格而列，'安神'一格空着，格底散着两粒碾碎的深褐丸药；碾槽里的药末极细，帘外传来更漏声。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "监临公廨",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "监临公廨肃然，公案上令签文书各归其位，抽屉深处压着一张礼单底子；烛光把案牍照得发白，帘外的更鼓一声声传进来。"
+        }
+      ]
     }
   ],
   "clues": [

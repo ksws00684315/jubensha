@@ -540,7 +540,8 @@
                 "text": "你私抄师父的显影定影药方、攒下配药的残料，藏在学徒铺灯座下；21:40 你鬼祟去过账房门口，看见里面有人翻账本却没敢吱声——这事你不愿说，怕人问你怎么不去睡觉。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当死亡时刻被卡在21:30之后、众人追问其后行踪时，说出21:40在账房门外看见灯影人影的事，并认下私抄药方、半夜乱走的缘由。"
           }
         ],
         "objectives": [
@@ -784,7 +785,8 @@
                 "text": "你曾代买过红砒，代买人身份不能说；今晚你带着'砒霜赊账单底联'上门，本想提醒死者撇清，最终没敢开口，单据遗落在店堂条凳。若警方查出砒霜，你怕说不清。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当条凳上的赊账单底联被搜出、砒霜之事被摆上台面时，才认下曾代买红砒，坚称药鼠名目、与照相馆无关，拒不说出托买之人。"
           }
         ],
         "objectives": [
@@ -1198,32 +1200,62 @@
     {
       "id": "location_1",
       "name": "暗房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "暗房里红灯尚亮，显影案上药盘未收；炭盆的煤压得瓷实、盆沿结着水渍薄冰，后墙高处一方砖眼糊着雪白的新纸，四边平整。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "账房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "账房里账册流水排满一格，十二月支出栏的撕口崭新；案上镇纸压着主人留下的字条，油灯灯芯结了花，没人来挑。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "账房阁楼",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "账房上的阁楼低矮逼仄，房梁榫缝纵横，堆着旧镜框与纸料；扶梯上去吱呀作响，梁上陈灰厚得能记下手指的印子。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "老板娘的起居间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "起居间里妆台、妆匣、香炉陈设齐整，香炉里有一撮新烧的纸灰；窗纸糊得密不透风，炭盆的红光映着帐幔。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "学徒铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "学徒的铺位窄小，铺盖卷得整齐；席子底下压得住纸页，灯座旁摆着杂物小盒，墙上挂着当值的围裙与提灯。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "店堂雅座",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "店堂橱窗里挂着全镇人的婚照寿照，柜台玻璃板下压着各色单据；雅座条凳坐得发亮，取件的相框还靠在柜台上。"
+        }
+      ]
     }
   ],
   "clues": [

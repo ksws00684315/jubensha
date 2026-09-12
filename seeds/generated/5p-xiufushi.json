@@ -441,7 +441,8 @@
                 "text": "你22:00-22:20在监控室打盹（值守记录空档，巡馆记录填了'正常'）；你私放过布展车收过两条烟，那个人知道——今晚21:10送到修复楼门口的那辆手推车，是你推的。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当监控日志对出22:00-22:20的空档、或那晚手推车与两条烟被翻出来时，认下打盹填'正常'与私放布展车收烟的事。"
           }
         ],
         "objectives": [
@@ -805,7 +806,8 @@
                 "text": "你执行了停机工单，还代取过滤毒罐——若被认定'共同过失'，你的执业资格就完了；你把20:30-21:30的停机交底记录藏在自己抽屉里，不敢上交。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当领用单查出滤罐是你代取、或'共同过失'的话头被提起时，坦白代取与私藏交底记录，复述'今晚办，别声张'那句原话。"
           }
         ],
         "objectives": [
@@ -961,32 +963,62 @@
     {
       "id": "location_1",
       "name": "修复操作间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "操作台的灯还亮着，敞口的操作槽里溶剂气味刺鼻；防护面具伏在台前，内院窗边一个穿反光背心的'人影'端坐着，一动不动。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "器材库",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "器材库货架分门别类，滤毒罐、手套、溶剂码放整齐；领用单夹在夹板上，出库底账压在台面玻璃下，回收登记一栏干干净净。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "设备间",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "设备间里管道与风机盘踞，仪表灯在暗中明明灭灭；排风机重新转起来，工单压在控制柜上，检修内容一栏空着。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "库房值班室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "库房值班室里台账排了满柜，器物总账翻在青铜壶那一页；办公柜最底层锁着私物，值班灯照着一排钥匙牌。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "监控室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "监控室一面墙的屏幕映着各层走廊，修复楼的门禁流水在屏幕上滚动；值守记录摊在桌面，22点后的那一段还空着。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "陈列部办公室",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "陈列部办公室里展签与图纸铺了满桌，电脑屏幕停在一份没写完的道歉信上，文档自动保存的影子一闪一闪。"
+        }
+      ]
     }
   ],
   "clues": [

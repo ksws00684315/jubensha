@@ -169,7 +169,8 @@
                 "text": "你腊月十九用对牌从库房支银三千两补贴旧部军饷，并撕去库房存根一页——此事若在王爷尸骨未寒时曝光，你就是「逼死父亲」的逆子。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当库房将被彻查、或'与父不睦'的流言指向你时，算准时机自己认领腊月十九支银三千两补贴旧部、撕存根之事——认得早是孝心。"
           }
         ],
         "objectives": [
@@ -633,7 +634,8 @@
                 "text": "你私放二阿哥出府又接回，收银五十两，并篡改巡夜簿把戌时三刻至子时二刻并签作「西角门平安」；子时初你在凝晖堂外见过一行朝外的新鲜官靴印。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当巡夜簿的并签被别人揭穿时，痛悔交底私放二阿哥收银五十两之事，再交出子时初官靴印的目击——罪小而功大。"
           }
         ],
         "objectives": [
@@ -839,37 +841,72 @@
     {
       "id": "location_1",
       "name": "凝晖堂书房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "书房里炭盆拨得半明，梁下铜钩空着，断了的画绦垂在一旁；案上镇纸压着病中习字，脚边杌凳翻倒，那页'自陈折'端端正正摆在案头。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "长史院",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "长史院里文书印信各归其位，案上算盘与账册相伴二十年；衣架上官服齐整，腰间丝绦断去一截，断口的毛茬新旧可辨。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "护卫房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "护卫房里兵器架与腰刀各归各架，巡夜簿摊在灯下，一行并签的墨色前后如一；窗上糊着挡风的旧纸，角门的梆子挂在墙钉上。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "西角门",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "西角门的铜环上覆着薄雪，门里墙根的浮灰上有新蹭的靴痕；门外就是除夕的街市，爆竹的碎红被风卷进门缝。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "老格格的西院",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "西院里佛堂与居屋一明一暗，炭盆里的火拨过又掩；未烧尽的账页蜷在灰里，余字可辨，窗外守岁灯一盏未灭。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "白氏院",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "白氏院的妆台陈设奢华，妆匣夹层压着押出去的契票；熏笼里香气未散，廊下灯笼照着满院守岁的彩绸。"
+        }
+      ]
     },
     {
       "id": "location_7",
       "name": "世子院与库房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "世子院书房里贺岁帖子墨迹未干，库房门上锁贴着封条；对牌存根翻在腊月那页，缺了一页的册子装订线还松着。"
+        }
+      ]
     }
   ],
   "clues": [

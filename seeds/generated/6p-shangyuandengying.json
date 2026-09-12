@@ -405,7 +405,8 @@
                 "text": "你收着有人每月二两的「存信钱」，替他保管外柜信匣；你两度望见他反常的举动（条案边独站、拦人上楼），却因受银子在先，怕说出来先惹一身腥。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当更次簿的时辰被读出、你那两眼'望见'被追问到底时，先补上条案独站与拦人上楼的两眼，最后才交出寄存的信匣。"
           }
         ],
         "objectives": [
@@ -639,7 +640,8 @@
                 "text": "你挪用了柜上几百两给儿子娶亲，记在一本没上总账的「贴己流水」里；「正月二十盘总库」的手令一到，你就没睡过一个整觉。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当账匣将被搜查、挪银的嫌疑盖到你头上时，抢先自首贴己流水里的几百两，再说出你亲眼所见有人接壶上楼。"
           }
         ],
         "objectives": [
@@ -731,22 +733,42 @@
     {
       "id": "location_1",
       "name": "缀锦楼三楼雅阁",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "三楼雅阁临着灯河，窗纸上映着满城灯火；案头白瓷壶歪着，多宝格上的走马灯还转着，人却伏在案上没了声息。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "缀锦楼柜台大堂",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "大堂里柜台与楼梯口条案隔道相对，条案四面临空；柜上暗格与礼目匣齐整，更次簿翻在今夜那页，灯影里人声漫上楼来。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "灯市灯铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "灯铺里各式花灯挂了满架，走马灯的灯壁夹层藏得下薄物；铺外灯河如昼，人声与更鼓混作一处，竹篾彩纸的碎屑扫作一堆。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "河埠头",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "河埠头的石阶浸在水里，一条雇定的快船泊在暗处；舱里账箱贴着新封条，浆糊未干，灯市的喧嚣到这儿只剩水声。"
+        }
+      ]
     }
   ],
   "clues": [

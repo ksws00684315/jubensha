@@ -820,7 +820,8 @@
                 "text": "你偷取了锅头寄存烟土的四两样货，与下关商号订了出手字据，藏在酒肆账台下；你与和四爷有私情。发现尸体的是你——第一个到场的永远最像凶手。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当字据或样货被搜出时，先认偷取烟土动过货，再死咬没动过人，交代你21:35送汤撞见倒地前后的一刻钟。"
           }
         ],
         "objectives": [
@@ -1357,7 +1358,8 @@
                 "text": "五年前是你替锅头递的那封'路条'——把后队走线卖给土匪的信，你送时不知内容，回来才知道；你私藏了断后队崖下一支涂膏断弩箭，压在马厩褥子底下。你是旧案唯一在世的活证。"
               }
             ],
-            "disclosure": "never"
+            "disclosure": "conditional",
+            "condition": "当褥底的断箭被搜出时，认下藏了五年，说'是留作念想'，再等旧案被翻出时补上'路条是我送的'那一锤。"
           }
         ],
         "objectives": [
@@ -1541,32 +1543,62 @@
     {
       "id": "location_1",
       "name": "驿馆正房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "正房里火塘余烬未熄，榻前摔着一只黄铜烟锅；房梁灯钩旁垂着小油纸包，枕下压着未封口的信，门闩内落、窗纸完好。"
+        }
+      ]
     },
     {
       "id": "location_2",
       "name": "马厩与料槽",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "马厩里骡马喷着响鼻，料槽底的草把塞得紧实；草把有连夜翻动的新抽痕，槽边挂着辔头与铜铃，牲口的眼睛在暗处发亮。"
+        }
+      ]
     },
     {
       "id": "location_3",
       "name": "后院货棚",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "货棚里樟木箱码在草垫上，锅头自管的那只封蜡有起过的重封痕，蜡色新亮；棚顶漏下几缕夜风，茶香混着仓尘。"
+        }
+      ]
     },
     {
       "id": "location_4",
       "name": "驿站公房",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "驿站公房里文书归档整齐，抽屉里压着一沓过所存底；案上裁纸刀搁在笔架旁，官样小楷的墨香混着灯油味。"
+        }
+      ]
     },
     {
       "id": "location_5",
       "name": "蛮云酒肆",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "酒肆里酒旗垂着，账台的夹层压得住单据；柜上酒葫芦成排，后堂灶火煨着醒酒汤，窗外就是驿馆的院墙。"
+        }
+      ]
     },
     {
       "id": "location_6",
       "name": "赶马人的通铺",
-      "description": []
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "通铺上一排铺盖滚得松散，铺盖夹层藏得住薄物；火塘的炭埋着灰，墙上挂着赶马的鞭子与褡裢，鼾声与马嚼夜草声此起彼伏。"
+        }
+      ]
     }
   ],
   "clues": [
