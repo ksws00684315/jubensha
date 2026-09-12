@@ -117,6 +117,6 @@ AI 玩法的工程实现借鉴 SillyTavern / AI Dungeon 等平台的成熟机制
 - 线索转交仅讨论阶段可用、只能转未公开线索（已公开卡无需转交）；持有权只看 `heldClues`，发现者历史（`discoveredBy`）不变
 - 技能系统需 `flow.actionPointsPerRound > 0` 且角色卡配 `skills`；【质询】只能对 AI 座位使用，被质询的真人仍走既有"回答/拒绝"交互（forced 仅作用于 AI 回答提示）
 - choice 模式不指凶：`caught` 恒为 false，结局文案沿用 `ending.outcomes` 的 culprit_escaped 文案位承载"复盘总结"语义（写本时注意）；答题结果只进对局状态与复盘事件，未建独立数据表
-- 向量检索需在「设置 → AI 接入」为 `向量检索（记忆）` 槽位绑定 embedding 模型（OpenAI 兼容 `/embeddings`，如 `text-embedding-3-small`、`bge-m3`）；未绑定时该层静默关闭，仅用滚动摘要
+- 向量检索需在「设置 → AI 接入」为 `向量检索（记忆）` 槽位绑定 embedding 模型（OpenAI 兼容 `/embeddings`，如 `text-embedding-3-small`、`bge-m3`；本机 Ollama 已实测：baseUrl 填 `http://127.0.0.1:11434/v1`，API Key 随意填非空）；未绑定时该层静默关闭，仅用滚动摘要。相似度阈值按 bge-m3 标定为 0.45，更换向量模型建议重新标定
 - 真人回合 3 分钟无操作自动跳过（可在房间关闭限时）；搜证公开决策超时自动私藏；投票/答题超时由系统随机代投/代答
 - TTS 依赖 OpenAI 兼容 `/audio/speech` 协议的服务商
