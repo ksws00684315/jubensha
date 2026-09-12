@@ -293,7 +293,9 @@ export const agent = {
     const parsed = extractJson<{ ask?: boolean; target?: number; question?: string }>(res.text);
     if (!parsed?.ask || parsed.target === undefined) return null;
     const toSeat = parsed.target - 1;
-    const question = (parsed.question ?? "").trim();
+    // 提问会以本人公开发言进入事件流,同样要过泄露守卫;剥空则放弃提问
+    const guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (parsed.question ?? "").trim());
+    const question = guarded.text;
     if (!candidates.includes(toSeat) || !question) return null;
     return { toSeat, question: question.slice(0, 200) };
   },
@@ -329,7 +331,9 @@ export const agent = {
       if (parsed?.target !== undefined) {
         const t = parsed.target - 1;
         if (candidates.includes(t) && t !== seatIndex) {
-          return { target: t, reason: (parsed.reason ?? "").slice(0, 120) };
+          // 理由同样公开发言,过泄露守卫;剥空降级为无理由投票
+          const reason = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (parsed.reason ?? "").trim()).text;
+          return { target: t, reason: reason.slice(0, 120) };
         }
       }
     }
