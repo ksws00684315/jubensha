@@ -3,6 +3,7 @@ import { subscribe } from "@/core/engine/bus";
 import type { BusMessage, EngineEvent } from "@/core/engine/types";
 import type { Prisma } from "@prisma/client";
 import { sanitizeEventContent } from "@/core/engine/state";
+import { GameEngine } from "@/core/engine/engine";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -64,6 +65,11 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     !!game.room.dmToken &&
     game.room.dmToken === url.searchParams.get("dmtoken");
 
+  // 运行中对局:SSE 订阅即懒恢复引擎(断线重连/重启后重连即可续跑)
+  if (game.status === "running" && !GameEngine.get(id)) {
+    void GameEngine.load(id).catch(() => null);
+  }
+
   const encoder = new TextEncoder();
   let unsubscribe: (() => void) | null = null;
   let heartbeat: NodeJS.Timeout | null = null;
@@ -113,15 +119,42 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       const lastDelivered = history.length ? history[history.length - 1].seq.toString() : lastSeq.toString();
       send({ kind: "hello", lastSeq: lastDelivered });
 
-      // 2) 心跳保活
+      // 2) 心跳保活 + 定期重验凭证（座位/DM token 轮换后,旧订阅随之失效）
       heartbeat = setInterval(() => {
-        if (!closed) {
+        if (closed) return;
+        void (async () => {
           try {
-            controller.enqueue(encoder.encode(": ping\n\n"));
+            const fresh = await db.game.findUnique({
+              where: { id },
+              select: { room: { select: { seats: { select: { index: true, token: true } }, dmToken: true, humanDm: true } } },
+            });
+            const stillValid =
+              !!fresh &&
+              (seatIndex === null ||
+                (fresh.room.seats.find((s2) => s2.index === seatIndex)?.token ?? "") === (url.searchParams.get("token") ?? "")) &&
+              (!dmView || (fresh.room.humanDm && fresh.room.dmToken === url.searchParams.get("dmtoken")));
+            if (!stillValid) {
+              closed = true;
+              unsubscribe?.();
+              if (heartbeat) clearInterval(heartbeat);
+              try {
+                controller.close();
+              } catch {
+                /* already closed */
+              }
+              return;
+            }
           } catch {
-            closed = true;
+            /* 查询失败不断开,下个心跳再试 */
           }
-        }
+          if (!closed) {
+            try {
+              controller.enqueue(encoder.encode(": ping\n\n"));
+            } catch {
+              closed = true;
+            }
+          }
+        })();
       }, 20_000);
 
       req.signal.addEventListener("abort", () => {

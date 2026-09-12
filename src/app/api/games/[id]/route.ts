@@ -4,6 +4,7 @@ import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, 
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
 import { clueReachable, cluesVisibleToSeat } from "@/core/engine/state";
 import { unlockedActs } from "@/core/engine/flow";
+import { GameEngine } from "@/core/engine/engine";
 import type { GameState } from "@/core/engine/types";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
@@ -24,6 +25,10 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     if (!seatRow || !seatRow.token || seatRow.token !== token) mySeat = null;
   }
 
+  // 运行中对局:概要访问即懒恢复引擎(重启后刷新页面/重连 SSE 即可续跑,无需等待玩家动作)
+  if (game.status === "running" && !GameEngine.get(id)) {
+    void GameEngine.load(id).catch(() => null);
+  }
   const seatStates = await db.seatState.findMany({ where: { gameId: id } });
   const runtimeState = (game.state as unknown as GameState) ?? { clueStates: {}, heldClues: {} };
   const clueStates = runtimeState.clueStates ?? {};

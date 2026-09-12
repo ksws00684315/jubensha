@@ -4,7 +4,7 @@ import { clueText, fullTimelineText, methodText, parseScriptForRuntime, resolveL
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import { publish } from "./bus";
 import { activeSeats, appendEvent, initialState, persistState, renderEventLog, clueReachable } from "./state";
-import { computeQuizResult, ensureDiscussionState, finaleMissing, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, validateDiscussionAsk, validateTransfer, validateUseSkill, unlockedActs } from "./flow";
+import { computeQuizResult, ensureDiscussionState, finaleMissing, forcedAnswerHint, nextAfterDiscussion, nextAfterSearch, QUESTIONS_PER_PLAYER, unlockedActs, validateDiscussionAsk, validateTransfer, validateUseSkill } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { agent, type AgentCtx } from "@/core/agents";
 import { SUMMARY_TRIGGER_CHARS, pendingHeadChars, planMemorySplit } from "@/core/agents/memory";
@@ -154,7 +154,6 @@ export class GameEngine {
   private async recordEvent(ev: Omit<EngineEvent, "seq" | "createdAt"> & { content: Record<string, unknown> }): Promise<EngineEvent> {
     const event = await appendEvent(this.gameId, ev);
     this.events.push(event);
-    this.maybeScheduleSummarize();
     this.queueEmbed(event);
     return event;
   }
@@ -320,22 +319,31 @@ export class GameEngine {
   }
 
   /**
-   * ★ 分层记忆维护 ★：新增公共记录攒够一批（SUMMARY_TRIGGER_CHARS）就在后台滚动更新摘要。
-   * 摘要更新在互斥锁外做 LLM 调用，完成后只把短暂的状态提交重新排队（同 AI 投票决策模式）。
+   * ★ 分层记忆维护 ★：只在轮次边界（进入新搜证轮/讨论轮）滚动更新摘要。
+   * 摘要文本位于 prompt 用户消息开头，局中更新会同时打掉全部座位+DM 的前缀缓存，
+   * 因此刻意锚定在轮次边界——轮内前缀保持稳定，前缀缓存命中率随对局推进持续走高。
+   * LLM 调用在互斥锁外，完成后只把短暂的状态提交重新排队（同 AI 投票决策模式）。
    */
   private maybeScheduleSummarize(): void {
     if (this.state.phase === "REVEAL" || this.state.phase === "ENDED") return;
     const pending = pendingHeadChars(this.events, this.state.memory?.anchorSeq ?? "");
     if (pending < SUMMARY_TRIGGER_CHARS) return;
+    const boundary = { phase: this.state.phase, round: this.state.round };
     this.scheduleBackground("memory", async () => {
-      if (this.state.phase === "REVEAL" || this.state.phase === "ENDED") return;
+      if (this.state.phase !== boundary.phase || this.state.round !== boundary.round) return; // 已进入下一边界,留给下次
       const { head } = planMemorySplit(this.events);
       const anchor = head[head.length - 1];
       if (!anchor || !isNewerSeq(anchor.seq, this.state.memory?.anchorSeq)) return;
-      const headLog = renderEventLog(head, null);
-      const summary = await agent.summarizeHistory(this.ctx(), this.state.memory?.summary ?? "", headLog);
-      if (!summary) return; // 摘要失败保留旧记忆，下次事件再试
+      // 只把上个锚点之后的「新增」记录交给摘要员（旧摘要已由 buildSummarizeMessages 携带），避免重复发送整段历史
+      const prevAnchorSeq = this.state.memory?.anchorSeq ?? "";
+      const splitAt = prevAnchorSeq ? head.findIndex((e) => e.seq === prevAnchorSeq) + 1 : 0;
+      const pendingLog = renderEventLog(head.slice(splitAt), null);
+      if (!pendingLog.trim()) return;
+      const summary = await agent.summarizeHistory(this.ctx(), this.state.memory?.summary ?? "", pendingLog);
+      if (!summary) return; // 摘要失败保留旧记忆，下次边界再试
       await this.exclusive(async () => {
+        // 提交前仍在同一轮次边界内：不把缓存失效带进轮中
+        if (this.state.phase !== boundary.phase || this.state.round !== boundary.round) return;
         if (!isNewerSeq(anchor.seq, this.state.memory?.anchorSeq)) return;
         this.state.memory = { anchorSeq: anchor.seq, summary };
         await persistState(this.gameId, this.state);
@@ -609,6 +617,7 @@ export class GameEngine {
       await this.dmSay(`【第${round}幕 · ${act.title}】${brief}`.trim(), "SEARCH", round);
     }
     await persistState(this.gameId, this.state);
+    this.maybeScheduleSummarize();
     await this.tickInner();
   }
 
@@ -620,6 +629,8 @@ export class GameEngine {
     this.state.pendingAnswer = null;
     this.state.suggestions = {};
     ensureDiscussionState(this.state);
+    // 每轮讨论提问配额重置（ensureDiscussionState 只补缺值,不会恢复已用完的额度）
+    for (const seat of activeSeats(this.state)) this.state.questionsLeft[String(seat)] = QUESTIONS_PER_PLAYER;
     this.searchAsked.clear();
     this.turnAsked.clear();
     this.aiDiscussionAsked.clear();
@@ -633,6 +644,7 @@ export class GameEngine {
       round
     );
     await persistState(this.gameId, this.state);
+    this.maybeScheduleSummarize();
     await this.tickInner();
   }
 
@@ -683,66 +695,92 @@ export class GameEngine {
   }
 
   private async transitionReveal(): Promise<void> {
-    if (this.state.voteResult) return; // 同步守卫：防真人投票与 tick 并发双触发（quiz 分支共用同一守卫）
-    const voteMode = this.script.flow.voteMode;
-    const counts: Record<string, number> = {};
-    for (const v of Object.values(this.state.votes)) counts[String(v.target)] = (counts[String(v.target)] ?? 0) + 1;
-    const culpritSeat = this.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === this.script.truth.culpritId);
-    let topSeat = -1;
-    let topCount = -1;
-    for (const [k, n] of Object.entries(counts)) {
-      if (n > topCount) {
-        topCount = n;
-        topSeat = Number(k);
+    if (!this.state.voteResult) {
+      const voteMode = this.script.flow.voteMode;
+      const counts: Record<string, number> = {};
+      for (const v of Object.values(this.state.votes)) counts[String(v.target)] = (counts[String(v.target)] ?? 0) + 1;
+      const culpritSeat = this.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === this.script.truth.culpritId);
+      let topSeat = -1;
+      let topCount = -1;
+      for (const [k, n] of Object.entries(counts)) {
+        if (n > topCount) {
+          topCount = n;
+          topSeat = Number(k);
+        }
       }
+      this.state.voteResult = { counts, culpritSeat, caught: voteMode === "choice" ? false : topSeat === culpritSeat };
+      if (this.script.ending.quiz.length) {
+        this.state.quizResult = computeQuizResult(this.script.ending.quiz, this.state.quizAnswers ?? {});
+      }
+      this.state.phase = "REVEAL";
+      this.state.round = 0;
+      await persistState(this.gameId, this.state);
     }
-    this.state.voteResult = { counts, culpritSeat, caught: voteMode === "choice" ? false : topSeat === culpritSeat };
-    if (this.script.ending.quiz.length) {
-      this.state.quizResult = computeQuizResult(this.script.ending.quiz, this.state.quizAnswers ?? {});
+    // 幂等推进：中途任一步失败(如 DB 抖动)后,下一次 tick/玩家动作会经 step() 的 REVEAL 分支重入
+    await this.finishReveal();
+  }
+
+  /** 幂等收尾：复盘事件 → ENDED 事件 → 持久化 → 结算房间。已做完的步骤按事件流/状态跳过。 */
+  private async finishReveal(): Promise<void> {
+    const result = this.state.voteResult;
+    if (!result) return;
+    const voteMode = this.script.flow.voteMode;
+    const caughtName = this.state.seats[result.culpritSeat] ? this.speakerName(result.culpritSeat) : "?";
+
+    if (!this.events.some((e) => e.type === "reveal")) {
+      let task: string;
+      if (voteMode === "choice") {
+        task = `复盘时刻：本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评全场还原度，然后完整宣读真相复盘：手法、完整时间线、关键证据链。`;
+      } else {
+        task = `公布投票结果（${Object.entries(result.counts).map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`).join("，") || "无人投票"}），然后宣布揭晓真相：凶手是 ${caughtName}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
+        if (this.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评各位玩家的还原度。`;
+      }
+      await this.dmSay(task, "REVEAL", 0);
+      await this.recordEvent({
+        type: "reveal",
+        phase: "REVEAL",
+        round: 0,
+        fromSeat: null,
+        toSeat: null,
+        visibility: "public",
+        content: {
+          culpritSeat: result.culpritSeat,
+          culpritName: caughtName,
+          caught: result.caught,
+          counts: result.counts,
+          method: methodText(this.script),
+          fullTimeline: fullTimelineText(this.script),
+          reveal: revealText(this.script),
+          winText: winText(this.script),
+          ...(this.state.quizResult ? { quiz: this.state.quizResult } : {}),
+        },
+      });
     }
-    const caughtName = this.state.seats[culpritSeat] ? this.speakerName(culpritSeat) : "?";
-    this.state.phase = "REVEAL";
-    this.state.round = 0;
-    let task: string;
-    if (voteMode === "choice") {
-      task = `复盘时刻：本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评全场还原度，然后完整宣读真相复盘：手法、完整时间线、关键证据链。`;
-    } else {
-      task = `公布投票结果（${Object.entries(counts).map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`).join("，") || "无人投票"}），然后宣布揭晓真相：凶手是 ${caughtName}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
-      if (this.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${this.quizBrief()}），按得分点评各位玩家的还原度。`;
+
+    if (this.state.phase !== "ENDED") {
+      this.state.phase = "ENDED";
+      await this.recordEvent({
+        type: "phase",
+        phase: "ENDED",
+        round: 0,
+        fromSeat: null,
+        toSeat: null,
+        visibility: "public",
+        content: { phase: "ENDED", round: 0, text: "" },
+      });
+      await persistState(this.gameId, this.state);
     }
-    await this.dmSay(task, "REVEAL", 0);
-    await this.recordEvent({
-      type: "reveal",
-      phase: "REVEAL",
-      round: 0,
-      fromSeat: null,
-      toSeat: null,
-      visibility: "public",
-      content: {
-        culpritSeat,
-        culpritName: caughtName,
-        caught: this.state.voteResult.caught,
-        counts,
-        method: methodText(this.script),
-        fullTimeline: fullTimelineText(this.script),
-        reveal: revealText(this.script),
-        winText: winText(this.script),
-        ...(this.state.quizResult ? { quiz: this.state.quizResult } : {}),
-      },
-    });
-    this.state.phase = "ENDED";
-    await this.recordEvent({
-      type: "phase",
-      phase: "ENDED",
-      round: 0,
-      fromSeat: null,
-      toSeat: null,
-      visibility: "public",
-      content: { phase: "ENDED", round: 0, text: "" },
-    });
-    await persistState(this.gameId, this.state);
+    await this.finalizeEnded();
+  }
+
+  private endFinalized = false;
+
+  /** 结算：对局/房间置为已结束 + 广播终局。幂等,失败可在下一次 tick 重试。 */
+  private async finalizeEnded(): Promise<void> {
+    if (this.endFinalized) return;
     const ended = await db.game.update({ where: { id: this.gameId }, data: { status: "ended", endedAt: new Date() } });
     await db.room.update({ where: { id: ended.roomId }, data: { status: "ended" } });
+    this.endFinalized = true;
     publish(this.gameId, { kind: "end" });
   }
 
@@ -872,6 +910,13 @@ export class GameEngine {
         }
         return;
       }
+      case "REVEAL":
+        // 终局收尾曾在中途失败(如 DB 抖动):重入幂等收尾,而不是永久停在 REVEAL
+        await this.finishReveal();
+        return;
+      case "ENDED":
+        await this.finalizeEnded();
+        return;
       case "VOTE": {
         const voteMode = this.script.flow.voteMode;
         const hasQuiz = this.script.ending.quiz.length > 0;
