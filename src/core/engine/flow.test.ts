@@ -203,3 +203,45 @@ describe("复盘答题作答指令 quizPrompt", () => {
     expect(prompt).toContain("必须每题都答");
   });
 });
+
+describe("相等轮数组合的完整路径(回归:2/2 曾跳过最后一轮讨论)", () => {
+  function walk(searchRounds: number, discussionRounds: number): string[] {
+    const path: string[] = [];
+    let phase: "SEARCH" | "DISCUSSION" | "VOTE" = "SEARCH";
+    let round = 1;
+    for (let i = 0; i < 40; i++) {
+      if (phase === "SEARCH") {
+        path.push(`S${round}`);
+        const next = nextAfterSearch(round, searchRounds, discussionRounds);
+        if (next === "VOTE") { path.push("VOTE"); return path; }
+        if (next === "SEARCH") { round += 1; continue; }
+        phase = "DISCUSSION";
+        continue;
+      }
+      path.push(`D${round}`);
+      const next = nextAfterDiscussion(round, searchRounds, discussionRounds);
+      if (next === "VOTE") { path.push("VOTE"); return path; }
+      if (next === "SEARCH") { phase = "SEARCH"; round += 1; continue; }
+      phase = "DISCUSSION";
+      round += 1;
+    }
+    return path;
+  }
+
+  const expected = (s: number, d: number) => {
+    const seq: string[] = [];
+    for (let r = 1; r <= Math.min(s, d); r++) seq.push(`S${r}`, `D${r}`);
+    for (let r = d + 1; r <= s; r++) seq.push(`S${r}`);
+    for (let r = s + 1; r <= d; r++) seq.push(`D${r}`);
+    seq.push("VOTE");
+    return seq;
+  };
+
+  for (const s of [1, 2, 3, 4]) {
+    for (const d of [1, 2, 3, 4]) {
+      it(`${s}轮搜证/${d}轮讨论 走全 ${expected(s, d).join("→")}`, () => {
+        expect(walk(s, d)).toEqual(expected(s, d));
+      });
+    }
+  }
+});

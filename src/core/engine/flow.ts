@@ -10,8 +10,13 @@ export function nextAfterDiscussion(round: number, searchRounds: number, discuss
   return "VOTE";
 }
 
+/**
+ * 搜证第 R 轮结束后:第 R 轮的讨论必然还没发生,只要 R 在讨论轮数预算内就进讨论。
+ * 之前用 `round < discussionRounds` 会把 searchRounds == discussionRounds 的最后一轮讨论跳过
+ * （2/2 配置实际只讨论 1 轮,历史对局已印证）。
+ */
 export function nextAfterSearch(round: number, searchRounds: number, discussionRounds: number): Phase {
-  if (round < discussionRounds) return "DISCUSSION";
+  if (round <= discussionRounds) return "DISCUSSION";
   if (round < searchRounds) return "SEARCH";
   return "VOTE";
 }
@@ -63,12 +68,13 @@ export function validateUseSkill(
     flow: { actionPointsPerRound: number };
     characters: ReadonlyArray<{ id: string; privateCard: { skills: ReadonlyArray<SkillV2> } }>;
   },
-  state: Pick<GameState, "phase" | "seats" | "actionPoints" | "usedSkills">,
+  state: Pick<GameState, "phase" | "seats" | "actionPoints" | "usedSkills" | "pendingAnswer">,
   fromSeat: number,
   skillId: string,
   toSeat: number | undefined,
   text: string
 ): string | null {
+  if (state.pendingAnswer) return "已有待回答的提问，请等其结束后再发动技能";
   if (script.flow.actionPointsPerRound <= 0) return "本局未开启技能系统";
   const charId = state.seats[fromSeat]?.characterId;
   const skill = script.characters.find((c) => c.id === charId)?.privateCard.skills.find((s) => s.id === skillId);
