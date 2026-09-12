@@ -15,18 +15,21 @@ export function isPlaceholderTimelineTitle(title: string | null | undefined): bo
 }
 
 /** 首个字符是收尾类符号 → 该条明显是上一句被切断后剩下的尾巴。 */
-const TRUNCATED_HEAD = /^[）)」』】\]]/;
+const TRUNCATED_HEAD = /^[）)」』】\]）]|^\)[^）]/;
 /** 末字符是开括号/连接符 → 该条明显是下一句被截走的开头。 */
 const TRUNCATED_TAIL = /[（(【「→—]$/;
+/** 末字符是句中停顿/悬空成分 → 早期管线按逗号劈句留下的半句。 */
+const TRUNCATED_TAIL_SOFT = /[，,、：:]$/;
 
 /**
  * 条目正文是否明显被机械切断（首尾缺一半）。
+ * 含「逗号结尾」形态：时间线条目应是自足的一句，以句中停顿收尾说明后半句被切走。
  * 这种缺失无法在渲染层还原，只能提示作者重写——校验器据此报 warning。
  */
 export function isTruncatedTimelineText(text: string | null | undefined): boolean {
   const t = String(text ?? "").trim();
   if (!t) return false;
-  return TRUNCATED_HEAD.test(t) || TRUNCATED_TAIL.test(t);
+  return TRUNCATED_HEAD.test(t) || TRUNCATED_TAIL.test(t) || TRUNCATED_TAIL_SOFT.test(t);
 }
 
 const LEADING_TIME = /^\d{1,2}:\d{2}(?::\d{2})?\s*/;
