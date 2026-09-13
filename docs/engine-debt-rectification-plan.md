@@ -138,3 +138,20 @@ tickInner(锁内,毫秒级)
 | 34 本 validator | 0 error / 39 条结构性链 warning |
 | 冒烟 | PASSED(1 真人+4 AI,全流程) |
 | 缓存命中率 | 整体 36.1%(短局),culprit 49% |
+
+
+---
+
+## 执行状态(2026-09-13)
+
+| 里程碑 | 状态 | 结果 |
+|---|---|---|
+| M2 终局事务化+快照权威 | ✅ | finalizeEnded 两条写合并 $transaction;ENDED 先落快照再补事件;Prisma 注释声明快照权威 |
+| M1 回合执行器 | ✅ | dispatchTurn/dispatchPlayerSpeech/dispatchAnswerTurn/dispatchDmTurn;七个调用点全部改造;看门狗+降级链;新增并发回归测试(AI 挂起时真人动作立即可用+看门狗强制推进) |
+| M3 证据链内容批 | ✅ | 修复 15 条(14 链补交叉 + 1 线索改写 + 1 分类纠正)/接受 24 条(逐条登记结构性理由);13 本、仅动允许字段、线索数零净增 |
+| M4 回归验收 | ✅ | 175 测试全绿、tsc/eslint 干净、34 本 0 error(24 条"接受"级 warning 为登记残量)、同步 DB、build/restart、冒烟 PASSED(culprit 被指认,caught=true) |
+
+**剩余登记(非本轮范围,均有依据)**:
+- 24 条"缺人证/物证交叉"warning:对应书籍线索池缺可交叉类型,属内容创作型长尾,已在 validator 中持续可见;
+- 47 条合法短句时间线:非缺陷(逐条抽验为完整短句节拍);
+- 第二秘密:生成器规范已覆盖新书,存量书维持不改(矛盾风险)。
