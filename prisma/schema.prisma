@@ -100,7 +100,8 @@ model Seat {
   @@map("seats")
 }
 
-/// 一局对局。state 为引擎快照（座位运行时状态、线索状态等），可由事件重放重建。
+/// 一局对局。state 为引擎快照（座位运行时状态、线索状态等）——恢复以快照为权威；
+/// 事件流用于现场回放展示与审计，不做完整状态重放（技能/答题/限时等不参与重建）。
 model Game {
   id        String    @id @default(cuid())
   roomId    String    @unique

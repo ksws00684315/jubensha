@@ -1,3 +1,8 @@
+/**
+ * 引擎长流程集成测试:mock Prisma 与 LLM。
+ * mock 层大量使用 any 以简化 Prisma 形状伪装,故对本文件豁免 no-explicit-any。
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -13,6 +18,7 @@ import path from "node:path";
  */
 
 const hoisted = vi.hoisted(() => {
+  const hang = { stream: false, chat: false };
   const tables = { rooms: [] as any[], games: [] as any[], events: [] as any[], seatStates: [] as any[], votes: [] as any[] };
   let seq = BigInt(0);
   const gameRows = new Map<string, any>();
@@ -26,11 +32,12 @@ const hoisted = vi.hoisted(() => {
       return row;
     },
     gameRows,
+    hang,
   };
 });
 
-vi.mock("@/lib/db", () => ({
-  db: {
+vi.mock("@/lib/db", () => {
+  const db = {
     room: {
       create: async ({ data }: any) => {
         const row = { id: `room-${hoisted.tables.rooms.length + 1}`, ...data };
@@ -71,8 +78,10 @@ vi.mock("@/lib/db", () => ({
       findMany: async () => hoisted.tables.seatStates,
     },
     vote: { create: async ({ data }: any) => ({ id: `vote-${hoisted.tables.votes.length + 1}`, ...data }) },
-  },
-}));
+    $transaction: async (cb: any) => cb(db),
+  };
+  return { db };
+});
 
 vi.mock("@/core/llm/client", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/core/llm/client")>();
@@ -80,6 +89,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
   return {
     ...actual,
     chat: vi.fn(async (opts: any) => {
+      if (hoisted.hang.chat) await new Promise(() => {});
       const last = opts.messages[opts.messages.length - 1].content as string;
       let text = speech;
       if (last.includes('{"location"')) text = JSON.stringify({ location: "书房" });
@@ -91,6 +101,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
       return { text, promptTokens: 10, completionTokens: 5, providerName: "mock", modelId: "mock" };
     }),
     chatStream: vi.fn(async function* () {
+      if (hoisted.hang.stream) await new Promise(() => {});
       const speech = "我确认我当时一直待在房间里，哪里都没有去。";
       yield speech.slice(0, 10);
       yield speech.slice(10);
@@ -232,5 +243,48 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     );
     expect(discussionRounds.has(1)).toBe(true);
     expect(discussionRounds.has(2)).toBe(true);
+  }, 120_000);
+});
+
+describe("回合执行器(审计 M6 核心回归)", () => {
+  beforeEach(() => {
+    hoisted.hang.stream = false;
+    hoisted.hang.chat = false;
+  });
+
+  it("AI 思考期间真人动作立即可用,不被 LLM 阻塞;看门狗超时后强制推进", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    const ready = await engine.handleAction(0, { type: "ready" });
+    expect(ready.ok).toBe(true);
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(engine.state.phase).toBe("SELF_INTRO");
+
+    // 真人发言后轮到 AI;让 LLM 挂起,制造"回合在飞"
+    const speak = await engine.handleAction(0, { type: "speak", text: "我一直在房间里，没有离开过。" });
+    expect(speak.ok).toBe(true);
+    hoisted.hang.stream = true;
+    hoisted.hang.chat = true;
+    await vi.advanceTimersByTimeAsync(200); // AI 回合 dispatch(30ms)后 produce 挂起
+
+    // 核心断言:挂起的 LLM 不得阻塞真人动作(旧实现会把整个 handleAction 卡在互斥锁里)
+    let resolved = false;
+    const p = engine.handleAction(0, { type: "rush" }).then((r) => {
+      resolved = true;
+      return r;
+    });
+    for (let i = 0; i < 200 && !resolved; i++) await Promise.resolve();
+    expect(resolved).toBe(true);
+    const rushResult = await p;
+    expect(rushResult.ok).toBe(true);
+
+    // 看门狗:2×90s+5s 后强制跳过挂起的回合,流程继续
+    await vi.advanceTimersByTimeAsync(200_000);
+    expect(engine.state.spokenSeats.includes(1)).toBe(true);
+
+    // 解除挂起,其余流程正常走完
+    hoisted.hang.stream = false;
+    hoisted.hang.chat = false;
+    await runUntilEnded(engine);
+    expect(engine.state.voteResult).not.toBeNull();
   }, 120_000);
 });
