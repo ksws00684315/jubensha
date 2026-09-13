@@ -1416,7 +1416,8 @@
         "id": "evidence_3",
         "clueIds": [
           "jishiben",
-          "shouji_zhaopian"
+          "shouji_zhaopian",
+          "diliao_zhangben"
         ],
         "conclusion": "雷师傅的记事本记录了周五将带市场监管所老宋上门查周记烧烤用油的计划，老周的烧烤摊油料来路不正——灭口动机指向老周。"
       }

@@ -2190,7 +2190,8 @@
         "clueIds": [
           "danke",
           "yanshi_jilu",
-          "qianggui_dengji"
+          "qianggui_dengji",
+          "dianming_ben"
         ],
         "conclusion": "行军床下的弹壳批号与枪柜弹药盒吻合，弹道指向床尾近距离射击——死者至死未起，凶手是熟人，枪来自营地内部而非'流寇'。"
       },
@@ -2222,7 +2223,8 @@
       {
         "id": "evidence_5",
         "clueIds": [
-          "banmai_dengshanxue"
+          "banmai_dengshanxue",
+          "dianming_ben"
         ],
         "conclusion": "半埋登山靴靴底嵌着红柳须与死者外帐纤维、靴筒有硝烟味残留、鞋垫姓名缩写被剪去一角——靴主人去过北面红柳沙包埋枪，也去过死者帐内开枪。"
       }

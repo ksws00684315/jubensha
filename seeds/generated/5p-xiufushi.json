@@ -1695,7 +1695,8 @@
         "id": "evidence_3",
         "clueIds": [
           "moxing_beixin",
-          "xiandai_kanyan"
+          "xiandai_kanyan",
+          "paifeng_gongdan"
         ],
         "conclusion": "窗边人体模型穿着岑松年的反光背心，从监控室望去正是「有人伏案干活」的剪影——这是凶手为拖延发现时间而刻意制造的伪装。"
       },
@@ -1711,7 +1712,8 @@
         "id": "evidence_5",
         "clueIds": [
           "menjian_kongbai",
-          "moxing_beixin"
+          "moxing_beixin",
+          "paifeng_gongdan"
         ],
         "conclusion": "门禁记录21:15程砚再进修复楼的十分钟窗口，与监控中外套下摆撑宽的背影、以及窗边剪影出现的时间完全吻合——他在这十分钟里完成了摆模型、取旧罐、发假消息的全部善后。"
       }
