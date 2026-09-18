@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "experienceGoal": "以第七封贺卡为情感主线，让玩家在查明双硫仑反应杀人手法的同时，决定是否让三十年前被改写的志愿表真相在众人面前完成一次迟到的道歉。",
+  "targetDurationMin": 120,
+  "facts": [
+    {"id":"f_medical","statement":"郑国栋服用头孢后饮酒，血液酒精和胃内容物符合双硫仑样反应，药盒与购药小票确认用药事实。","source":"药盒与购药小票"},
+    {"id":"f_switch","statement":"20:38-20:42 有人让服务员撤果茶、换上白酒，点单签名和便签笔迹都指向赵凯。","source":"换酒便签/点单存根"},
+    {"id":"f_search","statement":"赵凯旧手机一周前连续搜索头孢加酒后果、抢救和拒酒借口，显示提前准备。","source":"手机搜索记录"},
+    {"id":"f_card","statement":"第七封贺卡和志愿表复印件说明赵凯三十年前改写林素芬志愿表，郑国栋准备当众念信。","source":"第七封贺卡"},
+    {"id":"f_witness","statement":"陈曼在 20:48 听见有人说‘这玩意儿等回家再吃’，王大力和高鹏都在走廊附近看见换酒行为。","source":"角色证词"},
+    {"id":"f_redherrings","statement":"王大力有三十年前班费欠条，高鹏藏有红章文件，林素芬有购药小票，陈曼隐藏与死者的感情，均形成可行动的非凶手动机。","source":"角色卡与相关线索"}
+  ],
+  "inferenceGraph": [
+    {"id":"i_method","premiseFactIds":["f_medical","f_switch","f_witness"],"conclusion":"死亡不是普通猝死，而是被人利用头孢与白酒的禁忌组合诱导饮酒；换酒和劝酒是关键行动。","alternatives":["死者自行饮酒导致意外","药物来源或饮酒时间被误判"]},
+    {"id":"i_planning","premiseFactIds":["f_switch","f_search"],"conclusion":"赵凯在聚会前已研究反应并安排换酒，现场行为不是临时起哄。","alternatives":["搜索是健康焦虑，换酒是普通服务调整"]},
+    {"id":"i_motive","premiseFactIds":["f_card","f_search"],"conclusion":"赵凯担心第七封贺卡公开三十年前的志愿名额造假，因此有灭口动机。","alternatives":["赵凯只是害怕同学会争执，并无杀人意图"]}
+  ],
+  "characterPlans": [
+    {"characterId":"lin_sufen","experienceGoal":"先洗清药店嫌疑，再选择是否把成绩底单与六封贺卡交给全场。","objectives":["指出药物禁忌","保护匿名贺卡来源"],"interactionHooks":["回应赵凯对购药小票的质疑","与陈曼确认第七封贺卡"]},
+    {"characterId":"zhao_kai","experienceGoal":"把死亡解释为意外，把换酒包装成服务安排。","objectives":["咬定意外","阻止志愿表和贺卡被讨论"],"interactionHooks":["解释搜索记录","把嫌疑分散给有旧账的同学"]},
+    {"characterId":"wang_dali","experienceGoal":"在欠条被发现后完成一次迟到的认账，同时说出换酒目击。","objectives":["说出 20:40 目击","在条件触发时承认旧账"],"interactionHooks":["决定何时展示欠条","向林素芬交换目击细节"]},
+    {"characterId":"chen_man","experienceGoal":"保护与死者的感情，却不能让关键听证被情绪淹没。","objectives":["复述 20:48 原话","隐藏聊天记录"],"interactionHooks":["回应贺卡照片","在质询中区分亲耳听见和推断"]},
+    {"characterId":"gao_peng","experienceGoal":"把红章文件还回去并说出走廊画面，不让偷拆公文包变成杀人动机。","objectives":["提供换酒目击","条件触发时解释红章残页"],"interactionHooks":["与王大力交叉核对时间","决定是否承认偷看文件"]}
+  ],
+  "acts": [
+    {"actId":"act1","question":"死者为何会在聚会上突然倒下？","newKnowledge":["头孢与白酒存在致命组合","换酒行为需要证人确认"],"publicClueIds":["yaohe_xiaopiao","diancan_cungen","huanjiu_bianqian"]},
+    {"actId":"act2","question":"谁提前知道风险，谁最害怕第七封贺卡被念出？","newKnowledge":["赵凯有预先搜索","旧志愿表构成动机","其他人的秘密提供竞争解释"],"publicClueIds":["shouji_sousuo","diqifengheka","liaotian_jilu"]}
+  ],
+  "review":{"status":"needs_revision","issues":[{"level":"warning","message":"需盲读确认情感线不会被‘赵凯搜索记录’单点锁凶；第二轮应先让玩家处理王大力、高鹏的条件秘密。","path":"inferenceGraph.i_planning"}]}
+}

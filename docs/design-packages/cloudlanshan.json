@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "experienceGoal": "在两轮搜证与圆桌质询中，让玩家从毒物来源、进入窗口和十年旧案动机三条线交叉锁定苏晚，同时让每个角色都必须用自己的把柄换取一段关键证词。",
+  "targetDurationMin": 120,
+  "facts": [
+    {"id":"f_teacup","statement":"21:15 周伯送茶时沈万山仍活着，参茶已喝大半；杯中检出乌头碱，毒发约一刻钟。","source":"参茶残液/周伯证词"},
+    {"id":"f_window","statement":"21:15 至 21:35 是最可信的下毒窗口；21:20 有人提包进入书房约十分钟。","source":"周伯的走廊目击"},
+    {"id":"f_footprint","statement":"门廊至书房有 37 码横条纹女靴往返脚印，山庄内只有苏晚穿同规格出诊靴。","source":"雪地脚印"},
+    {"id":"f_bottle","statement":"苏晚房间盆栽土中藏有乌头碱阳性棕色瓶，标签被指甲抠掉。","source":"玻璃瓶"},
+    {"id":"f_motive","statement":"沈万山用十年前医疗事故报告和认罪声明要挟苏晚，日记记载当晚准备摊牌。","source":"日记/保险柜旧文件"},
+    {"id":"f_competing","statement":"青禾有继承动机、周伯有挪用公款、白慕森有股份纠纷、陆小开有私配钥匙，均能解释部分可疑行为。","source":"角色卡与账本/钥匙/情书"}
+  ],
+  "inferenceGraph": [
+    {"id":"i_window_identity","premiseFactIds":["f_teacup","f_window","f_footprint"],"conclusion":"下毒者必须在 21:15 后进入书房且穿 37 码横条纹女靴，苏晚是唯一同时满足者。","alternatives":["脚印可能被他人伪造","青禾短靴纹路与脚印不符"]},
+    {"id":"i_source","premiseFactIds":["f_teacup","f_bottle"],"conclusion":"参茶中的乌头碱与苏晚房间的残瓶形成毒物来源闭环。","alternatives":["另有未发现的毒物来源"]},
+    {"id":"i_motive","premiseFactIds":["f_motive","f_bottle"],"conclusion":"十年医疗事故把柄在当晚被摊牌，解释苏晚为何承担投毒风险。","alternatives":["苏晚只是依法救治并误触毒物"]}
+  ],
+  "characterPlans": [
+    {"characterId":"qinghe","experienceGoal":"先洗清继承嫌疑，再决定是否用伪造信换取脚印证词。","objectives":["查出真凶","保护伪造继承信"],"interactionHooks":["向周伯核对 21:15 茶","被问到遗嘱时模糊带过"]},
+    {"characterId":"zhoubo","experienceGoal":"用走廊目击换取账本不被公开。","objectives":["证明送茶后未再进书房","隐藏挪用公款"],"interactionHooks":["被质询时描述提包背影","与持有账本的人交换信息"]},
+    {"characterId":"baimusen","experienceGoal":"保住股份交易秘密，同时让录音中的 20:58 时间点成为可验证的不在场证明。","objectives":["提供有限录音自证","隐藏两千万债务"],"interactionHooks":["回应青禾的继承动机","决定是否公开日记线索"]},
+    {"characterId":"suwan","experienceGoal":"在医学解释与有限承认之间拖过投票。","objectives":["活过今晚","把怀疑引向其他有把柄者"],"interactionHooks":["解释脚印为诊视路线","把瓶子说成采样容器"]},
+    {"characterId":"luxiaokai","experienceGoal":"用门廊目击洗清自己，同时承受私配钥匙和情书暴露的代价。","objectives":["说出 21:20 后的背影","保护私配钥匙与情书"],"interactionHooks":["被问时区分看见与猜测","向青禾私聊交换情报"]}
+  ],
+  "acts": [
+    {"actId":"act1","question":"谁在 21:15 后进入书房？","newKnowledge":["送茶后仍有进入窗口","存在两组竞争动机"],"publicClueIds":["teacup","missing_key","footprint"]},
+    {"actId":"act2","question":"毒物从哪里来，为什么必须今晚下手？","newKnowledge":["毒物来源与旧案动机可以交叉验证"],"publicClueIds":["bottle","diary","safe_report"]}
+  ],
+  "review":{"status":"needs_revision","issues":[{"level":"warning","message":"需通过盲读确认脚印不会在第一轮直接锁死苏晚，并为伪造脚印的竞争解释安排排除材料。","path":"inferenceGraph.i_window_identity"}]}
+}
