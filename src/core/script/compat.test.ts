@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { ingestScriptDoc, locationNames, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, resolveLocation, toLegacyScriptDoc } from "./compat";
+import { clearScriptRuntimeCache, ingestScriptDoc, locationNames, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, resolveLocation, toLegacyScriptDoc } from "./compat";
 import { parseScriptDoc } from "./schema";
 import { parseScriptDocV2, publicScriptViewV2 } from "./v2/schema";
 
@@ -45,5 +45,25 @@ describe("V1/V2 剧本兼容层", () => {
     expect(byName?.id).toBe("location_1");
     expect(byId?.name).toBe("书房");
     expect(locationNames(v2)).toContain("书房");
+  });
+
+  it("运行时解析缓存：同内容命中同一对象，内容变化即失效", () => {
+    clearScriptRuntimeCache();
+    const raw = JSON.parse(readFileSync(v2Path, "utf8"));
+    const first = parseScriptForRuntime(raw);
+    const second = parseScriptForRuntime(JSON.parse(JSON.stringify(raw)));
+    expect(second).toBe(first); // 命中缓存（引用相等）
+
+    const changed = JSON.parse(JSON.stringify(raw));
+    changed.meta.durationMin = (changed.meta.durationMin ?? 120) + 1;
+    const third = parseScriptForRuntime(changed);
+    expect(third).not.toBe(first); // 键不同不误命中
+
+    const mutated = JSON.parse(JSON.stringify(raw));
+    mutated.meta.title = "改名后的剧本";
+    const fourth = parseScriptForRuntime(mutated);
+    expect(fourth.meta.title).toBe("改名后的剧本");
+    expect(fourth).not.toBe(first);
+    clearScriptRuntimeCache();
   });
 });

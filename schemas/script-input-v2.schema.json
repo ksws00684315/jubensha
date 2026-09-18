@@ -460,6 +460,32 @@
                     "condition": {
                       "type": "string",
                       "minLength": 1
+                    },
+                    "trigger": {
+                      "type": "object",
+                      "properties": {
+                        "round": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9007199254740991
+                        },
+                        "actId": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_]*$"
+                        },
+                        "publicClueIds": {
+                          "default": [],
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          }
+                        }
+                      },
+                      "required": [
+                        "publicClueIds"
+                      ],
+                      "additionalProperties": false
                     }
                   },
                   "required": [
@@ -3106,11 +3132,35 @@
             ],
             "additionalProperties": false
           }
+        },
+        "guaranteedPublicClues": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "clueId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "deadlineRound": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "clueId",
+              "deadlineRound"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
         "perPhase",
-        "stallBreakers"
+        "stallBreakers",
+        "guaranteedPublicClues"
       ],
       "additionalProperties": false
     }

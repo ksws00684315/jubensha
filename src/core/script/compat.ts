@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { parseScriptDoc, type ScriptDoc } from "./schema";
 import { migrateV1ToV2, type MigrationWarning } from "./v2/migrate-v1";
 import { parseScriptDocV2, type CharacterV2, type ClueV2, type LocationV2, type Narrative, type ScriptDocV2 } from "./v2/schema";
@@ -23,8 +24,48 @@ export function ingestScriptDoc(input: unknown): { doc: ScriptDocV2; migrationWa
   return { doc: migrated.doc, migrationWarnings: migrated.warnings };
 }
 
+/**
+ * 解析结果进程内缓存（LRU ≤50 本）。
+ * 房间页 2s 轮询与对局 GET 每次都重新 zod 校验整本书是首要 CPU 热点；
+ * 内容 hash 即键，剧本编辑保存后 hash 变化自动失效，无需显式清缓存。
+ * 缓存对象按只读约定共享——消费方（engine/api）不得原地修改 ScriptDocV2。
+ */
+const runtimeCache = new Map<string, ScriptDocV2>();
+const RUNTIME_CACHE_MAX = 50;
+
+function runtimeCacheKey(input: unknown): string | null {
+  try {
+    const raw = typeof input === "string" ? input : JSON.stringify(input);
+    return createHash("sha256").update(raw).digest("hex");
+  } catch {
+    return null;
+  }
+}
+
 export function parseScriptForRuntime(input: unknown): ScriptDocV2 {
-  return ingestScriptDoc(input).doc;
+  const key = runtimeCacheKey(input);
+  if (key) {
+    const hit = runtimeCache.get(key);
+    if (hit) {
+      runtimeCache.delete(key);
+      runtimeCache.set(key, hit);
+      return hit;
+    }
+  }
+  const doc = ingestScriptDoc(input).doc;
+  if (key) {
+    runtimeCache.set(key, doc);
+    if (runtimeCache.size > RUNTIME_CACHE_MAX) {
+      const oldest = runtimeCache.keys().next().value;
+      if (oldest !== undefined) runtimeCache.delete(oldest);
+    }
+  }
+  return doc;
+}
+
+/** 仅供测试：清空解析缓存。 */
+export function clearScriptRuntimeCache(): void {
+  runtimeCache.clear();
 }
 
 export function narrativeToText(blocks: Narrative): string {

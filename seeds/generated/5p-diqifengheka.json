@@ -289,7 +289,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "lin_sufen_act1_knowledge",
+                "title": "药物事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先确认头孢与白酒的医学冲突，解释购药小票为何不是凶器。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lin_sufen_act1_objective",
+                "title": "保护药店名声",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "只交代售药事实，不主动讲匿名贺卡。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "lin_sufen_act2_knowledge",
+                "title": "第七封信的重量",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把成绩底单与贺卡中的志愿表存根逐项对照。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lin_sufen_act2_objective",
+                "title": "决定是否公开六封卡片",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "在全场准备好听道歉时，再选择交出贺卡。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -549,7 +615,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "zhao_kai_act1_knowledge",
+                "title": "换酒安排",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把撤茶换酒包装成服务调整，注意不能与签单时间冲突。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhao_kai_act1_objective",
+                "title": "分散嫌疑",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "让每个人的旧账都进入讨论，避免大家只看换酒。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "zhao_kai_act2_knowledge",
+                "title": "志愿表风险",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "阻止玩家把搜索记录与第七封贺卡放在同一条动机链上。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhao_kai_act2_objective",
+                "title": "守住最后解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "被点名时只承认组织聚会，不承认知道药物风险。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -584,7 +716,12 @@
               }
             ],
             "disclosure": "conditional",
-            "condition": "当相册夹层的欠条被翻出、或有人点破你趁乱弯腰塞纸条时，认下三十年前挪班费、班长替你背锅的旧账，说出今晚物归原主的来意。"
+            "condition": "当相册夹层的欠条被翻出、或有人点破你趁乱弯腰塞纸条时，认下三十年前挪班费、班长替你背锅的旧账，说出今晚物归原主的来意。",
+            "trigger": {
+              "publicClueIds": [
+                "qiantiao"
+              ]
+            }
           }
         ],
         "objectives": [
@@ -812,7 +949,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "wang_dali_act1_knowledge",
+                "title": "走廊目击",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出 20:40 换酒行为，但把自己塞欠条的事保留到条件触发。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wang_dali_act1_objective",
+                "title": "先证明在场位置",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "与高鹏交叉确认服务员和传菜口位置。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "wang_dali_act2_knowledge",
+                "title": "欠条触发",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "相册欠条公开后承认三十年前班费旧账及今晚归还。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wang_dali_act2_objective",
+                "title": "完成一次迟到认账",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认旧账后说明它不能解释药物和换酒。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1076,7 +1279,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "chen_man_act1_knowledge",
+                "title": "20:48 原话",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复述听见的“回家再吃”，明确这是亲耳听见而非猜测。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chen_man_act1_objective",
+                "title": "保护聊天记录",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先提供原话，再决定是否承认与死者的关系。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "chen_man_act2_knowledge",
+                "title": "第七封贺卡",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明六张贺卡与死者准备公开道歉的关联。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chen_man_act2_objective",
+                "title": "让情感线服务于事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回答贺卡来源时不替赵凯解释动机。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1111,7 +1380,12 @@
               }
             ],
             "disclosure": "conditional",
-            "condition": "当车里那半页红章复印件被搜出、或公文包里缺的两页被追问时，认下偷拆偷抽的事，把'想研究保送门道'的原话说出口。"
+            "condition": "当车里那半页红章复印件被搜出、或公文包里缺的两页被追问时，认下偷拆偷抽的事，把'想研究保送门道'的原话说出口。",
+            "trigger": {
+              "publicClueIds": [
+                "hongzhang_canhou"
+              ]
+            }
           }
         ],
         "objectives": [
@@ -1321,7 +1595,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "gao_peng_act1_knowledge",
+                "title": "换酒画面",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出 20:40 在走廊看见换东西的人，但不承认偷拆公文包。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gao_peng_act1_objective",
+                "title": "把目击交给全场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "和王大力分别描述视角，避免互相背台词。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "gao_peng_act2_knowledge",
+                "title": "红章残页",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "红章残页公开后承认抽走文件，说明它与死亡没有直接关系。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gao_peng_act2_objective",
+                "title": "在投票前完成澄清",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把文件动机和药物手法明确分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1371,7 +1711,11 @@
       ],
       "policy": "auto_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "diancan_cungen",
@@ -1386,7 +1730,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "diqifengheka",
@@ -1401,7 +1749,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "liaotian_jilu"
+        ]
+      }
     },
     {
       "id": "chengji_didan",
@@ -1416,7 +1770,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "shouji_sousuo",
@@ -1431,7 +1789,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "diancan_cungen"
+        ]
+      }
     },
     {
       "id": "qiantiao",
@@ -1446,7 +1810,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "liaotian_jilu",
@@ -1461,7 +1829,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "huanjiu_bianqian",
@@ -1476,7 +1848,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": [
+          "diancan_cungen"
+        ]
+      }
     },
     {
       "id": "hongzhang_canhou",
@@ -1491,7 +1869,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "qiantiao"
+        ]
+      }
     }
   ],
   "truth": {
@@ -1981,7 +2365,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "意外还是人为",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先确认头孢与白酒的医学关系，再追查撤茶换酒和现场证词。"
+          }
+        ],
+        "roundStart": 1
+      },
+      {
+        "id": "act2",
+        "title": "第七封信",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "把手机搜索、贺卡和志愿表放在同一条动机链上，同时处理其他人的旧账。"
+          }
+        ],
+        "roundStart": 2
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2004,6 +2412,50 @@
             "text": "赵凯保住了体面，也保住了儿子明年政审表上的清白——可那封没念出来的第七封贺卡，连同三十年的沉默，从此压在每一个在场者的心头。聚贤厅包厢的灯灭了，班长的道歉永远开不了口了。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "提醒玩家记住 20:38、20:42、20:48 三个时间点，以及自己愿意交换的情报。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮建立医学事实和换酒事实，第二轮再揭开搜索记录、贺卡和旧账。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "先确认死亡机制，再追问谁安排换酒，最后处理第七封贺卡的动机。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "提醒玩家不要把药店小票、欠条或红章残页单独当作杀人证据。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家只讨论谁与死者关系亲密，尚未确认死亡机制",
+        "hint": "请先让持有药盒线索的角色说明头孢与白酒的医学关系。"
+      },
+      {
+        "condition": "玩家确认换酒却没有追问提前准备",
+        "hint": "提醒大家比较换酒便签、点单签名与手机搜索的时间先后。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yaohe_xiaopiao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "diancan_cungen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "diqifengheka",
+        "deadlineRound": 2
       }
     ]
   }

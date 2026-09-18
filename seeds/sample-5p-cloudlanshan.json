@@ -223,7 +223,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qinghe_act1_knowledge",
+                "title": "进入窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "确认 21:15 送茶后的进入窗口，先用目击信息洗清自己。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinghe_act1_objective",
+                "title": "先保住继承信",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "讨论遗嘱时只承认争执，不交出伪造信。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qinghe_act2_knowledge",
+                "title": "旧案压力",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把日记与保险柜文件和苏晚的医生身份联系起来。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinghe_act2_objective",
+                "title": "选择何时交换伪造信",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "若脚印和旧案同时指向苏晚，用有限代价换取全场信任。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -423,7 +489,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "zhoubo_act1_knowledge",
+                "title": "提包背影",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复述送茶和 21:20 背影，但避免主动提账本。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhoubo_act1_objective",
+                "title": "用目击换安全",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先回答时间问题，再拒绝无关的财务追问。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "zhoubo_act2_knowledge",
+                "title": "账本风险",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账本公开后承认挪用的金额与时间，不替真凶背锅。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhoubo_act2_objective",
+                "title": "把账本变成交换",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "在有人提供毒物证据时承认旧账，换取对目击的采信。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -627,7 +759,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "baimusen_act1_knowledge",
+                "title": "书房日记",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明 20:40 看到摊开的日记，但不公开债务。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baimusen_act1_objective",
+                "title": "用录音自证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "只播放 20:58 前后能证明沈万山仍活着的片段。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "baimusen_act2_knowledge",
+                "title": "股份与旧案",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将日记的威胁语气与保险柜文件放在一起比较。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baimusen_act2_objective",
+                "title": "决定公开底牌",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "若投票前仍被怀疑，公开最短的自证片段。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -842,7 +1040,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "suwan_act1_knowledge",
+                "title": "医学解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把参茶毒发时间解释为 21:15 后窗口，避免承认投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suwan_act1_objective",
+                "title": "制造替代解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把脚印说成诊视路线，并指出青禾短靴纹路不同。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "suwan_act2_knowledge",
+                "title": "旧案封口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "看到日记和事故报告后，改用“救治与取样”解释瓶子。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suwan_act2_objective",
+                "title": "拖过最后质询",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "不主动提旧案，只回应别人拿出的具体材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -877,6 +1141,23 @@
               }
             ],
             "disclosure": "never"
+          },
+          {
+            "id": "secret_luxiaokai_witness",
+            "title": "愿意说出的目击",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "当雪地脚印公开后，你愿意承认自己在 21:20 后躲在廊柱后，看见提包的人进入书房，但仍隐瞒私配钥匙的来源。"
+              }
+            ],
+            "disclosure": "conditional",
+            "condition": "雪地脚印公开后，或有人直接追问你是否在门廊看见提包背影时。",
+            "trigger": {
+              "publicClueIds": [
+                "footprint"
+              ]
+            }
           }
         ],
         "objectives": [
@@ -1106,7 +1387,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "luxiaokai_act1_knowledge",
+                "title": "门廊目击",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "确认 21:20 后看见提包背影，但把钥匙藏在口袋里。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaokai_act1_objective",
+                "title": "说出能洗清自己的部分",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先描述看见的事实，再承认自己不敢确认性别。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "luxiaokai_act2_knowledge",
+                "title": "脚印验证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "脚印公开后补充 21:30 左右听见道晚安。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaokai_act2_objective",
+                "title": "在情书与钥匙之间取舍",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "只在被逼问时承认钥匙，保持情书不公开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1186,7 +1533,11 @@
       ],
       "policy": "auto_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "diary",
@@ -1201,7 +1552,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "missing_key"
+        ]
+      }
     },
     {
       "id": "safe_report",
@@ -1216,7 +1573,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "diary"
+        ]
+      }
     },
     {
       "id": "missing_key",
@@ -1231,7 +1594,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "footprint",
@@ -1246,7 +1613,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": [
+          "teacup"
+        ]
+      }
     },
     {
       "id": "bottle",
@@ -1261,7 +1634,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "teacup"
+        ]
+      }
     },
     {
       "id": "newspaper",
@@ -1276,7 +1655,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "bottle"
+        ]
+      }
     },
     {
       "id": "ledger",
@@ -1291,7 +1676,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "spare_key",
@@ -1306,7 +1695,11 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
     },
     {
       "id": "love_letter",
@@ -1321,7 +1714,13 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "footprint"
+        ]
+      }
     }
   ],
   "truth": {
@@ -1758,7 +2157,8 @@
         "id": "evidence_5",
         "clueIds": [
           "diary",
-          "safe_report"
+          "safe_report",
+          "bottle"
         ],
         "conclusion": "沈万山日记明载'苏晚的事，十年了，这把柄用得顺手'，保险柜中存有苏晚签名的医疗差错事故报告与未签署的认罪声明——十年要挟构成她不惜杀人的深层动机。"
       }
@@ -1813,7 +2213,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "雪夜进入窗口",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先确认参茶中毒与 21:15 后的进入窗口，再比较走廊目击和脚印。"
+          }
+        ],
+        "roundStart": 1
+      },
+      {
+        "id": "act2",
+        "title": "毒物与旧案",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "将毒物来源与十年前医疗事故动机交叉验证，处理竞争解释。"
+          }
+        ],
+        "roundStart": 2
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1836,6 +2260,50 @@
             "text": "天亮时雪停了，警察进山勘查，苏晚以'家庭医生'的身份全程陪同，举止得体、语气哀伤。那盆绿植在窗台上安静地晒着太阳，土里的玻璃瓶再没人翻出来过。沈万山的死被定性为'参茶中意外混入不明毒素'——山庄的账本、遗嘱、旧怨，都被一场大雪盖住了。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "提醒玩家记住自己的时间线、秘密触发条件和至少一个可交换的信息。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮优先让玩家获得参茶、目击和脚印；第二轮再提供毒物来源与旧案材料。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "先问谁在 21:15 后进入书房，再问毒物来源和动机；不要提前宣告锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前提醒玩家区分亲见证词、物证和角色推断。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家只围绕继承和账本争吵，尚未比较进入窗口",
+        "hint": "请让持有走廊目击的角色先复述 21:15、21:20 和 21:30 三个时间点。"
+      },
+      {
+        "condition": "玩家已经知道毒物存在，却没有追问来源",
+        "hint": "提醒大家检查谁能接触到装有乌头碱的容器，以及哪些材料能验证来源。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "teacup",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "missing_key",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "bottle",
+        "deadlineRound": 2
       }
     ]
   }
