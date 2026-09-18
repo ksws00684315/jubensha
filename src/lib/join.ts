@@ -58,6 +58,10 @@ export function decideDmJoin(
   return "claim";
 }
 
+/**
+ * SSE 订阅地址。凭证只能走 query——EventSource 不支持自定义请求头；
+ * 其余 REST 调用已迁到 x-seat-token / x-dm-token 头（避免 token 进访问日志）。
+ */
 export function gameEventsUrl(
   gameId: string,
   opts: { seat?: number | null; token?: string | null; dm?: boolean; dmToken?: string | null; lastSeq?: string }

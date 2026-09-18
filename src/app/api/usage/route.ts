@@ -1,9 +1,10 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 
 /** 用量统计：按 provider+model+purpose 汇总（近 30 天） */
-export async function GET(req: Request) {
+async function GET_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const since = new Date(Date.now() - 30 * 24 * 3600 * 1000);
@@ -19,6 +20,26 @@ export async function GET(req: Request) {
     take: 10,
     select: { providerName: true, modelId: true, purpose: true, error: true, createdAt: true },
   });
+  const recentDiagnostics = await db.usageLog.findMany({
+    where: { createdAt: { gte: since } },
+    orderBy: { createdAt: "desc" },
+    take: 50,
+    select: {
+      requestId: true,
+      generationId: true,
+      taskType: true,
+      providerName: true,
+      modelId: true,
+      purpose: true,
+      inputTokensEstimate: true,
+      budgetTokens: true,
+      retryCount: true,
+      cancelled: true,
+      ok: true,
+      latencyMs: true,
+      createdAt: true,
+    },
+  });
   const summary = rows.map((r) => ({
     providerName: r.providerName,
     modelId: r.modelId,
@@ -30,5 +51,7 @@ export async function GET(req: Request) {
     cachedTokens: r._sum.cachedTokens ?? 0,
     totalTokens: r._sum.totalTokens ?? 0,
   }));
-  return NextResponse.json({ since: since.toISOString(), summary, recentErrors });
+  return NextResponse.json({ since: since.toISOString(), summary, recentErrors, recentDiagnostics });
 }
+
+export const GET = withRoute(GET_IMPL);

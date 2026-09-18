@@ -1,7 +1,9 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { synthesize } from "@/core/tts";
 import { db } from "@/lib/db";
+import { checkTtsRateLimit } from "@/lib/rate-limit";
 
 const schema = z.object({
   gameId: z.string().min(1),
@@ -18,7 +20,9 @@ const schema = z.object({
  * 需要本局玩家或真人主持凭证——房间码本身不是凭证，
  * 否则任何人凭 5 位房间码拿到 gameId 就能反复触发合成、白刷 TTS 额度。
  */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
+  const limited = checkTtsRateLimit(req);
+  if (!limited.ok) return NextResponse.json({ error: "合成过于频繁，请稍后再试" }, { status: 429, headers: { "Retry-After": String(limited.retryAfterSec) } });
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });
@@ -47,6 +51,9 @@ export async function POST(req: Request) {
     const result = await synthesize(text);
     return NextResponse.json({ url: `/api/tts/${result.hash}`, cached: result.cached });
   } catch (err) {
-    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 502 });
+    console.error("[tts] 合成失败：", err);
+    return NextResponse.json({ error: "语音合成失败，请稍后重试" }, { status: 502 });
   }
 }
+
+export const POST = withRoute(POST_IMPL);

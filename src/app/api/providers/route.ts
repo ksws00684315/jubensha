@@ -1,8 +1,10 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { encryptSecret, maskSecret } from "@/lib/crypto";
 import { requireAdmin } from "@/lib/admin";
+import { assertProviderUrlAllowed } from "@/lib/url-guard";
 
 const createSchema = z.object({
   name: z.string().min(1),
@@ -12,7 +14,7 @@ const createSchema = z.object({
   note: z.string().optional(),
 });
 
-export async function GET(req: Request) {
+async function GET_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const providers = await db.aiProvider.findMany({ orderBy: { createdAt: "asc" } });
@@ -29,13 +31,18 @@ export async function GET(req: Request) {
   );
 }
 
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const body = await req.json().catch(() => null);
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "参数不合法", detail: parsed.error.flatten() }, { status: 400 });
+  }
+  try {
+    await assertProviderUrlAllowed(parsed.data.baseUrl);
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 400 });
   }
   const provider = await db.aiProvider.create({
     data: {
@@ -48,3 +55,6 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ id: provider.id }, { status: 201 });
 }
+
+export const GET = withRoute(GET_IMPL);
+export const POST = withRoute(POST_IMPL);

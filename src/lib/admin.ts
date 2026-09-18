@@ -5,7 +5,17 @@ import { cookies, headers } from "next/headers";
 export const ADMIN_COOKIE = "jbs_admin";
 
 function masterSecret(): string {
-  return process.env.ADMIN_TOKEN || process.env.SECRET_MASTER_KEY || "";
+  return process.env.SECRET_MASTER_KEY || "";
+}
+
+/** 生产环境禁止用加密主密钥兼任管理口令，也禁止默认占位值。 */
+export function assertAdminConfig(): void {
+  if (process.env.NODE_ENV !== "production") return;
+  const secret = process.env.SECRET_MASTER_KEY?.trim() ?? "";
+  const token = process.env.ADMIN_TOKEN?.trim() ?? "";
+  if (!secret || secret === "change-me") throw new Error("生产环境必须配置 SECRET_MASTER_KEY");
+  if (!token || token === "change-me") throw new Error("生产环境必须配置 ADMIN_TOKEN");
+  if (token === secret) throw new Error("ADMIN_TOKEN 不得与 SECRET_MASTER_KEY 相同");
 }
 
 /**
@@ -25,7 +35,20 @@ export function adminSessionToken(): string {
 }
 
 export function adminPassword(): string {
-  return masterSecret();
+  assertAdminConfig();
+  return process.env.ADMIN_TOKEN?.trim() ?? "";
+}
+
+/** 口令比较不泄露长度或前缀信息。 */
+export function safeEqualString(a: string, b: string): boolean {
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+  const width = Math.max(left.length, right.length, 1);
+  const paddedLeft = Buffer.alloc(width);
+  const paddedRight = Buffer.alloc(width);
+  left.copy(paddedLeft);
+  right.copy(paddedRight);
+  return crypto.timingSafeEqual(paddedLeft, paddedRight) && left.length === right.length;
 }
 
 function isLoopbackHost(host: string | null): boolean {
@@ -55,7 +78,7 @@ export function isAdminSync(opts: {
   const session = adminSessionToken();
   if (session && opts.cookie === session) return true;
   const password = adminPassword();
-  if (password && opts.tokenHeader && opts.tokenHeader === password) return true;
+  if (password && opts.tokenHeader && safeEqualString(opts.tokenHeader, password)) return true;
   // 本机免登录默认只在开发环境生效。生产构建(next start)里 Host 可被客户端伪造,
   // 因此需要显式设置 ADMIN_TRUST_LOOPBACK=1 才开启——仅适用于服务只在本机/可信网络使用的部署。
   const trustLoopback =

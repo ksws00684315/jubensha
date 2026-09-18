@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { clientIp, rateLimit, resetRateLimits, checkJoinRateLimit } from "./rate-limit";
+import { clientIp, rateLimit, resetRateLimits, checkJoinRateLimit, checkRoomRateLimit } from "./rate-limit";
 
 beforeEach(() => resetRateLimits());
 
@@ -25,6 +25,14 @@ describe("rateLimit", () => {
     expect(rateLimit("b", 1, 1000, 0).ok).toBe(true);
     expect(rateLimit("a", 1, 1000, 0).ok).toBe(false);
   });
+
+  it("达到桶上限时逐出旧来源但保留全局桶", () => {
+    resetRateLimits();
+    const now = 1_000;
+    expect(rateLimit("join:global", 1, 60_000, now).ok).toBe(true);
+    for (let i = 0; i < 5_100; i += 1) rateLimit(`join:ip:${i}`, 1, 60_000, now);
+    expect(rateLimit("join:global", 1, 60_000, now).ok).toBe(false);
+  });
 });
 
 describe("clientIp", () => {
@@ -47,5 +55,13 @@ describe("checkJoinRateLimit", () => {
   it("换个 IP 仍有独立配额（全局桶未打满时）", () => {
     for (let i = 0; i < 10; i++) checkJoinRateLimit(req("1.1.1.1"));
     expect(checkJoinRateLimit(req("2.2.2.2")).ok).toBe(true);
+  });
+});
+
+describe("checkRoomRateLimit", () => {
+  it("允许正常轮询但限制异常高频来源", () => {
+    const req = (ip: string) => new Request("http://x/api/rooms/ABCD", { headers: { "x-forwarded-for": ip } });
+    for (let i = 0; i < 60; i++) expect(checkRoomRateLimit(req("3.3.3.3")).ok).toBe(true);
+    expect(checkRoomRateLimit(req("3.3.3.3")).ok).toBe(false);
   });
 });

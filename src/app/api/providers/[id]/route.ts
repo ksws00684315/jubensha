@@ -1,8 +1,10 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { encryptSecret, maskSecret } from "@/lib/crypto";
 import { requireAdmin } from "@/lib/admin";
+import { assertProviderUrlAllowed } from "@/lib/url-guard";
 
 const patchSchema = z.object({
   name: z.string().min(1).optional(),
@@ -13,7 +15,7 @@ const patchSchema = z.object({
   note: z.string().nullable().optional(),
 });
 
-export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
@@ -24,6 +26,13 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   }
   const existing = await db.aiProvider.findUnique({ where: { id } });
   if (!existing) return NextResponse.json({ error: "Provider 不存在" }, { status: 404 });
+  if (parsed.data.baseUrl !== undefined) {
+    try {
+      await assertProviderUrlAllowed(parsed.data.baseUrl);
+    } catch (err) {
+      return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 400 });
+    }
+  }
   const provider = await db.aiProvider.update({
     where: { id },
     data: {
@@ -38,10 +47,13 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   return NextResponse.json({ id: provider.id, apiKeyMasked: maskSecret(provider.apiKeyCipher) });
 }
 
-export async function DELETE(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function DELETE_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
   await db.aiProvider.delete({ where: { id } }).catch(() => null);
   return NextResponse.json({ ok: true });
 }
+
+export const PATCH = withRoute(PATCH_IMPL);
+export const DELETE = withRoute(DELETE_IMPL);

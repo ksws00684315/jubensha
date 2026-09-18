@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, publicBioText, timelineToText } from "@/core/script/compat";
@@ -8,16 +9,27 @@ import { GameEngine } from "@/core/engine/engine";
 import type { GameState } from "@/core/engine/types";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
-export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   const url = new URL(req.url);
   const seatParam = url.searchParams.get("seat");
-  const token = url.searchParams.get("token");
+  // 凭证优先走 header（不进访问日志）；query 为兼容期回退，一个版本后删除
+  const token = url.searchParams.get("token") ?? req.headers.get("x-seat-token");
 
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: { orderBy: { index: "asc" } } } }, script: true } });
   if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
 
-  const doc = parseScriptForRuntime(game.script.content);
+  // 快照优先；快照或原始剧本任一可解析即可提供服务，全部损坏时降级 503 而不是抛 500
+  let doc: ReturnType<typeof parseScriptForRuntime>;
+  try {
+    doc = parseScriptForRuntime(game.scriptSnapshot ?? game.script.content);
+  } catch {
+    try {
+      doc = parseScriptForRuntime(game.script.content);
+    } catch {
+      return NextResponse.json({ error: "对局剧本数据损坏，请联系主持人" }, { status: 503 });
+    }
+  }
   const v2 = publicScriptViewV2(doc);
   let mySeat: number | null = seatParam !== null ? Number(seatParam) : null;
   if (mySeat !== null) {
@@ -25,8 +37,8 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     if (!seatRow || !seatRow.token || seatRow.token !== token) mySeat = null;
   }
 
-  // 运行中对局:概要访问即懒恢复引擎(重启后刷新页面/重连 SSE 即可续跑,无需等待玩家动作)
-  if (game.status === "running" && !GameEngine.get(id)) {
+  // 只有持有有效座位凭证的参与者才可触发懒恢复；公开观战请求只读快照，避免被匿名轮询唤醒 AI 消耗。
+  if (game.status === "running" && mySeat !== null && !GameEngine.get(id)) {
     void GameEngine.load(id).catch(() => null);
   }
   const seatStates = await db.seatState.findMany({ where: { gameId: id } });
@@ -85,7 +97,9 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         myCard: isMine && c
           ? {
               backstory: narrativeToText(c.privateCard.backstory),
-              secret: c.privateCard.secrets.map((secret) => `${secret.title}：${narrativeToText(secret.content)}`).join("\n\n"),
+              secret: c.privateCard.secrets
+                .map((secret) => `${secret.title}${secret.disclosure === "conditional" ? `（满足条件后披露：${secret.condition ?? "由主持判断"}）` : secret.disclosure === "must_share" ? "（需要找机会主动披露）" : "（不可主动披露）"}：${narrativeToText(secret.content)}`)
+                .join("\n\n"),
               goal: c.privateCard.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n\n"),
               isCulprit: c.privateCard.isCulprit,
               timeline: timelineToText(c.privateCard.timeline),
@@ -155,3 +169,5 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         : [],
   });
 }
+
+export const GET = withRoute(GET_IMPL);

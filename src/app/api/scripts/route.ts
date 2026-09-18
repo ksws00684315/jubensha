@@ -1,11 +1,13 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { ingestScriptDoc } from "@/core/script/compat";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { requireAdmin } from "@/lib/admin";
+import { authorDesignPackageSchema, designPackageHash, validateAuthorDesignPackage } from "@/core/script/design";
 
 /** 剧本列表（仅元数据） */
-export async function GET() {
+async function GET_IMPL() {
   const scripts = await db.script.findMany({
     where: { deleted: false },
     orderBy: { updatedAt: "desc" },
@@ -26,7 +28,7 @@ export async function GET() {
 }
 
 /** 导入/创建剧本：body = { doc: ScriptDocV2 | V1, source? } 或直接是剧本文档。入库一律存 V2。 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const body = await req.json().catch(() => null);
@@ -39,6 +41,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "剧本结构校验失败", issues: ingested.issues }, { status: 400 });
   }
   const doc = ingested.doc;
+  const designParsed = body && typeof body === "object" && body.designPackage !== undefined
+    ? authorDesignPackageSchema.safeParse(body.designPackage)
+    : null;
+  if (designParsed && !designParsed.success) return NextResponse.json({ error: "作者设计包结构校验失败", issues: designParsed.error.issues }, { status: 400 });
+  const designIssues = designParsed?.success ? validateAuthorDesignPackage(designParsed.data, doc) : [];
+  if (designIssues.some((issue) => issue.level === "error")) return NextResponse.json({ error: "作者设计包引用校验失败", issues: designIssues }, { status: 400 });
   const issues = [
     ...ingested.migrationWarnings.map((warning) => ({ level: "warning" as const, path: warning.path, message: warning.message })),
     ...validateScriptV2(doc),
@@ -58,10 +66,11 @@ export async function POST(req: Request) {
       tags: doc.meta.tags,
       intro: doc.meta.intro,
       content: doc as unknown as object,
+      ...(designParsed?.success ? { designPackage: designParsed.data as unknown as object, designHash: designPackageHash(designParsed.data) } : {}),
       source,
     },
   });
-  return NextResponse.json({ id: script.id, issues }, { status: 201 });
+  return NextResponse.json({ id: script.id, issues: [...issues, ...designIssues] }, { status: 201 });
 }
 
 function ingestScriptDocSafe(input: unknown) {
@@ -79,3 +88,6 @@ function ingestScriptDocSafe(input: unknown) {
     return { ok: false as const, issues };
   }
 }
+
+export const GET = withRoute(GET_IMPL);
+export const POST = withRoute(POST_IMPL);

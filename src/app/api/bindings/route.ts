@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -13,10 +14,13 @@ const upsertSchema = z.object({
   modelId: z.string().min(1),
   temperature: z.number().min(0).max(2).nullable().optional(),
   maxTokens: z.number().int().min(MIN_BINDING_OUTPUT_TOKENS).max(MAX_BINDING_OUTPUT_TOKENS).nullable().optional(),
+  contextWindow: z.number().int().min(1024).max(2_000_000).nullable().optional(),
+  supportsSystem: z.boolean().optional(),
+  supportsJson: z.boolean().optional(),
   fallbackSlot: slotSchema.nullable().optional(),
 });
 
-export async function GET(req: Request) {
+async function GET_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const bindings = await db.modelBinding.findMany({ include: { provider: true }, orderBy: { slot: "asc" } });
@@ -28,13 +32,16 @@ export async function GET(req: Request) {
       modelId: b.modelId,
       temperature: b.temperature,
       maxTokens: b.maxTokens,
+      contextWindow: b.contextWindow,
+      supportsSystem: b.supportsSystem,
+      supportsJson: b.supportsJson,
       fallbackSlot: b.fallbackSlot,
       providerEnabled: b.provider.enabled,
     }))
   );
 }
 
-export async function PUT(req: Request) {
+async function PUT_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const body = await req.json().catch(() => null);
@@ -53,6 +60,9 @@ export async function PUT(req: Request) {
       modelId: d.modelId,
       temperature: d.temperature ?? null,
       maxTokens: d.maxTokens ?? null,
+      contextWindow: d.contextWindow ?? null,
+      supportsSystem: d.supportsSystem ?? true,
+      supportsJson: d.supportsJson ?? false,
       fallbackSlot: d.fallbackSlot ?? null,
     },
     update: {
@@ -60,8 +70,14 @@ export async function PUT(req: Request) {
       modelId: d.modelId,
       ...(d.temperature !== undefined ? { temperature: d.temperature } : {}),
       ...(d.maxTokens !== undefined ? { maxTokens: d.maxTokens } : {}),
+      ...(d.contextWindow !== undefined ? { contextWindow: d.contextWindow } : {}),
+      ...(d.supportsSystem !== undefined ? { supportsSystem: d.supportsSystem } : {}),
+      ...(d.supportsJson !== undefined ? { supportsJson: d.supportsJson } : {}),
       ...(d.fallbackSlot !== undefined ? { fallbackSlot: d.fallbackSlot } : {}),
     },
   });
   return NextResponse.json({ slot: binding.slot });
 }
+
+export const GET = withRoute(GET_IMPL);
+export const PUT = withRoute(PUT_IMPL);

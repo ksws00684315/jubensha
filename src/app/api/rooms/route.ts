@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import crypto from "node:crypto";
@@ -5,6 +6,7 @@ import { db } from "@/lib/db";
 import { parseScriptForRuntime } from "@/core/script/compat";
 import { isScriptPlayable } from "@/core/script/v2/validate";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
+import { checkCreateRoomRateLimit } from "@/lib/rate-limit";
 
 const seatSchema = z.object({
   kind: z.enum(["human", "ai", "empty"]),
@@ -26,7 +28,9 @@ function genRoomCode(): string {
 }
 
 /** 创建房间 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
+  const limited = checkCreateRoomRateLimit(req);
+  if (!limited.ok) return NextResponse.json({ error: "创建过于频繁，请稍后再试" }, { status: 429, headers: { "Retry-After": String(limited.retryAfterSec) } });
   const body = await req.json().catch(() => null);
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });
@@ -51,30 +55,36 @@ export async function POST(req: Request) {
   }
 
   let code = genRoomCode();
-  for (let i = 0; i < 5; i++) {
-    const exists = await db.room.findUnique({ where: { code } });
-    if (!exists) break;
-    code = genRoomCode();
-  }
-
   const hostToken = crypto.randomBytes(16).toString("hex");
-  const room = await db.room.create({
-    data: {
-      code,
-      scriptId: scriptRow.id,
-      humanDm: parsed.data.humanDm ?? false,
-      unlimitedHumanTurns: parsed.data.unlimitedHumanTurns ?? true,
-      hostToken,
-      seats: {
-        create: parsed.data.seats.map((s, index) => ({
-          index,
-          kind: s.kind,
-          playerName: null,
-          characterId: characterIds[index],
-        })),
-      },
-    },
-    include: { seats: true },
-  });
-  return NextResponse.json({ roomId: room.id, code: room.code, hostToken }, { status: 201 });
+  // findUnique 预检查不是原子的：并发下以 code 唯一约束为准，撞码就换新码重试（独立审查 M5）
+  let room: Awaited<ReturnType<typeof db.room.create>> | null = null;
+  for (let attempt = 0; attempt < 5 && !room; attempt++) {
+    if (attempt > 0) code = genRoomCode();
+    try {
+      room = await db.room.create({
+        data: {
+          code,
+          scriptId: scriptRow.id,
+          humanDm: parsed.data.humanDm ?? false,
+          unlimitedHumanTurns: parsed.data.unlimitedHumanTurns ?? true,
+          hostToken,
+          seats: {
+            create: parsed.data.seats.map((s, index) => ({
+              index,
+              kind: s.kind,
+              playerName: null,
+              characterId: characterIds[index],
+            })),
+          },
+        },
+        include: { seats: true },
+      });
+    } catch (err) {
+      const isLastAttempt = attempt === 4;
+      if (isLastAttempt || (err && typeof err === "object" && (err as { code?: string }).code !== "P2002")) throw err;
+    }
+  }
+  return NextResponse.json({ roomId: room!.id, code: room!.code, hostToken }, { status: 201 });
 }
+
+export const POST = withRoute(POST_IMPL);

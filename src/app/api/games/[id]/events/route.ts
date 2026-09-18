@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { db } from "@/lib/db";
 import { subscribe } from "@/core/engine/bus";
 import type { BusMessage, EngineEvent } from "@/core/engine/types";
@@ -33,12 +34,18 @@ function rowToEvent(r: {
 }
 
 /** SSE 事件流。查询参数：seat（座位号，缺省为纯观战）。支持 Last-Event-ID 断线续传。 */
-export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   const url = new URL(req.url);
   const seatParam = url.searchParams.get("seat");
   const lastSeqHeader = req.headers.get("last-event-id");
-  const lastSeq = BigInt(lastSeqHeader ?? url.searchParams.get("lastSeq") ?? "0");
+  let lastSeq: bigint;
+  try {
+    lastSeq = BigInt(lastSeqHeader ?? url.searchParams.get("lastSeq") ?? "0");
+  } catch {
+    // 损坏/伪造的 Last-Event-ID：降级为从头重放（前端按 seq 去重），不能让流挂掉
+    lastSeq = BigInt(0);
+  }
 
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: true } } } });
   if (!game) return new Response("game not found", { status: 404 });
@@ -57,8 +64,8 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     !!game.room.dmToken &&
     game.room.dmToken === url.searchParams.get("dmtoken");
 
-  // 运行中对局:SSE 订阅即懒恢复引擎(断线重连/重启后重连即可续跑)
-  if (game.status === "running" && !GameEngine.get(id)) {
+  // 公开 SSE 只能回放事件，不得触发 AI。持有座位或 DM 凭证时才允许懒恢复。
+  if (game.status === "running" && (seatIndex !== null || dmView) && !GameEngine.get(id)) {
     void GameEngine.load(id).catch(() => null);
   }
 
@@ -100,8 +107,14 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
         }
       });
 
-      // 1) 补发历史事件（> lastSeq，按视角过滤）
-      const history = await db.gameEvent.findMany({ where: { gameId: id, seq: { gt: lastSeq } }, orderBy: { seq: "asc" } });
+      // 1) 补发历史事件（> lastSeq，按视角过滤）。查询失败只放弃回放、保住实时订阅，
+      // 避免 start() 抛错让 unsubscribe 已建立的订阅泄漏。
+      let history: Awaited<ReturnType<typeof db.gameEvent.findMany>> = [];
+      try {
+        history = await db.gameEvent.findMany({ where: { gameId: id, seq: { gt: lastSeq } }, orderBy: { seq: "asc" } });
+      } catch (err) {
+        console.error(`[sse] ${id} 历史回放失败，仅保留实时流：${String(err)}`);
+      }
       for (const row of history) {
         sendEvent(rowToEvent(row));
       }
@@ -175,3 +188,5 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     },
   });
 }
+
+export const GET = withRoute(GET_IMPL);

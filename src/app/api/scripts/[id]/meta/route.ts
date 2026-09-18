@@ -1,10 +1,11 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { locationNames, parseScriptForRuntime, publicBioText } from "@/core/script/compat";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 
 /** 剧本公开元数据（不含真相/角色私卡），供开房间等客户端场景使用 */
-export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function GET_IMPL(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   const script = await db.script.findFirst({ where: { id, deleted: false } });
   if (!script) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
@@ -23,3 +24,5 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     issues: validateScriptV2(doc).filter((i) => i.level === "error"),
   });
 }
+
+export const GET = withRoute(GET_IMPL);

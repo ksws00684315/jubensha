@@ -10,6 +10,9 @@ import { decryptSecret } from "@/lib/crypto";
  */
 
 const AUDIO_DIR = path.join(process.cwd(), ".data", "audio");
+/** 缓存上限（条）：超限时按最旧创建时间成批清理，防止 .data/audio 无界增长。 */
+const TTS_CACHE_MAX = 500;
+const TTS_CACHE_TRIM_BATCH = 20;
 
 export interface TtsResult {
   filePath: string;
@@ -59,5 +62,23 @@ export async function synthesize(text: string, opts: { voice?: string } = {}): P
     create: { hash, provider: binding.provider.name, voice, filePath },
     update: { filePath },
   });
+  await trimTtsCache();
   return { filePath, hash, cached: false };
+}
+
+/** 惰性修剪：每次新写入后顺带清理溢出批次；失败只记日志，不影响合成结果。 */
+async function trimTtsCache(): Promise<void> {
+  try {
+    const overflow = await db.ttsCache.findMany({
+      orderBy: { createdAt: "asc" },
+      skip: TTS_CACHE_MAX,
+      take: TTS_CACHE_TRIM_BATCH,
+      select: { id: true, filePath: true },
+    });
+    if (!overflow.length) return;
+    await db.ttsCache.deleteMany({ where: { id: { in: overflow.map((o) => o.id) } } });
+    for (const o of overflow) await fs.unlink(o.filePath).catch(() => null);
+  } catch (err) {
+    console.error(`[tts] 缓存修剪失败（不影响本次合成）：${String(err)}`);
+  }
 }

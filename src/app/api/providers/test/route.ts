@@ -1,9 +1,11 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { decryptSecret } from "@/lib/crypto";
 import { testProviderConnection } from "@/core/llm/client";
 import { requireAdmin } from "@/lib/admin";
+import { assertProviderUrlAllowed } from "@/lib/url-guard";
 
 const testSchema = z.union([
   z.object({
@@ -21,7 +23,7 @@ const testSchema = z.union([
 ]);
 
 /** 测试连接：传 providerId 测已保存配置，或传 protocol/baseUrl/apiKey 测未保存的新配置 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const body = await req.json().catch(() => null);
@@ -43,6 +45,14 @@ export async function POST(req: Request) {
     apiKey = (parsed.data as { apiKey: string }).apiKey;
   }
 
+  try {
+    await assertProviderUrlAllowed(baseUrl);
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 400 });
+  }
+
   const result = await testProviderConnection({ protocol, baseUrl, apiKey });
   return NextResponse.json(result, { status: result.ok ? 200 : 502 });
 }
+
+export const POST = withRoute(POST_IMPL);

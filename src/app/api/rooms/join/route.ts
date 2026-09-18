@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -17,7 +18,7 @@ function newToken() {
 }
 
 /** 大厅入座；恢复已有座位必须提供旧 token，或由房主 token 明确确认。 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   // 限流放在查库之前：房间码只有 5 位，无限制时可被在线枚举并抢占真人座位
   const limited = checkJoinRateLimit(req);
   if (!limited.ok) {
@@ -83,3 +84,5 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({ error: "房间已满（没有空的真人座位）" }, { status: 400 });
 }
+
+export const POST = withRoute(POST_IMPL);

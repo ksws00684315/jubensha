@@ -1,15 +1,17 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { ingestScriptDoc, parseScriptForRuntime } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { isAdminRequest, requireAdmin } from "@/lib/admin";
+import { authorDesignPackageSchema, designPackageHash, validateAuthorDesignPackage } from "@/core/script/design";
 
 async function getScript(id: string) {
   return db.script.findFirst({ where: { id, deleted: false } });
 }
 
-export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   const script = await getScript(id);
   if (!script) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
@@ -24,6 +26,9 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
       updatedAt: script.updatedAt,
       issues: validateScriptV2(doc),
       doc,
+      designPackage: script.designPackage,
+      designHash: script.designHash,
+      designReview: script.designReview,
     });
   }
   const publicView = publicScriptViewV2(doc);
@@ -38,10 +43,12 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
 }
 
 /** 更新剧本（整体替换文档，需重新通过校验）。入库一律存 V2。 */
-export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
+  const existing = await getScript(id);
+  if (!existing) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "请求体不是合法 JSON" }, { status: 400 });
   const docInput = body.doc ?? body;
@@ -58,6 +65,11 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   const errors = issues.filter((i) => i.level === "error");
   if (errors.length) return NextResponse.json({ error: "剧本逻辑校验失败", issues: errors }, { status: 400 });
 
+  const designParsed = body.designPackage === undefined ? null : authorDesignPackageSchema.safeParse(body.designPackage);
+  if (designParsed && !designParsed.success) return NextResponse.json({ error: "作者设计包结构校验失败", issues: designParsed.error.issues }, { status: 400 });
+  const designIssues = designParsed?.success ? validateAuthorDesignPackage(designParsed.data, ingested.doc) : [];
+  if (designIssues.some((issue) => issue.level === "error")) return NextResponse.json({ error: "作者设计包引用校验失败", issues: designIssues }, { status: 400 });
+
   const script = await db.script.update({
     where: { id },
     data: {
@@ -69,12 +81,16 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
       tags: ingested.doc.meta.tags,
       intro: ingested.doc.meta.intro,
       content: ingested.doc as unknown as object,
+      ...(designParsed?.success ? { designPackage: designParsed.data as unknown as object, designHash: designPackageHash(designParsed.data) } : {}),
+      ...(!designParsed?.success && existing.designReview
+        ? { designReview: { ...(existing.designReview as Record<string, unknown>), status: "needs_revision", staleReason: "正文已修改，需重新审稿" } as object }
+        : {}),
     },
   });
-  return NextResponse.json({ id: script.id });
+  return NextResponse.json({ id: script.id, issues: [...issues, ...designIssues] });
 }
 
-export async function DELETE(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function DELETE_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
@@ -83,7 +99,7 @@ export async function DELETE(req: Request, ctx: { params: Promise<{ id: string }
 }
 
 /** 导出 JSON */
-export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
+async function POST_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
@@ -131,3 +147,8 @@ function parseOrCanonical(doc: unknown) {
     };
   }
 }
+
+export const GET = withRoute(GET_IMPL);
+export const PATCH = withRoute(PATCH_IMPL);
+export const DELETE = withRoute(DELETE_IMPL);
+export const POST = withRoute(POST_IMPL);

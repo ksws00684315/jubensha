@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -13,7 +14,7 @@ const schema = z.object({
 });
 
 /** 真人 DM 加入：首次认领后，恢复必须提供旧 token 或房主明确确认。 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   // 与座位加入共用同一限流桶：DM 一旦被抢占就等于全量事件可见
   const limited = checkJoinRateLimit(req);
   if (!limited.ok) {
@@ -55,3 +56,5 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({ roomId: room.id, token, gameId: room.game?.id ?? null, resumed: false });
 }
+
+export const POST = withRoute(POST_IMPL);

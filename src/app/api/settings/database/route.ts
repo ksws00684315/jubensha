@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/admin";
@@ -8,7 +9,7 @@ const bodySchema = z.object({
   url: z.string().min(1),
 });
 
-export async function GET(req: Request) {
+async function GET_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const resolved = resolveDatabaseUrl();
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
 }
 
 /** 测试连通性，不落盘 */
-export async function POST(req: Request) {
+async function POST_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const parsed = bodySchema.safeParse(await req.json().catch(() => null));
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
 }
 
 /** 保存到 local.app.json 并切换当前连接 */
-export async function PUT(req: Request) {
+async function PUT_IMPL(req: Request) {
   const denied = requireAdmin(req);
   if (denied) return denied;
   const parsed = bodySchema.safeParse(await req.json().catch(() => null));
@@ -61,7 +62,9 @@ export async function PUT(req: Request) {
   try {
     await reconnectDatabase(url);
   } catch (err) {
-    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 502 });
+    // Prisma 连接错误细节只进日志；响应给固定文案（admin 可看日志排查）
+    console.error("[settings/database] 切换连接失败：", err);
+    return NextResponse.json({ error: "数据库连接切换失败，请检查地址与网络后重试" }, { status: 502 });
   }
   return NextResponse.json({
     ok: true,
@@ -70,3 +73,7 @@ export async function PUT(req: Request) {
     urlMasked: maskDatabaseUrl(url),
   });
 }
+
+export const GET = withRoute(GET_IMPL);
+export const POST = withRoute(POST_IMPL);
+export const PUT = withRoute(PUT_IMPL);

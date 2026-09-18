@@ -1,3 +1,4 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -9,7 +10,7 @@ import { hasDuplicateCharacterIds } from "@/lib/seats";
 const startSchema = z.object({ hostToken: z.string().min(1) });
 
 /** 开局：校验座位与剧本，创建引擎并自动开始 */
-export async function POST(req: Request, ctx: { params: Promise<{ code: string }> }) {
+async function POST_IMPL(req: Request, ctx: { params: Promise<{ code: string }> }) {
   const { code } = await ctx.params;
   const body = await req.json().catch(() => null);
   const parsed = startSchema.safeParse(body ?? {});
@@ -50,14 +51,27 @@ export async function POST(req: Request, ctx: { params: Promise<{ code: string }
     }
   }
   // 真人座位应有名字（加入时填）；AI 座位补默认名
-  for (const s of seats) {
-    if (s.kind === "ai" && !s.playerName) {
+  const aiNameUpdates = seats
+    .filter((s) => s.kind === "ai" && !s.playerName)
+    .map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);
-      await db.seat.update({ where: { id: s.id }, data: { playerName: `${c?.name ?? "AI"}（AI）` } });
-    }
-  }
+      return db.seat.update({ where: { id: s.id }, data: { playerName: `${c?.name ?? "AI"}（AI）` } });
+    });
+  if (aiNameUpdates.length) await db.$transaction(aiNameUpdates);
 
+  // 先建局（roomId 唯一约束兜底并发），成功后才把房间置为 playing——
+  // 反序会在引擎抛错时留下「playing 但无对局」的僵尸房间（独立审查 M5）。
+  let engine: GameEngine;
+  try {
+    engine = await GameEngine.start({ ...room, seats }, { id: scriptRow.id, content: scriptRow.content });
+  } catch (err) {
+    if (err && typeof err === "object" && (err as { code?: string }).code === "P2002") {
+      return NextResponse.json({ error: "对局已存在" }, { status: 409 });
+    }
+    throw err;
+  }
   await db.room.update({ where: { id: room.id }, data: { status: "playing" } });
-  const engine = await GameEngine.start({ ...room, seats }, { id: scriptRow.id, content: scriptRow.content });
   return NextResponse.json({ gameId: engine.gameId }, { status: 201 });
 }
+
+export const POST = withRoute(POST_IMPL);

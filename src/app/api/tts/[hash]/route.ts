@@ -1,10 +1,11 @@
+import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { createReadStream } from "node:fs";
 import { Readable } from "node:stream";
 
 /** 提供缓存的 TTS 音频文件 */
-export async function GET(_req: Request, ctx: { params: Promise<{ hash: string }> }) {
+async function GET_IMPL(_req: Request, ctx: { params: Promise<{ hash: string }> }) {
   const { hash } = await ctx.params;
   if (!/^[a-f0-9]{32}$/.test(hash)) return NextResponse.json({ error: "hash 不合法" }, { status: 400 });
   const cached = await db.ttsCache.findUnique({ where: { hash } });
@@ -16,3 +17,5 @@ export async function GET(_req: Request, ctx: { params: Promise<{ hash: string }
     return NextResponse.json({ error: "音频文件丢失" }, { status: 404 });
   }
 }
+
+export const GET = withRoute(GET_IMPL);
