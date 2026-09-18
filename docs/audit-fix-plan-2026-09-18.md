@@ -128,7 +128,7 @@
 - H5 对比度：元信息色从 `paper-500` 提到 `paper-400`（≥4.5:1）；`globals.css:43,52,64` 硬编码色并入 token。
 - H6 空态/死码：`settings:293,411` 首帧未加载前显示骨架而非空态文案；`scripts/generate:24` 删除未用的 `"outline"` 阶段。
 
-## 批次 I：P2 结构治理（不阻塞发布，按机会执行）
+## 批次 I：P2 结构治理（不阻塞发布，按机会执行）✅（2026-09-19 整批完成）
 
 - I1 `engine.ts` 按 phase 拆 handler + 提取 `TurnScheduler`（B 批的定时器命名空间改造是其自然前奏）。✅（2026-09-19）
   - 落地：`engine.ts` 2263→981 行，只保留门面（构造/注册、recordEvent/persist、exclusive/schedule、tick/step、handleAction/handleDmAction）。拆出 8 个兄弟模块：`util/registry/turns/phases/social/search-deal/discussion/finale/human-turn`，均以 `(e: GameEngine, ...)` 注入 + type-only 回 import，运行时导入图验证无环；`TurnScheduler` 即 `turns.ts` 的 `dispatchTurn`（锁外 produce→锁内 token/边界双重校验 commit→看门狗强制推进）。longflow 测试 3 处 `maybeQueueWhisper` 改调 `social.ts` 导出版；顺带清理 `social/recall/snapshots` 三处死导入。验收：tsc 0 错误、205 用例全绿、lint 0 告警、生产构建+pm2 重启+SSE 续传冒烟通过。
@@ -144,15 +144,23 @@
   - 落地：`chat()` 删恒等 try/rethrow 改直接 `const binding = await resolveBinding(...)`；`engine.ts` 三处重复锁清理已随 I1 门面化完成；`agents/index.ts` 提出 `JSON_DECISION_RETRIES/MAX_SUGGESTIONS/MAX_QUESTION_CHARS/MAX_VOTE_REASON_CHARS/MAX_WHISPER_CHARS` 五常量替换三处重采样循环与四处截断；一次性字号 `text-[11px]` 全库 5 处并回 `text-xs` 阶梯。验收：tsc 0 错误、226 用例全绿、lint 0 告警、build ✓、pm2 重启后 play/home 均 200。
 - I7 死码：流式 `delta` 链路（`engine.ts:253,624,676,725` 空 `onDelta`）——要么接线要么删除前端打字机分支。✅（2026-09-19）
   - 落地：选接线而非删除——`streamPlayerSpeech/streamDmNarrate` 本就走 `createSpeechRedactor` 句子级增量守卫（泄露句不放行），流式 delta 即守卫后文本，信息防火墙不破；I1 拆分后的 4 处 `consumeStream(…, () => undefined, …)`（`turns.ts` 玩家发言/质询应答/DM 旁白 + `social.ts` 插话）改推 `publish({kind:"delta", seat, text, audience:"public"})`，`social.ts` 补 bus import。前端 `useGameStream/ChatFeed` 打字机分支原样复用，无协议变更。验收：tsc 0 错误、226 用例全绿、lint 0 告警、build ✓、pm2 重启；新开 5AI 全托管局——裸 SSE 抓到 93 帧 delta（DM 旁白守卫后句子），浏览器观战页 `.typing-caret` 气泡 6→149 字实时增长无重载。教训登记：I5 的纯测试批未触发运行时，pm2 重启必须先 `npm run build`（本轮首次冒烟 delta=0 即因跑旧构建）。
-- I8 工作树卫生：当前 28 修改 + 23 未跟踪文件按功能尽快分批提交，勿再滚入下一批。
+- I8 工作树卫生：当前 28 修改 + 23 未跟踪文件按功能尽快分批提交，勿再滚入下一批。✅（2026-09-19）
+  - 落地：经确认按功能域分 6 个本地提交（未推送）——`docs(db)` 文档+四迁移+schema、`refactor(engine)` I1/I2/I7、`feat(script)` 工具链与评测、`fix(api)` A/D/E 安全健壮性、`feat(ui)` C/H/I3、`test(core)` I5；工作树清零（62 修改+45 未跟踪 → 0），HEAD 上 tsc 0 错误、226 用例全绿。
+
+> 批次 I 整批验收：M-A/M-B/M-C/M-D 遗留的结构债全部出清——引擎 981 行门面+9 模块、类型环消除、play 页五件套组件化、测试 205→226、delta 流式复活、魔法数字常量化、工作树归零。运行态 pm2 与数据库为最终一致状态（I7 构建后重启，冒烟含一整局真人+AI 实战与 5AI 托管局流式验证）。
 
 ---
 
 ## 里程碑与验收口径
 
-- **M-A（A+B+C 完成，约 2 天）**：可对外测试——无爆破面、无已知永久卡死、无白屏死路。合入标准：新增限流/引擎/错误态测试全绿，`tsc` 0 错误。
-- **M-B（D+E+F 完成，约 +2.5 天）**：可小范围公测——API 无 500 风暴、事务完整、开关生效、SSRF 关闭。
-- **M-C（G+H 完成，约 +2.5 天）**：体验/性能达标——轮询热点消除、移动端可用、a11y 关键路径通过键盘走通。
-- **M-D（I 持续）**：技术债清册，随功能迭代摊还。
+- **M-A（A+B+C 完成，约 2 天）✅**：可对外测试——无爆破面、无已知永久卡死、无白屏死路。合入标准：新增限流/引擎/错误态测试全绿，`tsc` 0 错误。
+- **M-B（D+E+F 完成，约 +2.5 天）✅**：可小范围公测——API 无 500 风暴、事务完整、开关生效、SSRF 关闭。
+- **M-C（G+H 完成，约 +2.5 天）✅**：体验/性能达标——轮询热点消除、移动端可用、a11y 关键路径通过键盘走通。
+- **M-D（I 持续）✅（2026-09-19 提前出清）**：技术债清册，随功能迭代摊还。
 
 每批合入后在本文档对应条目标记 ✅ 并附 commit 哈希，与 `engine-debt-rectification-plan.md` 的执行状态惯例一致。
+
+### 执行落账（2026-09-19）
+
+批次 A–I 改动最终按功能域落为 6 个本地提交（未推送 origin），逐提交 `tsc --noEmit` 独立通过：
+`417ce43` docs(db) 文档/迁移 · `49be99e` refactor(engine) I1/I2/I7（含 v2 依赖字段） · `c6ce22b` feat(script) 工具链/评测 · `54c5f6e` fix(api) A/D/E · `e28df43` feat(ui) C/H/I3 · `06ac256` test(core) I5 · 末笔 docs 为本执行状态。
