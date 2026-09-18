@@ -25,14 +25,17 @@ interface BindingView {
   modelId: string;
   temperature: number | null;
   maxTokens: number | null;
+  contextWindow: number | null;
+  supportsSystem: boolean;
+  supportsJson: boolean;
   fallbackSlot: string | null;
   providerEnabled: boolean;
 }
 
-type BindingDraft = { providerId: string; modelId: string; temperature: string; maxTokens: string };
+type BindingDraft = { providerId: string; modelId: string; temperature: string; maxTokens: string; contextWindow: string };
 
 function emptyDraft(): BindingDraft {
-  return { providerId: "", modelId: "", temperature: "", maxTokens: "" };
+  return { providerId: "", modelId: "", temperature: "", maxTokens: "", contextWindow: "" };
 }
 interface UsageView {
   summary: Array<{
@@ -83,28 +86,29 @@ function AdminGate({ children }: { children: ReactNode }) {
     }
   };
 
-  if (state === "loading") return <p className="text-zinc-500">检查管理身份…</p>;
+  if (state === "loading") return <p className="text-paper-400">检查管理身份…</p>;
   if (state === "ok") return <>{children}</>;
   return (
-    <div className="mx-auto max-w-md space-y-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+    <div className="mx-auto max-w-md space-y-4 rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
       <h2 className="text-lg font-semibold">解锁管理面</h2>
-      <p className="text-sm text-zinc-400">
-        开发环境下本机 <code className="text-zinc-300">localhost</code> 访问会自动解锁；生产环境请输入{" "}
-        <code className="text-zinc-300">.env</code> 里的 <code className="text-zinc-300">ADMIN_TOKEN</code> 或{" "}
-        <code className="text-zinc-300">SECRET_MASTER_KEY</code>。
+      <p className="text-sm text-paper-300">
+        开发环境下本机 <code className="text-paper-200">localhost</code> 访问会自动解锁；生产环境请输入{" "}
+        <code className="text-paper-200">.env</code> 里的 <code className="text-paper-200">ADMIN_TOKEN</code> 或{" "}
+        <code className="text-paper-200">SECRET_MASTER_KEY</code>。
       </p>
       <input
         type="password"
+        aria-label="管理口令"
         value={token}
         onChange={(e) => setToken(e.target.value)}
         placeholder="管理口令"
-        className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500"
+        className="w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400"
       />
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-danger-400">{error}</p>}
       <button
         onClick={() => void unlock()}
         disabled={busy || !token.trim()}
-        className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+        className="rounded-lg bg-gold-400 px-5 py-2 text-sm font-medium text-ink-950 hover:bg-gold-300 disabled:opacity-40"
       >
         {busy ? "验证中…" : "解锁"}
       </button>
@@ -132,7 +136,7 @@ export default function SettingsPage() {
               key={k}
               onClick={() => setTab(k)}
               className={`rounded-lg px-4 py-2 text-sm transition ${
-                tab === k ? "bg-zinc-800 text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
+                tab === k ? "bg-ink-800 text-paper-50" : "text-paper-400 hover:text-paper-200"
               }`}
             >
               {label}
@@ -220,38 +224,38 @@ function DatabaseTab() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">当前连接</h3>
-        {!info && <p className="mt-2 text-sm text-zinc-500">加载中…</p>}
+        {!info && <div className="skeleton mt-3 h-20 rounded-lg" aria-busy="true" aria-label="数据库信息加载中" />}
         {info && (
           <div className="mt-3 space-y-1 text-sm">
             <p>
               状态：
               {info.configured ? (
                 info.ok ? (
-                  <span className="text-emerald-400">已连通</span>
+                  <span className="text-success-400">已连通</span>
                 ) : (
-                  <span className="text-red-400">连不上</span>
+                  <span className="text-danger-400">连不上</span>
                 )
               ) : (
-                <span className="text-zinc-400">未配置</span>
+                <span className="text-paper-300">未配置</span>
               )}
-              {info.hasSchema === false && info.ok && <span className="ml-2 text-amber-400">缺表结构</span>}
+              {info.hasSchema === false && info.ok && <span className="ml-2 text-gold-400">缺表结构</span>}
             </p>
-            <p className="text-zinc-500">来源：{sourceLabel}</p>
-            {info.urlMasked && <p className="font-mono text-xs text-zinc-400 break-all">{info.urlMasked}</p>}
-            {info.error && <p className="text-red-400">{info.error}</p>}
+            <p className="text-paper-400">来源：{sourceLabel}</p>
+            {info.urlMasked && <p className="font-mono text-xs text-paper-300 break-all">{info.urlMasked}</p>}
+            {info.error && <p className="text-danger-400">{info.error}</p>}
           </div>
         )}
       </div>
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">填写 PostgreSQL 连接串</h3>
-        <p className="mt-1 text-sm text-zinc-500">
-          支持本机或远端。云厂商库通常要加 <code className="text-zinc-300">sslmode=require</code>。保存后写入项目根目录{" "}
-          <code className="text-zinc-300">local.app.json</code>（已 gitignore），并立即切换，无需改 .env。
+        <p className="mt-1 text-sm text-paper-400">
+          支持本机或远端。云厂商库通常要加 <code className="text-paper-200">sslmode=require</code>。保存后写入项目根目录{" "}
+          <code className="text-paper-200">local.app.json</code>（已 gitignore），并立即切换，无需改 .env。
         </p>
-        <label className="mt-4 block text-sm text-zinc-400">
+        <label className="mt-4 block text-sm text-paper-300">
           DATABASE_URL
           <input
             value={url}
@@ -259,22 +263,22 @@ function DatabaseTab() {
             type="password"
             autoComplete="off"
             placeholder="postgresql://USER:PASSWORD@HOST:5432/jubensha?schema=public&sslmode=require"
-            className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 font-mono text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500"
+            className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 font-mono text-sm outline-none placeholder:text-paper-500 focus:border-gold-400"
           />
         </label>
-        {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-emerald-400" : "text-red-400"}`}>{msg.text}</p>}
+        {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-success-400" : "text-danger-400"}`}>{msg.text}</p>}
         <div className="mt-4 flex gap-3">
           <button
             onClick={() => void save()}
             disabled={busy || !url.trim()}
-            className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+            className="rounded-lg bg-gold-400 px-5 py-2 text-sm font-medium text-ink-950 hover:bg-gold-300 disabled:opacity-40"
           >
             {busy ? "处理中…" : "测试并保存"}
           </button>
           <button
             onClick={() => void test()}
             disabled={busy || !url.trim()}
-            className="rounded-lg border border-zinc-700 px-5 py-2 text-sm hover:border-zinc-500 disabled:opacity-40"
+            className="rounded-lg border border-gold-400/25 px-5 py-2 text-sm hover:border-gold-400/50 disabled:opacity-40"
           >
             只测试、不保存
           </button>
@@ -378,46 +382,46 @@ function ProvidersTab() {
     <div className="space-y-6">
       <div className="space-y-3">
         {providers.map((p) => (
-          <div key={p.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-4">
+          <div key={p.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-gold-400/12 bg-ink-900/60 px-5 py-4">
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <span className="font-medium">{p.name}</span>
-                <span className="rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-500">{p.protocol === "anthropic" ? "Anthropic" : "OpenAI 兼容"}</span>
-                {!p.enabled && <span className="rounded bg-red-500/20 px-1.5 py-0.5 text-xs text-red-400">已禁用</span>}
+                <span className="rounded bg-ink-800 px-1.5 py-0.5 text-xs text-paper-400">{p.protocol === "anthropic" ? "Anthropic" : "OpenAI 兼容"}</span>
+                {!p.enabled && <span className="rounded bg-danger-400/20 px-1.5 py-0.5 text-xs text-danger-400">已禁用</span>}
               </div>
-              <p className="mt-1 font-mono text-xs text-zinc-500">
+              <p className="mt-1 font-mono text-xs text-paper-400">
                 {p.baseUrl} · {p.apiKeyMasked}
               </p>
             </div>
             <div className="flex gap-2 text-sm">
-              <button onClick={() => startEdit(p)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
+              <button onClick={() => startEdit(p)} className="rounded-lg border border-gold-400/25 px-3 py-1.5 hover:border-gold-400/50">
                 编辑
               </button>
-              <button onClick={() => void test(p.id)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
+              <button onClick={() => void test(p.id)} className="rounded-lg border border-gold-400/25 px-3 py-1.5 hover:border-gold-400/50">
                 测试
               </button>
-              <button onClick={() => toggle(p)} className="rounded-lg border border-zinc-700 px-3 py-1.5 hover:border-zinc-500">
+              <button onClick={() => toggle(p)} className="rounded-lg border border-gold-400/25 px-3 py-1.5 hover:border-gold-400/50">
                 {p.enabled ? "禁用" : "启用"}
               </button>
-              <button onClick={() => remove(p)} className="rounded-lg px-3 py-1.5 text-zinc-500 hover:text-red-400">
+              <button onClick={() => remove(p)} className="rounded-lg px-3 py-1.5 text-paper-400 hover:text-danger-400">
                 删除
               </button>
             </div>
           </div>
         ))}
         {providers.length === 0 && (
-          <p className="rounded-xl border border-dashed border-zinc-800 p-8 text-center text-sm text-zinc-500">
+          <p className="rounded-xl border border-dashed border-gold-400/12 p-8 text-center text-sm text-paper-400">
             还没有接入任何 AI 服务商。从下方添加一个（DeepSeek / 智谱 / Qwen / OpenAI / Ollama 等）。
           </p>
         )}
       </div>
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">{editingId ? "编辑 Provider" : "添加 Provider"}</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             快速模板
-            <select value={preset} onChange={(e) => applyPreset(e.target.value)} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500">
+            <select value={preset} onChange={(e) => applyPreset(e.target.value)} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400">
               <option value="">自定义…</option>
               {PROVIDER_PRESETS.map((p) => (
                 <option key={p.key} value={p.key}>
@@ -426,48 +430,48 @@ function ProvidersTab() {
               ))}
             </select>
           </label>
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             名称
-            <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+            <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
           </label>
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             协议
-            <select value={form.protocol} onChange={(e) => setForm((f) => ({ ...f, protocol: e.target.value }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500">
+            <select value={form.protocol} onChange={(e) => setForm((f) => ({ ...f, protocol: e.target.value }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400">
               <option value="openai_compatible">OpenAI 兼容</option>
               <option value="anthropic">Anthropic</option>
             </select>
           </label>
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             Base URL
-            <input value={form.baseUrl} onChange={(e) => setForm((f) => ({ ...f, baseUrl: e.target.value }))} placeholder="https://api.deepseek.com/v1" className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none placeholder:text-zinc-600 focus:border-amber-500" />
+            <input value={form.baseUrl} onChange={(e) => setForm((f) => ({ ...f, baseUrl: e.target.value }))} placeholder="https://api.deepseek.com/v1" className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none placeholder:text-paper-500 focus:border-gold-400" />
           </label>
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             API Key{editingId ? "（留空不改）" : ""}
-            <input value={form.apiKey} onChange={(e) => setForm((f) => ({ ...f, apiKey: e.target.value }))} type="password" placeholder={editingId ? "不修改则留空" : ""} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+            <input value={form.apiKey} onChange={(e) => setForm((f) => ({ ...f, apiKey: e.target.value }))} type="password" placeholder={editingId ? "不修改则留空" : ""} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
           </label>
-          <label className="text-sm text-zinc-400">
+          <label className="text-sm text-paper-300">
             备注（可选）
-            <input value={form.note} onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+            <input value={form.note} onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
           </label>
         </div>
-        {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-emerald-400" : "text-red-400"}`}>{msg.text}</p>}
+        {msg && <p className={`mt-3 text-sm ${msg.ok ? "text-success-400" : "text-danger-400"}`}>{msg.text}</p>}
         <div className="mt-4 flex gap-3">
           <button
             onClick={() => void save()}
             disabled={busy || !form.name || !form.baseUrl || (!editingId && !form.apiKey)}
-            className="rounded-lg bg-amber-500 px-5 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40"
+            className="rounded-lg bg-gold-400 px-5 py-2 text-sm font-medium text-ink-950 hover:bg-gold-300 disabled:opacity-40"
           >
             {editingId ? "保存修改" : "保存"}
           </button>
           <button
             onClick={() => void test()}
             disabled={busy || !form.baseUrl || (!editingId && !form.apiKey)}
-            className="rounded-lg border border-zinc-700 px-5 py-2 text-sm hover:border-zinc-500 disabled:opacity-40"
+            className="rounded-lg border border-gold-400/25 px-5 py-2 text-sm hover:border-gold-400/50 disabled:opacity-40"
           >
             先测试连通性
           </button>
           {editingId && (
-            <button onClick={resetForm} className="rounded-lg px-3 py-2 text-sm text-zinc-500 hover:text-zinc-300">
+            <button onClick={resetForm} className="rounded-lg px-3 py-2 text-sm text-paper-400 hover:text-paper-200">
               取消编辑
             </button>
           )}
@@ -481,7 +485,7 @@ function BindingsTab() {
   const [providers, setProviders] = useState<ProviderView[]>([]);
   const [bindings, setBindings] = useState<BindingView[]>([]);
   const [draft, setDraft] = useState<Record<string, BindingDraft>>({});
-  const [msg, setMsg] = useState<string | null>(null);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   const load = useCallback(async () => {
     setProviders(await api<ProviderView[]>("/api/providers"));
@@ -495,6 +499,7 @@ function BindingsTab() {
         modelId: found?.modelId ?? "",
         temperature: found?.temperature != null ? String(found.temperature) : "",
         maxTokens: found?.maxTokens != null ? String(found.maxTokens) : "",
+        contextWindow: found?.contextWindow != null ? String(found.contextWindow) : "",
       };
     }
     setDraft(d);
@@ -508,26 +513,31 @@ function BindingsTab() {
     if (!d?.providerId || !d.modelId) return;
     const temperature = d.temperature.trim() === "" ? null : Number(d.temperature);
     const maxTokens = d.maxTokens.trim() === "" ? null : Number(d.maxTokens);
+    const contextWindow = d.contextWindow.trim() === "" ? null : Number(d.contextWindow);
     if (temperature !== null && (Number.isNaN(temperature) || temperature < 0 || temperature > 2)) {
-      setMsg("温度需在 0–2 之间，留空则用默认。");
+      setMsg({ ok: false, text: "温度需在 0–2 之间，留空则用默认。" });
       return;
     }
     if (
       maxTokens !== null &&
       (!Number.isInteger(maxTokens) || maxTokens < MIN_BINDING_OUTPUT_TOKENS || maxTokens > MAX_BINDING_OUTPUT_TOKENS)
     ) {
-      setMsg(`单次输出上限需为 ${MIN_BINDING_OUTPUT_TOKENS}–${MAX_BINDING_OUTPUT_TOKENS} 的整数。这是「这一句最多生成多长」，不是 1M 上下文窗口。`);
+      setMsg({ ok: false, text: `单次输出上限需为 ${MIN_BINDING_OUTPUT_TOKENS}–${MAX_BINDING_OUTPUT_TOKENS} 的整数。这是「这一句最多生成多长」，不是 1M 上下文窗口。` });
+      return;
+    }
+    if (contextWindow !== null && (!Number.isInteger(contextWindow) || contextWindow < 1024 || contextWindow > 2_000_000)) {
+      setMsg({ ok: false, text: "上下文窗口需为 1024–2000000 的整数，留空表示暂不启用预算检查。" });
       return;
     }
     try {
       await api("/api/bindings", {
         method: "PUT",
-        body: JSON.stringify({ slot, providerId: d.providerId, modelId: d.modelId, temperature, maxTokens }),
+        body: JSON.stringify({ slot, providerId: d.providerId, modelId: d.modelId, temperature, maxTokens, contextWindow }),
       });
-      setMsg(`已保存「${PURPOSE_LABEL[slot]}」绑定。`);
+      setMsg({ ok: true, text: `已保存「${PURPOSE_LABEL[slot]}」绑定。` });
       await load();
     } catch (err) {
-      setMsg(err instanceof Error ? err.message : String(err));
+      setMsg({ ok: false, text: err instanceof Error ? err.message : String(err) });
     }
   };
 
@@ -535,34 +545,35 @@ function BindingsTab() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-paper-400">
         为不同用途绑定不同模型：DM 与凶手建议用最强模型，路人 AI 用便宜模型即可。模型名参考各服务商文档（例如 deepseek-chat、glm-4.7-air）。
-        轮次变多会堆在「输入上下文」里，整局发言记录每次都会全量送给模型，没有截断。下面这项只限制「这一句最多生成多长」（含思考），默认 {DEFAULT_MAX_OUTPUT_TOKENS}，可填到 {MAX_BINDING_OUTPUT_TOKENS}。1M 是能读进去的上下文，不要填成输出上限。
+        轮次变多会堆在「输入上下文」里。输出上限只限制这一句最多生成多长；上下文窗口用于超限前保护规则和当前问题，留空时保持旧绑定兼容。
       </p>
       {BINDING_SLOTS.map((slot) => {
         const bound = bindings.find((b) => b.slot === slot.key);
         const d = draft[slot.key] ?? emptyDraft();
         const preset = PROVIDER_PRESETS.find((p) => p.label === bound?.providerName);
         return (
-          <div key={slot.key} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+          <div key={slot.key} className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h4 className="font-medium">
                   {slot.label}
                   {bound && (
-                    <span className={`ml-2 rounded px-1.5 py-0.5 text-xs ${bound.providerEnabled ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/20 text-red-400"}`}>
+                    <span className={`ml-2 rounded px-1.5 py-0.5 text-xs ${bound.providerEnabled ? "bg-success-400/15 text-success-400" : "bg-danger-400/20 text-danger-400"}`}>
                       {bound.providerName} / {bound.modelId}
                       {bound.maxTokens ? ` · ${bound.maxTokens} tok` : ""}
                     </span>
                   )}
                 </h4>
-                <p className="mt-0.5 text-xs text-zinc-500">{slot.description}</p>
+                <p className="mt-0.5 text-xs text-paper-400">{slot.description}</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <select
+                  aria-label={`${slot.label} · 供应商`}
                   value={d.providerId}
                   onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, providerId: e.target.value } }))}
-                  className="rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 text-sm outline-none focus:border-amber-500"
+                  className="rounded-lg border border-gold-400/25 bg-ink-950 px-2 py-1.5 text-sm outline-none focus:border-gold-400"
                 >
                   <option value="">选择 Provider…</option>
                   {enabled.map((p) => (
@@ -572,11 +583,12 @@ function BindingsTab() {
                   ))}
                 </select>
                 <input
+                  aria-label={`${slot.label} · 模型名`}
                   value={d.modelId}
                   onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, modelId: e.target.value } }))}
                   list={`models-${slot.key}`}
                   placeholder="模型名"
-                  className="w-44 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-amber-500"
+                  className="w-44 rounded-lg border border-gold-400/25 bg-ink-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-gold-400"
                 />
                 <datalist id={`models-${slot.key}`}>
                   {(preset?.commonModels ?? []).map((m) => (
@@ -584,22 +596,33 @@ function BindingsTab() {
                   ))}
                 </datalist>
                 <input
+                  aria-label={`${slot.label} · 温度`}
                   value={d.temperature}
                   onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, temperature: e.target.value } }))}
                   placeholder="温度"
                   inputMode="decimal"
-                  className="w-20 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-amber-500"
+                  className="w-20 rounded-lg border border-gold-400/25 bg-ink-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-gold-400"
                   title="温度 0–2，留空用默认"
                 />
                 <input
+                  aria-label={`${slot.label} · 输出上限`}
                   value={d.maxTokens}
                   onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, maxTokens: e.target.value } }))}
                   placeholder={`输出 ${DEFAULT_MAX_OUTPUT_TOKENS}`}
                   inputMode="numeric"
-                  className="w-28 rounded-lg border border-zinc-700 bg-zinc-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-amber-500"
+                  className="w-28 rounded-lg border border-gold-400/25 bg-ink-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-gold-400"
                   title={`单次输出上限，留空默认 ${DEFAULT_MAX_OUTPUT_TOKENS}，最高 ${MAX_BINDING_OUTPUT_TOKENS}`}
                 />
-                <button onClick={() => save(slot.key)} disabled={!d.providerId || !d.modelId} className="rounded-lg bg-zinc-800 px-3 py-1.5 text-sm hover:bg-zinc-700 disabled:opacity-40">
+                <input
+                  aria-label={`${slot.label} · 上下文窗口`}
+                  value={d.contextWindow}
+                  onChange={(e) => setDraft((s) => ({ ...s, [slot.key]: { ...d, contextWindow: e.target.value } }))}
+                  placeholder="上下文窗口"
+                  inputMode="numeric"
+                  className="w-28 rounded-lg border border-gold-400/25 bg-ink-950 px-2 py-1.5 font-mono text-sm outline-none focus:border-gold-400"
+                  title="模型输入上下文窗口 token 数，1024–2000000；留空不启用预算检查"
+                />
+                <button onClick={() => save(slot.key)} disabled={!d.providerId || !d.modelId} className="rounded-lg bg-gold-400 px-3 py-1.5 text-sm text-ink-950 hover:bg-gold-300 disabled:opacity-40">
                   保存
                 </button>
               </div>
@@ -607,7 +630,7 @@ function BindingsTab() {
           </div>
         );
       })}
-      {msg && <p className="text-sm text-emerald-400">{msg}</p>}
+      {msg && <p className={`text-sm ${msg.ok ? "text-success-400" : "text-danger-400"}`}>{msg.text}</p>}
     </div>
   );
 }
@@ -617,7 +640,13 @@ function UsageTab() {
   useEffect(() => {
     void api<UsageView>("/api/usage").then(setUsage);
   }, []);
-  if (!usage) return <p className="text-zinc-500">加载中…</p>;
+  if (!usage)
+    return (
+      <div className="space-y-3" aria-busy="true" aria-label="用量数据加载中">
+        <div className="skeleton h-24 rounded-xl" />
+        <div className="skeleton h-48 rounded-xl" />
+      </div>
+    );
   const okRows = usage.summary.filter((r) => r.ok);
   const failRows = usage.summary.filter((r) => !r.ok);
   const total = okRows.reduce((a, r) => a + r.totalTokens, 0);
@@ -626,15 +655,16 @@ function UsageTab() {
   const hit = prompt > 0 ? Math.round((cached / prompt) * 100) : 0;
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">近 30 天总用量</h3>
-        <p className="mt-2 text-3xl font-bold text-amber-400">{total.toLocaleString()}</p>
-        <p className="text-xs text-zinc-500">
+        <p className="mt-2 text-3xl font-bold text-gold-400">{total.toLocaleString()}</p>
+        <p className="text-xs text-paper-400">
           tokens · 输入缓存命中 {cached.toLocaleString()}（{hit}%）
         </p>
         {okRows.length > 0 && (
-          <table className="mt-4 w-full text-left text-sm">
-            <thead className="text-xs text-zinc-500">
+          <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[560px] text-left text-sm">
+            <thead className="text-xs text-paper-400">
               <tr>
                 <th className="py-1">Provider</th>
                 <th>模型</th>
@@ -647,7 +677,7 @@ function UsageTab() {
             </thead>
             <tbody>
               {okRows.map((r, i) => (
-                <tr key={i} className="border-t border-zinc-800/60">
+                <tr key={i} className="border-t border-gold-400/10">
                   <td className="py-1.5">{r.providerName}</td>
                   <td className="font-mono text-xs">{r.modelId}</td>
                   <td>{PURPOSE_LABEL[r.purpose] ?? r.purpose}</td>
@@ -659,20 +689,21 @@ function UsageTab() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
-        {okRows.length === 0 && <p className="mt-3 text-sm text-zinc-500">还没有任何调用记录。</p>}
+        {okRows.length === 0 && <p className="mt-3 text-sm text-paper-400">还没有任何调用记录。</p>}
       </div>
       {failRows.length > 0 && (
-        <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-6 text-sm">
-          <h3 className="font-semibold text-red-400">失败调用</h3>
-          <ul className="mt-2 space-y-1 text-zinc-400">
+        <div className="rounded-xl border border-danger-400/30 bg-danger-400/5 p-6 text-sm">
+          <h3 className="font-semibold text-danger-400">失败调用</h3>
+          <ul className="mt-2 space-y-1 text-paper-300">
             {failRows.map((r, i) => (
               <li key={i}>
                 {r.providerName}/{r.modelId} · {PURPOSE_LABEL[r.purpose] ?? r.purpose} · {r.calls} 次
               </li>
             ))}
           </ul>
-          <ul className="mt-3 space-y-1 text-xs text-zinc-500">
+          <ul className="mt-3 space-y-1 text-xs text-paper-400">
             {usage.recentErrors.slice(0, 5).map((e, i) => (
               <li key={i} className="truncate">
                 {new Date(e.createdAt).toLocaleString()} {e.error}

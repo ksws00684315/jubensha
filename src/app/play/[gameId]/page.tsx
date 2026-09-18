@@ -1,248 +1,45 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BrandMark, SoundIcon } from "@/components/VisualIcons";
-import { NarrativeBlocks, TimelineList } from "@/components/ScriptContent";
-import {
-  api,
-  getIdentity,
-  PHASE_LABEL,
-  saveIdentity,
-  type GameEventView,
-  type GameSummary,
-  type DmStructuredView,
-} from "@/lib/client";
-import { gameEventsUrl } from "@/lib/join";
+import { api, PHASE_LABEL, type GameSummary } from "@/lib/client";
 import { countdownRemaining, formatCountdown } from "@/lib/human-timeout";
+import { ChatFeed } from "./_components/ChatFeed";
+import { DmConsole, type DmAction } from "./_components/DmConsole";
+import { InfoRail } from "./_components/InfoRail";
+import { useGameStream } from "./_components/useGameStream";
+import { VotePanel } from "./_components/VotePanel";
+import type { GameEventView } from "@/lib/client";
 
-interface DmView {
-  truth: { culprit: string; method: string; fullTimeline: string; keyEvidence: string[]; reveal: string };
-  characters: Array<{ id: string; name: string; publicBio: string; secret: string; goal: string; timeline: string; isCulprit: boolean; seatIndex: number | null }>;
-  clues: Array<{ id: string; location: string; name: string; content: string; policy: string }>;
-  structured: DmStructuredView | null;
-}
-
-type GameCue = "phase" | "clue" | "reveal";
-
+/**
+ * ★ 对局页编排层（批次 I3 拆分后）★
+ * 页面保留：身份动作（send/发言/私信/DM 指令/TTS）+ 左栏「你的行动」阶段面板 + 三栏组装。
+ * 现场流与展示已拆入 _components/：useGameStream（加载+SSE+音效+倒计时）、
+ * ChatFeed（事件流/输入区/复盘）、DmConsole（真人主持台）、VotePanel（终局投票/答题）、
+ * InfoRail（剧本/线索/时间线页签）。
+ */
 export default function PlayPage() {
   const { gameId } = useParams<{ gameId: string }>();
-  const [summary, setSummary] = useState<GameSummary | null>(null);
-  const [mySeat, setMySeat] = useState<number | null>(null);
-  const [myToken, setMyToken] = useState<string | null>(null);
-  const [isDm, setIsDm] = useState(false);
-  const [dmToken, setDmToken] = useState<string | null>(null);
-  const [dmData, setDmData] = useState<DmView | null>(null);
-  const [dmText, setDmText] = useState("");
-  const [events, setEvents] = useState<GameEventView[]>([]);
-  const [deltas, setDeltas] = useState<Record<number, string>>({});
-  const [thinking, setThinking] = useState<Record<number, boolean>>({});
-  const [dmThinking, setDmThinking] = useState(false);
-  const [dmDelta, setDmDelta] = useState("");
-  const [whisperText, setWhisperText] = useState<Record<number, string>>({});
-  const [input, setInput] = useState("");
-  const [tab, setTab] = useState<"script" | "clues" | "timeline">("script");
-  const [voteTarget, setVoteTarget] = useState<number | null>(null);
-  const [voteReason, setVoteReason] = useState("");
-  const [askTarget, setAskTarget] = useState<number | null>(null);
-  const [askText, setAskText] = useState("");
-  const [decidedClues, setDecidedClues] = useState<Set<string>>(new Set());
-  const [transferClueId, setTransferClueId] = useState<string | null>(null);
-  const [skillActiveId, setSkillActiveId] = useState<string | null>(null);
-  const [skillToSeat, setSkillToSeat] = useState<number | null>(null);
-  const [skillText, setSkillText] = useState("");
-  const [quizPicks, setQuizPicks] = useState<Record<string, string>>({});
+  const [retryKey, setRetryKey] = useState(0);
+  const { setSummary, ...stream } = useGameStream(gameId, retryKey);
+  const { summary, mySeat, myToken, isDm, dmToken, dmData, events, deltas, thinking, dmThinking, dmDelta, loadError, soundEnabled, setSoundEnabled, playCue, now } = stream;
+
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
-  const [soundEnabled, setSoundEnabled] = useState(false);
-  const [now, setNow] = useState(() => Date.now());
-  const lastSeq = useRef("0");
-  const soundedSeq = useRef("0");
-  const audioContext = useRef<AudioContext | null>(null);
-  const chatRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState("");
+  const [askTarget, setAskTarget] = useState<number | null>(null);
+  const [askText, setAskText] = useState("");
+  const [skillActiveId, setSkillActiveId] = useState<string | null>(null);
+  const [skillToSeat, setSkillToSeat] = useState<number | null>(null);
+  const [skillText, setSkillText] = useState("");
   const sendNoticeTimer = useRef<NodeJS.Timeout | null>(null);
-  const [streamKey, setStreamKey] = useState<string | null>(null);
-
-  const playCue = useCallback(
-    (cue: GameCue, force = false) => {
-      if (!soundEnabled && !force) return;
-      const context = audioContext.current ?? new AudioContext();
-      audioContext.current = context;
-      void context.resume();
-      const notes = cue === "reveal" ? [164, 130, 329] : cue === "clue" ? [440, 659] : [220, 330];
-      notes.forEach((frequency, index) => {
-        const start = context.currentTime + index * (cue === "reveal" ? 0.18 : 0.1);
-        const oscillator = context.createOscillator();
-        const gain = context.createGain();
-        oscillator.type = cue === "reveal" ? "triangle" : "sine";
-        oscillator.frequency.setValueAtTime(frequency, start);
-        gain.gain.setValueAtTime(0.0001, start);
-        gain.gain.exponentialRampToValueAtTime(0.055, start + 0.025);
-        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.28);
-        oscillator.connect(gain).connect(context.destination);
-        oscillator.start(start);
-        oscillator.stop(start + 0.3);
-      });
-    },
-    [soundEnabled]
-  );
-
-  // 1) 加载对局概要（先不带身份拿 roomId，再带身份重取私卡）
-  useEffect(() => {
-    let cancelled = false;
-    lastSeq.current = "0";
-    setEvents([]);
-    setDeltas({});
-    setThinking({});
-    setStreamKey(null);
-    setSummary(null);
-    setMySeat(null);
-    setMyToken(null);
-    setIsDm(false);
-    setDmToken(null);
-    (async () => {
-      const base = await api<GameSummary>(`/api/games/${gameId}`);
-      if (cancelled) return;
-      const id = getIdentity()[base.roomId];
-      const seatIndex = id?.seatIndex;
-      const idToken = id?.token;
-      if (id) {
-        saveIdentity(base.roomId, id.seatIndex, id.token, id.name, { code: base.roomCode, gameId });
-      }
-      if (id && seatIndex === "dm") {
-        setIsDm(true);
-        setDmToken(idToken ?? null);
-        setSummary(base);
-        void api<DmView>(`/api/games/${gameId}/dm-actions?token=${idToken ?? ""}`).then(setDmData).catch(() => null);
-      } else if (id && typeof seatIndex === "number" && idToken) {
-        setMySeat(seatIndex);
-        setMyToken(idToken);
-        try {
-          const mine = await api<GameSummary>(`/api/games/${gameId}?seat=${seatIndex}&token=${idToken}`);
-          if (!cancelled) setSummary(mine);
-        } catch {
-          setSummary(base);
-        }
-      } else {
-        setSummary(base);
-      }
-      if (!cancelled) setStreamKey(gameId);
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [gameId]);
-
-  // 2) SSE 订阅：不依赖 summary，避免阶段刷新时拆掉连接导致 lastSeq 丢失
-  useEffect(() => {
-    if (streamKey !== gameId) return;
-    const url = gameEventsUrl(gameId, {
-      dm: isDm,
-      dmToken,
-      seat: mySeat,
-      token: myToken,
-      lastSeq: lastSeq.current,
-    });
-    const es = new EventSource(url);
-    es.onmessage = (m) => {
-      const msg = JSON.parse(m.data) as
-        | { kind: "event"; event: GameEventView }
-        | { kind: "delta"; seat: number | "dm"; text: string }
-        | { kind: "thinking"; seat: number | "dm" | null }
-        | { kind: "end" }
-        | { kind: "hello" };
-      if (msg.kind === "event") {
-        if (BigInt(msg.event.seq) <= BigInt(lastSeq.current)) return;
-        lastSeq.current = msg.event.seq;
-        const ev = msg.event;
-        setEvents((prev) => [...prev, ev]);
-        if (ev.type === "speech" && ev.fromSeat !== null) {
-          setDeltas((d) => {
-            const { [ev.fromSeat as number]: _drop, ...rest } = d;
-            void _drop;
-            return rest;
-          });
-          setThinking((t) => ({ ...t, [ev.fromSeat as number]: false }));
-        }
-        if (ev.type === "private" && ev.fromSeat !== null) {
-          setDeltas((d) => {
-            const { [ev.fromSeat as number]: _drop, ...rest } = d;
-            void _drop;
-            return rest;
-          });
-        }
-        if (ev.type === "phase" || ev.type === "reveal") {
-          setDmThinking(false);
-          setDmDelta("");
-          setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
-        }
-        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer" || ev.type === "vote") {
-          const q = mySeat !== null ? `?seat=${mySeat}&token=${myToken ?? ""}` : "";
-          void api<GameSummary>(`/api/games/${gameId}${q}`).then(setSummary).catch(() => null);
-        }
-      } else if (msg.kind === "delta") {
-        if (msg.seat === "dm") setDmDelta((t) => t + msg.text);
-        else setDeltas((d) => ({ ...d, [msg.seat as number]: (d[msg.seat as number] ?? "") + msg.text }));
-      } else if (msg.kind === "thinking") {
-        if (msg.seat === "dm") {
-          setDmThinking(true);
-        } else if (msg.seat === null) {
-          setDmThinking(false);
-          setThinking((t) => {
-            const next = { ...t };
-            for (const k of Object.keys(next)) next[Number(k)] = false;
-            return next;
-          });
-        } else {
-          setThinking((t) => ({ ...t, [msg.seat as number]: true }));
-        }
-      } else if (msg.kind === "end") {
-        // 终局：服务端不会再推事件，主动收掉这条长连接（否则 EventSource 会一直空转重连）
-        setSummary((s) => (s ? { ...s, status: "ended", phase: "ENDED" } : s));
-        es.close();
-      }
-    };
-    es.onerror = () => {
-      /* EventSource 自动重连，服务端按 Last-Event-ID 补发 */
-    };
-    return () => es.close();
-  }, [gameId, streamKey, mySeat, myToken, isDm, dmToken]);
-
-  // 3) 自动滚动
-  useEffect(() => {
-    chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" });
-  }, [events, deltas]);
-
-  useEffect(() => {
-    const newest = events.at(-1);
-    if (!newest || BigInt(newest.seq) <= BigInt(soundedSeq.current)) return;
-    soundedSeq.current = newest.seq;
-    if (newest.type === "phase") playCue("phase");
-    if (newest.type === "clue") playCue("clue");
-    if (newest.type === "reveal") playCue("reveal");
-  }, [events, playCue]);
-
-  useEffect(
-    () => () => {
-      void audioContext.current?.close();
-    },
-    []
-  );
-
-  // 限时倒计时：仅在截止时间进入最后 60 秒窗口后才需要每秒刷新
-  useEffect(() => {
-    const deadline = summary?.humanDeadline ?? null;
-    if (deadline === null) return;
-    setNow(Date.now());
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
-  }, [summary?.humanDeadline]);
 
   const send = useCallback(
     async (action: Record<string, unknown>) => {
-      if (mySeat === null) return;
+      if (mySeat === null) return false;
       setError(null);
       setSending(true);
       const type = action.type;
@@ -254,20 +51,30 @@ export default function PlayPage() {
           method: "POST",
           body: JSON.stringify({ seatIndex: mySeat, token: myToken, action }),
         });
-        if (!res.ok) setError(res.error ?? "操作失败");
-        else {
-          const mine = await api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}&token=${myToken ?? ""}`);
-          setSummary(mine);
+        if (!res.ok) {
+          setError(res.error ?? "操作失败");
+          return false;
         }
+        const mine = await api<GameSummary>(`/api/games/${gameId}?seat=${mySeat}`, { headers: { "x-seat-token": myToken ?? "" } });
+        setSummary(mine);
+        return true;
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
+        return false;
       } finally {
         if (sendNoticeTimer.current) clearTimeout(sendNoticeTimer.current);
         setSending(false);
       }
     },
-    [gameId, mySeat, myToken]
+    [gameId, mySeat, myToken, setSummary]
   );
+
+  /** 发言：发送成功才清空输入，失败保留文本便于重试（独立审查 H2）。 */
+  const submitSpeak = useCallback(async () => {
+    const text = input.trim();
+    if (!text) return;
+    if (await send({ type: "speak", text })) setInput("");
+  }, [input, send]);
 
   const speakEvent = useCallback(
     async (eventSeq: string) => {
@@ -292,21 +99,9 @@ export default function PlayPage() {
     [gameId, mySeat, myToken, isDm, dmToken]
   );
 
-  // ★ AI 主动私信的回复 ★：仅当对方窗口开着且这是最新一条往来消息时显示回复框
-  const openWhispers = summary?.openWhispers ?? [];
-  const isLatestWhisper = (ev: GameEventView): boolean => {
-    if (ev.type !== "private" || ev.toSeat !== mySeat || ev.fromSeat === null) return false;
-    if (!openWhispers.includes(ev.fromSeat)) return false;
-    const last = events.findLast(
-      (e) => e.type === "private" && ((e.fromSeat === ev.fromSeat && e.toSeat === mySeat) || (e.fromSeat === mySeat && e.toSeat === ev.fromSeat))
-    );
-    return last?.seq === ev.seq;
-  };
   const sendWhisper = useCallback(
-    async (toSeat: number) => {
-      if (mySeat === null) return;
-      const text = (whisperText[toSeat] ?? "").trim();
-      if (!text) return;
+    async (toSeat: number, text: string) => {
+      if (mySeat === null || !text.trim()) return;
       setError(null);
       try {
         const res = await api<{ ok: boolean; error?: string }>(`/api/games/${gameId}/actions`, {
@@ -314,20 +109,15 @@ export default function PlayPage() {
           body: JSON.stringify({ seatIndex: mySeat, token: myToken, action: { type: "private_chat", toSeat, text } }),
         });
         if (!res.ok) setError(res.error ?? "发送失败");
-        setWhisperText((w) => {
-          const next = { ...w };
-          delete next[toSeat];
-          return next;
-        });
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       }
     },
-    [gameId, mySeat, myToken, whisperText]
+    [gameId, mySeat, myToken]
   );
 
   const sendDm = useCallback(
-    async (action: { type: "narrate" | "nudge" | "skip_turn"; text?: string }) => {
+    async (action: DmAction) => {
       if (!isDm) return;
       setError(null);
       try {
@@ -343,7 +133,20 @@ export default function PlayPage() {
     [gameId, isDm, dmToken]
   );
 
-  if (!summary) return <p className="text-paper-500">进入对局…</p>;
+  if (!summary)
+    return loadError ? (
+      <div className="game-panel mx-auto mt-16 max-w-md p-6 text-center">
+        <p className="text-sm text-danger-400">对局加载失败：{loadError}</p>
+        <button
+          onClick={() => setRetryKey((k) => k + 1)}
+          className="mt-4 rounded-lg bg-gold-400 px-4 py-2 text-sm font-medium text-ink-950 transition-colors hover:bg-gold-300"
+        >
+          重试
+        </button>
+      </div>
+    ) : (
+      <p className="text-paper-500">进入对局…</p>
+    );
 
   const phase = summary.phase;
   const ended = phase === "ENDED" || events.some((e) => e.type === "reveal");
@@ -359,7 +162,7 @@ export default function PlayPage() {
   const iVoted = events.some((e) => e.type === "vote" && e.fromSeat === mySeat);
   const voteMode = summary.voteMode ?? "culprit";
   const quizDone = summary.quiz !== null && summary.quiz.myAnswers !== null;
-  const reveal = events.findLast((e) => e.type === "reveal");
+  const reveal: GameEventView | undefined = events.findLast((e) => e.type === "reveal");
   const answering = phase === "DISCUSSION" && summary.pendingAnswer?.toSeat === mySeat;
   const mySpeakTurn =
     (phase === "SELF_INTRO" || phase === "DISCUSSION") && summary.turnSeat === mySeat && !summary.pendingAnswer;
@@ -383,32 +186,6 @@ export default function PlayPage() {
     !canSpeak &&
     !(phase === "SEARCH" && !iChoseLocation) &&
     !(phase === "VOTE" && (voteMode === "choice" ? summary.quiz !== null && !quizDone : !iVoted));
-
-  // 我的线索卡（持有权 = 我发现的 + 转给我的 − 最近一次转出的）
-  const lastTransferByClue = new Map<string, GameEventView>();
-  for (const e of events) {
-    if (e.type === "transfer" && e.content.clueId) lastTransferByClue.set(e.content.clueId, e);
-  }
-  const clueCardOf = (id: string, name: string, content: string, isPrivate: boolean) => ({
-    id,
-    name,
-    content,
-    private: isPrivate,
-    structured: summary.myCluesV2.find((clue) => clue.id === id) ?? null,
-  });
-  const myClueMap = new Map<string, ReturnType<typeof clueCardOf>>();
-  for (const e of events) {
-    if (e.type === "clue" && e.visibility === `seat:${mySeat}` && e.content.clueId) {
-      myClueMap.set(e.content.clueId, clueCardOf(e.content.clueId, e.content.clueName ?? "", e.content.clueContent ?? "", e.content.private === true));
-    }
-    if (e.type === "transfer" && e.toSeat === mySeat && e.content.clueId) {
-      myClueMap.set(e.content.clueId, clueCardOf(e.content.clueId, e.content.clueName ?? "", e.content.clueContent ?? "", true));
-    }
-  }
-  for (const [id, ev] of lastTransferByClue) {
-    if (ev.toSeat !== mySeat) myClueMap.delete(id);
-  }
-  const myClueCardsUnique = [...myClueMap.values()];
 
   const phaseSteps = ["READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL"];
   const phaseIdx = phaseSteps.indexOf(phase === "ENDED" ? "REVEAL" : phase);
@@ -468,9 +245,9 @@ export default function PlayPage() {
         </div>
       </section>
 
-      <div className={`grid min-w-0 gap-4 ${showLeftRail ? "xl:grid-cols-[250px_minmax(0,1fr)_310px]" : "xl:grid-cols-[minmax(0,1fr)_310px]"}`}>
-      {/* 左栏：场景与行动 */}
-      {showLeftRail && <aside className="space-y-4">
+      <div className={`grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_310px] ${showLeftRail ? "xl:grid-cols-[250px_minmax(0,1fr)_310px]" : "xl:grid-cols-[minmax(0,1fr)_310px]"}`}>
+      {/* 左栏：场景与行动（lg 两栏时横贯顶部，xl 起成为独立侧栏） */}
+      {showLeftRail && <aside className="space-y-4 lg:col-span-2 xl:col-span-1">
         {me && (
           <div className="game-panel p-4">
             <div className="flex items-center justify-between">
@@ -541,7 +318,7 @@ export default function PlayPage() {
                     className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400 disabled:opacity-50"
                   >
                     <span className="block">{loc}{emptied ? "（已搜完）" : ""}</span>
-                    {desc && <span className="mt-0.5 block text-[11px] leading-snug text-paper-500">{desc}</span>}
+                    {desc && <span className="mt-0.5 block text-xs leading-snug text-paper-500">{desc}</span>}
                   </button>
                   );
                 })}
@@ -549,76 +326,7 @@ export default function PlayPage() {
               </div>
             )}
             {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
-            {phase === "VOTE" && !iVoted && voteMode !== "choice" && (
-              <div className="space-y-2">
-                <p className="text-xs text-paper-400">指认真凶：</p>
-                {activeSeats
-                  .filter((s) => s.index !== mySeat)
-                  .map((s) => (
-                    <button
-                      key={s.index}
-                      onClick={() => setVoteTarget(s.index)}
-                      className={`vote-target w-full rounded-lg border px-3 py-2 text-left text-sm ${voteTarget === s.index ? "border-danger-400/70 bg-danger-400/10 text-danger-400" : "border-gold-400/15 text-paper-200 hover:border-danger-400/40"}`}
-                    >
-                      {s.characterName}
-                    </button>
-                  ))}
-                <input
-                  value={voteReason}
-                  onChange={(e) => setVoteReason(e.target.value)}
-                  placeholder="一句话理由（可选）"
-                  className="w-full rounded-lg border border-danger-400/20 bg-ink-950/80 px-3 py-2 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-danger-400"
-                />
-                <button
-                  onClick={() => {
-                    if (voteTarget !== null) void send({ type: "vote", target: voteTarget, reason: voteReason }).then(() => setVoteTarget(null));
-                  }}
-                  disabled={voteTarget === null}
-                  className="w-full rounded-lg bg-danger-400 py-2.5 text-sm font-semibold text-ink-950 hover:brightness-110 disabled:opacity-40"
-                >
-                  投票
-                </button>
-              </div>
-            )}
-            {phase === "VOTE" && iVoted && voteMode !== "choice" && <p className="text-xs text-paper-400">已投票，等待其他人…</p>}
-            {phase === "VOTE" && summary.quiz && !quizDone && (
-              <div className="space-y-2">
-                <p className="text-xs text-paper-400">复盘答题卡（整卷提交，交卷后不可修改）：</p>
-                {summary.quiz.questions.map((q) => (
-                  <div key={q.id} className="rounded-lg border border-gold-400/15 bg-ink-950/50 p-2">
-                    <p className="text-xs text-paper-200">{q.prompt}</p>
-                    <div className="mt-1.5 space-y-1">
-                      {q.options.map((o) => (
-                        <label key={o.id} className="flex cursor-pointer items-center gap-2 text-xs text-paper-300 hover:text-paper-100">
-                          <input
-                            type="radio"
-                            name={`quiz-${q.id}`}
-                            checked={quizPicks[q.id] === o.id}
-                            onChange={() => setQuizPicks((p) => ({ ...p, [q.id]: o.id }))}
-                            className="accent-gold-400"
-                          />
-                          {o.label}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    if (!summary.quiz) return;
-                    const answers = summary.quiz.questions
-                      .map((q) => ({ questionId: q.id, optionId: quizPicks[q.id] }))
-                      .filter((a): a is { questionId: string; optionId: string } => Boolean(a.optionId));
-                    if (answers.length === summary.quiz.questions.length) void send({ type: "answer_quiz", answers });
-                  }}
-                  disabled={sending || !summary.quiz.questions.every((q) => quizPicks[q.id])}
-                  className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
-                >
-                  交卷
-                </button>
-              </div>
-            )}
-            {phase === "VOTE" && summary.quiz && quizDone && <p className="text-xs text-paper-400">已交卷，等待其他人…</p>}
+            <VotePanel summary={summary} activeSeats={activeSeats} mySeat={mySeat} iVoted={iVoted} sending={sending} send={send} />
             {(summary.skills?.length ?? 0) > 0 && (phase === "SEARCH" || phase === "DISCUSSION") && (
               <div className="space-y-2 border-t border-gold-400/20 pt-3">
                 <p className="text-xs text-gold-400">技能（剩余行动点 {summary.actionPointsLeft ?? 0}）：</p>
@@ -637,11 +345,12 @@ export default function PlayPage() {
                           skillActiveId === s.id ? "border-secret-400/60 bg-secret-400/10 text-secret-400" : "border-secret-400/20 text-paper-200 hover:border-secret-400/50"
                         }`}
                       >
-                        【{s.name}】<span className="ml-1 text-[11px] text-paper-500">{s.cost} 点{s.once ? " · 单次" : ""}</span>
+                        【{s.name}】<span className="ml-1 text-xs text-paper-500">{s.cost} 点{s.once ? " · 单次" : ""}</span>
                       </button>
                       {skillActiveId === s.id && (
                         <div className="space-y-1.5 rounded-lg border border-secret-400/20 bg-ink-950/60 p-2">
                           <select
+                            aria-label="选择技能目标座位"
                             value={skillToSeat ?? ""}
                             onChange={(e) => setSkillToSeat(Number(e.target.value))}
                             className="w-full rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
@@ -659,6 +368,7 @@ export default function PlayPage() {
                           </select>
                           <div className="flex gap-2">
                             <input
+                              aria-label="质询问题"
                               value={skillText}
                               onChange={(e) => setSkillText(e.target.value)}
                               maxLength={200}
@@ -702,6 +412,7 @@ export default function PlayPage() {
                       <div className="space-y-2 border-t border-gold-400/20 pt-3">
                         <p className="text-xs text-gold-400">当众提问（全场讨论共 {summary.questionsLeft} 次）：</p>
                         <select
+                          aria-label="选择提问对象"
                           value={askTarget ?? ""}
                           onChange={(e) => setAskTarget(Number(e.target.value))}
                           className="w-full rounded-lg border border-gold-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-gold-400"
@@ -719,6 +430,7 @@ export default function PlayPage() {
                         </select>
                         <div className="flex gap-2">
                           <input
+                            aria-label="单独提问问题"
                             value={askText}
                             onChange={(e) => setAskText(e.target.value)}
                             placeholder="一个具体问题…"
@@ -777,55 +489,10 @@ export default function PlayPage() {
           </div>
         )}
         {/* 真人 DM 控制台 */}
-        {isDm && !ended && (
-          <div className="game-panel space-y-3 border-secret-400/40 bg-secret-400/5 p-4">
-            <h3 className="text-sm font-medium text-secret-400">DM 控制台</h3>
-            {dmData && (
-              <div className="rounded-lg bg-ink-950/70 p-3 text-xs text-paper-400">
-                <p>
-                  真凶：<span className="font-semibold text-danger-400">{dmData.structured?.characters.find((c) => c.privateCard.isCulprit)?.name ?? dmData.characters.find((c) => c.isCulprit)?.name}</span>
-                </p>
-                <p className="mt-1">{dmData.structured ? "结构化真相已加载，可在右侧查看完整时间线。" : `${dmData.truth.method.slice(0, 60)}…（完整真相见右侧「真相」页）`}</p>
-              </div>
-            )}
-            <div className="flex gap-2">
-              <input
-                value={dmText}
-                onChange={(e) => setDmText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && dmText.trim()) {
-                    void sendDm({ type: "narrate", text: dmText });
-                    setDmText("");
-                  }
-                }}
-                placeholder="以 DM 身份向全场旁白…"
-                className="min-w-0 flex-1 rounded-lg border border-secret-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-secret-400"
-              />
-              <button
-                onClick={() => {
-                  if (dmText.trim()) {
-                    void sendDm({ type: "narrate", text: dmText });
-                    setDmText("");
-                  }
-                }}
-                disabled={!dmText.trim()}
-                className="rounded-lg bg-secret-400 px-3 text-sm font-medium text-ink-950 hover:brightness-110 disabled:opacity-40"
-              >
-                旁白
-              </button>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => void sendDm({ type: "nudge" })} className="flex-1 rounded-lg border border-secret-400/20 px-3 py-1.5 text-xs text-paper-300 hover:border-secret-400/60">
-                催促推进
-              </button>
-              <button onClick={() => void sendDm({ type: "skip_turn" })} className="flex-1 rounded-lg border border-secret-400/20 px-3 py-1.5 text-xs text-paper-300 hover:border-secret-400/60">
-                跳过当前回合
-              </button>
-            </div>
-          </div>
-        )}
+        {isDm && !ended && <DmConsole dmData={dmData} error={error} onSend={(a) => void sendDm(a)} />}
         {!me && !isDm && !ended && (
           <p className="game-panel p-4 text-xs text-paper-500">
+            {error && <span className="mb-1 block text-danger-400">{error}</span>}
             你正在以观众身份观看（公开事件流）。若你是本局玩家，回{" "}
             <Link href={`/rooms/${summary.roomCode}`} className="text-gold-400 hover:underline">
               房间 {summary.roomCode}
@@ -836,556 +503,45 @@ export default function PlayPage() {
       </aside>}
 
       {/* 中栏：对话流 */}
-      <section className="game-panel flex min-h-[70vh] min-w-0 flex-col overflow-hidden">
-        <div className="flex items-center justify-between border-b border-gold-400/10 px-5 py-3">
-          <div>
-            <p className="text-[10px] font-semibold tracking-[0.18em] text-paper-500">LIVE SCENE</p>
-            <h2 className="text-sm font-medium text-paper-200">现场记录</h2>
-          </div>
-          {dmThinking ? (
-            <span className="thinking-dots text-xs font-medium text-gold-400">主持人正在撰写旁白</span>
-          ) : (
-            <span className="flex items-center gap-2 text-[10px] font-semibold tracking-widest text-success-400">
-              <span className="size-1.5 rounded-full bg-success-400 shadow-[0_0_8px_rgba(102,196,154,.75)]" /> LIVE
-            </span>
-          )}
-        </div>
-        <div ref={chatRef} className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5" style={{ maxHeight: "72vh" }}>
-          <div className="case-briefing p-4 text-sm leading-relaxed text-paper-300">
-            <span className="eyebrow">Case Briefing · 案情背景</span>
-            {summary.scriptV2 ? (
-              <NarrativeBlocks blocks={summary.scriptV2.background} className="mt-2" />
-            ) : (
-              <p className="mt-2 whitespace-pre-wrap">{summary.background}</p>
-            )}
-          </div>
-
-          {events.map((ev) => (
-            <div key={ev.seq}>
-              <EventBubble
-                ev={ev}
-                mySeat={mySeat}
-                seatName={seatName}
-                ttsSeats={aiSeatSet}
-                onSpeak={speakEvent}
-              />
-              {isLatestWhisper(ev) && (
-                <div className="mx-auto mt-1 flex max-w-[85%] gap-1.5">
-                  <input
-                    value={whisperText[ev.fromSeat ?? -1] ?? ""}
-                    onChange={(e) => setWhisperText((w) => ({ ...w, [ev.fromSeat ?? -1]: e.target.value }))}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && (whisperText[ev.fromSeat ?? -1] ?? "").trim()) void sendWhisper(ev.fromSeat ?? -1);
-                    }}
-                    maxLength={300}
-                    placeholder={`悄悄回复 ${seatName(ev.fromSeat ?? 0)}（其他人看不到）…`}
-                    className="min-w-0 flex-1 rounded-lg border border-dashed border-secret-400/30 bg-ink-950 px-3 py-1.5 text-xs text-paper-50 outline-none placeholder:text-paper-500 focus:border-secret-400"
-                  />
-                  <button
-                    onClick={() => void sendWhisper(ev.fromSeat ?? -1)}
-                    disabled={!(whisperText[ev.fromSeat ?? -1] ?? "").trim()}
-                    className="rounded-lg border border-secret-400/40 px-3 text-xs font-semibold text-secret-400 hover:bg-secret-400/10 disabled:opacity-40"
-                  >
-                    回复
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {dmThinking && (
-            <div className="fade-up rounded-2xl rounded-tl-sm border border-gold-400/25 bg-gold-400/5 px-4 py-3 text-sm">
-              <p className="eyebrow">DM · 主持人</p>
-              {dmDelta ? (
-                <p className="typing-caret mt-1 whitespace-pre-wrap leading-relaxed text-paper-300">{dmDelta}</p>
-              ) : (
-                <p className="thinking-dots mt-1 text-paper-400">正在组织旁白，请稍候</p>
-              )}
-            </div>
-          )}
-
-          {/* 流式中的 AI 发言 */}
-          {Object.entries(deltas).map(([seatStr, text]) =>
-            text ? (
-              <div key={`delta-${seatStr}`} className="fade-up flex gap-2">
-                <div className="max-w-[85%] rounded-2xl rounded-tl-sm border border-secret-400/20 bg-secret-400/5 px-4 py-2.5 text-sm">
-                  <p className="text-xs text-secret-400">{seatName(Number(seatStr))} · AI 正在演绎</p>
-                  <p className="typing-caret mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{text}</p>
-                </div>
-              </div>
-            ) : null
-          )}
-
-          {ended && reveal && (
-            <div className="reveal-stage reveal-curtain p-6 text-center text-sm sm:p-8">
-              <p className="eyebrow text-danger-400">Final Reveal · 真相揭晓</p>
-              <BrandMark className="mx-auto mt-5 size-14 text-danger-400" />
-              <h3 className="mt-3 text-2xl font-bold text-paper-50">真凶：{reveal.content.culpritName}</h3>
-              <p className="mt-2 font-medium text-danger-400">
-                {reveal.content.caught ? "凶手被指认，好人阵营胜利！" : "凶手逃脱了……凶手阵营胜利！"}
-              </p>
-              <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
-              <p className="mt-4 text-xs text-paper-500">{reveal.content.winText}</p>
-              {(() => {
-                const quizBoard = (reveal.content.quiz as GameSummary["quizResult"] | undefined) ?? summary.quizResult ?? null;
-                if (!quizBoard || !summary.quiz) return null;
-                const seatScores = Object.values(quizBoard.perSeat);
-                const avg = seatScores.length ? seatScores.reduce((s, v) => s + v.score, 0) / seatScores.length : 0;
-                const mine = mySeat !== null ? quizBoard.perSeat[String(mySeat)] : undefined;
-                return (
-                  <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-gold-400/20 bg-ink-950/60 p-4 text-left">
-                    <p className="text-[10px] font-semibold tracking-[0.16em] text-gold-400">QUIZ · 复盘答题成绩单</p>
-                    <div className="mt-3 space-y-3">
-                      {summary.quiz.questions.map((q) => {
-                        const stat = quizBoard.perQuestion.find((p) => p.questionId === q.id);
-                        return (
-                          <div key={q.id}>
-                            <p className="text-sm text-paper-200">{q.prompt}</p>
-                            <div className="mt-1.5 flex flex-wrap gap-1.5">
-                              {q.options.map((o) => {
-                                const isCorrect = stat?.correctOptionId === o.id;
-                                const n = stat?.counts[o.id] ?? 0;
-                                return (
-                                  <span
-                                    key={o.id}
-                                    className={`rounded-full border px-2.5 py-0.5 text-xs ${
-                                      isCorrect ? "border-success-400/60 bg-success-400/10 text-success-400" : "border-paper-500/20 text-paper-400"
-                                    }`}
-                                  >
-                                    {o.label} ×{n}
-                                    {isCorrect ? " ✓" : ""}
-                                  </span>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <p className="mt-3 text-xs text-paper-400">
-                      全场平均 {avg.toFixed(1)} 分
-                      {mine ? ` · 我答对 ${mine.correct}/${mine.total}（加权 ${mine.score} 分）` : ""}
-                    </p>
-                  </div>
-                );
-              })()}
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <Link href="/rooms/new" className="rounded-lg bg-gold-500 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-gold-400">
-                  再来一局
-                </Link>
-                <Link href={`/rooms/${summary.roomCode}`} className="rounded-lg border border-gold-400/20 px-4 py-2 text-sm text-paper-200 hover:border-gold-400/50">
-                  回到大厅
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 输入区 */}
-        {me && (phase === "SELF_INTRO" || phase === "DISCUSSION") && !ended && (
-          <div className="border-t border-gold-400/10 bg-ink-950/45 p-4">
-            {error && <p className="mb-2 text-xs text-danger-400">{error}</p>}
-            {/* 推荐回复：轮到你发言时后台生成的建议短句，点击直接填入 */}
-            {mySpeakTurn && !sending && (summary.suggestions?.length ?? 0) > 0 && (
-              <div className="mb-2 flex flex-wrap items-center gap-1.5">
-                <span className="text-[10px] font-semibold tracking-widest text-paper-500">试试说</span>
-                {summary.suggestions.map((s, i) => (
-                  <button
-                    key={`sug-${i}`}
-                    onClick={() => setInput(s)}
-                    className="rounded-full border border-gold-400/20 bg-gold-400/5 px-2.5 py-1 text-xs text-paper-300 hover:border-gold-400/50 hover:text-paper-100"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
-            <div className="flex gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && input.trim() && canSpeak) {
-                    void send({ type: "speak", text: input });
-                    setInput("");
-                  }
-                }}
-                disabled={!canSpeak || sending}
-                placeholder={speakPlaceholder}
-                className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2.5 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400 disabled:opacity-50"
-              />
-              <button
-                onClick={() => {
-                  if (input.trim() && canSpeak) {
-                    void send({ type: "speak", text: input });
-                    setInput("");
-                  }
-                }}
-                disabled={!canSpeak || sending || !input.trim()}
-                className="rounded-lg bg-gold-500 px-5 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
-              >
-                {answering ? "回答" : "发言"}
-              </button>
-            </div>
-          </div>
-        )}
-      </section>
+      <ChatFeed
+        summary={summary}
+        events={events}
+        mySeat={mySeat}
+        seatName={seatName}
+        aiSeatSet={aiSeatSet}
+        ended={ended}
+        reveal={reveal}
+        deltas={deltas}
+        dmThinking={dmThinking}
+        dmDelta={dmDelta}
+        showComposer={Boolean(me) && (phase === "SELF_INTRO" || phase === "DISCUSSION") && !ended}
+        canSpeak={canSpeak}
+        answering={answering}
+        mySpeakTurn={mySpeakTurn}
+        speakPlaceholder={speakPlaceholder}
+        sending={sending}
+        error={error}
+        input={input}
+        onInput={setInput}
+        onSubmitSpeak={() => void submitSpeak()}
+        onSpeakEvent={(seq) => void speakEvent(seq)}
+        onSendWhisper={(toSeat, text) => void sendWhisper(toSeat, text)}
+      />
 
       {/* 右栏：我的剧本 / 我的线索 / 时间线 */}
-      <aside className="game-panel overflow-hidden">
-        <div className="flex border-b border-gold-400/10 text-sm">
-          {(
-            [
-              ["script", isDm ? "真相" : me?.myCard ? "我的剧本" : "剧本"],
-              ["clues", isDm ? "全部线索" : `我的线索${myClueCardsUnique.length ? ` (${myClueCardsUnique.length})` : ""}`],
-              ["timeline", "时间线"],
-            ] as const
-          ).map(([k, label]) => (
-            <button key={k} onClick={() => setTab(k)} className={`relative flex-1 px-2 py-3 text-center transition ${tab === k ? "bg-gold-400/7 text-gold-400 after:absolute after:inset-x-3 after:bottom-0 after:h-px after:bg-gold-400" : "text-paper-500 hover:text-paper-200"}`}>
-              {label}
-            </button>
-          ))}
-        </div>
-        <div className="max-h-[65vh] overflow-y-auto p-4 text-sm">
-          {tab === "script" && isDm && (
-            dmData ? (
-              dmData.structured ? (
-                <div className="space-y-4 leading-relaxed text-xs">
-                  <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
-                    <h4 className="font-semibold text-danger-400">真相</h4>
-                    <p className="mt-1 text-paper-200">真凶：{dmData.structured.characters.find((c) => c.privateCard.isCulprit)?.name}</p>
-                    <h5 className="mt-2 font-medium text-paper-300">作案手法</h5>
-                    <NarrativeBlocks blocks={dmData.structured.truth.method.summary} className="mt-1 text-paper-400" />
-                    <h5 className="mt-3 font-medium text-paper-300">完整时间线</h5>
-                    <TimelineList entries={dmData.structured.truth.timeline} className="mt-2" />
-                  </section>
-                  <section>
-                    <h4 className="font-semibold text-paper-400">各角色秘密</h4>
-                    {dmData.structured.characters.map((c) => (
-                      <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
-                        <p className="font-medium text-paper-200">{c.name}{c.privateCard.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}{c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}</p>
-                        {c.privateCard.secrets.map((secret) => <div key={secret.id} className="mt-1"><p className="font-medium text-paper-400">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1 text-paper-400" /></div>)}
-                        {c.privateCard.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-paper-500">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1 text-paper-500" /></div>)}
-                      </div>
-                    ))}
-                  </section>
-                </div>
-              ) : (
-                <div className="space-y-3 leading-relaxed text-xs">
-                  <section className="rounded-lg border border-danger-400/30 bg-danger-400/5 p-3">
-                    <h4 className="font-semibold text-danger-400">真相</h4>
-                    <p className="mt-1 text-paper-200">真凶：{dmData.characters.find((c) => c.isCulprit)?.name} · {dmData.truth.method}</p>
-                    <p className="mt-2 whitespace-pre-wrap text-paper-400">{dmData.truth.fullTimeline}</p>
-                    <p className="mt-2 text-paper-500">关键证据：{dmData.truth.keyEvidence.join("、")}</p>
-                  </section>
-                  <section>
-                    <h4 className="font-semibold text-paper-400">各角色秘密</h4>
-                    {dmData.characters.map((c) => (
-                      <div key={c.id} className="mt-2 rounded-lg border border-secret-400/15 bg-secret-400/3 p-2.5">
-                        <p className="font-medium text-paper-200">{c.name}{c.isCulprit && <span className="ml-1.5 text-danger-400">← 真凶</span>}{c.seatIndex !== null && <span className="ml-1.5 text-paper-500">（座位 {c.seatIndex + 1}）</span>}</p>
-                        <p className="mt-1 text-paper-400">秘密：{c.secret}</p>
-                        <p className="mt-0.5 text-paper-500">目标：{c.goal}</p>
-                      </div>
-                    ))}
-                  </section>
-                </div>
-              )
-            ) : (
-              <p className="text-paper-500">加载真相…</p>
-            )
-          )}
-          {tab === "script" && !isDm && (
-            me?.myCard ? (
-              me.myCardV2 ? (
-                <div className="space-y-4 leading-relaxed">
-                  <section><h4 className="text-xs font-semibold text-paper-400">背景</h4><NarrativeBlocks blocks={me.myCardV2.backstory} className="mt-1 text-paper-300" /></section>
-                  <section><h4 className="text-xs font-semibold text-danger-400">你的秘密（绝不主动透露）</h4>{me.myCardV2.secrets.map((secret) => <div key={secret.id} className="mt-1 rounded-lg border border-danger-400/15 bg-danger-400/5 p-2 text-paper-300"><p className="font-medium text-danger-300">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1" /></div>)}</section>
-                  <section><h4 className="text-xs font-semibold text-paper-400">目标</h4>{me.myCardV2.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-paper-200">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1 text-paper-300" /></div>)}</section>
-                  <section><h4 className="text-xs font-semibold text-paper-400">你的时间线</h4><TimelineList entries={me.myCardV2.timeline} locations={new Map(summary.scriptV2?.locations.map((location) => [location.id, location.name]))} className="mt-2 text-paper-300" /></section>
-                  {me.myCardV2.knowledge.length > 0 && <section><h4 className="text-xs font-semibold text-paper-400">你额外知道</h4><div className="mt-1 space-y-2">{me.myCardV2.knowledge.map((item) => <div key={item.id} className="rounded-lg border border-gold-400/10 p-2"><p className="font-medium text-paper-200">{item.title}</p><NarrativeBlocks blocks={item.content} className="mt-1 text-paper-300" /></div>)}</div></section>}
-                </div>
-              ) : (
-              <div className="space-y-3 leading-relaxed">
-                <section>
-                  <h4 className="text-xs font-semibold text-paper-400">背景</h4>
-                  <p className="mt-1 text-paper-300">{me.myCard.backstory}</p>
-                </section>
-                <section>
-                  <h4 className="text-xs font-semibold text-danger-400">你的秘密（绝不主动透露）</h4>
-                  <p className="mt-1 text-paper-300">{me.myCard.secret}</p>
-                </section>
-                <section>
-                  <h4 className="text-xs font-semibold text-paper-400">目标</h4>
-                  <p className="mt-1 text-paper-300">{me.myCard.goal}</p>
-                </section>
-                <section>
-                  <h4 className="text-xs font-semibold text-paper-400">你的时间线</h4>
-                  <p className="mt-1 text-paper-300">{me.myCard.timeline}</p>
-                </section>
-                {me.myCard.knowledge.length > 0 && (
-                  <section>
-                    <h4 className="text-xs font-semibold text-paper-400">你额外知道</h4>
-                    <ul className="mt-1 list-disc space-y-1 pl-4 text-paper-300">
-                      {me.myCard.knowledge.map((k, i) => (
-                        <li key={i}>{k}</li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-              </div>
-              )
-            ) : (
-              <p className="whitespace-pre-wrap leading-relaxed text-paper-400">{summary.background}</p>
-            )
-          )}
-          {tab === "clues" && isDm && (
-            <div className="space-y-2 text-xs">
-              {dmData ? (
-                dmData.structured ? dmData.structured.clues.map((c) => {
-                  const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
-                  const isHeld = events.some((e) => e.type === "clue" && e.visibility !== "public" && e.content.clueId === c.id);
-                  const location = dmData.structured?.clues.find((item) => item.id === c.id)?.locationId;
-                  const locationName = dmData.structured ? summary.scriptV2?.locations.find((item) => item.id === location)?.name ?? location : location;
-                  return (
-                    <div key={c.id} className="clue-card p-3">
-                      <p className="font-medium text-paper-200">{c.name}<span className="ml-2 text-paper-500">[{locationName}]</span><span className={`ml-2 ${isPublic ? "text-clue-400" : isHeld ? "text-secret-400" : "text-paper-500"}`}>{isPublic ? "已公开" : isHeld ? "被持有" : "未发现"}</span></p>
-                      <NarrativeBlocks blocks={c.content} className="mt-1 text-paper-400" />
-                    </div>
-                  );
-                }) : dmData.clues.map((c) => {
-                  const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
-                  const isHeld = events.some((e) => e.type === "clue" && e.visibility !== "public" && e.content.clueId === c.id);
-                  return (
-                    <div key={c.id} className="clue-card p-3">
-                      <p className="font-medium text-paper-200">
-                        {c.name}
-                        <span className="ml-2 text-paper-500">[{c.location}]</span>
-                        <span className={`ml-2 ${isPublic ? "text-clue-400" : isHeld ? "text-secret-400" : "text-paper-500"}`}>
-                          {isPublic ? "已公开" : isHeld ? "被持有" : "未发现"}
-                        </span>
-                      </p>
-                      <p className="mt-1 text-paper-400">{c.content}</p>
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="text-paper-500">加载中…</p>
-              )}
-            </div>
-          )}
-          {tab === "clues" && !isDm && (
-            <div className="space-y-3">
-              {myClueCardsUnique.length === 0 && <p className="text-paper-500">还没有获得任何线索。搜证阶段选择地点后在这里查看。</p>}
-              {myClueCardsUnique.map((c) => {
-                const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
-                const needDecision = phase === "SEARCH" && c.private && !isPublic && !decidedClues.has(c.id);
-                const canTransfer = Boolean(summary.flow?.allowClueTransfer) && phase === "DISCUSSION" && !isPublic && !ended;
-                return (
-                  <div key={c.id} className="clue-card evidence-reveal p-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-clue-400">{c.name}</span>
-                      <span className="rounded-full border border-clue-400/20 px-2 py-0.5 text-[10px] text-clue-400">{isPublic ? "已公开" : "私藏证据"}</span>
-                    </div>
-                    {c.structured ? <NarrativeBlocks blocks={c.structured.content} className="mt-2 leading-relaxed text-paper-300" /> : <p className="mt-2 leading-relaxed text-paper-300">{c.content}</p>}
-                    {needDecision && (
-                      <div className="mt-2 flex gap-2">
-                        <button
-                          onClick={() => {
-                            setDecidedClues((s) => new Set(s).add(c.id));
-                            void send({ type: "publish", clueId: c.id, publish: true });
-                          }}
-                          className="rounded-lg bg-clue-400 px-3 py-1.5 text-xs font-semibold text-ink-950 hover:brightness-110"
-                        >
-                          当场公开
-                        </button>
-                        <button
-                          onClick={() => {
-                            setDecidedClues((s) => new Set(s).add(c.id));
-                            void send({ type: "publish", clueId: c.id, publish: false });
-                          }}
-                          className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60"
-                        >
-                          私藏
-                        </button>
-                      </div>
-                    )}
-                    {canTransfer && !needDecision && (
-                      <div className="mt-2 space-y-1.5">
-                        {transferClueId === c.id ? (
-                          <>
-                            <p className="text-[11px] text-paper-500">悄悄转交给谁（仅双方可见）：</p>
-                            <div className="flex flex-wrap gap-1.5">
-                              {activeSeats
-                                .filter((s) => s.index !== mySeat)
-                                .map((s) => (
-                                  <button
-                                    key={s.index}
-                                    onClick={() => {
-                                      setTransferClueId(null);
-                                      void send({ type: "transfer", clueId: c.id, toSeat: s.index });
-                                    }}
-                                    disabled={sending}
-                                    className="rounded-lg border border-secret-400/40 px-2.5 py-1 text-xs text-secret-400 hover:bg-secret-400/10 disabled:opacity-40"
-                                  >
-                                    {s.characterName}
-                                  </button>
-                                ))}
-                              <button onClick={() => setTransferClueId(null)} className="rounded-lg border border-paper-500/30 px-2.5 py-1 text-xs text-paper-400 hover:text-paper-200">
-                                取消
-                              </button>
-                            </div>
-                          </>
-                        ) : (
-                          <button
-                            onClick={() => setTransferClueId(c.id)}
-                            disabled={sending}
-                            className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60 disabled:opacity-40"
-                          >
-                            转交这张线索
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {tab === "timeline" && (
-            <ul className="space-y-2 text-xs text-paper-400">
-              {events
-                .filter((e) => e.type === "phase" || e.type === "system" || e.type === "reveal")
-                .map((e) => (
-                  <li key={e.seq}>
-                    <span className="text-paper-500">{new Date(e.createdAt).toLocaleTimeString()}</span>{" "}
-                    {e.type === "phase" ? `进入 ${PHASE_LABEL[(e.content.phase as string) ?? e.phase] ?? e.phase}` : e.content.text}
-                  </li>
-                ))}
-              {events.filter((e) => e.type === "phase" || e.type === "system" || e.type === "reveal").length === 0 && (
-                <li>还没有事件。</li>
-              )}
-            </ul>
-          )}
-        </div>
-      </aside>
+      <InfoRail
+        summary={summary}
+        events={events}
+        me={me}
+        mySeat={mySeat}
+        isDm={isDm}
+        dmData={dmData}
+        ended={ended}
+        activeSeats={activeSeats}
+        sending={sending}
+        send={send}
+      />
       </div>
     </div>
   );
-}
-
-function EventBubble({
-  ev,
-  mySeat,
-  seatName,
-  ttsSeats,
-  onSpeak,
-}: {
-  ev: GameEventView;
-  mySeat: number | null;
-  seatName: (i: number) => string;
-  ttsSeats: Set<number>;
-  onSpeak: (eventSeq: string) => void;
-}) {
-  const mine = ev.fromSeat !== null && ev.fromSeat === mySeat;
-  switch (ev.type) {
-    case "phase":
-      return (
-        <div className="phase-arrival space-y-2">
-          <div className="flex items-center gap-3 text-xs text-gold-400/70">
-            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold-400/20" />
-            <span className="font-semibold tracking-wide">
-              {PHASE_LABEL[(ev.content.phase as string) ?? ev.phase] ?? ev.phase}
-              {ev.round ? ` · 第 ${ev.round} 轮` : ""}
-            </span>
-            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold-400/20" />
-          </div>
-          {ev.content.text && (
-            <div className="rounded-2xl rounded-tl-sm border border-gold-400/25 bg-gold-400/5 px-4 py-3 text-sm">
-              <p className="eyebrow">DM · 主持人</p>
-              <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-300">{ev.content.text}</p>
-            </div>
-          )}
-        </div>
-      );
-    case "speech": {
-      const text = ev.content.text ?? "";
-      const canSpeak = ev.fromSeat !== null && ttsSeats.has(ev.fromSeat) && text;
-      const isInterjection = ev.content.interjection === true;
-      return (
-        <div className={`fade-up flex ${mine ? "justify-end" : "justify-start"}`}>
-          <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm sm:max-w-[82%] ${mine ? "rounded-tr-sm border border-gold-400/20 bg-gold-400/10" : "rounded-tl-sm border border-gold-400/10 bg-ink-850"}`}>
-            <p className={`flex items-center text-xs ${mine ? "justify-end text-gold-400" : "text-paper-500"}`}>
-              {ev.content.speakerName ?? seatName(ev.fromSeat ?? 0)}
-              {isInterjection && (
-                <span className="ml-1.5 rounded-full border border-secret-400/30 px-1.5 py-0.5 text-[10px] text-secret-400">插话</span>
-              )}
-              {canSpeak && (
-                <button
-                  onClick={() => onSpeak(ev.seq)}
-                  title="播放语音"
-                  className="ml-2 grid size-6 place-items-center rounded-full text-paper-500 transition hover:bg-gold-400/10 hover:text-gold-400"
-                >
-                  <SoundIcon className="size-3.5" />
-                </button>
-              )}
-            </p>
-            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{text}</p>
-          </div>
-        </div>
-      );
-    }
-    case "system":
-      return <p className="mx-auto w-fit rounded-full border border-gold-400/10 bg-ink-950/70 px-3 py-1 text-center text-[11px] text-paper-500">{ev.content.text}</p>;
-    case "clue":
-      if (ev.visibility === "public") {
-        return (
-          <div className="clue-card evidence-reveal mx-auto max-w-[92%] px-5 py-4 text-sm">
-            <p className="text-[10px] font-semibold tracking-[0.16em] text-clue-400">
-              EVIDENCE · 公开线索{typeof ev.content.publicBy === "number" ? ` · ${seatName(ev.content.publicBy)} 公布` : ""}
-            </p>
-            <p className="mt-2 font-semibold text-paper-50">{ev.content.clueName}</p>
-            <p className="mt-1 leading-relaxed text-paper-400">{ev.content.clueContent}</p>
-          </div>
-        );
-      }
-      return (
-        <p className="evidence-reveal mx-auto w-fit rounded-full border border-secret-400/20 bg-secret-400/5 px-3 py-1.5 text-center text-xs text-secret-400">
-          获得私密线索「{ev.content.clueName}」· 前往线索栏查看
-        </p>
-      );
-    case "vote":
-      return (
-        <div className="mx-auto flex w-fit items-center gap-2 rounded-lg border border-danger-400/20 bg-danger-400/5 px-3 py-2 text-center text-sm text-paper-300">
-          <span className="text-[10px] font-bold tracking-widest text-danger-400">VOTE</span>
-          <span>{ev.content.text}</span>
-        </div>
-      );
-    case "private":
-      return (
-        <div className={`flex ${ev.fromSeat === mySeat ? "justify-end" : "justify-start"}`}>
-          <div className="max-w-[85%] rounded-2xl border border-dashed border-secret-400/40 bg-secret-400/5 px-4 py-2.5 text-sm">
-            <p className="text-xs text-secret-400">
-              私聊 · {ev.fromSeat === mySeat ? "你对" : `${seatName(ev.fromSeat ?? 0)} 对`} {ev.toSeat === mySeat ? "你" : seatName(ev.toSeat ?? 0)}
-            </p>
-            <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{ev.content.text}</p>
-          </div>
-        </div>
-      );
-    case "transfer":
-      return (
-        <div className={`flex ${ev.fromSeat === mySeat ? "justify-end" : "justify-start"}`}>
-          <div className="max-w-[85%] rounded-2xl border border-dashed border-secret-400/40 bg-secret-400/5 px-4 py-2.5 text-sm">
-            <p className="text-xs text-secret-400">
-              线索转交 · {ev.fromSeat === mySeat ? `你悄悄交给了 ${seatName(ev.toSeat ?? 0)}` : `${seatName(ev.fromSeat ?? 0)} 悄悄把一张线索卡交给了你`}
-            </p>
-            <p className="mt-1 font-semibold text-paper-100">「{ev.content.clueName}」</p>
-            {ev.content.clueContent && <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{ev.content.clueContent}</p>}
-          </div>
-        </div>
-      );
-    case "reveal":
-      return null; // 复盘在主区块单独渲染
-    default:
-      return null;
-  }
 }

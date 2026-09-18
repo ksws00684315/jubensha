@@ -6,15 +6,19 @@
   --color-ink-850: #131319;
   --color-ink-800: #1c1b22;
   --color-paper-50: #f7f0df;
+  --color-paper-100: #ebe3cd;
   --color-paper-200: #ded4bd;
+  --color-paper-300: #bdb2a0;
   --color-paper-400: #9c9382;
   --color-paper-500: #756e62;
   --color-gold-300: #f6cf79;
   --color-gold-400: #eeb958;
   --color-gold-500: #d99a32;
   --color-gold-600: #a86d18;
+  --color-clue-300: #8ec9e0;
   --color-clue-400: #69b7d4;
   --color-secret-400: #ac87e6;
+  --color-danger-300: #ef908e;
   --color-danger-400: #e56a67;
   --color-success-400: #66c49a;
 }
@@ -40,16 +44,16 @@ body {
   background:
     radial-gradient(circle at 50% -20%, rgba(217, 154, 50, 0.08), transparent 36rem),
     var(--surface-canvas);
-  color: #f7f0df;
+  color: var(--color-paper-50);
 }
 
 ::selection {
-  background: rgba(238, 185, 88, 0.28);
-  color: #fff8e8;
+  background: color-mix(in srgb, var(--color-gold-400) 28%, transparent);
+  color: var(--color-paper-50);
 }
 
 :where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid #eeb958;
+  outline: 2px solid var(--color-gold-400);
   outline-offset: 3px;
 }
 
@@ -61,7 +65,7 @@ body {
 }
 
 .eyebrow {
-  color: #eeb958;
+  color: var(--color-gold-400);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -458,4 +462,14 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* 骨架屏：首帧加载占位（settings/scripts 等列表页共用） */
+.skeleton {
+  animation: pulse 1.6s ease-in-out infinite;
+  background: color-mix(in srgb, var(--color-ink-800) 78%, var(--color-paper-500) 8%);
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
 }

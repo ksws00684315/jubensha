@@ -84,67 +84,67 @@ export default function ScriptDetail({
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold">{meta.title}</h1>
-            <span className="rounded bg-zinc-800 px-2 py-0.5 text-xs text-zinc-400">{meta.difficulty}</span>
-            <span className="text-xs text-zinc-500">
+            <span className="rounded bg-ink-800 px-2 py-0.5 text-xs text-paper-400">{meta.difficulty}</span>
+            <span className="text-xs text-paper-400">
               {meta.minPlayers === meta.maxPlayers ? `${meta.minPlayers} 人` : `${meta.minPlayers}-${meta.maxPlayers} 人`} · 约{" "}
               {meta.durationMin} 分钟 · {source === "ai" ? "AI 生成" : source === "import" ? "导入" : "手工"}
             </span>
           </div>
-          <p className="mt-2 max-w-3xl text-sm text-zinc-400">{meta.intro}</p>
+          <p className="mt-2 max-w-3xl text-sm text-paper-400">{meta.intro}</p>
           <div className="mt-2 flex flex-wrap gap-2">
             {meta.tags.map((t) => (
-              <span key={t} className="rounded bg-zinc-800/80 px-2 py-0.5 text-xs text-zinc-400">
+              <span key={t} className="rounded bg-ink-800/80 px-2 py-0.5 text-xs text-paper-400">
                 {t}
               </span>
             ))}
           </div>
-          <p className="mt-2 text-xs text-zinc-600">更新于 {updatedAt.slice(0, 10)}</p>
+          <p className="mt-2 text-xs text-paper-400">更新于 {updatedAt.slice(0, 10)}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => void openDm()}
             disabled={busy}
             className={`rounded-lg border px-4 py-2 text-sm transition ${
-              dmView ? "border-red-500/60 text-red-400" : "border-zinc-700 text-zinc-300 hover:border-zinc-500"
+              dmView ? "border-danger-400/60 text-danger-400" : "border-gold-400/25 text-paper-300 hover:border-gold-400/50"
             }`}
           >
             {dmView ? "返回公开视图" : "DM 视图（需管理身份）"}
           </button>
-          <button onClick={() => void download()} className="rounded-lg border border-zinc-700 px-4 py-2 text-sm hover:border-zinc-500">
+          <button onClick={() => void download()} className="rounded-lg border border-gold-400/25 px-4 py-2 text-sm hover:border-gold-400/50">
             导出 JSON
           </button>
           <Link
             href={`/rooms/new?scriptId=${id}`}
-            className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-amber-400"
+            className="rounded-lg bg-gold-400 px-4 py-2 text-sm font-medium text-ink-950 hover:bg-gold-300"
           >
             用它开一局
           </Link>
-          <button onClick={() => void remove()} disabled={busy} className="rounded-lg px-3 py-2 text-sm text-zinc-500 hover:text-red-400 disabled:opacity-40">
+          <button onClick={() => void remove()} disabled={busy} className="rounded-lg px-3 py-2 text-sm text-paper-400 hover:text-danger-400 disabled:opacity-40">
             删除
           </button>
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-danger-400">{error}</p>}
 
       {dmView && (errors.length > 0 || warnings.length > 0) && (
-        <div className="space-y-1 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-sm">
+        <div className="space-y-1 rounded-xl border border-gold-400/12 bg-ink-900/50 p-4 text-sm">
           {errors.map((e, i) => (
-            <p key={`e${i}`} className="text-red-400">
+            <p key={`e${i}`} className="text-danger-400">
               ✗ {e.message}
             </p>
           ))}
           {warnings.map((w, i) => (
-            <p key={`w${i}`} className="text-amber-400/80">
+            <p key={`w${i}`} className="text-gold-400/80">
               警告 · {w.message}
             </p>
           ))}
         </div>
       )}
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
-        <h2 className="font-semibold text-amber-400">公开背景</h2>
-        <NarrativeBlocks blocks={publicDocV2.background} className="mt-2 text-sm leading-relaxed text-zinc-300" />
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/50 p-6">
+        <h2 className="font-semibold text-gold-400">公开背景</h2>
+        <NarrativeBlocks blocks={publicDocV2.background} className="mt-2 text-sm leading-relaxed text-paper-300" />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -152,30 +152,30 @@ export default function ScriptDetail({
           const cardV2 = full?.characters.find((x) => x.id === c.id)?.privateCard ?? null;
           const publicV2 = c.publicProfile;
           return (
-            <div key={c.id} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+            <div key={c.id} className="rounded-xl border border-gold-400/12 bg-ink-900/50 p-5">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold">
                   {c.name}
-                  {c.gender ? <span className="ml-1 text-xs text-zinc-500">{c.gender}</span> : null}
+                  {c.gender ? <span className="ml-1 text-xs text-paper-400">{c.gender}</span> : null}
                 </h3>
-                {dmView && cardV2?.isCulprit && <span className="rounded bg-red-500/20 px-2 py-0.5 text-xs text-red-400">真凶</span>}
+                {dmView && cardV2?.isCulprit && <span className="rounded bg-danger-400/20 px-2 py-0.5 text-xs text-danger-400">真凶</span>}
               </div>
-              <div className="mt-2 text-sm text-zinc-400">
-                {publicV2.identity && <p className="font-medium text-zinc-300">{publicV2.identity}</p>}
+              <div className="mt-2 text-sm text-paper-400">
+                {publicV2.identity && <p className="font-medium text-paper-300">{publicV2.identity}</p>}
                 <NarrativeBlocks blocks={publicV2.bio} className="mt-1" />
               </div>
               {dmView && cardV2 && (
-                <div className="mt-3 space-y-3 border-t border-zinc-800 pt-3 text-xs text-zinc-500">
+                <div className="mt-3 space-y-3 border-t border-gold-400/12 pt-3 text-xs text-paper-400">
                   <div>
-                    <p className="text-zinc-400">秘密</p>
-                    {cardV2.secrets.map((secret) => <div key={secret.id} className="mt-1"><p className="font-medium text-zinc-300">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1" /></div>)}
+                    <p className="text-paper-400">秘密</p>
+                    {cardV2.secrets.map((secret) => <div key={secret.id} className="mt-1"><p className="font-medium text-paper-300">{secret.title}</p><NarrativeBlocks blocks={secret.content} className="mt-1" /></div>)}
                   </div>
                   <div>
-                    <p className="text-zinc-400">目标</p>
-                    {cardV2.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-zinc-300">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1" /></div>)}
+                    <p className="text-paper-400">目标</p>
+                    {cardV2.objectives.map((objective) => <div key={objective.id} className="mt-1"><p className="font-medium text-paper-300">{objective.title}</p><NarrativeBlocks blocks={objective.content} className="mt-1" /></div>)}
                   </div>
                   <div>
-                    <p className="text-zinc-400">时间线</p>
+                    <p className="text-paper-400">时间线</p>
                     <TimelineList entries={cardV2.timeline} className="mt-2" />
                   </div>
                 </div>
@@ -187,36 +187,36 @@ export default function ScriptDetail({
 
       {dmView && full && (
         <>
-          <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-6">
-            <h2 className="font-semibold text-red-400">真相（仅 DM / 组织者可见）</h2>
-            <p className="mt-2 text-sm text-zinc-300"><span className="text-zinc-500">真凶：</span>{full.characters.find((c) => c.id === full.truth.culpritId)?.name}</p>
-            <h3 className="mt-3 text-sm font-medium text-zinc-300">作案手法</h3>
-            <NarrativeBlocks blocks={full.truth.method.summary} className="mt-1 text-sm text-zinc-400" />
-            <div className="mt-3"><h3 className="text-sm font-medium text-zinc-300">关键证据</h3><p className="mt-1 text-sm text-zinc-400">{full.truth.keyEvidenceIds.map((id) => full.clues.find((clue) => clue.id === id)?.name ?? id).join("、") || "待整理"}</p></div>
-            <div className="mt-3"><h3 className="text-sm font-medium text-zinc-300">完整时间线</h3><TimelineList entries={full.truth.timeline} className="mt-2 text-sm" /></div>
+          <div className="rounded-xl border border-danger-400/30 bg-danger-400/5 p-6">
+            <h2 className="font-semibold text-danger-400">真相（仅 DM / 组织者可见）</h2>
+            <p className="mt-2 text-sm text-paper-300"><span className="text-paper-400">真凶：</span>{full.characters.find((c) => c.id === full.truth.culpritId)?.name}</p>
+            <h3 className="mt-3 text-sm font-medium text-paper-300">作案手法</h3>
+            <NarrativeBlocks blocks={full.truth.method.summary} className="mt-1 text-sm text-paper-400" />
+            <div className="mt-3"><h3 className="text-sm font-medium text-paper-300">关键证据</h3><p className="mt-1 text-sm text-paper-400">{full.truth.keyEvidenceIds.map((id) => full.clues.find((clue) => clue.id === id)?.name ?? id).join("、") || "待整理"}</p></div>
+            <div className="mt-3"><h3 className="text-sm font-medium text-paper-300">完整时间线</h3><TimelineList entries={full.truth.timeline} className="mt-2 text-sm" /></div>
           </div>
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6"><h2 className="font-semibold">复盘底稿</h2><NarrativeBlocks blocks={full.truth.reveal} className="mt-2 text-sm leading-relaxed text-zinc-400" /></div>
+          <div className="rounded-xl border border-gold-400/12 bg-ink-900/50 p-6"><h2 className="font-semibold">复盘底稿</h2><NarrativeBlocks blocks={full.truth.reveal} className="mt-2 text-sm leading-relaxed text-paper-400" /></div>
         </>
       )}
 
       <div>
         <h2 className="font-semibold">
           线索卡{" "}
-          <span className="text-sm text-zinc-500">
+          <span className="text-sm text-paper-400">
             共 {dmView && full ? full.clues.length : publicDocV2.clueCount} 张 · 搜证地点：{publicDocV2.locations.map((location) => location.name).join("、")}
           </span>
         </h2>
         {dmView && full ? (
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {full.clues.map((c) => (
-              <div key={c.id} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-sm">
-                <div className="flex items-center justify-between gap-2"><span className="font-medium">{c.name}</span><span className="text-xs text-zinc-500">{c.policy === "auto_public" ? "自动公开" : c.policy === "keep_private" ? "必私藏" : "可公开"}</span></div>
-                <NarrativeBlocks blocks={c.content} className="mt-2 text-zinc-400" />
+              <div key={c.id} className="rounded-lg border border-gold-400/12 bg-ink-900/40 p-4 text-sm">
+                <div className="flex items-center justify-between gap-2"><span className="font-medium">{c.name}</span><span className="text-xs text-paper-400">{c.policy === "auto_public" ? "自动公开" : c.policy === "keep_private" ? "必私藏" : "可公开"}</span></div>
+                <NarrativeBlocks blocks={c.content} className="mt-2 text-paper-400" />
               </div>
             ))}
           </div>
         ) : (
-          <p className="mt-3 text-sm text-zinc-500">线索内容仅在搜证后或 DM 视图中可见。</p>
+          <p className="mt-3 text-sm text-paper-400">线索内容仅在搜证后或 DM 视图中可见。</p>
         )}
       </div>
     </div>

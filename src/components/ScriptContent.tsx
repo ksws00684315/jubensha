@@ -36,7 +36,7 @@ export function TimelineList({ entries, locations, className = "" }: { entries: 
           <div className="min-w-0 border-l border-gold-400/20 pl-3 text-paper-300">
             {/* 占位标题（「事件 N」）不展示：它没有信息量，还不如直接读正文 */}
             {!isPlaceholderTimelineTitle(entry.title) && <p className="font-medium text-paper-100">{entry.title}</p>}
-            {(entry.locationId && locations?.get(entry.locationId)) && <p className="mt-0.5 text-[11px] text-paper-500">{locations.get(entry.locationId)}</p>}
+            {(entry.locationId && locations?.get(entry.locationId)) && <p className="mt-0.5 text-xs text-paper-500">{locations.get(entry.locationId)}</p>}
             <NarrativeBlocks blocks={entry.content} className="mt-1 leading-relaxed" />
           </div>
         </li>

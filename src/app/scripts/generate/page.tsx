@@ -21,7 +21,7 @@ export default function GeneratePage() {
   });
   const [outline, setOutline] = useState<Outline | null>(null);
   const [docText, setDocText] = useState("");
-  const [stage, setStage] = useState<"form" | "outline" | "edit">("form");
+  const [stage, setStage] = useState<"form" | "edit">("form");
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -96,21 +96,21 @@ export default function GeneratePage() {
     <div className="mx-auto max-w-3xl space-y-6">
       <div>
         <h1 className="text-2xl font-bold">AI 生成剧本</h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-paper-400">
           两阶段生成：先构思案件骨架，再展开完整剧本。生成后可手工编辑 JSON 再入库。需在「设置 → 模型绑定」配置「剧本生成」槽位。
         </p>
       </div>
 
       {stage === "form" && (
-        <div className="space-y-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6">
+        <div className="space-y-4 rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm text-zinc-400">
+            <label className="text-sm text-paper-300">
               题材
-              <input value={form.theme} onChange={(e) => setForm((f) => ({ ...f, theme: e.target.value }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+              <input value={form.theme} onChange={(e) => setForm((f) => ({ ...f, theme: e.target.value }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
             </label>
-            <label className="text-sm text-zinc-400">
+            <label className="text-sm text-paper-300">
               玩家人数
-              <select value={form.playerCount} onChange={(e) => setForm((f) => ({ ...f, playerCount: Number(e.target.value) }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500">
+              <select value={form.playerCount} onChange={(e) => setForm((f) => ({ ...f, playerCount: Number(e.target.value) }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400">
                 {[4, 5, 6].map((n) => (
                   <option key={n} value={n}>
                     {n} 人
@@ -118,9 +118,9 @@ export default function GeneratePage() {
                 ))}
               </select>
             </label>
-            <label className="text-sm text-zinc-400">
+            <label className="text-sm text-paper-300">
               难度
-              <select value={form.difficulty} onChange={(e) => setForm((f) => ({ ...f, difficulty: e.target.value as typeof form.difficulty }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500">
+              <select value={form.difficulty} onChange={(e) => setForm((f) => ({ ...f, difficulty: e.target.value as typeof form.difficulty }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400">
                 {["新手", "进阶", "硬核"].map((d) => (
                   <option key={d} value={d}>
                     {d}
@@ -128,50 +128,51 @@ export default function GeneratePage() {
                 ))}
               </select>
             </label>
-            <label className="text-sm text-zinc-400">
+            <label className="text-sm text-paper-300">
               诡计偏好
-              <input value={form.trickType} onChange={(e) => setForm((f) => ({ ...f, trickType: e.target.value }))} className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+              <input value={form.trickType} onChange={(e) => setForm((f) => ({ ...f, trickType: e.target.value }))} className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
             </label>
           </div>
-          <label className="block text-sm text-zinc-400">
+          <label className="block text-sm text-paper-300">
             其他要求（可选）
-            <textarea value={form.extra} onChange={(e) => setForm((f) => ({ ...f, extra: e.target.value }))} rows={3} placeholder="例如：民国背景、山庄密室、情感线…" className="mt-1 w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm outline-none focus:border-amber-500" />
+            <textarea value={form.extra} onChange={(e) => setForm((f) => ({ ...f, extra: e.target.value }))} rows={3} placeholder="例如：民国背景、山庄密室、情感线…" className="mt-1 w-full rounded-lg border border-gold-400/25 bg-ink-950 px-3 py-2 text-sm outline-none focus:border-gold-400" />
           </label>
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="text-sm text-danger-400">{error}</p>}
           {outline && (
-            <details className="rounded-lg border border-zinc-800 p-3 text-xs text-zinc-500">
+            <details className="rounded-lg border border-gold-400/12 p-3 text-xs text-paper-400">
               <summary className="cursor-pointer">查看骨架</summary>
               <pre className="mt-2 overflow-auto">{JSON.stringify(outline, null, 2)}</pre>
             </details>
           )}
-          <button onClick={generate} disabled={busy} className="rounded-lg bg-amber-500 px-6 py-2.5 font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40">
+          <button onClick={generate} disabled={busy} className="rounded-lg bg-gold-400 px-6 py-2.5 font-medium text-ink-950 hover:bg-gold-300 disabled:opacity-40">
             {busy ? "生成中…" : "开始生成"}
           </button>
-          {busy && <p className="animate-pulse text-sm text-amber-400">{status}</p>}
+          {busy && <p className="animate-pulse text-sm text-gold-400">{status}</p>}
         </div>
       )}
 
       {stage === "edit" && (
         <div className="space-y-4">
           {issues.length > 0 && (
-            <div className="rounded-xl border border-amber-500/40 bg-amber-500/5 p-4 text-sm text-amber-400/90">
+            <div className="rounded-xl border border-gold-400/40 bg-gold-400/5 p-4 text-sm text-gold-400/90">
               {issues.map((w, i) => (
                 <p key={i}>警告 · {w}</p>
               ))}
             </div>
           )}
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="text-sm text-danger-400">{error}</p>}
           <textarea
+            aria-label="剧本 JSON 编辑器"
             value={docText}
             onChange={(e) => setDocText(e.target.value)}
             rows={24}
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-950 p-4 font-mono text-xs outline-none focus:border-amber-500"
+            className="w-full rounded-xl border border-gold-400/25 bg-ink-950 p-4 font-mono text-xs outline-none focus:border-gold-400"
           />
           <div className="flex gap-3">
-            <button onClick={save} disabled={busy} className="rounded-lg bg-amber-500 px-6 py-2.5 font-medium text-zinc-950 hover:bg-amber-400 disabled:opacity-40">
+            <button onClick={save} disabled={busy} className="rounded-lg bg-gold-400 px-6 py-2.5 font-medium text-ink-950 hover:bg-gold-300 disabled:opacity-40">
               {busy ? "校验入库中…" : "校验并入库"}
             </button>
-            <button onClick={() => setStage("form")} className="rounded-lg border border-zinc-700 px-6 py-2.5 text-sm hover:border-zinc-500">
+            <button onClick={() => setStage("form")} className="rounded-lg border border-gold-400/25 px-6 py-2.5 text-sm hover:border-gold-400/50">
               返回重新生成
             </button>
           </div>
