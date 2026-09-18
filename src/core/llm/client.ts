@@ -5,10 +5,16 @@ import { db } from "@/lib/db";
 import { decryptSecret } from "@/lib/crypto";
 import { candidateModelListUrls, normalizeProviderBaseUrl } from "./provider-url";
 import { emptyCompletionError, isRetryableLlmError, resolveMaxOutputTokens } from "./output-tokens";
+import { createHash, randomUUID } from "node:crypto";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
 export { extractJson } from "./json";
+
+/** 不包含密钥的 embedding 空间标识；模型或端点变化会自然形成新空间。 */
+export function embeddingSpaceId(b: Pick<ResolvedBinding, "providerId" | "baseUrl" | "modelId">): string {
+  return createHash("sha256").update(`${b.providerId}\n${b.baseUrl}\n${b.modelId}`).digest("hex").slice(0, 24);
+}
 
 /** 读取某用途槽位的绑定（含 fallback 链），运行时解析 apiKey */
 export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
@@ -33,6 +39,11 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
         temperature: binding.temperature ?? null,
         maxTokens: binding.maxTokens ?? null,
         fallbackSlot: binding.fallbackSlot ?? null,
+        contextWindow: binding.contextWindow ?? null,
+        capabilities: {
+          system: binding.supportsSystem,
+          json: binding.supportsJson,
+        },
       };
     }
     // 该槽位无绑定，沿 fallbackSlot 找
@@ -93,6 +104,13 @@ async function logUsage(args: {
   latencyMs: number;
   ok: boolean;
   error?: string;
+  requestId?: string;
+  generationId?: string;
+  taskType?: string;
+  inputTokensEstimate?: number;
+  budgetTokens?: number | null;
+  retryCount?: number;
+  cancelled?: boolean;
 }): Promise<void> {
   try {
     await db.usageLog.create({
@@ -109,6 +127,13 @@ async function logUsage(args: {
         latencyMs: args.latencyMs,
         ok: args.ok,
         error: args.error?.slice(0, 500),
+        requestId: args.requestId,
+        generationId: args.generationId,
+        taskType: args.taskType ?? args.purpose,
+        inputTokensEstimate: args.inputTokensEstimate,
+        budgetTokens: args.budgetTokens ?? null,
+        retryCount: args.retryCount ?? 0,
+        cancelled: args.cancelled ?? false,
       },
     });
   } catch {
@@ -118,13 +143,23 @@ async function logUsage(args: {
 
 const RETRY_DELAYS_MS = [800, 2000];
 const REQUEST_TIMEOUT_MS = 180_000;
+const systemSupportOverrides = new Map<string, boolean>();
+
+function bindingSystemKey(b: ResolvedBinding): string {
+  return `${b.providerId}:${b.modelId}`;
+}
+
+function preservesSystemMessages(b: ResolvedBinding): boolean {
+  return b.capabilities.system && systemSupportOverrides.get(bindingSystemKey(b)) !== false;
+}
 
 function isRetryable(err: unknown): boolean {
   return isRetryableLlmError(err);
 }
 
 /** 部分网关拒绝 system 角色，把系统提示并进第一条 user 的前缀（仍保持「稳定前缀 + 追加尾部」以便缓存）。 */
-function toCompatibleMessages(messages: ChatMessage[]): Array<{ role: "user" | "assistant"; content: string }> {
+function toCompatibleMessages(messages: ChatMessage[], preserveSystem: boolean): Array<{ role: "system" | "user" | "assistant"; content: string }> {
+  if (preserveSystem) return messages.map((m) => ({ role: m.role, content: m.content }));
   const system = messages.filter((m) => m.role === "system").map((m) => m.content).join("\n\n");
   const rest = messages
     .filter((m) => m.role !== "system")
@@ -138,23 +173,75 @@ function toCompatibleMessages(messages: ChatMessage[]): Array<{ role: "user" | "
   return [{ role: "user", content: system }, ...rest];
 }
 
+/** 中文和混合文本的保守估算；真实 tokenizer 不可用时宁可提前报预算不足。 */
+export function estimateInputTokens(messages: Array<{ content: string }>): number {
+  return Math.ceil(messages.reduce((sum, m) => sum + m.content.length, 0) / 3.5);
+}
+
+/** 返回配置窗口下允许注入的输入预算；未配置窗口时返回 null。 */
+export function inputBudgetTokens(b: Pick<ResolvedBinding, "contextWindow">, maxOutputTokens: number): number | null {
+  if (!b.contextWindow) return null;
+  const safety = Math.max(256, Math.ceil(b.contextWindow * 0.05));
+  return Math.max(0, b.contextWindow - maxOutputTokens - safety);
+}
+
+/** 在不改变 system 规则和当前任务尾部的前提下裁剪最旧现场记录。 */
+export function fitMessagesToInputBudget(
+  b: Pick<ResolvedBinding, "contextWindow">,
+  messages: ChatMessage[],
+  maxOutputTokens: number,
+): ChatMessage[] {
+  const budget = inputBudgetTokens(b, maxOutputTokens);
+  if (budget === null || estimateInputTokens(messages) <= budget) return messages;
+  const userIndex = messages.findIndex((m) => m.role === "user");
+  if (userIndex < 0) return messages;
+  const user = messages[userIndex].content;
+  const marker = "\n\n【你持有的线索卡】";
+  const markerIndex = user.indexOf(marker);
+  if (markerIndex < 0) return messages;
+  const growing = user.slice(0, markerIndex);
+  const tail = user.slice(markerIndex);
+  const fixedTokens = estimateInputTokens(messages.filter((_, i) => i !== userIndex).concat({ role: "user", content: tail }));
+  const availableGrowingTokens = budget - fixedTokens;
+  if (availableGrowingTokens < 64) return messages;
+  const maxChars = Math.floor(availableGrowingTokens * 3.5);
+  const clipped = growing.length > maxChars
+    ? `【较早现场记录因模型输入预算已裁剪，仅保留最近部分】\n${growing.slice(-maxChars)}`
+    : growing;
+  const out = messages.slice();
+  out[userIndex] = { ...out[userIndex], content: `${clipped}${tail}` };
+  return out;
+}
+
+function assertContextBudget(b: ResolvedBinding, messages: Array<{ content: string }>, maxOutputTokens: number): void {
+  // 未配置窗口的旧绑定保持兼容；管理员配置窗口后，任何调用都不得静默截断。
+  if (!b.contextWindow) return;
+  const input = estimateInputTokens(messages);
+  const available = inputBudgetTokens(b, maxOutputTokens) ?? 0;
+  if (available < 0 || input > available) {
+    throw new Error(`上下文超出模型窗口：估算输入 ${input} tokens，可用 ${Math.max(0, available)} tokens；请减少历史、提高窗口或降低输出上限`);
+  }
+}
+
 /** 单次绑定调用（不重试），返回 { text, usage } */
 async function callOnce(
   b: ResolvedBinding,
   purpose: string,
   opts: ChatOptions
 ): Promise<{ text: string; prompt: number; completion: number; cached: number; latencyMs: number }> {
-  const messages = toCompatibleMessages(opts.messages);
+  const rawMessages = toCompatibleMessages(opts.messages, preservesSystemMessages(b));
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
+  const messages = fitMessagesToInputBudget(b, rawMessages, maxOutputTokens);
+  assertContextBudget(b, messages, maxOutputTokens);
 
-  const invoke = async (extra?: Record<string, unknown>) => {
+  const invoke = async (extra?: Record<string, unknown>, invokeMessages = messages) => {
     const result = await generateText({
       model: toLanguageModel(b, extra),
-      messages,
+      messages: invokeMessages,
       temperature: opts.temperature ?? b.temperature ?? 0.8,
       maxOutputTokens,
-      abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      abortSignal: opts.abortSignal ?? AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     const usage = normalizeUsage(result.usage);
     const text = (result.text ?? "").trim();
@@ -180,18 +267,25 @@ async function callOnce(
     if (isRetryableLlmError(err) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(err))) {
       return await invoke();
     }
+    if (/system messages? (are )?not allowed|instructions? option|system role/i.test(String(err))) {
+      // 网关声明支持 system 但实际拒绝时，在进程内记住该模型并合并到首条 user。
+      // 下次调用直接走兼容格式，避免每轮重复一次必败请求。
+      systemSupportOverrides.set(bindingSystemKey(b), false);
+      const compatible = toCompatibleMessages(opts.messages, false);
+      try {
+        return await invoke({ thinking: { type: "disabled" } }, compatible);
+      } catch (fallbackErr) {
+        if (isRetryableLlmError(fallbackErr) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(fallbackErr))) return await invoke(undefined, compatible);
+        throw fallbackErr;
+      }
+    }
     throw err;
   }
 }
 
 /** 非流式对话：重试 + fallback + 用量记账 */
 export async function chat(opts: ChatOptions): Promise<ChatResult> {
-  let binding: ResolvedBinding;
-  try {
-    binding = await resolveBinding(opts.purpose);
-  } catch (err) {
-    throw err;
-  }
+  const binding = await resolveBinding(opts.purpose);
 
   const slotsToTry: ResolvedBinding[] = [binding];
   if (binding.fallbackSlot) {
@@ -202,13 +296,40 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
     }
   }
 
+  const requestId = opts.requestId ?? randomUUID();
   let lastErr: unknown = null;
+  let attempts = 0;
+  let lastBinding = binding;
+  let lastDiagnostics = {
+    inputTokensEstimate: estimateInputTokens(fitMessagesToInputBudget(binding, toCompatibleMessages(opts.messages, preservesSystemMessages(binding)), resolveMaxOutputTokens(binding.maxTokens, opts.maxTokens))),
+    budgetTokens: inputBudgetTokens(binding, resolveMaxOutputTokens(binding.maxTokens, opts.maxTokens)),
+  };
   for (const b of slotsToTry) {
     for (const delay of [0, ...RETRY_DELAYS_MS]) {
-      if (delay) await new Promise((r) => setTimeout(r, delay));
+      if (delay) {
+        try {
+          await new Promise<void>((resolve, reject) => {
+            const timer = setTimeout(resolve, delay);
+            opts.abortSignal?.addEventListener("abort", () => {
+              clearTimeout(timer);
+              reject(opts.abortSignal?.reason ?? new Error("请求已取消"));
+            }, { once: true });
+          });
+        } catch (err) {
+          lastErr = err;
+          break;
+        }
+      }
+      opts.abortSignal?.throwIfAborted();
+      attempts += 1;
+      lastBinding = b;
+      lastDiagnostics = {
+        inputTokensEstimate: estimateInputTokens(fitMessagesToInputBudget(b, toCompatibleMessages(opts.messages, preservesSystemMessages(b)), resolveMaxOutputTokens(b.maxTokens, opts.maxTokens))),
+        budgetTokens: inputBudgetTokens(b, resolveMaxOutputTokens(b.maxTokens, opts.maxTokens)),
+      };
       try {
         const r = await callOnce(b, opts.purpose, opts);
-        await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true });
+        await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate: lastDiagnostics.inputTokensEstimate, budgetTokens: lastDiagnostics.budgetTokens, retryCount: attempts - 1 });
         return {
           text: r.text,
           promptTokens: r.prompt,
@@ -219,15 +340,17 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
       } catch (err) {
         lastErr = err;
         console.warn(`[llm] call failed purpose=${opts.purpose} model=${b.modelId}:`, err instanceof Error ? err.message : err);
+        if (opts.abortSignal?.aborted || (err instanceof Error && (err.name === "AbortError" || /aborted|取消/i.test(err.message)))) break;
         if (!isRetryable(err)) break;
       }
     }
+    if (opts.abortSignal?.aborted || (lastErr instanceof Error && (lastErr.name === "AbortError" || /aborted|取消/i.test(lastErr.message)))) break;
   }
   const msg = lastErr instanceof Error ? lastErr.message : String(lastErr);
   // 记一条失败日志
   try {
     await logUsage({
-      b: slotsToTry[0],
+      b: lastBinding,
       purpose: opts.purpose,
       gameId: opts.gameId,
       prompt: 0,
@@ -235,26 +358,42 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
       latencyMs: 0,
       ok: false,
       error: msg,
+      requestId,
+      generationId: opts.generationId,
+      taskType: opts.taskType,
+      inputTokensEstimate: lastDiagnostics.inputTokensEstimate,
+      budgetTokens: lastDiagnostics.budgetTokens,
+      retryCount: Math.max(0, attempts - 1),
+      cancelled: opts.abortSignal?.aborted || (lastErr instanceof Error && lastErr.name === "AbortError"),
     });
   } catch {
     /* ignore */
   }
-  throw new Error(`LLM 调用失败（${slotsToTry[0].providerName}/${slotsToTry[0].modelId}）: ${msg}`);
+  // 上游原始报文只进 UsageLog（error 字段），不随异常外流——
+  // 该异常会被引擎捕获并广播进公开事件流（独立审查 M10）
+  console.error(`[llm] ${slotsToTry[0].providerName}/${slotsToTry[0].modelId} 调用失败：${msg}`);
+  throw new Error(`LLM 调用失败（${slotsToTry[0].providerName}/${slotsToTry[0].modelId}），详情见设置→用量日志`);
 }
 
 /** 流式对话：逐 token 产出文本；结束时记账。失败时抛出。 */
 export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   const b = await resolveBinding(opts.purpose);
   const model = toLanguageModel(b, { thinking: { type: "disabled" } });
-  const messages = toCompatibleMessages(opts.messages);
+  const rawMessages = toCompatibleMessages(opts.messages, preservesSystemMessages(b));
   const started = Date.now();
+  const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
+  const messages = fitMessagesToInputBudget(b, rawMessages, maxOutputTokens);
+  assertContextBudget(b, messages, maxOutputTokens);
+  const requestId = opts.requestId ?? randomUUID();
+  const inputTokensEstimate = estimateInputTokens(messages);
+  const budgetTokens = inputBudgetTokens(b, maxOutputTokens);
   try {
     const result = streamText({
       model,
       messages,
       temperature: opts.temperature ?? b.temperature ?? 0.8,
-      maxOutputTokens: resolveMaxOutputTokens(b.maxTokens, opts.maxTokens),
-      abortSignal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      maxOutputTokens,
+      abortSignal: opts.abortSignal ?? AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     for await (const chunk of result.textStream) {
       yield chunk;
@@ -267,9 +406,22 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
       ...usage,
       latencyMs: Date.now() - started,
       ok: true,
+      requestId,
+      generationId: opts.generationId,
+      taskType: opts.taskType,
+      inputTokensEstimate,
+      budgetTokens,
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
+    if (preservesSystemMessages(b) && /system messages? (are )?not allowed|instructions? option|system role/i.test(msg)) {
+      systemSupportOverrides.set(bindingSystemKey(b), false);
+      // 流式接口已创建的请求不能改写消息，结束本次失败后用同一 requestId
+      // 以合并后的兼容格式重试，调用方仍只收到一条文本流。
+      await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: msg, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate, budgetTokens });
+      for await (const chunk of chatStream({ ...opts, requestId })) yield chunk;
+      return;
+    }
     await logUsage({
       b,
       purpose: opts.purpose,
@@ -279,6 +431,12 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
       latencyMs: Date.now() - started,
       ok: false,
       error: msg,
+      requestId,
+      generationId: opts.generationId,
+      taskType: opts.taskType,
+      inputTokensEstimate,
+      budgetTokens,
+      cancelled: opts.abortSignal?.aborted || (err instanceof Error && err.name === "AbortError"),
     });
     throw new Error(`LLM 流式调用失败（${b.providerName}/${b.modelId}）: ${msg}`);
   }
@@ -305,6 +463,8 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
     return null;
   }
   const started = Date.now();
+  const requestId = randomUUID();
+  const inputTokensEstimate = estimateInputTokens(texts.map((content) => ({ content })));
   try {
     const url = `${normalizeProviderBaseUrl(b.baseUrl, "openai_compatible")}/embeddings`;
     const res = await fetch(url, {
@@ -314,7 +474,7 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
       signal: AbortSignal.timeout(60_000),
     });
     if (!res.ok) {
-      await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: `HTTP ${res.status}` });
+      await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: `HTTP ${res.status}`, requestId, taskType: "embedding", inputTokensEstimate });
       return null;
     }
     const json = (await res.json()) as { data?: Array<{ embedding?: unknown; index?: number }>; usage?: { prompt_tokens?: number } };
@@ -322,10 +482,10 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
     const out = data
       .map((d) => (Array.isArray(d.embedding) ? (d.embedding as number[]) : null))
       .filter((v): v is number[] => v !== null);
-    await logUsage({ b, purpose: "embedding", prompt: json.usage?.prompt_tokens ?? 0, completion: 0, latencyMs: Date.now() - started, ok: out.length === texts.length });
+    await logUsage({ b, purpose: "embedding", prompt: json.usage?.prompt_tokens ?? 0, completion: 0, latencyMs: Date.now() - started, ok: out.length === texts.length, requestId, taskType: "embedding", inputTokensEstimate });
     return out.length === texts.length ? out : null;
   } catch (err) {
-    await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: err instanceof Error ? err.message : String(err) }).catch(() => undefined);
+    await logUsage({ b, purpose: "embedding", prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: err instanceof Error ? err.message : String(err), requestId, taskType: "embedding", inputTokensEstimate, cancelled: err instanceof Error && err.name === "AbortError" }).catch(() => undefined);
     return null;
   }
 }

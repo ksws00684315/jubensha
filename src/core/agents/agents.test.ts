@@ -51,6 +51,15 @@ describe("信息防火墙", () => {
     expect(goodMsgs).not.toContain("你的目标是找出真凶并让大家相信你");
   });
 
+  it("私聊和质询使用独立的阶段指令，不再与圆桌禁令冲突", () => {
+    const whisper = buildPlayerContext(doc, state, 1, [], { taskType: "whisper", hint: "交换账本线索" }).map((m) => m.content).join("\n");
+    expect(whisper).toContain("私聊窗口");
+    expect(whisper).not.toContain("禁止私聊");
+    const answer = buildPlayerContext(doc, state, 1, [], { taskType: "answer", hint: "回应脚印问题" }).map((m) => m.content).join("\n");
+    expect(answer).toContain("质询回应");
+    expect(answer).toContain("正面回答");
+  });
+
   it("玩家上下文包含自己的角色卡但不含别人的", () => {
     const msgs = buildPlayerContext(doc, state, 1, events, {}).map((m) => m.content).join("\n");
     const zhoubo = doc.characters.find((c) => c.id === "zhoubo")!;

@@ -3,6 +3,19 @@ import type { ScriptDocV2 } from "@/core/script/v2/schema";
 /** 游戏阶段状态机：LOBBY → READING → SELF_INTRO → [SEARCH → DISCUSSION]×N → VOTE → REVEAL → ENDED */
 export type Phase = "LOBBY" | "READING" | "SELF_INTRO" | "SEARCH" | "DISCUSSION" | "VOTE" | "REVEAL" | "ENDED";
 
+/**
+ * AI 玩家回合前的短行动计划（生成侧校验在 agents/plan.ts）。
+ * 定义在 engine/types 而非 agents：它持久化于 GameState.actionPlans，
+ * 下沉后 agents→engine 只剩单向 type-only 依赖（批次 I2 解环）。
+ */
+export interface PlayerActionPlan {
+  objectiveId: string | null;
+  targetSeat: number | null;
+  discloseClueIds: string[];
+  holdClueIds: string[];
+  nextAction: "state" | "ask" | "defend" | "probe" | "exchange" | "wait";
+}
+
 export const PHASE_ORDER: Phase[] = ["LOBBY", "READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL", "ENDED"];
 
 export interface SeatInfo {
@@ -53,7 +66,7 @@ export interface GameState {
   searchDealtRound: number;
   /** 投票结果 */
   voteResult: { counts: Record<string, number>; culpritSeat: number; caught: boolean } | null;
-  /** @deprecated 插话已取消，仅兼容旧存档 */
+  /** 本轮讨论已落地的 mention 插话次数（上限 MAX_INTERJECTIONS_PER_ROUND，进入新讨论轮清零） */
   interjections: number;
   /** 讨论阶段每人剩余提问次数 */
   questionsLeft: Record<string, number>;
@@ -67,6 +80,12 @@ export interface GameState {
   quizAnswers?: Record<string, Record<string, string>>;
   /** 复盘答题结果（transitionReveal 时计算，随 reveal 事件公布） */
   quizResult?: QuizResult | null;
+  /** 由主持/引擎明确解锁的条件秘密；键为 `${seat}:${secretId}`。 */
+  unlockedSecrets?: Record<string, boolean>;
+  /** 主持保证公开材料的发放记录；用于重启后的幂等与复盘。 */
+  hostHandouts?: Record<string, { round: number; reason: string }>;
+  /** 主持人手动使用的分级提示记录；键为提示在手册中的索引。 */
+  hostHints?: Record<string, { round: number; condition: string; hint: string }>;
   /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */
   humanDeadlines?: Record<string, number>;
   /**
@@ -77,6 +96,8 @@ export interface GameState {
   memory?: { anchorSeq: string; summary: string };
   /** 推荐回复：座位索引字符串 → 该座位轮到发言时后台生成的建议短句（发言/跳过后清除） */
   suggestions?: Record<string, string[]>;
+  /** 每座位最近一次正式发言计划；仅作为运行时提示，不能直接改变游戏状态。 */
+  actionPlans?: Record<string, PlayerActionPlan>;
 }
 
 export interface EngineEvent {
@@ -108,7 +129,7 @@ export interface EngineEvent {
 export type BusMessage =
   | { kind: "event"; event: EngineEvent }
   | { kind: "delta"; seat: number | "dm"; text: string; audience: "public" | number }
-  | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number }
+  | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number; generationId?: string }
   | { kind: "end" };
 
 export interface EngineContext {

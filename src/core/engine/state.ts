@@ -23,6 +23,10 @@ export function initialState(seats: SeatInfo[]): GameState {
     interjections: 0,
     questionsLeft: {},
     pendingAnswer: null,
+    unlockedSecrets: {},
+    hostHandouts: {},
+    hostHints: {},
+    actionPlans: {},
   };
 }
 

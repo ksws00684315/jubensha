@@ -1,7 +1,9 @@
 import { db } from "@/lib/db";
-import { embedTexts } from "@/core/llm/client";
-import type { EngineEvent, GameState } from "@/core/engine/types";
+import { embedTexts, embeddingSpaceId, resolveBinding } from "@/core/llm/client";
+import type { EngineEvent } from "@/core/engine/types";
 import { visibleTo } from "@/core/engine/state";
+import { buildPublicEvidenceRegistry } from "./evidence";
+import type { ScriptDocV2 } from "@/core/script/v2/schema";
 
 /**
  * ★ 向量检索记忆层 ★（SillyTavern Chat Vectorization / AI Dungeon Memory Bank 思路）
@@ -19,6 +21,7 @@ const TOP_K = 3;
 export interface RecallLine {
   label: string;
   text: string;
+  sourceSeq?: string;
 }
 
 function cosine(a: number[], b: number[]): number {
@@ -36,8 +39,8 @@ function cosine(a: number[], b: number[]): number {
 }
 
 /**
- * 检索与 query 语义最相关的"摘要锚点之前"的公开发言。
- * 无滚动记忆（全量日志本就在上下文里）或 embedding 未绑定时返回空。
+ * 检索与 query 语义最相关的"摘要锚点之前"的公开发言，并对公开线索做精确回查。
+ * 无滚动记忆（全量日志本就在上下文里）或 embedding 未绑定时仍会返回精确命中的公开线索。
  */
 export async function recallRelevantStatements(args: {
   gameId: string;
@@ -45,39 +48,59 @@ export async function recallRelevantStatements(args: {
   seatIndex: number | null;
   anchorSeq: string;
   query: string;
+  script?: ScriptDocV2;
 }): Promise<RecallLine[]> {
-  const { gameId, events, seatIndex, anchorSeq, query } = args;
+  const { gameId, events, seatIndex, anchorSeq, query, script } = args;
   if (!anchorSeq || !query.trim()) return [];
   const anchor = BigInt(anchorSeq);
+  const directClueLines: RecallLine[] = [];
+  if (script) {
+    for (const record of buildPublicEvidenceRegistry(script, { clueStates: Object.fromEntries(events.filter((e) => e.type === "clue" && e.visibility === "public" && typeof e.content.clueId === "string").map((e) => [String(e.content.clueId), { discoveredBy: e.fromSeat, isPublic: true }])) }, events).filter((item) => item.kind === "clue")) {
+      const sourceSeq = record.sourceSeqs.find((seq) => BigInt(seq) <= anchor);
+      const terms = [record.title, ...record.text.split(/[，。；：、\s]+/).filter((term) => term.length >= 4)];
+      if (sourceSeq && terms.some((term) => query.includes(term))) {
+        directClueLines.push({ label: `${record.title}（公开线索）`, text: record.text, sourceSeq });
+      }
+    }
+  }
   const candidates = events.filter(
     (e) => e.type === "speech" && BigInt(e.seq) <= anchor && visibleTo(e, seatIndex) && typeof e.content.text === "string" && e.content.text.trim()
   );
-  if (!candidates.length) return [];
+  if (!candidates.length) return directClueLines;
 
-  const rows = await db.eventVector.findMany({ where: { gameId, seq: { lte: anchor } } });
+  const binding = await resolveBinding("embedding").catch(() => null);
+  if (!binding) return directClueLines;
+  const spaceId = embeddingSpaceId(binding);
+  const rows = await db.eventVector.findMany({ where: { gameId, seq: { lte: anchor }, spaceId } });
   const vectorBySeq = new Map<string, number[]>();
   for (const row of rows) {
     const v = row.vector as unknown;
-    if (Array.isArray(v)) vectorBySeq.set(row.seq.toString(), v as number[]);
+    if (Array.isArray(v) && row.dimension === v.length && v.every((n) => typeof n === "number" && Number.isFinite(n))) {
+      vectorBySeq.set(row.seq.toString(), v as number[]);
+    }
   }
   const withVectors = candidates.filter((e) => vectorBySeq.has(e.seq));
-  if (!withVectors.length) return [];
+  if (!withVectors.length) return directClueLines;
 
   const [queryVector] = (await embedTexts([query.slice(0, 512)])) ?? [];
-  if (!queryVector) return [];
+  if (!queryVector) return directClueLines;
 
   const scored = withVectors
+    .filter((e) => (vectorBySeq.get(e.seq)?.length ?? 0) === queryVector.length)
     .map((e) => ({ e, score: cosine(queryVector, vectorBySeq.get(e.seq) ?? []) }))
     .filter((s) => s.score >= SIMILARITY_THRESHOLD)
     .sort((a, b) => b.score - a.score)
     .slice(0, TOP_K);
 
-  return scored.map(({ e }) => {
+  const lines: RecallLine[] = scored.map(({ e }) => {
     const who = e.fromSeat === null ? "主持人" : `${e.content.speakerName ?? `玩家${e.fromSeat + 1}`}`;
     const round = e.round ? `第${e.round}轮` : "";
     return {
       label: `${who}${round ? `（${round}）` : ""}`,
-      text: String(e.content.text).slice(0, 140),
+      text: String(e.content.text),
+      sourceSeq: e.seq,
     };
   });
+
+  return [...directClueLines, ...lines];
 }

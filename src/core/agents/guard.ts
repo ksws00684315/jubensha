@@ -14,6 +14,18 @@ export interface GuardMarker {
   value: string;
 }
 
+function typedSecretUnlocked(secret: { trigger?: { round?: number; actId?: string; publicClueIds?: string[] } }, script: ScriptDocV2, state: GameState, seatIndex: number): boolean {
+  const trigger = secret.trigger;
+  if (!trigger) return false;
+  if (trigger.round !== undefined && state.round < trigger.round) return false;
+  if (trigger.actId) {
+    const act = script.flow.acts.find((item) => item.id === trigger.actId);
+    if (!act || state.round < act.roundStart) return false;
+  }
+  if ((trigger.publicClueIds ?? []).some((id) => !state.clueStates[id]?.isPublic)) return false;
+  return state.unlockedSecrets?.[`${seatIndex}:${(secret as { id: string }).id}`] !== false;
+}
+
 const SENTENCE_SPLIT = /(?<=[。！？；;\n])/;
 
 /**
@@ -40,6 +52,11 @@ export function playerGuardMarkers(script: ScriptDocV2, state: GameState, seatIn
     for (const frag of uniqueNgrams(narrativeToText(secret.content), 6)) {
       markers.push({ label: secret.title, value: frag });
     }
+  }
+  for (const secret of character?.privateCard.secrets ?? []) {
+    if (secret.disclosure !== "conditional" || !secret.trigger || typedSecretUnlocked(secret, script, state, seatIndex)) continue;
+    if (secret.title.length >= 4) markers.push({ label: secret.title, value: secret.title });
+    for (const frag of uniqueNgrams(narrativeToText(secret.content), 6)) markers.push({ label: secret.title, value: frag });
   }
   return markers;
 }

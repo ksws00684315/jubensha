@@ -16,6 +16,14 @@ export interface ChatOptions {
   temperature?: number;
   maxTokens?: number;
   gameId?: string | null;
+  /** 由引擎传入的可取消信号；未提供时由客户端创建超时信号。 */
+  abortSignal?: AbortSignal;
+  /** 贯穿重试/fallback 的逻辑请求标识；缺省由客户端生成。 */
+  requestId?: string;
+  /** 引擎生成代次，用于诊断迟到输出。 */
+  generationId?: string;
+  /** 细分任务类型，便于按任务统计成本与失败。 */
+  taskType?: string;
 }
 
 export interface ChatResult {
@@ -36,4 +44,10 @@ export interface ResolvedBinding {
   temperature: number | null;
   maxTokens: number | null;
   fallbackSlot: string | null;
+  /** null 表示管理员尚未声明上下文窗口，预算模式不得猜测。 */
+  contextWindow: number | null;
+  capabilities: {
+    system: boolean;
+    json: boolean;
+  };
 }

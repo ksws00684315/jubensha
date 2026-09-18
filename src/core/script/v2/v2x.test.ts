@@ -11,10 +11,17 @@ import { initialState } from "@/core/engine/state";
 import type { GameState } from "@/core/engine/types";
 
 const raw = JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8"));
-const doc = parseScriptDocV2(raw);
+// 用去掉可选分幕字段的副本验证旧文档兼容性；样板种子本身已开始配置分幕。
+const legacyRaw = JSON.parse(JSON.stringify(raw));
+delete legacyRaw.flow.acts;
+const doc = parseScriptDocV2(legacyRaw);
 
 function cloneWith(mutate: (d: any) => void) {
   const copy = JSON.parse(JSON.stringify(raw));
+  // 样板种子现在带有 act/stages；大多数兼容性测试需要从“旧文档”起步，避免
+  // 未参与该测试的样板幕干扰自定义引用校验。
+  delete copy.flow.acts;
+  for (const character of copy.characters) delete character.privateCard.stages;
   mutate(copy);
   return parseScriptDocV2(copy);
 }
@@ -53,12 +60,38 @@ describe("Schema v2.x 新字段（向后兼容）", () => {
       d.hostGuide = {
         perPhase: [{ phase: "DISCUSSION", notes: "引导大家比对时间线" }],
         stallBreakers: [{ condition: "两轮无人提出矛盾", hint: "由 AI 主动质疑时间线" }],
+        guaranteedPublicClues: [{ clueId: "bottle", deadlineRound: 2 }],
       };
     });
     expect(d2.characters[1].privateCard.secrets[0].disclosure).toBe("must_share");
     expect(d2.flow.acts[0].title).toBe("第二幕");
     expect(d2.hostGuide?.perPhase[0].notes).toContain("时间线");
+    expect(d2.hostGuide?.guaranteedPublicClues[0]).toEqual({ clueId: "bottle", deadlineRound: 2 });
     expect(validateScriptV2(d2).filter((i) => i.level === "error")).toHaveLength(0);
+  });
+
+  it("主持保证公开不能引用不存在或 keep_private 的线索", () => {
+    const missing = cloneWith((d) => {
+      d.hostGuide = { guaranteedPublicClues: [{ clueId: "missing", deadlineRound: 1 }] };
+    });
+    expect(validateScriptV2(missing).some((i) => i.path.includes("guaranteedPublicClues") && i.level === "error")).toBe(true);
+    const privateDoc = cloneWith((d) => {
+      d.clues[0].policy = "keep_private";
+      d.hostGuide = { guaranteedPublicClues: [{ clueId: d.clues[0].id, deadlineRound: 1 }] };
+    });
+    expect(validateScriptV2(privateDoc).some((i) => i.message.includes("keep_private") && i.level === "error")).toBe(true);
+  });
+
+  it("线索 release 循环与全角色禁搜会阻断可玩性", () => {
+    const circular = cloneWith((d) => {
+      d.clues[0].release = { afterCluePublicIds: [d.clues[1].id] };
+      d.clues[1].release = { afterCluePublicIds: [d.clues[0].id] };
+    });
+    expect(validateScriptV2(circular).some((i) => i.level === "error" && i.message.includes("循环"))).toBe(true);
+    const unreachable = cloneWith((d) => {
+      d.clues[0].forbiddenCharacterIds = d.characters.map((c: { id: string }) => c.id);
+    });
+    expect(validateScriptV2(unreachable).some((i) => i.level === "error" && i.message.includes("不可达"))).toBe(true);
   });
 
   it("技能卡与行动点字段可解析；cost 超过每轮行动点 → warning", () => {
@@ -145,14 +178,14 @@ describe("Validator 新规则", () => {
     expect(errors.some((e) => e.message.includes("超过可发现上限"))).toBe(true);
   });
 
-  it("R2 证据链单线索支撑 → warning；S1 残留真凶姓名 → warning", () => {
+  it("R2 证据链单线索支撑 → warning；合法姓名关系不再误报", () => {
     const d2 = cloneWith((d) => {
       d.truth.evidenceChain = [{ id: "c1", clueIds: ["bottle"], conclusion: "毒源即凶器来源。" }];
       d.characters[1].privateCard.knowledge[0].content = [{ type: "paragraph", text: "你亲眼看见苏晚在书房出入。" }];
     });
     const issues = validateScriptV2(d2);
     expect(issues.some((i) => i.level === "warning" && i.message.includes("单线索锁凶"))).toBe(true);
-    expect(issues.some((i) => i.level === "warning" && i.message.includes("真凶姓名"))).toBe(true);
+    expect(issues.some((i) => i.message.includes("真凶姓名"))).toBe(false);
   });
 
   it("stages 指向不存在的幕 → error", () => {
@@ -222,7 +255,7 @@ describe("上下文消费", () => {
     expect("truth" in view).toBe(false);
   });
 
-  it("S1 扫描面覆盖 secret/backstory/objectives（不只 knowledge）", () => {
+  it("角色卡可以在关系或目击中明确提及其他角色", () => {
     const d2 = cloneWith((d: any) => {
       const culpritName = d.characters.find((c: any) => c.id === d.truth.culpritId).name;
       const innocent = d.characters.find((c: any) => c.id !== d.truth.culpritId);
@@ -230,8 +263,8 @@ describe("上下文消费", () => {
       innocent.privateCard.backstory = [{ type: "paragraph", text: `你的旧怨源于${culpritName}。` }];
       innocent.privateCard.objectives[0].content = [{ type: "paragraph", text: `让别人的嘴说出${culpritName}三个字。` }];
     });
-    const issues = validateScriptV2(d2).filter((i) => i.level === "warning" && i.message.includes("真凶姓名"));
-    expect(issues.length).toBeGreaterThanOrEqual(3);
+    const issues = validateScriptV2(d2).filter((i) => i.message.includes("真凶姓名"));
+    expect(issues).toHaveLength(0);
   });
 
   it("VOTE 阶段全部幕视为已解锁（分幕增量不消失）", () => {

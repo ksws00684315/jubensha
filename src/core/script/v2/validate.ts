@@ -125,12 +125,57 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
       checkRefs(issues, item.relatedCharacterIds, characterIds, `characters.${index}.privateCard.knowledge.${kIndex}.relatedCharacterIds`);
       checkRefs(issues, item.relatedClueIds, clueIds, `characters.${index}.privateCard.knowledge.${kIndex}.relatedClueIds`);
     }
+    for (const [sIndex, secret] of character.privateCard.secrets.entries()) {
+      if (!secret.trigger) continue;
+      checkRefs(issues, secret.trigger.publicClueIds, clueIds, `characters.${index}.privateCard.secrets.${sIndex}.trigger.publicClueIds`);
+      if (secret.trigger.actId && !doc.flow.acts.some((act) => act.id === secret.trigger?.actId)) {
+        issue(issues, "error", `characters.${index}.privateCard.secrets.${sIndex}.trigger.actId`, `幕不存在: ${secret.trigger.actId}`);
+      }
+      if (secret.disclosure !== "conditional") {
+        issue(issues, "warning", `characters.${index}.privateCard.secrets.${sIndex}.trigger`, "trigger 只对 conditional 秘密自动生效");
+      }
+    }
   }
 
   for (const [index, clue] of doc.clues.entries()) {
     if (!locationIds.has(clue.locationId)) issue(issues, "error", `clues.${index}.locationId`, `地点不存在: ${clue.locationId}`);
     checkRefs(issues, clue.relatedCharacterIds, characterIds, `clues.${index}.relatedCharacterIds`);
     checkRefs(issues, clue.relatedTruthEventIds, truthEventIds, `clues.${index}.relatedTruthEventIds`);
+    if (characterIds.size > 0 && characterIds.size <= clue.forbiddenCharacterIds.length && [...characterIds].every((id) => clue.forbiddenCharacterIds.includes(id))) {
+      issue(issues, "error", `clues.${index}.forbiddenCharacterIds`, "这张线索禁止所有角色搜取，材料不可达");
+    }
+    if (clue.release?.round !== undefined && clue.release.round > doc.flow.searchRounds) {
+      issue(issues, "error", `clues.${index}.release.round`, `release.round(${clue.release.round})超过搜证轮数(${doc.flow.searchRounds})，材料不可达`);
+    }
+  }
+  // 线索公开前置必须是无环图，否则所有环内材料都会永久不可达。
+  const releaseGraph = new Map<string, string[]>();
+  for (const clue of doc.clues) releaseGraph.set(clue.id, clue.release?.afterCluePublicIds ?? []);
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+  const walkRelease = (id: string, path: string[]): void => {
+    if (visiting.has(id)) {
+      issue(issues, "error", `clues.${doc.clues.findIndex((clue) => clue.id === id)}.release.afterCluePublicIds`, `线索公开前置存在循环：${[...path, id].join(" → ")}`);
+      return;
+    }
+    if (visited.has(id)) return;
+    visiting.add(id);
+    for (const dep of releaseGraph.get(id) ?? []) walkRelease(dep, [...path, id]);
+    visiting.delete(id);
+    visited.add(id);
+  };
+  for (const id of releaseGraph.keys()) walkRelease(id, []);
+  for (const [index, item] of (doc.hostGuide?.guaranteedPublicClues ?? []).entries()) {
+    if (!clueIds.has(item.clueId)) issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.clueId`, `线索不存在: ${item.clueId}`);
+    const clue = doc.clues.find((c) => c.id === item.clueId);
+    if (clue?.policy === "keep_private") issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.clueId`, "keep_private 线索不能配置为主持保证公开");
+    if (item.deadlineRound > doc.flow.searchRounds) issue(issues, "warning", `hostGuide.guaranteedPublicClues.${index}.deadlineRound`, `截止轮次(${item.deadlineRound})超过搜证轮数(${doc.flow.searchRounds})`);
+    if (clue?.release?.round !== undefined && clue.release.round > item.deadlineRound) {
+      issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.deadlineRound`, `保证公开早于线索 release.round(${clue.release.round})，运行时无法满足`);
+    }
+    if (clue?.release?.afterCluePublicIds?.includes(item.clueId)) {
+      issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.clueId`, "线索不能依赖自己公开，存在循环前置");
+    }
   }
 
   checkTimelineEntries(issues, doc.truth.timeline, "truth.timeline", locationIds, clueIds, characterIds);
@@ -164,29 +209,6 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   const maxDiscoverable = doc.characters.length * doc.flow.searchRounds;
   if (doc.clues.length > maxDiscoverable) {
     issue(issues, "error", "clues", `线索数(${doc.clues.length})超过可发现上限(${doc.characters.length}人×${doc.flow.searchRounds}轮=${maxDiscoverable})，必有线索永不出现`);
-  }
-
-  // S1 残留检测：无辜者卡片任何通道不得出现真凶姓名（knowledge/秘密/背景/目标/时间线标题/不在场证明）
-  const culpritCharacter = doc.characters.find((c) => c.id === doc.truth.culpritId);
-  if (culpritCharacter) {
-    const name = culpritCharacter.name;
-    for (const [index, character] of doc.characters.entries()) {
-      if (character.id === culpritCharacter.id) continue;
-      const card = character.privateCard;
-      const channels: Array<[string, string]> = [
-        ...card.knowledge.map((k, i) => [`knowledge.${i}`, `${k.title}${JSON.stringify(k.content)}`] as [string, string]),
-        ...card.secrets.map((s, i) => [`secrets.${i}`, `${s.title}${JSON.stringify(s.content)}`] as [string, string]),
-        ...card.objectives.map((o, i) => [`objectives.${i}`, `${o.title}${JSON.stringify(o.content)}`] as [string, string]),
-        ...card.timeline.map((t, i) => [`timeline.${i}`, `${t.title}${JSON.stringify(t.content)}`] as [string, string]),
-        ["backstory", JSON.stringify(card.backstory)],
-        ["alibi", JSON.stringify(card.alibi)],
-      ];
-      for (const [channel, text] of channels) {
-        if (text.includes(name)) {
-          issue(issues, "warning", `characters.${index}.privateCard.${channel}.content`, `无辜角色卡片提及真凶姓名「${name}」，读卡即锁凶`);
-        }
-      }
-    }
   }
 
   // 分幕校验：acts 唯一、roundStart 不超过搜证轮数；stages 必须指向已定义的 act

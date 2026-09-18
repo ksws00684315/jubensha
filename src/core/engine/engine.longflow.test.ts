@@ -33,6 +33,8 @@ const hoisted = vi.hoisted(() => {
     },
     gameRows,
     hang,
+    // AI 私信决策开关:null=拒绝;设为 {to,text} 则 AI 向该真人开窗（to 为 1 基座位号）
+    whisperDecision: null as { to: number; text: string } | null,
   };
 });
 
@@ -65,11 +67,24 @@ vi.mock("@/lib/db", () => {
         return row;
       },
     },
-    gameEvent: { create: async ({ data }: any) => hoisted.nextEventRow(data) },
+    gameEvent: {
+      create: async ({ data }: any) => hoisted.nextEventRow(data),
+      count: async ({ where: { gameId } }: any) => hoisted.tables.events.filter((e) => e.gameId === gameId).length,
+      findMany: async ({ where: { gameId }, orderBy, take }: any) => {
+        const rows = hoisted.tables.events.filter((e) => e.gameId === gameId);
+        const desc = String(orderBy?.seq ?? "") === "desc";
+        const sorted = rows.sort((a, b) => (desc ? Number(b.seq - a.seq) : Number(a.seq - b.seq)));
+        return take ? sorted.slice(0, take) : sorted;
+      },
+    },
     seatState: {
       create: async ({ data }: any) => {
         hoisted.tables.seatStates.push(data);
         return data;
+      },
+      createMany: async ({ data }: any) => {
+        for (const row of data) hoisted.tables.seatStates.push(row);
+        return { count: data.length };
       },
       upsert: async ({ create }: any) => {
         hoisted.tables.seatStates.push(create);
@@ -78,7 +93,7 @@ vi.mock("@/lib/db", () => {
       findMany: async () => hoisted.tables.seatStates,
     },
     vote: { create: async ({ data }: any) => ({ id: `vote-${hoisted.tables.votes.length + 1}`, ...data }) },
-    $transaction: async (cb: any) => cb(db),
+    $transaction: async (arg: any) => (Array.isArray(arg) ? Promise.all(arg) : arg(db)),
   };
   return { db };
 });
@@ -95,7 +110,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
       if (last.includes('{"location"')) text = JSON.stringify({ location: "书房" });
       else if (last.includes('{"publish"')) text = JSON.stringify({ publish: true });
       else if (last.includes('{"ask"')) text = JSON.stringify({ ask: false });
-      else if (last.includes('{"whisper"')) text = JSON.stringify({ whisper: false });
+      else if (last.includes('{"whisper"')) text = hoisted.whisperDecision ? JSON.stringify({ whisper: true, ...hoisted.whisperDecision }) : JSON.stringify({ whisper: false });
       else if (last.includes('{"suggestions"')) text = JSON.stringify({ suggestions: ["我在场。", "我没见过。", "别问我。"] });
       else if (last.includes('{"target"')) text = JSON.stringify({ target: 2, reason: "嫌疑最大。" });
       return { text, promptTokens: 10, completionTokens: 5, providerName: "mock", modelId: "mock" };
@@ -111,6 +126,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 });
 
 import { GameEngine } from "./engine";
+import { maybeQueueWhisper } from "./social";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
 const doc = parseScriptForRuntime(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
@@ -286,5 +302,106 @@ describe("回合执行器(审计 M6 核心回归)", () => {
     hoisted.hang.chat = false;
     await runUntilEnded(engine);
     expect(engine.state.voteResult).not.toBeNull();
+  }, 120_000);
+});
+
+describe("剧本开关接线(批次 F)", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    hoisted.hang.stream = false;
+    hoisted.hang.chat = false;
+    hoisted.whisperDecision = null;
+    hoisted.tables.rooms.length = 0;
+    hoisted.tables.games.length = 0;
+    hoisted.tables.events.length = 0;
+    hoisted.tables.seatStates.length = 0;
+    hoisted.tables.votes.length = 0;
+  });
+
+  /** 推进到第一轮讨论(真人只发一次自我介绍言,其余靠超时与 AI 自动) */
+  async function startInDiscussion(engine: GameEngine) {
+    await engine.handleAction(0, { type: "ready" });
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(engine.state.phase).toBe("SELF_INTRO");
+    const speak = await engine.handleAction(0, { type: "speak", text: "我是住客，案发前在大厅烤火。" });
+    expect(speak.ok).toBe(true);
+    await waitPhase(engine, "DISCUSSION");
+  }
+
+  it("selfIntroRounds=2:自我介绍完整跑两轮后才进入搜证", async () => {
+    const docClone = JSON.parse(JSON.stringify(doc));
+    docClone.flow.selfIntroRounds = 2;
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: docClone });
+    await engine.handleAction(0, { type: "ready" });
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(engine.state.phase).toBe("SELF_INTRO");
+    await engine.handleAction(0, { type: "speak", text: "第一轮：我是住客。" });
+
+    for (let i = 0; i < 30 && !(engine.state.phase === "SELF_INTRO" && engine.state.round === 2); i++) {
+      await vi.advanceTimersByTimeAsync(20_000);
+    }
+    expect(engine.state.phase).toBe("SELF_INTRO");
+    expect(engine.state.round).toBe(2);
+    expect(engine.state.turnSeat).toBe(0);
+    expect(engine.state.spokenSeats.length).toBe(0); // 新一轮重新计名
+
+    await engine.handleAction(0, { type: "speak", text: "第二轮：我没上过二楼。" });
+    await waitPhase(engine, "SEARCH");
+    const introRounds = new Set(
+      eventsOf(engine).filter((e) => e.type === "phase" && e.content.phase === "SELF_INTRO").map((e) => e.round),
+    );
+    expect(introRounds.has(2)).toBe(true);
+  }, 120_000);
+
+  it("allowPrivateChat=false:AI 私信不派发,真人回复通道被拦截", async () => {
+    const docClone = JSON.parse(JSON.stringify(doc));
+    docClone.flow.allowPrivateChat = false;
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: docClone });
+    await startInDiscussion(engine);
+    hoisted.whisperDecision = { to: 1, text: "悄悄说一句。" };
+
+    (engine as any).whisperAsked.clear(); // 讨论中 AI 发言已自然占用过记忆位,先重置
+    await maybeQueueWhisper(engine, 1);
+    await vi.advanceTimersByTimeAsync(5_000);
+    expect(engine.state.privateChat["1-0"]).toBeUndefined(); // 开关关闭时不开窗
+
+    const reply = await engine.handleAction(0, { type: "private_chat", toSeat: 1, text: "回复" });
+    expect(reply.ok).toBe(false);
+    expect(reply.error).toContain("未开放私聊");
+  }, 120_000);
+
+  it("allowPrivateChat=true:开窗口封顶 limit,真人回复逐次消耗、耗尽封口", async () => {
+    expect(doc.flow.allowPrivateChat).toBe(true);
+    expect(doc.flow.privateChatMessageLimit).toBe(3);
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    await startInDiscussion(engine);
+    hoisted.whisperDecision = { to: 1, text: "这条你白天没敢当众说。" };
+
+    (engine as any).whisperAsked.clear(); // 讨论中 AI 发言已自然占用过记忆位,先重置
+    await maybeQueueWhisper(engine, 1);
+    await vi.advanceTimersByTimeAsync(5_000);
+    expect(engine.state.privateChat["1-0"]).toBe(1);
+
+    // 同一窗口反复私信:额度封顶 privateChatMessageLimit=3,不无限累加
+    for (let i = 0; i < 4; i++) {
+      (engine as any).whisperAsked.clear();
+      await maybeQueueWhisper(engine, 1);
+      await vi.advanceTimersByTimeAsync(5_000);
+    }
+    expect(engine.state.privateChat["1-0"]).toBe(3);
+
+    // 真人回复逐次扣减(修正旧实现直接置 0 的一次性语义)
+    const r1 = await engine.handleAction(0, { type: "private_chat", toSeat: 1, text: "回复一" });
+    expect(r1.ok).toBe(true);
+    expect(engine.state.privateChat["1-0"]).toBe(2);
+    const r2 = await engine.handleAction(0, { type: "private_chat", toSeat: 1, text: "回复二" });
+    expect(r2.ok).toBe(true);
+    expect(engine.state.privateChat["1-0"]).toBe(1);
+    const r3 = await engine.handleAction(0, { type: "private_chat", toSeat: 1, text: "回复三" });
+    expect(r3.ok).toBe(true);
+    expect(engine.state.privateChat["1-0"]).toBe(0);
+    const r4 = await engine.handleAction(0, { type: "private_chat", toSeat: 1, text: "回复四" });
+    expect(r4.ok).toBe(false); // 额度耗尽,窗口封口
+    expect(r4.error).toContain("没有向你发起私信");
   }, 120_000);
 });

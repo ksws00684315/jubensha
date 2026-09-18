@@ -2,6 +2,7 @@ import type { ChatMessage } from "@/core/llm/types";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import { unlockedActs } from "@/core/engine/flow";
 import { clueMentionHints, renderLogWithMemory } from "./memory";
+import { buildPublicEvidenceRegistry, renderPublicEvidenceRegistry } from "./evidence";
 import type { KnowledgeV2 } from "@/core/script/v2/schema";
 
 /** knowledge 的情报性质前缀：防 AI 把听来的传闻当亲见事实 */
@@ -10,6 +11,18 @@ const KIND_LABEL: Record<string, string> = { fact: "亲见", claim: "传闻", in
 function knowledgeLine(item: KnowledgeV2): string {
   const kind = KIND_LABEL[item.kind] ?? "亲见";
   return `· 【${kind}】${item.title}：${narrativeToText(item.content)}`;
+}
+
+function typedSecretReady(secret: { trigger?: { round?: number; actId?: string; publicClueIds?: string[] }; id: string }, script: ScriptDocV2, state: GameState, seatIndex: number): boolean {
+  const trigger = secret.trigger;
+  if (!trigger) return false;
+  if (trigger.round !== undefined && state.round < trigger.round) return false;
+  if (trigger.actId) {
+    const act = script.flow.acts.find((item) => item.id === trigger.actId);
+    if (!act || state.round < act.roundStart) return false;
+  }
+  if ((trigger.publicClueIds ?? []).some((id) => !state.clueStates[id]?.isPublic)) return false;
+  return state.unlockedSecrets?.[`${seatIndex}:${secret.id}`] !== false;
 }
 import {
   clueText,
@@ -58,12 +71,16 @@ export function cacheFriendlyMessages(system: string, growingLog: string, tail: 
   ];
 }
 
-function phaseInstruction(_script: ScriptDocV2, state: GameState, _seatIndex: number, hint?: string): string {
+type PlayerTask = "speech" | "answer" | "whisper" | "plan" | "search" | "question" | "vote";
+
+function phaseInstruction(_script: ScriptDocV2, state: GameState, _seatIndex: number, hint?: string, task: PlayerTask = "speech"): string {
   switch (state.phase) {
     case "SELF_INTRO":
       return `现在是【自我介绍】环节。请以第一人称做一段 80-150 字的自我介绍：你是谁、与死者的关系、今晚大致做了什么（按你的角色卡时间线，注意保护你的秘密）。不要剧透游戏机制。`;
     case "DISCUSSION":
-      return `现在是【第 ${state.round} 轮圆桌讨论】，按座位轮流发言，禁止插话、禁止私聊。轮到你时做一段陈述；有人向你提问时请正面回答。不要连珠炮质问，不要替别人作答，也不要打断别人的回合。${hint ? `主持人提示：${hint}` : ""}`;
+      if (task === "whisper") return `现在是【第 ${state.round} 轮私聊窗口】。只有你和对方能看到这段话；可以交换情报、试探、结盟或暂时敷衍，但仍须遵守自己的披露规则。${hint ? `私聊提示：${hint}` : ""}`;
+      if (task === "answer") return `现在是【第 ${state.round} 轮质询回应】。请先正面回答对方刚问的具体问题，再补充有限解释；不必突破自己的秘密或披露限制。不要替别人作答。${hint ? `主持人提示：${hint}` : ""}`;
+      return `现在是【第 ${state.round} 轮圆桌讨论】，按座位轮流发言。轮到你时做一段陈述；有人向你提问时请正面回答。不要连珠炮质问，不要替别人作答，也不要打断别人的回合。${hint ? `主持人提示：${hint}` : ""}`;
     case "SEARCH":
       return `现在是【第 ${state.round} 轮搜证】。`;
     case "VOTE":
@@ -89,15 +106,17 @@ export function buildPlayerContext(
   state: GameState,
   seatIndex: number,
   events: EngineEvent[],
-  opts: { hint?: string; extraInstruction?: string; requireJson?: string; recall?: string }
+  opts: { hint?: string; extraInstruction?: string; requireJson?: string; recall?: string; taskType?: PlayerTask }
 ): ChatMessage[] {
   const character = characterOf(script, state, seatIndex);
   if (!character) throw new Error(`座位 ${seatIndex} 未绑定角色`);
 
   const card = character.privateCard;
   const isCulprit = card.isCulprit;
-  const clues = heldCluesOf(script, state, seatIndex);
-  const publicClues = clues.filter((c) => c && state.clueStates[c.id]?.isPublic);
+  const heldClues = heldCluesOf(script, state, seatIndex);
+  const publicClues = script.clues.filter((c) => state.clueStates[c.id]?.isPublic);
+  // 公开证据是独立的事实层：即使玩家后来转交了卡，也仍应能回查公开原文。
+  const clues = [...heldClues, ...publicClues.filter((c) => !heldClues.some((h) => h?.id === c.id))];
 
   const strategy = isCulprit
     ? `【你的处境】你就是真凶。你的首要目标是活过今晚：绝不能承认、绝不能供出手法细节。
@@ -128,8 +147,15 @@ ${publicRoster(script, state)}
 【你的角色】${character.name}${character.gender ? `（${character.gender}）` : ""}${character.age ? ` ${character.age} 岁` : ""}
 公开身份：${publicBioText(character)}
 角色背景：${narrativeToText(card.backstory)}
-${alibiBlock}你的秘密（未标注的绝不能主动告诉任何人；标注〔必须说出去〕的按标注执行）：${card.secrets
-    .map((secret) => `${secret.title}${secret.disclosure === "must_share" ? "〔必须找机会说出去，可以说得含蓄，但不能瞒到底〕" : ""}：${narrativeToText(secret.content)}`)
+  ${alibiBlock}你的秘密（只能按披露规则处理）：${card.secrets
+    .map((secret) => {
+      const disclosure = secret.disclosure === "must_share"
+        ? "〔必须找机会说出去，可以说得含蓄，但不能瞒到底〕"
+        : secret.disclosure === "conditional"
+          ? `〔${!secret.trigger ? "需按公开记录判断；" : typedSecretReady(secret, script, state, seatIndex) ? "条件已满足；" : "条件尚未满足；"}满足条件后才可披露：${secret.condition ?? "以当前公开记录判断"}〕`
+          : "〔绝不能主动披露；已经公开的事实可以按公开来源回应〕";
+      return `${secret.title}${disclosure}：${narrativeToText(secret.content)}`;
+    })
     .join("\n")}
 你的目标：${card.objectives.map((objective) => `${objective.title}：${narrativeToText(objective.content)}`).join("\n")}
 你的时间线（你自己的经历，可按此陈述）：${timelineToText(card.timeline)}
@@ -148,6 +174,7 @@ ${strategy}
     clues.length === 0
       ? "（暂无）"
       : clues.map((c) => `· ${c!.name}（${publicClues.includes(c!) ? "已公开" : "仅你可见"}）: ${clueText(c!)}`).join("\n");
+  const publicEvidence = renderPublicEvidenceRegistry(buildPublicEvidenceRegistry(script, state, events));
 
   // 分层记忆：早期公共事件用滚动摘要，近期逐字保留（见 memory.ts）
   const growingLog = `【到目前为止的现场记录】
@@ -179,7 +206,8 @@ ${renderLogWithMemory(events, seatIndex, state.memory, true)}`;
 ${clueBlock}
 ${mentionBlock ? `\n${mentionBlock}\n` : ""}
 ${actBlock}${opts.recall ? `${opts.recall}\n` : ""}
-${phaseInstruction(script, state, seatIndex, opts.hint)}
+${publicEvidence ? `【公开证据登记】\n${publicEvidence}\n` : ""}
+${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
 ${opts.extraInstruction ?? ""}
 ${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
 

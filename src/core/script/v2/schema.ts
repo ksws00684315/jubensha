@@ -83,6 +83,12 @@ const secretSchema = z
     /** never=绝不披露；conditional=满足 condition 才可披露；must_share=必须在合适时机主动披露 */
     disclosure: z.enum(["never", "conditional", "must_share"]).default("never"),
     condition: leafText.optional(),
+    /** 可由引擎确定判断的触发器；多个条件全部满足。自然语言 condition 仍由作者/主持判断。 */
+    trigger: z.object({
+      round: z.number().int().min(1).optional(),
+      actId: idSchema.optional(),
+      publicClueIds: z.array(idSchema).default([]),
+    }).strict().optional(),
   })
   .strict()
   .superRefine((value, ctx) => {
@@ -313,6 +319,8 @@ const hostGuideSchema = z
   .object({
     perPhase: z.array(z.object({ phase: PHASE_KEY, notes: leafText }).strict()).default([]),
     stallBreakers: z.array(z.object({ condition: leafText, hint: leafText }).strict()).default([]),
+    /** 到截止搜证轮仍未公开时，由主持人自动补发的公共材料。 */
+    guaranteedPublicClues: z.array(z.object({ clueId: idSchema, deadlineRound: z.number().int().min(1) }).strict()).default([]),
   })
   .strict();
 
