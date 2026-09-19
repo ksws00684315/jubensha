@@ -267,7 +267,13 @@ function RevealBlock({ summary, reveal, mySeat }: { summary: GameSummary; reveal
       <BrandMark className="mx-auto mt-5 size-14 text-danger-400" />
       <h3 className="mt-3 text-2xl font-bold text-paper-50">真凶：{reveal.content.culpritName}</h3>
       <p className="mt-2 font-medium text-danger-400">
-        {reveal.content.caught ? "凶手被指认，好人阵营胜利！" : "凶手逃脱了……凶手阵营胜利！"}
+        {reveal.content.caught
+          ? "凶手被指认，好人阵营胜利！"
+          : reveal.content.culpritSeat !== undefined && reveal.content.culpritSeat < 0
+            ? "真凶未在本局入座，指认无果。"
+            : reveal.content.tiedSeats?.length
+              ? `投票在${reveal.content.tiedSeats.map((s) => `座位${s + 1}`).join(" 与 ")}之间出现平票，指认失败，凶手逃脱……凶手阵营胜利！`
+              : "凶手逃脱了……凶手阵营胜利！"}
       </p>
       <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
       <p className="mt-4 text-xs text-paper-500">{reveal.content.winText}</p>

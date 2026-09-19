@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/client";
+import { ConfirmDialog } from "@/components/ui";
 import type { PublicScriptViewV2, ScriptDocV2 } from "@/core/script/v2/schema";
 import { NarrativeBlocks, TimelineList } from "./ScriptContent";
 
@@ -24,6 +25,7 @@ export default function ScriptDetail({
   const [issues, setIssues] = useState<Array<{ level: "error" | "warning"; message: string }>>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const meta = publicDocV2.meta;
 
   const openDm = async () => {
@@ -64,7 +66,6 @@ export default function ScriptDetail({
   };
 
   const remove = async () => {
-    if (!confirm(`确定删除剧本「${meta.title}」？`)) return;
     setBusy(true);
     try {
       await api(`/api/scripts/${id}`, { method: "DELETE" });
@@ -119,7 +120,7 @@ export default function ScriptDetail({
           >
             用它开一局
           </Link>
-          <button onClick={() => void remove()} disabled={busy} className="rounded-lg px-3 py-2 text-sm text-paper-400 hover:text-danger-400 disabled:opacity-40">
+          <button onClick={() => setConfirmDelete(true)} disabled={busy} className="rounded-lg px-3 py-2 text-sm text-paper-400 hover:text-danger-400 disabled:opacity-40">
             删除
           </button>
         </div>
@@ -219,6 +220,16 @@ export default function ScriptDetail({
           <p className="mt-3 text-sm text-paper-400">线索内容仅在搜证后或 DM 视图中可见。</p>
         )}
       </div>
+
+      {confirmDelete && (
+        <ConfirmDialog
+          title={`删除剧本「${meta.title}」`}
+          description="剧本将从库中移除，历史对局记录不受影响。"
+          busy={busy}
+          onCancel={() => setConfirmDelete(false)}
+          onConfirm={() => void remove()}
+        />
+      )}
     </div>
   );
 }

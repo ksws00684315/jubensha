@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useId, useRef } from "react";
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
 
 /**
@@ -59,5 +60,85 @@ export function Card({
       )}
       {children}
     </section>
+  );
+}
+
+/** 破坏性操作确认弹窗：role=dialog + Esc + Tab 焦点圈定，关闭后焦点归还触发元素（替代原生 confirm()）。 */
+export function ConfirmDialog({
+  title,
+  description,
+  confirmLabel = "确认删除",
+  cancelLabel = "取消",
+  busy = false,
+  onConfirm,
+  onCancel,
+}: {
+  title: ReactNode;
+  description?: ReactNode;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  busy?: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  // 键盘监听仅挂载时订阅一次（避免重渲染焦点复位），处理器经 ref 取最新值
+  const latest = useRef({ busy, onCancel });
+  useEffect(() => {
+    latest.current = { busy, onCancel };
+  }, [busy, onCancel]);
+  useEffect(() => {
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const el = ref.current;
+    el?.querySelector<HTMLButtonElement>("button")?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !latest.current.busy) {
+        latest.current.onCancel();
+        return;
+      }
+      if (e.key !== "Tab" || !el) return;
+      const focusables = el.querySelectorAll<HTMLElement>("button:not([disabled])");
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      opener?.focus();
+    };
+  }, []);
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => !busy && onCancel()}>
+      <div
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="w-full max-w-sm rounded-xl border border-gold-400/20 bg-ink-900 p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3 id={titleId} className="font-semibold text-paper-50">
+          {title}
+        </h3>
+        {description && <p className="mt-2 text-sm text-paper-300">{description}</p>}
+        <div className="mt-5 flex justify-end gap-3">
+          <Button variant="ghost" onClick={onCancel} disabled={busy}>
+            {cancelLabel}
+          </Button>
+          <Button variant="danger" onClick={onConfirm} disabled={busy}>
+            {confirmLabel}
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }

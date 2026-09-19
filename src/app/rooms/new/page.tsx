@@ -87,7 +87,7 @@ function NewRoomContent() {
   const charName = (id: string | null) => doc.characters.find((c) => c.id === id)?.name ?? "自动分配";
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6 xl:max-w-5xl">
       <div>
         <h1 className="text-2xl font-bold">创建房间</h1>
         <p className="mt-1 text-sm text-paper-400">选择剧本，为每个座位指定 AI 或真人。真人座位创建后凭房间码入座。</p>
@@ -110,8 +110,8 @@ function NewRoomContent() {
         </div>
       )}
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
+      <div className="grid gap-2 md:grid-cols-2">
+        <div className="flex items-center justify-between md:col-span-2">
           <h3 className="text-sm font-medium text-paper-200">座位配置（{activeCount} 个活跃座位）</h3>
           <p className="text-xs text-paper-400">
             需要 {doc.minPlayers}-{doc.maxPlayers} 人；座位 0 为房主位

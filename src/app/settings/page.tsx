@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { api } from "@/lib/client";
+import { ConfirmDialog } from "@/components/ui";
 import { BINDING_SLOTS, PROVIDER_PRESETS } from "@/lib/provider-presets";
 import {
   DEFAULT_MAX_OUTPUT_TOKENS,
@@ -297,7 +298,7 @@ function ProvidersTab() {
   const [preset, setPreset] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
-
+  const [pendingDelete, setPendingDelete] = useState<ProviderView | null>(null);
   const load = useCallback(async () => {
     setProviders(await api<ProviderView[]>("/api/providers"));
   }, []);
@@ -373,7 +374,6 @@ function ProvidersTab() {
     await load();
   };
   const remove = async (p: ProviderView) => {
-    if (!confirm(`删除 Provider「${p.name}」？其模型绑定也会一并删除。`)) return;
     await api(`/api/providers/${p.id}`, { method: "DELETE" });
     await load();
   };
@@ -403,7 +403,7 @@ function ProvidersTab() {
               <button onClick={() => toggle(p)} className="rounded-lg border border-gold-400/25 px-3 py-1.5 hover:border-gold-400/50">
                 {p.enabled ? "禁用" : "启用"}
               </button>
-              <button onClick={() => remove(p)} className="rounded-lg px-3 py-1.5 text-paper-400 hover:text-danger-400">
+              <button onClick={() => setPendingDelete(p)} className="rounded-lg px-3 py-1.5 text-paper-400 hover:text-danger-400">
                 删除
               </button>
             </div>
@@ -415,6 +415,19 @@ function ProvidersTab() {
           </p>
         )}
       </div>
+
+      {pendingDelete && (
+        <ConfirmDialog
+          title={`删除 Provider「${pendingDelete.name}」`}
+          description="其模型绑定也会一并删除。"
+          onCancel={() => setPendingDelete(null)}
+          onConfirm={() => {
+            const p = pendingDelete;
+            setPendingDelete(null);
+            void remove(p);
+          }}
+        />
+      )}
 
       <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">{editingId ? "编辑 Provider" : "添加 Provider"}</h3>

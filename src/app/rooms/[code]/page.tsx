@@ -182,7 +182,7 @@ export default function RoomPage() {
   const openHumanSeat = room.seats.find((s) => s.kind === "human" && !s.hasToken);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="mx-auto max-w-3xl space-y-6 xl:max-w-5xl">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">{room.script.title}</h1>
@@ -194,8 +194,8 @@ export default function RoomPage() {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-paper-200">座位</h3>
+      <div className="grid gap-2 md:grid-cols-2">
+        <h3 className="text-sm font-medium text-paper-200 md:col-span-2">座位</h3>
         {room.seats.map((s) => {
           const isMe = my?.seatIndex === s.index;
           return (

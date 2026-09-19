@@ -146,8 +146,8 @@ export function useGameStream(gameId: string, retryKey: number) {
     es.onmessage = (m) => {
       const msg = JSON.parse(m.data) as
         | { kind: "event"; event: GameEventView }
-        | { kind: "delta"; seat: number | "dm"; text: string }
-        | { kind: "thinking"; seat: number | "dm" | null }
+        | { kind: "delta"; seat: number | "dm"; text: string; audience?: "public" | number }
+        | { kind: "thinking"; seat: number | "dm" | null; audience?: "public" | number }
         | { kind: "end" }
         | { kind: "hello" };
       if (msg.kind === "event") {

@@ -68,6 +68,8 @@ export interface GameEventView {
     target?: number;
     reason?: string;
     culpritName?: string;
+    culpritSeat?: number;
+    tiedSeats?: number[];
     caught?: boolean;
     counts?: Record<string, number>;
     reveal?: string;
