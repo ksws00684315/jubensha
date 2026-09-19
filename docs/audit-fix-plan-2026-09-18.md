@@ -16,6 +16,7 @@
 | G | P2 性能热点 | 1 天 | D |
 | H | P2 UI 体验与可访问性 | 1–1.5 天 | C |
 | I | P2 结构治理（拆分/测试/卫生） | 持续 | A–H 之后 |
+| J | 审查报告尾批扫尾（终局规则/confirm/前端扫尾） | 0.5 天 | I 之后 |
 
 ---
 
@@ -147,6 +148,18 @@
 - I8 工作树卫生：当前 28 修改 + 23 未跟踪文件按功能尽快分批提交，勿再滚入下一批。✅（2026-09-19）
   - 落地：经确认按功能域分 6 个本地提交（未推送）——`docs(db)` 文档+四迁移+schema、`refactor(engine)` I1/I2/I7、`feat(script)` 工具链与评测、`fix(api)` A/D/E 安全健壮性、`feat(ui)` C/H/I3、`test(core)` I5；工作树清零（62 修改+45 未跟踪 → 0），HEAD 上 tsc 0 错误、226 用例全绿。
 
+## 批次 J：审查报告尾批扫尾（2026-09-19 增补）✅（2026-09-19 验收：tsc 0 错误、231 用例全绿（+5 计票用例）、lint 0 error、build+pm2 重启、home/settings/scripts 冒烟 200、浏览器实测 ConfirmDialog（聚焦取消/Esc 关闭/焦点归还/文案正确）且控制台零错误）
+
+原报告「轻微 P2 / UI」中未列入 A–I 的三条遗留 + 执行期登记的前端小项。
+
+- J1 真凶未入座终局规则：`phases.ts:186,232` `culpritSeat=-1` 时宣读「凶手是 ?」；且 `topSeat` 与 `culpritSeat` 同为 `-1`（无人投票）时 `caught` 误判 true。→ 真凶名恒取 `script.truth` 对应角色名；未入座或无有效票时 `caught=false`，宣读文本注明「真凶未入座」。
+  - 落地：`finishReveal` 的 `culpritName` 改从 `e.script.characters` 按 `truth.culpritId` 解析（与入座无关），reveal 事件与 DM 宣读文本共用；「未入座」「平票」两种判词分支独立成文。
+- J2 平票规则：`phases.ts:189-194` 最高票并列时结果取决于 `counts` 键插入序，不确定且无说明。→ 定规「平票即指认失败」：并列最高票 → `caught=false`；`voteResult` 增可选 `tiedSeats`；DM 宣读文本附票型与平票说明。
+  - 落地：计票抽为纯函数 `tallyVotes`（`phases.ts` 导出），`types.ts` `voteResult` 增 `tiedSeats?: number[]`（旧快照兼容）；longflow 新增 5 例（命中/平票/无人投票×真凶未入座旧 bug 回归/票全投唯一座但真凶未入座/还原本）。
+- J3 破坏性操作原生 `confirm()`：`settings/page.tsx:376`、`ScriptDetail.tsx:67` 两处 → 换共享 `<ConfirmDialog>`（复用 H3 弹窗规范：`role=dialog`+Esc+Tab 焦点圈定，关闭后焦点归还触发元素；键盘监听挂载订阅一次、处理器经 ref 取最新，规避 react-hooks/refs）。全库 `confirm(` 清零。
+- J4 前端扫尾：`useGameStream.ts` delta/thinking 消息类型补总线实际携带的 `audience` 字段；`GameEventView.content` 声明 `culpritSeat/tiedSeats`；`RevealBlock` 结局文案分「指认成功/平票逃脱/真凶未入座」三态；`rooms/new`、`rooms/[code]` 座位列表改 `md:grid-cols-2` 栅格（标题 `md:col-span-2`），页根 `xl:max-w-5xl`。
+- 验收：平票/真凶未入座/无人投票三条终局用例可断言；`confirm(` 全库清零；tsc 0 错误、全部用例绿、lint 0 告警、build+pm2 冒烟。
+
 > 批次 I 整批验收：M-A/M-B/M-C/M-D 遗留的结构债全部出清——引擎 981 行门面+9 模块、类型环消除、play 页五件套组件化、测试 205→226、delta 流式复活、魔法数字常量化、工作树归零。运行态 pm2 与数据库为最终一致状态（I7 构建后重启，冒烟含一整局真人+AI 实战与 5AI 托管局流式验证）。
 
 ---
@@ -164,3 +177,5 @@
 
 批次 A–I 改动最终按功能域落为 6 个本地提交（未推送 origin），逐提交 `tsc --noEmit` 独立通过：
 `417ce43` docs(db) 文档/迁移 · `49be99e` refactor(engine) I1/I2/I7（含 v2 依赖字段） · `c6ce22b` feat(script) 工具链/评测 · `54c5f6e` fix(api) A/D/E · `e28df43` feat(ui) C/H/I3 · `06ac256` test(core) I5 · 末笔 docs 为本执行状态。
+
+批次 J 按域落为 3 个本地提交（未推送）：`c31cb4f` fix(engine) J1/J2 计票规则+5 用例 · `0a28f58` feat(ui) J3/J4 扫尾 · docs 本落账。
