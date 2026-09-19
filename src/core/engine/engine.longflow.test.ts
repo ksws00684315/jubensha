@@ -127,6 +127,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 
 import { GameEngine } from "./engine";
 import { maybeQueueWhisper } from "./social";
+import { tallyVotes } from "./phases";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
 const doc = parseScriptForRuntime(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
@@ -404,4 +405,30 @@ describe("剧本开关接线(批次 F)", () => {
     expect(r4.ok).toBe(false); // 额度耗尽,窗口封口
     expect(r4.error).toContain("没有向你发起私信");
   }, 120_000);
+});
+
+describe("计票判定 tallyVotes（批次 J：平票规则与真凶未入座）", () => {
+  it("唯一最高票命中真凶 → 指认成功", () => {
+    const r = tallyVotes({ counts: { "2": 3, "1": 2 }, culpritSeat: 2, voteMode: "accuse" });
+    expect(r.caught).toBe(true);
+    expect(r.tiedSeats).toBeUndefined();
+  });
+  it("并列最高票 → 平票指认失败，tiedSeats 升序给出", () => {
+    const r = tallyVotes({ counts: { "2": 2, "1": 2, "0": 1 }, culpritSeat: 1, voteMode: "accuse" });
+    expect(r.caught).toBe(false);
+    expect(r.tiedSeats).toEqual([1, 2]);
+  });
+  it("无人投票且真凶未入座 → 不判「被抓」（旧实现 topSeat/culpritSeat 同为 -1 的误判回归）", () => {
+    expect(tallyVotes({ counts: {}, culpritSeat: -1, voteMode: "accuse" }).caught).toBe(false);
+    expect(tallyVotes({ counts: {}, culpritSeat: 0, voteMode: "accuse" }).caught).toBe(false);
+  });
+  it("票全投给唯一座位但真凶未入座 → caught false", () => {
+    const r = tallyVotes({ counts: { "1": 4 }, culpritSeat: -1, voteMode: "accuse" });
+    expect(r.caught).toBe(false);
+    expect(r.tiedSeats).toBeUndefined();
+  });
+  it("还原本（choice）不参与指认判定", () => {
+    const r = tallyVotes({ counts: { "2": 5 }, culpritSeat: 2, voteMode: "choice" });
+    expect(r.caught).toBe(false);
+  });
 });

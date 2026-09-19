@@ -64,8 +64,8 @@ export interface GameState {
   pendingPublish: Record<string, string[]>;
   /** 本轮搜证是否已发过牌（防 choose_location/rush 重入再发） */
   searchDealtRound: number;
-  /** 投票结果 */
-  voteResult: { counts: Record<string, number>; culpritSeat: number; caught: boolean } | null;
+  /** 投票结果；tiedSeats 为并列最高票座位（平票即指认失败），无平票时省略 */
+  voteResult: { counts: Record<string, number>; culpritSeat: number; caught: boolean; tiedSeats?: number[] } | null;
   /** 本轮讨论已落地的 mention 插话次数（上限 MAX_INTERJECTIONS_PER_ROUND，进入新讨论轮清零） */
   interjections: number;
   /** 讨论阶段每人剩余提问次数 */

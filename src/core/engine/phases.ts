@@ -178,21 +178,34 @@ export function quizBrief(e: GameEngine): string {
     .join("；");
 }
 
+/** 计票判定（批次 J 定规）：并列最高票=平票=指认失败；无人投票/还原本/真凶未入座一律不判「被抓」。 */
+export function tallyVotes(args: { counts: Record<string, number>; culpritSeat: number; voteMode: string }): {
+  culpritSeat: number;
+  caught: boolean;
+  tiedSeats?: number[];
+} {
+  const { counts, culpritSeat, voteMode } = args;
+  let topCount = 0;
+  for (const n of Object.values(counts)) if (n > topCount) topCount = n;
+  const tiedSeats = Object.keys(counts)
+    .filter((k) => counts[k] === topCount)
+    .map(Number)
+    .sort((a, b) => a - b);
+  const decisive = topCount > 0 && tiedSeats.length === 1;
+  return {
+    culpritSeat,
+    caught: decisive && voteMode !== "choice" && tiedSeats[0] === culpritSeat,
+    ...(topCount > 0 && tiedSeats.length > 1 ? { tiedSeats } : {}),
+  };
+}
+
 export async function transitionReveal(e: GameEngine): Promise<void> {
   if (!e.state.voteResult) {
     const voteMode = e.script.flow.voteMode;
     const counts: Record<string, number> = {};
     for (const v of Object.values(e.state.votes)) counts[String(v.target)] = (counts[String(v.target)] ?? 0) + 1;
     const culpritSeat = e.state.seats.findIndex((s) => s.kind !== "empty" && s.characterId === e.script.truth.culpritId);
-    let topSeat = -1;
-    let topCount = -1;
-    for (const [k, n] of Object.entries(counts)) {
-      if (n > topCount) {
-        topCount = n;
-        topSeat = Number(k);
-      }
-    }
-    e.state.voteResult = { counts, culpritSeat, caught: voteMode === "choice" ? false : topSeat === culpritSeat };
+    e.state.voteResult = { counts, ...tallyVotes({ counts, culpritSeat, voteMode }) };
     if (e.script.ending.quiz.length) {
       e.state.quizResult = computeQuizResult(e.script.ending.quiz, e.state.quizAnswers ?? {});
     }
@@ -229,12 +242,21 @@ export async function finishReveal(e: GameEngine): Promise<void> {
   }
 
   const voteMode = e.script.flow.voteMode;
-  const caughtName = e.state.seats[result.culpritSeat] ? e.speakerName(result.culpritSeat) : "?";
+  const culpritName = e.script.characters.find((c) => c.id === e.script.truth.culpritId)?.name ?? "?";
+  const culpritSeated = result.culpritSeat >= 0 && !!e.state.seats[result.culpritSeat];
+  const voteBrief = Object.entries(result.counts)
+    .map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`)
+    .join("，") || "无人投票";
   let task: string;
   if (voteMode === "choice") {
     task = `复盘时刻：本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评全场还原度，然后完整宣读真相复盘：手法、完整时间线、关键证据链。`;
   } else {
-    task = `公布投票结果（${Object.entries(result.counts).map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`).join("，") || "无人投票"}），然后宣布揭晓真相：凶手是 ${caughtName}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
+    const verdict = !culpritSeated
+      ? `本期真凶是「${culpritName}」，但该角色并未在本局入座，任何指认都不成立`
+      : result.tiedSeats?.length
+        ? `${result.tiedSeats.map((s) => `座位${s + 1}`).join(" 与 ")} 平票，指认失败，真凶「${culpritName}」逃脱`
+        : `凶手是 ${e.speakerName(result.culpritSeat)}`;
+    task = `公布投票结果（${voteBrief}），然后宣布揭晓真相：${verdict}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
     if (e.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评各位玩家的还原度。`;
   }
 
@@ -250,8 +272,9 @@ export async function finishReveal(e: GameEngine): Promise<void> {
         visibility: "public",
         content: {
           culpritSeat: result.culpritSeat,
-          culpritName: caughtName,
+          culpritName,
           caught: result.caught,
+          ...(result.tiedSeats ? { tiedSeats: result.tiedSeats } : {}),
           counts: result.counts,
           method: methodText(e.script),
           fullTimeline: fullTimelineText(e.script),
