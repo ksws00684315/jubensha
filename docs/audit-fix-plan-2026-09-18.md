@@ -176,6 +176,8 @@
 ### 执行落账（2026-09-19）
 
 批次 A–I 改动最终按功能域落为 6 个本地提交（未推送 origin），逐提交 `tsc --noEmit` 独立通过：
-`417ce43` docs(db) 文档/迁移 · `49be99e` refactor(engine) I1/I2/I7（含 v2 依赖字段） · `c6ce22b` feat(script) 工具链/评测 · `54c5f6e` fix(api) A/D/E · `e28df43` feat(ui) C/H/I3 · `06ac256` test(core) I5 · 末笔 docs 为本执行状态。
+`c0b19c0` docs(db) 文档/迁移 · `b4cb555` refactor(engine) I1/I2/I7（含 v2 依赖字段） · `e8615d3` feat(script) 工具链/评测 · `9689a2c` fix(api) A/D/E · `2fa5f01` feat(ui) C/H/I3 · `8229aea` test(core) I5 · 末笔 `f25dd3b` docs 为本执行状态。
 
-批次 J 按域落为 3 个本地提交（未推送）：`c31cb4f` fix(engine) J1/J2 计票规则+5 用例 · `0a28f58` feat(ui) J3/J4 扫尾 · docs 本落账。
+批次 J 按域落为 3 个本地提交（未推送）：`f322c30` fix(engine) J1/J2 计票规则+5 用例 · `c0df47b` feat(ui) J3/J4 扫尾 · `8efb935` docs 本落账。
+
+> 哈希更正（2026-09-19）：推送前远端新增 1 笔《夜航号》示范本提交（`9cc74da`），本地 45 笔 rebase 到其上，上述哈希为 rebase 后终值；首次落账所记旧哈希（`417ce43`/`49be99e`/`c6ce22b`/`54c5f6e`/`e28df43`/`06ac256`/`084e6ac`/`c31cb4f`/`0a28f58`/`c5d289b`）已随 rebase 失效。全部批次 A–J 已于当日推送 origin/main。
