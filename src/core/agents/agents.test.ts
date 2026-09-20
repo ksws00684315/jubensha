@@ -169,6 +169,32 @@ describe("信息防火墙", () => {
     expect(log2.startsWith(log1.trimEnd())).toBe(true);
     expect(log2).toContain("第二句。");
   });
+
+  it("语气死锁与行为禁令位于 tail 近因区，不再驻留 system", () => {
+    const msgs = buildPlayerContext(doc, state, 1, events, { requireJson: '输出 JSON：{"text":"…"}' });
+    expect(msgs[0].content).not.toContain("【发言要求】");
+    expect(msgs[0].content).not.toContain("红线（");
+    const user = msgs[1].content;
+    expect(user.indexOf("【发言要求】")).toBeGreaterThan(user.indexOf("【你持有的线索卡】"));
+    expect(user.indexOf("【发言要求】")).toBeLessThan(user.indexOf("输出 JSON"));
+  });
+
+  it("红线跟随发言要求进入近因区尾部", () => {
+    const patched = structuredClone(doc);
+    patched.characters.find((c) => c.id === "zhoubo")!.privateCard.violation = ["绝不能提及灯塔暗号"];
+    const user = buildPlayerContext(patched, state, 1, events, {})[1].content;
+    expect(user).toContain("红线（无论如何不能说破、不能做）：绝不能提及灯塔暗号");
+    expect(user.indexOf("红线（")).toBeGreaterThan(user.indexOf("【发言要求】"));
+  });
+
+  it("DM 禁令与发言要求同样移入 tail，紧贴任务之后", () => {
+    const msgs = buildDmContext(doc, state, events, { task: "控场", requireJson: "输出 JSON" });
+    expect(msgs[0].content).not.toContain("复盘前严禁");
+    expect(msgs[0].content).not.toContain("主持人旁白口吻");
+    const user = msgs[1].content;
+    expect(user.indexOf("【你的任务】")).toBeLessThan(user.indexOf("复盘前严禁"));
+    expect(user.indexOf("主持人旁白口吻")).toBeLessThan(user.indexOf("输出 JSON"));
+  });
 });
 
 describe("输出守卫", () => {

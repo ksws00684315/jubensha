@@ -130,7 +130,7 @@ export function buildPlayerContext(
 - 信息不足时可以同时怀疑好几个人，不要表现得胸有成竹。
 - 被逼问自己的秘密时可以回避或部分承认，但不要撒与自己时间线硬冲突的谎。`;
 
-  const violationBlock = card.violation.length ? `\n红线（无论如何不能说破、不能做）：${card.violation.join("；")}` : "";
+  const violationBlock = card.violation.length ? `红线（无论如何不能说破、不能做）：${card.violation.join("；")}` : "";
   const alibiBlock = card.alibi?.length ? `不在场证明（必要时可主动陈述）：${narrativeToText(card.alibi)}\n` : "";
   const tellBlock = card.tells.length ? `说谎时的小动作（演凶/撒谎时可带）：${card.tells.join("；")}\n` : "";
   const activeDefenseHooks = (card.defenseHooks ?? []).filter((hook) => !hook.brokenByPublicClueIds.some((id) => state.clueStates[id]?.isPublic));
@@ -165,14 +165,16 @@ ${publicRoster(script, state)}
 你的时间线（你自己的经历，可按此陈述）：${timelineToText(card.timeline)}
 你额外知道的事：${card.knowledge.map(knowledgeLine).join("\n") || "（无）"}
 你的说话风格：${[card.persona.speechStyle, ...card.persona.traits].filter(Boolean).join("；")}
-${tellBlock}${defenseBlock}${violationBlock}
+${tellBlock}${defenseBlock}
 
-${strategy}
+${strategy}`;
 
-【发言要求】
+  // 近因区：语气死锁与行为禁令放在紧邻生成点的 tail 尾部（格式指令之前），
+  // 对冲长局历史对硬约束的稀释；system 仍是整局常量，不破坏前缀缓存。
+  const hardTail = `【发言要求】
 - 每次发言 60-180 字，中文，口语化，符合人设。不要输出任何舞台指示、括号动作或"我说"之类的前缀。
 - 你看到的【线索·仅你可见】是你自己的情报，可以转述其中的内容（视为你亲手翻到的），但请用你的口吻，不要逐字念卡。
-- 除你持有的线索外，你不知道任何未公开的信息；其他玩家说的都是他们的陈述，真假自辨。`;
+- 除你持有的线索外，你不知道任何未公开的信息；其他玩家说的都是他们的陈述，真假自辨。${violationBlock ? `\n${violationBlock}` : ""}`;
 
   const clueBlock =
     clues.length === 0
@@ -212,6 +214,7 @@ ${mentionBlock ? `\n${mentionBlock}\n` : ""}
 ${actBlock}${opts.recall ? `${opts.recall}\n` : ""}
 ${publicEvidence ? `【公开证据登记】\n${publicEvidence}\n` : ""}
 ${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
+${hardTail}
 ${opts.extraInstruction ?? ""}
 ${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
 
@@ -240,7 +243,6 @@ export function buildDmContext(
   opts: { task: string; requireJson?: string; recall?: string }
 ): ChatMessage[] {
   const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你只根据公开记录控场和渲染氛围。
-复盘前严禁：说出或暗示谁是真凶、点名该怀疑谁、引导投票、复述未公开线索原文、泄露任何角色的秘密。不要给玩家「正确答案」。
 
 【公开背景】
 ${narrativeToText(script.background)}
@@ -248,8 +250,10 @@ ${narrativeToText(script.background)}
 【在场人物（仅公开身份）】
 ${publicRoster(script, state)}
 
-【可搜证地点】${locationNames(script).join("、")}
+【可搜证地点】${locationNames(script).join("、")}`;
 
+  // 近因区：与玩家侧同理，行为禁令与格式腔调贴紧生成点。
+  const hardTail = `复盘前严禁：说出或暗示谁是真凶、点名该怀疑谁、引导投票、复述未公开线索原文、泄露任何角色的秘密。不要给玩家「正确答案」。
 【发言要求】中文，主持人旁白口吻，100-300 字（除非另有说明）。`;
 
   const clueStatus = script.clues
@@ -270,6 +274,7 @@ ${clueStatus}
 ${hostGuideBlock(script, state)}${opts.recall ? `\n${opts.recall}\n` : ""}
 ${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
 【你的任务】${opts.task}
+${hardTail}
 ${opts.requireJson ? opts.requireJson : ""}`;
 
   return cacheFriendlyMessages(system, growingLog, tail);
