@@ -13,12 +13,12 @@
       "职场",
       "密室"
     ],
-    "intro": "云声广播大厦，FM98.6《午夜直达》直播到一半。23:00整，广告垫播准时响起——这是王牌主播罗夜航雷打不动的十二分钟小睡。23:12，替班DJ进播音间接档，发现他侧卧在沙发里，空酒壶倒在脚边，像每一次喝断片后的样子。急救初判：酒后呕吐物堵塞气道窒息。可他的嘴边干干净净，口鼻周围有两道对称的月牙形压痕——垫播的十二分钟里，这间隔音的播音间里发生过什么，全楼的灯都关着。"
+    "intro": "23:00至23:12的广告垫播期间，王牌主播罗夜航死在隔音播音间。现场不支持酒后呕吐窒息；监控停用、对讲静音、门禁缓存待补传。你们需要分别查明死因、作案机会与进入者身份，再判断谁有杀人动机。"
   },
   "background": [
     {
       "type": "paragraph",
-      "text": "云声广播大厦，城市之声FM98.6。《午夜直达》是王牌深夜情感节目，主持人罗夜航，四十一岁，名满全城，酒名同样满城。今晚的直播从22:35开始，23:00整进入十二分钟广告垫播——罗夜航的惯例是垫播开始就窝进播音间沙发的靠垫里小睡，全台人尽皆知。23:12，替班DJ白楠进播音间接档《零点悦读》，发现罗夜航侧卧在沙发里，酒壶倒了，地毯上泼着啤酒，人已经没了呼吸。急救到场初判：饮酒后呕吐物堵塞气道窒息——一个酗酒主播最'合理'的死法，没人想深究。但坡度在细节里：他的嘴边没有呕吐物残迹，口鼻周缘有两道对称的月牙形压痕，与沙发靠垫的缝线间距一致；双侧眼睑内密布出血点；血检酒精浓度只有微醺量级。更蹊跷的是，今晚播音间的对讲线路在23:03到23:09之间被静音了四分半钟，走廊监控因'维保'停用，门禁记录要第二天才同步上传——三盏灯，全灭在垫播的十二分钟里。案发时段（23:00-23:12）能接近播音间的，只有你们五个。"
+      "text": "云声广播大厦，FM98.6《午夜直达》直播到一半。23:00整，十二分钟广告垫播开始；23:12，替班DJ白楠进播音间接档，发现罗夜航侧卧在沙发里。现场没有呕吐物，口鼻周围有与靠垫缝线吻合的月牙形压痕，血检仅微醺。尸检确认他死于外力压迫窒息，死亡发生在23:00至23:12之间。走廊监控当晚维保停用，对讲在23:03:41至23:09:12静音，门禁缓存次日才补传。五名角色都在电台，谁能进入、谁动过设备、谁有理由下手，需要把不同材料拼在一起判断。"
     }
   ],
   "characters": [
@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你有一手'设备报修'的牌：对讲故障、监控维保、门禁缓存，全都替你关了灯。策略：主动认下报修（圆成'设备老化，怕垫播出事故'），死咬23:00-23:12一直在导播台盯垫播——调音台日志会替你'作证'，你只求没人细问那次四分半钟的静音；把水引向21:50摔过话筒的秦克和怀揣剪报的老鲍。门禁缓存补传后23:03进、23:08出是硬伤，被戳穿就改口'去送23:15的接档单，看他在睡没打扰'。"
+                "text": "设备和日志都留有你的工作痕迹。你可以承认门禁系统只记录备用凭证、调音台只记录账号；要求大家核实值班室领用簿、导播席交接表和白楠的目击时间。把“有机会”与“实施杀人”分开讨论，再质疑秦克、白楠和何大有各自未核实的行踪。不要否认能被日志核验的工作操作。"
               }
             ],
             "priority": "primary"
@@ -80,15 +80,20 @@
                 "time": "22:10"
               }
             },
-            "title": "在导播台听罗夜航宣布合并新节目",
+            "title": "在导播台听到合并宣言",
             "content": [
               {
                 "type": "paragraph",
-                "text": "在导播台听罗夜航宣布合并新节目。"
+                "text": "罗夜航当着白楠宣布合并《城市病历》。"
               }
             ],
-            "characterIds": [],
-            "clueIds": []
+            "characterIds": [
+              "baiman"
+            ],
+            "clueIds": [
+              "luyin_paiban",
+              "cehua_yuangao"
+            ]
           },
           {
             "id": "character_shenyinuo_event_2",
@@ -104,7 +109,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "送手卡进播音间（门禁可证），看他垫好靠垫准备小睡。"
+                "text": "送手卡后返回导播间；此时罗夜航仍在直播。"
               }
             ],
             "characterIds": [],
@@ -120,15 +125,17 @@
                 "time": "23:00"
               }
             },
-            "title": "垫播启动",
+            "title": "启动广告垫播",
             "content": [
               {
                 "type": "paragraph",
-                "text": "垫播启动，回导播台。"
+                "text": "在导播席启动垫播；罗夜航留在播音间。"
               }
             ],
             "characterIds": [],
-            "clueIds": []
+            "clueIds": [
+              "diaoyintai_rizhi"
+            ]
           },
           {
             "id": "character_shenyinuo_event_4",
@@ -144,11 +151,11 @@
                 "time": "23:08"
               }
             },
-            "title": "进出播音间走廊",
+            "title": "门禁记录出现通行凭证",
             "content": [
               {
                 "type": "paragraph",
-                "text": "进出播音间走廊（门禁缓存补传可证）。"
+                "text": "你承认自己在这段时间去过走廊，称去检查隔音门；凭证共用，记录无法说明谁持卡。"
               }
             ],
             "characterIds": [],
@@ -164,15 +171,17 @@
                 "time": "23:09"
               }
             },
-            "title": "回导播台关静音",
+            "title": "恢复对讲",
             "content": [
               {
                 "type": "paragraph",
-                "text": "回导播台关静音。"
+                "text": "对讲静音解除，导播席账号操作记录留痕。"
               }
             ],
             "characterIds": [],
-            "clueIds": []
+            "clueIds": [
+              "diaoyintai_rizhi"
+            ]
           },
           {
             "id": "character_shenyinuo_event_6",
@@ -184,11 +193,11 @@
                 "time": "23:12"
               }
             },
-            "title": "与白楠一同发现",
+            "title": "响应白楠呼救",
             "content": [
               {
                 "type": "paragraph",
-                "text": "你与白楠一同发现罗夜航倒在播音间。"
+                "text": "白楠先进入播音间发现尸体并呼救，你从导播间赶到。"
               }
             ],
             "characterIds": [
@@ -206,11 +215,11 @@
                 "time": "23:25"
               }
             },
-            "title": "协助急救并提议封播音间",
+            "title": "协助急救并提议封存现场",
             "content": [
               {
                 "type": "paragraph",
-                "text": "协助急救并提议封播音间。"
+                "text": "协助急救后建议先封存播音间，理由是保护设备与现场。"
               }
             ],
             "characterIds": [],
@@ -220,42 +229,53 @@
         "knowledge": [
           {
             "id": "knowledge_shenyinuo_1",
-            "title": "情报 1",
+            "title": "情报：设备日志",
             "content": [
               {
                 "type": "paragraph",
-                "text": "导播席密码只有你有——23:03:41那次静音，日志上钉着你的席位，你赌没人去调日志。"
+                "text": "你知道导播席日志只记录账号，不记录实际操作者；当晚交接表能核实席位是否有人代操作。"
               }
             ],
-            "source": "other",
+            "kind": "fact",
+            "source": "possessed",
             "relatedCharacterIds": [],
-            "relatedClueIds": []
+            "relatedClueIds": [
+              "diaoyintai_rizhi"
+            ]
           },
           {
             "id": "knowledge_shenyinuo_2",
-            "title": "情报 2",
+            "title": "情报：垫播惯例",
             "content": [
               {
                 "type": "paragraph",
-                "text": "22:57罗夜航还对着话筒说'垫播完叫我'——你听见了，也记下了：他是真的打算睡十二分钟。"
+                "text": "22:57罗夜航在直播中说“垫播完叫我”，多名在场者听见；这能确认他在垫播开始时还活着。"
               }
             ],
-            "source": "other",
+            "kind": "fact",
+            "source": "heard",
             "relatedCharacterIds": [],
-            "relatedClueIds": []
+            "relatedClueIds": [
+              "diaoyintai_rizhi"
+            ]
           },
           {
             "id": "knowledge_shenyinuo_3",
-            "title": "情报 3",
+            "title": "情报：门禁缓存",
             "content": [
               {
                 "type": "paragraph",
-                "text": "上午报修对讲时维保师傅说'线路老化，顶多再撑一个月'——这句话成了你的机会，也可能成为你的绞索。"
+                "text": "门禁记录只能证明凭证通行，不能区分凭证由谁持有；值班室有共用备用卡的领用登记。"
               }
             ],
-            "source": "other",
-            "relatedCharacterIds": [],
-            "relatedClueIds": []
+            "kind": "fact",
+            "source": "possessed",
+            "relatedCharacterIds": [
+              "hedayou"
+            ],
+            "relatedClueIds": [
+              "menjin_buchuan"
+            ]
           }
         ],
         "relationships": [],
@@ -265,7 +285,95 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_shenyinuo_sleep",
+            "claim": "罗夜航可能只是饮酒后在垫播时睡着，最初看起来像意外窒息。",
+            "basis": "他直播中说垫播时叫醒他，现场也有啤酒；需区分饮酒与真正死因。",
+            "brokenByPublicClueIds": [
+              "xianchang_kanyan"
+            ]
+          },
+          {
+            "id": "defense_shenyinuo_no_entry",
+            "claim": "静音时段我只在导播间操作设备，没有进入播音间；白楠只在23:09看到我回来，门禁也只覆盖走廊。",
+            "basis": "账号与共用卡记录不等于持有人身份，23:09目击本身无法证明23:03—09的去向。",
+            "brokenByPublicClueIds": [
+              "console_handover",
+              "spare_card_log",
+              "engineering_receipt",
+              "menjin_buchuan",
+              "luyin_paiban"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "shenyinuo_act1_fact",
+                "title": "案发窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开线索能确定现场发生外力窒息并限定垫播时间，但门禁编号、账号操作和目击各有边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenyinuo_act1_goal",
+                "title": "核对死因与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明23:00垫播和对讲操作的设备流程，主动区分账号日志与操作者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "shenyinuo_act2_fact",
+                "title": "身份交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕新增三份独立原始材料：席位交接、备用卡领用和工程工单签收。它们可以验证职责、凭证和进入窗口，但维修及权限仍是竞争解释。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenyinuo_act2_goal",
+                "title": "核对材料并回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "逐条回应K-17领用、工单进入与交接表，承认维修行为并提出它为何不能直接证明伤害。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -326,15 +434,17 @@
                 "time": "21:30"
               }
             },
-            "title": "前 在配音间剪片",
+            "title": "在配音间剪片",
             "content": [
               {
                 "type": "paragraph",
-                "text": "前 在配音间剪片（有人证）。"
+                "text": "音棚登记和工程文件能核对你在配音间。"
               }
             ],
             "characterIds": [],
-            "clueIds": []
+            "clueIds": [
+              "luyin_paiban"
+            ]
           },
           {
             "id": "character_baiman_event_2",
@@ -346,15 +456,19 @@
                 "time": "22:10"
               }
             },
-            "title": "导播台听见合并宣言",
+            "title": "在导播台听到合并宣言",
             "content": [
               {
                 "type": "paragraph",
-                "text": "导播台听见合并宣言。"
+                "text": "录下罗夜航宣布合并节目的片段。"
               }
             ],
-            "characterIds": [],
-            "clueIds": []
+            "characterIds": [
+              "shenyinuo"
+            ],
+            "clueIds": [
+              "luyin_paiban"
+            ]
           },
           {
             "id": "character_baiman_event_3",
@@ -370,11 +484,11 @@
                 "time": "23:12"
               }
             },
-            "title": "在走廊候播区",
+            "title": "在候播区等待接档",
             "content": [
               {
                 "type": "paragraph",
-                "text": "在走廊候播区。"
+                "text": "候播区就在导播间外的公共走廊；你中途进导播间对台本。"
               }
             ],
             "characterIds": [],
@@ -383,22 +497,26 @@
           {
             "id": "character_baiman_event_4",
             "time": {
-              "display": "23:05",
+              "display": "23:09",
               "precision": "exact",
               "start": {
                 "dayOffset": 0,
-                "time": "23:05"
+                "time": "23:09"
               }
             },
-            "title": "探头进导播间对台本",
+            "title": "回导播间对台本",
             "content": [
               {
                 "type": "paragraph",
-                "text": "探头进导播间对台本。"
+                "text": "你回导播间对台本，亲眼看见沈一诺坐回导播席操作控制台，听到一声轻响；不能据此判断谁先开启静音。"
               }
             ],
-            "characterIds": [],
-            "clueIds": []
+            "characterIds": [
+              "shenyinuo"
+            ],
+            "clueIds": [
+              "diaoyintai_rizhi"
+            ]
           },
           {
             "id": "character_baiman_event_5",
@@ -410,15 +528,17 @@
                 "time": "23:12"
               }
             },
-            "title": "进播音间发现尸体",
+            "title": "进入播音间发现尸体",
             "content": [
               {
                 "type": "paragraph",
-                "text": "进播音间发现尸体，呼救。"
+                "text": "垫播结束后进播音间，发现罗夜航并呼救。"
               }
             ],
             "characterIds": [],
-            "clueIds": []
+            "clueIds": [
+              "xianchang_kanyan"
+            ]
           },
           {
             "id": "character_baiman_event_6",
@@ -434,7 +554,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "陪急救与众人核实。"
+                "text": "配合急救人员说明发现经过。"
               }
             ],
             "characterIds": [],
@@ -461,7 +581,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "23:05你探头进导播间对台本，导播在调音台前按了一下什么，啪嗒一声很轻——当时你以为是线材接触不良。"
+                "text": "23:09你回导播间对台本，亲眼看见沈一诺坐回导播席操作控制台；日志显示四秒后对讲静音关闭。你能证实她在静音解除前回到席位，不能判断谁开启静音。"
               }
             ],
             "source": "other",
@@ -489,7 +609,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "baiman_act1_fact",
+                "title": "案发窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开线索能确定现场发生外力窒息并限定垫播时间，但门禁编号、账号操作和目击各有边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiman_act1_goal",
+                "title": "核对死因与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代23:09:08回导播间看到沈一诺回席、23:12发现尸体的先后顺序，说明亲见与推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "baiman_act2_fact",
+                "title": "身份交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕新增三份独立原始材料：席位交接、备用卡领用和工程工单签收。它们可以验证职责、凭证和进入窗口，但维修及权限仍是竞争解释。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiman_act2_goal",
+                "title": "核对材料并回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开录音与排班，向沈一诺询问维修工单签收和谁有机会进入播音间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -582,7 +768,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "在广告部办公室对账（报销单据时间可证）。"
+                "text": "对账系统与凭证能核验你在广告部直到垫播开始；之后的行踪需进一步核对。"
               }
             ],
             "characterIds": [],
@@ -677,7 +863,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qinke_act1_fact",
+                "title": "案发窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开线索能确定现场发生外力窒息并限定垫播时间，但门禁编号、账号操作和目击各有边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinke_act1_goal",
+                "title": "核对死因与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明21:50闯台原因及对账记录覆盖到23:00的边界。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qinke_act2_fact",
+                "title": "身份交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕新增三份独立原始材料：席位交接、备用卡领用和工程工单签收。它们可以验证职责、凭证和进入窗口，但维修及权限仍是竞争解释。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinke_act2_goal",
+                "title": "核对材料并回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "展示手卡和排期流水，回应四十七万利益链，并请全场核验23:00之后的行动证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -762,7 +1014,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "欲上楼被何大有拦下。"
+                "text": "23:05你在楼梯口试图上楼，被何大有拦下；门厅登记和值班记录可核验。"
               }
             ],
             "characterIds": [
@@ -859,7 +1111,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "laobaogen_act1_fact",
+                "title": "案发窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开线索能确定现场发生外力窒息并限定垫播时间，但门禁编号、账号操作和目击各有边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "laobaogen_act1_goal",
+                "title": "核对死因与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说清22:20来访、23:05被拦、23:20离台，公开剪报但标明旧怨只是动机。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "laobaogen_act2_fact",
+                "title": "身份交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕新增三份独立原始材料：席位交接、备用卡领用和工程工单签收。它们可以验证职责、凭证和进入窗口，但维修及权限仍是竞争解释。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "laobaogen_act2_goal",
+                "title": "核对材料并回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "询问何大有值守和备用卡领用流程，帮助核实谁能进入走廊及登记是否完整。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1003,7 +1321,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "补传记录你昨晚就看到了：23:03:05 进、23:08:22 出——走廊里那五分钟有一次进出记录。当时还有谁在楼上走动，监控停用，你不知道。"
+                "text": "补传日志显示一张备用通行凭证23:03进入、23:08离开；凭证当晚由值班室与导播间共用。记录不显示持卡人，也不表示有人进入播音间。"
               }
             ],
             "source": "other",
@@ -1016,7 +1334,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "监控停用的报修单是导播台上午报的，签发人一栏你看得最清楚。"
+                "text": "监控维保工单由工程部受理，签收栏的笔迹需与原件核对；仅凭工单不能确定谁在案发时持有备用凭证。"
               }
             ],
             "source": "other",
@@ -1044,7 +1362,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hedayou_act1_fact",
+                "title": "案发窗口",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开线索能确定现场发生外力窒息并限定垫播时间，但门禁编号、账号操作和目击各有边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hedayou_act1_goal",
+                "title": "核对死因与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公布门禁缓存局限和23:05拦人记录，区分卡号、持卡人和房间进入。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hedayou_act2_fact",
+                "title": "身份交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕新增三份独立原始材料：席位交接、备用卡领用和工程工单签收。它们可以验证职责、凭证和进入窗口，但维修及权限仍是竞争解释。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hedayou_act2_goal",
+                "title": "核对材料并回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "出示K-17领用归还簿，说明何时交给谁、何时收回，并与工程工单和控制台交接记录核对。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1098,6 +1482,16 @@
           "text": "广告部的排期墙贴满黄金档位，窗外是城市的夜色；柜子里立着装合同与流水的保险柜，座机的铃早就不响了。"
         }
       ]
+    },
+    {
+      "id": "location_6",
+      "name": "工程值班台",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "工程值班台的工单夹按日期归档，对讲线路维修签收联仍夹在当夜设备测试记录中；签收笔迹与工程值班员的回单相对。"
+        }
+      ]
     }
   ],
   "clues": [
@@ -1109,7 +1503,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者侧卧于沙发，胸襟与地毯泼有啤酒，嘴边无呕吐物残迹；口鼻周缘见两处对称的月牙形压痕，与沙发靠垫缝线间距一致；双侧眼睑内密布出血点。血检酒精浓度仅微醺量级，不足以致昏。初判'酒后呕吐窒息'与体征不符，窒息不排除人为捂压。"
+          "text": "死者侧卧于沙发，胸襟与地毯有啤酒，嘴边无呕吐物；口鼻周缘两处对称月牙形压痕，与沙发靠垫缝线间距一致，双侧眼睑内见出血点。血检酒精浓度仅微醺。法医初步意见：外力压迫导致窒息，死亡时间约在23:00至23:12；这些体征能判断死因与手段，不能单独识别操作者。尸检原始记录可由急救医师复核。 现场另有半杯啤酒自上而下泼在胸襟与地毯，死者啤酒箱少两罐、垃圾篓有空罐；沙发扶手有掌根压痕，织物纹路与靠垫缝线相符。以上支持现场被摆布，但无完整指纹可识别操作者。"
         }
       ],
       "policy": "auto_public",
@@ -1124,7 +1518,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "自动日志：23:00:00垫播带启动，23:03:41'对讲静音开启'，23:09:12'对讲静音关闭'，23:12:30切回直播。静音操作登录席位为导播席，密码个人持有。日志旁附维保工单：对讲线路'报修'，签发于案发当日10:20，报修人：沈一诺。"
+          "text": "自动日志记录：23:00:00垫播启动，23:03:41导播席账号开启对讲静音，23:09:12关闭，23:12:30切回直播。系统只记录账号与按键时间，不记录操作者。对讲线路当日上午10:20报修；该日志说明设备操作与故障窗口，不能证明是谁按键或是否进入播音间。"
         }
       ],
       "policy": "manual_public",
@@ -1139,22 +1533,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "事发次日补传的门禁记录（当日22:00-23:30缓存未同步）：23:03:05沈一诺刷卡进入播音间走廊，23:08:22刷卡离开；鲍长根22:20来访登记、23:20离台；其间无人再进播音间走廊。门禁系统'升级'由保安班执行，负责人何大有。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
-      "id": "pajiu_pingzi",
-      "locationId": "location_1",
-      "name": "泼洒的啤酒与消失的空罐",
-      "category": "trace",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "半杯啤酒泼在胸襟与地毯，泼洒方向自上而下、无壶口滴落线——像被人端起泼的，不是失手打翻。死者自带的啤酒箱里少了两罐，垃圾篓只有一只空罐：另一罐'消失'了。沙发扶手上有一处新鲜的掌根压痕，压痕里的织物纹路与靠垫缝线一致。"
+          "text": "次日补传的门禁缓存保留通行凭证编号：23:03:05凭证K-17进入播音间走廊，23:08:22离开；读头只覆盖走廊门，不能证明持卡人身份或进入播音间。当晚测试备用卡由值班室管理并可登记领用。另：22:20鲍长根登记来访，23:05曾在楼梯口被拦，23:20离台。"
         }
       ],
       "policy": "manual_public",
@@ -1169,22 +1548,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "沈一诺保存的十年前提案原稿，页边有她的笔迹批注与两版改样；台档案室的存档版上，策划人一栏只有'罗夜航'。附台里最新批文：《城市病历》定档下月，制作人：沈一诺——她的第一档署名节目，今晚22:10被宣布合并。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
-    },
-    {
-      "id": "baoliao_shouka",
-      "locationId": "location_1",
-      "name": "23:30的爆料手卡",
-      "category": "document",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "罗夜航的手写手卡，23:30环节标题：'谁在卖药？'列有三组时间点与一笔四十七万'顾问费'的流向，末行写着：'插播录音，当众放。'手卡下压着他与'王主任'的两条聊天截图（已转存电台邮箱），收件时间：今晚21:40。"
+          "text": "沈一诺保存的十年前提案原稿有她的笔迹批注与两版改样；台档案室存档版的策划人栏只有罗夜航。台里最新批文将《城市病历》定档下月、制作人列为沈一诺；今晚22:10罗夜航宣布合并节目。原稿与批文能核对署名争议，提供动机线索，本身不能证明她到过案发现场。 同一份材料夹有罗夜航23:30爆料手卡，标题“谁在卖药？”，列三组时间点和四十七万顾问费流向，末行写“插播录音，当众放”；他与“王主任”的两条聊天截图于21:40转存电台邮箱。该手卡记录死者准备曝光的内容，也解释秦克的经济动机。"
         }
       ],
       "policy": "manual_public",
@@ -1199,7 +1563,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "广告部保险柜里的《固本源排期单》：三档黄金时段，代理公司打给秦克小舅子公司的'推广费'累计四十七万，时间与罗夜航手卡上的'顾问费'流向吻合。21:50秦克闯导播台被泼水劝离，白楠、导播在场；此后他的门禁再无上行记录。"
+          "text": "广告部保险柜里的《固本源排期单》显示三档黄金时段；代理公司向秦克小舅子公司的“推广费”累计四十七万，与罗夜航手卡上的顾问费流向吻合。21:50秦克闯导播台被劝离；广告部对账系统留有22:00至23:00的连续操作时间戳，纸质凭证在保险柜。经济动机明显，但记录仅覆盖到23:00，不能单独排除其后的行动。"
         }
       ],
       "policy": "manual_public",
@@ -1214,7 +1578,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "鲍长根每夜送来的点歌单，背面工整抄着药名与忌口。他随身的帆布包里有一份十五年前的剪报：'实习护士遭网暴后轻生'，配图报道记者署名：罗夜航。门厅值守记录：23:05他试图上楼，被何大有拦下，23:20刷卡离台。"
+          "text": "鲍长根每夜送来的点歌单背面抄着药名与忌口。帆布包里的十五年前剪报记载“实习护士遭网暴后轻生”，报道记者署名罗夜航。门厅登记可核验他22:20来访、23:05被拦、23:20刷卡离台；剪报揭示旧怨，但来访记录与门厅值班记录可核验案发窗口内未上楼。"
         }
       ],
       "policy": "manual_public",
@@ -1225,15 +1589,109 @@
       "id": "luyin_paiban",
       "locationId": "location_4",
       "name": "白楠的录音与排班表",
-      "category": "digital",
+      "category": "testimony",
       "content": [
         {
           "type": "paragraph",
-          "text": "白楠手机里三段录音：罗夜航酒后失态，骂导播'提词的'，宣布'《城市病历》素材归我'——录于今晚22:10导播台。她的排班表：23:12接档《零点悦读》；21:30前她在台里配音间剪片，音棚使用登记有人证。"
+          "text": "白楠手机保存三段罗夜航酒后失态录音，其中一段录于今晚22:10导播台，内容涉及《城市病历》素材归属。排班表显示白楠23:12接档《零点悦读》；21:30前她在配音间剪片，音棚登记与剪辑工程文件可核验。白楠另在23:09:08回到导播间对台本，亲眼看见沈一诺坐回导播席操作控制台；四秒后系统记录对讲静音关闭（23:09:12）。她能核实沈一诺在静音解除前回到控制台，但不能确认谁在23:03:41开启静音，也不能证明此前谁进入播音间。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "baiman"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "console_handover",
+      "locationId": "location_2",
+      "name": "导播席交接表",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "导播席纸质交接表记载：23:00垫播前沈一诺接替前班，负责控制台；23:03在“播音间设备检查”一栏登记暂离，签名沈一诺；23:09登记返回并恢复对讲，接班人白楠在23:12接档。交接表由当班导播与交班员分别签字，能记录排班和申报的去向，但不能独自证明表上记载都真实，也不能证明谁实施了暴力。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "spare_card_log",
+      "locationId": "location_3",
+      "name": "备用卡K-17领用与归还簿",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "值班室原始领用簿记载：K-17测试备用卡于22:59由沈一诺签领，23:10交还何大有；何大有在归还栏签收。门禁补传日志显示同一凭证K-17于23:03:05进入播音间走廊、23:08:22离开。领用人与实际持卡人仍可能不同；领用簿与机器缓存互相印证卡片流转，不单独证明持卡人进了播音间。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "engineering_receipt",
+      "locationId": "location_6",
+      "name": "对讲线路维修工单签收联",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "工程值班员原始工单及签收联：当日10:20由沈一诺报修播音间对讲线路；夜间测试栏约23:03由沈一诺签领K-17并注明进入播音间检查线盒，23:08工程值班员在播音间外收回工单，记录“线路复位、静音测试完成”，双方签名。值班员未见室内发生什么，签收联能独立支持沈一诺在静音窗口内进入播音间处理设备，但不能说明她是否接触罗夜航或实施伤害。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "engineering_audit",
+      "locationId": "location_6",
+      "name": "对讲线维修前后自检与领料核验",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "工程值班台的独立自检终端与当班领料册记录：22:51播音间对讲线路自检为正常，23:00—23:10无断线或异常告警；当夜没有线盒、接头、测试仪器的出库记录。工程员说明签收联的“复位、静音测试完成”是根据沈一诺交回的工单勾选，他未入播音间，也未亲自测试。它与维修签收联构成可核对的矛盾：没有系统故障或领料可支持实际维修，但不能单独证明沈一诺伪造维修或实施杀人。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "cushion_transfer",
+      "locationId": "location_1",
+      "name": "靠垫接触痕迹补充检验",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "急救医师复核现场封存的靠垫：内侧缝边检出与罗夜航口鼻分泌物相符的微量蛋白及啤酒成分，压痕方向与尸检口鼻月牙印相合；同一处还嵌有一根深蓝涤纶制服纤维。该纤维与电台夜班工程/导播共用制服批次相符，无法仅凭颜色或批次锁定个人；接触痕迹证明靠垫参与过压迫，却不能区分谁使用，也可能在发现尸体后被白楠触碰。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "uniform_fiber_check",
+      "locationId": "location_6",
+      "name": "制服纤维批次与袖口状态核验",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "服装管理员与封存照片可交叉核验：沈一诺当夜穿的导播/工程共用深蓝制服右袖口有一处新鲜脱丝，纤维截面与靠垫内侧嵌留纤维相同；但该批制服多人共用，袖口脱丝也可能来自其他工作接触。比对只能把她与靠垫接触痕迹连接起来，不能单独确认她实施压迫。若是仅检查墙边线盒的正常维修，仍需解释为何袖口纤维留在沾有死者分泌物的靠垫内侧。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [
+        "shenyinuo"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -1249,17 +1707,17 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "沈一诺熬了十年才等来自己的名字，罗夜航一纸报告就能把它合并进《午夜直达》。她比谁都懂这栋楼的声音与灯：上午报修对讲线路（'老化'），让走廊监控以'维保'停用——垫播的十二分钟里，播音间是一间没人看得见、听不见的屋子。23:03她刷卡进播音间，23:06用沙发靠垫捂压熟睡的罗夜航至机械性窒息，把他摆成侧卧'呕吐'姿势，端起他自带的啤酒泼在胸襟与地毯上，伪装成酗酒主播最'合理'的死法——酒后呕吐物堵塞气道。23:03-23:09她拉下对讲静音四分半钟（导播席密码个人持有），23:08刷卡离开，23:12与白楠一同'发现'，23:25又第一个提议封播音间'保护设备'。破绽：口鼻月牙形压痕、眼睑出血点、微醺量级的血检与泼洒方向、补传的门禁流水，以及调音台日志上那四分半钟的静音。"
+          "text": "罗夜航在垫播开始前仍活着，法医将死亡时间限定在23:00至23:12；靠垫压痕支持外力窒息，现场酒液支持摆布。调音、门禁、席位交接、备用卡簿和维修工单分别记录静音、走廊通行、职责、凭证与播音间进入。沈一诺的动机和23:09回席目击与这些独立材料相互校验，身份链可反驳且没有单卡锁凶。 第3轮公开的靠垫检验与制服纤维核验将杀人手段和沈一诺的接触机会独立连接；工程自检和领料记录可检验并削弱“23:03—08仅为正当维修”的解释，但纤维批次不是个人专属，需多类材料交叉。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "提前关闭监控与对讲",
+          "title": "制造隐蔽窗口",
           "content": [
             {
               "type": "paragraph",
-              "text": "案发当日上午，沈一诺以「线路老化」为由报修对讲线路，同时签发走廊监控的「维保停用」工单——两盏灯在垫播的十二分钟里同时熄灭，播音间变成一间没人听得见、看得见的屋子。"
+              "text": "案发当日上午有人报修对讲线路，走廊监控也进入维保停用；日志可以核验故障与工单时间，但需要查原件、签收人与工程记录，不能把系统状态直接等同于某人的作案行为。"
             }
           ],
           "clueIds": [
@@ -1268,190 +1726,43 @@
         },
         {
           "id": "method_step_2",
-          "title": "趁垫播捂压杀人",
+          "title": "垫播期间压迫窒息并伪装",
           "content": [
             {
               "type": "paragraph",
-              "text": "23:00垫播启动后，沈一诺于23:03刷卡进入播音间走廊，用沙发靠垫捂压熟睡的罗夜航至机械性窒息，将其摆成侧卧「呕吐」姿势，端起啤酒泼在胸襟与地毯上伪装酒后窒息，并取走一只空罐。死者口鼻周缘的月牙形压痕与靠垫缝线间距一致，双侧眼睑内密布出血点。"
+              "text": "罗夜航在垫播开始前还活着。23:00至23:12间，凶手用沙发靠垫压迫其口鼻致死，摆成侧卧并泼洒啤酒，试图伪装成醉酒窒息。法医体征与现场泼洒方向支持手段判断，不直接指向身份。"
             }
           ],
           "clueIds": [
             "xianchang_kanyan",
-            "pajiu_pingzi"
+            "luyin_paiban",
+            "cushion_transfer"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "静音对讲、刷卡离开",
+          "title": "用静音和通行凭证掩护行动",
           "content": [
             {
               "type": "paragraph",
-              "text": "23:03至23:09沈一诺拉下导播席对讲静音（导播席密码个人持有），彻底屏蔽播音间声源；23:08刷卡离开走廊，23:12与白楠一同「发现」尸体，23:25第一个提议封播音间「保护设备」。门禁补传记录与调音台日志精确锁定了她的进出时间与静音操作。"
+              "text": "23:03至23:09间对讲静音，K-17备用凭证进入并离开播音间走廊。交接表记录沈一诺在23:03暂离控制台并于23:09回席；备用卡簿记她领还K-17；维修工单由工程值班员签收，证明她在窗口内进入播音间检查对讲线路。白楠23:09目击和机器日志提供时间校验。所有材料都支持进入机会，但维修行为和设备职责仍需与现场杀人手段、动机共同判断。 第3轮的独立设备自检与领料册显示线路正常、无故障和无领料，削弱实际维修解释；制服纤维比对则提供与靠垫的接触关联，但都不能单独证明杀人。"
             }
           ],
           "clueIds": [
+            "diaoyintai_rizhi",
             "menjin_buchuan",
-            "diaoyintai_rizhi"
+            "console_handover",
+            "spare_card_log",
+            "engineering_receipt",
+            "luyin_paiban",
+            "engineering_audit",
+            "uniform_fiber_check",
+            "cushion_transfer"
           ]
         }
       ]
     },
     "timeline": [
-      {
-        "id": "truth_event_10",
-        "time": {
-          "display": "00:00",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "00:00"
-          }
-        },
-        "title": "广告垫播启动",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "广告垫播启动，十二分钟。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_12",
-        "time": {
-          "display": "03:05",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:05"
-          }
-        },
-        "title": "沈一诺刷卡进入播音间走廊",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "沈一诺刷卡进入播音间走廊（缓存次日补传），罗夜航已熟睡；"
-          }
-        ],
-        "characterIds": [
-          "shenyinuo"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo"
-        ]
-      },
-      {
-        "id": "truth_event_14",
-        "time": {
-          "display": "03:41",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "03:41"
-          }
-        },
-        "title": "对讲静音开启",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "对讲静音开启。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_17",
-        "time": {
-          "display": "08:22",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "08:22"
-          }
-        },
-        "title": "刷卡离开走廊",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "刷卡离开走廊；"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_20",
-        "time": {
-          "display": "09:12",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "09:12"
-          }
-        },
-        "title": "对讲静音关闭",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "对讲静音关闭。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_28",
-        "time": {
-          "display": "09:12",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "09:12"
-          }
-        },
-        "title": "对讲静音",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "对讲静音与导播席空置由门禁补传记录补齐：23:03:05 进、23:08:22 出——那五分钟里，整层楼只剩播音间有人。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_22",
-        "time": {
-          "display": "12:30",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "12:30"
-          }
-        },
-        "title": "垫播结束",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "垫播结束，白楠进播音间接档，发现尸体呼救。"
-          }
-        ],
-        "characterIds": [
-          "baiman"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "baiman"
-        ]
-      },
       {
         "id": "truth_event_1",
         "time": {
@@ -1462,19 +1773,18 @@
             "time": "21:30"
           }
         },
-        "title": "前 白楠在配音间剪片",
+        "title": "白楠在配音间剪片",
         "content": [
           {
             "type": "paragraph",
-            "text": "前 白楠在配音间剪片（音棚登记可证）。"
+            "text": "音棚登记和工程文件可核验。"
           }
         ],
         "characterIds": [
           "baiman"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "baiman"
+        "clueIds": [
+          "luyin_paiban"
         ]
       },
       {
@@ -1487,16 +1797,17 @@
             "time": "21:40"
           }
         },
-        "title": "罗夜航把爆料截图转存电台邮箱",
+        "title": "罗夜航转存爆料截图",
         "content": [
           {
             "type": "paragraph",
-            "text": "罗夜航把爆料截图转存电台邮箱。"
+            "text": "截图转存至电台邮箱。"
           }
         ],
         "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "clueIds": [
+          "cehua_yuangao"
+        ]
       },
       {
         "id": "truth_event_3",
@@ -1512,39 +1823,17 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "秦克闯导播台求撤环节，被罗夜航泼水、沈一诺劝走。"
+            "text": "秦克被劝离；事件有白楠与沈一诺在场。"
           }
         ],
         "characterIds": [
+          "qinke",
           "shenyinuo",
-          "qinke"
+          "baiman"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo",
-          "qinke"
+        "clueIds": [
+          "qinke_liushui"
         ]
-      },
-      {
-        "id": "truth_event_32",
-        "time": {
-          "display": "21:50",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "21:50"
-          }
-        },
-        "title": "失态、老鲍十五年的剪报与",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "失态、老鲍十五年的剪报与"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       },
       {
         "id": "truth_event_4",
@@ -1556,48 +1845,20 @@
             "time": "22:10"
           }
         },
-        "title": "罗夜航在导播台当着白楠宣布：新节目素材归…",
+        "title": "罗夜航宣布合并新节目",
         "content": [
           {
             "type": "paragraph",
-            "text": "罗夜航在导播台当着白楠宣布：新节目素材归他，合并进《午夜直达》；沈一诺手指敲桌三下（白楠录音可证）。"
+            "text": "沈一诺与白楠听到宣布，白楠录音留存。"
           }
         ],
         "characterIds": [
           "shenyinuo",
           "baiman"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo",
-          "baiman"
-        ]
-      },
-      {
-        "id": "truth_event_31",
-        "time": {
-          "display": "22:10",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "22:10"
-          }
-        },
-        "title": "宣言",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "宣言（十年署名被夺+新节目被并，动机）→ 报修工单（对讲、监控两盏灯皆因她而灭）。红鲱鱼：白楠的三段录音与'发现人'身份、秦克的四十七万回扣与"
-          }
-        ],
-        "characterIds": [
-          "baiman",
-          "qinke"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "baiman",
-          "qinke"
+        "clueIds": [
+          "luyin_paiban",
+          "cehua_yuangao"
         ]
       },
       {
@@ -1610,19 +1871,18 @@
             "time": "22:20"
           }
         },
-        "title": "鲍长根来访登记送夜宵",
+        "title": "鲍长根来访登记",
         "content": [
           {
             "type": "paragraph",
-            "text": "鲍长根来访登记送夜宵，在门厅等候。"
+            "text": "鲍长根在门厅登记并等候。"
           }
         ],
         "characterIds": [
           "laobaogen"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "laobaogen"
+        "clueIds": [
+          "jianbao_dian"
         ]
       },
       {
@@ -1635,16 +1895,15 @@
             "time": "22:35"
           }
         },
-        "title": "罗夜航开始直播第一段",
+        "title": "罗夜航开始直播",
         "content": [
           {
             "type": "paragraph",
-            "text": "罗夜航开始直播第一段。"
+            "text": "《午夜直达》开始当晚直播。"
           }
         ],
         "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "clueIds": []
       },
       {
         "id": "truth_event_7",
@@ -1660,16 +1919,13 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "沈一诺送手卡进播音间（门禁可证），罗夜航垫好靠垫准备小睡。"
+            "text": "沈一诺送手卡后离开，罗夜航继续直播。"
           }
         ],
         "characterIds": [
           "shenyinuo"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo"
-        ]
+        "clueIds": []
       },
       {
         "id": "truth_event_8",
@@ -1681,19 +1937,42 @@
             "time": "22:57"
           }
         },
-        "title": "罗夜航对直播说'垫播完叫我'——此时尚活…",
+        "title": "罗夜航说垫播后叫醒他",
         "content": [
           {
             "type": "paragraph",
-            "text": "罗夜航对直播说'垫播完叫我'——此时尚活着。"
+            "text": "直播中说“垫播完叫我”，确认垫播开始前仍活着。"
           }
         ],
         "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "clueIds": [
+          "diaoyintai_rizhi"
+        ]
       },
       {
-        "id": "truth_event_29",
+        "id": "truth_event_10",
+        "time": {
+          "display": "23:00",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "广告垫播开始",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "垫播自动启动，预定持续十二分钟。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [
+          "diaoyintai_rizhi"
+        ]
+      },
+      {
+        "id": "truth_event_12",
         "time": {
           "display": "23:03",
           "precision": "exact",
@@ -1702,69 +1981,41 @@
             "time": "23:03"
           }
         },
-        "title": "进",
+        "title": "备用凭证进入播音间走廊",
         "content": [
           {
             "type": "paragraph",
-            "text": "进"
+            "text": "备用卡K-17进入播音间走廊。领用簿、维修签收和席位交接表都记录沈一诺在设备检查窗口内进入或暂离；这些记录共同支持机会，但表单内容仍可质疑。"
           }
         ],
         "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
-      },
-      {
-        "id": "truth_event_18",
-        "time": {
-          "display": "23:05–23:08",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:05"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "23:08"
-          }
-        },
-        "title": "白楠曾探头进导播间听见轻轻一声'啪嗒",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "白楠曾探头进导播间听见轻轻一声'啪嗒'。"
-          }
-        ],
-        "characterIds": [
-          "baiman"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "baiman"
+        "clueIds": [
+          "menjin_buchuan",
+          "spare_card_log",
+          "engineering_receipt"
         ]
       },
       {
-        "id": "truth_event_33",
+        "id": "truth_event_14",
         "time": {
-          "display": "23:05",
+          "display": "23:03",
           "precision": "exact",
           "start": {
             "dayOffset": 0,
-            "time": "23:05"
+            "time": "23:03"
           }
         },
-        "title": "被拦、何大有的烟酒与缓存失职——人人有秘…",
+        "title": "对讲静音开启",
         "content": [
           {
             "type": "paragraph",
-            "text": "被拦、何大有的烟酒与缓存失职——人人有秘密，无人是第二凶手。"
+            "text": "导播席账号开启对讲静音；系统不记录实际操作者。"
           }
         ],
-        "characterIds": [
-          "hedayou"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "hedayou"
+        "characterIds": [],
+        "clueIds": [
+          "diaoyintai_rizhi",
+          "console_handover"
         ]
       },
       {
@@ -1777,19 +2028,22 @@
             "time": "23:06"
           }
         },
-        "title": "她用沙发靠垫捂压至窒息",
+        "title": "罗夜航遭靠垫压迫窒息",
         "content": [
           {
             "type": "paragraph",
-            "text": "她用沙发靠垫捂压至窒息，摆成侧卧'呕吐'姿势、泼上啤酒，取走一只空罐。"
+            "text": "沈一诺进入播音间，以沙发靠垫压迫罗夜航口鼻致死，后摆放侧卧并泼洒啤酒伪装醉酒窒息。现场体征支持死因，身份由机会与动机材料交叉推断。"
           }
         ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "characterIds": [
+          "shenyinuo"
+        ],
+        "clueIds": [
+          "xianchang_kanyan"
+        ]
       },
       {
-        "id": "truth_event_30",
+        "id": "truth_event_17",
         "time": {
           "display": "23:08",
           "precision": "exact",
@@ -1798,16 +2052,90 @@
             "time": "23:08"
           }
         },
-        "title": "出的唯一一人）→ 策划原稿与",
+        "title": "备用凭证离开走廊",
         "content": [
           {
             "type": "paragraph",
-            "text": "出的唯一一人）→ 策划原稿与"
+            "text": "同一共用备用凭证离开；无法单凭此记录确认持卡人。"
           }
         ],
         "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "clueIds": [
+          "menjin_buchuan"
+        ]
+      },
+      {
+        "id": "truth_event_18",
+        "time": {
+          "display": "23:09",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:09"
+          }
+        },
+        "title": "白楠看见沈一诺回到导播席",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "23:09:08白楠回导播间对台本，亲眼看见沈一诺坐回导播席操作控制台；四秒后对讲静音关闭。白楠不能确认谁开启静音。"
+          }
+        ],
+        "characterIds": [
+          "baiman"
+        ],
+        "clueIds": [
+          "console_handover",
+          "luyin_paiban",
+          "diaoyintai_rizhi"
+        ]
+      },
+      {
+        "id": "truth_event_20",
+        "time": {
+          "display": "23:09",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:09"
+          }
+        },
+        "title": "对讲静音关闭",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "导播席账号恢复对讲。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [
+          "diaoyintai_rizhi"
+        ]
+      },
+      {
+        "id": "truth_event_22",
+        "time": {
+          "display": "23:12",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:12"
+          }
+        },
+        "title": "白楠发现尸体并呼救",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "白楠先进入播音间发现尸体，沈一诺闻声赶到。"
+          }
+        ],
+        "characterIds": [
+          "baiman",
+          "shenyinuo"
+        ],
+        "clueIds": [
+          "xianchang_kanyan"
+        ]
       },
       {
         "id": "truth_event_23",
@@ -1819,19 +2147,18 @@
             "time": "23:20"
           }
         },
-        "title": "鲍长根刷卡离台",
+        "title": "鲍长根离开电台",
         "content": [
           {
             "type": "paragraph",
-            "text": "鲍长根刷卡离台（不知情）。"
+            "text": "门禁记录显示刷卡离台。"
           }
         ],
         "characterIds": [
           "laobaogen"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "laobaogen"
+        "clueIds": [
+          "jianbao_dian"
         ]
       },
       {
@@ -1844,21 +2171,19 @@
             "time": "23:25"
           }
         },
-        "title": "急救初判'酒后呕吐窒息",
+        "title": "急救并封存现场",
         "content": [
           {
             "type": "paragraph",
-            "text": "急救初判'酒后呕吐窒息'；沈一诺提议封播音间保护设备，何大有执行。"
+            "text": "急救初判与体征不符；沈一诺建议封存现场，何大有执行。"
           }
         ],
         "characterIds": [
           "shenyinuo",
           "hedayou"
         ],
-        "clueIds": [],
-        "participantIds": [
-          "shenyinuo",
-          "hedayou"
+        "clueIds": [
+          "xianchang_kanyan"
         ]
       },
       {
@@ -1871,63 +2196,124 @@
             "time": "23:40"
           }
         },
-        "title": "老鲍在收音机里听到消息折返",
+        "title": "鲍长根听闻事故后折返",
         "content": [
           {
             "type": "paragraph",
-            "text": "老鲍在收音机里听到消息折返。破案链：现场勘验（月牙形压痕+眼睑出血点+无呕吐残迹，否定呕吐窒息）→ 泼洒的啤酒（自上而下泼洒、消失的空罐）→ 调音台日志（23:03:41 导播席静音键的按键记录）→ 白楠的录音与垫播时长（作案窗口的唯一性）——链路闭合，锁定沈一诺。"
+            "text": "老鲍在出租车收音机里听到消息后折返。"
           }
         ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
+        "characterIds": [
+          "laobaogen"
+        ],
+        "clueIds": [
+          "engineering_audit"
+        ]
       }
     ],
     "keyEvidenceIds": [
-      "cehua_yuangao",
-      "jianbao_dian"
+      "xianchang_kanyan",
+      "diaoyintai_rizhi",
+      "menjin_buchuan",
+      "console_handover",
+      "spare_card_log",
+      "engineering_receipt",
+      "engineering_audit",
+      "cushion_transfer",
+      "uniform_fiber_check"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_4",
+        "id": "evidence_mechanism",
         "clueIds": [
-          "cehua_yuangao",
+          "xianchang_kanyan",
           "luyin_paiban"
         ],
-        "conclusion": "策划原稿证明《午夜直达》的开播案出自沈一诺之手，十年署名被夺、新节目被合并构成强烈杀人动机。"
+        "conclusion": "法医体征及靠垫压痕支持外力压迫窒息，泼酒与摆放痕迹支持伪装；直播与发现时间将案发限定在垫播期间。它们确认死因和窗口，不单独识别操作者。"
       },
       {
-        "id": "evidence_5",
+        "id": "evidence_access",
         "clueIds": [
-          "jianbao_dian",
-          "baoliao_shouka"
+          "menjin_buchuan",
+          "spare_card_log",
+          "engineering_receipt",
+          "console_handover"
         ],
-        "conclusion": "老听众的剪报揭示罗夜航十五年前制造过「毒护士」网暴事件，说明死者树敌众多，为其他嫌疑人提供了合理动机但并非真凶指向。"
+        "conclusion": "门禁缓存中的K-17走廊通行与领用簿的沈一诺签领相合；维修签收联把她放进播音间检查线路的23:03—23:08窗口；交接表显示她负责导播席且在23:09返回。文件、凭证缓存和工程值班员签收构成独立的进入机会链，但均不能单独证明杀人。"
+      },
+      {
+        "id": "evidence_identity",
+        "clueIds": [
+          "cehua_yuangao",
+          "console_handover",
+          "spare_card_log",
+          "engineering_receipt",
+          "diaoyintai_rizhi",
+          "menjin_buchuan",
+          "luyin_paiban"
+        ],
+        "conclusion": "署名争议和新节目安排提供沈一诺的动机；交接表、备用卡领用簿、工程工单分别连接她与控制台职责、K-17凭证及播音间进入窗口；门禁和调音日志提供相同分钟段的机器记录，白楠在23:09:08看到她回到导播席作时间校验。多类材料共同支持身份与机会，但不能单卡定凶，维修工作也可作为她的替代解释。"
+      },
+      {
+        "id": "evidence_killing_act",
+        "clueIds": [
+          "xianchang_kanyan",
+          "cushion_transfer",
+          "uniform_fiber_check",
+          "engineering_receipt",
+          "engineering_audit",
+          "spare_card_log"
+        ],
+        "conclusion": "尸检与现场检验确认靠垫造成口鼻压迫；靠垫上的死者分泌物、啤酒及制服纤维说明它在案发中被使用并发生制服接触。纤维批次与沈一诺袖口脱丝相符但多人共用，需结合她签领K-17及进入窗口；维修自检、告警和领料记录与“确实进屋修线”的签收解释不符。任何一项都不能单独定凶，现场机制、接触、机会及维修矛盾合并后才支持实施压迫的推断。"
       }
     ],
     "redHerrings": [
       {
-        "id": "red_herring_1",
+        "id": "red_herring_baiman",
         "clueIds": [
           "luyin_paiban"
         ],
         "explanation": [
           {
             "type": "paragraph",
-            "text": "白楠的三段录音与'发现人'身份"
+            "text": "白楠持有录音且负责发现尸体，容易引起怀疑；录音的时间戳、配音间工程文件与23:12接档安排可核验她的行踪，但不应只凭“发现者”身份排除或定罪。"
           }
         ]
       },
       {
-        "id": "red_herring_2",
+        "id": "red_herring_qinke",
         "clueIds": [
           "qinke_liushui",
-          "baoliao_shouka"
+          "cehua_yuangao"
         ],
         "explanation": [
           {
             "type": "paragraph",
-            "text": "秦克的四十七万回扣与"
+            "text": "秦克确有四十七万回扣的经济动机；广告部对账只能覆盖至23:00，需核对后续刷卡和账务时间，不能以动机替代案发窗口内的机会证据。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_laobaogen",
+        "clueIds": [
+          "jianbao_dian"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "鲍长根因十五年前的报道怀恨在心；门厅来访、被拦与离台记录可核验他在关键时段未上楼。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_hedayou",
+        "clueIds": [
+          "menjin_buchuan"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "何大有管理门禁且当晚拦过鲍长根，可能接触备用卡；应核验备用卡登记及交接记录，不能把设备管理权限直接当作犯罪证据。"
           }
         ]
       }
@@ -1935,46 +2321,46 @@
     "supplemental": [
       {
         "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
-      },
-      {
-        "type": "paragraph",
-        "text": "23:"
+        "text": "主持人材料流转：第1轮优先公开现场勘验，确保玩家能判断不是呕吐窒息；第1轮末或第2轮公开啤酒痕迹与录音/排班，区分死因与动机；第2轮公开门禁补传和调音台日志。若玩家未搜到门禁记录，最迟第2轮讨论前由何大有提交值班室打印件；若未搜到操作日志，主持人可让白楠展示23:05手机录音并由导播间终端打印时间戳。身份仍须结合交接表、备用卡领用簿、工程部工单原件与策划原稿推理；主持人不得把单张门禁卡直接宣布为凶手证据。"
       }
     ],
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是值班导播沈一诺。《午夜直达》的开播案是她写的，名字却是罗夜航的；她替他守了十年的垫播、对讲、秒表，等来的却是'素材归我，导播就是提词的'。她没有用刀，没有下毒——她用的是这栋楼最熟悉的东西：一通'线路老化'的报修，一次'维保'停用的监控，一段十二分钟的垫播，和一只垫了十年的靠垫。全世界都以为酗酒的王牌主播会死在酒上，她只是让这个'以为'有了形状。她的破绽：死者嘴边太干净，靠垫的缝线在口鼻上盖了章；泼下去的啤酒不认壶口的方向；还有调音台不会说谎——23:03:41，导播席的静音键响过一声，白楠听见了，日志记下了。白楠的录音里存着凶案的前因，秦克的流水里存着凶案的红鲱鱼，老鲍的剪报里存着死者的另一副面孔，何大有的缓存里存着最后的门。午夜电台照常开播，只是那一档节目，再没有人替她提词。"
+        "text": "真相：凶手是值班导播沈一诺。她十年前写下《午夜直达》的策划，却长期没有署名；如今罗夜航又宣布把她的新节目并入旧节目。23:00垫播开始后，沈一诺利用熟悉的工作流程与监控停用窗口接近播音间，用沙发靠垫压迫罗夜航口鼻致窒息，再摆放身体并泼洒啤酒。她试图用对讲静音与共用备用凭证遮掩行动。现场体征先揭示真正死因，泼酒痕迹揭示伪装；日志与门禁只提供机会窗口，交接记录、凭证领用、工单笔迹、白楠的目击和沈一诺的署名动机共同完成身份推断。每张证据各自有限，拼合后才形成完整结论。"
       }
     ]
   },
   "flow": {
     "selfIntroRounds": 1,
-    "searchRounds": 2,
+    "searchRounds": 3,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "死因与静音时间窗",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先用现场勘验区分醉酒意外与外力窒息，再对照垫播、静音、走廊门禁和23:09回到导播席的时间。暂时只回答“发生了什么、什么时候”，不要凭共享账号或单条门禁记录认人。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "身份、进入机会与动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "公开导播席交接表、备用卡原始领用簿和工程工单签收联，核对K-17、沈一诺签领、播音间设备检查及23:09回席是否相互吻合；再与动机材料和竞争嫌疑人行踪交叉检验。维修是替代解释，机会不等于实施杀人。 第3轮公开设备核验与靠垫痕迹比对，检查“正当维修”的工单是否吻合，并把现场接触线索与机会、动机分开评估。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1997,6 +2383,98 @@
             "text": "沈一诺保住了导播席，也保住了秘密。《午夜直达》照常开播，她照常在23:00按下垫播键——只是每一次靠垫落在沙发上的声响，都让她手指发僵。白楠的录音还在手机里，秦克的流水还在保险柜里，真相在电台的暗处，等着下一双翻日志的手。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求分开陈述死因、静音与进入窗口、身份、动机四层；身份结论至少引用两份不同来源的公开材料，并回应维修这一替代解释。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "每位玩家报告一个案发前后的时间点，并说清亲眼所见、系统记录和推断各是什么。"
+      },
+      {
+        "phase": "READING",
+        "notes": "开局先交代垫播时间和现场死因线索；门禁只到走廊、调音日志只到账号。避免使用任何私卡目击单独锁人。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮兜底公开现场勘验、调音台日志、门禁补传、录音排班、啤酒现场及合并后的原稿/手卡线索，搭出死因和时间窗，但不揭示单卡身份。第二轮必须保证公开导播席交接表、K-17领用归还簿、工程工单签收联原件，再与署名争议、广告流水和剪报交叉核对。 第3轮必须保证公开工程独立自检/领料核验、靠垫接触痕迹检验和制服纤维比对。先用自检与领料核验工单所称维修，再用靠垫及纤维材料讨论杀人行为；纤维批次共用，不得当作个人指纹。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分四层讨论：外力窒息与现场伪装；23:03—09静音和走廊通行；谁实际进入播音间及回到导播席；署名争议与其他角色的动机。交接、卡簿、工单是独立来源，每份都有局限；维修、共享凭证和管理权限均可作为竞争解释。 进一步检验维修替代解释：工程独立自检正常且无领料，和签收联所称复位测试不相符；靠垫死者分泌物/啤酒痕迹说明其参与压迫，制服批次纤维与沈一诺脱丝提供接触关联但非个人唯一。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把初判酒后呕吐当成死因，或尚未检查现场。",
+        "hint": "提示查看口鼻压痕、眼睑出血点与无呕吐残迹，并让急救医师说明死亡时间范围。"
+      },
+      {
+        "condition": "玩家找到门禁或控制台日志后直接认定沈一诺。",
+        "hint": "先分别公开原始领用簿中的K-17签领、交接表中的暂离/回席、工程工单的播音间签收，再将K-17门禁与静音日志对时；即使能证明进入机会，仍要用动机及案发手段材料交叉核实。 第3轮再展示设备自检/领料原件与靠垫、制服纤维检验，要求分别回应维修矛盾和现场接触，不可单凭纤维定人。"
+      },
+      {
+        "condition": "玩家卡在多个嫌疑人的动机比较。",
+        "hint": "提醒查看23:03—09的三份原件：席位交接表、K-17领用簿和工程工单签收。再对照白楠23:09目击与机器日志，解释这组材料能证明的职责、凭证和进入机会，以及不能证明的杀人行为。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "xianchang_kanyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "diaoyintai_rizhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "menjin_buchuan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "cehua_yuangao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "qinke_liushui",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jianbao_dian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "luyin_paiban",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "console_handover",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "spare_card_log",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "engineering_receipt",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "engineering_audit",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "cushion_transfer",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "uniform_fiber_check",
+        "deadlineRound": 3
       }
     ]
   }

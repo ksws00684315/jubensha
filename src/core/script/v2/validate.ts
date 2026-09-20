@@ -1,5 +1,5 @@
 import type { Narrative, ScriptDocV2, TimelineTime } from "./schema";
-import { isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
+import { isPlaceholderTimelineTime, isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
 import { narrativeToText } from "../compat";
 
 export interface ScriptV2Issue {
@@ -74,6 +74,11 @@ function checkTimelineContent(issues: ScriptV2Issue[], entries: TimelineEntryLik
         `时间线标题是机械占位「${entry.title.trim()}」，不含任何信息；它会被念进 AI 上下文与复盘宣读，请改为事件摘要`
       );
     }
+    if (isPlaceholderTimelineTime(entry.time.display)) {
+      issue(issues, "error", `${path}.${index}.time.display`, `时间线时间仍是占位值「${entry.time.display.trim()}」，请填写具体时刻或有意义的相对时间`);
+    } else if (entry.time.precision === "relative" && /^(?:前后|稍后|之后|期间|某时|当时|夜间|白天)$/.test(entry.time.display.trim())) {
+      issue(issues, "warning", `${path}.${index}.time.display`, "相对时间标签缺少可识别的事件或时段信息，建议补充具体时段");
+    }
     if (isTruncatedTimelineText(narrativeToText(entry.content))) {
       issue(issues, "warning", `${path}.${index}.content`, "时间线条目首尾被截断（缺上一句或下一句），建议重写为完整叙述");
     }
@@ -134,6 +139,12 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
       if (secret.disclosure !== "conditional") {
         issue(issues, "warning", `characters.${index}.privateCard.secrets.${sIndex}.trigger`, "trigger 只对 conditional 秘密自动生效");
       }
+    }
+    for (const [dIndex, hook] of character.privateCard.defenseHooks.entries()) {
+      checkRefs(issues, hook.brokenByPublicClueIds, clueIds, `characters.${index}.privateCard.defenseHooks.${dIndex}.brokenByPublicClueIds`);
+    }
+    if (!character.privateCard.isCulprit && character.privateCard.defenseHooks.length) {
+      issue(issues, "warning", `characters.${index}.privateCard.defenseHooks`, "通常只为真凶配置辩解钩子；请确认这不是误填");
     }
   }
 

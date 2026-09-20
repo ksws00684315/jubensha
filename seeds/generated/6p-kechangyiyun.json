@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "以官身主持封锁与查案，先稳住内外帘，把案子办成「主考痰厥暴毙」保住贡院体面。烛匣经你之手，必须先撇清：匣是你封的，封条完好，开匣之手另有其人——查清这一点，你也才安全。"
+                "text": "说明你按规程在戌时末封好烛匣；交接簿只有“已收”，封蜡又由两个官署共用，不能凭封条重贴就把人锁定。协助厘清谁在何时经转桶、手记能否精确标记死亡时刻。"
               }
             ],
             "priority": "primary"
@@ -73,14 +73,78 @@
           {
             "id": "character_luobingheng_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "巡查外帘各所",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）巡查外帘各所。戌时末（约21时）将封好的御烛匣交入内外帘帘门转桶，封条亲书。亥时（约21时）回监临公廨批场规文书，一夜未离，笔迹与时刻可查。子时三刻（约23时45分）闻惊，即刻封内帘、锁外帘，主持查案。"
+                "text": "巡查外帘各所。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luobingheng_event_1_part_2",
+            "time": {
+              "display": "戌时末（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "将封好的御烛匣交入内外帘帘门转桶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "将封好的御烛匣交入内外帘帘门转桶，封条亲书。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luobingheng_event_1_part_3",
+            "time": {
+              "display": "亥时（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "回监临公廨批场规文书",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回监临公廨批场规文书，一夜未离，笔迹与时刻可查。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luobingheng_event_1_part_4",
+            "time": {
+              "display": "子时三刻（约23时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:45"
+              }
+            },
+            "title": "闻惊",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊，即刻封内帘、锁外帘，主持查案。"
               }
             ],
             "characterIds": [],
@@ -94,7 +158,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "烛匣是你戌时末封入转桶的，封条亲书——若封条有重开封取的痕迹，那便是帘内接匣之人干的，而每夜入帘接匣呈烛的，只有弥封官。"
+                "text": "封条重贴只证明封后有人碰过烛匣；弥封所和监临公廨领用同批封蜡，转桶签收没有实名。弥封官按例常进内帘，但不是唯一可能经手人。"
               }
             ],
             "source": "other",
@@ -107,7 +171,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "差役闲话：亥时初弥封官照例持弥封总册入内帘——他是每夜唯一进主考值房的外帘官。"
+                "text": "弥封官通常持总册入帘；另有同考呈落卷、医士隔帘送药和誊录书手补送朱卷等公务经过。每次是否进入值房、是否触碰烛匣，需要分开核对。"
               }
             ],
             "source": "other",
@@ -190,19 +254,103 @@
           {
             "id": "character_shenmolin_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "起在丙字房批卷",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）起在丙字房批卷。亥时一刻（约21时15分）去受卷所问丙字十号墨卷下落，与受卷官卢守拙交谈一盏茶。亥时二刻（约21时30分）回房。子时（约23时）理齐落卷，动笔写剖白呈文。子时三刻（约23时45分）持落卷入内帘请示，发现主考尸身，即刻惊报。"
+                "text": "起在丙字房批卷。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenmolin_event_1_part_2",
+            "time": {
+              "display": "亥时一刻（约21时15分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "去受卷所问丙字十号墨卷下落",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "去受卷所问丙字十号墨卷下落，与受卷官卢守拙交谈一盏茶。"
               }
             ],
             "characterIds": [
               "lushouzhuo"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenmolin_event_1_part_3",
+            "time": {
+              "display": "亥时二刻（约21时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "回房",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenmolin_event_1_part_4",
+            "time": {
+              "display": "子时（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "理齐落卷",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "理齐落卷，动笔写剖白呈文。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_shenmolin_event_1_part_5",
+            "time": {
+              "display": "子时三刻（约23时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:45"
+              }
+            },
+            "title": "持落卷入内帘请示",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持落卷入内帘请示，发现主考尸身，即刻惊报。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           }
         ],
@@ -266,7 +414,7 @@
         "bio": [
           {
             "type": "paragraph",
-            "text": "外帘弥封官，掌糊名、编号、转誊之权，性谨细，二十年账目从无差错。每夜亥时持弥封总册穿帘入内，是唯一每夜进主考值房的外帘官。"
+            "text": "外帘弥封官，掌糊名、编号与转誊，常按规持总册入帘；烛匣交接记录不实名，其他公务也可能经转桶往来。"
           }
         ],
         "relationships": []
@@ -275,7 +423,7 @@
         "backstory": [
           {
             "type": "paragraph",
-            "text": "你叫秦九章，弥封官。二十年前你三场俱佳，因无银打点被黜落，从此恨透「银子进科场」。可如今盐商万有财把三千两抬进了你家后门——他儿子的卷子在你手里。你终究干了：借弥封编号之权，把万柏舟的落卷朱卷抽换成中卷。主考周慎行前日抽查，在手记里写下「编号错位者三」，明日辰时调墨卷亲核。一核，你就完了。"
+            "text": "你叫秦九章，弥封官。二十年前你三场俱佳，因无银打点被黜落，从此恨透“银子进科场”。如今万有财的三千两进了你手，万家之子的卷子也在弥封总册中。你借编号权限替其抽换朱卷。主考周慎行写下“编号错位者三”，说明卷册异常即将受查；但礼单、卷号和款项各有不同来源，任何一项单独公开都不能还原整件事。"
           }
         ],
         "secrets": [
@@ -285,7 +433,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你就是凶手。你受盐商万有财三千两，抽换其子万柏舟（戊字十一号）朱卷舞弊；主考明日辰时要调墨卷核「编号错位」，你昨夜借验烛之名换下御烛真芯、换上拌了信石粉封蜡的双股毒芯。亥时初（约21时）呈册入值房时挑亮毒烛，烟毒半个时辰内发作，主考亥时末（约22时40分前后）毙命。"
+                "text": "你是凶手。你收下万家三千两，利用弥封权限抽换万柏舟（戊字十一号）的朱卷。周慎行准备调墨卷复核，你趁烛匣交接时换入含砷毒芯，并在亥时初入帘呈册时挑亮；烟气逐渐在衡文堂累积，周慎行约22时左右死亡。你在21:45左右离开内帘，之后回弥封所核册。尸体到23:45才被发现，医官只能给出较宽的死亡时间范围。"
               }
             ],
             "disclosure": "never"
@@ -298,7 +446,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把死亡时间往后推——让所有人相信主考亥时初还好好批卷、子时前后才犯痰厥，那么你在值房短短一盏茶便无足轻重。咬定「亥时二刻已出内帘，此后一直在弥封所核册」。有人提烛焰发青，推给灯花；有人提调墨卷，抢先拦一句「主考新丧，核卷从长计议」。真芯还压在弥封所封蜡匣底，天亮前必须处理。"
+                "text": "让众人把事实和推论分开。封条重贴、砷中毒、青短烛焰和卷号错位各自都不能单独证明换芯者或舞弊者；提醒大家多人能经手烛匣，死亡时间只能估算。若万家票据被发现，承认收款往来但争辩它未必用于舞弊；不要否认你经手过总册或烛匣。"
               }
             ],
             "priority": "primary"
@@ -308,14 +456,110 @@
           {
             "id": "character_qinjiuzhang_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在弥封所核总册",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在弥封所核总册。戌时末（约21时）接帘门转桶送出的烛匣——匣中御烛芯昨夜已被你换过。亥时初（约21时）持弥封总册入内帘，进主考值房呈册、挑亮烛芯。亥时三刻（约22时15分）方出帘门——比你的自述晚了一刻，这是你要瞒的头一个漏洞。亥时三刻后回弥封所核册至子时。子时三刻闻惊。"
+                "text": "在弥封所核总册。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinjiuzhang_event_1_part_2",
+            "time": {
+              "display": "戌时末（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "接帘门转桶送出的烛匣——匣中御烛芯昨夜已被你换过",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接帘门转桶送出的烛匣——匣中御烛芯昨夜已被你换过。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinjiuzhang_event_1_part_3",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "持弥封总册入内帘",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持弥封总册入内帘，进主考值房呈册、挑亮烛芯。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinjiuzhang_event_1_part_4",
+            "time": {
+              "display": "亥时三刻（约21时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "方出帘门——比你的自述晚了一刻",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "方出帘门——比你的自述晚了一刻，这是你要瞒的头一个漏洞。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinjiuzhang_event_1_part_5",
+            "time": {
+              "display": "亥时三刻",
+              "precision": "relative"
+            },
+            "title": "后回弥封所核册至子时",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后回弥封所核册至子时。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qinjiuzhang_event_1_part_6",
+            "time": {
+              "display": "子时三刻",
+              "precision": "relative"
+            },
+            "title": "闻惊",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊。"
               }
             ],
             "characterIds": [],
@@ -329,7 +573,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "真御烛芯被你带回弥封所压在封蜡匣底——那是唯一的物证，天亮前必须处理掉。"
+                "text": "被换下的原烛芯藏在你值房封蜡匣底。它能证明有人保留了旧芯，但对外还需与残烛成分、封条交接和经手时间一起核验。"
               }
             ],
             "source": "other",
@@ -342,7 +586,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "谢小蝉亥时二刻来转递窗时你正在值房多坐了一刻——她隔窗看见案头烛焰发青；你出门时她恰低头，你赌她没看清你的脸。"
+                "text": "谢小蝉约21:30隔窗看见伏案身影与青短烛焰，约21:45又与一名携册出帘者擦身；她没有看清脸，也没判断主考当时是否已死。"
               }
             ],
             "source": "other",
@@ -355,7 +599,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "主考手记「明日辰时调墨卷亲核」你亲手呈册时看见了——主考一死，调卷之权归监临，而监临未必肯越帘核卷。"
+                "text": "周慎行的手记要求明日核对墨卷；卷号异样可能来自错誊、错装或舞弊。万家账房票据若被发现，会暴露你收款，但款项用途仍需与卷面变化交叉验证。"
               }
             ],
             "source": "other",
@@ -370,7 +614,125 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_seal",
+            "claim": "封条重贴只证明有人碰过烛匣；签收不实名，同批封蜡由监临公廨与弥封所共用。",
+            "basis": "交接簿没有逐手签名，封蜡领用簿也不是个人专用。",
+            "brokenByPublicClueIds": [
+              "zhuanfengfengtiao",
+              "zhuhe_jiaojie",
+              "yuzhucanzhu"
+            ]
+          },
+          {
+            "id": "defense_time",
+            "claim": "谢小蝉只看见伏案和青短烛焰，没探脉；她擦身时看不清携册者的脸。",
+            "basis": "死亡时刻估计受室温影响，尸体直到23:45才被发现。",
+            "brokenByPublicClueIds": [
+              "xie_shijian",
+              "yangu_jianyan",
+              "shoujishouji"
+            ]
+          },
+          {
+            "id": "defense_fraud",
+            "claim": "万家票据证明有付款往来，不自动证明款项用于换卷；卷号错位也可能来自误誊或误装。",
+            "basis": "总册只显示异常，谢谨铺位也有一页新誊残卷；骆秉衡另收过万家礼金。",
+            "brokenByPublicClueIds": [
+              "wanjia_zhang",
+              "mifengzongce",
+              "puzhouxiujuan",
+              "chengyilidan"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "qin_stage1_knowledge",
+                "title": "第一幕应对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "强调封蜡共用、转桶不实名、死亡时间范围较宽；承认你按规程呈册，但不承认接触毒芯。不要把尸检确认的中毒因果否认成痰厥。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [
+                  "luobingheng",
+                  "xiexiaochan",
+                  "baishu"
+                ],
+                "relatedClueIds": [
+                  "yuzhucanzhu",
+                  "yangu_jianyan",
+                  "zhuanfengfengtiao",
+                  "zhuhe_jiaojie",
+                  "xie_shijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qin_stage1_objective",
+                "title": "分开毒因与经手",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "引导玩家区分“谁碰过烛匣”和“谁换了毒芯”；提醒谢小蝉不能认人，尸检不能指认凶手。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "qin_stage2_knowledge",
+                "title": "第二幕应对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "卷号与付款线索会把你和万家联系起来，但单据还需要互证用途。谢谨残页、骆秉衡程仪及误封卷提供其他违例解释；不要再把付款说成无关礼数。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [
+                  "luobingheng",
+                  "xiexiaochan",
+                  "lushouzhuo"
+                ],
+                "relatedClueIds": [
+                  "mifengzongce",
+                  "shoujishouji",
+                  "wanjia_zhang",
+                  "chengyilidan",
+                  "puzhouxiujuan",
+                  "xiangdiyajuan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qin_stage2_objective",
+                "title": "回应舞弊与动机链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "逐项回应万家付款、卷号异常和手记复核，指出每份材料的证明边界；避免把自己的舞弊动机和杀人行为混为一谈。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -425,14 +787,86 @@
           {
             "id": "character_xiexiaochan_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "至亥时二刻（约21时30分）在誊录所誊卷",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）至亥时二刻（约21时30分）在誊录所誊卷。亥时二刻送补誊朱卷至帘门转递窗，隔窗见主考伏案、烛焰发青。亥时三刻（约22时15分）回誊录所，路上与出帘门的那人错身而过。亥时三刻后留所偷抄朱卷，子时前后回铺位。子时三刻惊闻死讯。"
+                "text": "至亥时二刻（约21时30分）在誊录所誊卷。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiexiaochan_event_1_part_2",
+            "time": {
+              "display": "亥时二刻",
+              "precision": "relative"
+            },
+            "title": "送补誊朱卷至帘门转递窗",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "送补誊朱卷至帘门转递窗，隔窗见主考伏案、烛焰发青。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiexiaochan_event_1_part_3",
+            "time": {
+              "display": "亥时三刻（约21时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "回誊录所",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回誊录所，路上与出帘门的那人错身而过。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiexiaochan_event_1_part_4",
+            "time": {
+              "display": "亥时三刻",
+              "precision": "relative"
+            },
+            "title": "后留所偷抄朱卷",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后留所偷抄朱卷，子时前后回铺位。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiexiaochan_event_1_part_5",
+            "time": {
+              "display": "子时三刻",
+              "precision": "relative"
+            },
+            "title": "惊闻死讯",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "惊闻死讯。"
               }
             ],
             "characterIds": [],
@@ -541,14 +975,74 @@
           {
             "id": "character_baishu_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在医士值房炮制安神散",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在医士值房炮制安神散。亥时三刻（约22时15分）隔帘递清心丸一粒，由帘门转递传进，未见主考。子时（约23时）奉召入内帘验看，判「痰厥」。子时三刻后回房收起清心丸瓷瓶，碾碎两粒掺入安神散销形。"
+                "text": "在医士值房炮制安神散。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baishu_event_1_part_2",
+            "time": {
+              "display": "亥时三刻（约21时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "隔帘递清心丸一粒",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "隔帘递清心丸一粒，由帘门转递传进，未见主考。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baishu_event_1_part_3",
+            "time": {
+              "display": "子时（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "奉召入内帘验看",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "奉召入内帘验看，判「痰厥」。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baishu_event_1_part_4",
+            "time": {
+              "display": "子时三刻",
+              "precision": "relative"
+            },
+            "title": "后回房收起清心丸瓷瓶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后回房收起清心丸瓷瓶，碾碎两粒掺入安神散销形。"
               }
             ],
             "characterIds": [],
@@ -588,7 +1082,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "亥时之后凡入内帘须持穿帘公文——亥时初只有弥封官一人的总册公文过帘。"
+                "text": "亥时之后入内帘需持穿帘公文；弥封官常携总册入帘，沈墨林、白术及誊录书手也有其他公务递送记录，不能据此认定某人是唯一经手者。"
               }
             ],
             "source": "other",
@@ -657,19 +1151,91 @@
           {
             "id": "character_lushouzhuo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "受卷所盘库",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）受卷所盘库，发现短少戊字七号墨卷，翻找至亥时。亥时一刻（约21时15分）沈墨林来问丙字十号，答「墨卷在誊」。亥时三刻后你在箱笼前翻检，误将一份卷压入箱底（正是戊字七号）。子时后在受卷所枯坐。子时三刻闻惊。"
+                "text": "受卷所盘库，发现短少戊字七号墨卷，翻找至亥时。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lushouzhuo_event_1_part_2",
+            "time": {
+              "display": "亥时一刻（约21时15分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:15"
+              }
+            },
+            "title": "沈墨林来问丙字十号",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "沈墨林来问丙字十号，答「墨卷在誊」。"
               }
             ],
             "characterIds": [
               "shenmolin"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_lushouzhuo_event_1_part_3",
+            "time": {
+              "display": "亥时三刻",
+              "precision": "relative"
+            },
+            "title": "后你在箱笼前翻检",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后你在箱笼前翻检，误将一份卷压入箱底（正是戊字七号）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lushouzhuo_event_1_part_4",
+            "time": {
+              "display": "子时",
+              "precision": "relative"
+            },
+            "title": "后在受卷所枯坐",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后在受卷所枯坐。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_lushouzhuo_event_1_part_5",
+            "time": {
+              "display": "子时三刻",
+              "precision": "relative"
+            },
+            "title": "闻惊",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           }
         ],
@@ -764,7 +1330,8 @@
           "type": "paragraph",
           "text": "同考官值房里一几一榻一盏灯，枕下压得住折起的字条；案上半页呈文墨迹被水洇过，房内文书分丙戊两房码放。"
         }
-      ]
+      ],
+      "ownerCharacterId": "shenmolin"
     },
     {
       "id": "location_5",
@@ -774,7 +1341,8 @@
           "type": "paragraph",
           "text": "受卷所里箱笼编号入位，收卷架一层层码到梁下；封箱的火漆完好，盘库的册子摊着，灯下坐着一夜未合眼的人。"
         }
-      ]
+      ],
+      "ownerCharacterId": "lushouzhuo"
     },
     {
       "id": "location_6",
@@ -784,7 +1352,8 @@
           "type": "paragraph",
           "text": "医士值房药匣分格而列，'安神'一格空着，格底散着两粒碾碎的深褐丸药；碾槽里的药末极细，帘外传来更漏声。"
         }
-      ]
+      ],
+      "ownerCharacterId": "baishu"
     },
     {
       "id": "location_7",
@@ -794,7 +1363,19 @@
           "type": "paragraph",
           "text": "监临公廨肃然，公案上令签文书各归其位，抽屉深处压着一张礼单底子；烛光把案牍照得发白，帘外的更鼓一声声传进来。"
         }
-      ]
+      ],
+      "ownerCharacterId": "luobingheng"
+    },
+    {
+      "id": "location_8",
+      "name": "弥封官秦九章值房",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "弥封官值房只设一案一柜，核册封蜡和旧物都收在柜中；房内私人物件与官署文书混放。"
+        }
+      ],
+      "ownerCharacterId": "qinjiuzhang"
     }
   ],
   "clues": [
@@ -806,7 +1387,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "主考周慎行伏于案上，面青唇紫、指甲青灰，口鼻有两道极细的黑烟缕痕——并非单纯痰厥之相。案头御赐金莲烛几乎燃尽，烛泪色偏青；烛芯抽出竟是双股丝线缠着蜡衣，与寻常御烛单股白芯不同。门窗并无强闯痕迹，值房炭盆里烧过的纸灰可辨官纸纹样。"
+          "text": "衡文堂现场记录：周慎行伏案，面色青灰，口鼻周围有细黑色沉积；御赐金莲烛已燃去大半，烛泪呈青灰色，残烛抽出双股丝线缠蜡芯。炭盆有纸灰，门窗无强闯痕迹。现场本身无法判断黑色沉积来自吸入、灯烟还是炭灰，也不能单独证明蜡芯有毒或确定死亡时刻。"
         }
       ],
       "policy": "auto_public",
@@ -821,7 +1402,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "砚下压着主考亲笔手记：「弥封朱卷，编号错位者三，丙、戊两房俱见。明日辰时调墨卷亲核，勿令出帘。」墨迹未干，当是亥时前后所书——他到死都惦记着明早核对墨卷。"
+          "text": "砚下手记由周慎行亲笔写成：“弥封朱卷，编号错位者三，丙、戊两房俱见。明日辰时调墨卷亲核，勿令出帘。”墨迹尚新，只能判断写于当夜，不能据此精确到某一更刻或证明他写后仍然存活多久。"
         }
       ],
       "policy": "manual_public",
@@ -836,7 +1417,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "亥时呈入内帘的总册副本上，三处朱卷编号与墨卷编号错位，其一为戊字十一号万姓举子；该卷朱卷誊迹墨色新于同页，纸口有重新装池的毛茬——像被抽换重誊过。"
+          "text": "亥时呈入内帘的总册副本上，三处朱卷编号与墨卷编号不一致，其中一处为戊字十一号万姓举子；该页墨色和装池边缘与同册其余页不同。它能证明卷面存在异样，尚不能区分误誊、误装、抽换或舞弊。"
         }
       ],
       "policy": "manual_public",
@@ -866,7 +1447,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "白术的药匣「安神」一格空着，格底散着两粒碾碎的深褐药丸；惯常放清心丸瓷瓶的位置空了。白术自陈丸药受潮碾碎弃之，但碾槽里的药末细得像有人连夜赶工。"
+          "text": "白术药匣“安神”一格空着，清心丸瓷瓶不在惯常位置，格底有两粒碾碎的深褐药丸。白术自称丸药受潮后碾碎弃置；留样检验显示丸中含禁用罂壳成分，但没有在死者胃内容物中检出相同成分。它证明医士违规和药物管理问题，不足以解释现场黑色沉积。"
         }
       ],
       "policy": "manual_public",
@@ -881,7 +1462,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "监临公廨抽屉里压着一张礼单底子：「某年族侄下场，谨具程仪二百两，骆大人笑纳。」落款是本省盐商万有财的堂号——万家的银子，竟也摸到了监临的门上。"
+          "text": "监临公廨抽屉里的礼单底子写着：“万家族侄下场，谨具程仪二百两，骆大人笑纳。”这说明骆秉衡收过一笔与万家有关的礼金并承诺照拂；没有证据显示这笔钱送给秦九章，或实际改变过某份试卷。"
         }
       ],
       "policy": "manual_public",
@@ -892,7 +1473,7 @@
       "id": "xiangdiyajuan",
       "locationId": "location_5",
       "name": "箱底压卷",
-      "category": "document",
+      "category": "object",
       "content": [
         {
           "type": "paragraph",
@@ -911,7 +1492,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "誊录书手「谢谨」铺位褥下藏着一页新誊的朱卷残页，编号正是「编号错位」三卷之一，墨色极新，是当夜誊的。誊录所差簿记着：亥时三刻后，誊录所仅书手谢谨一人在值。"
+          "text": "誊录书手谢谨铺位褥下藏有一页新誊的朱卷残页，编号为错位三卷之一；墨色较新。差簿记载亥时二刻后谢谨仍在誊录所，但“仅一人在值”不代表他能接触内帘，也不能证明残页由他造成错号。"
         }
       ],
       "policy": "manual_public",
@@ -926,11 +1507,97 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "帘门转桶内梢的烛匣，封条是监临官骆秉衡亲笔、戌时末所封；但封条揭开重贴过，贴口用弥封所的封蜡料粘合——重封之手，必是每夜入帘接匣呈烛之人。"
+          "text": "帘门转桶内梢的烛匣封条由骆秉衡戌时末亲笔封缄。封条有揭开再贴痕迹，贴口检出弥封所与监临公廨都在用的同批封蜡；封蜡批次不能识别具体经手人。转桶交接时没有逐手签名，重封说明有人接触烛匣，不等于只有弥封官能够动手。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "yangu_jianyan",
+      "name": "尸检与毒物复验单",
+      "category": "medical",
+      "locationId": "location_1",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "由贡院外值候命的两名医官分别验看并交叉复核：肺部与气道有吸入性烟尘，血样检出砷化物；胃内容物未检出可解释症状的对应药丸成分。综合判断为吸入含砷烟气中毒，非单纯痰厥或口服安神丸。因衡文堂温度、死者体质与发现前无人连续观察，死亡时刻只能估为亥时二刻至子时初（约21:30—23:15），不能精确到一刻。该检验确认死因范围，不指出毒物来自何物或谁投放。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "baishu"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "xie_shijian",
+      "name": "转递窗所见与时刻记录",
+      "category": "testimony",
+      "locationId": "location_2",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "谢小蝉供述并在值簿上记下：约21:30送补誊朱卷时，隔窗见主考伏案、烛焰青短；她没有呼唤或探脉，无法判断主考当时是否已死。约21:45她在转递窗外与一名携册出帘的人擦身，雾灯下未看清脸。两次观察只限定状态与出入时间，不识别该人身份。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "xiexiaochan"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "zhuhe_jiaojie",
+      "name": "烛匣交接簿与封蜡领用簿",
+      "category": "document",
+      "locationId": "location_2",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "交接簿记载戌时末骆秉衡封好烛匣，经转桶递入内帘；烛匣签收栏只有“已收”二字，没有签名。封蜡领用簿显示同批封蜡同时发给监临公廨与弥封所。记录证明封缄后有人在帘内外交接、且多个岗位持有同批封蜡；无法据此锁定重封者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "luobingheng",
+        "qinjiuzhang"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "wanjia_zhang",
+      "name": "万家账房的往来票据",
+      "category": "document",
+      "locationId": "location_8",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "万家账房抄件及封存回票：秋闱前分两次支出共三千两，收讫栏记“秦九章”，交付由万家账房管事签押。票据可确认万家向秦九章付款；它本身不能证明款项用于舞弊，也不能证明谁害死主考。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "qinjiuzhang"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "zhenxin_canliu",
+      "name": "封蜡匣底的旧烛芯",
+      "category": "trace",
+      "locationId": "location_8",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "秦九章值房封蜡匣底压着一截未烧尽的单股白丝芯，纤维和御赐金莲烛常制芯相同；外层粘有少量封蜡。该物提示有人留存或拆换过旧烛芯，但仅凭藏匿地点和材质不能证明谁替换了案发当夜的烛芯；需与残烛检验、封蜡交接和时间线对照。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "qinjiuzhang"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -939,54 +1606,77 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "二十年前你三场俱佳，因无银打点被黜落，从此恨透「银子进科场」。"
+        "text": "秦九章收取万家三千两，并利用弥封权限使万柏舟的朱卷出现异样；主考手记显示异常将被复核。程仪礼单另指骆秉衡收过万家二百两，但未证明他改卷或参与杀人。卷面、付款来源、动机和杀人机会各由不同材料证明，不能互相替代。"
       }
     ],
     "method": {
       "summary": [
         {
           "type": "paragraph",
-          "text": "秦九章为保舞弊（替盐商万有财抽换其子朱卷），昨夜借验烛之名将主考御赐金莲烛的真芯换成拌了信石封蜡的双股毒芯；亥时初（约21时）借每夜呈弥封总册入主考值房之机挑亮毒烛，烟毒半个时辰内发作，主考于亥时末（约22时40分前后）毙命于内帘衡文堂——其间秦九章自陈「亥时二刻已出内帘」，实则亥时三刻方出，被谢小蝉错身撞见。"
+          "text": "秦九章利用弥封权限调换万柏舟的朱卷，又在烛匣交接过程中换入含砷毒芯。残烛结构、尸检与烟尘检验共同支持吸入中毒；重贴封条说明有人碰过烛匣，但封蜡两处共用、交接不实名。谢小蝉只记录青短烛焰和模糊出入时间，不能确认主考当时存亡或认出经手者；死亡时间也只能落在较宽区间。卷号异常、万家付款和手记合在一起解释舞弊风险，但礼单与付款用途都需独立核对。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "换烛芯",
+          "title": "确认死因为吸入性砷中毒",
           "content": [
             {
               "type": "paragraph",
-              "text": "秦九章昨夜借「验烛」之名打开帘门转桶内的烛匣，将御赐金莲烛的真芯换下，换上拌了信石封蜡的双股毒芯——封条揭开重贴，贴口用了弥封所的封蜡料。"
+              "text": "现场只见青灰色烟尘与双股烛芯；尸检复验在气道、肺部与血样检出吸入性烟尘及砷化物，胃内没有相符丸药。另有封蜡匣底的旧芯可供比对，但残烛或旧芯单独都不能证明何人换芯。"
             }
           ],
           "clueIds": [
-            "zhuanfengfengtiao"
+            "yuzhucanzhu",
+            "yangu_jianyan",
+            "zhenxin_canliu"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "挑亮毒烛",
+          "title": "复原烛匣重封与经手范围",
           "content": [
             {
               "type": "paragraph",
-              "text": "亥时初（约21时）秦九章持弥封总册入内帘进主考值房呈册，趁机替主考挑亮毒烛芯——御烛残躯抽出的双股丝线芯与寻常单股白芯不同，正是被换过的铁证。"
+              "text": "骆秉衡封匣后，转桶签收没有实名；两处官署共用同批封蜡，封条痕迹不能独占指向秦九章。交接簿和谢小蝉两次观察共同限定了烛匣可能被触碰的时间窗。"
             }
           ],
           "clueIds": [
-            "yuzhucanzhu"
+            "zhuanfengfengtiao",
+            "zhuhe_jiaojie",
+            "xie_shijian"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "毒发身亡与时间谎言",
+          "title": "估计死亡时间而不强行精确到刻",
           "content": [
             {
               "type": "paragraph",
-              "text": "毒烟半个时辰内发作，主考于亥时末（约22时40分前后）毙命。秦九章自陈「亥时二刻已出内帘」，实则亥时三刻方出——谢小蝉在帘门与其错身，戳穿了这句谎言。主考手记「明日辰时调墨卷亲核」说明他死前仍在追查编号错位，秦九章等不到明日。"
+              "text": "谢小蝉21:30隔窗见伏案，没确认生命体征；约21:45只见模糊的携册身影出帘。医官根据尸体与室温将死亡时间估为21:30至23:15；手记墨迹只能证明当夜书写。尸体23:45被发现，故不能把“伏案”直接当作死亡时刻。"
             }
           ],
           "clueIds": [
+            "xie_shijian",
+            "yangu_jianyan",
             "shoujishouji"
+          ]
+        },
+        {
+          "id": "method_step_4",
+          "title": "分层验证卷号舞弊与动机",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "总册显示万柏舟卷号和誊迹异常，主考手记说明他准备复核；万家账房回票另证万家向秦九章付款。骆秉衡收受的二百两礼金属于另一条线索，未证明他改卷。谢谨藏有新誊残页也提供替代解释。多份来源合看才支持秦九章舞弊动机。"
+            }
+          ],
+          "clueIds": [
+            "mifengzongce",
+            "shoujishouji",
+            "wanjia_zhang",
+            "chengyilidan",
+            "puzhouxiujuan"
           ]
         }
       ]
@@ -995,14 +1685,18 @@
       {
         "id": "truth_event_1",
         "time": {
-          "display": "时间待整理",
-          "precision": "relative"
+          "display": "戌时（约20时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
         },
-        "title": "戌时",
+        "title": "外帘各所当值：骆秉衡巡查外帘",
         "content": [
           {
             "type": "paragraph",
-            "text": "戌时（约20时）外帘各所当值：骆秉衡巡查外帘；卢守拙在受卷所盘库，发现短少戊字七号墨卷；沈墨林在丙字房批卷；白术在医士值房炮药；秦九章在弥封所核总册；谢小蝉在誊录所誊卷。戌时末（约21时）骆秉衡将烛匣封入帘门转桶——匣中御烛芯，已被秦九章昨夜借「验烛」之名换为拌信石封蜡的毒芯。亥时初（约21时）秦九章持弥封总册入内帘，进主考值房呈册、挑亮毒烛；周慎行留下手记「明日辰时调墨卷亲核」。亥时一刻沈墨林至受卷所问卷（卢守拙可证），亥时二刻回房。亥时二刻（约21时30分）谢小蝉送补誊朱卷至转递窗，隔窗见主考伏案、烛焰发青。亥时三刻（约22时15分）秦九章出帘门，与回程的谢小蝉错身；白术隔帘递清心丸；毒烟半个时辰发作，周慎行于亥时末（约22时40分前后）毙命。亥时三刻后谢小蝉留所偷抄朱卷；卢守拙翻检箱笼误将戊字七号压入箱底；白术回房；秦九章回弥封所核册。子时（约23时）沈墨林理落卷并动笔写剖白呈文。子时三刻（约23时45分）沈墨林持落卷入内帘发现尸身，惊报；骆秉衡封内帘锁外帘；白术奉召验看判「痰厥」，连夜藏起清心丸药瓶。破案链：手记「编号错位」（舞弊将败露）→ 弥封总册错位三卷（万姓卷被抽换）→ 程仪礼单（万有财的银子牵出弥封官）→ 转桶封条重贴（秦九章开匣）→ 御烛双股毒芯与面青唇紫烟痕（毒烟毙命）→ 谢小蝉「亥时三刻错身」（戳穿秦「二刻已出」的谎言）。红鲱鱼：沈墨林的关节字条、白术的违禁清心丸、骆秉衡的程仪、卢守拙的箱底压卷——人人有罪愆，人人非凶手。"
+            "text": "外帘各所当值：骆秉衡巡查外帘；卢守拙在受卷所盘库，发现短少戊字七号墨卷；沈墨林在丙字房批卷；白术在医士值房炮药；秦九章在弥封所核总册；谢小蝉在誊录所誊卷。"
           }
         ],
         "characterIds": [
@@ -1022,32 +1716,295 @@
           "baishu",
           "lushouzhuo"
         ]
+      },
+      {
+        "id": "truth_event_1_part_2",
+        "time": {
+          "display": "戌时末（约21时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "骆秉衡将烛匣封入帘门转桶——匣中御烛芯",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "骆秉衡将烛匣封入帘门转桶；其后秦九章借当值机会在交接途中拆封换芯并重新粘封。"
+          }
+        ],
+        "characterIds": [
+          "luobingheng",
+          "qinjiuzhang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luobingheng",
+          "qinjiuzhang"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_3",
+        "time": {
+          "display": "亥时初（约21时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "秦九章持弥封总册入内帘",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "秦九章持弥封总册入内帘，进主考值房呈册并挑亮御烛；周慎行留下要求次日复核的手记。"
+          }
+        ],
+        "characterIds": [
+          "qinjiuzhang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qinjiuzhang"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_4",
+        "time": {
+          "display": "亥时一刻",
+          "precision": "relative"
+        },
+        "title": "沈墨林至受卷所问卷（卢守拙可证）",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈墨林至受卷所问卷（卢守拙可证），亥时二刻回房。"
+          }
+        ],
+        "characterIds": [
+          "shenmolin",
+          "lushouzhuo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenmolin",
+          "lushouzhuo"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_5",
+        "time": {
+          "display": "亥时二刻（约21时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "谢小蝉送补誊朱卷至转递窗",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谢小蝉隔转递窗看见主考伏案、烛焰发青变短；她没有探脉，无法判断主考是否已死。"
+          }
+        ],
+        "characterIds": [
+          "xiexiaochan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiexiaochan"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_6",
+        "time": {
+          "display": "亥时三刻（约21时45分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:45"
+          }
+        },
+        "title": "秦九章出帘门",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "秦九章约21:45出帘，与回程的谢小蝉擦身，雾灯下她未能辨认；白术同时隔帘递清心丸，未获主考是否接收的确认。"
+          }
+        ],
+        "characterIds": [
+          "qinjiuzhang",
+          "xiexiaochan",
+          "baishu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qinjiuzhang",
+          "xiexiaochan",
+          "baishu"
+        ]
+      },
+      {
+        "id": "truth_death_estimate",
+        "time": {
+          "display": "约22:00",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "主考可能在此时段中毒死亡",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "秦九章所换毒芯持续燃烧，周慎行约22时左右死于吸入性砷中毒；这是复盘真相时间，玩家手中尸检只能把死亡限定在21:30至23:15。"
+          }
+        ],
+        "characterIds": [
+          "qinjiuzhang"
+        ],
+        "clueIds": [
+          "yangu_jianyan"
+        ],
+        "participantIds": [
+          "qinjiuzhang"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_7",
+        "time": {
+          "display": "亥时三刻",
+          "precision": "relative"
+        },
+        "title": "后谢小蝉留所偷抄朱卷",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "谢小蝉回誊录所后继续留值；卢守拙翻检箱笼时误将戊字七号压入箱底；白术回医士值房，秦九章回弥封所核册。"
+          }
+        ],
+        "characterIds": [
+          "qinjiuzhang",
+          "xiexiaochan",
+          "baishu",
+          "lushouzhuo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qinjiuzhang",
+          "xiexiaochan",
+          "baishu",
+          "lushouzhuo"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_8",
+        "time": {
+          "display": "子时（约23时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "沈墨林理落卷并动笔写剖白呈文",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈墨林理落卷并动笔写剖白呈文。"
+          }
+        ],
+        "characterIds": [
+          "shenmolin"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "shenmolin"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_9",
+        "time": {
+          "display": "子时三刻（约23时45分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:45"
+          }
+        },
+        "title": "沈墨林持落卷入内帘发现尸身",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "沈墨林持落卷入内帘发现尸身，惊报；骆秉衡封内帘锁外帘；白术奉召验看判「痰厥」，连夜藏起清心丸药瓶。"
+          }
+        ],
+        "characterIds": [
+          "luobingheng",
+          "shenmolin",
+          "baishu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luobingheng",
+          "shenmolin",
+          "baishu"
+        ]
       }
     ],
     "keyEvidenceIds": [
-      "zhuanfengfengtiao",
       "yuzhucanzhu",
+      "yangu_jianyan",
+      "zhuanfengfengtiao",
+      "zhuhe_jiaojie",
+      "xie_shijian",
       "mifengzongce",
       "shoujishouji",
-      "chengyilidan"
+      "wanjia_zhang"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "evidence_cause",
         "clueIds": [
-          "zhuanfengfengtiao",
-          "yuzhucanzhu"
+          "yuzhucanzhu",
+          "yangu_jianyan",
+          "zhenxin_canliu",
+          "zhuhe_jiaojie"
         ],
-        "conclusion": "御赐金莲烛的烛芯被换成拌了信石封蜡的双股毒芯：死者面青唇紫、口鼻黑烟缕痕与残烛双股丝芯互为因果；而帘门转桶烛匣的封条揭开重贴、粘合用的正是弥封所封蜡料——重封之手，只能是每夜入帘接匣呈烛的弥封官秦九章。"
+        "conclusion": "现场双股烛芯与青灰烟尘只是异常；尸检复验确认吸入性砷中毒，封蜡匣底旧芯提供可比物。三种材料支持毒芯致死路径，但旧芯留在秦值房不单独证明是谁安装。"
       },
       {
-        "id": "evidence_2",
+        "id": "evidence_reseal",
+        "clueIds": [
+          "zhuanfengfengtiao",
+          "zhuhe_jiaojie",
+          "yuzhucanzhu"
+        ],
+        "conclusion": "封条被揭贴、转桶签收无实名、同批封蜡由两处官署共用，说明有人在交接链中动过烛匣；残烛异常确认烛芯值得检验。材料不支持“只有秦九章能重封”的唯一性判断。"
+      },
+      {
+        "id": "evidence_time",
+        "clueIds": [
+          "xie_shijian",
+          "yangu_jianyan",
+          "shoujishouji"
+        ],
+        "conclusion": "21:30的伏案观察不等于确认存活，21:45模糊出帘身影也不能认人；尸检只能给出宽死亡区间，手记只标示当夜书写。多源材料限定时间，不把死亡时刻强行锁定在某一更刻。"
+      },
+      {
+        "id": "evidence_fraud",
         "clueIds": [
           "mifengzongce",
           "shoujishouji",
-          "chengyilidan"
+          "wanjia_zhang",
+          "puzhouxiujuan",
+          "chengyilidan",
+          "xiangdiyajuan"
         ],
-        "conclusion": "主考手记亲笔写下'编号错位者三，明日辰时调墨卷亲核'，总册副本上戊字十一号万姓举子的朱卷墨色新于同页——舞弊即将败露，杀人时限由此锁死；程仪礼单底子又显示万有财的银子从监临门上一路牵到弥封官手里，换卷牟利者非秦九章莫属。"
+        "conclusion": "总册与手记证明卷号异常并将受复核，万家账房回票另证向秦九章付款；谢谨的残页和骆秉衡收礼说明贡院存在其他违规路径。付款用途、改卷人和杀人行为不能由任一单据单独推出，合并卷面、资金与时间材料后才指向秦九章。"
       }
     ],
     "redHerrings": [
@@ -1101,11 +2058,16 @@
         ]
       }
     ],
-    "supplemental": [],
+    "supplemental": [
+      {
+        "type": "paragraph",
+        "text": "复盘顺序：尸检复验确认吸入砷烟；残烛与匣底旧芯支持烛芯被换，但封条共用封蜡、签收无名，不能独自指人；21:30观察与21:45模糊擦身限定而不确定死亡时刻；总册和手记证明卷号待核，万家票据另证秦九章收款。谢谨误誊/藏卷、卢守拙误封、白术违禁丸药和骆秉衡收礼都是必须分别处理的替代解释。"
+      }
+    ],
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是弥封官秦九章。二十年前他被银子踢出科场，二十年后他把银子放进科场——三千两，换盐商万有财之子的朱卷。主考周慎行在手记里写下「编号错位者三」，明日辰时调墨卷亲核；他等不到明日。御赐金莲烛每晚亥时换新，烛经监临封匣、转桶入帘，最后接匣呈烛的却是他——昨夜他借「验烛」之名换下真芯，换上拌了信石封蜡的双股毒芯；亥时初呈册入值房，替主考挑亮烛芯，退到帘边数着更漏离开。毒烟半个时辰发作，主考死在亥时末，那时他已在弥封所核了半刻册。他算准了贡院的规矩：帘门转桶、穿帘公文、烛烬无声。他没算准三件事：谢小蝉亥时三刻与他在帘门错身、转桶封条上重贴的封蜡料、以及医士没敢说出口的「口鼻烟痕」。沈墨林的关节字条、白术的违禁丸药、骆秉衡的程仪、卢守拙的箱底压卷——四桩罪愆、四团烟雾，替真凶遮了半夜。"
+        "text": "凶手是秦九章。尸检复验确认周慎行死于吸入砷烟，残烛与封蜡匣底旧芯说明御烛可能被换；封条重贴和转桶交接只说明有人接触，不能单独指认秦九章。谢小蝉的两次观察限定了时间范围却认不出携册者，尸检也无法把死亡定到某一刻。另一方面，总册与手记记录即将被复核的卷号异样，万家账房票据独立证明秦九章收款；误封卷、谢谨残页和骆秉衡的礼单提供替代的违规解释。将毒物来源、交接时序、舞弊利益和行踪分开交叉后，才拼出秦九章换芯杀人、阻止复核的完整行为。"
       }
     ]
   },
@@ -1114,7 +2076,31 @@
     "searchRounds": 3,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：毒从何来，死亡何时发生",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第一轮保证公开现场残烛、尸检复验、封条和交接记录、谢小蝉的时间观察。把实际发现、毒物判断、重封和死亡时刻分开讨论；不宣布唯一经手人。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：卷号错位与银钱往来",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二轮保证公开总册、主考手记、万家票据、程仪礼单、误封卷和谢谨残页。讨论舞弊动机与替代解释，不能把任何一张礼单等同于杀人证据。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1124,7 +2110,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "秦九章二十年前被银子踢出科场，二十年后把银子放进科场——可他算准了贡院的规矩，没算准谢小蝉在帘门的那一眼、转桶封条上那层新封的蜡，以及医士咽回去的那半句话。金莲烛燃尽了，科场的暗火也该灭了。"
+            "text": "秦九章被指认。尸检与残烛确认吸入中毒路径，封条与交接簿说明烛匣被重开过，但不能单独指人；总册、手记与万家票据共同揭示舞弊利益。宽死亡时间区间和其他人的违规行为都曾制造疑点，只有分开验证死因、经手、时间和动机后才能得出结论。"
           }
         ]
       },
@@ -1134,9 +2120,105 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "秦九章把真芯压在封蜡匣底，把毒烟藏进御赐金莲烛的青焰里，又用沈墨林的关节字条、白术的违禁丸药、骆秉衡的程仪替自己挡了半夜。天亮了，发榜的日子照常——可今科乡试的每一张卷子，从此都洗不干净。"
+            "text": "秦九章没有被指认。众人确认主考死于吸入性中毒，也发现卷号和烛匣交接异常，却把骆秉衡礼金、白术丸药和谢谨誊卷混成了同一条证据。死亡时刻与烛匣经手者仍未查清，发榜时卷号疑云继续笼罩秋闱。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "先宣读发现时间、现场状态和原始手记，不宣告确切死亡时刻、烛芯毒性或谁重封。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮截止保证公开残烛、尸检复验、封条、交接簿和谢小蝉时间记录；第二轮保证公开总册、手记、万家票据、程仪礼单、药匣、箱底卷、谢谨残页和封蜡匣底旧芯。主持人按截止轮次补齐。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别回答死因、烛匣如何被重开、死亡时间区间、卷号舞弊和资金动机。强调共用封蜡、无名签收、模糊目击和宽尸检区间各自的限制。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前确认至少用尸检与残烛、封条与交接、卷号与付款等独立来源交叉；礼单、服药和失卷各自不能直接等于杀人。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家认为重贴封条证明只有秦九章能开匣。",
+        "hint": "查看交接簿和封蜡领用簿：签收不实名，封蜡两处共用；先确定接触窗口，再找毒物与残芯。"
+      },
+      {
+        "condition": "玩家把21:30伏案当作确切死亡时刻。",
+        "hint": "谢小蝉没有确认生命体征，尸检也只能给宽区间；手记墨迹不能精确到更刻。"
+      },
+      {
+        "condition": "玩家把骆秉衡的礼单当成万家舞弊链的终点。",
+        "hint": "礼单只证明骆收过二百两；另核万家票据、万姓卷号和主考手记，分别确认对象与用途。"
+      },
+      {
+        "condition": "玩家用药匣空格解释全部死因。",
+        "hint": "对照尸检胃内容物、气道烟尘和血样结果；违规丸药是替代嫌疑，不能覆盖检验结果。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yuzhucanzhu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shoujishouji",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "mifengzongce",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "guanjiezitiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yaoxiakongge",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "chengyilidan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "xiangdiyajuan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "puzhouxiujuan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhuanfengfengtiao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yangu_jianyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xie_shijian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhuhe_jiaojie",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "wanjia_zhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhenxin_canliu",
+        "deadlineRound": 2
       }
     ]
   }

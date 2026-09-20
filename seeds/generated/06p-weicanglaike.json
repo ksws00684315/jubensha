@@ -439,7 +439,117 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "niehuaiyuan_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "niehuaiyuan_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "维持自缢说法；承认门禁只记刷卡，不主动解释滑道。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "niehuaiyuan_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "niehuaiyuan_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "逐项回应登记、钥匙、路线与底稿；把握“机会不等于身份”的辩护。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "nie_defense_clock",
+            "claim": "怀表停在21:03只能证明撞击时刻；船医的死亡推算又受低温影响，不能把表针直接当作死亡证明。",
+            "basis": "怀表记录撞击，不直接记录医学死亡时间。",
+            "brokenByPublicClueIds": [
+              "huaibiao",
+              "chuyan_jilu",
+              "menjin_qingdan",
+              "jianggao_pizhu"
+            ]
+          },
+          {
+            "id": "nie_defense_route",
+            "claim": "楼层图只证明滑道连接9层与3层；锁痕和掌印也无法识别是谁使用，不能仅凭密道指认我。",
+            "basis": "路线与痕迹材料分别只证明可行性、近期操作或接触。",
+            "brokenByPublicClueIds": [
+              "crew_deck_plan",
+              "linen_chute_manual",
+              "door_lock_rules",
+              "yaoshi_jieyong",
+              "jianxiu_kanyan",
+              "menjin_qingdan"
+            ]
+          },
+          {
+            "id": "nie_defense_medicine",
+            "claim": "登记虽是我的笔迹，也可能由别人代取药；登记不可靠不等于我在库房。",
+            "basis": "药板确实短少，登记材料说明书写与取药并非一回事。",
+            "brokenByPublicClueIds": [
+              "yaodeng_jilu",
+              "menjin_qingdan",
+              "jianggao_pizhu",
+              "jianxiu_kanyan"
+            ]
+          }
+        ]
       }
     },
     {
@@ -647,7 +757,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "yancheng_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yancheng_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认保底协议和上楼徘徊，交代门禁权限与时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "yancheng_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yancheng_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明熟悉门闩不等于实施勒杀，指出缺少把自己连到滑道和登记的证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -838,7 +1021,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "wushuang_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wushuang_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代21:05在洗衣房闻到浆糊与旧绢味，但说明气味不能识别来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "wushuang_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wushuang_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将气味与滑道、检修门痕迹对照，指出它只支持有人经过。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1063,7 +1319,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "luozhiwu_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luozhiwu_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "确认20:52看见聂怀远刷卡进9层、21:15见其回席，不夸大为亲见其走过滑道。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "luozhiwu_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luozhiwu_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "登记墨迹公开后再讲完整目击，区分亲见与门禁记录并解释自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1224,7 +1553,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "tongsu_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tongsu_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代监控故障及门禁记录范围，说明密码门开启不留刷卡记录。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "tongsu_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tongsu_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明维修手册、楼层图和检修记录的证明边界，不把设备痕迹直接说成身份。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1438,7 +1840,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "wendi_act1_knowledge",
+                "title": "密室规则",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "路线图、滑道检修说明、双门锁具手册建立的是可行性和操作规则，不识别行为人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "crew_deck_plan",
+                  "linen_chute_manual",
+                  "door_lock_rules"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wendi_act1_objective",
+                "title": "说明规则与行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代21:15聂怀远回席及21:20至21:35讲座的亲见时间，不倒推他21:03也在席。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "wendi_act2_knowledge",
+                "title": "时间与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "表针、门禁、登记和席位证词各有边界，应交叉判断而不把单项材料绝对化。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "huaibiao",
+                  "menjin_qingdan",
+                  "yaodeng_jilu",
+                  "jianggao_pizhu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wendi_act2_objective",
+                "title": "交叉核验时间线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将讲稿批注与底稿并置，说明“松年”关联仇怨仍需行为证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1491,7 +1966,8 @@
           "type": "paragraph",
           "text": "保安室一面屏幕墙大半黑屏，轮机部的带宽日志摊在桌上；门禁刷卡清单打印出来订成一沓，红色指示灯在角落明明灭灭。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tongsu"
     },
     {
       "id": "location_6",
@@ -1501,7 +1977,8 @@
           "type": "paragraph",
           "text": "九层服务通道里布草车排成一列，滑道口张着半开的舱盖；服务间的架子上挂着一只磨破角的放大镜袋，皂气混着海风。"
         }
-      ]
+      ],
+      "ownerCharacterId": "niehuaiyuan"
     }
   ],
   "clues": [
@@ -1513,7 +1990,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "船医记录：初判（0:40-1:00）'悬吊姿态、脚下半倒木箱，疑似自缢'；复验（1:30）改判——颈部索沟水平环绕、交于颈后，非自缢缢沟之耳后上提八字形，舌骨大角骨折方向与垂直悬吊不符，索沟有生活反应。结论：先勒后悬，勒痕宽度与画框打包带吻合。死亡时间初推 22:30-23:30（恒温库低温干扰尸温，存疑）。"
+          "text": "船医记录：初验（0:40至1:00）因尸体呈悬吊状、脚下木箱翻倒，疑似自缢；复验（1:30）发现颈部索沟水平环绕交于颈后，舌骨骨折方向与垂直悬吊不符，索沟有生活反应。结论：先被勒杀后悬尸，勒痕宽度与画框打包带相符。恒温库低温使尸温推时不可靠，死亡时段仍需依据其他材料判断。"
         }
       ],
       "policy": "auto_public",
@@ -1524,11 +2001,11 @@
       "id": "huaibiao",
       "locationId": "location_1",
       "name": "木箱下的怀表",
-      "category": "document",
+      "category": "object",
       "content": [
         {
           "type": "paragraph",
-          "text": "半倒木箱下的地面缝隙里卡着一块怀表：表链断裂、表蒙碎裂、指针停在 21:03，表底錾刻'松年'二字。死者家人证实，此表随身六十年从不离袋——它坠落停摆的时刻，即勒杀发生的时刻，比船医推定早了近两个小时。"
+          "text": "半倒木箱下卡着一块怀表，表链断裂、表蒙碎裂，指针停在21:03，表底錾刻“松年”。家人证实死者常年随身带表。停摆只能记录一次撞击时刻；须结合船医复验与行踪材料，不能单凭表针把撞击等同死亡时刻或锁定行凶者。"
         }
       ],
       "policy": "manual_public",
@@ -1543,7 +2020,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "当晚员工层门禁全记录：20:52 聂怀远入 9 层员工门；20:58 晏起予入 9 层员工门；21:12 聂怀远出 9 层员工门；21:20-21:35 晏承入出 9 层员工门（卡无 3 层权限）；21:35 佟肃巡检入出 3 层；0:40 轮机员与佟肃下 3 层。备注：3 层库房密码门无刷卡记录（密码开启不刷卡），尾舱走廊监控当晚黑屏（跨年直播挤占带宽，轮机部日志佐证）。"
+          "text": "当晚员工层门禁全记录：20:52聂怀远进入9层员工门；20:58晏起予进入9层员工门；21:12聂怀远离开9层员工门；21:20至21:35晏承进出9层员工门（其卡无3层权限）；21:35佟肃巡检经过3层；0:40轮机员与佟肃下3层。3层库房密码门以密码开闭，不写入刷卡清单，因此没有3层刷卡不等于无人到过3层。监控当晚黑屏，轮机部带宽日志可核验故障原因。门禁只记卡和门，不记持卡者在楼层内的路线。"
         }
       ],
       "policy": "manual_public",
@@ -1558,7 +2035,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "药箱自助登记本：21:08 行——'聂怀远，晕船药，一板'。鉴定：该行墨迹氧化程度明显早于上下相邻两行，属提前预写；笔迹为聂怀远本人。夜班护士证词：20:55 至 21:20 间未见过任何人来取药（里间配液，仅凭登记）。晕船药确少一板。"
+          "text": "药箱自助登记本记有21:08一行：“聂怀远，晕船药，一板”。墨迹氧化程度明显早于上下相邻记录，笔迹为聂怀远本人；夜班护士证称20:55至21:20未见有人来取药（她当时在里间配液），晕船药确少一板。登记能证明笔迹及记录先后异常，不能单独证明药板由谁取走；需与门禁、席位目击交叉核对。"
         }
       ],
       "policy": "manual_public",
@@ -1573,7 +2050,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "洗衣房钥匙板借用登记：15:00 聂怀远借 40 号（检修门挂锁）钥匙，事由'库房侧门通风防潮'；16:30 归还。轮机部证实：检修门确曾开窗通风。挂锁为老式弹簧锁梁，扣上无需钥匙，开启才需——'归还'的钥匙管不住虚挂的锁。"
+          "text": "洗衣房钥匙板登记：15:00聂怀远借40号检修门挂锁钥匙，事由“库房侧门通风防潮”，16:30归还。轮机部说明40号挂锁是弹簧锁梁：扣合时锁梁会自行咬住，钥匙只用于解锁；若锁梁曾被拨成虚挂，外表看似扣着，轻拉即可打开。借还记录证明聂怀远有过钥匙接触机会，不证明他实际改动了挂锁。"
         }
       ],
       "policy": "manual_public",
@@ -1588,7 +2065,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "保安部勘验：检修门挂锁锁梁搭扣内侧两道新鲜蹭亮划痕（锁当日被动过）；门轴夹一缕深色缎面丝线（高级晚礼服衬里质地，3 层员工无此衣料）；布草滑道出口防回弹门内侧落尘上有一枚新鲜掌印（戴手套）；洗衣房内可闻浆糊混陈年绢纸味自检修门缝逸出——库房味道出现在了库房外。"
+          "text": "保安部勘验：检修门挂锁锁梁搭扣内侧有新鲜蹭亮划痕；门轴夹着深色缎面丝线；布草滑道出口防回弹门内侧落尘上有戴手套的新鲜掌印；洗衣房可闻浆糊与陈年绢纸味。划痕说明锁具近期受过操作，掌印说明有人从滑道出口一侧活动；痕迹不能分别确认操作者或进入时间，须结合钥匙借用与楼层结构图判断路线。"
         }
       ],
       "policy": "manual_public",
@@ -1629,7 +2106,7 @@
       "id": "jianggao_pizhu",
       "locationId": "location_4",
       "name": "闻笛的讲稿批注",
-      "category": "document",
+      "category": "testimony",
       "content": [
         {
           "type": "paragraph",
@@ -1639,6 +2116,60 @@
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "crew_deck_plan",
+      "name": "船尾员工层通道图",
+      "locationId": "location_5",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "轮机部核准图标明：布草间位于9层，滑道垂直通往3层洗衣房；3层艺术品库房紧邻洗衣房检修通道。员工梯连接员工层，9层员工门刷卡记录不记下楼后的具体去向；库房密码门与检修门是两套入口。图纸证明路线存在，不证明当晚有人使用。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "linen_chute_manual",
+      "name": "布草滑道检修说明",
+      "locationId": "location_6",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "检修说明记载：9层布草滑道内径可容一名成年人缓慢通过，滑道只向下通行；3层出口装有防回弹门，只能从洗衣房一侧推开，不能由下方返回9层。维修时须先清空滑道并戴手套。说明建立通行方向与可行性，不识别使用者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "door_lock_rules",
+      "name": "库房双门锁具说明",
+      "locationId": "location_2",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "船舶维修手册记载：库房密码门可从内侧插入横闩，横闩落下后外侧密码不能开启；检修门另有40号弹簧挂锁，锁梁扣合后自行锁住，钥匙只负责打开。若检修门锁梁预先虚挂，离开者可从检修门离开并在门外扣合挂锁。规则说明密室可以如何形成，不证明谁执行。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
     }
   ],
   "truth": {
@@ -2395,36 +2926,72 @@
       }
     ],
     "keyEvidenceIds": [
+      "chuyan_jilu",
       "huaibiao",
+      "crew_deck_plan",
+      "linen_chute_manual",
+      "door_lock_rules",
       "menjin_qingdan",
-      "jianxiu_kanyan"
+      "yaoshi_jieyong",
+      "jianxiu_kanyan",
+      "yaodeng_jilu",
+      "jianggao_pizhu",
+      "jianding_digao"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "chain_method",
         "clueIds": [
+          "chuyan_jilu",
           "huaibiao",
-          "chuyan_jilu"
-        ],
-        "conclusion": "怀表停在21:03且表底錾刻'松年'二字，证明晏起予在21:03即已死亡而非船医初判的22:30-23:30，'松年'即聂家祖父之名，将死亡时刻与五十年前的仇怨直接挂钩。"
-      },
-      {
-        "id": "evidence_3",
-        "clueIds": [
-          "menjin_qingdan",
-          "huaibiao",
-          "yaodeng_jilu"
-        ],
-        "conclusion": "门禁记录显示聂怀远20:52刷卡进9层员工门、21:12刷卡出，中间20分钟无任何其他刷卡记录进入3层库房——这20分钟空窗精准覆盖21:03的死亡时刻，而他声称的'21:08医务室取药'已被登记本墨迹鉴定证伪。"
-      },
-      {
-        "id": "evidence_4",
-        "clueIds": [
-          "jianxiu_kanyan",
-          "yaoshi_jieyong",
           "jianggao_pizhu"
         ],
-        "conclusion": "检修门挂锁搭扣内侧有新鲜蹭亮划痕（锁当日被动过）、布草滑道出口防回弹门内侧有戴手套掌印、洗衣房自检修门缝逸出浆糊味——三处物证共同指向一条'只去不回'的密道：从9层布草间滑降至3层洗衣房，经检修门进入库房。"
+        "conclusion": "船医复验确认先勒后悬，勒痕与打包带吻合；怀表停摆记录21:03一次撞击，但撞击不必然等同死亡时刻。两类材料共同确认手段与时间锚，死亡时段仍须结合行踪判断。"
+      },
+      {
+        "id": "chain_route_premise",
+        "clueIds": [
+          "crew_deck_plan",
+          "linen_chute_manual",
+          "door_lock_rules"
+        ],
+        "conclusion": "通道图、滑道说明和锁具手册分别建立9层至3层的单向通路、可供成年人通过的结构，以及两道锁具的规则。它们证明密室存在可行解，不证明谁走过。"
+      },
+      {
+        "id": "chain_route_use",
+        "clueIds": [
+          "yaoshi_jieyong",
+          "jianxiu_kanyan",
+          "jianggao_pizhu"
+        ],
+        "conclusion": "聂怀远借过检修门钥匙；现场有近期锁具操作痕迹和滑道出口掌印，宴会证词将其进出门禁与回席时间定在同一窗口。记录、物证与证词支持通道被使用，仍须判断行为人。"
+      },
+      {
+        "id": "chain_time",
+        "clueIds": [
+          "huaibiao",
+          "menjin_qingdan",
+          "jianggao_pizhu"
+        ],
+        "conclusion": "怀表撞击发生于21:03；门禁记录聂怀远20:52入9层、21:12出门，闻笛证词证明他21:15回席。三者合看形成覆盖21:03的空窗；门禁本身不说明楼层内路线。"
+      },
+      {
+        "id": "chain_forgery",
+        "clueIds": [
+          "yaodeng_jilu",
+          "menjin_qingdan",
+          "jianggao_pizhu"
+        ],
+        "conclusion": "医务室登记笔迹属聂怀远但墨迹早于相邻记录，护士在所记时间未见取药；门禁与21:15席位目击给出案发时段行踪。笔迹鉴定、证词与数字记录共同削弱取药不在场说法。"
+      },
+      {
+        "id": "chain_identity_motive",
+        "clueIds": [
+          "jianding_digao",
+          "jianggao_pizhu",
+          "huaibiao"
+        ],
+        "conclusion": "底稿把“松年长物”印鉴与《寒江》原件相连，讲稿批注和怀表錾字提供不同场景的“松年”呼应，构成聂家旧怨动机线索；仍须结合通道使用和时间空窗证明行为。"
       }
     ],
     "redHerrings": [
@@ -2487,7 +3054,31 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：建立密室规则",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "公开楼层通道图、布草滑道结构和双门锁具规则；先讨论路线是否可行、门禁记录的边界，不凭密道直接认定身份。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：核对时间与伪登记",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "交叉核验怀表撞击时刻、聂怀远进出门禁、医务室登记墨迹和宴会席位目击，再讨论底稿、仇怨与行为证据。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2510,6 +3101,94 @@
             "text": "滑道不会开口，登记本不会翻供，监控当晚黑屏得恰到好处。聂怀远带着那只磨破角的放大镜袋在晨光中离船，全场掌声送的是鉴定权威'聂半尺'，无人知道那双手半小时前刚把偷来的画主吊回横梁。《寒江独钓图》继续挂在库房里，被偷来的主人看了五十年，还会继续看下去——直到没人记得'松年'两个字的来历。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场只宣读悬尸、内闩与挂锁状态；暂不揭示滑道路线和怀表停摆意义。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证公开楼层图、滑道检修说明、双门锁具规则、船医复验、门禁清单和钥匙借用记录；第二轮保证医务室登记原本、讲座席位证词、检修门勘验和放大镜袋底稿。关键卡不依赖角色自曝或搜查顺序。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别讨论死因、通道规则、时间窗口、登记真伪和身份动机。滑道掌印与锁痕只证明活动；路线图只证明可行；门禁无3层刷卡不能排除密码门或检修门通行。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前分别说明通道、时间或行踪、伪造登记的材料；不可用怀表单卡锁定死亡时刻，也不可因熟悉密室规则直接锁凶。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家认为没有3层刷卡就说明无人进库房。",
+        "hint": "重读维修手册和楼层通道图：密码门不开刷卡记录，检修门是独立入口。"
+      },
+      {
+        "condition": "玩家认为检修门外锁着，无人能离开。",
+        "hint": "核对40号锁具说明：弹簧挂锁扣合会自锁，钥匙只负责开启；对照借钥匙登记和锁梁划痕。"
+      },
+      {
+        "condition": "玩家知道滑道路线但不能判断是否有人走过。",
+        "hint": "核对滑道出口掌印、检修门痕迹、洗衣房气味证词与门禁窗口；它们支持有人经过，但不识别身份。"
+      },
+      {
+        "condition": "玩家把21:03表停直接当作死亡时刻。",
+        "hint": "怀表只记录撞击，低温使船医推时不可靠；再与门禁及21:15入席目击对照。"
+      },
+      {
+        "condition": "玩家把登记当成真实取药的不在场证明。",
+        "hint": "公开墨迹鉴定和护士证词，再核对聂怀远进出门禁及回席时间。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "crew_deck_plan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "linen_chute_manual",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "door_lock_rules",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "chuyan_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "menjin_qingdan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yaoshi_jieyong",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "huaibiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yaodeng_jilu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jianxiu_kanyan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jianggao_pizhu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jianding_digao",
+        "deadlineRound": 2
       }
     ]
   }

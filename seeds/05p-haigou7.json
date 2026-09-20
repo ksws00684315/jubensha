@@ -284,7 +284,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "fangan_act1_knowledge",
+                "title": "设备事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遥测记录阀位和比例，权限表记录账号能力，二者都不能独立识别实际操作者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yaoc_e",
+                  "permission_matrix",
+                  "bijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangan_act1_objective",
+                "title": "核实故障与权限",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开你能批准维护切换的权限边界，交代监控排班与警报时的处置；不要把行政权限当作阀组操作证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "fangan_act2_knowledge",
+                "title": "归因证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "设备接触残留、备件差异和仪器时间记录需与个人行踪交叉核对，不能以技术身份或动机替代行为证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "command_cache",
+                  "valve_residue",
+                  "fengpian",
+                  "shoutao"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangan_act2_objective",
+                "title": "交叉核验行动链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "对照指令缓存解释权限记录不能识别凭证持有人；回应审计和纸条动机，但要求玩家用物证核验具体操作。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -559,7 +632,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "jiangli_act1_knowledge",
+                "title": "设备事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遥测记录阀位和比例，权限表记录账号能力，二者都不能独立识别实际操作者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yaoc_e",
+                  "permission_matrix",
+                  "bijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiangli_act1_objective",
+                "title": "核实故障与权限",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "讲清遥测曲线、维护权限表与正常故障形态；说明手动旁路能否绕开账号，并交代二号气闸工单时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "jiangli_act2_knowledge",
+                "title": "归因证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "设备接触残留、备件差异和仪器时间记录需与个人行踪交叉核对，不能以技术身份或动机替代行为证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "command_cache",
+                  "valve_residue",
+                  "fengpian",
+                  "shoutao"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiangli_act2_objective",
+                "title": "交叉核验行动链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与阀组拆检，解释橡胶屑、润滑脂和封签分别能证明什么；避免技术判断越界成为身份判断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -884,7 +1030,115 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "wenshu_act1_knowledge",
+                "title": "设备事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遥测记录阀位和比例，权限表记录账号能力，二者都不能独立识别实际操作者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yaoc_e",
+                  "permission_matrix",
+                  "bijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wenshu_act1_objective",
+                "title": "核实故障与权限",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认检索日志只说明查过手册；对工具和阀组线索要求检验来源，不要否认客观存在的锉屑或记录。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "wenshu_act2_knowledge",
+                "title": "归因证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "设备接触残留、备件差异和仪器时间记录需与个人行踪交叉核对，不能以技术身份或动机替代行为证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "command_cache",
+                  "valve_residue",
+                  "fengpian",
+                  "shoutao"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wenshu_act2_objective",
+                "title": "交叉核验行动链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "面对封片记录仪、指令缓存和阀组残留，主张账号和标签不等于操作者；将这一抗辩与动机争议分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "wenshu_defense_permission",
+            "claim": "我的实验室账号只能读手册，阀组指令来自共享维护端；权限矩阵并不证明我能或曾操作阀门。",
+            "basis": "检索日志是只读账号，指令缓存没有具体凭证持有人。",
+            "brokenByPublicClueIds": [
+              "permission_matrix",
+              "jianxiu_rizhi",
+              "command_cache",
+              "valve_residue"
+            ]
+          },
+          {
+            "id": "wenshu_defense_glove",
+            "claim": "姓名标签的手套可能被人移动，油脂和锉屑也无法个体化到我；它们不能证明我动过阀组。",
+            "basis": "手套与阀组残留只建立物质对应，未提供指纹或DNA身份。",
+            "brokenByPublicClueIds": [
+              "shoutao",
+              "valve_residue",
+              "bijian",
+              "chaoshengdao"
+            ]
+          },
+          {
+            "id": "wenshu_defense_alibi",
+            "claim": "封片记录仪只能证明机器何时操作，不能证明我离开过样品间；16:20至16:35我可能一直在实验室。",
+            "basis": "设备不记录人的在场，且走廊监控黑屏。",
+            "brokenByPublicClueIds": [
+              "fengpian",
+              "mifeng_jian",
+              "yaoc_e",
+              "command_cache"
+            ]
+          }
+        ]
       }
     },
     {
@@ -1125,7 +1379,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "baiou_act1_knowledge",
+                "title": "设备事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遥测记录阀位和比例，权限表记录账号能力，二者都不能独立识别实际操作者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yaoc_e",
+                  "permission_matrix",
+                  "bijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiou_act1_objective",
+                "title": "核实故障与权限",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交出镇静剂系统记录和医疗处置记录，说明被盗用账号不等于本人取药；协助厘清低氧症状与设备遥测。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "baiou_act2_knowledge",
+                "title": "归因证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "设备接触残留、备件差异和仪器时间记录需与个人行踪交叉核对，不能以技术身份或动机替代行为证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "command_cache",
+                  "valve_residue",
+                  "fengpian",
+                  "shoutao"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiou_act2_objective",
+                "title": "交叉核验行动链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把医学结论限定在症状和死亡原因；讨论阀组残留时要求工程人员说明技术证据边界。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1380,7 +1707,80 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "huoye_act1_knowledge",
+                "title": "设备事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遥测记录阀位和比例，权限表记录账号能力，二者都不能独立识别实际操作者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yaoc_e",
+                  "permission_matrix",
+                  "bijian"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "huoye_act1_objective",
+                "title": "核实故障与权限",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "按真实时间交代医疗舱治疗结束与外廊活动，主动解释地漏盖线索；承认商业合作秘密但区分动机与能力。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "huoye_act2_knowledge",
+                "title": "归因证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "设备接触残留、备件差异和仪器时间记录需与个人行踪交叉核对，不能以技术身份或动机替代行为证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "command_cache",
+                  "valve_residue",
+                  "fengpian",
+                  "shoutao"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "huoye_act2_objective",
+                "title": "交叉核验行动链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明你看到的通道痕迹和时间，不替任何人猜测是谁通过；和医生共同核对不在场时段。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1403,7 +1803,8 @@
           "type": "paragraph",
           "text": "主控室。全站的神经中枢，遥测屏幕与阀位指示灯昼夜不熄。"
         }
-      ]
+      ],
+      "ownerCharacterId": "fangan"
     },
     {
       "id": "location_3",
@@ -1413,7 +1814,8 @@
           "type": "paragraph",
           "text": "器材间。维修手册与工具柜一字排开，检索终端就搁在角落。"
         }
-      ]
+      ],
+      "ownerCharacterId": "jiangli"
     },
     {
       "id": "location_4",
@@ -1423,7 +1825,8 @@
           "type": "paragraph",
           "text": "样品间。封片台与记录仪对着门，做好的样本按批次入柜。"
         }
-      ]
+      ],
+      "ownerCharacterId": "wenshu"
     },
     {
       "id": "location_5",
@@ -1433,7 +1836,8 @@
           "type": "paragraph",
           "text": "医疗舱。处置床与药柜一应俱全，验看记录压在台面上。"
         }
-      ]
+      ],
+      "ownerCharacterId": "baiou"
     },
     {
       "id": "location_6",
@@ -1455,7 +1859,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "三号气闸主遥测：站内时刻 16:15:00 混合阀输出由'氧氮配比 21/79'跳变为'氮洗模式'，16:35 警报，16:36:40 '故障自动复位'回到标准配比。江离现场复核：跳变为一次性指令切入，非磨损渐变——'这不是老化，是模式谋杀，且凶手设了 15 分钟自恢复来伪装故障'。"
+          "text": "三号气闸主遥测原始曲线：站内时刻16:15:00混合阀输出由“氧氮配比21/79”切换至“氮洗模式”，16:35警报，16:36:40自动复位回标准配比。曲线只记录阀位与气体比例变化，不记录指令来源、操作者或是否人为；一次阶跃变化与渐进磨损不同，但需结合设备检验和指令记录判断原因。"
         }
       ],
       "policy": "auto_public",
@@ -1470,7 +1874,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "三号外廊地漏盖歪斜约两指宽，盖板下是通向器材间的风道夹层入口；盖板螺纹上有新鲜指印状油渍，未干。夹层内壁有两个蹭痕，高度 165cm 上下（成年女性操作高度）。"
+          "text": "三号外廊地漏盖歪斜约两指宽，盖板下是通往器材间的设备风道夹层入口。检修图记载夹层净宽可供一人侧身通过，正常仅用于线缆维护；盖板螺纹有新鲜油渍，夹层内壁留下两处新蹭痕。痕迹支持近期有人打开或通过，不能单独判断身份、性别或精确时间。"
         }
       ],
       "policy": "manual_public",
@@ -1481,11 +1885,11 @@
       "id": "bijian",
       "locationId": "location_3",
       "name": "做旧的 B-7 密封件",
-      "category": "trace",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
-          "text": "备件柜第 3 格的 B-7 密封组件：规格与工单 214 记录一致，但橡胶面有非自然磨损——放大镜下可见均匀细锉痕（人为做旧）。器材间废料袋里反而躺着一枚真正的'服役到期'旧件，橡胶老化纹自然。两件的存在本身就矛盾：柜里是'老化件'，废袋里是'刚换下件'。"
+          "text": "备件柜第3格B-7密封组件规格与工单214一致，橡胶面有均匀细锉痕，属于人为做旧；器材间废料袋里另有一枚自然老化的旧件。维护交接单记载217日应安装新件，但未记录替换者。两件状态与工单相反，支持发生过调包，单凭存放位置不能确定谁调换。"
         }
       ],
       "policy": "manual_public",
@@ -1500,7 +1904,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "墙上维护排班表：217 日 16:20-16:35 走廊监控例行维护（黑屏窗口）。检索终端日志：站内时刻 15:02-15:18，账号 wenshu 检索《三号气闸维修手册》第七节'混合阀手动模式与复位'，页面停留 16 分钟。"
+          "text": "墙上维护排班表：217日16:20至16:35走廊监控例行维护（黑屏窗口）。检索终端日志：15:02至15:18，温书账号检索《三号气闸维修手册》第七节“混合阀手动模式与复位”，页面停留16分钟。该终端为只读检索，日志证明查阅记录，不证明她实际操作阀组。"
         }
       ],
       "policy": "manual_public",
@@ -1515,7 +1919,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "生物样本室超声刀柄缝隙里有银灰色金属微屑（橡胶配套的锉屑），刀口有非生物用途使用痕迹。样本室使用登记：217 日 14:50 有一次 wenshu 账号的门禁进入，理由栏空白。"
+          "text": "生物样本室超声刀柄缝隙有银灰色橡胶锉屑，刀口有非生物用途痕迹；样本室门禁记217日14:50由温书账号进入，理由栏空白。门禁和刀具痕迹支持她有机会接触工具，但账号可由持卡人之外的人使用，不能单独证明加工密封件。"
         }
       ],
       "policy": "manual_public",
@@ -1526,11 +1930,11 @@
       "id": "fengpian",
       "locationId": "location_4",
       "name": "封片记录仪",
-      "category": "digital",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
-          "text": "样品间固氮菌封片记录仪（自动记录每批操作时间戳）：217 日批次实际完成时间 15:47-15:50。温书口述'16:20-16:35 在样品间封片'与记录矛盾——该时段仪器无任何操作。"
+          "text": "样品间固氮菌封片记录仪自动记载：217日最后一批操作完成于15:47至15:50；16:20至16:35无任何仪器操作。温书称该时段一直在样品间封片，与仪器记录不符。记录仪只记录台面操作，不监测人员是否在房间，也不能单独证明她离开。"
         }
       ],
       "policy": "manual_public",
@@ -1541,11 +1945,11 @@
       "id": "shoutao",
       "locationId": "location_4",
       "name": "实验手套上的润滑脂",
-      "category": "document",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "样品间挂架上一副 wenshu 姓名标签的丁腈手套，掌指部位沾有淡黄色阀组润滑脂（与三号气闸加油枪油脂光谱一致）。手套内侧汗液反应新鲜（24 小时内）。"
+          "text": "样品间挂架上一副温书姓名标签的丁腈手套，掌指部位沾有淡黄色润滑脂，光谱与三号气闸加油枪油脂相符；手套内侧汗液反应新鲜（24小时内）。标签可被移放，汗液不能精确测时；手套与阀组残留的对应需要结合工具、设备权限和遥测判断。"
         }
       ],
       "policy": "manual_public",
@@ -1626,6 +2030,60 @@
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "permission_matrix",
+      "name": "气闸维护权限矩阵",
+      "locationId": "location_2",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "站内权限表区分三类能力：方岸可批准维护模式切换，江离的工程账号可直接下发阀组指令，实验室账号仅能读取手册与查看状态；另有带物理封签的本地手动旁路，不依赖个人账号，但开启会留下封签与阀盖痕迹。权限表说明技术权限与物理接触是两条路径，不能由职位直接锁定操作者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "command_cache",
+      "name": "混合阀指令缓存",
+      "locationId": "location_2",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "主控备用缓存保留一条16:14:58排定的指令序列：“16:15氮洗模式，持续20分钟后自动复位”。来源标记为三号阀组本地维护端，维护端当班使用共享维修凭证，缓存不记录具体持有人；它与遥测中的16:15切换、16:35复位相符，证明模式变化由预设指令触发，不证明是谁设定。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
+    },
+    {
+      "id": "valve_residue",
+      "name": "三号阀组拆检与残留",
+      "locationId": "location_1",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "江离拆检三号混合阀：手动旁路封签有新鲜断裂，阀盖内侧留有细橡胶锉屑和淡黄色润滑脂；锉屑成分与B-7密封组件一致，润滑脂与加油枪样本一致。此结果支持近期拆动阀组并接触密封件，但残留未能个体化到某人，须结合权限、工具与备件记录判断。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
     }
   ],
   "truth": {
@@ -1640,7 +2098,7 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "温书因论文署名被当众降级（三年心血折价为'共同第一'），于三天前开始布置：将锉旧的做旧 B-7 密封件混入备件柜、预藏原件于风道夹层，并研读维修手册第七节。案发日她检索手册、盗用白鸥账号制造镇静剂取用假象、打印匿名纸条嫁祸方岸，随后以'延迟 16:15 触发'的方式把三号混合阀切入氮洗模式并设 15 分钟自动复位——利用 16:20-16:35 的监控维护黑屏窗口作为干扰项，本人全程留在样品间伪造不在场证明（封片实际 15:50 已完成）。周潜 16:20 独自入舱，16:35 因氮洗缺氧昏迷，17:00 死亡。现场呈现为'设备老化故障'。"
+          "text": "温书因署名被降级而动机强烈。备件柜中的B-7组件被人为做旧，工具留有橡胶锉屑；她检索过混合阀手动模式说明。案发时，预排指令令三号阀组进入氮洗模式并自动复位，遥测和指令缓存互相印证；拆检发现封签破坏与阀组残留。封片记录仪反驳她声称的实验时段，但每项材料均有边界：权限不等于操作者、账号不等于持有人、残留不直接个体化。玩家需将这些与她的技术准备、工具接触和行动窗口组合，推断实际行为。"
         }
       ],
       "steps": [
@@ -1656,7 +2114,8 @@
           "clueIds": [
             "bijian",
             "jianxiu_rizhi",
-            "chaoshengdao"
+            "chaoshengdao",
+            "permission_matrix"
           ]
         },
         {
@@ -1670,6 +2129,7 @@
           ],
           "clueIds": [
             "zhitiao",
+            "command_cache",
             "yaoc_e",
             "zhenjingji"
           ]
@@ -1685,7 +2145,9 @@
           ],
           "clueIds": [
             "fengpian",
-            "shoutao"
+            "shoutao",
+            "mifeng_jian",
+            "valve_residue"
           ]
         }
       ]
@@ -2238,26 +2700,64 @@
       }
     ],
     "keyEvidenceIds": [
+      "yaoc_e",
+      "permission_matrix",
+      "command_cache",
+      "bijian",
+      "valve_residue",
       "fengpian",
-      "shoutao"
+      "mifeng_jian",
+      "chaoshengdao",
+      "shoutao",
+      "jianxiu_rizhi"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_4",
+        "id": "chain_failure",
         "clueIds": [
-          "fengpian",
-          "zhenjingji"
+          "yaoc_e",
+          "command_cache",
+          "valve_residue",
+          "permission_matrix"
         ],
-        "conclusion": "封片记录仪显示温书声称的16:20-16:35在样品间封片时段无任何操作记录，实际完成时间为15:47-15:50，证明其不在场证明系伪造，案发时段她不在样品间。"
+        "conclusion": "遥测显示16:15模式阶跃和16:35自动复位；独立的指令缓存显示预排氮洗序列；拆检发现封签破坏及阀内橡胶屑、润滑脂。数字记录与物证共同支持人为预设并拆动阀组，而不能单独识别操作者。"
       },
       {
-        "id": "evidence_5",
+        "id": "chain_authority",
         "clueIds": [
-          "shoutao",
-          "yaoc_e",
-          "mifeng_jian"
+          "permission_matrix",
+          "jianxiu_rizhi",
+          "chaoshengdao"
         ],
-        "conclusion": "温书姓名标签的丁腈手套掌指部位沾有淡黄色阀组润滑脂（与三号气闸加油枪油脂光谱一致），证明她直接接触过三号气闸阀组，将她与'模式谋杀'的技术操作直接关联。"
+        "conclusion": "权限矩阵显示工程账号和本地旁路两种操作路径；温书账号检索过对应章节，样本间工具有锉屑且有其账号门禁记录。权限、知识获取和工具接触来自不同记录，支持其具备实施条件但不等于实际动手。"
+      },
+      {
+        "id": "chain_spare",
+        "clueIds": [
+          "bijian",
+          "valve_residue",
+          "chaoshengdao"
+        ],
+        "conclusion": "工单要求更换新件，柜中组件被细锉做旧，真正自然老化旧件却在废料袋；阀组残留锉屑与B-7一致，超声刀柄留有橡胶锉屑。工单、拆检与工具痕迹跨类别支持备件调包链，仍需结合行动时间认定人员。"
+      },
+      {
+        "id": "chain_alibi",
+        "clueIds": [
+          "fengpian",
+          "mifeng_jian",
+          "yaoc_e",
+          "zhiriao"
+        ],
+        "conclusion": "封片记录仪没有温书声称时段的操作；地漏盖和风道内有近期活动痕迹；主控日志限定其他人员的行踪，遥测给出操作窗口。仪器记录、物理痕迹与数字行踪共同削弱不在场说，但各自不直接证明她进过气闸。"
+      },
+      {
+        "id": "chain_motive",
+        "clueIds": [
+          "qianming",
+          "beiping",
+          "zhitiao"
+        ],
+        "conclusion": "署名邮件草稿显示温书被降级，周潜备忘确认署名调整；匿名纸条把嫌疑引向方岸但打印记录只指向公共打印机。邮件和备忘提供动机背景，纸条只能证明有人嫁祸的可能，动机不等于行凶。"
       }
     ],
     "redHerrings": [
@@ -2323,7 +2823,31 @@
     "searchRounds": 3,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：故障还是人为切换",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先区分渐进磨损与模式切换，核验气体变化、权限矩阵、监控维护窗口和备件状态。不要仅凭技术职位或某个账号指认操作者。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：指令来源与不在场证明",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "对照指令缓存、阀组残留、超声刀屑和封片记录仪，逐层判断谁能接触、谁查过操作方法、谁的时间线不成立。把动机、能力和实际行为分开。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2346,6 +2870,110 @@
             "text": "四千米的黑暗替温书保守了秘密。方岸的数据、白鸥的咨询费、霍野的私活，全站每个人都以为自己站在悬崖边上，没人低头看一眼手套上的润滑脂和封片记录仪上的时间差。通信恢复后地面救援到来，事故报告写的是'设备老化导致气闸故障'，温书的名字安安静静地留在论文的共同第一作者栏——她拿回了自己的名字，用的却是别人的命。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场宣读三号气闸警报与低氧死亡，暂不把故障定性为谋杀，也不把系统账号当作实际操作者。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证公开遥测、维护权限矩阵、门禁与监控排班、备件对照和镇静剂记录；第二轮保证公开指令缓存、阀组拆检与封片记录仪；第三轮保证公开阀组/手套残留及全部关键复核材料。必要证据不依赖角色自曝。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "按故障机制、操作权限、指令来源、备件调包、时间线与残留物顺序讨论。区分系统记录、账号权限和实际持有人；技术职责本身不能锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求至少分别说明一项遥测/记录、一项权限或操作材料、一项独立物证或时间线；单张手套、账号日志、匿名纸条不能直接定罪。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把遥测阶跃直接当成设备老化或凶手身份。",
+        "hint": "对照原始指令缓存与阀组拆检：遥测记录结果，缓存记录预设命令，残留用于判断是否物理拆动。"
+      },
+      {
+        "condition": "玩家认为只有工程师能造成氮洗模式。",
+        "hint": "公开权限矩阵中工程账号、批准权限和本地旁路的区别，再判断谁有机会接触设备。"
+      },
+      {
+        "condition": "玩家只凭柜中做旧密封件认定调包者。",
+        "hint": "同时核对自然老化旧件、超声刀锉屑与阀组橡胶残留；每项分别证明状态、工具和使用痕迹。"
+      },
+      {
+        "condition": "温书以封片记录仪证明自己没离开。",
+        "hint": "记录仪只写仪器操作时间；对照她声称的时段、遥测计划、监控维护窗口和风道入口痕迹。"
+      },
+      {
+        "condition": "玩家把手套润滑脂或共享账号当成单点锁凶。",
+        "hint": "提示物质残留未个体化，账号不等于操作者；与检索日志、备件记录和实际行动时间交叉验证。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yaoc_e",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "permission_matrix",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "bijian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "jianxiu_rizhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhenjingji",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhiriao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "command_cache",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "fengpian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "chaoshengdao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "mifeng_jian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "valve_residue",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "shoutao",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "beiping",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "zhitiao",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "qianming",
+        "deadlineRound": 3
       }
     ]
   }

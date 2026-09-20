@@ -172,7 +172,11 @@ describe("Schema v2.x 新字段（向后兼容）", () => {
 describe("Validator 新规则", () => {
   it("R1 线索数超过 可搜上限(人数×轮数) → error", () => {
     const d2 = cloneWith((d) => {
-      d.clues.push({ ...d.clues[0], id: "extra_clue", name: "多出来的一条" });
+      const limit = d.characters.length * d.flow.searchRounds;
+      while (d.clues.length <= limit) {
+        const index = d.clues.length;
+        d.clues.push({ ...d.clues[0], id: `extra_clue_${index}`, name: `多出来的线索${index}` });
+      }
     });
     const errors = validateScriptV2(d2).filter((i) => i.level === "error");
     expect(errors.some((e) => e.message.includes("超过可发现上限"))).toBe(true);

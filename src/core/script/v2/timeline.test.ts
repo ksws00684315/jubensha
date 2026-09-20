@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveTimelineTitle, isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
+import { deriveTimelineTitle, isPlaceholderTimelineTime, isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
 import { timelineToText } from "../compat";
 
 describe("isPlaceholderTimelineTitle", () => {
@@ -10,6 +10,14 @@ describe("isPlaceholderTimelineTitle", () => {
     expect(isPlaceholderTimelineTitle("事件一")).toBe(false);
     expect(isPlaceholderTimelineTitle("")).toBe(false);
     expect(isPlaceholderTimelineTitle(undefined)).toBe(false);
+  });
+});
+
+describe("isPlaceholderTimelineTime", () => {
+  it("识别未整理的时间占位值", () => {
+    expect(isPlaceholderTimelineTime("时间待整理")).toBe(true);
+    expect(isPlaceholderTimelineTime("待补充")).toBe(true);
+    expect(isPlaceholderTimelineTime("子时末（约零时前后）")).toBe(false);
   });
 });
 

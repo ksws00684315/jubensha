@@ -6,13 +6,18 @@
     "maxPlayers": 5,
     "durationMin": 150,
     "difficulty": "进阶",
-    "tags": ["现代", "游艇", "本格", "密室"],
+    "tags": [
+      "现代",
+      "游艇",
+      "本格",
+      "密室"
+    ],
     "intro": "远洋贸易集团董事长沈万钧在豪华游艇上举办私密晚宴。次日清晨，他被发现死在底舱保险库内。船上只有五个人，凶手就在其中。"
   },
   "background": [
     {
       "type": "paragraph",
-      "text": "远洋贸易集团董事长沈万钧在自己的豪华游艇'夜航号'上举办了一场私密晚宴，邀请了四位客人。游艇在离岸二十海里处抛锚过夜。次日清晨六点，家庭医生方敏在底舱保险库内发现了沈万钧的尸体——后脑遭钝器击打，当场死亡。保险库的密码锁记录显示，最后一次正确开启是前一晚22:17。船上没有救生艇可以单独离开，海警需要至少两小时才能赶到。五个人，一个凶手，无处可逃。"
+      "text": "远洋贸易集团董事长沈万钧在自己的豪华游艇'夜航号'上举办了一场私密晚宴，邀请了四位客人。游艇在离岸二十海里处抛锚过夜。次日清晨六点（06:00，次日），家庭医生方敏在底舱保险库内发现了沈万钧的尸体——后脑遭钝器击打，当场死亡。保险库的密码锁记录显示，前一晚22:17开启一次，次日05:58再次开启（方敏发现尸体时）。船上没有救生艇可以单独离开，海警需要至少两小时才能赶到。五个人，一个凶手，无处可逃。"
     },
     {
       "type": "list",
@@ -63,7 +68,8 @@
           "type": "paragraph",
           "text": "位于下层甲板的客舱，床铺整洁。床头柜上有一个上了锁的小箱子。"
         }
-      ]
+      ],
+      "ownerCharacterId": "chenjie"
     }
   ],
   "characters": [
@@ -81,7 +87,10 @@
           }
         ],
         "relationships": [
-          { "characterId": "liwei", "label": "下属" }
+          {
+            "characterId": "liwei",
+            "label": "下属"
+          }
         ]
       },
       "privateCard": {
@@ -123,8 +132,14 @@
             "time": {
               "display": "21:30–21:50",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:30" },
-              "end": { "dayOffset": 0, "time": "21:50" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
             },
             "title": "书房谈话",
             "locationId": "study",
@@ -143,8 +158,14 @@
             "time": {
               "display": "21:50–22:00",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:50" },
-              "end": { "dayOffset": 0, "time": "22:00" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
             },
             "title": "离开书房",
             "content": [
@@ -161,8 +182,14 @@
             "time": {
               "display": "22:00–22:30",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "22:00" },
-              "end": { "dayOffset": 0, "time": "22:30" }
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
             },
             "title": "甲板喝酒",
             "content": [
@@ -171,7 +198,9 @@
                 "text": "你在前甲板独自喝酒。海风很大，你没注意有没有人经过。大约22:20，你看到李薇从后甲板走过来。"
               }
             ],
-            "characterIds": ["liwei"],
+            "characterIds": [
+              "liwei"
+            ],
             "clueIds": []
           }
         ],
@@ -205,12 +234,85 @@
         ],
         "relationships": [],
         "persona": {
-          "traits": ["强势", "固执"],
+          "traits": [
+            "强势",
+            "固执"
+          ],
           "speechStyle": "说话直来直去，喜欢用反问句",
-          "habits": ["喝酒时喜欢摇杯子"],
-          "taboos": ["不愿提儿子的病"]
+          "habits": [
+            "喝酒时喜欢摇杯子"
+          ],
+          "taboos": [
+            "不愿提儿子的病"
+          ]
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "zhouming_act1",
+                "title": "现场与路线事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开门锁、镇纸、甲板监控和目击；每条材料只能证明具体时间、物品或路线的一部分。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhouming_act1_goal",
+                "title": "核对第一轮公开事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明镇纸指纹可能来自21:30—21:50捡拾，要求将遗嘱利益与钝器现场分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "zhouming_act2",
+                "title": "身份与动机分层",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二、三轮分别公开鞋印/设备记录与亲子/工商材料；进入机会、短信来源、身份和动机不可互相替代。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhouming_act2_goal",
+                "title": "回应交叉材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开挪用公款的边界，追问门槛鞋印、SIM设备关联和陈家旧案各能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -227,7 +329,10 @@
           }
         ],
         "relationships": [
-          { "characterId": "liwei", "label": "前同事" }
+          {
+            "characterId": "liwei",
+            "label": "前同事"
+          }
         ]
       },
       "privateCard": {
@@ -269,8 +374,14 @@
             "time": {
               "display": "21:30–21:50",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:30" },
-              "end": { "dayOffset": 0, "time": "21:50" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
             },
             "title": "离开餐厅",
             "content": [
@@ -279,7 +390,9 @@
                 "text": "晚宴结束后你离开餐厅，在走廊遇到方医生。你往船尾方向走。"
               }
             ],
-            "characterIds": ["fangmin"],
+            "characterIds": [
+              "fangmin"
+            ],
             "clueIds": []
           },
           {
@@ -287,8 +400,14 @@
             "time": {
               "display": "21:50–22:00",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:50" },
-              "end": { "dayOffset": 0, "time": "22:00" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
             },
             "title": "前往底舱",
             "content": [
@@ -306,8 +425,14 @@
             "time": {
               "display": "22:00–22:20",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "22:00" },
-              "end": { "dayOffset": 0, "time": "22:20" }
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:20"
+              }
             },
             "title": "货舱找玉佩",
             "content": [
@@ -351,12 +476,85 @@
         ],
         "relationships": [],
         "persona": {
-          "traits": ["精明", "记仇"],
+          "traits": [
+            "精明",
+            "记仇"
+          ],
           "speechStyle": "语速快，喜欢用数据和事实说话",
-          "habits": ["紧张时摸下巴"],
-          "taboos": ["不愿承认被开除的事实"]
+          "habits": [
+            "紧张时摸下巴"
+          ],
+          "taboos": [
+            "不愿承认被开除的事实"
+          ]
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "xuzheng_act1",
+                "title": "现场与路线事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开门锁、镇纸、甲板监控和目击；每条材料只能证明具体时间、物品或路线的一部分。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xuzheng_act1_goal",
+                "title": "核对第一轮公开事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代21:50下到底舱寻找玉佩、经过保险库但门关着；主动展示玉佩并解释自己没有进入保险库。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "xuzheng_act2",
+                "title": "身份与动机分层",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二、三轮分别公开鞋印/设备记录与亲子/工商材料；进入机会、短信来源、身份和动机不可互相替代。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xuzheng_act2_goal",
+                "title": "回应交叉材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应威胁短信和玉佩证据，要求他人区分财物盗窃动机与22:17进入/杀人行为。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -373,7 +571,10 @@
           }
         ],
         "relationships": [
-          { "characterId": "zhouming", "label": "副董事长" }
+          {
+            "characterId": "zhouming",
+            "label": "副董事长"
+          }
         ]
       },
       "privateCard": {
@@ -411,12 +612,42 @@
         ],
         "timeline": [
           {
+            "id": "liwei_event_0",
+            "time": {
+              "display": "20:15",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:15"
+              }
+            },
+            "title": "在主甲板书房外看见陈捷操作手机",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "约20:15，你在主甲板书房外看见陈捷用她的手机输入信息；你没有看到屏幕或收件人。"
+              }
+            ],
+            "characterIds": [
+              "chenjie"
+            ],
+            "clueIds": [
+              "liwei_chenjie_zhengci"
+            ]
+          },
+          {
             "id": "li_e1",
             "time": {
               "display": "21:30–21:50",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:30" },
-              "end": { "dayOffset": 0, "time": "21:50" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
             },
             "title": "甲板透气",
             "content": [
@@ -425,7 +656,9 @@
                 "text": "晚宴后你去后甲板透气。方医生也在甲板上，你们聊了几句。"
               }
             ],
-            "characterIds": ["fangmin"],
+            "characterIds": [
+              "fangmin"
+            ],
             "clueIds": []
           },
           {
@@ -433,8 +666,14 @@
             "time": {
               "display": "21:50–22:10",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:50" },
-              "end": { "dayOffset": 0, "time": "22:10" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:10"
+              }
             },
             "title": "甲板散步",
             "content": [
@@ -443,7 +682,9 @@
                 "text": "你在后甲板散步，大约22:00看到陈捷从甲板楼梯往下走。22:10你决定回客舱。"
               }
             ],
-            "characterIds": ["chenjie"],
+            "characterIds": [
+              "chenjie"
+            ],
             "clueIds": []
           },
           {
@@ -451,8 +692,14 @@
             "time": {
               "display": "22:10–22:30",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "22:10" },
-              "end": { "dayOffset": 0, "time": "22:30" }
+              "start": {
+                "dayOffset": 0,
+                "time": "22:10"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
             },
             "title": "回客舱发短信",
             "content": [
@@ -495,12 +742,85 @@
         ],
         "relationships": [],
         "persona": {
-          "traits": ["细心", "隐忍"],
+          "traits": [
+            "细心",
+            "隐忍"
+          ],
           "speechStyle": "说话温和，很少直接表态",
-          "habits": ["习惯性整理衣角"],
-          "taboos": ["不愿承认自己在帮周铭"]
+          "habits": [
+            "习惯性整理衣角"
+          ],
+          "taboos": [
+            "不愿承认自己在帮周铭"
+          ]
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "liwei_act1",
+                "title": "现场与路线事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开门锁、镇纸、甲板监控和目击；每条材料只能证明具体时间、物品或路线的一部分。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liwei_act1_goal",
+                "title": "核对第一轮公开事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "按时间说明22:00看见陈捷下楼、22:10回客舱；明确没有亲眼看见她进保险库。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "liwei_act2",
+                "title": "身份与动机分层",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二、三轮分别公开鞋印/设备记录与亲子/工商材料；进入机会、短信来源、身份和动机不可互相替代。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liwei_act2_goal",
+                "title": "回应交叉材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对通信设备和保险库门槛痕迹，说明证词与其他来源相合的部分及其辨认限制。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -517,7 +837,10 @@
           }
         ],
         "relationships": [
-          { "characterId": "fangmin", "label": "父亲的医生" }
+          {
+            "characterId": "fangmin",
+            "label": "父亲的医生"
+          }
         ]
       },
       "privateCard": {
@@ -578,12 +901,41 @@
         ],
         "timeline": [
           {
+            "id": "chenjie_event_sms",
+            "time": {
+              "display": "20:15",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:15"
+              }
+            },
+            "title": "用不记名SIM约见沈万钧",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "用不记名SIM从客舱配发手机发送短信，约沈万钧到保险库见面。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": [
+              "niming_duanxin",
+              "sim_device_trace"
+            ]
+          },
+          {
             "id": "chen_e1",
             "time": {
               "display": "21:30–21:50",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:30" },
-              "end": { "dayOffset": 0, "time": "21:50" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
             },
             "title": "甲板看海",
             "content": [
@@ -592,7 +944,9 @@
                 "text": "晚宴后你去了前甲板看海。周铭在吧台喝酒，你们没有说话。"
               }
             ],
-            "characterIds": ["zhouming"],
+            "characterIds": [
+              "zhouming"
+            ],
             "clueIds": []
           },
           {
@@ -600,8 +954,14 @@
             "time": {
               "display": "21:50–22:00",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:50" },
-              "end": { "dayOffset": 0, "time": "22:00" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
             },
             "title": "从甲板下来",
             "content": [
@@ -610,7 +970,9 @@
                 "text": "22:00你从甲板楼梯往下层走。李薇在甲板上看到你。你说你回客舱休息。"
               }
             ],
-            "characterIds": ["liwei"],
+            "characterIds": [
+              "liwei"
+            ],
             "clueIds": []
           },
           {
@@ -618,14 +980,20 @@
             "time": {
               "display": "22:00–22:20",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "22:00" },
-              "end": { "dayOffset": 0, "time": "22:20" }
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:20"
+              }
             },
-            "title": "前往保险库",
+            "title": "前往保险库并与沈万钧会面",
             "content": [
               {
                 "type": "paragraph",
-                "text": "你没有回客舱。你去了保险库——你早就偷看到了密码。你用提前准备好的短信把沈万钧约到保险库。他来了。你用书房的铜镇纸击打他的后脑，一击致死。你擦掉了自己的指纹，把镇纸放回原处。"
+                "text": "你从甲板下来后没有回客舱，而是前往保险库。你知道密码，也准备了匿名短信。沈万钧赴约后，你用铜镇纸击打他的后脑并擦拭镇纸。"
               }
             ],
             "locationId": "vault",
@@ -663,12 +1031,128 @@
         ],
         "relationships": [],
         "persona": {
-          "traits": ["冷静", "隐忍"],
+          "traits": [
+            "冷静",
+            "隐忍"
+          ],
           "speechStyle": "说话柔声细语，偶尔会露出不合时宜的微笑",
-          "habits": ["习惯性低头看手机"],
-          "taboos": ["不愿谈童年和家庭"]
+          "habits": [
+            "习惯性低头看手机"
+          ],
+          "taboos": [
+            "不愿谈童年和家庭"
+          ]
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "alibi": [
+          {
+            "type": "paragraph",
+            "text": "可核验辩解一：21:30–21:50你在前甲板看海，周铭当时也在前甲板吧台；他可以确认你在那段时间出现过。这只能核实该时段，不能证明22:17时你在哪里。"
+          },
+          {
+            "type": "paragraph",
+            "text": "可核验辩解二：门锁日志只记录前一晚22:17有人正确开门，不记录使用者；匿名短信也没有登记身份。要求大家区分“有人邀约/有人开门”和“你本人发信/开门”的证据。"
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "chenjie_act1",
+                "title": "现场与路线事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开门锁、镇纸、甲板监控和目击；每条材料只能证明具体时间、物品或路线的一部分。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chenjie_act1_goal",
+                "title": "核对第一轮公开事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认被李薇看见下楼，但坚持那不等于进入保险库；具体回应门锁和目击身份边界。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "chenjie_act2",
+                "title": "身份与动机分层",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二、三轮分别公开鞋印/设备记录与亲子/工商材料；进入机会、短信来源、身份和动机不可互相替代。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chenjie_act2_goal",
+                "title": "回应交叉材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "面对鞋印、SIM终端、认证收养档案和工商材料，逐项区分设备/鞋的借用可能、身份事实、旧案动机与行凶事实。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "chen_defense_entry",
+            "claim": "门锁只记22:17开门，走廊目击看不清脸；没有公开物证能把门槛内的鞋印与我客舱鞋柜里的鞋款相连。",
+            "basis": "目击者未辨脸，鞋子可能借用，门锁不记录操作者；下楼不等于进入保险库。",
+            "brokenByPublicClueIds": [
+              "menjin_jilu",
+              "jiaban_jiandu",
+              "liwei_chenjie_zhengci",
+              "vault_threshold_trace"
+            ]
+          },
+          {
+            "id": "chen_defense_motive",
+            "claim": "收养协议的生父栏被涂黑，现有协议本身没有写出陈正邦；不能仅凭我非沈万钧亲生就把我和正邦海贸旧案相连。",
+            "basis": "DNA只能证明非亲生关系，旧案工商档案与当前身份需分开核对；即使建立关系，也不等于我知情或杀人。",
+            "brokenByPublicClueIds": [
+              "shouyang_wenjian",
+              "dna_baogao",
+              "weixie_duanxin"
+            ]
+          },
+          {
+            "id": "chen_defense_sms",
+            "claim": "不记名SIM没有实名记录，也没有任何公开通信记录把它和分配给我的终端相连。",
+            "basis": "号码未实名；即使设备登记给我，也可能被他人借用或操作，设备关联不等于亲手发送。",
+            "brokenByPublicClueIds": [
+              "niming_duanxin",
+              "sim_device_trace",
+              "liwei_chenjie_zhengci"
+            ]
+          }
+        ]
       }
     },
     {
@@ -685,7 +1169,10 @@
           }
         ],
         "relationships": [
-          { "characterId": "chenjie", "label": "雇主的女儿" }
+          {
+            "characterId": "chenjie",
+            "label": "雇主的女儿"
+          }
         ]
       },
       "privateCard": {
@@ -727,8 +1214,14 @@
             "time": {
               "display": "21:30–21:50",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:30" },
-              "end": { "dayOffset": 0, "time": "21:50" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "21:50"
+              }
             },
             "title": "甲板散步",
             "content": [
@@ -737,7 +1230,9 @@
                 "text": "晚宴后你去后甲板散步，遇到李薇。你们聊了几句，你提到沈总的身体不太好。"
               }
             ],
-            "characterIds": ["liwei"],
+            "characterIds": [
+              "liwei"
+            ],
             "clueIds": []
           },
           {
@@ -745,8 +1240,14 @@
             "time": {
               "display": "21:50–22:30",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "21:50" },
-              "end": { "dayOffset": 0, "time": "22:30" }
+              "start": {
+                "dayOffset": 0,
+                "time": "21:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:30"
+              }
             },
             "title": "医疗室整理",
             "content": [
@@ -761,16 +1262,22 @@
           {
             "id": "fang_e3",
             "time": {
-              "display": "23:00–23:05",
+              "display": "次日 05:58–06:00",
               "precision": "range",
-              "start": { "dayOffset": 0, "time": "23:00" },
-              "end": { "dayOffset": 0, "time": "23:05" }
+              "start": {
+                "dayOffset": 1,
+                "time": "05:58"
+              },
+              "end": {
+                "dayOffset": 1,
+                "time": "06:00"
+              }
             },
-            "title": "发现尸体",
+            "title": "次日清晨发现尸体",
             "content": [
               {
                 "type": "paragraph",
-                "text": "你去底舱找沈万钧拿药。保险库的门虚掩着——你推开它，看到了沈万钧的尸体。你喊了起来。"
+                "text": "次日清晨约05:58，你去底舱找沈万钧拿药。保险库门虚掩着，你推门发现尸体并呼救。"
               }
             ],
             "locationId": "vault",
@@ -808,12 +1315,85 @@
         ],
         "relationships": [],
         "persona": {
-          "traits": ["沉稳", "守口如瓶"],
+          "traits": [
+            "沉稳",
+            "守口如瓶"
+          ],
           "speechStyle": "说话简洁专业，很少带感情",
-          "habits": ["习惯性推眼镜"],
-          "taboos": ["不愿谈沈万钧的病情细节"]
+          "habits": [
+            "习惯性推眼镜"
+          ],
+          "taboos": [
+            "不愿谈沈万钧的病情细节"
+          ]
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "fangmin_act1",
+                "title": "现场与路线事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕公开门锁、镇纸、甲板监控和目击；每条材料只能证明具体时间、物品或路线的一部分。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangmin_act1_goal",
+                "title": "核对第一轮公开事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释清晨到保险库找药、发现尸体及现场物证，承认自己配药失误可能影响药物判断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "fangmin_act2",
+                "title": "身份与动机分层",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二、三轮分别公开鞋印/设备记录与亲子/工商材料；进入机会、短信来源、身份和动机不可互相替代。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangmin_act2_goal",
+                "title": "回应交叉材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "以尸检和急救记录区分钝器死亡与药物问题，帮助核验鞋印保全时间，并质疑将机会等同定罪。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -821,32 +1401,40 @@
     {
       "id": "tongzhenzhi",
       "locationId": "vault",
-      "name": "铜镇纸",
+      "name": "带血青铜镇纸",
       "category": "object",
       "content": [
         {
           "type": "paragraph",
-          "text": "书房的青铜镇纸，底部有血迹和毛发。上面有两组指纹——一组清晰（经比对是周铭的），一组被擦拭过，只留下模糊痕迹。"
+          "text": "书房的青铜镇纸，底部有血迹和毛发，符合钝器伤的现场特征。其上有一组可辨认的周铭指纹，另有一组被擦拭后无法比对的残留；指纹不能确定留下时间。"
         }
       ],
       "policy": "auto_public",
-      "relatedCharacterIds": ["zhouming"],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "zhouming"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
     },
     {
       "id": "menjin_jilu",
       "locationId": "vault",
-      "name": "保险库门禁记录",
+      "name": "保险库门锁日志",
       "category": "digital",
       "content": [
         {
           "type": "paragraph",
-          "text": "保险库密码锁的电子记录显示：22:17正确开启一次，23:05正确开启一次。22:17是案发时间，23:05是方医生发现尸体的时间。"
+          "text": "电子日志记录前一晚22:17和次日05:58各有一次正确密码开启；中间没有其他有效开门记录。日志只记录开门时间，不记录操作者、进入者或死亡时间。22:17与底舱值班员约22:15的门槛目击、急救前保留的鞋印相互校时；门锁本身不能识别是谁开门。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
     },
     {
       "id": "niming_duanxin",
@@ -861,22 +1449,30 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
     },
     {
       "id": "weixie_duanxin",
       "locationId": "study",
-      "name": "许政的威胁短信",
+      "name": "许政威胁信息与远洋贸易档案",
       "category": "digital",
       "content": [
         {
           "type": "paragraph",
-          "text": "沈万钧手机里保存着三条许政发来的短信。最近一条是两周前：'你会后悔的，我保证。'再往前是：'不给赔偿我就让你身败名裂。'"
+          "text": "沈万钧手机保存着许政两周前发来的威胁短信：“不给赔偿我就让你身败名裂。”同一数字证据包另附船上律师保存的工商档案副本：远洋贸易前身“正邦海贸”由陈正邦持有主要股份；沈万钧关联公司二十年前以一份股权转让合同取得控制权。司法复核意见指出合同上的陈正邦签名与同期样本不符，交易争议当年未能继续追诉。短信保留许政的竞争嫌疑；工商档案支持陈家存在旧案损失，但不证明陈捷知道全部详情或因此行凶。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": ["xuzheng"],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "xuzheng"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
     },
     {
       "id": "guyupei",
@@ -890,8 +1486,13 @@
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": ["xuzheng"],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "xuzheng"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
     },
     {
       "id": "shouyang_wenjian",
@@ -901,12 +1502,17 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "陈捷客舱的小箱子里有一份二十年前的收养协议复印件。养父一栏写着'沈万钧'，生父一栏的名字被黑色记号笔涂掉了，但依稀可以看出是两个字。收养机构的公章清晰可辨。"
+          "text": "陈捷客舱小箱里有二十年前的收养协议复印件：养父栏写沈万钧，生父栏被涂黑，公章和档案编号清晰。同箱夹着收养机构按该编号出具的认证登记摘录，原始生父栏记为陈正邦，婴儿原名陈小捷。协议与机构留档是两份来源不同的材料，编号相符；它们建立身份关联，但不证明陈捷是否知晓旧案或是否犯罪。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": ["chenjie"],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "chenjie"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
     },
     {
       "id": "dna_baogao",
@@ -916,12 +1522,17 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "保险柜里有一份DNA比对报告。结论栏写着：'送检样本A（沈万钧）与样本B（陈捷）无生物学亲子关系。'报告日期是一周前。"
+          "text": "保险柜内有一份一周前的DNA比对报告：沈万钧与陈捷无生物学亲子关系。报告证明两人非亲生父女，不说明陈捷的生父是谁，也不能证明她是否知情或有杀人动机。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": ["chenjie"],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "chenjie"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
     },
     {
       "id": "jiaban_jiandu",
@@ -931,10 +1542,88 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "甲板摄像头21:58拍到一个穿深色外套的人影从甲板楼梯往下层走。画面模糊，只能看出身高约一米六五，无法辨认面部。周铭身高一米八，许政一米七八，李薇一米六三，陈捷一米六六，方医生一米六零。"
+          "text": "甲板摄像头21:58拍到一个穿深色外套的人影从甲板楼梯往下层走。画面模糊，只能估计身高约1.65米，无法辨认面部或目的地。周铭身高1.80米、许政1.78米、李薇1.63米、陈捷1.66米、方医生1.60米；身高范围不能单独排除或认定任何人。"
         }
       ],
       "policy": "auto_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "zhou_zhenzhi_zhengci",
+      "locationId": "study",
+      "name": "周铭关于镇纸的陈述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "周铭承认21:30–21:50在书房争吵时，铜镇纸曾掉到地上，他随后捡起放回桌面。他的陈述与镇纸上可辨认的指纹相符，只能说明指纹可能在较早时留下，不能证明他之后未再接触镇纸。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "zhouming"
+      ],
+      "relatedTruthEventIds": [
+        "truth_e1"
+      ],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "liwei_chenjie_zhengci",
+      "locationId": "study",
+      "name": "李薇关于甲板行踪的陈述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "证词一（李薇）：20:15左右在主甲板书房外看见陈捷用自己的手机输入一条信息，未看见收件人或正文；约22:00又在后甲板看见陈捷从楼梯下到下层，无法确认她之后去客舱还是底舱。证词二（底舱走廊值班员的当夜书面记录）：约22:15听见保险库门锁提示音，见一名身形与陈捷相近、穿深色外套的人影越过库门门槛；灯光反射遮住面部，未看见其离开。两段证词分别来自不同目击者，不能单独辨认身份；与门锁时间和急救前封存的门槛鞋印比对后，可核实有人由门槛进入并返回，且鞋底特征与陈捷客舱鞋相符，但仍可能存在借鞋等解释。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "liwei",
+        "chenjie"
+      ],
+      "relatedTruthEventIds": [
+        "truth_e3"
+      ],
+      "release": {
+        "round": 1
+      }
+    },
+    {
+      "id": "vault_threshold_trace",
+      "locationId": "vault",
+      "name": "保险库门槛鞋印比对",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "急救人员进入前拍下保险库门槛与工作台间的细粉尘鞋印：有一组由门内通向工作台、再折返门口的成对鞋印，鞋底为女式36码细横纹，左跟外缘缺一枚月牙形小角。陈捷客舱鞋柜中一双甲板鞋的鞋底有同样的缺角及纹路；现场其他可比鞋底不符。门锁日志只记录22:17及次日05:58两次开门，值班员的门槛目击亦在约22:15。痕迹支持22:17进入者穿过这双鞋并进入保险库，但鞋可能借用，且鞋印本身不能证明穿鞋者的身份或打人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "sim_device_trace",
+      "locationId": "cabin_chen",
+      "name": "匿名SIM与船载通信终端记录",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "船载通信站留存的20:15短信传输详单记有不记名SIM卡ICCID尾号7712及终端IMEI尾号0441；船上设备领用表将IMEI 0441登记为陈捷客舱的个人通信机，机身序号与客舱回收的手机相符。该关联说明发送短信所用SIM曾装在分配给陈捷的设备中，削弱“短信与我任何设备都无关”的说法；设备可能被借用或他人操作，记录不单独证明陈捷亲手发信。 李薇在20:15左右看到陈捷操作该手机，为设备使用者提供另一来源的时间校验；她未见屏幕内容，不能单独证明她发送了案中短信。"
+        }
+      ],
+      "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
     }
@@ -944,18 +1633,18 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "陈捷是陈正邦的女儿。二十年前沈万钧用伪造合同吞并了陈正邦的公司，陈正邦破产自杀。陈捷改姓整容，花三年接近沈万钧，成为他的'女儿'。一周前沈万钧拿到DNA报告，发现陈捷不是亲生的，准备修改遗嘱。陈捷得知后决定先下手为强。"
+        "text": "公开的收养协议与同编号机构认证留档将陈捷与陈正邦联系起来；DNA报告证明她并非沈万钧亲生女儿。工商档案显示陈正邦经营的正邦海贸被沈万钧关联公司通过有争议的合同取得控制。三组来源共同建立潜在身份与复仇动机，但不能单独证明陈捷知情或因此杀人。"
       },
       {
         "type": "paragraph",
-        "text": "她的计划是：用匿名短信约沈万钧到保险库，趁其不备用铜镇纸击杀，然后嫁祸给有威胁短信和盗窃行为的许政。"
+        "text": "匿名短信约沈万钧前往保险库，短信没有发件归属；结合下楼与门槛目击、门锁记录和物证，玩家需要分别判断约见者、进入者与行凶者是否为同一人。"
       }
     ],
     "method": {
       "summary": [
         {
           "type": "paragraph",
-          "text": "陈捷提前偷看保险库密码，用不记名SIM卡发短信约沈万钧22:17在保险库见面。她从甲板下来后直接前往保险库，趁沈万钧不备用书房的铜镇纸击打其后脑，一击致死。随后她擦掉指纹，原路返回客舱。"
+          "text": "陈捷从甲板下层前往保险库，22:17开门。门槛内外的新鲜鞋印与客舱一双带特殊缺角的甲板鞋相合，值班员目击和李薇下楼陈述提供独立时间校验；这支持陈捷进入机会，但借鞋仍是可讨论解释。她用铜镇纸击打沈万钧后脑。通信详单将不记名SIM关联到分配给陈捷的终端，支持短信来源假设但不能证明亲手操作。身份、通信、机会与复仇动机须分别论证。"
         }
       ],
       "steps": [
@@ -965,10 +1654,14 @@
           "content": [
             {
               "type": "paragraph",
-              "text": "20:15，陈捷用提前购买的不记名SIM卡给沈万钧发短信，约他22:17在保险库见面。"
+              "text": "20:15匿名短信约沈万钧到保险库。运营商与船载终端详单把该SIM使用记录关联到分配给陈捷的手机；此关联不能排除借用或代操作。"
             }
           ],
-          "clueIds": ["niming_duanxin"]
+          "clueIds": [
+            "niming_duanxin",
+            "liwei_chenjie_zhengci",
+            "menjin_jilu"
+          ]
         },
         {
           "id": "step_2",
@@ -976,10 +1669,15 @@
           "content": [
             {
               "type": "paragraph",
-              "text": "22:00陈捷从甲板楼梯下来，经走廊前往保险库。甲板监控拍到了她下楼的身影。"
+              "text": "22:00陈捷从甲板楼梯下到下层；22:17保险库开门。急救前保留的门槛鞋印与陈捷客舱鞋底的特殊缺角和纹路一致，底舱值班员目击及李薇的下楼陈述分别提供第二来源；任何一条都不单独确认她进入。"
             }
           ],
-          "clueIds": ["jiaban_jiandu"]
+          "clueIds": [
+            "jiaban_jiandu",
+            "menjin_jilu",
+            "liwei_chenjie_zhengci",
+            "vault_threshold_trace"
+          ]
         },
         {
           "id": "step_3",
@@ -990,7 +1688,11 @@
               "text": "22:17陈捷在保险库内用铜镇纸击打沈万钧后脑，一击致死。"
             }
           ],
-          "clueIds": ["tongzhenzhi", "menjin_jilu"]
+          "clueIds": [
+            "tongzhenzhi",
+            "menjin_jilu",
+            "liwei_chenjie_zhengci"
+          ]
         },
         {
           "id": "step_4",
@@ -1001,18 +1703,57 @@
               "text": "陈捷擦掉镇纸上的指纹（但无法完全擦干净），把镇纸留在现场，原路返回客舱。"
             }
           ],
-          "clueIds": ["tongzhenzhi"]
+          "clueIds": [
+            "tongzhenzhi"
+          ]
         }
       ]
     },
     "timeline": [
       {
+        "id": "truth_e0_sms",
+        "time": {
+          "display": "20:15",
+          "precision": "exact",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:15"
+          }
+        },
+        "title": "陈捷发送匿名短信",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "陈捷用不记名SIM，通过分配给自己的通信终端发送约见短信；李薇在甲板书房外见她操作手机。公开证据支持设备与时间的关联，不直接证明消息正文由她输入。"
+          }
+        ],
+        "characterIds": [
+          "chenjie",
+          "liwei"
+        ],
+        "clueIds": [
+          "niming_duanxin",
+          "sim_device_trace",
+          "liwei_chenjie_zhengci"
+        ],
+        "participantIds": [
+          "chenjie",
+          "liwei"
+        ]
+      },
+      {
         "id": "truth_e1",
         "time": {
           "display": "21:30–21:50",
           "precision": "range",
-          "start": { "dayOffset": 0, "time": "21:30" },
-          "end": { "dayOffset": 0, "time": "21:50" }
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
         },
         "title": "书房争吵",
         "locationId": "study",
@@ -1022,8 +1763,12 @@
             "text": "周铭在书房与沈万钧争论股权问题。沈万钧态度强硬，说新遗嘱已经写好。周铭拍桌时铜镇纸掉落在地——他弯腰捡起来放回桌上，留下了指纹。"
           }
         ],
-        "characterIds": ["zhouming"],
-        "participantIds": ["zhouming"],
+        "characterIds": [
+          "zhouming"
+        ],
+        "participantIds": [
+          "zhouming"
+        ],
         "clueIds": []
       },
       {
@@ -1031,7 +1776,10 @@
         "time": {
           "display": "21:50",
           "precision": "exact",
-          "start": { "dayOffset": 0, "time": "21:50" }
+          "start": {
+            "dayOffset": 0,
+            "time": "21:50"
+          }
         },
         "title": "许政前往底舱",
         "content": [
@@ -1040,8 +1788,12 @@
             "text": "许政从船尾楼梯下到底舱，经过保险库门口（门关着），继续往货舱走去偷玉佩。"
           }
         ],
-        "characterIds": ["xuzheng"],
-        "participantIds": ["xuzheng"],
+        "characterIds": [
+          "xuzheng"
+        ],
+        "participantIds": [
+          "xuzheng"
+        ],
         "clueIds": []
       },
       {
@@ -1049,7 +1801,10 @@
         "time": {
           "display": "22:00",
           "precision": "exact",
-          "start": { "dayOffset": 0, "time": "22:00" }
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
         },
         "title": "陈捷下楼",
         "content": [
@@ -1058,17 +1813,32 @@
             "text": "陈捷从甲板楼梯下到下层。李薇在甲板上看到她，陈捷说回客舱休息。但陈捷没有回客舱——她转向了底舱方向。"
           }
         ],
-        "characterIds": ["chenjie", "liwei"],
-        "participantIds": ["chenjie", "liwei"],
-        "clueIds": []
+        "characterIds": [
+          "chenjie",
+          "liwei"
+        ],
+        "participantIds": [
+          "chenjie",
+          "liwei"
+        ],
+        "clueIds": [
+          "jiaban_jiandu",
+          "liwei_chenjie_zhengci"
+        ]
       },
       {
         "id": "truth_e4",
         "time": {
           "display": "22:00–22:20",
           "precision": "range",
-          "start": { "dayOffset": 0, "time": "22:00" },
-          "end": { "dayOffset": 0, "time": "22:20" }
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:20"
+          }
         },
         "title": "许政偷玉佩",
         "locationId": "cargo",
@@ -1078,8 +1848,12 @@
             "text": "许政在货舱的行李箱夹层里找到了古玉佩，藏在自己外套内袋里。"
           }
         ],
-        "characterIds": ["xuzheng"],
-        "participantIds": ["xuzheng"],
+        "characterIds": [
+          "xuzheng"
+        ],
+        "participantIds": [
+          "xuzheng"
+        ],
         "clueIds": []
       },
       {
@@ -1087,7 +1861,10 @@
         "time": {
           "display": "22:10",
           "precision": "exact",
-          "start": { "dayOffset": 0, "time": "22:10" }
+          "start": {
+            "dayOffset": 0,
+            "time": "22:10"
+          }
         },
         "title": "李薇回客舱",
         "content": [
@@ -1096,8 +1873,12 @@
             "text": "李薇从甲板回到客舱，给周铭发了一条短信。"
           }
         ],
-        "characterIds": ["liwei"],
-        "participantIds": ["liwei"],
+        "characterIds": [
+          "liwei"
+        ],
+        "participantIds": [
+          "liwei"
+        ],
         "clueIds": []
       },
       {
@@ -1105,7 +1886,10 @@
         "time": {
           "display": "22:17",
           "precision": "exact",
-          "start": { "dayOffset": 0, "time": "22:17" }
+          "start": {
+            "dayOffset": 0,
+            "time": "22:17"
+          }
         },
         "title": "案发",
         "locationId": "vault",
@@ -1115,16 +1899,28 @@
             "text": "沈万钧按约定来到保险库。陈捷已经在里面等他。她用铜镇纸击打他的后脑，一击致死。门禁记录显示22:17开启。"
           }
         ],
-        "characterIds": ["chenjie"],
-        "participantIds": ["chenjie"],
-        "clueIds": []
+        "characterIds": [
+          "chenjie"
+        ],
+        "participantIds": [
+          "chenjie"
+        ],
+        "clueIds": [
+          "menjin_jilu",
+          "liwei_chenjie_zhengci",
+          "vault_threshold_trace",
+          "tongzhenzhi"
+        ]
       },
       {
         "id": "truth_e7",
         "time": {
           "display": "22:20",
           "precision": "exact",
-          "start": { "dayOffset": 0, "time": "22:20" }
+          "start": {
+            "dayOffset": 0,
+            "time": "22:20"
+          }
         },
         "title": "许政离开底舱",
         "content": [
@@ -1133,52 +1929,95 @@
             "text": "许政拿到玉佩后离开货舱，回到自己的客舱。"
           }
         ],
-        "characterIds": ["xuzheng"],
-        "participantIds": ["xuzheng"],
+        "characterIds": [
+          "xuzheng"
+        ],
+        "participantIds": [
+          "xuzheng"
+        ],
         "clueIds": []
       },
       {
         "id": "truth_e8",
         "time": {
-          "display": "23:05",
-          "precision": "exact",
-          "start": { "dayOffset": 0, "time": "23:05" }
+          "display": "次日 06:00",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 1,
+            "time": "06:00"
+          }
         },
-        "title": "发现尸体",
+        "title": "次日清晨发现尸体",
         "locationId": "vault",
         "content": [
           {
             "type": "paragraph",
-            "text": "方医生去底舱找沈万钧拿药。保险库门虚掩着，她推开后发现沈万钧的尸体。她喊了起来，所有人赶到现场。"
+            "text": "次日清晨约06:00，方医生去底舱找沈万钧拿药。保险库门虚掩着，她推开后发现尸体并呼救。门锁日志的05:58开启记录与她发现尸体的时间相符。"
           }
         ],
-        "characterIds": ["fangmin"],
-        "participantIds": ["fangmin"],
+        "characterIds": [
+          "fangmin"
+        ],
+        "participantIds": [
+          "fangmin"
+        ],
         "clueIds": []
       }
     ],
-    "keyEvidenceIds": ["tongzhenzhi", "menjin_jilu", "niming_duanxin", "dna_baogao", "shouyang_wenjian", "jiaban_jiandu"],
+    "keyEvidenceIds": [
+      "tongzhenzhi",
+      "menjin_jilu",
+      "vault_threshold_trace",
+      "sim_device_trace",
+      "shouyang_wenjian",
+      "dna_baogao",
+      "weixie_duanxin"
+    ],
     "evidenceChain": [
       {
         "id": "chain_1",
-        "clueIds": ["tongzhenzhi", "menjin_jilu"],
-        "conclusion": "凶器上的指纹是白天留下的（被擦拭过），结合22:17的门禁记录，说明凶手是有计划地进入保险库作案。"
+        "clueIds": [
+          "tongzhenzhi",
+          "zhou_zhenzhi_zhengci"
+        ],
+        "conclusion": "机制与镇纸：带血镇纸符合钝器伤现场特征；周铭承认较早时曾捡起镇纸，解释了可辨指纹为何可能在案发前留下。物证和陈述支持机制，不单独指认凶手。"
       },
       {
         "id": "chain_2",
-        "clueIds": ["niming_duanxin", "jiaban_jiandu"],
-        "conclusion": "有人用匿名短信约沈万钧22:17去保险库，而21:58甲板监控拍到一个身高约一米六五的人下楼——排除了周铭和许政，指向李薇或陈捷。"
+        "clueIds": [
+          "menjin_jilu",
+          "jiaban_jiandu",
+          "liwei_chenjie_zhengci",
+          "vault_threshold_trace"
+        ],
+        "conclusion": "22:17开门记录与底舱值班员门槛目击相近；李薇证明陈捷22:00下到下层，急救前的门槛鞋印与她客舱鞋底独特缺角相合。门锁、两段证言和现场鞋印共同支持陈捷实际越过门槛；鞋可能借用、监控及目击有辨认误差，因此仍需与镇纸机制、通信和其他证据交叉，不能由鞋印单卡锁凶。"
       },
       {
         "id": "chain_3",
-        "clueIds": ["shouyang_wenjian", "dna_baogao"],
-        "conclusion": "陈捷不是沈万钧的亲生女儿，而沈万钧一周前发现了这件事。陈捷有隐瞒身世的动机，也有失去继承权的紧迫感。"
+        "clueIds": [
+          "niming_duanxin",
+          "sim_device_trace",
+          "liwei_chenjie_zhengci"
+        ],
+        "conclusion": "匿名短信内容约沈万钧前往保险库；船载通信详单把不记名SIM与分配给陈捷的终端相连，李薇又在相同时间看见陈捷操作该手机。数字记录与独立目击相互印证，削弱“SIM与本人设备无关”及“设备无人操作”的辩解；李薇未看见屏幕，终端也可能被借用，仍不能单独证明发送正文者。"
+      },
+      {
+        "id": "chain_4",
+        "clueIds": [
+          "shouyang_wenjian",
+          "dna_baogao",
+          "weixie_duanxin"
+        ],
+        "conclusion": "收养协议与同编号机构认证摘录记录陈正邦为生父，DNA报告独立确认陈捷与沈万钧非亲生；工商档案显示正邦海贸被沈万钧关联公司以签名有争议的股权合同取得控制。不同来源建立陈捷与陈正邦及旧公司损失的公开身份/动机链，但不证明她知情或行凶。"
       }
     ],
     "redHerrings": [
       {
         "id": "rh_1",
-        "clueIds": ["tongzhenzhi", "weixie_duanxin"],
+        "clueIds": [
+          "tongzhenzhi",
+          "weixie_duanxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1188,7 +2027,11 @@
       },
       {
         "id": "rh_2",
-        "clueIds": ["menjin_jilu", "guyupei", "weixie_duanxin"],
+        "clueIds": [
+          "menjin_jilu",
+          "guyupei",
+          "weixie_duanxin"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1198,7 +2041,9 @@
       },
       {
         "id": "rh_3",
-        "clueIds": ["menjin_jilu"],
+        "clueIds": [
+          "menjin_jilu"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -1224,10 +2069,34 @@
   },
   "flow": {
     "selfIntroRounds": 1,
-    "searchRounds": 2,
+    "searchRounds": 3,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "保险库现场与行动路线",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第一轮核对死因、22:17开门、甲板下楼和独立门槛目击。门锁、模糊影像和单一证言各有辨认边界；先建立时间路线，不急于定身份。"
+          }
+        ],
+        "roundStart": 1
+      },
+      {
+        "id": "act_2",
+        "title": "门槛痕迹、短信设备与身世旧案",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二轮对照急救前保存的保险库鞋印与陈捷客舱鞋底，再核对SIM/终端记录；第三轮公开收养机构认证、DNA与公司档案，分别检验身份、短信关联和动机。机会、通信、身份与动机仍是不同命题。"
+          }
+        ],
+        "roundStart": 2
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1250,6 +2119,102 @@
             "text": "投票未能指认陈捷。许政因盗窃被追究，周铭因挪用公款被调查，沈万钧的死成了悬案。陈捷站在甲板上看着海面——她赢了，但她的眼神里没有胜利者的光。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "提醒玩家案发发生在前一晚，尸体于次日清晨发现；不要把发现时间当作死亡时间。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "请每人交代21:30至22:30的行动，并明确亲见、听闻和推断的区别。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证现场、门锁、短信、甲板监控、李薇与底舱值班员陈述、周铭镇纸陈述及玉佩线索；第二轮保证急救前封存的保险库鞋印比对、陈捷客舱鞋底和通信设备记录；第三轮保证收养协议及机构认证、DNA报告、公司股权档案和许政威胁材料。每张原件/记录均按保证清单发放，避免线索堆积导致抽不到关键材料。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别讨论钝器机制、22:17谁越过门槛、匿名短信是否关联陈捷设备、陈捷与陈正邦及正邦海贸旧案的身份动机。门槛鞋印、终端记录各有借用/代操作可能，均需第二来源交叉验证；身份和动机不等于杀人。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前分别回答进入者身份、短信设备关联、陈捷的生父及公司旧案关系，并指出每条材料不能证明什么。进入结论须同时引用门锁、目击、鞋印中的至少两类；动机结论须用机构认证和公司档案等不同来源。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把22:17门锁记录当成精确死亡时间",
+        "hint": "日志只证明开门时刻；请回看次日05:58的第二次开门及06:00发现尸体。"
+      },
+      {
+        "condition": "玩家因周铭指纹直接指认周铭",
+        "hint": "指纹没有时间信息；镇纸另一组痕迹无法比对。请结合其余证据核对机制和机会。"
+      },
+      {
+        "condition": "玩家无法从身份材料继续推理",
+        "hint": "第二轮确保开放客舱内收养文件与保险库中的鉴定报告，并提醒它们支持动机假设而非直接证明行凶。"
+      },
+      {
+        "condition": "玩家尚未把陈捷的身份与陈正邦、正邦海贸旧案分开核验。",
+        "hint": "第三轮保证公开同编号收养机构认证、DNA报告和公司档案；认证摘录给出陈正邦，DNA只证明非亲生，公司档案支持旧案损失，不证明陈捷知情或行凶。"
+      },
+      {
+        "condition": "玩家把门锁或模糊影像直接当成陈捷进入保险库的证明。",
+        "hint": "对照22:17门锁、李薇下楼、值班员门槛目击与急救前鞋印；新鞋印可与客舱鞋底比对但鞋可能借用，说明各证据的身份边界。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "tongzhenzhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "menjin_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "niming_duanxin",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "weixie_duanxin",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "guyupei",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shouyang_wenjian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "dna_baogao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jiaban_jiandu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhou_zhenzhi_zhengci",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "liwei_chenjie_zhengci",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "vault_threshold_trace",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "sim_device_trace",
+        "deadlineRound": 3
       }
     ]
   }

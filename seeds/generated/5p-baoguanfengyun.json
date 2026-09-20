@@ -62,7 +62,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把'线路老化漏电'坐实：检修登记簿是你一人的字、学徒离馆两刻是你支的、胶底鞋是'脚气'。若汇票存根被翻出，就说'那是我替内弟垫的冤枉钱，我才是被牵连的'。你要抢着'修灯验线'，第一个碰现场——手套在你工具房，今晚没戴，是想不起来还是想得起来，你自己清楚。"
+                "text": "把现场先解释成旧线路偶发漏电，争取在众人碰灯前主张由你验线；但不要碰裸线或擅自改动现场。推动大家核对停电调度、检修登记与学徒口述，强调三者只能证明授权、窗口和接触；若汇票被发现，就承认妻子收款并提出款项用途尚待核实。你要争取让讨论分别回答“灯怎样带电、谁有机会改灯、谁从中受益”，而不是把一张工单当作全案结论。"
               }
             ],
             "priority": "primary"
@@ -262,7 +262,93 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_niudeshan_routine_repair",
+            "claim": "我按签批安排做的是例行检修；排字房停电本来就是为了安全，不能因为我拆过灯就说我故意把灯壳接成带电。",
+            "basis": "停电单只授权线路检修，学徒只看见拆装过程而未看见内部接线；旧线路确有偶发故障，触电伤痕也不能单独区分意外与人为。",
+            "brokenByPublicClueIds": [
+              "c_tongxian",
+              "c_xuetu_zhengci"
+            ]
+          },
+          {
+            "id": "defense_niudeshan_family_remittance",
+            "claim": "牛王氏收到的钱可能是米行给周仓儿的封口款或家庭往来；汇票没有我的签收，主编在存根上的“封口银”只是猜测。",
+            "basis": "收款人不是我，汇票不能单独证明经手人；主编批注是调查线索，不是银行对款项性质的鉴定。",
+            "brokenByPublicClueIds": [
+              "c_huipiao",
+              "c_dayang"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "niudeshan_act1_fact",
+                "title": "第一幕事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道停电、检修、灯具拆装分别发生过，但学徒未看见内部接线。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "niudeshan_act1_goal",
+                "title": "核对停电检修与触灯机会",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "围绕死亡机制与时间窗发言，说明亲历、记录和推断的区别；避免触碰或改动现场。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "niudeshan_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "汇票存根记的是妻子收款，主编的批注仍只是调查判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "niudeshan_act2_goal",
+                "title": "回应灯具改装和汇款证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与核对本幕公开材料，回应两条防御线索并提出可检验的替代解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -487,7 +573,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "shenshucheng_act1_fact",
+                "title": "第一幕事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "停电单、验尸和灯具线索分别说明不同事实，任何一件都不足以独自认定实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenshucheng_act1_goal",
+                "title": "交代案发时段亲历事实并决定如何处理个人秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "围绕死亡机制与时间窗发言，说明亲历、记录和推断的区别；决定是否公开自己的相关行动。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "shenshucheng_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开汇款与号外批注，要求把动机推测同行为证据分开。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenshucheng_act2_goal",
+                "title": "用公开材料核验机会与动机并回应自己的秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与核对本幕公开材料，回应他人的机会与动机，同时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -711,7 +863,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "linpeiqiu_act1_fact",
+                "title": "第一幕事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "停电单、验尸和灯具线索分别说明不同事实，任何一件都不足以独自认定实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "linpeiqiu_act1_goal",
+                "title": "交代案发时段亲历事实并决定如何处理个人秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "围绕死亡机制与时间窗发言，说明亲历、记录和推断的区别；决定是否公开自己的相关行动。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "linpeiqiu_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开汇款与号外批注，要求把动机推测同行为证据分开。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "linpeiqiu_act2_goal",
+                "title": "用公开材料核验机会与动机并回应自己的秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与核对本幕公开材料，回应他人的机会与动机，同时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -911,7 +1129,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "tongboheng_act1_fact",
+                "title": "第一幕事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "停电单、验尸和灯具线索分别说明不同事实，任何一件都不足以独自认定实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tongboheng_act1_goal",
+                "title": "交代案发时段亲历事实并决定如何处理个人秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "围绕死亡机制与时间窗发言，说明亲历、记录和推断的区别；决定是否公开自己的相关行动。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "tongboheng_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开汇款与号外批注，要求把动机推测同行为证据分开。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tongboheng_act2_goal",
+                "title": "用公开材料核验机会与动机并回应自己的秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与核对本幕公开材料，回应他人的机会与动机，同时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1132,7 +1416,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "guoyishou_act1_fact",
+                "title": "第一幕事实边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "停电单、验尸和灯具线索分别说明不同事实，任何一件都不足以独自认定实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guoyishou_act1_goal",
+                "title": "交代案发时段亲历事实并决定如何处理个人秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "围绕死亡机制与时间窗发言，说明亲历、记录和推断的区别；决定是否公开自己的相关行动。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "guoyishou_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开汇款与号外批注，要求把动机推测同行为证据分开。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guoyishou_act2_goal",
+                "title": "用公开材料核验机会与动机并回应自己的秘密",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "参与核对本幕公开材料，回应他人的机会与动机，同时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1155,7 +1505,8 @@
           "type": "paragraph",
           "text": "电机房里印刷机与配电闸一字排开，检修登记簿摊在案上；机器预热的嗡鸣不停，电闸与钥匙都归这一屋管。"
         }
-      ]
+      ],
+      "ownerCharacterId": "niudeshan"
     },
     {
       "id": "location_3",
@@ -1175,7 +1526,8 @@
           "type": "paragraph",
           "text": "账房里账册与流水排了满架，经理室的抽屉上着锁，钥匙拴在怀表链上；纸行的催款信压在最上面，深夜只剩机器声从墙外传来。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tongboheng"
     },
     {
       "id": "location_5",
@@ -1185,7 +1537,8 @@
           "type": "paragraph",
           "text": "狭小的馆员宿舍里，木板床铺底压着随身的皮箱，退稿信与私物塞在箱底；窗外机器声隐隐，灯芯拨得极小。"
         }
-      ]
+      ],
+      "ownerCharacterId": "shenshucheng"
     },
     {
       "id": "location_6",
@@ -1195,7 +1548,8 @@
           "type": "paragraph",
           "text": "储纸库里白报纸垛得齐胸高，纸卷与纸垛间留着窄缝；夜里库房阴凉，翻动纸垛会扬起细屑，一有人抽动就留痕。"
         }
-      ]
+      ],
+      "ownerCharacterId": "linpeiqiu"
     },
     {
       "id": "location_7",
@@ -1205,7 +1559,8 @@
           "type": "paragraph",
           "text": "排字房后间铺着草席，堆着杂物与备用字盘；席角压得住私物，地上一只字盘翻倒着，五号铅字撒了半地还没拾。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guoyishou"
     }
   ],
   "clues": [
@@ -1217,7 +1572,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者伏于字架旁矮凳，右手搭在绿罩台灯铜底座上：右手掌心与食、中二指指腹有灰白色隆起的电流斑，边缘充血如烙。死亡时刻约 23:10 至 23:25。馆内电路当夜时断时续，排字房那盏灯半明半灭——众人皆言'线路老化漏电'。草单边角有一行补记：'死者指腹灼痕深，非瞬间脱离，是握而不放。'"
+          "text": "死者伏于字架旁矮凳，右手搭在绿罩台灯铜底座上。掌心及食、中指指腹有电流斑，边缘充血；尸体姿势和持续接触痕迹符合触电后肌肉痉挛，死亡时间估计为23:10—23:25。草单未检出能证明灯具由谁改装的特征，也不能仅凭伤痕区分人为短路与意外漏电。"
         }
       ],
       "policy": "auto_public",
@@ -1232,7 +1587,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "台灯铜底座的旋钮开关被拆开过：开关一极的线头直接绕焊在铜壳内壁，螺丝口有新旋的亮痕；铜壳内侧干干净净——用了十年的灯，壳内早该积灰包浆，干净才是最大的不对。灯泡被拧松半圈，一碰即亮。门口泥地上印着一枚带棱的胶底鞋印，纹路与机师平日那双胶鞋同款——胶底绝缘，做贼心虚的人才穿得上。"
+          "text": "台灯铜底座旋钮开关有拆装痕迹：一极线头被绕焊在铜壳内壁，螺丝口留有新鲜工具擦痕；灯泡松了约半圈，一碰就会亮。铜壳内壁异常洁净，与旧灯长期使用不符。它说明灯具近期被改动并可能使外壳带电，但无法单独说明改动者、改动时间或死者当时如何碰到灯。门边泥地有一枚普通棱纹胶底鞋印，鞋型常见，不能据此认人。"
         }
       ],
       "policy": "manual_public",
@@ -1247,7 +1602,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "字架上钳着号外大样：《官米案始末》之三，标题被红笔加粗。大样边角有主编的批注：'仓吏周仓儿收米行封口银，经手何人？另：牛记电机行承揽本馆线路十年，回扣几何——明日一并登。'批注墨色极新，笔画潦草，是死前半个时辰内写的。"
+          "text": "字架上钳着号外大样：《官米案始末》之三。主编红笔批注：“仓吏周仓儿收米行封口银，经手何人？另：牛记电机行承揽本馆线路十年，回扣几何——明日一并登。”墨色较新，说明主编准备继续追查周仓儿及牛记电机行；批注没有写牛德山实施任何行为。"
         }
       ],
       "policy": "manual_public",
@@ -1262,7 +1617,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "当日上午登记：'整修排字房线路，机师牛德山，一人作业'；学徒名下只有一句'购烟，午前出馆两刻'的请假条——支开人的时候，正是接线的时候。往前翻：三个月前'电机异响检修'也是牛德山一人。配电间的备用钥匙两把，一把在机师身上，另一把去年就'锈死取不出'了。"
+          "text": "电机房检修登记簿记有当日上午排字房线路检修，由机师牛德山一人负责；学徒另留有外出购烟两刻的请假条。配电间钥匙领用栏记牛德山当日签领。簿册只能证明他有工作权限及单独作业窗口，不能证明他实际改装台灯或案发时在现场。"
         }
       ],
       "policy": "manual_public",
@@ -1277,7 +1632,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "主编抽屉暗格里两联广济钱庄汇票存根：收款人'牛王氏'（牛德山之妻），两笔共二百元，日期都在官米案见报之后。附言栏一行主编的小字：'封口银？取死之道。'存根是从钱庄抄来的底——主编查账查到了谁头上，一目了然。"
+          "text": "主编室抽屉暗格里有两联广济钱庄汇票存根，收款人均为牛德山之妻牛王氏，合计二百元，日期在官米案见报后。钱庄抄件显示款项由丰裕米行经手账户汇出，存根本身未写牛德山亲自收款或转交。附言栏有主编手写“封口银？”，这是他的调查判断，不是银行结论。"
         }
       ],
       "policy": "manual_public",
@@ -1322,7 +1677,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "账房抽屉：纸行催款信三封，最晚一封措辞严厉'年底不结，照会商会'；一本公积金流水，'申庄往来'一项亏空两千。另一张是童伯衡签批的条子：'准机师牛德山，廿八日晨整修排字房线路，停电半日。'——停电半日，一人作业，条子是他签的。抽屉上了锁，钥匙在他怀表链上。"
+          "text": "经理室档案夹中有一张经经理童伯衡签批的停电调度单：次日上午排字房线路检修，隔离该房支路两小时，机师牛德山负责复电。单据证明维修窗口与授权程序；没有记载具体维修项目或灯具状态，也不证明谁动了台灯。纸行催款信和公积金流水另见同夹，显示经理当时也有账务压力，但与停电审批本身没有直接关联。"
         }
       ],
       "policy": "manual_public",
@@ -1338,6 +1693,21 @@
         {
           "type": "paragraph",
           "text": "排字房后间草席下有一本小账：'廿一，五号铅两盘，售洋六元；廿四，同。'末页夹着烟馆的赊账单：'烟资累计三十七元五角。'字迹与领班郭一手的拣字单同出一手。字架旁还有一只碰倒的字盘，五号铅字撒了半地——有人慌乱中碰的，撞翻的时刻在发现尸体之前。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_xuetu_zhengci",
+      "locationId": "location_2",
+      "name": "学徒的检修口述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "学徒补写的工作记录称：停电检修时，他看见牛德山把绿罩台灯从桌上取下，放在电机房工作布上拆开；牛让他出去买烟，回来时灯已装回。学徒没有看见内部接线，也未见牛在案发前后进入排字房。另一次，他在配电间听见牛对账房说“两笔钱是我替周仓儿跑腿，经我妻子户头转的；主编拿存根来问过”。这是学徒的回忆，不能替代银行记录或证明杀人，但可与汇票和主编批注互证。"
         }
       ],
       "policy": "manual_public",
@@ -1781,9 +2151,11 @@
         "id": "evidence_3",
         "clueIds": [
           "c_huipiao",
-          "c_dayang"
+          "c_dayang",
+          "c_xuetu_zhengci",
+          "c_tongxian"
         ],
-        "conclusion": "主编暗格里的汇票存根显示，官米案见报后牛德山之妻'牛王氏'收到两笔共二百元封口银——主编查账查到了牛德山头上，逼他写自白书，否则号外连他一起登。灭口动机成立。"
+        "conclusion": "银行汇票和学徒回忆交叉支持牛德山经手米行汇款，号外大样显示主编正准备追查；另有灯具实物证明开关近期被故意改动。把动机材料与独立的灯具痕迹、学徒所见的拆装事实合并，支持牛有作案动机且接触过被改动的灯具；仍需注意，动机和接触都不能单独证明他实施了致命改装。"
       }
     ],
     "redHerrings": [
@@ -1854,7 +2226,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": false,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "断电检修与死亡机制",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先区分停电安排、台灯被改动和死者触电死亡：验尸只说明死因及大致时间，现场灯具只说明近期改动。公布检修登记、停电调度与学徒口述后，讨论谁有接触机会；暂不把机会直接当作凶手身份。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "实施者与动机核验",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "交叉核对台灯改装痕迹、独立的维修记录与目击口述，再用汇票存根和号外批注核验可能动机。每条辩解都要结合来源不同的公开材料回应；钱款和停电单分别不能单独定罪。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1877,6 +2273,82 @@
             "text": "投票未能指认牛德山。众人的注意力被沈书城的'你等着'、林佩秋的鬼祟折返、童伯衡的签批停电和郭一手的二十分钟空白分散——人人都有秘密，人人都像凶手。牛德山第二天照常检修线路，排字房那盏灯换成了新的。号外照常出门，只是主编的名字旁边，永远少了一行该登而没登的字。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场说明报馆停电检修安排及23:40发现尸体；不提前宣布具体触电时刻或改灯者。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮保证公开 c_yanshi、c_tongxian、c_dengjibu、c_qianzi、c_xuetu_zhengci；按“死亡机制—灯具状态—检修窗口—实际接触”分层发放。第2轮保证公开 c_huipiao、c_dayang，并提供其余角色相关材料；汇票与主编批注仅构成动机调查线索，必须分开解释。所有保证材料均在现有两轮预算内。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "要求玩家分别陈述停电是否发生、灯具如何异常、受害者如何触电、谁有机会及谁实际实施、可能动机。检修记录和口述证明机会/接触，不能单独证明接线；汇票存根不能证明牛德山亲手收款。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "最终指认须至少引用两种来源的材料说明实施者身份，并回应例行维修/意外漏电及汇款用途两条竞争解释。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把全馆停电直接等同于凶手制造触电。",
+        "hint": "请他们分别读停电调度单、检修簿和验尸草单，说明每份记录证明的对象不同。"
+      },
+      {
+        "condition": "玩家凭灯具接线直接锁定牛德山。",
+        "hint": "提醒灯具本身没有操作者身份；结合学徒口述、检修记录评估接触机会，再找独立动机材料。"
+      },
+      {
+        "condition": "玩家凭汇票直接认定封口银和杀人动机。",
+        "hint": "指出“封口银？”是主编批注而非银行事实，要求与号外批注交叉核对并保留家庭汇款解释。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "c_yanshi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_tongxian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_dengjibu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_qianzi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_xuetu_zhengci",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_huipiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_dayang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_maijia",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_fuben",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_qianbao",
+        "deadlineRound": 2
       }
     ]
   }

@@ -1242,6 +1242,42 @@
                   "minLength": 1
                 }
               },
+              "defenseHooks": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "basis": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "brokenByPublicClueIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "claim",
+                    "basis",
+                    "brokenByPublicClueIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
               "stages": {
                 "default": [],
                 "type": "array",
@@ -1644,6 +1680,7 @@
               "alibi",
               "violation",
               "tells",
+              "defenseHooks",
               "stages",
               "skills"
             ],

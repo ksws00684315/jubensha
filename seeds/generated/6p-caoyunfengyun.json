@@ -73,20 +73,163 @@
           {
             "id": "character_qilianbo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "香堂陪坐",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）香堂陪坐。亥时初（约21时）散后查各船封舱。亥时二刻（约21时30分）在栈桥公房替帮主接待郑朝奉：「帮主酒了，明早对票」。亥时末（约22时40分）给铁锁送去赏夜酒。子时初（约23时）上金满仓号；子时一刻舱内行凶；子时二刻（约23时30分）下船入公房与郑朝奉对坐一盏茶。寅时（约4时）闻锣而出，主持封栈桥。"
+                "text": "香堂陪坐。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_2",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "散后查各船封舱",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "散后查各船封舱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_3",
+            "time": {
+              "display": "亥时二刻（约21时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "在栈桥公房替帮主接待郑朝奉：「帮主酒了",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在栈桥公房替帮主接待郑朝奉：「帮主酒了，明早对票」。"
               }
             ],
             "characterIds": [
-              "tiesuo",
               "zhengzhaofeng"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_4",
+            "time": {
+              "display": "亥时末（约22时40分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "给铁锁送去赏夜酒",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "给铁锁送去赏夜酒。"
+              }
+            ],
+            "characterIds": [
+              "tiesuo"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_5",
+            "time": {
+              "display": "子时初（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "上金满仓号",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "上金满仓号；"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_6",
+            "time": {
+              "display": "子时一刻",
+              "precision": "relative"
+            },
+            "title": "舱内行凶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "舱内行凶；"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_7",
+            "time": {
+              "display": "子时二刻（约23时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "下船入公房与郑朝奉对坐一盏茶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "下船入公房与郑朝奉对坐一盏茶。"
+              }
+            ],
+            "characterIds": [
+              "zhengzhaofeng"
+            ],
+            "clueIds": []
+          },
+          {
+            "id": "character_qilianbo_event_1_part_8",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "闻锣而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻锣而出，主持封栈桥。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           }
         ],
@@ -192,14 +335,78 @@
           {
             "id": "character_tiesuo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "香堂聚众后回金满仓号守船",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）香堂聚众后回金满仓号守船。亥时末（约22时40分）接过那个人送来的赏夜酒，边守边喝。子时（约23时）后睡死过去。寅时（约4时）酒醒解缆，发现舱底尸身，敲锣惊动码头。"
+                "text": "香堂聚众后回金满仓号守船。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiesuo_event_1_part_2",
+            "time": {
+              "display": "亥时末（约22时40分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:40"
+              }
+            },
+            "title": "接过那个人送来的赏夜酒",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "接过那个人送来的赏夜酒，边守边喝。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiesuo_event_1_part_3",
+            "time": {
+              "display": "子时（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "后睡死过去",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后睡死过去。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiesuo_event_1_part_4",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "酒醒解缆",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "酒醒解缆，发现舱底尸身，敲锣惊动码头。"
               }
             ],
             "characterIds": [],
@@ -309,14 +516,86 @@
           {
             "id": "character_gaoxiaobo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "香堂聚众",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）香堂聚众。亥时后回水手铺转侧难眠。子时前后（约23时）溜进帮主舱房偷走贴身盐引底单，回铺藏入褥下。子时后未出。寅时（约4时）闻锣而出。"
+                "text": "香堂聚众。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gaoxiaobo_event_1_part_2",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后回水手铺转侧难眠",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后回水手铺转侧难眠。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gaoxiaobo_event_1_part_3",
+            "time": {
+              "display": "子时",
+              "precision": "relative"
+            },
+            "title": "前后（约23时）溜进帮主舱房偷走贴身盐引底单",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "前后（约23时）溜进帮主舱房偷走贴身盐引底单，回铺藏入褥下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gaoxiaobo_event_1_part_4",
+            "time": {
+              "display": "子时",
+              "precision": "relative"
+            },
+            "title": "后未出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后未出。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_gaoxiaobo_event_1_part_5",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "闻锣而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻锣而出。"
               }
             ],
             "characterIds": [],
@@ -425,14 +704,74 @@
           {
             "id": "character_zhengzhaofeng_event_1",
             "time": {
-              "display": "时间待整理",
+              "display": "戌时末",
               "precision": "relative"
             },
-            "title": "戌时末离官仓",
+            "title": "离官仓",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时末离官仓。亥时二刻（约21时30分）持官票到栈桥公房候对，被那个人挡驾，留在公房吃茶。子时二刻（约23时30分）与那个人对坐一盏茶，约定明早对票。此后宿在公房。寅时（约4时）闻锣而出。"
+                "text": "离官仓。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhengzhaofeng_event_1_part_2",
+            "time": {
+              "display": "亥时二刻（约21时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "持官票到栈桥公房候对",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持官票到栈桥公房候对，被那个人挡驾，留在公房吃茶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhengzhaofeng_event_1_part_3",
+            "time": {
+              "display": "子时二刻（约23时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "与那个人对坐一盏茶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "与那个人对坐一盏茶，约定明早对票。此后宿在公房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_zhengzhaofeng_event_1_part_4",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "闻锣而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻锣而出。"
               }
             ],
             "characterIds": [],
@@ -541,14 +880,50 @@
           {
             "id": "character_caosanniang_event_1",
             "time": {
-              "display": "时间待整理",
+              "display": "戌时末",
               "precision": "relative"
             },
-            "title": "戌时末驾小舟入芦苇荡桩船",
+            "title": "驾小舟入芦苇荡桩船",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时末驾小舟入芦苇荡桩船。亥时后守桩船候「水脊」。子夜（约23时）望见金满仓号舱口灯灭、一条人影下跳板；无人来接信，将浪花纹暗信压回香案下。寅时（约4时）闻锣，远观不动。"
+                "text": "驾小舟入芦苇荡桩船。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_caosanniang_event_1_part_2",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后守桩船候「水脊」",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后守桩船候「水脊」。子夜（约23时）望见金满仓号舱口灯灭、一条人影下跳板；无人来接信，将浪花纹暗信压回香案下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_caosanniang_event_1_part_3",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "闻锣",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻锣，远观不动。"
               }
             ],
             "characterIds": [],
@@ -658,14 +1033,110 @@
           {
             "id": "character_jiduoxing_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "香堂执笔录事",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）香堂执笔录事。亥时后在香堂账房汇总水程；亥时三刻（约22时15分）记「雷帮主上金满仓号，未下」；子时初（约23时）记「那人上」、子时二刻（约23时30分）记「那人下」。子时后锁账房睡下。寅时（约4时）闻锣而出。"
+                "text": "香堂执笔录事。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiduoxing_event_1_part_2",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后在香堂账房汇总水程",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后在香堂账房汇总水程；"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiduoxing_event_1_part_3",
+            "time": {
+              "display": "亥时三刻（约22时15分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:15"
+              }
+            },
+            "title": "记「雷帮主上金满仓号",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "记「雷帮主上金满仓号，未下」；"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiduoxing_event_1_part_4",
+            "time": {
+              "display": "子时初（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "记「那人上」、子时二刻（约23时30分）记「那…",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "记「那人上」、子时二刻（约23时30分）记「那人下」。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiduoxing_event_1_part_5",
+            "time": {
+              "display": "子时",
+              "precision": "relative"
+            },
+            "title": "后锁账房睡下",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后锁账房睡下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiduoxing_event_1_part_6",
+            "time": {
+              "display": "寅时（约4时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "04:00"
+              }
+            },
+            "title": "闻锣而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻锣而出。"
               }
             ],
             "characterIds": [],
@@ -986,32 +1457,242 @@
       {
         "id": "truth_event_1",
         "time": {
-          "display": "时间待整理",
-          "precision": "relative"
+          "display": "戌时（约20时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
         },
-        "title": "戌时",
+        "title": "香堂聚众：雷震江放话「明日对粮票",
         "content": [
           {
             "type": "paragraph",
-            "text": "戌时（约20时）香堂聚众：雷震江放话「明日对粮票，三日内开香堂清帮规」，众人皆闻；帮主拍高小舸肩膀说「磨三年，帮是你的」。亥时（约21时）雷震江带酒气独自夜巡船队，亥时三刻（约22时15分）上金满仓号查湿粮（计多星在账房窗口望见并记入水程簿：上船，未下）。亥时二刻（约21时30分）郑朝奉持官票到栈桥公房候对，戚连波替帮主挡驾：「帮主酒了，明早对票」，郑留公房吃茶。亥时末（约22时40分）戚连波给铁锁送去「赏夜酒」（掺蒙汗药），铁锁边守边喝。子时初（约23时）戚连波上金满仓号（水程簿记「戚二爷上」；高小舸几乎同时溜进帮主舱房偷走盐引底单；曹三娘在芦苇荡候「水脊」）。子时一刻（约23时15分）舱底行凶：帮主蹲身查湿粮，戚连波从背后将其按入积水呛毙，横倒船桨、滚落酒葫芦，布置成醉后失足。子时二刻（约23时30分）戚连波下船（曹三娘望见舱口灯灭、人影下跳板；水程簿记「戚二爷下」），入公房与郑朝奉对坐一盏茶——互为对方的人证。子时后铁锁药力发作睡死；计多星锁账房睡下。寅时（约4时）铁锁酒醒解缆，发现舱底尸身，敲锣惊动码头；戚连波封栈桥，郑朝奉出公房，曹三娘远观不动。破案链：舱底青苔麻絮与后脑无伤（活人呛毙非磕晕）→ 夹仓糠盐与香堂草帖（水脊的财路与杀机）→ 守夜酒壶蒙汗药（守夜被安排）→ 水程簿三行时辰（案发窗口只有戚连波上下船）→ 郑朝奉的油泥与对茶、米色册改痕（人证与勾连）→ 浪花纹暗信与盐引底单（暗码与实证）。红鲱鱼：铁锁的守夜失职、高小舸的偷底单、郑朝奉的改册、计多星的私押、曹三娘的放话——人人有把柄，把柄各归各，凶手只有一人。"
+            "text": "香堂聚众：雷震江放话「明日对粮票，三日内开香堂清帮规」，众人皆闻；帮主拍高小舸肩膀说「磨三年，帮是你的」。"
+          }
+        ],
+        "characterIds": [
+          "gaoxiaobo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "gaoxiaobo"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_2",
+        "time": {
+          "display": "亥时（约21时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "雷震江带酒气独自夜巡船队",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "雷震江带酒气独自夜巡船队，亥时三刻（约22时15分）上金满仓号查湿粮（计多星在账房窗口望见并记入水程簿：上船，未下）。"
+          }
+        ],
+        "characterIds": [
+          "jiduoxing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "jiduoxing"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_3",
+        "time": {
+          "display": "亥时二刻（约21时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "郑朝奉持官票到栈桥公房候对",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "郑朝奉持官票到栈桥公房候对，戚连波替帮主挡驾：「帮主酒了，明早对票」，郑留公房吃茶。"
+          }
+        ],
+        "characterIds": [
+          "qilianbo",
+          "zhengzhaofeng"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qilianbo",
+          "zhengzhaofeng"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_4",
+        "time": {
+          "display": "亥时末（约22时40分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:40"
+          }
+        },
+        "title": "戚连波给铁锁送去「赏夜酒」（掺蒙汗药）",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戚连波给铁锁送去「赏夜酒」（掺蒙汗药），铁锁边守边喝。"
+          }
+        ],
+        "characterIds": [
+          "qilianbo",
+          "tiesuo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qilianbo",
+          "tiesuo"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_5",
+        "time": {
+          "display": "子时初（约23时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "戚连波上金满仓号（水程簿记「戚二爷上」",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戚连波上金满仓号（水程簿记「戚二爷上」；高小舸几乎同时溜进帮主舱房偷走盐引底单；曹三娘在芦苇荡候「水脊」）。"
+          }
+        ],
+        "characterIds": [
+          "qilianbo",
+          "gaoxiaobo",
+          "caosanniang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qilianbo",
+          "gaoxiaobo",
+          "caosanniang"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_6",
+        "time": {
+          "display": "子时一刻（约23时15分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:15"
+          }
+        },
+        "title": "舱底行凶：帮主蹲身查湿粮",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "舱底行凶：帮主蹲身查湿粮，戚连波从背后将其按入积水呛毙，横倒船桨、滚落酒葫芦，布置成醉后失足。"
+          }
+        ],
+        "characterIds": [
+          "qilianbo"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qilianbo"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_7",
+        "time": {
+          "display": "子时二刻（约23时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:30"
+          }
+        },
+        "title": "戚连波下船（曹三娘望见舱口灯灭、人影下跳板",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戚连波下船（曹三娘望见舱口灯灭、人影下跳板；水程簿记「戚二爷下」），入公房与郑朝奉对坐一盏茶——互为对方的人证。"
+          }
+        ],
+        "characterIds": [
+          "qilianbo",
+          "zhengzhaofeng",
+          "caosanniang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "qilianbo",
+          "zhengzhaofeng",
+          "caosanniang"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_8",
+        "time": {
+          "display": "子时",
+          "precision": "relative"
+        },
+        "title": "后铁锁药力发作睡死",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "后铁锁药力发作睡死；计多星锁账房睡下。"
+          }
+        ],
+        "characterIds": [
+          "tiesuo",
+          "jiduoxing"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tiesuo",
+          "jiduoxing"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_9",
+        "time": {
+          "display": "寅时（约4时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 1,
+            "time": "04:00"
+          }
+        },
+        "title": "铁锁酒醒解缆",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁锁酒醒解缆，发现舱底尸身，敲锣惊动码头；戚连波封栈桥，郑朝奉出公房，曹三娘远观不动。"
           }
         ],
         "characterIds": [
           "qilianbo",
           "tiesuo",
-          "gaoxiaobo",
           "zhengzhaofeng",
-          "caosanniang",
-          "jiduoxing"
+          "caosanniang"
         ],
         "clueIds": [],
         "participantIds": [
           "qilianbo",
           "tiesuo",
-          "gaoxiaobo",
           "zhengzhaofeng",
-          "caosanniang",
-          "jiduoxing"
+          "caosanniang"
         ]
       }
     ],
@@ -1120,7 +1801,12 @@
         ]
       }
     ],
-    "supplemental": [],
+    "supplemental": [
+      {
+        "type": "paragraph",
+        "text": "破案链：舱底青苔麻絮与后脑无伤（活人呛毙非磕晕）→ 夹仓糠盐与香堂草帖（水脊的财路与杀机）→ 守夜酒壶蒙汗药（守夜被安排）→ 水程簿三行时辰（案发窗口只有戚连波上下船）→ 郑朝奉的油泥与对茶、米色册改痕（人证与勾连）→ 浪花纹暗信与盐引底单（暗码与实证）。 红鲱鱼：铁锁的守夜失职、高小舸的偷底单、郑朝奉的改册、计多星的私押、曹三娘的放话——人人有把柄，把柄各归各，凶手只有一人。"
+      }
+    ],
     "reveal": [
       {
         "type": "paragraph",

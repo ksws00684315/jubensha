@@ -358,19 +358,127 @@
           {
             "id": "character_jiping_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "0:00-1:50",
+              "precision": "range",
+              "start": {
+                "dayOffset": 1,
+                "time": "00:00"
+              },
+              "end": {
+                "dayOffset": 1,
+                "time": "01:50"
+              }
             },
-            "title": "-1:50 在 5 排睡眠",
+            "title": "在 5 排睡眠（1:30 魏迟起夜时证其在睡）",
             "content": [
               {
                 "type": "paragraph",
-                "text": "0:00-1:50 在 5 排睡眠（1:30 魏迟起夜时证其在睡）。1:52 响应广播到场。1:56 取死者外套内袋药瓶含服（察觉发甜无灼麻感）。2:05 拆应急医疗箱，真药加吸氧。2:20 宣布心搏停止死亡。2:30 检查遗物，发现瓶内戒烟糖与'苗'字钢印，封存药瓶并记录。"
+                "text": "在 5 排睡眠（1:30 魏迟起夜时证其在睡）。"
               }
             ],
             "characterIds": [
               "weichi"
             ],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiping_event_1_part_2",
+            "time": {
+              "display": "1:52",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "01:52"
+              }
+            },
+            "title": "响应广播到场",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "响应广播到场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiping_event_1_part_3",
+            "time": {
+              "display": "1:56",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "01:56"
+              }
+            },
+            "title": "取死者外套内袋药瓶含服（察觉发甜无灼麻感）",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "取死者外套内袋药瓶含服（察觉发甜无灼麻感）。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiping_event_1_part_4",
+            "time": {
+              "display": "2:05",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "02:05"
+              }
+            },
+            "title": "拆应急医疗箱",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "拆应急医疗箱，真药加吸氧。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiping_event_1_part_5",
+            "time": {
+              "display": "2:20",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "02:20"
+              }
+            },
+            "title": "宣布心搏停止死亡",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宣布心搏停止死亡。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_jiping_event_1_part_6",
+            "time": {
+              "display": "2:30",
+              "precision": "exact",
+              "start": {
+                "dayOffset": 1,
+                "time": "02:30"
+              }
+            },
+            "title": "检查遗物",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "检查遗物，发现瓶内戒烟糖与'苗'字钢印，封存药瓶并记录。"
+              }
+            ],
+            "characterIds": [],
             "clueIds": []
           }
         ],

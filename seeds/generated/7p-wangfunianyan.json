@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "活下去，且把亏空永远钉在死人头上。要压住三件事：死者指甲缝里的靛青絮屑、子时初你回长史院的官靴印、以及你「三刻即出」的自述对不上白蕴珠望见的两个人影与萧令仪听见的响动。有人问丝绦，说是门环刮断；有人提靴印，说是子时初替王爷送对牌。先把「畏罪自尽」钉死，再谈别的。"
+                "text": "活下去，且把亏空永远钉在死人头上。你必须把尸身、伪折、旧账和离场时辰拆开应对：承认自己按例入书房、坚持不曾动过王爷；丝绦只承认早先整理文书时磨损；子时的官靴印只承认回院。不要替自己编造对牌、门环或旁人能立即推翻的细节。"
               }
             ],
             "priority": "primary"
@@ -73,14 +73,162 @@
           {
             "id": "character_guyannian_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴上执府礼",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴上执府礼。戌时戏毕分赏。亥时初（约21时）宴散回长史院更衣。亥时二刻（约21时30分）持开春府务册入凝晖堂书房。亥时三刻（约22时）行凶。亥时三刻至子时初收拾现场。子时初（约23时）出书房，经西廊回长史院——雪地官靴印朝外。子时后在长史院歇下。子时末闻惊而出，主持封府。"
+                "text": "年夜宴上执府礼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_2",
+            "time": {
+              "display": "戌时",
+              "precision": "relative"
+            },
+            "title": "戏毕分赏",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "戏毕分赏。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_3",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "宴散回长史院更衣",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "宴散回长史院更衣。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_4",
+            "time": {
+              "display": "亥时二刻（约21时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "持开春府务册入凝晖堂书房",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持开春府务册入凝晖堂书房。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_5",
+            "time": {
+              "display": "亥时三刻（约22时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "22:00"
+              }
+            },
+            "title": "行凶",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "行凶。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_6",
+            "time": {
+              "display": "亥时三刻至子时初",
+              "precision": "relative"
+            },
+            "title": "收拾现场",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "收拾现场。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_7",
+            "time": {
+              "display": "子时初（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "出书房",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "出书房，经西廊回长史院——雪地官靴印朝外。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_8",
+            "time": {
+              "display": "子时",
+              "precision": "relative"
+            },
+            "title": "后在长史院歇下",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后在长史院歇下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guyannian_event_1_part_9",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊而出，主持封府。"
               }
             ],
             "characterIds": [],
@@ -135,7 +283,108 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_guyannian_sitao",
+            "claim": "我腰间绦带早被柜角磨断；府中靛青绦色常见，尸身指缝那点絮屑不能仅凭颜色认作我的。",
+            "basis": "长史院和内院都有靛青丝织物，断绦可有旧损；尸身只留少量纤维。",
+            "brokenByPublicClueIds": [
+              "changshisitao",
+              "ninghuitangshishen",
+              "sitao_tongyuan",
+              "duantaodehuazhou"
+            ]
+          },
+          {
+            "id": "defense_guyannian_ledger",
+            "claim": "我在粮台总册上签押只代表公务经手；庄契和兑付副联看似同日同额，但还需证明款项来自缺失的粮款，而不是其他合法收入。",
+            "basis": "总册签押本身不能证明侵吞；地契和银庄副联须与独立复核副簿、拨银日期和款项数额核对。",
+            "brokenByPublicClueIds": [
+              "liangtaijiuzhang",
+              "liangtai_zhengbu",
+              "jiangnan_zhuangkuan"
+            ]
+          },
+          {
+            "id": "defense_guyannian_zhichen",
+            "claim": "自陈折可能是王爷口授、我按例誊写；纸笺由账房提供，字迹不似只是代笔痕迹。",
+            "basis": "长史长期负责誊拟文书，书房有公用纸笺；伪折可疑不等于执笔者身份或杀人行为。",
+            "brokenByPublicClueIds": [
+              "anzishizhenzhe",
+              "duantaodehuazhou",
+              "liangtai_zhengbu"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "guyannian_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyannian_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "坚持断绦可能旧损，追问死者指缝纤维如何保存与比对；承认长史职责但不承认侵吞。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "guyannian_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对、粮台总册、银库复核副簿及古延年名下庄契兑付副联；它们分别验证现场接触、缺额、签核和个人资金去向，须合并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiangnan_zhuangkuan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyannian_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应逐丝拼合结果与完整账册，指出同源仍不能证明何时接触；同时解释经手签押、书房行踪和自陈折来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -190,14 +439,74 @@
           {
             "id": "character_xiaojingheng_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴。戌时（约20时）被父王当众敲打。亥时初（约21时）回前院书房写贺岁谢恩帖子，写至子时安置——帖稿与墨迹可证。子时末闻惊而出。"
+                "text": "年夜宴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingheng_event_1_part_2",
+            "time": {
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "被父王当众敲打",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "被父王当众敲打。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingheng_event_1_part_3",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "回前院书房写贺岁谢恩帖子",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回前院书房写贺岁谢恩帖子，写至子时安置——帖稿与墨迹可证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingheng_event_1_part_4",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊而出。"
               }
             ],
             "characterIds": [],
@@ -252,7 +561,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "xiaojingheng_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaojingheng_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "展示贺岁帖与墨迹，说明案上自陈折为何不像父王亲笔；不要替府中账目作无根据结论。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "xiaojingheng_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaojingheng_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "面对库房存根与银库副簿，承认自己的三千两去向并解释；区分自己的亏空与粮台一万四千两。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -306,14 +681,94 @@
           {
             "id": "character_xiaojingming_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴。戌时（约20时）点错戏被训。戌时三刻（约20时45分）负气由西角门溜出府看灯。子时二刻（约23时30分）翻墙回府。子时末闻惊而出。"
+                "text": "年夜宴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingming_event_1_part_2",
+            "time": {
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "点错戏被训",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "点错戏被训。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingming_event_1_part_3",
+            "time": {
+              "display": "戌时三刻（约20时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:45"
+              }
+            },
+            "title": "负气由西角门溜出府看灯",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "负气由西角门溜出府看灯。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingming_event_1_part_4",
+            "time": {
+              "display": "子时二刻（约23时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "翻墙回府",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "翻墙回府。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaojingming_event_1_part_5",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊而出。"
               }
             ],
             "characterIds": [],
@@ -368,7 +823,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "xiaojingming_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaojingming_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代负气出府和西角门时间，说明玉绦环只证明自己的行踪，不是行凶证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "xiaojingming_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaojingming_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "与铁保核对并签和门环位置，坦白翻墙回府时间；追问长史何时离开书房。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -422,14 +943,110 @@
           {
             "id": "character_baiyunzhu_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴。戌时（约20时）为景铭求情碰钉。亥时初（约21时）回白氏院。亥时二刻末（约21时45分）绕过凝晖堂廊下，望见书房窗上两人影对坐。亥时后回院安置。子时末闻惊而出。"
+                "text": "年夜宴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baiyunzhu_event_1_part_2",
+            "time": {
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "为景铭求情碰钉",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "为景铭求情碰钉。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baiyunzhu_event_1_part_3",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "回白氏院",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回白氏院。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baiyunzhu_event_1_part_4",
+            "time": {
+              "display": "亥时二刻末（约21时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:45"
+              }
+            },
+            "title": "绕过凝晖堂廊下",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "绕过凝晖堂廊下，望见书房窗上两人影对坐。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baiyunzhu_event_1_part_5",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后回院安置",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后回院安置。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_baiyunzhu_event_1_part_6",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊而出。"
               }
             ],
             "characterIds": [],
@@ -484,7 +1101,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "baiyunzhu_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiyunzhu_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告亥时二刻末窗上有两个人影，说明距离和遮挡，不指认其中一人。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "baiyunzhu_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baiyunzhu_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释庄契当票和借银用途，再把两人影时间与古延年入书房时间、离开时间交叉核对。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -538,14 +1221,70 @@
           {
             "id": "character_guimomo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴执膳",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴执膳。亥时初（约21时）扶王爷回凝晖堂东暖阁安置，退下。亥时后在膳房备安神汤，丫头小翠可见。子时末（约零时前后）奉汤至书房，唤门不应，推门发现尸身，惊动全府。"
+                "text": "年夜宴执膳。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guimomo_event_1_part_2",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "扶王爷回凝晖堂东暖阁安置",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "扶王爷回凝晖堂东暖阁安置，退下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guimomo_event_1_part_3",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后在膳房备安神汤",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后在膳房备安神汤，丫头小翠可见。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guimomo_event_1_part_4",
+            "time": {
+              "display": "子时末（约零时前后）",
+              "precision": "relative"
+            },
+            "title": "奉汤至书房",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "奉汤至书房，唤门不应，推门发现尸身，惊动全府。"
               }
             ],
             "characterIds": [],
@@ -600,7 +1339,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "guimomo_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guimomo_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明自己如何辨认王爷病中笔迹，并讲述发现尸身顺序；强调一眼辨字不等于看见行凶。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "guimomo_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guimomo_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开王爷风疾渐愈、神志清楚的情况，说明自陈折为什么可疑，并请玩家核对同源检验和账证。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -655,14 +1460,114 @@
           {
             "id": "character_tiebao_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴领宴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴领宴。戌时三刻（约20时45分）在西角门私放二阿哥出府。亥时初（约21时）起巡夜。子时初（约23时）巡至凝晖堂外，见书房灯亮未入，见廊下雪地官靴印一行朝外。子时二刻（约23时30分）在西角门内接二阿哥翻墙回来。子时末闻惊，封四门。"
+                "text": "年夜宴领宴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiebao_event_1_part_2",
+            "time": {
+              "display": "戌时三刻（约20时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:45"
+              }
+            },
+            "title": "在西角门私放二阿哥出府",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在西角门私放二阿哥出府。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiebao_event_1_part_3",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "起巡夜",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "起巡夜。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiebao_event_1_part_4",
+            "time": {
+              "display": "子时初（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "巡至凝晖堂外",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "巡至凝晖堂外，见书房灯亮未入，见廊下雪地官靴印一行朝外。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiebao_event_1_part_5",
+            "time": {
+              "display": "子时二刻（约23时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:30"
+              }
+            },
+            "title": "在西角门内接二阿哥翻墙回来",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在西角门内接二阿哥翻墙回来。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_tiebao_event_1_part_6",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊，封四门。"
               }
             ],
             "characterIds": [],
@@ -717,7 +1622,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "tiebao_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tiebao_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "讲明巡夜簿并签及子时初所见官靴印，说明你没进书房，不能辨认靴主。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "tiebao_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tiebao_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认私放二阿哥，交代巡更空当；协助核对西角门假平安记录与古延年出院方向。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -771,14 +1742,74 @@
           {
             "id": "character_xiaolingyi_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "年夜宴",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）年夜宴。亥时初（约21时）回西院。子时初（约23时）抱旧账册至凝晖堂书房外，听见杌凳挪动与绳索绷紧的轻响，唤了一声无人应，折回西院，将旧账页塞入炭盆想烧未成。子时末闻惊而出。"
+                "text": "年夜宴。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaolingyi_event_1_part_2",
+            "time": {
+              "display": "亥时初（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "回西院",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回西院。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaolingyi_event_1_part_3",
+            "time": {
+              "display": "子时初（约23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "23:00"
+              }
+            },
+            "title": "抱旧账册至凝晖堂书房外",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "抱旧账册至凝晖堂书房外，听见杌凳挪动与绳索绷紧的轻响，唤了一声无人应，折回西院，将旧账页塞入炭盆想烧未成。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_xiaolingyi_event_1_part_4",
+            "time": {
+              "display": "子时末",
+              "precision": "relative"
+            },
+            "title": "闻惊而出",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻惊而出。"
               }
             ],
             "characterIds": [],
@@ -833,7 +1864,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "xiaolingyi_act1_fact",
+                "title": "现场与自陈折",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕可公开核验尸身索沟、画轴悬绳、自陈折和各自时辰。亲见、推断、秘密动机要分开陈述。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaolingyi_act1_goal",
+                "title": "检验第一层解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明子时初听到杌凳与绳索声但未看见室内，交代自己为何在书房外。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "xiaolingyi_act2_fact",
+                "title": "账证与同源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将公开断绦同源比对和粮台总册、银库复核副簿；它们分别验证绦带来源和款项签押，仍需与现场、时辰及竞争解释交叉判断。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiaolingyi_act2_goal",
+                "title": "核对第二层材料",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开烧剩的粮台残页并承认曾翻旧账；要求大家拿完整总册和副簿核对“经手”署名。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -856,7 +1953,8 @@
           "type": "paragraph",
           "text": "长史院里文书印信各归其位，案上算盘与账册相伴二十年；衣架上官服齐整，腰间丝绦断去一截，断口的毛茬新旧可辨。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guyannian"
     },
     {
       "id": "location_3",
@@ -866,7 +1964,8 @@
           "type": "paragraph",
           "text": "护卫房里兵器架与腰刀各归各架，巡夜簿摊在灯下，一行并签的墨色前后如一；窗上糊着挡风的旧纸，角门的梆子挂在墙钉上。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tiebao"
     },
     {
       "id": "location_4",
@@ -886,7 +1985,8 @@
           "type": "paragraph",
           "text": "西院里佛堂与居屋一明一暗，炭盆里的火拨过又掩；未烧尽的账页蜷在灰里，余字可辨，窗外守岁灯一盏未灭。"
         }
-      ]
+      ],
+      "ownerCharacterId": "xiaolingyi"
     },
     {
       "id": "location_6",
@@ -896,7 +1996,8 @@
           "type": "paragraph",
           "text": "白氏院的妆台陈设奢华，妆匣夹层压着押出去的契票；熏笼里香气未散，廊下灯笼照着满院守岁的彩绸。"
         }
-      ]
+      ],
+      "ownerCharacterId": "baiyunzhu"
     },
     {
       "id": "location_7",
@@ -906,7 +2007,8 @@
           "type": "paragraph",
           "text": "世子院书房里贺岁帖子墨迹未干，库房门上锁贴着封条；对牌存根翻在腊月那页，缺了一页的册子装订线还松着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "xiaojingheng"
     }
   ],
   "clues": [
@@ -918,7 +2020,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "老王爷悬于梁下铜钩，颈项有两道索沟——一道平缠项前、一道斜上耳后；悬吊的画绦勒痕深，平缠那道淤痕发青。脚边杌凳翻倒，死者指甲缝里有靛青丝絮；案上压着一页「自陈折」。"
+          "text": "老王爷悬于梁下铜钩，颈项有两道索沟：一道平缠项前、一道斜上耳后；悬吊的画绦勒痕较新，平缠那道淤痕更早。脚边杌凳翻倒，死者指甲缝里有靛青丝絮；案上压着一页「自陈折」。尸身、两种绳痕和指甲絮只证明发生过近身挣扎与悬挂伪装，不能单独识别操作者。"
         }
       ],
       "policy": "auto_public",
@@ -933,7 +2035,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "古延年腰间靛青丝绦断去一截，断口新鲜，绦结里粘着极细的靛青絮屑——与死者指甲缝里的丝絮同色同质。他自陈是挂门环刮断的，可门环是铜的，刮不出毛茬。"
+          "text": "古延年腰间靛青丝绦断去一截，断口毛茬有新旧差异；断绦的颜色与死者指甲缝里的靛青丝絮相近，但颜色、粗细不能证明同源。须将绦带实物与另行公布的织造局断口比对单核对。"
         }
       ],
       "policy": "manual_public",
@@ -944,7 +2046,7 @@
       "id": "anzishizhenzhe",
       "locationId": "location_1",
       "name": "案上自陈折",
-      "category": "trace",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
@@ -1008,7 +2110,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "萧令仪房中炭盆有一页未烧尽的旧账，余字：「丙戌年粮台，短白银一万四千两，经手……」——正是长史当年的差事；她夜里翻找旧账，想烧，没烧成。"
+          "text": "萧令仪房中炭盆有一页未烧尽的旧账，余字：“丙戌年粮台，短白银一万四千两，经手……”。残页没有完整姓名，也不是可单独归责的原账；它提示应到长史院和银库副簿核账，不能仅凭“经手”二字认定贪墨。"
         }
       ],
       "policy": "manual_public",
@@ -1044,6 +2146,56 @@
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "sitao_tongyuan",
+      "locationId": "location_1",
+      "name": "绦丝断口同源比对单",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "织造局绣作师傅将死者指甲缝靛青丝絮、长史腰间断绦与画轴悬尸用绦逐一拆丝比对：指甲内丝絮的蚕丝捻向、经纬节距和靛染层次，与古延年腰间断绦的断面相合；两处多根断丝可逐根拼接，断面纤维连续。画轴绦则为另一种棉线捻法，不与指甲絮同源。此结果比颜色和粗细更具体，支持指甲中的靛絮来自古延年所佩绦带；仍不能单独证明何时、由谁将丝絮带到死者手中。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "liangtai_zhengbu",
+      "locationId": "location_2",
+      "name": "粮台总册与银库复核副簿",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "长史院档柜中留有丙戌年粮台总册及银库独立复核副簿。两册页码、封印和收支数可逐笔对照：一万四千两记作拨付，仓粮收据却无对应入库；总册核销栏完整写有“经手长史古延年”，并有当年长史院官印。银库副簿是另一经手部门留存的副本，证实这笔缺额真实存在；签押能证明古延年经手核销，不能独自证明银两由他私吞。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "jiangnan_zhuangkuan",
+      "name": "江南庄契与银庄兑付副联",
+      "locationId": "location_2",
+      "category": "object",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "长史院封存匣中有两份可核验的原件：一是江南“松溪庄”地契，买受人古延年，契价白银一万四千两；二是银庄留存的兑付副联，记载同日收款人为古延年，款项来自粮台拨银。两份原件的日期、数额和收款人可与粮台总册、银库复核副簿逐项核对，印押经银庄与府库验真。它们支持公款缺额流入古延年名下产业，仍须与现场绳索和死亡伪装材料结合，不能单独证明他行凶。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "guyannian"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
     }
   ],
   "truth": {
@@ -1051,7 +2203,7 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "古延年经手王府粮台亏空一万四千两，王爷近来神志转清、案头折子已有'粮台'二字，开春对账交割在即。他杀人灭口，还要把亏空永远钉在死人头上。"
+        "text": "长史院总册与银库独立复核副簿记载丙戌年粮台短银一万四千两，核销栏有古延年完整签押，仓粮收据又没有相应入库。此账证把他置于最直接的经手与核销位置，但签押本身仍不等于侵吞；王爷渐愈、案头出现“粮台”二字、开春将交割对账，才解释了他为何可能急于灭口。公开庄契和银庄兑付副联显示，一万四千两粮台拨银同日流入古延年名下产业；这构成个人获利与掩盖动机，但仍不能替代现场行为证据。"
       }
     ],
     "method": {
@@ -1073,7 +2225,8 @@
           ],
           "clueIds": [
             "liangtaijiuzhang",
-            "anzishizhenzhe"
+            "anzishizhenzhe",
+            "liangtai_zhengbu"
           ]
         },
         {
@@ -1087,7 +2240,8 @@
           ],
           "clueIds": [
             "changshisitao",
-            "ninghuitangshishen"
+            "ninghuitangshishen",
+            "sitao_tongyuan"
           ]
         },
         {
@@ -1124,60 +2278,271 @@
       {
         "id": "truth_event_1",
         "time": {
-          "display": "时间待整理",
-          "precision": "relative"
+          "display": "酉时（约18时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:00"
+          }
         },
-        "title": "酉时",
+        "title": "银安殿年夜宴开",
         "content": [
           {
             "type": "paragraph",
-            "text": "酉时（约18时）银安殿年夜宴开。戌时（约20时）戏班演罢，二阿哥点错戏被王爷当众训斥，侧福晋白蕴珠求情碰钉；古延年执府礼分赏，并破例提前赏护卫两坛酒。戌时三刻（约20时45分）二阿哥萧景铭负气由西角门溜出府看灯——护卫统领铁保私放收银，巡夜簿并签遮掩。亥时初（约21时）宴散：王爷由桂嬷嬷扶回凝晖堂东暖阁安置，世子萧景珩回前院书房写谢恩帖，萧令仪回西院，白蕴珠回白氏院。亥时二刻（约21时30分）古延年持开春府务册入书房，王爷灯下问起「当年粮台的账」，案头折子已有「粮台」二字；同刻末白蕴珠绕过廊下，望见窗上两人影对坐。亥时三刻（约22时）古延年解腰间靛青丝绦趁王爷俯身拨炭将其勒毙，解画轴绦绳悬尸梁下，摆杌凳、铺集字「自陈折」，收拾现场至子时初。子时初（约23时）萧令仪至书房外听见杌凳挪动与绳索绷紧的轻响，唤「哥哥」无人应，折回西院烧旧账未成；铁保巡至凝晖堂外见灯亮未入，见廊下雪地官靴印一行朝外（古延年由此回长史院）。子时二刻（约23时30分）铁保在西角门内接二阿哥翻墙回府。子时末（约零时前后）桂嬷嬷奉安神汤至书房，门没闩，推门见王爷悬于梁下，惊动全府；铁保封四门，古延年「闻惊」而出主持局面。破案链：两道索沟（先勒后缢，非自缢）→ 靛青丝絮与长史断绦（凶器主）→ 高丽贡笺、端稳字迹与重描痕（「自陈折」系伪造）→ 断绦画轴与发颤的福字（王爷根本握不稳笔）→ 粮台旧账残页（亏空一万四千两，经手古延年）→ 白蕴珠两人影、萧令仪轻响、铁保官靴印（三人证词互相咬合长史的时辰）。红鲱鱼：世子的对牌缺页、二阿哥的出府空白、侧福晋的当票、铁保的巡夜空当——人人瞒着王爷，无人杀王爷。"
+            "text": "银安殿年夜宴开。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_1_part_2",
+        "time": {
+          "display": "戌时（约20时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "戏班演罢",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "戏班演罢，二阿哥点错戏被王爷当众训斥，侧福晋白蕴珠求情碰钉；古延年执府礼分赏，并破例提前赏护卫两坛酒。"
           }
         ],
         "characterIds": [
           "guyannian",
-          "xiaojingheng",
+          "baiyunzhu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyannian",
+          "baiyunzhu"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_3",
+        "time": {
+          "display": "戌时三刻（约20时45分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:45"
+          }
+        },
+        "title": "二阿哥萧景铭负气由西角门溜出府看灯——护卫统领…",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "二阿哥萧景铭负气由西角门溜出府看灯——护卫统领铁保私放收银，巡夜簿并签遮掩。"
+          }
+        ],
+        "characterIds": [
           "xiaojingming",
+          "tiebao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiaojingming",
+          "tiebao"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_4",
+        "time": {
+          "display": "亥时初（约21时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:00"
+          }
+        },
+        "title": "宴散：王爷由桂嬷嬷扶回凝晖堂东暖阁安置",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "宴散：王爷由桂嬷嬷扶回凝晖堂东暖阁安置，世子萧景珩回前院书房写谢恩帖，萧令仪回西院，白蕴珠回白氏院。"
+          }
+        ],
+        "characterIds": [
+          "xiaojingheng",
           "baiyunzhu",
           "guimomo",
+          "xiaolingyi"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "xiaojingheng",
+          "baiyunzhu",
+          "guimomo",
+          "xiaolingyi"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_5",
+        "time": {
+          "display": "亥时二刻（约21时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "古延年持开春府务册入书房",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古延年持开春府务册入书房，王爷灯下问起「当年粮台的账」，案头折子已有「粮台」二字；同刻末白蕴珠绕过廊下，望见窗上两人影对坐。"
+          }
+        ],
+        "characterIds": [
+          "guyannian",
+          "baiyunzhu"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyannian",
+          "baiyunzhu"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_6",
+        "time": {
+          "display": "亥时三刻（约22时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:00"
+          }
+        },
+        "title": "古延年解腰间靛青丝绦趁王爷俯身拨炭将其勒毙",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "古延年解腰间靛青丝绦趁王爷俯身拨炭将其勒毙，解画轴绦绳悬尸梁下，摆杌凳、铺集字「自陈折」，收拾现场至子时初。"
+          }
+        ],
+        "characterIds": [
+          "guyannian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyannian"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_7",
+        "time": {
+          "display": "子时初（约23时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:00"
+          }
+        },
+        "title": "萧令仪至书房外听见杌凳挪动与绳索绷紧的轻响",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "萧令仪至书房外听见杌凳挪动与绳索绷紧的轻响，唤「哥哥」无人应，折回西院烧旧账未成；铁保巡至凝晖堂外见灯亮未入，见廊下雪地官靴印一行朝外（古延年由此回长史院）。"
+          }
+        ],
+        "characterIds": [
+          "guyannian",
           "tiebao",
           "xiaolingyi"
         ],
         "clueIds": [],
         "participantIds": [
           "guyannian",
-          "xiaojingheng",
-          "xiaojingming",
-          "baiyunzhu",
-          "guimomo",
           "tiebao",
           "xiaolingyi"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_8",
+        "time": {
+          "display": "子时二刻（约23时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "23:30"
+          }
+        },
+        "title": "铁保在西角门内接二阿哥翻墙回府",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "铁保在西角门内接二阿哥翻墙回府。"
+          }
+        ],
+        "characterIds": [
+          "tiebao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "tiebao"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_9",
+        "time": {
+          "display": "子时末（约零时前后）",
+          "precision": "relative"
+        },
+        "title": "桂嬷嬷奉安神汤至书房",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "桂嬷嬷奉安神汤至书房，门没闩，推门见王爷悬于梁下，惊动全府；铁保封四门，古延年「闻惊」而出主持局面。"
+          }
+        ],
+        "characterIds": [
+          "guyannian",
+          "guimomo",
+          "tiebao"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guyannian",
+          "guimomo",
+          "tiebao"
         ]
       }
     ],
     "keyEvidenceIds": [
-      "anzishizhenzhe",
+      "ninghuitangshishen",
+      "duantaodehuazhou",
+      "changshisitao",
+      "sitao_tongyuan",
       "liangtaijiuzhang",
-      "yutaohuan",
-      "duipaicungen"
+      "liangtai_zhengbu",
+      "jiangnan_zhuangkuan"
     ],
     "evidenceChain": [
       {
         "id": "evidence_2",
         "clueIds": [
           "anzishizhenzhe",
-          "duantaodehuazhou"
+          "duantaodehuazhou",
+          "ninghuitangshishen"
         ],
-        "conclusion": "自陈折用高丽贡笺（非王爷惯用的内府旧奏本），全篇字迹端稳而王爷风疾手抖连福字都写不圆，且案头习字笔笔发颤——结合'罪'字顿笔有重描痕，证明'自陈折'系集字钩摹伪造，非王爷亲笔。"
+        "conclusion": "自陈折用高丽贡笺而非王爷惯用旧奏本，字迹端稳与风疾手抖矛盾；平缠索沟、悬挂画绦与挣扎痕迹表明尸身被二次布置。它支持自陈折及自缢现场可疑，但尚不能据此认定古延年写折或杀人。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
           "liangtaijiuzhang",
+          "liangtai_zhengbu",
+          "jiangnan_zhuangkuan",
           "changshisitao",
-          "ninghuitangshishen"
+          "ninghuitangshishen",
+          "sitao_tongyuan"
         ],
-        "conclusion": "萧令仪房中炭盆未烧尽的旧账残页载明'丙戌年粮台，短白银一万四千两，经手……'，结合长史靛青丝绦断口与死者指甲缝靛青絮屑同色同质，揭示古延年二十年贪墨粮台的亏空，以及王爷除夕夜灯下追问'粮台的账'时他不得不灭口的动机。"
+        "conclusion": "烧毁残页提示粮台缺额；长史院总册与银库独立副簿核实一万四千两缺额和古延年的经手签押。庄契及银庄兑付副联再把同日同额拨银连接到古延年名下的松溪庄，回应“公务经手不等于私吞”的替代解释。织造局逐丝拼合将死者指甲靛絮与其佩绦连接，尸身材料证明近身挣扎。账务链支持个人获利动机，纤维链支持现场接触；任何账证均不能单独认定杀人。"
       },
       {
         "id": "evidence_4",
@@ -1185,15 +2550,16 @@
           "yutaohuan",
           "xunyebu"
         ],
-        "conclusion": "西角门墙根的羊脂玉绦环证实二阿哥戌时三刻私自出府、子时二刻翻墙回来，而巡夜簿'戌时三刻至子时二刻西角门平安'系一笔并签——铁保收银私放的空当与二阿哥出府的时间互相印证，将两人的'秘密'锁定为红鲱鱼而非杀人证据。"
+        "conclusion": "西角门玉绦环支持二阿哥曾出入，巡夜簿的并签则显示值守记录不可靠；这是需要独立解释的竞争行踪，不能把府内所有伪账都归到同一人。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
           "duipaicungen",
-          "zhuangqidangpiao"
+          "zhuangqidangpiao",
+          "yutaohuan"
         ],
-        "conclusion": "世子对牌存根缺腊月十九那页（三千两补贴旧部）与侧福晋妆匣中八千两庄契当票，分别说明府中各人瞒着王爷的亏空与窘迫——但这些'秘密'恰恰证明他们都需要王爷活着而非死去，从而排除其作案动机。"
+        "conclusion": "世子对牌缺页、侧福晋当票和二阿哥玉绦环分别说明府中多人有经济压力或隐瞒行踪；这些秘密可形成竞争嫌疑，但均不能替代书房内的绳索来源、死者挣扎与账证交叉判断。"
       }
     ],
     "redHerrings": [
@@ -1247,11 +2613,16 @@
         ]
       }
     ],
-    "supplemental": [],
+    "supplemental": [
+      {
+        "type": "paragraph",
+        "text": "破案链：两道索沟（先勒后缢，非自缢）→ 靛青丝絮与长史断绦（凶器主）→ 高丽贡笺、端稳字迹与重描痕（「自陈折」系伪造）→ 断绦画轴与发颤的福字（王爷根本握不稳笔）→ 粮台旧账残页（亏空一万四千两，经手古延年）→ 白蕴珠两人影、萧令仪轻响、铁保官靴印（三人证词互相咬合长史的时辰）。 红鲱鱼：世子的对牌缺页、二阿哥的出府空白、侧福晋的当票、铁保的巡夜空当——人人瞒着王爷，无人杀王爷。"
+      }
+    ],
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是长史古延年。二十年前他借经手粮台之便贪墨一万四千两，本指望王爷的风疾把这笔账烂成糊涂；谁知王爷渐愈渐清，除夕夜灯下问起「粮台的账」，案头折子上已落了「粮台」二字，开春还要世子接府、长史交割对账。他趁回事之机用腰间丝绦勒毙王爷，解下画轴绦绳悬尸梁上，再铺开一页集字钩摹的「自陈折」——让死人替活人认下亏空，一了百了。他算准了代笔的旧例、算准了王府的体面，没算准三件小事：死者指甲缝里抓落的靛青絮屑、老格格在门外听见的绳索轻响、以及一位侧福晋廊下无意望见的两个人影。桂嬷嬷认得王爷病后的每一个字——那页字太稳了。世子对牌的缺页、二阿哥墙根的玉绦环、侧福晋妆匣里的当票、铁保巡夜簿上的并签——满府的人都在瞒王爷，可瞒归瞒，杀王爷的只有一只拨了二十年算盘的手。"
+        "text": "真相：凶手是长史古延年。粮台总册与银库独立副簿逐笔核出一万四千两缺额，完整签押显示古延年经手核销；王爷渐愈、案头出现“粮台”二字，开春又将交割对账。织造局绣作师傅把死者指缝里的靛青丝絮与古延年腰间断绦逐根拼合，断面连续；这比颜色和粗细相近更进一步，证明两处纤维同源，但仍需和书房现场、时间与动机合看。古延年趁回事时用腰间丝绦勒毙王爷，随后取画轴绦悬尸、铺开集字钩摹的自陈折，把亏空推到死者身上。尸身的两道索沟、画轴悬挂痕、自陈折纸字异常、账证和侧福晋窗外见闻彼此补足；二阿哥玉绦环、铁保巡夜簿并签、当票则说明府中多人有秘密，却不替代这条相互校验的身份链。"
       }
     ]
   },
@@ -1260,7 +2631,115 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "尸身、画轴与自陈折",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第一轮先判断死因和现场是否伪装：比较颈上两道索沟、画轴绦痕、指缝靛絮与自陈折笔迹。区分“有人伪造自尽”与“谁行凶”，在织造局比对单公开前，颜色相近不能说成同源。"
+          }
+        ],
+        "roundStart": 1
+      },
+      {
+        "id": "act_2",
+        "title": "纤维同源、粮台账证与竞争解释",
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二轮由主持保证公开断绦同源比对单和粮台总册/银库复核副簿，检验靛絮与长史腰绦是否逐丝拼合，并核对完整署名及收支缺额；再核验西角门和府中其他经济秘密。账上经手、同源纤维、机会和动机分别成立，不能由任何单卡独自锁凶。"
+          }
+        ],
+        "roundStart": 2
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "先公开尸身、画轴和自陈折，让玩家识别自缢伪装；不要用私密目击或未公开账证直接锁定古延年。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证凝晖堂尸身、断绦画轴、自陈折及基本巡夜信息；第二轮保证长史断绦、织造局同源比对单、粮台残页、长史院总册与银库复核副簿、江南庄契及兑付副联，以及各竞争者的行踪/账物线索。原件或复核材料须实际发给玩家，不能只在日志正文提及。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "先分辨自陈折伪造与实际行凶，再核对死者指缝纤维与断绦是否逐丝同源，最后把粮台总册、银库副簿与庄契兑付副联逐笔对照。账册签押证明公务经手，兑付副联和个人地契证明款项去向；二者共同支持私利，但都不能单独证明行凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求引用尸身/画轴现场材料、独立同源鉴定、完整账证与个人资金去向中的至少两类，再说明竞争解释。账册单独只能证明经手，庄契单独只能证明购置；不能单凭任一账物材料锁凶。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "第一轮仍有人把尸身当作单纯自缢",
+        "hint": "看颈项两道索沟是否同一时间形成，并确认画轴绦是悬尸工具还是致命勒索；尸身挣扎和悬挂痕迹需分开解释。"
+      },
+      {
+        "condition": "第二轮只围绕王府众人的亏空争执",
+        "hint": "残页只有“经手”残字；主持第二轮必须发放长史院完整总册和银库复核副簿，逐笔核对一万四千两及古延年完整签押，再与死者指缝纤维的同源鉴定分开判断。"
+      },
+      {
+        "condition": "玩家仍认为古延年只是公务经手，无法判断一万四千两去向。",
+        "hint": "主持第二轮保证发放长史院总册、银库独立复核副簿、江南庄契及兑付副联。核对同日同额、拨银来源和古延年个人收款/置产，再与现场绳索同源材料分开讨论。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "ninghuitangshishen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "changshisitao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "anzishizhenzhe",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "duantaodehuazhou",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xunyebu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yutaohuan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "liangtaijiuzhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhuangqidangpiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "duipaicungen",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "sitao_tongyuan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "liangtai_zhengbu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jiangnan_zhuangkuan",
+        "deadlineRound": 2
+      }
+    ]
   },
   "ending": {
     "outcomes": [

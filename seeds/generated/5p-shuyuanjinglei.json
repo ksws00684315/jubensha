@@ -73,14 +73,126 @@
           {
             "id": "character_peisongnian_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "酉时（约18时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "18:00"
+              }
             },
-            "title": "酉时",
+            "title": "晚斋饭散",
             "content": [
               {
                 "type": "paragraph",
-                "text": "酉时（约18时）晚斋饭散。戌时（约20时）在训导院核斋规。戌时末（约20时50分）持「年谱补遗」随山长上二层经阁——趁山长俯身取稿，以青铜鹤形书镇击其后脑；拖尸推落楼梯，回二层摆正书镇、裁走《年谱》丙戌页。亥时整（约21时）登顶层代鸣惊雷钟三响。亥时初回训导院，将丙戌页塞入炭盆焚烧。亥时二刻至子时（约21时30分至23时）在明伦堂前与诸斋长查斋。卯时闻云牌惊起。"
+                "text": "晚斋饭散。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_2",
+            "time": {
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
+            },
+            "title": "在训导院核斋规",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在训导院核斋规。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_3",
+            "time": {
+              "display": "戌时末（约20时50分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              }
+            },
+            "title": "持「年谱补遗」随山长上二层经阁——趁山长俯身取稿",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持「年谱补遗」随山长上二层经阁——趁山长俯身取稿，以青铜鹤形书镇击其后脑；拖尸推落楼梯，回二层摆正书镇、裁走《年谱》丙戌页。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_4",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "整（约21时）登顶层代鸣惊雷钟三响",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "整（约21时）登顶层代鸣惊雷钟三响。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_5",
+            "time": {
+              "display": "亥时初",
+              "precision": "relative"
+            },
+            "title": "回训导院",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回训导院，将丙戌页塞入炭盆焚烧。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_6",
+            "time": {
+              "display": "亥时二刻至子时（约21时30分至23时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:30"
+              }
+            },
+            "title": "在明伦堂前与诸斋长查斋",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "在明伦堂前与诸斋长查斋。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_peisongnian_event_1_part_7",
+            "time": {
+              "display": "卯时",
+              "precision": "relative"
+            },
+            "title": "闻云牌惊起",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻云牌惊起。"
               }
             ],
             "characterIds": [],
@@ -190,14 +302,102 @@
           {
             "id": "character_guxiangjun_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在山长院与父争执婚事",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在山长院与父争执婚事。戌时二刻（约20时30分）含泪离开，路过奎文楼前见门厅常明灯亮着，回西厢。戌时二刻后至亥时在西厢收拾箱笼。亥时整（约21时）听见惊雷钟——第二响哑了半声，你听出异样，父亲鸣钟二十年从不失手。亥时后继续收拾箱笼，子时安置。卯时闻云牌惊起。"
+                "text": "在山长院与父争执婚事。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guxiangjun_event_1_part_2",
+            "time": {
+              "display": "戌时二刻（约20时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "含泪离开",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "含泪离开，路过奎文楼前见门厅常明灯亮着，回西厢。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guxiangjun_event_1_part_3",
+            "time": {
+              "display": "戌时二刻",
+              "precision": "relative"
+            },
+            "title": "后至亥时在西厢收拾箱笼",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后至亥时在西厢收拾箱笼。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guxiangjun_event_1_part_4",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "整（约21时）听见惊雷钟——第二响哑了半声",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "整（约21时）听见惊雷钟——第二响哑了半声，你听出异样，父亲鸣钟二十年从不失手。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guxiangjun_event_1_part_5",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后继续收拾箱笼",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后继续收拾箱笼，子时安置。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_guxiangjun_event_1_part_6",
+            "time": {
+              "display": "卯时",
+              "precision": "relative"
+            },
+            "title": "闻云牌惊起",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻云牌惊起。"
               }
             ],
             "characterIds": [],
@@ -306,14 +506,90 @@
           {
             "id": "character_luhongfei_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在自斋温书",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在自斋温书。戌时二刻（约20时30分）持《庚申实录》至奎文楼一层还书，未上二层。戌时三刻（约20时45分）回斋路上与上楼的山长打照面，见其抱着一册年谱。戌时三刻后至子时（约23时）在自斋温书，无人可证。卯时闻云牌惊起。"
+                "text": "在自斋温书。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luhongfei_event_1_part_2",
+            "time": {
+              "display": "戌时二刻（约20时30分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:30"
+              }
+            },
+            "title": "持《庚申实录》至奎文楼一层还书",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "持《庚申实录》至奎文楼一层还书，未上二层。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luhongfei_event_1_part_3",
+            "time": {
+              "display": "戌时三刻（约20时45分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:45"
+              }
+            },
+            "title": "回斋路上与上楼的山长打照面",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "回斋路上与上楼的山长打照面，见其抱着一册年谱。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luhongfei_event_1_part_4",
+            "time": {
+              "display": "戌时三刻",
+              "precision": "relative"
+            },
+            "title": "后至子时（约23时）在自斋温书",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后至子时（约23时）在自斋温书，无人可证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_luhongfei_event_1_part_5",
+            "time": {
+              "display": "卯时",
+              "precision": "relative"
+            },
+            "title": "闻云牌惊起",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻云牌惊起。"
               }
             ],
             "characterIds": [],
@@ -422,14 +698,94 @@
           {
             "id": "character_longbo_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在奎文楼下洒扫",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在奎文楼下洒扫。戌时末（约20时50分）入柴房搬书，觉楼板震了一下。亥时（约21时）觉地气嗡鸣——钟响过。亥时后回门房睡下。卯时（约5时）开楼洒扫，发现楼梯下尸身，敲响云牌惊动全院。"
+                "text": "在奎文楼下洒扫。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_longbo_event_1_part_2",
+            "time": {
+              "display": "戌时末（约20时50分）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:50"
+              }
+            },
+            "title": "入柴房搬书",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "入柴房搬书，觉楼板震了一下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_longbo_event_1_part_3",
+            "time": {
+              "display": "亥时（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "觉地气嗡鸣——钟响过",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "觉地气嗡鸣——钟响过。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_longbo_event_1_part_4",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后回门房睡下",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后回门房睡下。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_longbo_event_1_part_5",
+            "time": {
+              "display": "卯时（约5时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 1,
+                "time": "05:00"
+              }
+            },
+            "title": "开楼洒扫",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "开楼洒扫，发现楼梯下尸身，敲响云牌惊动全院。"
               }
             ],
             "characterIds": [],
@@ -539,14 +895,86 @@
           {
             "id": "character_qianmushan_event_1",
             "time": {
-              "display": "时间待整理",
-              "precision": "relative"
+              "display": "戌时（约20时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "20:00"
+              }
             },
-            "title": "戌时",
+            "title": "在客舍与随从核对捐账",
             "content": [
               {
                 "type": "paragraph",
-                "text": "戌时（约20时）在客舍与随从核对捐账。亥时前（约20时50分）曾至奎文楼下求见，见二层经阁窗影走动，未敢上楼，折回客舍。亥时（约21时）闻更夫二更响，续与随从算账至亥时末。亥时后在客舍与随从下灯棋，子时安置——随从可证。卯时闻云牌惊起。"
+                "text": "在客舍与随从核对捐账。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qianmushan_event_1_part_2",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "前（约20时50分）曾至奎文楼下求见",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "前（约20时50分）曾至奎文楼下求见，见二层经阁窗影走动，未敢上楼，折回客舍。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qianmushan_event_1_part_3",
+            "time": {
+              "display": "亥时（约21时）",
+              "precision": "approximate",
+              "start": {
+                "dayOffset": 0,
+                "time": "21:00"
+              }
+            },
+            "title": "闻更夫二更响",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻更夫二更响，续与随从算账至亥时末。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qianmushan_event_1_part_4",
+            "time": {
+              "display": "亥时",
+              "precision": "relative"
+            },
+            "title": "后在客舍与随从下灯棋",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "后在客舍与随从下灯棋，子时安置——随从可证。"
+              }
+            ],
+            "characterIds": [],
+            "clueIds": []
+          },
+          {
+            "id": "character_qianmushan_event_1_part_5",
+            "time": {
+              "display": "卯时",
+              "precision": "relative"
+            },
+            "title": "闻云牌惊起",
+            "content": [
+              {
+                "type": "paragraph",
+                "text": "闻云牌惊起。"
               }
             ],
             "characterIds": [],
@@ -889,14 +1317,39 @@
       {
         "id": "truth_event_1",
         "time": {
-          "display": "时间待整理",
-          "precision": "relative"
+          "display": "酉时（约18时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "18:00"
+          }
         },
-        "title": "酉时",
+        "title": "晚斋饭散",
         "content": [
           {
             "type": "paragraph",
-            "text": "酉时（约18时）晚斋饭散。戌时（约20时）顾云章在山长院与独女顾湘君争执婚事；钱慕山在客舍与随从算捐账；裴松年在训导院核斋规；陆鸿飞在自斋温书。戌时二刻（约20时30分）顾湘君含泪离开山长院，路过奎文楼前见门厅常明灯亮；同刻陆鸿飞至一层还《庚申实录》（借书簿可证），未上二层。戌时三刻（约20时45分）顾云章抱着年谱册独自上二层经阁——陆鸿飞回斋路上与之打照面。戌时末（约20时50分）裴松年持「年谱补遗」随上二层，趁山长俯身取稿以青铜鹤形书镇击其后脑，当场毙命；裴拖尸至楼梯口推落，回二层摆正书镇、裁走丙戌页；聋伯在楼下柴房搬书，觉楼板震了一下。亥时整（约21时）裴松年登顶层代鸣惊雷钟，第二响哑了半声——全院闻钟，皆信山长亥时还活着；钱慕山亥时前曾到楼下求见，见阁中人影未敢上楼；聋伯觉地气嗡鸣。亥时初裴回训导院，将丙戌页塞入炭盆焚烧；亥时二刻至子时（约21时30分至23时）他在明伦堂前与诸斋长查斋，故意让人看见亥时后的自己。同一时段：顾湘君在西厢收拾箱笼，陆鸿飞在自斋温书，钱慕山在客舍与随从下灯棋，聋伯回门房睡下。卯时（约5时）聋伯开楼洒扫，发现楼梯下尸身，敲响云牌惊动全院。破案链：楼梯下无擦痕、鞋底樟脑灰（尸身自二层而来）→ 经案血痕与书镇血痂（凶器）→ 钟绳夫子结与烛油（裴代鸣钟，死亡时刻被后移）→ 聋伯「戌时末楼板一震」（真实死亡时刻）→ 年谱裁页与炭盆残稿（冒名旧事将入谱）→ 借书簿朱批、翻刻宋椠批条、私订庚帖（三条红鲱鱼各有所「罪」，各非其罪）。"
+            "text": "晚斋饭散。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_1_part_2",
+        "time": {
+          "display": "戌时（约20时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:00"
+          }
+        },
+        "title": "顾云章在山长院与独女顾湘君争执婚事",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "顾云章在山长院与独女顾湘君争执婚事；钱慕山在客舍与随从算捐账；裴松年在训导院核斋规；陆鸿飞在自斋温书。"
           }
         ],
         "characterIds": [
@@ -912,6 +1365,173 @@
           "luhongfei",
           "qianmushan"
         ]
+      },
+      {
+        "id": "truth_event_1_part_3",
+        "time": {
+          "display": "戌时二刻（约20时30分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:30"
+          }
+        },
+        "title": "顾湘君含泪离开山长院",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "顾湘君含泪离开山长院，路过奎文楼前见门厅常明灯亮；同刻陆鸿飞至一层还《庚申实录》（借书簿可证），未上二层。"
+          }
+        ],
+        "characterIds": [
+          "guxiangjun",
+          "luhongfei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guxiangjun",
+          "luhongfei"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_4",
+        "time": {
+          "display": "戌时三刻（约20时45分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:45"
+          }
+        },
+        "title": "顾云章抱着年谱册独自上二层经阁——陆鸿飞回斋路…",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "顾云章抱着年谱册独自上二层经阁——陆鸿飞回斋路上与之打照面。"
+          }
+        ],
+        "characterIds": [
+          "luhongfei"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "luhongfei"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_5",
+        "time": {
+          "display": "戌时末（约20时50分）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "20:50"
+          }
+        },
+        "title": "裴松年持「年谱补遗」随上二层",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "裴松年持「年谱补遗」随上二层，趁山长俯身取稿以青铜鹤形书镇击其后脑，当场毙命；裴拖尸至楼梯口推落，回二层摆正书镇、裁走丙戌页；聋伯在楼下柴房搬书，觉楼板震了一下。"
+          }
+        ],
+        "characterIds": [
+          "peisongnian"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "peisongnian"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_6",
+        "time": {
+          "display": "亥时",
+          "precision": "relative"
+        },
+        "title": "整（约21时）裴松年登顶层代鸣惊雷钟",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "整（约21时）裴松年登顶层代鸣惊雷钟，第二响哑了半声——全院闻钟，皆信山长亥时还活着；钱慕山亥时前曾到楼下求见，见阁中人影未敢上楼；聋伯觉地气嗡鸣。"
+          }
+        ],
+        "characterIds": [
+          "peisongnian",
+          "qianmushan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "peisongnian",
+          "qianmushan"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_7",
+        "time": {
+          "display": "亥时初",
+          "precision": "relative"
+        },
+        "title": "裴回训导院",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "裴回训导院，将丙戌页塞入炭盆焚烧；"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
+      },
+      {
+        "id": "truth_event_1_part_8",
+        "time": {
+          "display": "亥时二刻至子时（约21时30分至23时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 0,
+            "time": "21:30"
+          }
+        },
+        "title": "他在明伦堂前与诸斋长查斋",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "他在明伦堂前与诸斋长查斋，故意让人看见亥时后的自己。同一时段：顾湘君在西厢收拾箱笼，陆鸿飞在自斋温书，钱慕山在客舍与随从下灯棋，聋伯回门房睡下。"
+          }
+        ],
+        "characterIds": [
+          "guxiangjun",
+          "luhongfei",
+          "qianmushan"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "guxiangjun",
+          "luhongfei",
+          "qianmushan"
+        ]
+      },
+      {
+        "id": "truth_event_1_part_9",
+        "time": {
+          "display": "卯时（约5时）",
+          "precision": "approximate",
+          "start": {
+            "dayOffset": 1,
+            "time": "05:00"
+          }
+        },
+        "title": "聋伯开楼洒扫",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "聋伯开楼洒扫，发现楼梯下尸身，敲响云牌惊动全院。"
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       }
     ],
     "keyEvidenceIds": [
@@ -979,7 +1599,12 @@
         ]
       }
     ],
-    "supplemental": [],
+    "supplemental": [
+      {
+        "type": "paragraph",
+        "text": "破案链：楼梯下无擦痕、鞋底樟脑灰（尸身自二层而来）→ 经案血痕与书镇血痂（凶器）→ 钟绳夫子结与烛油（裴代鸣钟，死亡时刻被后移）→ 聋伯「戌时末楼板一震」（真实死亡时刻）→ 年谱裁页与炭盆残稿（冒名旧事将入谱）→ 借书簿朱批、翻刻宋椠批条、私订庚帖（三条红鲱鱼各有所「罪」，各非其罪）。"
+      }
+    ],
     "reveal": [
       {
         "type": "paragraph",

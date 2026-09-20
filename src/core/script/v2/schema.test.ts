@@ -30,6 +30,26 @@ describe("剧本输入标准 V2", () => {
     expect(validateScriptV2(broken).some((issue) => issue.path === "clues.0.locationId" && issue.level === "error")).toBe(true);
   });
 
+  it("辩解钩子只能引用存在的击破线索", () => {
+    const doc = parseScriptDocV2(JSON.parse(readFileSync(examplePath, "utf8")));
+    const broken = structuredClone(doc);
+    const culprit = broken.characters.find((character) => character.privateCard.isCulprit)!;
+    culprit.privateCard.defenseHooks = [{
+      id: "defense_sample",
+      claim: "这是合理解释。",
+      basis: "角色本来就知道这件事。",
+      brokenByPublicClueIds: ["missing_clue"],
+    }];
+    expect(validateScriptV2(broken).some((issue) => issue.path.includes("defenseHooks") && issue.level === "error")).toBe(true);
+  });
+
+  it("时间线占位时间会阻断正式剧本校验", () => {
+    const doc = parseScriptDocV2(JSON.parse(readFileSync(examplePath, "utf8")));
+    const broken = structuredClone(doc);
+    broken.truth.timeline[0].time.display = "时间待整理";
+    expect(validateScriptV2(broken).some((issue) => issue.path === "truth.timeline.0.time.display" && issue.level === "error")).toBe(true);
+  });
+
   it("提交的 JSON Schema 与权威 Zod Schema 一致", () => {
     const committed = JSON.parse(readFileSync(path.join(process.cwd(), "schemas/script-input-v2.schema.json"), "utf8"));
     expect(committed).toEqual(toJSONSchema(scriptDocV2Schema));

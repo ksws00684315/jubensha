@@ -8,10 +8,16 @@
  */
 
 const PLACEHOLDER_TITLE = /^事件\s*\d+$/;
+const PLACEHOLDER_TIME = /^(?:时间待整理|待整理|待补充|时间未知|未知时间|相对时间)$/;
 
 /** 标题是否为机械占位（「事件 1」「事件 12」…）。 */
 export function isPlaceholderTimelineTitle(title: string | null | undefined): boolean {
   return PLACEHOLDER_TITLE.test(String(title ?? "").trim());
+}
+
+/** 作者尚未整理的时间标签；这类值不得进入正式种子。 */
+export function isPlaceholderTimelineTime(display: string | null | undefined): boolean {
+  return PLACEHOLDER_TIME.test(String(display ?? "").trim());
 }
 
 /** 首个字符是收尾类符号 → 该条明显是上一句被切断后剩下的尾巴。 */

@@ -62,7 +62,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把'自尽'坐实，让船靠岸、案结卷、你全身而退。你要用'公司亏空'的传闻垫住遗书，主动协理丧务、显得最称职。若被问 21:25 之后的行踪，咬定'21:35 起在三等舱查夜，签到本可证'。你要把怀疑往两处引：陆小侯（借据与继承）、沈砚洲（股权转让与匿名电报）。你最大的软肋是练字纸——纸篓必须抢先倒掉。"
+                "text": "第一幕先主动提出“亏空自尽”解释，要求大家把死因、死亡时间与遗书真伪分开核验；说明领用簿不等于投毒证据、托盘火漆只是管理标记。第二幕面对配膳器具残留和递盘背影时，承认自己有点验权限但追问轮班与接触范围；对签到本只坚持“字迹异常不能证明我在哪”，不要否认21:25支开阿贵。推动大家核对旧日志誊本的来源，避免把复仇动机当成定罪。不得尝试倒掉、烧毁或藏匿纸篓材料；可以解释其来源并质疑作者归属。"
               }
             ],
             "priority": "primary"
@@ -330,7 +330,107 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_xie_source",
+            "claim": "电镀间领用簿由我誊写，确有机会接触氰化物，但两把钥匙、无复核账和库存差额都不能说明是谁取走；锅勺残留也可能由轮班人员造成。",
+            "basis": "来源、保管、记录、配膳轮值并非同一人，残留物只定位流程，不带个人身份。",
+            "brokenByPublicClueIds": [
+              "c_lingyong",
+              "c_toxicology",
+              "c_kitchen_trace"
+            ]
+          },
+          {
+            "id": "defense_xie_delivery",
+            "claim": "我让阿贵去三等舱是事务安排；端托盘的人只有背影，火漆封记是日常点验标记，不能证明我递了奶。",
+            "basis": "证言未辨脸，托盘标记指向管理接触而非案发时接触；需用不同材料检验时间和路线。",
+            "brokenByPublicClueIds": [
+              "c_jiushui",
+              "c_tray_testimony",
+              "c_naibei",
+              "c_signbook_compare"
+            ]
+          },
+          {
+            "id": "defense_xie_forgery",
+            "claim": "练字纸与遗书字形相似，也可能是我练业务字样或他人取用纸篓；同批公文笺多人可接触，不能凭纸和一个字定作者。",
+            "basis": "笔迹类比存在主观性，公用文书有共享权限；遗书伪造需要独立的行为与时间证据。",
+            "brokenByPublicClueIds": [
+              "c_yishu",
+              "c_lianzi",
+              "c_paper_stock",
+              "c_qiandao"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "xiewangbei_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiewangbei_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "提出自尽与亏空说；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "xiewangbei_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiewangbei_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "逐条回应毒源、托盘和签到材料，质疑推论边界；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -374,7 +474,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "守住'我只是谈生意'的立场。匿名电报若被追出来，就咬定'我只是想卖旧档换股，没想过要谁的命'。你 21:00-21:30 在海图室独自复核航线，无人在旁——这是你最说不清的窗口，要靠航海日志的复核记录撑着。你要抢在别人之前把'广济旧案'摆上台面：旧案越响，你自己越像'另有目的'的人，反而越不像毒杀亲船东的凶手。"
+                "text": "第一幕公开20:50的股权委托书，逐条说明你想换取什么，并请两人核对朱批与电报底稿的笔势；不要把旧案誊本说成原件。第二幕追问谁能接触配膳房与电镀间，提出“有动机不等于投毒”的竞争解释，同时说明匿名电报的用途。"
               }
             ],
             "priority": "primary"
@@ -558,7 +658,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "shenyanzhou_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenyanzhou_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "展示股权委托并解释交易动机；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "shenyanzhou_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenyanzhou_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对匿名电报笔势并追问旧案证据来源；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -603,7 +769,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "先自保再查案。你要抢先把'死者体内另有毒物、与我那瓶药水无关'讲清楚——可药账一翻就露，你得决定什么时候主动认下'减料'来换'不是凶手'。你的专业判断是全案钥匙：初验时你就知道死因不在安眠药，这份证词值千金，也烫手。"
+                "text": "第一幕向全场解释初验只能提出中毒疑点，主动区分氰化物、安神药水和白兰地，说明21:00访舱所见。第二幕若有人质疑你，公开药水留样阴性与药账问题；邀请另一位玩家复核杯中检验和死亡时间边界，不要把专业判断说成确定的精确死刻。"
               }
             ],
             "priority": "primary"
@@ -767,7 +933,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hanting_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hanting_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "区分症状与尚未证实的死因；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hanting_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hanting_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开检验结论并核对死亡时间区间；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -812,7 +1044,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "活下去，也洗清楚。借据不能露，可露了反而能自证'我求活不求生'——什么时候亮这张牌，要看火候。你要把 21:05-21:15 在舱内、之后在船员娱乐室打牌至 22:00 的行踪钉死，三个牌友都是你的人证。把水往'继承阴谋'上引的人，你一个都不认。"
+                "text": "第一幕说明21:05借钱被拒，给出你之后去船员娱乐室的时间，并询问在场牌友是否愿意公开核对。第二幕展示借据，解释债务到期和继承对你分别意味着什么；向谢望北追问夜奶规程与谁安排阿贵离开。"
               }
             ],
             "priority": "primary"
@@ -980,7 +1212,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "luxiaohou_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaohou_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "讲明借钱被拒和案发后行踪；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "luxiaohou_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaohou_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "亮出借据并询问夜奶流程与阿贵去向；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1024,7 +1322,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "唱完最后一支歌，把'五分钟'钉死在化妆室里——梳头阿姨可以作证。你要主动认下'逼婚、撕合同'的恩怨，再把它变成'最没动机'：船东活着，你被合同拴着；他'自尽'了，合同作废，你自由了——这话毒，但你自己不说，别人也会说。"
+                "text": "第一幕说明你21:20—21:25在化妆室补妆及谁能作证，承认船东求婚和合同纠纷，解释活着与死亡对你的利害。第二幕询问托盘往返路线并核对当时舞台上谁能看见走廊；指出短暂离台只能提供机会，不能等于递送。"
               }
             ],
             "priority": "primary"
@@ -1188,7 +1486,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "baimei_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baimei_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述补妆时间和合同纠纷；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "baimei_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baimei_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对走廊视线与托盘路线；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1232,7 +1596,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把旧案挖出来，也把自己摘出去。电报房的发报留底可查——你要抢在别人之前追发报人。你的原则：记者不下场杀人，但记者可以掀桌子。必要时公开'我收到电报'，看谁的脸色变。"
+                "text": "第一幕公开你收到匿名电报及赴约扑空的时间，拿电报留底请全场比较签单与航海日志笔势。第二幕追查旧日志誊本由谁持有、是否有原件印证，并让谢望北解释纸篓启事中的谢阿大；把旧案动机与本案行为分开。"
               }
             ],
             "priority": "primary"
@@ -1416,7 +1780,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "chengyiwei_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chengyiwei_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开匿名电报并说明赴约；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "chengyiwei_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chengyiwei_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "追查誊本来源、旧案关联和作者争议；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1460,7 +1890,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "护住借条与情分，把 21:42 的见闻说清说满：无人应答、轻响、你未推门。你的证词能把死亡时刻钉死在 21:42-22:15 之间，这是你最硬的牌。但调账的风声让你不得不防：账册若被搜，你和小侯一起完。"
+                "text": "第一幕按顺序报告21:42—21:50按铃、无人应答、听见轻响和未推门的事实，明确这是时间边界而非亲眼见死亡。第二幕请韩汀说明怀表停摆能否等于死刻，再与阿贵22:15发现尸体交叉核对；若调账被问，说明借条与船东死亡的关系。"
               }
             ],
             "priority": "primary"
@@ -1628,7 +2058,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "guman_act1_fact",
+                "title": "第一幕已知事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你能说明自己的公开时间线和已知利害关系；把直接观察、转述与推测分开，不把单一材料当作定论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guman_act1_goal",
+                "title": "公开事实与提出问题",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告按铃、轻响和未推门的顺序；至少向一名角色提出一个可核验的时间、权限或材料来源问题。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "guman_act2_fact",
+                "title": "第二幕交叉核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道需将现场、医疗、物证、证言和文书分别核验；动机、接触机会和实施行为是不同层次。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guman_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "与怀表、发现尸体时间交叉核验；引用至少两种类别的公开材料回应一个竞争解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1681,7 +2177,8 @@
           "type": "paragraph",
           "text": "电报房的键声滴答未停，发报留底一沓压在台角；玻璃板下压着各舱室的分机表，烟味浸得指头发黄的客人刚走。"
         }
-      ]
+      ],
+      "ownerCharacterId": "chengyiwei"
     },
     {
       "id": "location_6",
@@ -1691,7 +2188,8 @@
           "type": "paragraph",
           "text": "事务长室里文书分格码放，签单与登记簿各归其位；纸篓立在桌脚，废舱单的背面写满了字，墨迹一层叠着一层。"
         }
-      ]
+      ],
+      "ownerCharacterId": "xiewangbei"
     }
   ],
   "clues": [
@@ -1703,7 +2201,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "船东伏于书案，唇甲发绀，右手无针孔无药粉。桌面牛奶杯倾倒，残奶散着苦杏仁气味，杯底沉着一层未化尽的白色粉渣；白兰地杯完好，酒未动。怀表摔停在案角，指针停在 21:47。舱门未闩、未锁——按船东习惯，入夜必反锁两道。"
+          "text": "船东伏于书案，唇甲发绀，右手无针孔无药粉。桌面牛奶杯倾倒，残奶有苦杏仁气味；白兰地杯完好，酒未动。怀表摔停在案角，指针停在21:47，但摔停时间不能单独等同死亡时间。舱门未闩未锁，与船东入夜通常反锁的习惯不符。初验只能提示疑似急性中毒与现场被整理，尚不能确定毒物来源、投毒者或遗书作者。"
         }
       ],
       "policy": "auto_public",
@@ -1733,7 +2231,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "头等舱专用的银托盘与青花牛奶杯。按船规，夜奶由值夜侍应送达、托盘当面收回；今夜托盘却留在舱内，杯是倾倒的。托盘把手上有一枚事务长专用的火漆封记——那是他点验配膳用品时亲手打的封。杯底残渣试以银簪，簪身泛黑。"
+          "text": "头等舱专用银托盘与青花牛奶杯。船规规定夜奶由值夜侍应送达并当面收盘；今夜托盘留在舱内、杯倾倒。把手上的事务长火漆封记是配膳用品点验标记，说明他有管理接触机会，不证明案发时由他送入。杯底残渣使银簪变色，只能作为异常残留，须与检验和配膳痕迹互证。"
         }
       ],
       "policy": "manual_public",
@@ -1763,7 +2261,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "上月氰化钾（电镀保养用）领用登记：批领三磅，而电镀池月耗至多一磅；经手花押的押脚是个'北'字——事务长谢望北签字惯把末笔甩成小旗。保管柜钥匙共两把：轮机长一把，事务长一把。轮机长识字不多，账目向来'凭事务长的本子'。"
+          "text": "上月电镀间氰化钾领用账记“三磅”，电镀池常规月耗约一磅；经手花押押脚像“北”字。保管柜钥匙分别由轮机长和事务长保管，登记由事务长誊写，且无独立复核。此账显示毒物可能有库存缺口及谢望北接触机会，但账页可误记或被改，不能证明本案投毒。"
         }
       ],
       "policy": "manual_public",
@@ -1778,7 +2276,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "谢望北名下'21:35 入舱查夜，22:05 签出'。墨色前淡后浓，'入'字与'出'字笔锋不同，像一口气补签的。而宴会厅酒水账显示他 21:25 还在厅里签批'加香槟十瓶'——从 21:25 到 21:35，从宴会厅到三等舱隔着两层甲板，再算上配膳房那一趟，一刻钟里要走三处。"
+          "text": "查舱签到本记谢望北21:35入舱、22:05签出。墨色浓淡与“入”“出”笔锋不一，像事后补写；这只能削弱该段行踪证明力。与21:25酒水账、三等舱路线及侍应口录对照，谢望北仍有离席和往返窗口，但单凭笔迹不能确定实际所在或作案。"
         }
       ],
       "policy": "manual_public",
@@ -1793,7 +2291,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "酒水账 21:25 有谢望北签批'加香槟十瓶'，笔迹如常。侍应阿贵的口录：'21:25 至 21:30，事务长先生在配膳房门口吩咐——头等舱的夜奶今夜不必送，他有数。另：21:05 小侯爷出舱时红着眼，走廊尽头有牛奶的甜腥气，那会儿夜奶还没送。'"
+          "text": "酒水账记21:25谢望北签批加香槟十瓶，笔迹如常。侍应阿贵口录：约21:25—21:30，谢在配膳房门口说头等舱夜奶不必由他送、自己会处理，并让阿贵去三等舱。阿贵记得有人随后取走夜奶托盘，但灯影里没看清脸。另称21:05陆小侯红眼离开船东舱。阿贵的观察受忙碌、视线和记忆影响，分别只能提供支使机会、托盘流转和陆小侯动机线索。"
         }
       ],
       "policy": "manual_public",
@@ -1808,7 +2306,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "电报房留底：21:10 发往上海报馆，收报人程一苇，文曰'广济旧案有凭，亥正后甲板舵楼一见，广济旧人'。付费签单走'船员舱'代付，签单笔迹与大副沈砚洲航海日志上的批注笔势相似。电报员补了一句：'这位客人拍长电拍了半个钟头，手指头都熏黄了。'"
+          "text": "电报房留底：21:10发往上海报馆、收报人程一苇的匿名电报称“广济旧案有凭，亥正后甲板舵楼一见，广济旧人”。付费签单走船员舱代付，笔势与沈砚洲航海日志批注相似，但签单并非正式笔迹鉴定。电报员记得程一苇拍过半小时长电。此材料支持旧案有人联络记者，不足以独立确认发报人或杀人动机。"
         }
       ],
       "policy": "manual_public",
@@ -1823,7 +2321,97 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "事务长室纸篓未倒。废舱单背面写满反复练写的'陆允中'三字，'中'字一律末竖无钩——与案头遗书同病。废稿里还夹着半页没写完的启事：'先父谢阿大，广济轮水手长，戊午年十月……'后头是一片涂黑的墨团。"
+          "text": "事务长室纸篓里有多张废舱单背面，反复写着“陆允中”；其中“中”字末竖无钩，与遗书相似。另有半页启事写“先父谢阿大，广济轮水手长，戊午年十月……”。废稿说明有人在事务长室练过这几个字，并提示谢阿大与广济旧案的私人关联；纸篓可被多人接触，字形相似也不能单独证明作者就是谢望北或证明其杀人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_toxicology",
+      "locationId": "location_1",
+      "name": "船医复核与残液试验",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "对杯底白色残渣、牛奶污迹与船东口腔残留作分别试验，均呈氰化物阳性；安神药水留样阴性，白兰地未见同类反应。样本量不足以反推剂量或精确死亡分钟，也无法判断毒物来自电镀间哪一份库存。它确认死亡与牛奶相关的氰化物中毒方向，但不指认取毒、递送或投毒者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_kitchen_trace",
+      "locationId": "location_2",
+      "name": "温奶锅与洗布痕迹",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "温奶小锅内沿、木勺凹槽及擦拭布上均有少量乳脂；擦拭布的试验显出与头等舱杯底相同的氰化物反应。配膳房多人轮值，锅具也供其他饮品使用；这些痕迹说明有人在配膳流程中处理过受污染牛奶，不能仅凭器具认定具体操作者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_tray_testimony",
+      "locationId": "location_2",
+      "name": "夜班侍应补充证言",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "另一名夜班侍应称，阿贵离开后曾看见一名穿事务长常用深色制服的人从配膳房方向端托盘往头等舱走；他只看到背影，时间约21:40—21:50，不能辨认面孔。轮机工也说谢望北平日负责配膳用品点验。两条信息均存在观察角度与记忆误差，只支持递送机会，不能单独锁定递送者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_paper_stock",
+      "locationId": "location_6",
+      "name": "公文笺领发与纸张纤维",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "遗书纸张的纤维、裁口与轮机部公文笺同批；事务长室的文书柜存有未编号公文笺，领发簿只记录整叠数量，没有逐张签领。纸张来源说明遗书可能在船上以公用纸写成，谢望北因职务可接触，但多名文书人员也有权限。它与遗书纸面异常相互印证，不能识别执笔人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_oldlog",
+      "locationId": "location_5",
+      "name": "广济轮旧航海日志誊本",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "一份由老舵工留下的旧日志誊本记载：戊午年十月，水手长谢阿大报告赈粮短少并要求报官；随后航程记录被撕页，沉船事故调查以“落海失踪”结案。誊本不是原件，无法单独证明陆允中指使灭口；它与纸篓启事中的“先父谢阿大”及匿名电报相合，解释谢望北可能的复仇动机，不是杀人证据。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_signbook_compare",
+      "locationId": "location_4",
+      "name": "签到时间与航程轮值对照",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "船员轮值表显示21:30—22:00三等舱查夜由另一名水手负责；签到本却记谢望北此段在场。酒水账与阿贵证言把他置于21:25配膳房附近，顾曼21:42—21:50在头等舱门外未获回应。轮值表只证明谢的查夜并非排班任务，不能排除他自行巡查；与签到本笔迹异常合看，所谓连续在场证明不可靠。"
         }
       ],
       "policy": "manual_public",
@@ -1836,70 +2424,78 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "十五年前死者吞赈粮、骗保险，借土匪的刀害死了发现亏空的水手长——谢望北的父亲。他改名换姓潜伏船上十五年，这一夜用'自尽'的局完成了复仇。"
+        "text": "谢望北是谢阿大之子，怀疑陆允中曾掩盖赈粮亏空并导致父亲“落海失踪”。旧日志誊本、匿名电报及练字纸分别来自历史记录、通讯留底和事务长室废稿，合起来支持旧案与私人复仇动机；誊本真实性仍可质疑，动机也不证明他实施了本案。"
       }
     ],
     "method": {
       "summary": [
         {
           "type": "paragraph",
-          "text": "谢望北为十五年前'广济轮沉船灭口案'复仇：其父谢阿大作为水手长撞破船东陆允中盗卖赈粮、骗保沉船，被灭口'落海'。他隐姓埋名十五年做到事务长，取得物资领用与配膳之权：上月以电镀保养名义多领氰化钾两磅，21:30 借'查夜班'支开值夜侍应，21:45 亲自把掺毒牛奶送进头等舱——船东认得他，绝不疑心。21:47 船东毒发身亡，他退出时故意不闩门，再补签三等舱'查夜'制造不在场，回厅后以遗书坐实'亏空自尽'。为何只有他：氰化钾钥匙在他手、送奶身份只有他有、仿写船东笔迹十五年少有人及、'自尽'的解释权由管文书的事务长一手把持。"
+          "text": "谢望北可能利用事务长的职务接触电镀间库存和配膳流程，但毒源、递送、伪造遗书、补签与旧案动机须作为五条独立推论检验。医学检验判断死因，痕迹与证言重建流程，文书和数字记录检验作者及行踪；不允许单卡锁凶。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "筹谋与获取毒物",
+          "title": "毒物来源与处理地点",
           "content": [
             {
               "type": "paragraph",
-              "text": "谢望北隐姓埋名十五年做到事务长，取得电镀间保管柜钥匙与配膳领用之权；上月他以'电镀保养'名义批领氰化钾三磅（实际月耗仅一磅），多出的两磅被他私藏备用。同时他用三个月时间仿练船东笔迹，备好伪造遗书。"
+              "text": "领用簿显示库存差额，杯中复核检出氰化物，配膳锅勺与擦布有同类反应；来源记录、毒理结果和现场痕迹只能共同指出可能的取用与处理流程，不能单独认定操作人。"
             }
           ],
           "clueIds": [
             "c_lingyong",
-            "c_lianzi"
-          ]
-        },
-        {
-          "id": "method_step_2",
-          "title": "支开侍应、温奶下毒",
-          "content": [
-            {
-              "type": "paragraph",
-              "text": "21:30 谢望北离席'查夜班'，吩咐值夜侍应阿贵'头等舱夜奶今夜不必送，我有数'，将其支去三等舱点验铺位；21:35-21:40 他在配膳房温牛奶并将氰化钾掺入其中。"
-            }
-          ],
-          "clueIds": [
+            "c_toxicology",
+            "c_kitchen_trace",
             "c_jiushui"
           ]
         },
         {
-          "id": "method_step_3",
-          "title": "送毒入舱、伪造现场",
+          "id": "method_step_2",
+          "title": "递送机会与接触者",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:45 谢望北亲自将掺毒牛奶以银托盘送入头等舱——船东认得他，绝不疑心；21:47 船东饮奶毒发身亡，怀表磕停在案角。谢望北将伪造遗书压于茶碟下，故意不闩舱门（船东习惯反锁两道，未闩门恰恰说明不是自尽），退出现场。"
+              "text": "谢望北支开阿贵，夜班侍应随后只看见模糊背影端盘，银托盘留在舱内；证言和现场物品显示递送流程异常，仍需与签到和轮值时间交叉核验身份。"
             }
           ],
           "clueIds": [
-            "c_naibei",
+            "c_jiushui",
+            "c_tray_testimony",
+            "c_naibei"
+          ]
+        },
+        {
+          "id": "method_step_3",
+          "title": "遗书与不在场说",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "公用纸张、练字废稿和遗书签名提示伪造；签到与轮值表削弱查夜说。纸张来源和字形不单独识别作者，签到不可靠也不直接证明人在头等舱。"
+            }
+          ],
+          "clueIds": [
             "c_yishu",
-            "c_yanshi"
+            "c_lianzi",
+            "c_paper_stock",
+            "c_qiandao",
+            "c_signbook_compare"
           ]
         },
         {
           "id": "method_step_4",
-          "title": "制造不在场证明",
+          "title": "旧案动机",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:50-22:05 谢望北在三等舱签到本补签'查夜'（'入''出'字迹笔锋不同，系一口气补签）；22:10 回宴会厅露面，22:15 闻报后第一个赶到'主持秩序'，并以事务长身份主动'坐实'亏空自尽的说法。"
+              "text": "旧日志誊本、匿名电报与启事相互提示谢望北与谢阿大、广济旧案有关；动机只解释可能的复仇原因，不替代本案实施行为证据。"
             }
           ],
           "clueIds": [
-            "c_qiandao"
+            "c_oldlog",
+            "c_dianbao",
+            "c_lianzi"
           ]
         }
       ]
@@ -2158,7 +2754,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "他在配膳房温奶下毒（氰化钾出自电镀间，多领两磅）。"
+            "text": "约21:35—21:40，谢望北在配膳房温奶并掺入氰化物；目前是重建真相，公开材料只将其与锅勺残留和托盘流转相连。"
           }
         ],
         "characterIds": [],
@@ -2229,7 +2825,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "亲自送奶入舱。"
+            "text": "约21:45有人将牛奶送入船东舱；侍应只看见背影，谢望北亲自递送属于真相层信息，玩家须由多条公开材料推断。"
           }
         ],
         "characterIds": [],
@@ -2250,7 +2846,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "船东饮奶毒发，怀表磕停；谢望北退出，门未闩。"
+            "text": "船东饮下受污染牛奶后在21:42—22:15之间死亡；怀表停在21:47但不能单独精确定死刻。谢望北退出时门未闩，随后补写签到。"
           }
         ],
         "characterIds": [
@@ -2271,11 +2867,11 @@
             "time": "21:47"
           }
         },
-        "title": "+门未闩）→ 遗书三疑",
+        "title": "分层推理提示（主持参考）",
         "content": [
           {
             "type": "paragraph",
-            "text": "+门未闩）→ 遗书三疑（公文笺、缺钩、无日期）→ 领用登记（多领氰化钾）→ 签到本与酒水账（补签破绽、支开侍应）→ 练字纸（仿迹与身世）。红鲱鱼：陆小侯的借据与继承、沈砚洲的要挟与匿名电报、白玫的逼婚与五分钟空白、韩汀的药账与吗啡、程一苇的赴约扑空、顾曼的公积金挪款与"
+            "text": "推理顺序：毒理复核与初验判断死因；领用差额与配膳痕迹讨论毒源；支使口录、模糊递盘证言、托盘与时间线讨论递送；纸张来源、练字废稿讨论遗书；签到与轮值讨论不在场说；旧日志誊本、电报和启事讨论复仇动机。每个结论需跨类别材料，不可单卡锁凶。"
           }
         ],
         "characterIds": [
@@ -2373,28 +2969,67 @@
       }
     ],
     "keyEvidenceIds": [
-      "c_yishu",
-      "c_lingyong"
+      "c_yanshi",
+      "c_toxicology",
+      "c_kitchen_trace",
+      "c_jiushui"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "chain_death",
+        "clueIds": [
+          "c_yanshi",
+          "c_toxicology",
+          "c_naibei"
+        ],
+        "conclusion": "尸检初验的发绀、苦杏仁气味与杯中残渣提示中毒；独立复核试验在死者口腔、牛奶杯残渣中检出氰化物，而白兰地与安神药水留样阴性。结合倾倒奶杯，支持牛奶中的氰化物导致死亡，不直接识别投毒者。"
+      },
+      {
+        "id": "chain_source",
+        "clueIds": [
+          "c_lingyong",
+          "c_toxicology",
+          "c_kitchen_trace",
+          "c_jiushui"
+        ],
+        "conclusion": "领用账显示氰化物库存有无法解释的差额且谢望北经手誊账；化学试验确认案发杯中有氰化物；配膳锅、木勺和擦拭布残留与杯中反应相同。账簿只提示可能来源，器具残留只提示处理地点，二者跨数字记录、医学检验和现场痕迹互证仍不能单独证明谁取毒或下毒。"
+      },
+      {
+        "id": "chain_delivery",
+        "clueIds": [
+          "c_jiushui",
+          "c_tray_testimony",
+          "c_naibei",
+          "c_kitchen_trace"
+        ],
+        "conclusion": "阿贵称谢望北说夜奶不必照常送并把他支开；另一侍应只看见模糊背影端托盘向头等舱，托盘留舱且牛奶受污染，配膳器具也有同类残留。管理关系、支开行为、背影证言和现场物证共同建立递送机会与流程，任何一项都不能单独认定是谢望北递送或投毒。"
+      },
+      {
+        "id": "chain_forgery",
         "clueIds": [
           "c_yishu",
           "c_lianzi",
-          "c_yanshi"
+          "c_paper_stock"
         ],
-        "conclusion": "遗书使用轮机部公文笺而非船东私用信笺，'允中'之'中'字末竖无钩而船东历年签名一律带钩，且无日期——与事务长室练字纸上反复练习的'陆允中'同病，证明遗书系谢望北仿笔伪造。"
+        "conclusion": "遗书所用纸张与公用轮机部公文笺同批且无日期，签名“中”字缺钩；事务长室废稿反复练写陆允中且缺钩特征相同；领发记录表明多名文书可接触同批纸。纸张来源、笔迹相似与练习行为来自不同观察面，支持遗书并非船东亲笔、且有人可能在事务长室练字；仍需与其他证据结合才能指向谢望北。"
       },
       {
-        "id": "evidence_3",
+        "id": "chain_signbook",
         "clueIds": [
-          "c_lingyong",
-          "c_naibei",
           "c_qiandao",
+          "c_signbook_compare",
           "c_jiushui"
         ],
-        "conclusion": "电镀间领用登记显示事务长以电镀保养名义多领氰化钾两磅（实际月耗仅一磅），银托盘留有其火漆封记且杯底残渣银簪泛黑；侍应阿贵证实事务长吩咐'夜奶不必送'并支他去三等舱；签到本'入''出'字迹笔锋不同系一口气补签——从毒源、送毒到不在场证明，完整指向谢望北。"
+        "conclusion": "签到本入出字迹与墨色不一致，轮值表表明该段查夜并非谢望北排班；酒水账和阿贵口录又将他放在配膳房附近。三种不同记录共同削弱其“不在场”主张，但只能证明行踪说法可疑，不能直接推出杀人。"
+      },
+      {
+        "id": "chain_oldcase",
+        "clueIds": [
+          "c_oldlog",
+          "c_lianzi",
+          "c_dianbao"
+        ],
+        "conclusion": "旧日志誊本提到谢阿大报告赈粮亏空后失踪；匿名电报以“广济旧人”约记者；事务长室启事写有“先父谢阿大”。历史誊本、通讯留底和私人废稿相互呼应，支持谢望北与旧案有私人关联及潜在复仇动机；这些材料不证明他造成船东死亡。"
       }
     ],
     "redHerrings": [
@@ -2425,7 +3060,9 @@
       },
       {
         "id": "red_herring_3",
-        "clueIds": [],
+        "clueIds": [
+          "c_jiushui"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2459,7 +3096,10 @@
       },
       {
         "id": "red_herring_6",
-        "clueIds": [],
+        "clueIds": [
+          "c_oldlog",
+          "c_lianzi"
+        ],
         "explanation": [
           {
             "type": "paragraph",
@@ -2472,7 +3112,7 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是事务长谢望北。十五年前，广济轮的水手长谢阿大撞破了船东陆允中盗卖赈粮、骗保沉船的勾当，'落海失踪'；十五年后，他的儿子端着一杯温好的牛奶，敲响了仇人的舱门。他算得极精：氰化钾有领用登记遮着，侍应被他一句话支去三等舱，遗书仿了三个月的笔迹，签到本补上不在场，连门都替'自尽'虚掩好了。他只输在两处小处：仿迹仿得出字形，仿不出'中'字那一钩；练字纸揉进了纸篓，却忘了事务长室的纸篓从来不倒。那页没写完的启事上，'先父谢阿大'五个字，是十五年来他第一次写下的真名。"
+        "text": "真相：凶手是事务长谢望北。毒理复核把死因指向被氰化物污染的牛奶；电镀间领用差额只提供潜在毒源，配膳锅勺残留建立处理地点，阿贵被支开、托盘流转与未能辨脸的背影共同构成递送机会。遗书的公用纸张、练字废稿和缺钩签名支持伪造判断；签到本与轮值表削弱不在场说。旧日志誊本、匿名电报和写有“先父谢阿大”的启事解释复仇动机，但动机本身不能定罪。只有把医学、痕迹、证言、数字记录和文书材料分别交叉核对，才能形成完整指认。"
       }
     ]
   },
@@ -2481,7 +3121,31 @@
     "searchRounds": 3,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "死亡方式与毒物来源",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先分别回答死因是否为氰化物中毒、毒物可能从何处取得、牛奶如何进入船东舱。检验只能判定毒物，领用簿只能提示来源，托盘和背影只能提示机会；至少提出一个非谢望北的接触解释。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "递送、伪造、补签与旧案动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "再分别核对谁递送、谁写遗书、签到能否证明在场、旧案能否解释动机。要求五条推论各自有两种不同类别材料支撑；公开说明仍不能从动机直接推出杀人。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2491,7 +3155,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "事务长室纸篓里那页没写完的启事——'先父谢阿大，广济轮水手长，戊午年十月……'——是十五年来谢望北第一次写下真名。船到叻埠时，巡捕登船，他没有跑；他只是把那枚火漆封记的银托盘擦了最后一遍，整整齐齐放回配膳房的架子上。十五年的仇，终于不必再藏了。"
+            "text": "当跨越医疗检验、配膳痕迹、证言、签到记录和纸本文书的线索彼此扣合，谢望北终于无法再把毒源、递送、遗书与补签拆成互不相干的偶然。他没有为自己辩解旧案，只把那页写着“先父谢阿大”的纸折好，随船等到叻埠接受巡捕调查。"
           }
         ]
       },
@@ -2501,9 +3165,113 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "海澄号靠岸时，谢望北照例在甲板上指挥卸货，礼数周全、袖口整齐。程一苇的稿子最终没有见报——他手里的旧案剪报缺了最关键的一环，而那页练字纸早已在某个深夜被倒进了大海。陆允中的死被归为'亏空自尽'，广济轮的旧案跟着这艘白船，又一次沉入了南洋的深水里。"
+            "text": "海澄号驶入叻埠，众人虽确认船东死于氰化物中毒，却未能把毒源、递送、遗书伪造和补签分别连成互证链。旧日志誊本仍有真伪争议，谢望北以职务接触与记账差错作解释，案件暂按公司亏空与自尽方向结案；广济旧案也没有得到彻底查明。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "初始只给现场和规则，不透露任何私密卡信息。怀表停在21:47不是法医精确死刻；顾曼21:42—21:50未获回应、阿贵22:15发现尸体，只能限定范围。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "每人按时间报一个亲见事实和一个推断。谢望北需说明离席与事务职责；不得把任何一张私密卡当全场已知。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮兜底公开c_yanshi、c_toxicology、c_naibei、c_lingyong、c_jiushui；第2轮兜底公开c_kitchen_trace、c_tray_testimony、c_qiandao、c_signbook_compare、c_yishu、c_lianzi、c_paper_stock、c_oldlog、c_dianbao。所有线索均可读给全场；主持不要求玩家先猜中地点或角色才能获得。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "引导依次讨论毒物死因、可能毒源、处理牛奶的机会、递送者、遗书作者、签到真实性和旧案动机。每一层都要跨类别交叉核验；允许提出多个接触者与账务被误记的解释。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前每位玩家分别陈述：氰化物死因证据、递送机会证据、遗书真伪证据、签到不可靠证据和复仇动机证据。至少使用医学、痕迹、证言、数字记录、文书中的三类，说明每条材料的局限。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家凭氰化物领用账或银簪变色直接锁定谢望北。",
+        "hint": "领用账有两把钥匙且无复核；先用复核试验判断杯中毒物，再用配膳锅痕迹建立处理地点，之后仍须另证递送者。"
+      },
+      {
+        "condition": "玩家把谢望北让阿贵去三等舱当成亲自递奶的证明。",
+        "hint": "阿贵只证明被支开，背影证言未辨认面孔；对照托盘规程、锅勺残留、顾曼时段和谢的路线，保留其他轮值者的可能。"
+      },
+      {
+        "condition": "玩家凭练字纸直接认定遗书由谢望北伪造。",
+        "hint": "练字只证明有人在事务长室写过相似字样；再核公文笺来源、文书柜权限和案发时间，笔迹与纸张分别不能单独识人。"
+      },
+      {
+        "condition": "玩家把签到笔迹异常等同于谢望北在头等舱。",
+        "hint": "笔迹异常只削弱签到证明力，轮值表说明并非排班；仍须将配膳证言、递送背影、现场残留和时间窗结合。"
+      },
+      {
+        "condition": "玩家把旧案动机当作定罪证据。",
+        "hint": "旧日志是誊本而非原件；它与启事、电报可解释关联和动机，但必须另找本案接触与递送证据。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "c_yanshi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_toxicology",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_naibei",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_lingyong",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_jiushui",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_kitchen_trace",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_tray_testimony",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_qiandao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_signbook_compare",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_yishu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_lianzi",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_paper_stock",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_oldlog",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_dianbao",
+        "deadlineRound": 2
       }
     ]
   }

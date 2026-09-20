@@ -241,7 +241,28 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "stage_cao_jie_act2",
+                "title": "第二幕补充",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "进入第二幕后，请把已公开的材料与自己的亲历分开陈述；即使你不愿谈私人秘密，也可以如实回应对应公开线索，不要让关键推理依赖主动自曝。"
+                  }
+                ],
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": []
+          }
+        ]
       }
     },
     {
@@ -472,7 +493,28 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "stage_a_liang_act2",
+                "title": "第二幕补充",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "进入第二幕后，请把已公开的材料与自己的亲历分开陈述；即使你不愿谈私人秘密，也可以如实回应对应公开线索，不要让关键推理依赖主动自曝。"
+                  }
+                ],
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": []
+          }
+        ]
       }
     },
     {
@@ -698,7 +740,115 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_illness",
+            "claim": "他本来就有肾病，可能是旧病猝发。",
+            "basis": "你知道雷师傅有肾病，现场药盒也支持存在基础风险；医学检验本身不指认任何人。",
+            "brokenByPublicClueIds": [
+              "youdie_yaohe",
+              "yaowu_jilu",
+              "dinaxian_dai"
+            ]
+          },
+          {
+            "id": "defense_touch",
+            "claim": "调料台是自助区，去过那里、递过油碟不等于换盐。",
+            "basis": "店里熟客和员工都能接近调料台；曹姐只看到你递碟，不能说她看见了换盐。",
+            "brokenByPublicClueIds": [
+              "su_cai",
+              "dinaxian_dai",
+              "cao_tiaoliao_zhengyan"
+            ]
+          },
+          {
+            "id": "defense_sauce",
+            "claim": "油碟的钾可能来自常见调料，盐袋也没证明被死者吃下。",
+            "basis": "目前只有残液异常与一只来路不明的袋子，需有画面或证词把来源和你的动作串起来。",
+            "brokenByPublicClueIds": [
+              "su_cai",
+              "cao_tiaoliao_zhengyan",
+              "youdie_yaohe"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "stage_zhou_1_knowledge",
+                "title": "第一幕应对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "死因或药物被提出时，强调基础病确实存在；不要主动承认低钠盐有钾，也不要仅因药物线索就慌乱改口。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [
+                  "cao_jie"
+                ],
+                "relatedClueIds": [
+                  "youdie_yaohe",
+                  "yaowu_jilu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "stage_zhou_1_objective",
+                "title": "稳住猝死解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕承认自己去过公共调料台、给老雷递过碟，但说这只是熟人帮忙；推动大家先确认病史与死因。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "stage_zhou_2_knowledge",
+                "title": "第二幕应对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "录像、盐袋和曹姐证词一旦交叉，单说公共区域人人可去已不足以解释；转而质疑画面无法辨认袋中物质，并提醒大家动机证据不等于杀人证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [
+                  "a_liang",
+                  "cao_jie"
+                ],
+                "relatedClueIds": [
+                  "dinaxian_dai",
+                  "su_cai",
+                  "cao_tiaoliao_zhengyan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "stage_zhou_2_objective",
+                "title": "拆开证据链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把低钠盐来源、替换动作、死者摄入和你的动机分成四个问题；避免一旦被质疑就全盘认罪，按仍缺少的交叉证明逐项回应。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -881,7 +1031,28 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "stage_lei_ting_act2",
+                "title": "第二幕补充",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "进入第二幕后，请把已公开的材料与自己的亲历分开陈述；即使你不愿谈私人秘密，也可以如实回应对应公开线索，不要让关键推理依赖主动自曝。"
+                  }
+                ],
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": []
+          }
+        ]
       }
     }
   ],
@@ -894,7 +1065,8 @@
           "type": "paragraph",
           "text": "打烊前的大堂灯还亮着，靠里那张桌上碗碟未收，油碟里残着底；两瓶撕去标签的酸梅汤立在桌角，寒气顺着门缝往里钻。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cao_jie"
     },
     {
       "id": "location_2",
@@ -904,7 +1076,8 @@
           "type": "paragraph",
           "text": "自助调料台上一排罐子摆得顺手，最常用的那格却挪动过；台下泔水桶边缘露出半只白色包装袋，撕口很新。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cao_jie"
     },
     {
       "id": "location_3",
@@ -914,7 +1087,8 @@
           "type": "paragraph",
           "text": "后厨蒸汽未散、灶火刚歇，茶水间窗台上还架着一部手机，镜头正对大堂；米缸后塞着一本黑色记事本，外皮沾着新鲜的米灰。"
         }
-      ]
+      ],
+      "ownerCharacterId": "a_liang"
     },
     {
       "id": "location_4",
@@ -924,7 +1098,8 @@
           "type": "paragraph",
           "text": "收银台抽屉里摞着经年的账册单据，台面磨得油亮；二十三年的老店，每一笔进出账都从这道小小的柜台过。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cao_jie"
     },
     {
       "id": "location_5",
@@ -934,24 +1109,29 @@
           "type": "paragraph",
           "text": "店门外的路边车位停着那辆收车的出租车，充电座上的手机还亮着屏；灶火的白气从门缝里飘出来，街灯照得车位雪亮。"
         }
-      ]
+      ],
+      "ownerCharacterId": "lei_ting"
     }
   ],
   "clues": [
     {
       "id": "youdie_yaohe",
       "locationId": "location_1",
-      "name": "油碟与随身药盒",
+      "name": "油碟残液检验",
       "category": "medical",
       "content": [
         {
           "type": "paragraph",
-          "text": "雷师傅座位：油碟残液送检，钾含量异常超标；随身外套内袋的药盒里是螺内酯片——保钾利尿剂，肾病患者禁食高钾食物时正在服用此药。法医初判：短时间内大量摄钾，高钾血症引发心律骤停。"
+          "text": "雷师傅座位的油碟残液送检，钾含量异常超标；血检显示血钾显著升高，法医判定高钾血症引发心律骤停。检验只能确认摄入了大量钾，不能单凭这一结果确定钾的来源或投放者。"
         }
       ],
       "policy": "auto_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "lao_zhou"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_8"
+      ]
     },
     {
       "id": "dinaxian_dai",
@@ -961,12 +1141,16 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "调料台下泔水桶边缘，露出半只白色包装袋：低钠盐（氯化钾型），撕口很新，袋内还有残留晶体。店内库存单上只有井盐和辣椒面——这袋盐来路不明，摆放位置正对着雷师傅常用的那格。"
+          "text": "调料台泔水桶边缘露出半只白色包装袋：低钠盐（氯化钾型），撕口很新，袋内有残留晶体。店内进货库存只有井盐和辣椒面；包装只能说明有人带来低钠盐，不能单独证明谁换了盐罐，也不能证明死者实际摄入。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "lao_zhou"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_5"
+      ]
     },
     {
       "id": "su_cai",
@@ -976,12 +1160,17 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "阿亮的手机 21:45 起架在茶水间窗台录像：22:09-22:12 的画面里，老周站在调料台前，拧开一只小袋子往盐罐里倒着什么，随后把井盐罐挪到下层；画面外有曹姐喊阿亮的声音。素材后半段还有不该拍的生肉镜头。"
+          "text": "阿亮的手机 21:45 起架在茶水间窗台录像：22:09-22:12 的画面里，老周站在调料台前，拧开一只小袋子往盐罐里倒东西，随后把井盐罐挪到下层。镜头无法辨认袋中物质；画面后半段还有不该拍的生肉镜头。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "lao_zhou",
+        "a_liang"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_5"
+      ]
     },
     {
       "id": "jishiben",
@@ -1029,34 +1218,43 @@
       "relatedTruthEventIds": []
     },
     {
-      "id": "suanmeitang",
+      "id": "yaowu_jilu",
       "locationId": "location_1",
-      "name": "两瓶特供酸梅汤",
-      "category": "document",
+      "name": "外套里的用药记录",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
-          "text": "老周带来的两瓶特供酸梅汤：瓶身是某品牌回收瓶，撕开的标签下露出周记烧烤的旧价签。化验结果：无毒。老周主动要求化验了三遍——酸梅汤没问题，问题就不在喝的上面。"
+          "text": "雷师傅外套内袋的药盒及随身用药记录显示，他长期服用螺内酯（保钾利尿剂），并有肾病史。该药物背景会放大高钾摄入的危险，但单凭用药不能证明本次死因，更不能指认投放者。"
         }
       ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "policy": "auto_public",
+      "relatedCharacterIds": [
+        "lao_zhou"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_8"
+      ]
     },
     {
-      "id": "lihun_xieyi",
-      "locationId": "location_4",
-      "name": "离婚协议附页",
-      "category": "document",
+      "id": "cao_tiaoliao_zhengyan",
+      "locationId": "location_1",
+      "name": "曹姐看到的调料台动向",
+      "category": "testimony",
       "content": [
         {
           "type": "paragraph",
-          "text": "收银台抽屉最底下压着1999年的离婚协议附页：门店装修及设备款，双方各出资一半——落款两个手印，一个是曹丽华的，一个是雷永强的。纸张被压得平整，却始终没有给过第二个人看。"
+          "text": "曹姐确认：22:05 前后她在门口收钱时，看见老周起身到调料台，之后亲手给雷师傅端来一碟油碟。她当时没看清罐内物质，也没看到他倒入什么；这只能证明接触与递送机会，需和盐袋、录像及检验相互印证。"
         }
       ],
       "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": []
+      "relatedCharacterIds": [
+        "cao_jie",
+        "lao_zhou"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_5"
+      ]
     }
   ],
   "truth": {
@@ -1071,47 +1269,50 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "老周把雷师傅常用的井盐罐换成低钠盐（氯化钾型），并亲手为他调油碟、劝咸添味；雷师傅长期服用保钾利尿剂螺内酯，短时大量摄钾引发高钾血症、心律骤停，症状酷似心源性猝死。他全程不碰饮料不碰锅，下毒工具是一撮更健康的盐。"
+          "text": "老周先替换雷师傅常用的盐罐，再亲手递上油碟。残液与血检确认高钾血症，用药记录解释危险性，低钠盐袋与录像、证词分别补上来源、替换和接触环节；必须交叉这些独立材料才能还原作案。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "购置低钠盐并替换盐罐",
+          "title": "死因与用药背景分别确认",
           "content": [
             {
               "type": "paragraph",
-              "text": "老周今早在批发市场购入一袋低钠盐（氯化钾型），趁22:00曹姐去门口收钱、背对大堂之际，起身到调料台，将雷师傅常用的井盐罐挪到下层，摆上装有低钠盐的新盐罐。"
+              "text": "残液和血检确认大量摄钾、高钾血症致死；独立的药盒材料补足螺内酯与肾病这一风险背景。两项医学材料解释死亡机制，但都不能单独说明钾从哪里来或谁动了手。"
             }
           ],
           "clueIds": [
-            "dinaxian_dai"
+            "youdie_yaohe",
+            "yaowu_jilu"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "亲手调油碟并劝咸添味",
+          "title": "低钠盐进入调料台并被替换",
           "content": [
             {
               "type": "paragraph",
-              "text": "老周殷勤地为雷师傅亲手调了一碟特供油碟，劝他多蘸多吃——雷师傅毫不知情，咂嘴说今晚的碟儿有点鲜。这碟油碟确保了大量低钠盐（氯化钾）随食物摄入。"
+              "text": "泔水桶边的低钠盐袋与店内库存不符；手机画面记录有人把袋中物倒入盐罐并挪走井盐罐。两种不同类别的材料相互印证换盐动作，但袋中物质和画面身份仍须由检验、证词等拼合。"
             }
           ],
           "clueIds": [
-            "su_cai",
-            "suanmeitang"
+            "dinaxian_dai",
+            "su_cai"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "高钾血症发作致死",
+          "title": "接触机会、递送与实际摄入互证",
           "content": [
             {
               "type": "paragraph",
-              "text": "雷师傅长期服用保钾利尿剂螺内酯，本应远离一切高钾食物；短时大量摄入氯化钾后，血钾浓度急剧攀升，引发高钾血症，导致心律骤停。22:35雷师傅起身结账时栽倒，22:55抢救无效死亡——症状酷似心源性猝死，杀招藏在一撮更健康的盐里。"
+              "text": "曹姐只证实老周到过调料台并递了油碟；录像补足他更换盐罐的动作，残液检验确认死者摄入了异常高钾物质。接触、替换与摄入须由证词、数字材料和医学检验合起来判断。"
             }
           ],
           "clueIds": [
+            "cao_tiaoliao_zhengyan",
+            "su_cai",
             "youdie_yaohe"
           ]
         }
@@ -1399,65 +1600,43 @@
       }
     ],
     "keyEvidenceIds": [
+      "youdie_yaohe",
+      "yaowu_jilu",
       "dinaxian_dai",
+      "su_cai",
+      "cao_tiaoliao_zhengyan",
       "jishiben"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "evidence_death",
         "clueIds": [
-          "dinaxian_dai",
           "youdie_yaohe",
-          "su_cai"
+          "yaowu_jilu",
+          "dinaxian_dai"
         ],
-        "conclusion": "调料台泔水桶边发现的低钠盐袋来路不明，店内库存只有井盐——有人将雷师傅常用的井盐罐替换为低钠盐（氯化钾型），配合其正在服用的保钾利尿剂螺内酯，制造了高钾血症致死的条件。"
+        "conclusion": "高钾血症解释死亡机制，用药记录说明风险背景；低钠盐袋提供可能的钾来源。医学材料与实物材料交叉后，才能提出被人为摄入的解释，三者均不能单独锁定凶手。"
       },
       {
-        "id": "evidence_3",
+        "id": "evidence_replacement",
+        "clueIds": [
+          "dinaxian_dai",
+          "su_cai",
+          "cao_tiaoliao_zhengyan"
+        ],
+        "conclusion": "低钠盐袋证明有外来盐料，手机录像呈现老周倒入物质并挪动盐罐，曹姐证词独立确认他到过调料台并递出油碟；物证、数字记录和证词共同支持换盐与接触链。"
+      },
+      {
+        "id": "evidence_motive",
         "clueIds": [
           "jishiben",
           "shouji_zhaopian",
           "diliao_zhangben"
         ],
-        "conclusion": "雷师傅的记事本记录了周五将带市场监管所老宋上门查周记烧烤用油的计划，老周的烧烤摊油料来路不正——灭口动机指向老周。"
+        "conclusion": "记事本记下周五带监管人员查油，照片将倾倒废油的车辆指向周记烧烤，进货账本显示老周的祖传秘方依赖曹姐供货；记录、影像与账目共同构成动机链。"
       }
     ],
-    "redHerrings": [
-      {
-        "id": "red_herring_1",
-        "clueIds": [
-          "lihun_xieyi"
-        ],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "曹姐的离婚协议与偏心锅底"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_2",
-        "clueIds": [],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "雷婷的隐匿证据与婆家关系"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_3",
-        "clueIds": [
-          "suanmeitang"
-        ],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "酸梅汤的无毒化验。"
-          }
-        ]
-      }
-    ],
+    "redHerrings": [],
     "supplemental": [],
     "reveal": [
       {
@@ -1471,7 +1650,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：先确认怎么死的",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先公开死因与用药背景，再分别搜集调料台实物、目击和录像。提醒玩家医学风险不能直接等于凶手身份。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：复原调料台的十分钟",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "集中核对盐袋、录像与曹姐证词；若关键材料尚未公开，按主持保证公开节奏补齐，再进入动机与投票。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1494,6 +1697,74 @@
             "text": "投票未能指认老周。众人各怀心事，把注意力分散在曹姐的离婚协议、雷婷的隐匿证据和那两瓶酸梅汤上——没人注意到泔水桶边的袋角和窗台上那台手机。老周回到周记烧烤继续摆摊，祖传秘方的招牌在夜风里晃荡。雷婷夹在婆家与娘家之间，再没踏进曹姐老火锅一步。而调料台上那只盐罐，再没人碰过。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场只宣读高钾血症与猝倒经过；低钠盐来源、换盐动作和老周身份应分阶段由独立材料呈现。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮优先发出死因、用药、盐袋和目击材料；第二轮发出手机录像及动机材料。所有保证材料到轮次即公开，避免依赖持有人自曝。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "追问玩家分别回答：死因是什么、钾来源是什么、谁接触并更换盐罐、动机是什么。提醒低钠盐、螺内酯或去过调料台任一单点都不足以锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前确认至少讨论过医学材料、实物盐袋、录像和目击证词中的两类以上，并能解释它们如何互相支持。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家只围绕肾病和螺内酯争论。",
+        "hint": "请主持人提示：药物能解释风险，但油碟检验显示高钾；接下来要寻找钾的具体来源。"
+      },
+      {
+        "condition": "玩家找到盐袋却无法确定是谁替换。",
+        "hint": "提示检查窗台手机录像，并询问曹姐22:05前后看到了谁去调料台、谁递来油碟。"
+      },
+      {
+        "condition": "阿亮因偷拍而不愿交出手机素材。",
+        "hint": "第二轮截止时由主持人直接公开录像线索卡，不要求阿亮角色主动承认偷拍。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "youdie_yaohe",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yaowu_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dinaxian_dai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "cao_tiaoliao_zhengyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "su_cai",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jishiben",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "shouji_zhaopian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "diliao_zhangben",
+        "deadlineRound": 2
       }
     ]
   }

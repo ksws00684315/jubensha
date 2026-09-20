@@ -200,7 +200,81 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "shenman_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenman_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "坦白遗嘱除名与托带牛奶，解释安眠药来源；指出新遗嘱的受益变动不只影响你一人。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "shenman_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "shenman_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对签批页和归档版的差异，讲明自己不知道谁誊抄；把遗嘱动机和包厢内行为分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -360,7 +434,81 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "guyan_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyan_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动承认23:20争吵和债务，说明摔门离开时间；不要把没有记录说成不在场证明。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "guyan_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyan_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应父亲追责条款及私账材料，说明债务动机不能证明你拿过镇纸。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -606,7 +754,115 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "baizeyu_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baizeyu_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认公务身份和签收单，解释值班簿不是全车出入清单；避免把自己经手文件说成全程在室内。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "baizeyu_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baizeyu_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "被问到镇纸和假账时，分别争论持有物证的时间、签批页誊抄与交易真假；回应每张公开材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "baize_defense_alone",
+            "claim": "值班簿只是人工巡检记录；陆研秋没看清侧脸，签收单也只证明我经手夜宵，不能证明我与顾云山独处或何时动手。",
+            "basis": "记录不是全量门禁，目击明确标注存疑，签收动作未必发生在包厢内。",
+            "brokenByPublicClueIds": [
+              "zhiban_jilu",
+              "reshui",
+              "yizhu_qian",
+              "shijian_lu"
+            ]
+          },
+          {
+            "id": "baize_defense_weapon",
+            "claim": "镇纸在我的行李里不等于我用它杀人；我可能替顾先生暂存或事后搬运，血迹也可能来自搬运现场物品。",
+            "basis": "单独持有不能确定取得时间，创口和血迹需与桌面来源对上。",
+            "brokenByPublicClueIds": [
+              "zhiben_dai",
+              "shijian_lu",
+              "cizhen_xue"
+            ]
+          },
+          {
+            "id": "baize_defense_accounts",
+            "claim": "我经手遗嘱与藏品清单，但账目可能是顾先生授意的复品处理；鉴定报告只证明藏品存疑，不能证明我挪款。",
+            "basis": "需要将私账实物、遗嘱删改与独立鉴定的编号结果对应。",
+            "brokenByPublicClueIds": [
+              "sizhang2",
+              "sizhang",
+              "jianding",
+              "yizhu_qian"
+            ]
+          }
+        ]
       }
     },
     {
@@ -760,7 +1016,81 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "ningshuang_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ningshuang_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "讲清创口棱痕、出血时间与药瓶摆放为何不支持心梗；承认初判错误并区分死因和凶手。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "ningshuang_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ningshuang_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "配合把尸表与镇纸比对，说明伤后存活数分钟只限制时间，不可精确到某次巡检。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1053,7 +1383,81 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "luxiaoman_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaoman_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开巡检簿并说明人工记录范围、观察盲点和估记时间；解释为何会替沈曼跑腿。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "luxiaoman_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luxiaoman_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "与目击纸条和签收单核时间，承认互相矛盾处，不把“唯一记录者”当作“唯一进出者”。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1246,7 +1650,81 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "lujiaoshou_act1_knowledge",
+                "title": "时间与痕迹边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "巡检簿是人工记录、目击者辨认存疑、签收单只证明经手；应将三类时间材料交叉而非单点锁凶。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "zhiban_jilu",
+                  "reshui",
+                  "yizhu_qian",
+                  "zhiben_dai"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lujiaoshou_act1_objective",
+                "title": "复原包厢出入",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代22:30在桌上看见镇纸及23:30热水间目击，指出侧脸辨认存疑；解释鉴定报告的送检链。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "lujiaoshou_act2_knowledge",
+                "title": "动机与行为边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "遗嘱、私账和鉴定报告分别证明受益变化、记账情况和藏品真假，动机必须与具体行为证据分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yizhu_qian",
+                  "sizhang",
+                  "sizhang2",
+                  "jianding"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lujiaoshou_act2_objective",
+                "title": "比较遗嘱和账证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开高仿检测结果并说明鉴定结论的边界，帮助区分假账风险、谁能接触凶器和谁实际行凶。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1269,7 +1747,8 @@
           "type": "paragraph",
           "text": "2号包厢，沈曼的包厢。化妆箱敞着，镜面映着窗外的风雪。"
         }
-      ]
+      ],
+      "ownerCharacterId": "shenman"
     },
     {
       "id": "location_3",
@@ -1279,7 +1758,8 @@
           "type": "paragraph",
           "text": "4号包厢，顾言的包厢。满桌商务文件，烟灰缸积了小半缸。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guyan"
     },
     {
       "id": "location_4",
@@ -1289,7 +1769,8 @@
           "type": "paragraph",
           "text": "秘书白泽宇的包厢。公文箱上锁，值班表钉在壁板上。"
         }
-      ]
+      ],
+      "ownerCharacterId": "baizeyu"
     },
     {
       "id": "location_5",
@@ -1309,7 +1790,8 @@
           "type": "paragraph",
           "text": "值班室与行李车。签收簿、备品柜一列排开，行李捆扎整齐。"
         }
-      ]
+      ],
+      "ownerCharacterId": "luxiaoman"
     }
   ],
   "clues": [
@@ -1351,7 +1833,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "桌面文件堆里有一份誊抄工整的《遗嘱（修订）》签批页：除名沈曼、调整信托受益与追责条款。签名栏有顾云山亲笔，但纸面在'信托'二字处有墨水洇痕——誊抄者当时手抖过。旁边压着一份夜宵签收单，落款时间 23:50。"
+          "text": "桌面文件堆里有誊抄工整的《遗嘱（修订）》签批页：除名沈曼、调整信托受益与追责条款；顾云山亲笔签名，'信托'二字处有墨水洇痕。旁边夜宵签收单记23:50送达3号包厢，签收栏是白泽宇的签名；签单只证明他经手接收，不证明顾云山当时仍活着或签单在包厢内完成。"
         }
       ],
       "policy": "manual_public",
@@ -1366,7 +1848,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "顾云山的黄铜镇纸（压标书用的老物件）不翼而飞——22:30 陆研秋来过时它还在桌上。桌面文件堆上留下一道新鲜的方形压痕，压痕边缘与死者指缝里的金色细屑吻合。"
+          "text": "顾云山的黄铜镇纸不翼而飞。陆研秋在22:30进入3号包厢时，确认镇纸仍在桌上；遗体发现后，桌面文件堆留下新鲜方形压痕，死者右手指缝检出金色细屑。目击、桌面痕迹与尸表材料共同建立镇纸来源和使用窗口，单独任何一项都不能确定谁拿走凶器。"
         }
       ],
       "policy": "manual_public",
@@ -1381,7 +1863,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "白泽宇行李箱的背板夹层里藏着一个报纸包：黄铜镇纸，棱角与死者后脑创口吻合，镇纸一侧用报纸反复擦拭过，但底棱缝里仍有暗褐色血痂。报纸是今天的《北岭日报》，油墨未褪。"
+          "text": "白泽宇行李箱背板夹层的报纸包内有一柄黄铜镇纸，棱角与死者后脑创缘吻合；底棱缝残留暗褐色血痂，报纸为当日《北岭日报》，有反复擦拭痕。镇纸被藏在秘书行李中是重要去向证据，但需与桌面失物记录和尸表痕迹交叉判断，仍不能仅凭持有者身份定罪。"
         }
       ],
       "policy": "manual_public",
@@ -1407,11 +1889,11 @@
       "id": "sizhang2",
       "locationId": "location_4",
       "name": "私账本与三只锦盒",
-      "category": "document",
+      "category": "object",
       "content": [
         {
           "type": "paragraph",
-          "text": "衣柜顶层藏着三个贴着'复品-处理'标签的锦盒，盒内衬布上留着真品形状的压痕。一只笔记本记录着十二年间'处理'给固定买家的藏品流水，成交价与'处理价'差额累计触目惊心。最后一页有三件大器的编号，被红笔圈出。"
+          "text": "白泽宇衣柜顶层藏着三个标注“复品-处理”的锦盒，衬布留有真品形状压痕；同处私账本逐年记载十二年间向固定买家“处理”藏品的流水，差价累计巨大，最后一页三件大器编号被红笔圈出。盒中压痕与账本是可检验的实物及记账记录；单看藏盒或账目都不能证明每件交易真假。"
         }
       ],
       "policy": "manual_public",
@@ -1426,7 +1908,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "郑晓满的巡检登记簿：22:40-23:00 白秘书进出 3 号；23:20 顾先生（子）进 3 号、23:25 出（摔门声，全车可闻）；23:35 白秘书端餐盘进 3 号、23:52 出。备注栏一行小字：'23:52 白秘书右手一直攥着。'23:35-23:52 期间无其他人进出 3 号包厢。"
+          "text": "郑晓满的巡检登记簿（人工填写）：22:40至23:00记白秘书进出3号；23:20顾先生（子）进3号、23:25出（摔门声全车可闻）；23:35白秘书端餐盘进3号、23:52出。备注：“23:52白秘书右手一直攥着。”该簿只记列车员当班注意到的出入，不是全车乘客逐一登记；时间为巡检时估记，不能单独证明包厢内只有白秘书一人或他在何时动手。"
         }
       ],
       "policy": "manual_public",
@@ -1471,7 +1953,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "陆研秋出示的鉴定报告摘要（原件锁于行李箱）：受托对顾氏藏品全面复核，'十一件存疑，其中三件大器经科学检测为高仿'，报告日期三天前，签收栏空白。附言：本报告如需司法用途，随移交随生效。"
+          "text": "陆研秋的鉴定报告摘要：受托复核顾氏藏品，十一件存疑，其中三件大器经科学检测为高仿；报告日期三天前，签收栏空白。陆研秋可说明检测方法和样品编号，报告只证明鉴定结果，不证明是谁调包或挪用款项。"
         }
       ],
       "policy": "manual_public",
@@ -1482,11 +1964,11 @@
       "id": "reshui",
       "locationId": "location_5",
       "name": "热水间的目击",
-      "category": "document",
+      "category": "testimony",
       "content": [
         {
           "type": "paragraph",
-          "text": "热水间的取水记录（纸条，陆研秋笔迹）：'23:30-23:33 取水，遇端托盘瘦高者自餐车来，往 3 号包厢方向去，侧脸似白秘书（当时未戴眼镜，存疑）。23:52 前后闻走廊脚步声，停顿良久。'"
+          "text": "陆研秋当夜写下的目击记录：23:30至23:33在热水间取水，遇见一名瘦高、端托盘的人从餐车向3号方向走，侧脸似白秘书（当时未戴眼镜，存疑）；23:52前后听见走廊脚步停顿及包厢门轻响，但未看清进出者。目击支持托盘路线和大致时段，不能单独辨认身份或证明屋内独处。"
         }
       ],
       "policy": "manual_public",
@@ -1506,7 +1988,7 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "白泽宇十二年做假账截留十一件真品（九千万），鉴定危机败露在即。23:35 他借'送文件签批'进入 3 号包厢，23:40 趁顾云山伏案核账背对自己，抓起桌上的黄铜镇纸击打其后脑致死，随后擦净镇纸藏入自己行李箱夹层、保留桌面布置（硝酸甘油药瓶为死者自摆），把现场伪装成心梗猝死。郑晓满的值班记录与陆研秋的走廊目击共同锁死：23:35-23:52 之间唯一与死者独处的人就是他。"
+          "text": "白泽宇经手十二年私账，顾云山最新签批页加入资产核查与追责条款，鉴定报告又即将揭露多件藏品为高仿。列车员人工簿、热水间存疑目击及夜宵签收单分别提供包厢时间线，不能单点锁凶；尸表、桌面压痕、镇纸失踪窗口和白泽宇行李中的血痂镇纸共同指向凶器及来源。把行踪、实物和假账动机结合，才能推断白泽宇行凶。"
         }
       ],
       "steps": [
@@ -1520,7 +2002,9 @@
             }
           ],
           "clueIds": [
-            "zhiben_dai",
+            "zhiban_jilu",
+            "reshui",
+            "yizhu_qian",
             "shijian_lu"
           ]
         },
@@ -1534,7 +2018,8 @@
             }
           ],
           "clueIds": [
-            "yaoping"
+            "yaoping",
+            "shijian_lu"
           ]
         },
         {
@@ -1547,6 +2032,7 @@
             }
           ],
           "clueIds": [
+            "zhiben_dai",
             "cizhen_xue",
             "sizhang"
           ]
@@ -1561,7 +2047,9 @@
             }
           ],
           "clueIds": [
-            "zhiban_jilu"
+            "zhiban_jilu",
+            "reshui",
+            "yizhu_qian"
           ]
         }
       ]
@@ -1912,34 +2400,54 @@
       }
     ],
     "keyEvidenceIds": [
+      "shijian_lu",
       "zhiben_dai",
+      "cizhen_xue",
       "zhiban_jilu",
-      "sizhang2"
+      "reshui",
+      "yizhu_qian",
+      "sizhang",
+      "sizhang2",
+      "jianding"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_2",
+        "id": "chain_cause_weapon",
         "clueIds": [
+          "shijian_lu",
           "zhiben_dai",
-          "shijian_lu"
+          "cizhen_xue"
         ],
-        "conclusion": "死者指缝的黄铜粉、桌面方形压痕与失踪的镇纸三者吻合，结合尸检创缘的直角棱痕，可锁定凶器即为白泽宇包厢中搜出的那柄黄铜镇纸。"
+        "conclusion": "尸表记录的直角棱痕与死者指缝黄铜粉、桌面方形压痕相符；陆研秋22:30见镇纸仍在桌上，之后镇纸在白泽宇行李中发现且底棱有血痂。医学、目击/现场痕迹和实物来源共同支持镇纸为凶器，并给出失物窗口，不能单凭持有者定罪。"
       },
       {
-        "id": "evidence_3",
+        "id": "chain_entry_window",
         "clueIds": [
           "zhiban_jilu",
-          "reshui"
+          "reshui",
+          "yizhu_qian",
+          "shijian_lu"
         ],
-        "conclusion": "值班记录显示 23:35-23:52 期间唯一进出 3 号包厢的人是白泽宇，陆研秋走廊目击与其身形吻合，结合'送文件签字'无需十七分钟，可将其独处时间锁定为作案窗口。"
+        "conclusion": "人工巡检簿记白泽宇23:35入、23:52出；陆研秋记录托盘人影及门响但辨认存疑；23:50签收单有白泽宇签名；尸表提示伤后存活数分钟。多种来源共同限制其包厢出入和可能作案窗口，但任何单条材料都不能证明屋内独处或准确动手时刻。"
       },
       {
-        "id": "evidence_5",
+        "id": "chain_motive",
         "clueIds": [
           "sizhang2",
-          "jianding"
+          "jianding",
+          "sizhang",
+          "yizhu_qian"
         ],
-        "conclusion": "十二年间十一件真品被调包截留、三只锦盒与私账本构成九千万假账铁证，陆研秋鉴定报告证实三件大器为高仿，揭示白泽宇的灭口动机：鉴定危机一旦败露，他将面临牢狱之灾。"
+        "conclusion": "秘书私账与锦盒记录多年处理流水，独立鉴定报告指出多件高仿；新签批页加入资产核查追责条款，而归档版删去该段。实物账证、专业鉴定和两版遗嘱共同支持白泽宇有暴露风险及删改动机，但动机不等于行凶。"
+      },
+      {
+        "id": "chain_competing_motives",
+        "clueIds": [
+          "yizhu_qian",
+          "niunai_xiaoxi",
+          "dangju"
+        ],
+        "conclusion": "新遗嘱除名沈曼、沈曼夜间取牛奶和安眠药、顾言催款与争执，为两人分别提供动机和机会讨论方向；这些线索不证明他们实施了钝器袭击。"
       }
     ],
     "redHerrings": [
@@ -2007,7 +2515,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：死因、凶器与出入时间",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先复核心梗还是钝器伤，确认镇纸来源和失踪窗口；再并读列车员巡检簿、签收单与陆研秋目击，区分进出记录、目击和推断。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：遗嘱、假账与动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "比较签批遗嘱与归档版、私账与鉴定报告，讨论谁有动机删改追责条款；要求动机证据与行凶证据分别成立。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2030,6 +2562,94 @@
             "text": "列车到站时天已大亮，白泽宇提着那只行李箱从容下车，身后是六个各怀心事却未能拼出真相的人。他混入熙攘的站台人流，消失在海滨城市的人海里——箱底夹层中的黄铜镇纸，将在某个深夜被他沉入大海，连同九千万的假账和一个老收藏家的命。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场只宣读初判心梗及搬动遗体后发现后脑创口；不要先公布镇纸来源或秘书独处结论。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证尸表、药瓶、镇纸桌面痕迹、列车员巡检簿、热水间目击及夜宵签收单可见；第二轮保证遗嘱两版本、秘书私账、鉴定报告和债务材料公开。线索不依赖角色自曝。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别讨论死因、凶器来源、包厢出入窗口和账目动机。巡检簿是人工记录，目击者辨认存疑，签收单不证明签字地点；不得把它们合成唯一单点锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求一条独立死因/凶器链和一条独立行踪/机会链，再说明假账动机如何由私账与鉴定相互支持。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家仍相信心梗猝死。",
+        "hint": "请宁霜说明后脑凹陷、直角创缘、头皮内出血与无心血管急症体征。"
+      },
+      {
+        "condition": "玩家把巡检簿视为包厢完整门禁。",
+        "hint": "重读簿册说明：列车员只记当班注意到的出入；再并读夜宵签收单和热水间目击，保留身份辨认限制。"
+      },
+      {
+        "condition": "玩家锁定镇纸却不知道来源。",
+        "hint": "对照22:30镇纸仍在桌面的目击、死者指缝黄铜粉与秘书行李中的血痂镇纸。"
+      },
+      {
+        "condition": "玩家只凭遗嘱除名指认沈曼，或凭签字指认白泽宇。",
+        "hint": "比较签批版与归档版，再核对私账盒与独立鉴定报告；要求另找行踪和凶器证据。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "shijian_lu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yaoping",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yizhu_qian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhiben_dai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "cizhen_xue",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "sizhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "sizhang2",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhiban_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "niunai_xiaoxi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dangju",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jianding",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "reshui",
+        "deadlineRound": 1
       }
     ]
   }

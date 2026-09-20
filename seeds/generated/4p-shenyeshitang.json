@@ -18,7 +18,7 @@
   "background": [
     {
       "type": "paragraph",
-      "text": "梧桐街口的老城街角，芳记小馆开了九年，深夜营业，街坊都喊老板方晓芳一声'芳姐'。常客陈广发，六十一岁，街坊口中'混过江湖的老陈'，每夜自带泡酒来吃蹄髈，高血压多年；打烊后醉宿店内是三年来的惯例——芳姐会给他披毯子、把'小太阳'取暖器留在他脚边，第二天早上照常开门。今晚是寒潮蓝色预警之夜，预报最低气温两度。23:00打烊，老陈伏桌醉睡；23:10芳姐反锁侧门离开；23:12她在隔壁便利店买了两杯热饮，23:40步行回街对面的家——每一分钟都有记录。凌晨五点，送菜的王婆发现老陈伏在餐桌旁已无呼吸，急救初判'醉酒猝死'。但细节不对：血检酒精仅微醺量级；指端冻痕、耳廓冻斑明显；墙上的电子温湿记录仪显示，凌晨一点起店堂温度降至七度以下，三点最低六点二度——寒潮夜里，一间打烊的小店不该是这个温度。仓库里那台三年没离开过老陈脚边的取暖器，插头还温着。这一夜进出过小店的，只有你们四个。"
+      "text": "梧桐街口的老城街角，芳记小馆开了九年，街坊都喊老板方晓芳一声'芳姐'。常客陈广发，六十一岁，街坊口中'混过江湖的老陈'，每夜自带泡酒来吃蹄髈，高血压多年；打烊后醉宿店内是三年来的惯例——芳姐会给他披毯子、把'小太阳'取暖器留在他脚边，第二天早上照常开门。今晚寒潮预警，室外约两度。23:00打烊后，芳姐收走取暖器、打开正对老位的排风扇与吊扇，把卷帘降到离地约十五厘米，再反锁侧门离开。卷帘缝不足以供成年人爬出，侧门从内侧也无法无钥匙开启。店堂温湿记录仪显示，凌晨一点后持续低于七度，三点最低六点二度。凌晨五点送菜的王婆发现老陈已无呼吸。法医判断为低体温致死，死亡约在凌晨二至四时；血液酒精仅微醺量级。取暖器虽被收走但插头仍温，排风和风扇开关留在开启档。此案要区分寒潮造成的环境条件与有人主动制造、维持的冷风暴露：设备没有故障，真正的异常是三年惯例被改掉。 "
     }
   ],
   "characters": [
@@ -50,7 +50,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你就是凶手。你明知他高血压、醉后贪睡、打烊留宿是三年惯例：今夜你收走取暖器、打开排风扇、把卷帘拉到只留一掌缝、反锁侧门，让他醉睡在穿堂寒风里失温而死。你手机里存着十二年前的判决书复印件，你认了他两年。"
+                "text": "你就是凶手。你知道老陈高血压、醉后贪睡、打烊留宿是多年惯例。今夜你收走仍能正常工作的取暖器，持续开启对着他座位的排风扇和吊扇，把卷帘降到成人无法钻出的窄缝，再反锁侧门。他醒来既无热源，也无法从门缝离开。寒潮和低温是客观条件；你主动改变热源、通风和出口状态，才把事故风险变成致命暴露。你23:10离店后没有再回店。 "
               }
             ],
             "disclosure": "never"
@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你的时间线干净得像新铺的桌布——23:10离店、便利店消费、23:40到家，每分钟都有记录。策略：把'排风''卷帘缝'都归给'排潮气的老规矩'，把取暖器说成'上周就坏了'；最危险的是判决书，一旦被搜出，抢先哭诉'我只是想他道歉，没想到天这么冷'——把故意说成侥幸，把两年说成一晚。"
+                "text": "你的时间线表面干净：23:10离店，便利店消费后回家。策略：把排风说成排潮，把取暖器说成坏了；但维修记录会证明它正常，风扇运行与卷帘高度也不是寒潮自动造成的。若被追问，强调自己离店时老陈还活着、死亡发生在数小时后，并质疑仅凭低温不能证明谁操作设备；不要声称有停电事故或把隋亮说成在店里留到深夜。 "
               }
             ],
             "priority": "primary"
@@ -307,7 +307,105 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_fang_alibi",
+            "claim": "我23:10离店后一直在便利店和家附近，死者在凌晨才死亡，我没有在死亡时段回店。",
+            "basis": "小票和连续街面监控支持离店后的行程；死亡时间是凌晨二至四时。",
+            "brokenByPublicClueIds": [
+              "bianlidian_jiankong",
+              "qunuanqi_yu",
+              "paifeng_juanlian"
+            ]
+          },
+          {
+            "id": "defense_fang_accident",
+            "claim": "寒潮、老陈高血压和微醺都可能造成意外低体温；温度记录只能证明冷，不能指认操作者。",
+            "basis": "尸检和温度仪没有直接记录谁拔插头或开风扇；我可以把操作说成打烊习惯。",
+            "brokenByPublicClueIds": [
+              "qunuanqi_yu",
+              "paifeng_juanlian",
+              "xianchang_kanyan"
+            ]
+          },
+          {
+            "id": "defense_fang_motive",
+            "claim": "判决书只能说明我有旧怨，账本只能证明欠款；动机并不等于杀人。",
+            "basis": "两份材料均没有记录当夜店内动作。",
+            "brokenByPublicClueIds": [
+              "bianlidian_jiankong",
+              "qunuanqi_yu",
+              "paifeng_juanlian"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "fangxiaofang_act1_fact",
+                "title": "现场阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道取暖器线路正常，老陈往日留宿时它都会留在脚边；今夜的操作是你亲自完成。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangxiaofang_act1_goal",
+                "title": "厘清死因与环境",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认寒潮客观存在，但不要主动承认改变了取暖、通风和出口。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "fangxiaofang_act2_fact",
+                "title": "行动窗口阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "监控只能证明你23:08至23:10离店，不能拍到你在店内操作风扇；动机材料还需与物证和时间窗相互印证。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangxiaofang_act2_goal",
+                "title": "交叉核验行动与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把旧案动机与环境操作的证据拆开应对，争取让众人停留在“有怨但无法证明操作”的解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -448,7 +546,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "jiangchunlai_act1_fact",
+                "title": "现场阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先按自己亲见的时间与位置发言。低温和风扇状态能说明环境变化，不能仅凭一项物证认定操作者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiangchunlai_act1_goal",
+                "title": "厘清死因与环境",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把低温死因与操作人身份分开，说明自己掌握材料的来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "jiangchunlai_act2_fact",
+                "title": "行动窗口阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二轮公开各自知道的出入、旧案或账本信息；动机、机会、物理手段需由不同来源的材料交叉支持。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiangchunlai_act2_goal",
+                "title": "交叉核验行动与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "不要用单独的动机材料或一张现场卡定案，拼出至少两类材料构成的因果链。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -608,7 +772,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "xuyiran_act1_fact",
+                "title": "现场阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先按自己亲见的时间与位置发言。低温和风扇状态能说明环境变化，不能仅凭一项物证认定操作者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xuyiran_act1_goal",
+                "title": "厘清死因与环境",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把低温死因与操作人身份分开，说明自己掌握材料的来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "xuyiran_act2_fact",
+                "title": "行动窗口阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二轮公开各自知道的出入、旧案或账本信息；动机、机会、物理手段需由不同来源的材料交叉支持。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xuyiran_act2_goal",
+                "title": "交叉核验行动与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "不要用单独的动机材料或一张现场卡定案，拼出至少两类材料构成的因果链。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -683,18 +913,22 @@
           {
             "id": "character_suiliang_event_2",
             "time": {
-              "display": "23:52",
-              "precision": "exact",
+              "display": "22:50–22:58",
+              "precision": "range",
               "start": {
                 "dayOffset": 0,
-                "time": "23:52"
+                "time": "22:50"
+              },
+              "end": {
+                "dayOffset": 0,
+                "time": "22:58"
               }
             },
-            "title": "钻缝出店离开",
+            "title": "趁卷帘半开钻入并离店",
             "content": [
               {
                 "type": "paragraph",
-                "text": "钻缝出店离开（店外监控可证）。凌晨5:40 接电话赶回，见到封条。"
+                "text": "你在打烊前趁卷帘尚未落下，从门缝钻进店里翻包、拿账本并撕走自家欠条；22:58趁卷帘仍半开时离店。之后芳姐才把卷帘降到不足以让成年人通过的缝隙。你没有在店里过夜，也没有接触取暖器或风扇。 "
               }
             ],
             "characterIds": [],
@@ -749,7 +983,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "suiliang_act1_fact",
+                "title": "现场阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "先按自己亲见的时间与位置发言。低温和风扇状态能说明环境变化，不能仅凭一项物证认定操作者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suiliang_act1_goal",
+                "title": "厘清死因与环境",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把低温死因与操作人身份分开，说明自己掌握材料的来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "suiliang_act2_fact",
+                "title": "行动窗口阶段信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二轮公开各自知道的出入、旧案或账本信息；动机、机会、物理手段需由不同来源的材料交叉支持。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suiliang_act2_goal",
+                "title": "交叉核验行动与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "不要用单独的动机材料或一张现场卡定案，拼出至少两类材料构成的因果链。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -772,7 +1072,8 @@
           "type": "paragraph",
           "text": "灶火已熄的后厨收拾得利落，里间仓库堆着纸箱杂物；角落里立着那台收进来的'小太阳'，机身新落的灰上有蹭亮的印子。"
         }
-      ]
+      ],
+      "ownerCharacterId": "fangxiaofang"
     },
     {
       "id": "location_3",
@@ -794,7 +1095,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者伏于靠窗老位的餐桌，身上披着芳姐惯给的旧毛毯，姿势像睡着而非挣扎。尸检初判：重度低体温（冻毙）致死，死亡时间约凌晨二至四时；血液酒精仅微醺量级，无致命毒物与外伤；指端冻痕、耳廓冻斑明显。墙上电子温湿记录仪：凌晨一点起店堂降至七度以下，三点最低六点二度——寒潮夜，一间打烊的小店不该是这个温度。"
+          "text": "死者伏于靠窗老位的餐桌，身上披着芳姐惯给的旧毛毯，姿势像睡着而非挣扎。尸检初判：重度低体温致死，死亡时间约凌晨二至四时；血液酒精仅微醺量级，无致命毒物与外伤；指端冻痕、耳廓冻斑明显。墙上电子温湿记录仪有连续记录：凌晨一点起店堂降至七度以下，三点最低六点二度，未见断电或传感器重启。低温与风冷足以解释死亡，记录仪本身不能说明是谁改变了环境，也不能单独区分意外与人为。 "
         }
       ],
       "policy": "auto_public",
@@ -809,7 +1110,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "仓库角落的'小太阳'取暖器：插头拔下不久、插片尚有余温，机身新落灰处被蹭亮——凌晨五时探看仍温。隔壁水果摊老板证言：每晚打烊后芳姐都把这台取暖器留给留宿的老陈，三年如此；'上周说它坏了才收进去'——可它今晚还热着。"
+          "text": "仓库角落的'小太阳'取暖器：插头拔下不久、插片尚有余温，机身新落灰处被蹭亮——凌晨五时探看仍温。水果摊老板证言：三年来，每晚打烊后芳姐都把这台取暖器留给留宿的老陈；她曾说'上周它坏了'，但检修记录显示加热档与线路均正常。今晚它是被拔下并收进仓库，不是因故障自行停机。余温能证明断电较晚，不能单独证明谁拔了插头。 "
         }
       ],
       "policy": "manual_public",
@@ -824,7 +1125,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "排风扇开关停在'开'档，扇叶停转是清晨跳闸所致；排风口正对靠窗老位，吊扇也停在'开'档。卷帘门下沿离地仅一掌宽，冷风灌入形成贯通对流——寒潮夜外界两度，排风一开，店堂成了风道。芳姐解释'排潮气，老规矩'；水果摊老板记得，往日她的排风扇只开十分钟。"
+          "text": "排风扇与吊扇的开关均停在'开'档，扇叶在发现现场、断开总闸后才停止，电路检查无故障，不能把失温归因于停电事故。排风口正对靠窗老位；卷帘门下沿离地约十五厘米，成人无法从缝隙钻出，冷风由卷帘缝进入、经排风口抽出，吊扇加强室内空气流动。水果摊老板记得，往日芳姐只为排潮开排风十分钟，并会把卷帘完全落下；今夜的持续开启和留缝并非常规操作。 "
         }
       ],
       "policy": "manual_public",
@@ -839,7 +1140,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "隔壁便利店小票：23:12热饮两杯、充电宝租借一次。监控画面：23:08芳姐把卷帘拉至一掌缝后出店，23:12进便利店，23:40步态平稳地走回街对面，全程未回店。店门口监控另拍到22:50一个年轻男人钻缝入店、23:52钻缝出店，手里夹着黑色账本状物——隋亮。"
+          "text": "隔壁便利店小票：23:12热饮两杯、充电宝租借一次。街面监控连续画面：22:50隋亮从当时半开的卷帘下进入，22:58原路离开，手里夹着黑色账本状物；23:08芳姐把卷帘降到约十五厘米缝后，从侧门离开，23:12进便利店，23:40步态平稳地走回街对面，全程未回店。该角度只能证明进出时间和卷帘高度，不能证明她是否操作了店内风扇。 "
         }
       ],
       "policy": "manual_public",
@@ -869,7 +1170,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "老陈自带的泡酒壶剩三分之二（约一两半，微醺量级），碟中蹄髈剩半只，汤汁咸得发苦——夜班护士许亦然尝过：'这个咸法，高血压的人一勺就该放下了。'他的高血压药盒在包里，'当日'一格未撕。"
+          "text": "老陈自带的泡酒壶剩三分之二（约一两半，微醺量级），碟中蹄髈剩半只，汤汁偏咸。夜班护士许亦然尝过后认为确实偏咸，但没有证据表明摄入量会造成急性中毒。死者高血压药盒在包里，'当日'一格未撕；这些情况可能增加低温暴露风险或解释其状态，均不足以单独证明死亡原因或有人下毒。 "
         }
       ],
       "policy": "manual_public",
@@ -927,7 +1228,7 @@
           "content": [
             {
               "type": "paragraph",
-              "text": "23:06她打开正对老陈座位的排风扇与吊扇，23:08把卷帘从半落拉到只留一掌宽的缝——寒潮夜外界两度，排风一开、卷帘一缝，店堂瞬间变成冷风贯通的风道。随后反锁侧门，老陈即便醒来也推不开门。"
+              "text": "23:06她打开正对老陈座位的排风扇与吊扇，23:08把卷帘降至离地约十五厘米。卷帘缝可进风但成年人无法通过；室外约两度，排风与风扇持续运行使老位持续受冷。电路正常，风扇在发现后由勘验人员断总闸才停。她随后反锁侧门，老陈醒来无法离店。寒潮本身是自然条件，收走热源、持续通风和封住出口则是她有意制造的组合。"
             }
           ],
           "clueIds": [
@@ -953,7 +1254,7 @@
           "content": [
             {
               "type": "paragraph",
-              "text": "老陈醉睡在六度的穿堂风里，高血压、微醺、血管扩张、低温四重叠加，凌晨两至四时重度低体温致死。她不碰他一根手指，杀招全部藏在'惯例的反常'里——三年不缺的取暖器、往日只开十分钟的排风扇、从不反锁的侧门，每一处改动都是她对一个人三年习惯的精准利用。"
+              "text": "低温记录仪连续显示店堂在凌晨一点后低于七度、三点最低六点二度；尸检与血检支持持续低温暴露致死，推定死亡为凌晨二至四时。低温是直接死因，寒潮属于自然因素；没有设备故障证据。结合取暖器正常却被拔下收走、风扇和卷帘被人为设置、侧门反锁，才能把意外风险与人为行为区分开。"
             }
           ],
           "clueIds": [
@@ -992,18 +1293,22 @@
       {
         "id": "truth_event_2",
         "time": {
-          "display": "22:50",
-          "precision": "exact",
+          "display": "22:50–22:58",
+          "precision": "range",
           "start": {
             "dayOffset": 0,
             "time": "22:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:58"
           }
         },
-        "title": "隋亮钻卷帘缝入店翻包：拿账本、撕自家那页…",
+        "title": "隋亮趁卷帘半开进店翻包后离开",
         "content": [
           {
             "type": "paragraph",
-            "text": "隋亮钻卷帘缝入店翻包：拿账本、撕自家那页、抽走两沓欠条；老陈打鼾，脚边烤着'小太阳'。"
+            "text": "隋亮趁卷帘尚半开时入店翻包、拿账本并撕欠条，22:58离开；此后卷帘才被降到成人无法通过的高度。老陈仍在桌旁醉睡，取暖器当时尚在脚边。 "
           }
         ],
         "characterIds": [
@@ -1013,6 +1318,60 @@
         "participantIds": [
           "suiliang"
         ]
+      },
+      {
+        "id": "truth_event_11",
+        "time": {
+          "display": "22:50–22:58",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:58"
+          }
+        },
+        "title": "隋亮翻欠条并离店",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "隋亮趁卷帘半开进入，翻欠条后在卷帘降低前离开。 "
+          }
+        ],
+        "characterIds": [
+          "suiliang"
+        ],
+        "clueIds": [],
+        "participantIds": [
+          "suiliang"
+        ]
+      },
+      {
+        "id": "truth_event_12",
+        "time": {
+          "display": "22:50–22:58",
+          "precision": "range",
+          "start": {
+            "dayOffset": 0,
+            "time": "22:50"
+          },
+          "end": {
+            "dayOffset": 0,
+            "time": "22:58"
+          }
+        },
+        "title": "隋亮翻欠条并离店",
+        "content": [
+          {
+            "type": "paragraph",
+            "text": "隋亮趁卷帘半开进入，翻欠条后在卷帘降低前离开。 "
+          }
+        ],
+        "characterIds": [],
+        "clueIds": [],
+        "participantIds": []
       },
       {
         "id": "truth_event_3",
@@ -1170,7 +1529,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "她每一步都在镜头里，唯独不在店里）→ 账本'芳记壹万贰'（两年的白吃白喝）→ 判决书复印件（十二年前的雨夜）。红鲱鱼：隋亮拿走账本撕页抽欠条（现场翻动与最后在场者）、蒋春来十二年的隐忍目击与剪报、许亦然"
+            "text": "街面监控拍到：22:50隋亮趁卷帘半开入店，22:58离开；23:08芳姐把卷帘降到成人无法通过的高度后离店，23:12至23:40在便利店与回家路上。监控证明行动窗口，不记录店内风扇操作。动机材料包括账本欠款与判决书，但动机本身不能证明作案。 "
           }
         ],
         "characterIds": [
@@ -1230,35 +1589,6 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_11",
-        "time": {
-          "display": "23:12–23:20",
-          "precision": "range",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:12"
-          },
-          "end": {
-            "dayOffset": 0,
-            "time": "23:20"
-          }
-        },
-        "title": "隋亮仍在店内翻欠条",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "隋亮仍在店内翻欠条。"
-          }
-        ],
-        "characterIds": [
-          "suiliang"
-        ],
-        "clueIds": [],
-        "participantIds": [
-          "suiliang"
-        ]
       },
       {
         "id": "truth_event_13",
@@ -1347,32 +1677,13 @@
         "characterIds": [],
         "clueIds": [],
         "participantIds": []
-      },
-      {
-        "id": "truth_event_12",
-        "time": {
-          "display": "23:52",
-          "precision": "exact",
-          "start": {
-            "dayOffset": 0,
-            "time": "23:52"
-          }
-        },
-        "title": "钻缝离开",
-        "content": [
-          {
-            "type": "paragraph",
-            "text": "钻缝离开。"
-          }
-        ],
-        "characterIds": [],
-        "clueIds": [],
-        "participantIds": []
       }
     ],
     "keyEvidenceIds": [
+      "xianchang_kanyan",
       "qunuanqi_yu",
       "paifeng_juanlian",
+      "bianlidian_jiankong",
       "zhangben_sijiao",
       "panjueshu_fuyinjian"
     ],
@@ -1380,35 +1691,40 @@
       {
         "id": "evidence_1",
         "clueIds": [
-          "qunuanqi_yu",
           "xianchang_kanyan",
+          "qunuanqi_yu",
           "paifeng_juanlian"
         ],
-        "conclusion": "库房里那台'小太阳'取暖器插头尚有余温、机身新落灰处被蹭亮，但三年来每晚都留在老陈脚边的惯例在今夜中断——有人故意收走了取暖器，让醉睡的老陈失去唯一的热源。"
+        "conclusion": "尸检和连续温度曲线支持持续低温致死；取暖器线路正常却被拔下，风扇无故障且被持续开启、卷帘留有进风缝。三类信息合在一起说明自然寒潮提供条件，而有人有意改变热源与通风，不能由单张现场卡得出。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
+          "bianlidian_jiankong",
           "paifeng_juanlian",
-          "xianchang_kanyan"
+          "qunuanqi_yu"
         ],
-        "conclusion": "排风扇停在'开'档、卷帘只留一掌宽的缝，形成冷风贯通的对流风道——寒潮夜外界仅两度，店堂温度被人为降至六度以下，这不是排潮气的老规矩，而是精心制造的失温陷阱。"
+        "conclusion": "监控把隋亮的离店时间定在22:58，把芳姐将卷帘降至成人无法通过并离店定在23:08至23:10；设备和卷帘状态显示关键操作发生在她离开前。监控提供机会窗口，物证提供操作结果，彼此交叉但都不单独锁凶。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
           "zhangben_sijiao",
-          "panjueshu_fuyinjian"
+          "panjueshu_fuyinjian",
+          "bianlidian_jiankong"
         ],
-        "conclusion": "账本末页'梧桐街，芳记，壹万贰'的记录与'白吃两年，记着呢'的批注，揭露老陈以十二年前肇事逃逸案要挟芳姐，白吃白喝两年欠下一万二——芳姐的仇恨有据可查。"
+        "conclusion": "账本欠款与旧案判决分别提供现实羞辱和复仇动机；监控则提供她在封闭环境前的行动窗口。动机材料来自文书/账本，机会来自数字影像，必须与设备痕迹结合才能形成完整推断。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "panjueshu_fuyinjian",
-          "zhangben_sijiao"
+          "paojiu_tangcai",
+          "xianchang_kanyan",
+          "qunuanqi_yu",
+          "bianlidian_jiankong",
+          "paifeng_juanlian"
         ],
-        "conclusion": "芳姐手机加密相册里存着十二年前的刑事判决书照片，死者正是她的丈夫，肇事者就是陈广发——她认了他两年，忍了两年，今夜借寒潮的风完成了迟到的审判。"
+        "conclusion": "少量酒精、未服药和高血压可能增加低温风险，但毒检和现场没有支持下毒；医学材料指向寒冷暴露，取暖器物证说明热源被人为撤走。这能排除“酒精中毒/下毒”解释，仍需通风和行动材料确认人为性。"
       }
     ],
     "redHerrings": [
@@ -1460,7 +1776,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": false,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "低温现场与异常设备",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先确认死因为低体温并厘清发现时间、死亡时间；对比温度曲线、取暖器状态与酒精/药物信息。环境证据说明机制，不可单卡锁定凶手。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "进出窗口与旧案动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "再核对卷帘高度、出入监控与风扇操作窗口；最后结合账本和判决书讨论动机。要求结论同时有环境/物证、行动机会和动机支撑。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1483,6 +1823,78 @@
             "text": "投票未能指认方晓芳。众人各怀秘密，隋亮怕翻出偷拿账本的事，蒋春来不忍撕开店家的伤口，许亦然被那一分钟的犹豫钉在原地——人人都有理由沉默。方晓芳第二天照常开店，靠窗老位空着，取暖器又回到了那个位置。只是从此再没有人喊'芳姐，加饭'，梧桐街口的深夜食堂，多了一张永远翻不过去的旧毛毯。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "明确发现时间是05:00左右、推定死亡时间是02:00至04:00。先区分低温致死这一结论与是否人为改变环境。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "让玩家按22:50至23:40交代行动，区分亲见、听闻和推断；注意隋亮22:58已离开。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证现场尸检/温度曲线与取暖器材料可得；第二轮保证通风、卷帘、监控及动机材料可得。店堂和街面公开搜查，后厨库房归芳晓芳所有。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "依次整理死因与环境、谁改变设备和出口、谁有窗口、为何针对死者。寒潮是自然条件，设备正常运行且操作异常才支持人为；任何一张卡都不能单独锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求每人同时引用至少两类证据，分别回应死亡机制、行动机会和动机。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把凌晨发现时间当成死亡时间，或质疑23:00到02:00暴露不足。",
+        "hint": "提醒尸检给的是02:00至04:00区间，墙上有连续温度记录；看死因时同时考虑6度左右的持续暴露、穿堂气流、微醺状态和高血压，不要把单个温度数字当成凶手证明。"
+      },
+      {
+        "condition": "玩家认为停电或风扇故障造成了低温。",
+        "hint": "查看开关状态和电路检查：风扇由现场人员断总闸后停转，设备没有故障；低温环境来自寒潮，但持续开风与留缝是人为操作。"
+      },
+      {
+        "condition": "玩家认为隋亮23:52仍在店内或能从窄缝离开。",
+        "hint": "监控显示他22:50趁卷帘半开进入、22:58离开；23:08之后卷帘缝只有约十五厘米，成人无法通过。"
+      },
+      {
+        "condition": "玩家凭判决书或账本直接指认方晓芳。",
+        "hint": "动机只能说明仇怨或欠款。请找出不同类别的取暖、通风/卷帘、监控材料，重建其离店前的具体操作。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "xianchang_kanyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "qunuanqi_yu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "paifeng_juanlian",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "bianlidian_jiankong",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "paojiu_tangcai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhangben_sijiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "panjueshu_fuyinjian",
+        "deadlineRound": 2
       }
     ]
   }

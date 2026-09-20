@@ -12,7 +12,7 @@
       "滇西",
       "本格"
     ],
-    "intro": "民国二十七年春，回龙帮的马队驮着茶叶棉纱从夷方归来，宿在澜沧江边的蛮云驿。半夜，马锅头聂永年死在驿馆正房里：面色青黑、指甲乌青、口吐白沫——像急痧，像心疾，像中了瘴气。江桥被春汛冲断，报官的路要走三天。马帮的规矩天亮见分晓：六个人里，谁送锅头上了路？"
+    "intro": "蛮云驿的锅头聂永年死在正房，口唇发青，身旁是用惯的黄铜烟锅。驿丞沐三元初验怀疑口毒，但屋里没有翻斗，醒酒汤也未见异样。烟锅里有残膏，草料槽另藏一只药盒；二锅头许踏山本来就负责装烟点火，阿黑又说见过他递进一封信。负责装烟的人是否也下了毒、残膏是否来自药盒、那封信是否由他制作，必须分别查证。"
   },
   "background": [
     {
@@ -39,7 +39,7 @@
         "backstory": [
           {
             "type": "paragraph",
-            "text": "你叫许踏山，回龙帮二锅头。五年前腊月，野人山，你兄长许拴柱押后队，中弩箭死在鹰嘴崖下。帮里说他'探路失足'，锅头把三成抚恤的股子银'代管'了，连你老娘的口粮田也一并'代管'了两年。去年独眼豹的匪巢被官军剿了，一个流落的喽啰为换口饭，把当年匪首的木刻分货账卖给了你：'腊月十六，后队驮十一，得九；前山不动。'你这才明白——锅头为保他夹带的黑货，把你兄长的走线卖给了土匪。你隐忍一年，爬上二锅头的位子，专司装烟。今晚那三锅烟的烟膛里，你抹了老猎户给你的草乌膏。第三锅抽完，他喊心口麻的时候，你在火塘边坐着，满帮人都看得见。"
+            "text": "你叫许踏山，回龙帮二锅头。五年前腊月，野人山，你兄长许拴柱押后队，中弩箭死在鹰嘴崖下。帮里说他'探路失足'，锅头把三成抚恤的股子银'代管'了，连你老娘的口粮田也一并'代管'了两年。去年独眼豹的匪巢被官军剿了，一个流落的喽啰为换口饭，把当年匪首的木刻分货账卖给了你：'腊月十六，后队驮十一，得九；前山不动。'你这才明白——锅头为保他夹带的黑货，把你兄长的走线卖给了土匪。你隐忍一年，爬上二锅头的位子，专司装烟。今晚你照常装了三锅烟，但把草乌膏抹在烟嘴冷端接缝；烟丝本身没有下毒。第三锅抽完，他喊心口麻的时候，你在火塘边坐着，满帮人都看得见。"
           }
         ],
         "secrets": [
@@ -49,7 +49,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你就是凶手。兄长许拴柱五年前被锅头卖给土匪断后惨死，抚恤被吞。今晚 20:10 与 20:45 你两次进屋装烟，把草乌膏抹在烟锅膛壁与衔口，三锅烟毒发。那封'山里故人'的敲诈信也是你伪造的——既乱他心神，又给查案的人另指一条路。"
+                "text": "你就是凶手。五年前锅头聂永年为保私夹烟土，把你兄长许拴柱押后队的路线卖给土匪。你隐忍一年爬上二锅头的位置，负责日常装烟点火。今晚烟丝本身干净：20:10和20:45你在烟嘴冷端及接缝抹了猎户给的草乌膏，让毒物直接沾到口唇；你又递入伪造的“山里故人”信，转移调查方向。21:35听见尖叫后你先到榻边，倒掉烟灰并擦过烟嘴，仍有残膏留在冷端接缝。23:00你把鹿皮药盒塞进料槽草把。"
               }
             ],
             "disclosure": "never"
@@ -62,7 +62,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把毒发做成'急痧攻心'，做成'被敲诈的仇家下的手'。你是全帮最贴身的人，也正因太贴身，人人都会想到你——所以你要把'装烟'讲成最干净的活：'烟是他自己的刀烟，锅是他自己的锅，我只管点火。'主动揽下查夜、封货、验尸的粗活显得坦荡。你藏两样东西：铺盖夹层的分货账（只可作最后一搏的牌，亮早了就是自供）、塞进马厩草料的兽皮药盒。"
+                "text": "承认你负责装烟，但把“例行装烟”与“投毒”分开：说自己只添烟丝、点火，烟嘴谁都可能碰；烟灰已被倒掉，现有残留只能证明有人污染过冷端。阿黑看见你在烟嘴处停手、递信、事后拿起烟锅，却看不清具体动作；药盒所在的料槽也由杨大顶杠守夜。信件试写稿会把你和旧案、文案联系起来，但仍不是烟嘴投毒的直接目击。若信稿曝光，承认你研究过旧案，不要否认例行装烟或事后拿过烟锅。"
               }
             ],
             "priority": "primary"
@@ -119,11 +119,11 @@
                 "time": "20:10"
               }
             },
-            "title": "你进屋装第一锅、点第一火",
+            "title": "二锅烟与烟嘴冷端",
             "content": [
               {
                 "type": "paragraph",
-                "text": "你进屋装第一锅、点第一火。"
+                "text": "20:10你进屋装第二锅，趁锅头看货单时在烟嘴冷端接缝抹少量草乌膏；烟丝未污染。"
               }
             ],
             "characterIds": [],
@@ -143,7 +143,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你再进屋装第三锅，顺带把伪造的敲诈信递给他：'下关捎来的，掌柜的收好。'"
+                "text": "20:45你再进屋装第三锅，在烟嘴冷端补上少量草乌膏，顺带把伪造的敲诈信递给他：'下关捎来的，掌柜的收好。'"
               }
             ],
             "characterIds": [],
@@ -308,7 +308,126 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_xu_filler",
+            "claim": "我是负责装烟的人，所以进入正房、摸过烟锅是日常工作；这不能把例行装烟等同于投毒。",
+            "basis": "帮中五年都由你装烟点火，阿黑只看见手停在烟嘴处，没看清有没有涂膏。",
+            "brokenByPublicClueIds": [
+              "c_wudu_jianyan",
+              "c_ahei_zhengci",
+              "c_yanguo"
+            ]
+          },
+          {
+            "id": "defense_xu_shared_access",
+            "claim": "烟锅是锅头的私物，旁人虽不负责装烟，也可能在宴席或救治时碰到；残留处没有可比指纹。",
+            "basis": "烟具平时在正房，多人进出；21:35之后多名帮众冲入现场。",
+            "brokenByPublicClueIds": [
+              "c_ahei_zhengci",
+              "c_yanguo",
+              "c_wudu_jianyan"
+            ]
+          },
+          {
+            "id": "defense_xu_box",
+            "claim": "鹿皮药盒在料槽，杨大顶杠负责守料，草把也被和四爷、阿月翻动过；药盒来源不能锁定我。",
+            "basis": "药盒藏处不专属于你，现场草把有连夜翻动痕迹。",
+            "brokenByPublicClueIds": [
+              "c_caowugao",
+              "c_ahei_zhengci",
+              "c_wudu_jianyan"
+            ]
+          },
+          {
+            "id": "defense_xu_letter",
+            "claim": "信件草稿证明我研究过野人山旧事，但我可能是准备揭发锅头；写信与投毒是两种行为。",
+            "basis": "草稿和成信的相似性指向文案来源，却不能证明谁碰了烟锅。",
+            "brokenByPublicClueIds": [
+              "c_xinwen_zhang",
+              "c_qiaozhaxin",
+              "c_ahei_zhengci"
+            ]
+          },
+          {
+            "id": "defense_xu_motive",
+            "claim": "兄长之死给我报仇动机，但动机不是行为证据；锅头也得罪过其他人。",
+            "basis": "分货账只能说明旧案，货物、过所、印子钱和私情也让其他人有隐瞒。",
+            "brokenByPublicClueIds": [
+              "c_fenhuozhang",
+              "c_yanguo",
+              "c_wudu_jianyan",
+              "c_ahei_zhengci"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "xutashan_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你知道装烟是例行差事，投毒需要把毒物放到烟嘴或烟料接触面；这两个动作必须分开核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xutashan_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "强调例行装烟不等于下毒，准备应对烟嘴残留与事后倒灰的质询。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "xutashan_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "试写稿把你与信件和旧案联系起来；承认文案来源仍不能直接回答是谁污染烟嘴。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xutashan_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "争取让玩家只讨论装烟职责或信件动机，不把它们连到毒物残留和事后接触。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -538,7 +657,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "musanyuan_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复验只定位到烟嘴口唇接触，不是烟丝或汤酒；装烟资格与投毒动作不能画等号。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "musanyuan_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明谁有装烟职责、谁在发病后碰过烟具，以及这些事实各自的证明限度。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "musanyuan_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将烟嘴毒物、阿黑目击、药盒和信件试写稿作为独立来源交叉验证，分辨文案作者与投毒者可能是否同一人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "musanyuan_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指认前要分别说明死因、烟具接触、信件作者和动机，至少引用两类材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -786,7 +971,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hesiye_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复验只定位到烟嘴口唇接触，不是烟丝或汤酒；装烟资格与投毒动作不能画等号。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hesiye_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明谁有装烟职责、谁在发病后碰过烟具，以及这些事实各自的证明限度。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hesiye_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将烟嘴毒物、阿黑目击、药盒和信件试写稿作为独立来源交叉验证，分辨文案作者与投毒者可能是否同一人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hesiye_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指认前要分别说明死因、烟具接触、信件作者和动机，至少引用两类材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1036,7 +1287,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "ayue_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复验只定位到烟嘴口唇接触，不是烟丝或汤酒；装烟资格与投毒动作不能画等号。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ayue_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明谁有装烟职责、谁在发病后碰过烟具，以及这些事实各自的证明限度。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "ayue_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将烟嘴毒物、阿黑目击、药盒和信件试写稿作为独立来源交叉验证，分辨文案作者与投毒者可能是否同一人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ayue_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指认前要分别说明死因、烟具接触、信件作者和动机，至少引用两类材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1324,7 +1641,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "ahei_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复验只定位到烟嘴口唇接触，不是烟丝或汤酒；装烟资格与投毒动作不能画等号。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ahei_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明谁有装烟职责、谁在发病后碰过烟具，以及这些事实各自的证明限度。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "ahei_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将烟嘴毒物、阿黑目击、药盒和信件试写稿作为独立来源交叉验证，分辨文案作者与投毒者可能是否同一人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "ahei_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指认前要分别说明死因、烟具接触、信件作者和动机，至少引用两类材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1535,7 +1918,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "yangdinggang_act1_fact",
+                "title": "毒物与器具阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "复验只定位到烟嘴口唇接触，不是烟丝或汤酒；装烟资格与投毒动作不能画等号。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yangdinggang_act1_goal",
+                "title": "说明器具接触边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明谁有装烟职责、谁在发病后碰过烟具，以及这些事实各自的证明限度。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "yangdinggang_act2_fact",
+                "title": "信件与来源阶段",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将烟嘴毒物、阿黑目击、药盒和信件试写稿作为独立来源交叉验证，分辨文案作者与投毒者可能是否同一人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "other",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yangdinggang_act2_goal",
+                "title": "交叉验证身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指认前要分别说明死因、烟具接触、信件作者和动机，至少引用两类材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1558,7 +2007,8 @@
           "type": "paragraph",
           "text": "马厩里骡马喷着响鼻，料槽底的草把塞得紧实；草把有连夜翻动的新抽痕，槽边挂着辔头与铜铃，牲口的眼睛在暗处发亮。"
         }
-      ]
+      ],
+      "ownerCharacterId": "yangdinggang"
     },
     {
       "id": "location_3",
@@ -1568,7 +2018,8 @@
           "type": "paragraph",
           "text": "货棚里樟木箱码在草垫上，锅头自管的那只封蜡有起过的重封痕，蜡色新亮；棚顶漏下几缕夜风，茶香混着仓尘。"
         }
-      ]
+      ],
+      "ownerCharacterId": "ayue"
     },
     {
       "id": "location_4",
@@ -1578,7 +2029,8 @@
           "type": "paragraph",
           "text": "驿站公房里文书归档整齐，抽屉里压着一沓过所存底；案上裁纸刀搁在笔架旁，官样小楷的墨香混着灯油味。"
         }
-      ]
+      ],
+      "ownerCharacterId": "musanyuan"
     },
     {
       "id": "location_5",
@@ -1588,7 +2040,8 @@
           "type": "paragraph",
           "text": "酒肆里酒旗垂着，账台的夹层压得住单据；柜上酒葫芦成排，后堂灶火煨着醒酒汤，窗外就是驿馆的院墙。"
         }
-      ]
+      ],
+      "ownerCharacterId": "ayue"
     },
     {
       "id": "location_6",
@@ -1598,7 +2051,8 @@
           "type": "paragraph",
           "text": "通铺上一排铺盖滚得松散，铺盖夹层藏得住薄物；火塘的炭埋着灰，墙上挂着赶马的鞭子与褡裢，鼾声与马嚼夜草声此起彼伏。"
         }
-      ]
+      ],
+      "ownerCharacterId": "xutashan"
     }
   ],
   "clues": [
@@ -1610,7 +2064,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者仰卧榻前，面色青黑，指甲乌青，口角白沫已干，瞳仁缩如针尖。驿丞沐三元断为'口毒攻心'：毒由口入，发作不过半个时辰，死亡约在 21:35 至 22:00 之间。房内无翻动，货箱封条完好，门闩内落，窗纸完好——毒不在屋里下，在进嘴的东西上下。草单末尾他写了一半又涂去一行小字。"
+          "text": "阿月发现死者时，他仍有微弱呼吸、脉搏紊乱，口唇发青、口角白沫，四肢抽搐；驿丞沐三元据其懂草药的经验怀疑乌头类口毒，但这些表现并非特异，不能单独确诊。尸体后来在正房被确认死亡，估计约22:00；死亡时刻不能由瞳孔或肤色精确推定。房内无搏斗、食物与醒酒汤无异常气味，烟锅与口腔残留需另行取样检验。"
         }
       ],
       "policy": "auto_public",
@@ -1625,7 +2079,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者的黄铜烟锅摔在榻边，膛内烟灰被倒得干干净净——可膛壁铜缝里抠出一线乌黑油膏：银簪蘸之微黑，舌尖一试舌尖发麻，正是猎户涂弩箭用的草乌膏。烟嘴衔口内侧也有一圈同样乌渍——毒在膛壁与衔口，烟一锅一锅地烫，毒一口一口地进。锅柄上没有指纹可考，倒灰的手套过袖。"
+          "text": "黄铜烟锅摔在榻边，烟膛烟灰已被倒净。膛底高温处只见普通烟灰；冷端烟嘴的衔口边缘和接缝内侧，却有一层被擦过的暗色油膏残迹。县医馆取样后在残膏中检出乌头类生物碱，完整烟丝与烟灰样本未检出。残留位置更符合烟嘴接触口唇，而非毒物随燃烧烟气挥发；它能证明烟具被污染，不能单独证明谁涂了膏。烟锅曾由多人使用，金属表面没有可比指纹。"
         }
       ],
       "policy": "manual_public",
@@ -1640,7 +2094,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者枕下搜出一封未封口的信，夷方绵纸所书：'五年前野人山后队之事，我知道得一清二楚。四十块半开，年前送到老鸦渡岩洞。若报官，就把话递到官家耳朵里——山里故人。'信纸裁口齐整，是裁纸刀裁的，非手撕；驿站公房才有裁纸刀。信纸上有几处洇开的湿点——像是滴上去的灯油。"
+          "text": "死者枕下有一封未封口敲诈信：'五年前野人山后队之事，我知道得一清二楚。四十块半开，年前送到老鸦渡岩洞。若报官，就把话递到官家耳朵里——山里故人。'信纸是夷方绵纸，边角有公房裁刀留下的缺口；笔画和纸张本身都不能识别作者。信上的湿点经比对是烟油，说明它曾被拿在烟具旁，但不说明由谁递入。"
         }
       ],
       "policy": "manual_public",
@@ -1655,7 +2109,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "正房房梁灯钩旁垂着一只小油纸包，内有半纸文书：'蛮云驿聂永年，夷方有一子，母早故……记入聂氏族谱，分股三厘……'末行未写完，墨迹被水洇开——像是写的时候手在抖。包油纸的麻绳打着夷方结。文书与枕下敲诈信同在一屋，一梁一枕，各藏各的心事。"
+          "text": "正房房梁灯钩旁垂着一只小油纸包，内有半纸族谱草稿：'蛮云驿聂永年，夷方有一子，母早故……记入聂氏族谱，分股三厘……'末行未写完，墨迹被水洇开。包油纸的麻绳打着夷方结。它解释了锅头与阿黑可能存在的血缘秘密，不直接证明投毒或制信。"
         }
       ],
       "policy": "manual_public",
@@ -1670,7 +2124,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "料槽底草把里塞着一只鹿皮小盒，盒底残着黑膏一层，气味麻舌刺鼻，银簪试之微黑——与烟锅膛缝里的膏同物。盒盖内侧烙着猎户的记号，是霁虹桥西岸打弩箭膏的猎户一路货。草把抽痕崭新，是有人连夜塞进去的：头骡整夜拴在料槽边，生人近不得——能在这里翻草把的，只有帮里查夜的人。"
+          "text": "料槽底草把里塞着一只鹿皮小盒，盒底有黑色油膏，盒盖内侧烙着猎户记号。县医馆对盒内膏体样本的复检也检出乌头类生物碱，与烟嘴残留同属一类，但检验不能证明两份样品来自同一批膏。草把刚被翻动过；马厩夜间由杨大顶杠看守，许踏山也负责查夜料，因此多人有接近料槽的机会。药盒提供毒物来源线索，不单独指认藏匿者。"
         }
       ],
       "policy": "manual_public",
@@ -1730,12 +2184,59 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "许踏山铺盖夹层藏着一方木刻账牌，刀刻歪斜：'腊月十六，后队：驮十一，茶廿筒，得九；前山不动。'另有一张皱绵纸：'独眼豹得信，夜里动手，三哥走的是鹰嘴崖线。'两件都是旧匪巢的流出一字不改——五年前卖队旧案，白纸黑字（白木黑刀）。"
+          "text": "许踏山铺盖夹层藏着一方木刻账牌，刀刻歪斜：'腊月十六，后队：驮十一，茶廿筒，得九；前山不动。'另有一张皱绵纸：'独眼豹得信，夜里动手，三哥走的是鹰嘴崖线。'两件旧匪巢流出物记录了五年前后队走线与分货，为许踏山的复仇动机提供背景；它们不能证明他涂毒或制作敲诈信。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "c_wudu_jianyan",
+      "locationId": "location_1",
+      "name": "口腔与烟具残留复验",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "次日县医馆复验留存样本：死者口腔拭子与烟锅烟嘴冷端残膏检出乌头类生物碱；完整烟丝、燃尽烟灰、醒酒汤与酒样未检出。料槽鹿皮盒里的黑膏也检出同类生物碱。此为定性比对，不足以精确计量或证明样品来自同一批；它支持毒物经烟嘴接触口唇进入，而非烟丝燃烧、酒汤或饭食投毒。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": []
+    },
+    {
+      "id": "c_ahei_zhengci",
+      "locationId": "location_1",
+      "name": "阿黑窗下目击",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "阿黑承认自己躲在正房窗根下：20:10与20:45他看见许踏山两次进屋装烟；第二次时许的手在烟嘴冷端停留、像用袖口擦过，随后递入一封夷方绵纸信。21:35听见阿月尖叫后，他还看见许踏山先冲到榻边拿起烟锅，倒掉烟灰又放回。窗纸和灯影遮住了具体手势，阿黑没有看见膏体，也不能判断擦拭是保养、装烟还是清理残留。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "xutashan",
+        "ahei"
+      ]
+    },
+    {
+      "id": "c_xinwen_zhang",
+      "locationId": "location_6",
+      "name": "铺盖里的绵纸试写稿",
+      "category": "object",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "许踏山铺盖夹层里有一张折过多次的夷方绵纸试写稿，残句包括“野人山后队”“四十块半开”“山里故人”。与枕下敲诈信比较，常用字的起笔、收笔和两处连笔习惯相同；纸张边角还有同样的裁刀缺口。它支持许踏山参与信件草拟或誊写，但不能单独证明他投毒。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "xutashan"
+      ]
     }
   ],
   "truth": {
@@ -1743,55 +2244,75 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "五年前腊月，野人山，你兄长许拴柱押后队，中弩箭死在鹰嘴崖下。"
+        "text": "五年前聂永年卖掉许拴柱后队路线，许踏山兄长因此死于弩箭；许踏山持有分货账牌，足以解释仇恨动机。动机不是投毒证据。"
       }
     ],
     "method": {
       "summary": [
         {
           "type": "paragraph",
-          "text": "许踏山为兄复仇：五年前马锅头聂永年为保全自夹的烟土黑货，把押后队的许拴柱（许踏山之兄）的走线卖给土匪独眼豹，致其弩箭穿身、坠崖而死，事后吞掉抚恤。许踏山查明旧案后隐忍一年爬上二锅头位子，专司装烟：今晚 20:10 与 20:45 两次进屋装烟，将草乌膏（猎户涂弩箭之毒）抹在烟锅膛壁与衔口，三锅烟的烫吸让毒经口黏膜进入——21:30 毒发，症状全然像'急痧攻心'。他又伪造'山里故人'的敲诈信随烟递入，一石二鸟：乱死者心神、替毒发症状作'惊悸'的注脚，并给查案者一条现成的歧路。为何只有他：装烟、点火、递烟是二锅头的专差，烟锅三进三出只有他经手；烟锅是锅头贴身之物，旁人碰一下都是犯忌。破绽：瞳仁如针尖（乌头口毒之相）、膛缝乌膏与衔口乌渍、料槽草把里来不及处理干净的兽皮药盒、敲诈信的裁纸刀裁口（只有驿站公房有裁刀）与二锅头'查夜'行踪的交叠。"
+          "text": "死因：乌头类生物碱在烟锅冷端残留，死者口腔样本阳性；烟丝、烟灰、醒酒汤和酒样阴性，说明毒物更可能经烟嘴直接接触口唇进入，而非随烟燃烧或由饭酒入口。机会：许踏山五年来负责装烟，20:10及20:45进屋；阿黑看见他在烟嘴停手、递信，并在死者倒下后先拿起烟锅倒灰。例行装烟只能证明接触机会，投毒动作要与冷端残留、口腔毒物和事后处理共同推断。信件：铺盖中的试写稿和裁口能独立识别信件制作来源，但信件作者不自动等于投毒者；阿黑证词把递信与接触烟嘴的同一晚行动联系起来。旧分货账提供动机。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "烟锅涂毒",
+          "title": "在烟嘴冷端留下毒膏",
           "content": [
             {
               "type": "paragraph",
-              "text": "许踏山查明旧案后隐忍一年爬上二锅头位子，专司装烟。20:10 他进屋装第一锅烟时将草乌膏（猎户涂弩箭之毒）抹在烟锅膛壁与衔口内侧，毒随烟丝烫吸经口黏膜渗入。"
+              "text": "20:10与20:45许踏山借例行装烟接近黄铜烟锅，在不接触高温膛底的烟嘴冷端和接缝涂上草乌膏。烟丝本身未污染；吸烟者含住烟嘴时，残膏直接接触口唇。"
             }
           ],
           "clueIds": [
-            "c_yanguo"
+            "c_yanguo",
+            "c_wudu_jianyan"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "递信乱心、持续下毒",
+          "title": "递入伪造敲诈信",
           "content": [
             {
               "type": "paragraph",
-              "text": "20:45 许踏山再进屋装第三锅烟，趁机将伪造的「山里故人」敲诈信递入——信中提及五年前野人山之事，一石二鸟：乱锅头心神使其猛抽烟加速毒发，又给查案者制造假想仇家的歧路。"
+              "text": "第二次进正房时，他把“山里故人”信递给聂永年。信件意在让死者以为旧案被人揭穿，也为调查制造“仇家报复”的解释。阿黑目击递信，铺盖试写稿和裁口独立支持其参与制作。"
             }
           ],
           "clueIds": [
-            "c_qiaozhaxin"
+            "c_qiaozhaxin",
+            "c_xinwen_zhang",
+            "c_ahei_zhengci"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "毒发伪装与善后",
+          "title": "毒发后倒灰掩盖烟锅残留",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:30 三锅烟后草乌膏毒发，锅头口唇青紫倒地，症状全然像「急痧攻心」。21:35 阿月尖叫后许踏山第二个冲入正房「抢救」，趁乱倒净烟膛烟灰销毁残毒证据，又于23:00借起夜将兽皮药盒塞进马厩料槽草把。"
+              "text": "草乌膏经口唇接触后引发口腔麻木、心律紊乱和抽搐，约21:35阿月发现他濒死，22:00左右死亡。许踏山冲到榻边倒掉烟灰并擦过烟嘴；烟膛高温处清洁，冷端接缝仍留残膏。"
             }
           ],
           "clueIds": [
             "c_yanshi",
-            "c_caowugao"
+            "c_wudu_jianyan",
+            "c_ahei_zhengci"
+          ]
+        },
+        {
+          "id": "method_step_4",
+          "title": "藏起药盒并留下旧案动机",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "23:00许踏山把鹿皮药盒塞进料槽草把。盒内膏体与口腔、烟嘴样本均检出乌头类生物碱；铺盖中的分货账牌提供复仇动机，但藏盒地点本身也有人可接近，不能单独认定藏匿者。"
+            }
+          ],
+          "clueIds": [
+            "c_caowugao",
+            "c_wudu_jianyan",
+            "c_fenhuozhang",
+            "c_ahei_zhengci"
           ]
         }
       ]
@@ -1886,11 +2407,11 @@
             "time": "20:10"
           }
         },
-        "title": "许踏山进屋装第一锅",
+        "title": "许踏山第二锅装烟并涂烟嘴",
         "content": [
           {
             "type": "paragraph",
-            "text": "许踏山进屋装第一锅。"
+            "text": "许踏山照常进屋装烟，但在烟嘴冷端接缝涂草乌膏；烟丝本身保持未污染。"
           }
         ],
         "characterIds": [
@@ -1996,19 +2517,21 @@
             "time": "20:45"
           }
         },
-        "title": "见许踏山进屋装烟",
+        "title": "阿黑看见许踏山进屋",
         "content": [
           {
             "type": "paragraph",
-            "text": "阿黑猫看见许踏山进屋装烟。"
+            "text": "阿黑从窗下看见许踏山再次进正房装烟，手在烟嘴冷端停留。"
           }
         ],
         "characterIds": [
-          "xutashan"
+          "xutashan",
+          "ahei"
         ],
         "clueIds": [],
         "participantIds": [
-          "xutashan"
+          "xutashan",
+          "ahei"
         ]
       },
       {
@@ -2021,16 +2544,22 @@
             "time": "20:50"
           }
         },
-        "title": "见其递入一封绵纸信",
+        "title": "递入伪造的敲诈信",
         "content": [
           {
             "type": "paragraph",
-            "text": "阿黑猫见其递入一封绵纸信（伪造的敲诈信）。"
+            "text": "许踏山递入“山里故人”信，阿黑目击；他没看清信的具体内容。"
           }
         ],
-        "characterIds": [],
+        "characterIds": [
+          "xutashan",
+          "ahei"
+        ],
         "clueIds": [],
-        "participantIds": []
+        "participantIds": [
+          "xutashan",
+          "ahei"
+        ]
       },
       {
         "id": "truth_event_10",
@@ -2046,7 +2575,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "见锅头读信变色、塞信入枕。"
+            "text": "锅头读信后将它塞入枕下；阿黑透过窗纸看见动作。"
           }
         ],
         "characterIds": [],
@@ -2121,7 +2650,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "锅头毒发（乌头口毒发作）。"
+            "text": "草乌类生物碱经烟嘴口唇接触，锅头出现麻木、心律紊乱与抽搐。"
           }
         ],
         "characterIds": [],
@@ -2142,7 +2671,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "阿月送醒酒汤撞见倒地尖叫；许踏山第二个冲入'抢救'，趁乱倒净烟膛烟灰；沐三元提灯验看。"
+            "text": "阿月送醒酒汤发现锅头濒死，尖叫求援；许踏山冲到榻边，取烟锅倒掉烟灰并擦过烟嘴，冷端接缝仍留有残膏。"
           }
         ],
         "characterIds": [
@@ -2200,7 +2729,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "锅头咽气。"
+            "text": "约22:00锅头咽气。"
           }
         ],
         "characterIds": [],
@@ -2221,7 +2750,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "杨大顶杠起夜，见许踏山蹲在料槽边（塞藏兽皮药盒）。破案链：验看草单（瞳仁针尖+口毒）→ 烟锅膛缝乌膏（下毒处）→ 草料药盒（毒之来源与藏匿）→ 敲诈信（伪证与歧路）→ 分货账（旧案动机）→ 假过所、烟土、认子文书（各人秘密与死者之恶）。红鲱鱼：沐三元的假过所、和四爷的私印与货棚之行、阿月的烟土样货与印子钱、阿黑的身世与趴窗、杨大顶杠的五年沉默——人人有秘密，无人是凶手。"
+            "text": "23:00杨大顶杠起夜，见许踏山在料槽草把边蹲着，不能确定他放入了什么。"
           }
         ],
         "characterIds": [
@@ -2244,43 +2773,69 @@
       }
     ],
     "keyEvidenceIds": [
+      "c_wudu_jianyan",
       "c_yanguo",
+      "c_ahei_zhengci",
+      "c_xinwen_zhang",
       "c_qiaozhaxin",
-      "c_fenhuozhang",
-      "c_renzi"
+      "c_caowugao"
     ],
     "evidenceChain": [
       {
+        "id": "evidence_1",
+        "clueIds": [
+          "c_yanshi",
+          "c_wudu_jianyan",
+          "c_yanguo",
+          "c_ahei_zhengci"
+        ],
+        "conclusion": "濒死症状提示口毒但不具特异性；口腔与烟嘴冷端样本检出乌头类生物碱，烟丝、烟灰、汤酒阴性。医学与器具残留共同支持毒物经烟嘴接触进入口腔，而非只凭症状猜毒。"
+      },
+      {
         "id": "evidence_2",
         "clueIds": [
-          "c_yanguo",
+          "c_wudu_jianyan",
           "c_caowugao",
-          "c_yanshi"
+          "c_ahei_zhengci"
         ],
-        "conclusion": "烟锅膛壁与衔口残留草乌膏（猎户涂弩箭之毒），烟灰被倒得干干净净——毒不在食物而在烟锅，烟一锅一锅烫、毒一口一口进，只有专司装烟的二锅头能在膛壁涂膏而不被察觉。"
+        "conclusion": "烟嘴和鹿皮盒有同类乌头生物碱，阿黑又看见许踏山在烟嘴处停手并在濒死后倒灰。检测说明毒物位置与来源，证词说明接触机会；检验不证明同批，目击也没看清涂膏，须合并评估。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "c_qiaozhaxin"
+          "c_ahei_zhengci",
+          "c_yanguo",
+          "c_wudu_jianyan"
         ],
-        "conclusion": "敲诈信裁口齐整系裁纸刀所裁（驿站公房才有裁刀），纸上有灯油洇痕——这封信是伪造的烟幕弹，意在制造「山里故人」的假想仇家，替真正的毒发症状作「惊悸攻心」的注脚。"
+        "conclusion": "许踏山例行装烟本身不等于投毒；但阿黑看见他在冷端停留、死者倒地后又先拿起烟锅，器具仍在冷端接缝留有毒膏，口腔样本与之对应。独立目击、器具残留和医学样本一起支持他利用职责投毒并试图清理。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "c_fenhuozhang",
-          "c_guohuoshan"
+          "c_qiaozhaxin",
+          "c_xinwen_zhang",
+          "c_ahei_zhengci"
         ],
-        "conclusion": "分货账白纸黑字记着「腊月十六后队驮十一得九、前山不动」——五年前锅头为保自夹烟土把断后队走线卖给土匪的铁证，许踏山的兄长许拴柱正是死在那条线上。"
+        "conclusion": "敲诈信与许踏山铺盖中的物理试写稿内容、连笔与裁口相合，阿黑又目击许踏山递信；成信、实物草稿和独立证言共同支持他参与制作与投递。它们识别信件来源，不单靠信件证明投毒。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "c_renzi",
-          "c_qiaozhaxin"
+          "c_fenhuozhang",
+          "c_ahei_zhengci",
+          "c_yanguo"
         ],
-        "conclusion": "认子文书半写未完、墨迹洇开，说明锅头死前正在书写——他打算给私生子分股三厘的善念，与敲诈信里「五年前野人山之事」的恐吓形成一善一恶的对照，佐证当晚锅头心神已乱。"
+        "conclusion": "分货账牌说明许踏山有报兄仇的动机；阿黑证词与烟锅残留将他与具体器具行为相连。文书动机与器具/目击材料互补，避免用旧案秘密直接锁凶。"
+      },
+      {
+        "id": "evidence_6",
+        "clueIds": [
+          "c_yanshi",
+          "c_dinghuo",
+          "c_guohuoshan",
+          "c_wudu_jianyan"
+        ],
+        "conclusion": "货棚黑膏与酒肆字据说明多人参与烟土交易，可能令人把黑膏与致死残留混为一谈。复验只在口腔、烟嘴冷端和料槽鹿皮盒检出乌头类生物碱，不能把交易货样直接认作毒膏；它是合理的竞争方向，但无法取代残留检测与器具接触证据。"
       }
     ],
     "redHerrings": [
@@ -2293,22 +2848,38 @@
         "explanation": [
           {
             "type": "paragraph",
-            "text": "沐三元的假过所"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_2",
-        "clueIds": [],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "和四爷的私印与货棚之行"
+            "text": "沐三元私改过所、验看又含糊，是机会与隐瞒；但毒物样本定位于烟嘴，现有材料没有显示他接触烟具。"
           }
         ]
       },
       {
         "id": "red_herring_3",
+        "clueIds": [
+          "c_renzi",
+          "c_qiaozhaxin"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "阿黑可能是认子文书所指之人，又趴窗偷看；他有隐瞒，却提供了关键目击。其证词只描述所见，不证明他制作信件或投毒。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_4",
+        "clueIds": [
+          "c_fenhuozhang",
+          "c_yanshi"
+        ],
+        "explanation": [
+          {
+            "type": "paragraph",
+            "text": "杨大顶杠知道旧案并守马厩，可能接近药盒；其旧案沉默和料槽权限构成嫌疑，但缺少烟嘴接触证据。"
+          }
+        ]
+      },
+      {
+        "id": "red_herring_2",
         "clueIds": [
           "c_guohuoshan",
           "c_dinghuo"
@@ -2316,30 +2887,7 @@
         "explanation": [
           {
             "type": "paragraph",
-            "text": "阿月的烟土样货与印子钱"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_4",
-        "clueIds": [],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "阿黑的身世与趴窗"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_5",
-        "clueIds": [
-          "c_qiaozhaxin",
-          "c_fenhuozhang"
-        ],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "杨大顶杠的五年沉默"
+            "text": "货棚黑膏与酒肆字据说明阿月、和四爷动过烟土样货；但烟土交易不是乌头毒膏，复验与烟嘴接触材料须另行解释。"
           }
         ]
       }
@@ -2348,7 +2896,7 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是二锅头许踏山。五年前，马锅头聂永年为保住自己夹带的那十二两烟土，把断后队的走线画进路条卖给了土匪——三哥拴柱替他挡了弩箭，抚恤进了他的腰包，账上写的是'探路失足'。许踏山用五年查清这笔账，再用一年爬到离烟锅最近的位置：装烟、点火、递信，全帮只有他能在锅头嘴边三寸处停留。草乌膏是他复仇的箭头——当年涂在弩箭上杀他兄长的东西，他涂进了仇人的烟锅。三锅烟，一个时辰，急痧攻心。那封敲诈信是他留的'第二只手'：让所有人都以为，杀锅头的是山里那个'故人'。他没算到三件事：瞳仁不会说谎；赶马人杨大顶杠的五年轻默里藏着一支刻着'柱'字的断箭；以及，他蹲在料槽边塞那只药盒时，头骡的眼睛，比人诚实。"
+        "text": "真相：许踏山为兄长报仇，计划用草乌膏杀死聂永年。装烟是他的例行差事，却不能因此直接定罪；关键在于复验发现烟嘴冷端残膏与死者口腔样本含同类乌头生物碱，而烟丝、烟灰和醒酒汤均为阴性。阿黑见他在烟嘴处停手、递入敲诈信，并在死者倒下后先拿起烟锅倒灰。铺盖中的试写稿与枕下信件相合，独立说明他参与制作假信；鹿皮盒提供毒物来源，分货账牌解释复仇动机。职责、投毒、事后清理、制信是四个不同事实，只有多份独立材料拼在一起才指向他。"
       }
     ]
   },
@@ -2357,7 +2905,31 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "口毒与烟具残留",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先确认死因为乌头类毒物导致的心律与神经症状；复验显示毒物在口腔与烟嘴冷端，烟丝、烟灰和汤酒未检出。区分“负责装烟”与“在烟具投毒”。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "烟具接触与信件来源",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "核对阿黑目击、烟锅事后处理、药盒来源、信件试写稿和裁口。分别判断谁接触烟具、谁制作敲诈信、动机如何；不要让其中任何一张卡代替整条链。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2367,7 +2939,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "当年涂在弩箭上杀许拴柱的草乌膏，被许踏山抹进了仇人的烟锅——三锅烟，一个时辰，兄仇得报。可瞳仁不会说谎，赶马人杨大顶杠褥子底下那支刻着「柱」字的断箭也不会。料槽草把里来不及处理干净的兽皮药盒，成了闷葫芦二锅头最后的遗言。马帮的规矩是天亮见分晓，天亮了，滇西的驿路上少了一个烟客。"
+            "text": "死者口腔与烟嘴冷端检出乌头类生物碱，烟丝、烟灰和醒酒汤均为阴性；阿黑看见许踏山在烟嘴停手并在死者倒下后倒灰；铺盖试写稿与枕下信件相合，说明他参与制作假信。装烟是职责，投毒、递信、事后清理各有独立材料，合起来才证明他借烟具杀人。"
           }
         ]
       },
@@ -2377,9 +2949,105 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "许踏山把「山里故人」的敲诈信留在枕下，把锅头的死推给了五年前野人山的旧怨。投票未能指认许踏山，那封伪造的信成了所有人追查的方向。杨大顶杠褥子底下的断箭终究没有拿出来，鹰嘴崖的风声，又多等了一个五年。"
+            "text": "众人把装烟当作投毒的全部解释，又让敲诈信把目光引向五年前的故人。许踏山继续留在帮里，日常装烟点火；只是每逢烟锅递到锅头手边，所有人都会想起那圈没擦净的乌膏。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "说明21:35发现濒死、约22:00死亡；驿丞初验与次日样本复验证据强度不同。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "让许踏山承认日常装烟职责，让阿黑交代窗下目击；分别记录装烟、烟嘴接触、递信和事后倒灰。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证死因/残留/目击；第二轮保证药盒、试写稿、旧案及各人竞争秘密。私人地点按ownerCharacterId分配，必要关键材料以保证公开机制发放。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "按毒物来源与进入途径、烟具接触机会、信件作者三线分别讨论，再判断是否同一人。职责与投毒不得合并成同一事实。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票者需分别引用毒物残留、器具接触/目击和信件制作或动机材料，至少三类互证；指出各条材料的证明限度。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家因许踏山是装烟人就直接认定他下毒。",
+        "hint": "装烟是例行职责。复验显示毒在烟嘴冷端而非烟丝、烟灰；结合阿黑看见的停手与死后倒灰动作判断是否有额外投毒/清理行为。"
+      },
+      {
+        "condition": "玩家以烟锅残膏一张卡锁凶。",
+        "hint": "残留能证明烟具被污染，不能识别操作者。找阿黑的直接目击和药盒来源，再与口腔复验相互印证。"
+      },
+      {
+        "condition": "玩家以敲诈信作者直接锁凶。",
+        "hint": "试写稿、裁口和递信目击可识别信件制作；写信与投毒是两种行为，还要看毒物和器具接触证据。"
+      },
+      {
+        "condition": "玩家仍坚持砒霜、药粉或醒酒汤投毒。",
+        "hint": "看复验：烟嘴及口腔阳性，烟丝、烟灰、汤酒阴性。再解释谁能接近烟嘴冷端。"
+      },
+      {
+        "condition": "玩家怀疑料槽药盒就是杨大顶杠藏的。",
+        "hint": "杨负责守料，但许踏山也查夜料；药盒位置不是身份独占证据，结合阿黑看到的烟锅处理和信件线索。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "c_yanshi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_yanguo",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_wudu_jianyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_ahei_zhengci",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "c_qiaozhaxin",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_xinwen_zhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_caowugao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_fenhuozhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_renzi",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_guohuoshan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_guosuo",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "c_dinghuo",
+        "deadlineRound": 2
       }
     ]
   }

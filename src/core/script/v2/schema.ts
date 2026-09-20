@@ -173,6 +173,16 @@ const skillSchema = z
   })
   .strict();
 
+/** 真凶可使用、且已有事实依据的辩解抓手。 */
+const defenseHookSchema = z
+  .object({
+    id: idSchema,
+    claim: leafText,
+    basis: leafText,
+    brokenByPublicClueIds: z.array(idSchema).min(1),
+  })
+  .strict();
+
 const privateCardSchema = z
   .object({
     backstory: narrativeSchema,
@@ -189,6 +199,8 @@ const privateCardSchema = z
     violation: z.array(leafText).default([]),
     /** 说谎时的小动作（演技抓手，多用于凶手） */
     tells: z.array(leafText).default([]),
+    /** 可核验的辩解；旧剧本为空，通常只为真凶配置。 */
+    defenseHooks: z.array(defenseHookSchema).default([]),
     /** 分幕增量：进入对应幕后追加的知识/目标 */
     stages: z.array(stageSchema).default([]),
     /** 技能卡：消耗行动点发动（flow.actionPointsPerRound > 0 才启用） */
@@ -365,6 +377,7 @@ export type PrivateCardV2 = z.infer<typeof privateCardSchema>;
 export type KnowledgeV2 = z.infer<typeof knowledgeSchema>;
 export type StageV2 = z.infer<typeof stageSchema>;
 export type SkillV2 = z.infer<typeof skillSchema>;
+export type DefenseHookV2 = z.infer<typeof defenseHookSchema>;
 export type QuizQuestionV2 = z.infer<typeof quizQuestionSchema>;
 export type ActV2 = z.infer<typeof actSchema>;
 export type HostGuideV2 = z.infer<typeof hostGuideSchema>;
