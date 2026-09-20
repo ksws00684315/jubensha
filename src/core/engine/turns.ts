@@ -2,6 +2,7 @@ import { publish } from "./bus";
 import type { GameEngine } from "./engine";
 import type { GameState } from "./types";
 import { AI_DECISION_TIMEOUT_MS, msgOf, withTimeout } from "./util";
+import { createRepetitionGuard } from "./repetition";
 import { agent } from "@/core/agents";
 import { renderActionPlan } from "@/core/agents/plan";
 
@@ -270,18 +271,32 @@ export function dispatchDmTurn(
  * 消费一个流式生成器：delta 边收边推（观众可见），整体受超时约束。
  * 超时后置 stopped 丢弃剩余输出（连接由 chatStream 内部 abortSignal 兜底关闭），
  * 避免残句在回退发言期间混进事件流。
+ * 防复读熔断默认开启：检出病态循环即停发 delta，返回文本截到循环片段最早一次
+ * 出现的起点（保住正常前半句）；截空时走各调用点既有的空文本降级。
+ * 与生成后精修（agents/review.ts）互补：这里治流式退化，那里治出戏/复读台词。
  */
 export async function consumeStream(
   makeStream: (abortSignal: AbortSignal) => AsyncGenerator<string>,
   onDelta: (delta: string) => void,
   timeoutMs: number,
-  abortSignal: AbortSignal
+  abortSignal: AbortSignal,
+  opts: { repetition?: boolean } = {}
 ): Promise<string> {
+  const useRepetition = opts.repetition !== false;
   let text = "";
   let stopped = false;
+  const guard = useRepetition ? createRepetitionGuard() : null;
   const consume = async (): Promise<void> => {
     for await (const delta of makeStream(abortSignal)) {
       if (stopped) continue;
+      if (guard) {
+        const r = guard.push(delta);
+        if (r.loopDetected) {
+          stopped = true;
+          text = text.slice(0, r.cutIndex ?? text.length);
+          continue;
+        }
+      }
       text += delta;
       onDelta(delta);
     }
@@ -289,6 +304,12 @@ export async function consumeStream(
   const tracked = consume();
   try {
     await withTimeout(tracked, timeoutMs);
+    // 流自然结束：补扫节流窗口内未覆盖的尾段，循环尾巴落在两次扫描之间也不漏判
+    const tail = guard && !stopped ? guard.finish() : { loopDetected: false };
+    if (tail.loopDetected) {
+      stopped = true;
+      text = text.slice(0, tail.cutIndex ?? text.length);
+    }
   } catch {
     stopped = true;
     tracked.catch(() => {});

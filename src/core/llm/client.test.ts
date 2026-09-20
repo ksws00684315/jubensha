@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { embeddingSpaceId, estimateInputTokens, fitSegmentsToInputBudget, inputBudgetTokens } from "./client";
+import { buildSamplingExtraBody, embeddingSpaceId, estimateInputTokens, fitSegmentsToInputBudget, inputBudgetTokens } from "./client";
 import { composeSegments, type PromptSegments } from "./prompt-segments";
 
 describe("LLM 上下文与 embedding 空间", () => {
@@ -37,6 +37,18 @@ describe("LLM 上下文与 embedding 空间", () => {
     expect(user).toContain("结尾的发言。");
     expect(user).toContain("较早现场记录因模型输入预算已裁剪");
     expect(estimateInputTokens(composeSegments(fitted))).toBeLessThanOrEqual(inputBudgetTokens({ contextWindow: 2_000 }, 512)!);
+  });
+
+  it("采样参数：缺省时不产生任何请求体字段，非 openai 兼容协议不透传", () => {
+    expect(buildSamplingExtraBody({}, "openai_compatible")).toBeUndefined();
+    expect(buildSamplingExtraBody({ topP: 0.95 }, "anthropic")).toBeUndefined();
+    expect(buildSamplingExtraBody({ topP: 0.95, frequencyPenalty: 0.3, presencePenalty: 0.1 }, "openai_compatible")).toEqual({
+      top_p: 0.95,
+      frequency_penalty: 0.3,
+      presence_penalty: 0.1,
+    });
+    // 只注入显式给出的键
+    expect(buildSamplingExtraBody({ presencePenalty: 0.2 }, "openai_compatible")).toEqual({ presence_penalty: 0.2 });
   });
 
   it("三档降级：充裕原样返回 → 按序丢 droppable → anchored 超载时原样交断言层", () => {

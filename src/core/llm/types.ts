@@ -41,6 +41,10 @@ export interface ChatOptions {
   generationId?: string;
   /** 细分任务类型，便于按任务统计成本与失败。 */
   taskType?: string;
+  /** 解码控制：缺省时请求体与旧版逐字节一致；网关拒绝未知字段时客户端自动去参重试。 */
+  topP?: number;
+  frequencyPenalty?: number;
+  presencePenalty?: number;
 }
 
 export interface ChatResult {

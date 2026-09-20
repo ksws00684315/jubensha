@@ -14,6 +14,8 @@ import { validatePlayerActionPlan } from "./plan";
 
 /** JSON 决策解析失败时的重采样次数；全部失败走各自的兜底（随机/默认值） */
 const JSON_DECISION_RETRIES = 3;
+/** 叙述类调用的保守解码参数：轻度罚重对冲复读倾向；决策/JSON 类调用不受影响 */
+const NARRATIVE_SAMPLING = { topP: 0.95, frequencyPenalty: 0.3, presencePenalty: 0.1 } as const;
 /** 推荐给真人的一键接话短句条数上限 */
 const MAX_SUGGESTIONS = 3;
 /** 守卫放行后的发言截断上限：问题/投票理由/私信各按其体裁封顶 */
@@ -92,6 +94,7 @@ export const agent = {
       gameId: ctx.gameId,
       ...dmPrompt(ctx, { task, recall: await recallFor(ctx, null) }),
       temperature: 0.7,
+      ...NARRATIVE_SAMPLING,
     });
     return guardDmSpeech(ctx.script, ctx.state, res.text).text;
   },
@@ -100,7 +103,7 @@ export const agent = {
   async *streamDmNarrate(ctx: AgentCtx, task: string, abortSignal?: AbortSignal, generationId?: string): AsyncGenerator<string> {
     const prompt = dmPrompt(ctx, { task, recall: await recallFor(ctx, null) });
     const redactor = createSpeechRedactor(dmGuardMarkers(ctx.script, ctx.state));
-    for await (const chunk of chatStream({ purpose: "dm", gameId: ctx.gameId, ...prompt, temperature: 0.7, abortSignal, generationId, taskType: "dm_narration" })) {
+    for await (const chunk of chatStream({ purpose: "dm", gameId: ctx.gameId, ...prompt, temperature: 0.7, ...NARRATIVE_SAMPLING, abortSignal, generationId, taskType: "dm_narration" })) {
       const delta = redactor.push(chunk);
       if (delta) yield delta;
     }
@@ -134,9 +137,9 @@ export const agent = {
         taskType: opts.taskType ?? (opts.intro ? "speech" : "speech"),
       });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
-    let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro" : "speech" })).text);
+    let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro" : "speech" })).text);
     if (guarded.leaked.length) {
-      const retry = await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro_retry" : "speech_retry" });
+      const retry = await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro_retry" : "speech_retry" });
       const guarded2 = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, retry.text);
       if (guarded2.text.length >= Math.min(20, guarded.text.length)) guarded = guarded2;
     }
@@ -157,7 +160,7 @@ export const agent = {
     });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     const redactor = createSpeechRedactor(playerGuardMarkers(ctx.script, ctx.state, seatIndex));
-    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : "speech" })) {
+    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : "speech" })) {
       const delta = redactor.push(chunk);
       if (delta) yield delta;
     }
@@ -240,6 +243,7 @@ export const agent = {
       gameId: ctx.gameId,
       ...playerPrompt(ctx, seatIndex, { requireJson }),
       temperature: 0.9,
+      ...NARRATIVE_SAMPLING,
     });
     const parsed = extractJson<{ suggestions?: unknown }>(res.text);
     if (!Array.isArray(parsed?.suggestions)) return [];
@@ -374,6 +378,7 @@ export const agent = {
         taskType: "whisper",
       }),
       temperature: 0.8,
+      ...NARRATIVE_SAMPLING,
     });
     return guardPlayerSpeech(ctx.script, ctx.state, seatIndex, res.text).text;
   },

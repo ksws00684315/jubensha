@@ -53,6 +53,19 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
   throw new Error(`槽位 "${slot}" 的 fallback 链解析失败`);
 }
 
+/** 采样参数 → OpenAI 兼容请求体顶层键（与 toLanguageModel 同判据：非 anthropic 即走兼容路径）。
+ * anthropic 不支持 penalties，SDK 原生 topP 未接线前一并忽略；
+ * 全部缺省时返回 undefined——请求体逐字节不变。个别网关拒绝 penalty 字段时，
+ * 由 callOnce 既有的 unknown-field 去 extra 重试兜底。 */
+export function buildSamplingExtraBody(opts: Pick<ChatOptions, "topP" | "frequencyPenalty" | "presencePenalty">, protocol: string): Record<string, unknown> | undefined {
+  if (protocol === "anthropic") return undefined;
+  const body: Record<string, unknown> = {};
+  if (opts.topP !== undefined) body.top_p = opts.topP;
+  if (opts.frequencyPenalty !== undefined) body.frequency_penalty = opts.frequencyPenalty;
+  if (opts.presencePenalty !== undefined) body.presence_penalty = opts.presencePenalty;
+  return Object.keys(body).length ? body : undefined;
+}
+
 function toLanguageModel(b: ResolvedBinding, extraBody?: Record<string, unknown>): LanguageModel {
   const baseURL = normalizeProviderBaseUrl(b.baseUrl, b.protocol);
   if (b.protocol === "anthropic") {
@@ -291,9 +304,10 @@ async function callOnce(
 
   try {
     // 推理模型默认开思考会把输出额度吃光；多数网关会忽略未知字段。
-    return await invoke({ thinking: { type: "disabled" } });
+    return await invoke({ thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) });
   } catch (err) {
     if (isRetryableLlmError(err) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(err))) {
+      // 网关拒绝 thinking/采样扩展字段：去 extra 重试（协议不支持的字段不再并入）
       return await invoke();
     }
     if (/system messages? (are )?not allowed|instructions? option|system role/i.test(String(err))) {
@@ -303,7 +317,7 @@ async function callOnce(
       // 同样走 prepareRequest：fit→compose→并入 system，降级不再绕过预算裁剪
       const compatible = prepareRequest(b, opts, maxOutputTokens, false);
       try {
-        return await invoke({ thinking: { type: "disabled" } }, compatible);
+        return await invoke({ thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }, compatible);
       } catch (fallbackErr) {
         if (isRetryableLlmError(fallbackErr) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(fallbackErr))) return await invoke(undefined, compatible);
         throw fallbackErr;
@@ -411,7 +425,7 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   const budgetTokens = inputBudgetTokens(b, maxOutputTokens);
   try {
     const result = streamText({
-      model: toLanguageModel(b, { thinking: { type: "disabled" } }),
+      model: toLanguageModel(b, { thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }),
       messages,
       temperature: opts.temperature ?? b.temperature ?? 0.8,
       maxOutputTokens,
