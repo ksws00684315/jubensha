@@ -132,6 +132,39 @@ export function winText(doc: ScriptDocV2): string {
   return doc.ending.outcomes.map((outcome) => `${outcome.title}：${narrativeToText(outcome.content)}`).join("\n\n");
 }
 
+export type FinaleOutcome = {
+  result: "caught" | "escaped";
+  title: string;
+  content: string;
+  verdict: string;
+};
+
+/** 终局文案的唯一投影入口，防止把两个互斥 outcomes 同时展示。 */
+export function resolveFinaleOutcome(
+  doc: ScriptDocV2,
+  voteResult: { culpritSeat: number; caught: boolean; tiedSeats?: number[] },
+): FinaleOutcome {
+  const caught = doc.flow.voteMode !== "choice" && voteResult.caught;
+  const result = caught ? "caught" : "escaped";
+  const selected = doc.ending.outcomes.find((outcome) => outcome.result === (caught ? "culprit_caught" : "culprit_escaped"));
+  const culpritName = doc.characters.find((character) => character.id === doc.truth.culpritId)?.name ?? "真凶";
+  const verdict = doc.flow.voteMode === "choice"
+    ? "本局为复盘答题模式，以下公布案件还原。"
+    : voteResult.culpritSeat < 0
+      ? `本期真凶是「${culpritName}」，但该角色未在本局入座，指认无果。`
+      : voteResult.tiedSeats?.length
+        ? `投票出现平票，真凶「${culpritName}」逃脱。`
+        : caught
+          ? `真凶「${culpritName}」被成功指认。`
+          : `真凶「${culpritName}」逃脱。`;
+  return {
+    result,
+    title: selected?.title ?? (caught ? "真凶被捕" : "真凶逃脱"),
+    content: selected ? narrativeToText(selected.content) : "",
+    verdict,
+  };
+}
+
 export function keyEvidenceNames(doc: ScriptDocV2): string[] {
   return doc.truth.keyEvidenceIds.map((id) => doc.clues.find((clue) => clue.id === id)?.name ?? id);
 }

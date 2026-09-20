@@ -11,14 +11,34 @@ import type { GameEngine } from "./engine";
  * ★ 讨论域（批次 I1 自 engine.ts 拆出）★：当众提问/作答链路 + AI 讨论回合。
  */
 
-export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: number, question: string): Promise<{ ok: boolean; error?: string }> {
+function legalPublicEvidenceIds(e: GameEngine, ids: readonly string[] | undefined): string[] {
+  const publicIds = new Set(e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id));
+  return [...new Set(ids ?? [])].filter((id) => publicIds.has(id));
+}
+
+function duplicateQuestion(e: GameEngine, fromSeat: number, toSeat: number, evidenceIds: readonly string[]): boolean {
+  if (!evidenceIds.length) return false;
+  const key = [...evidenceIds].sort().join(",");
+  return e.events.some((event) =>
+    event.type === "speech" &&
+    event.phase === "DISCUSSION" &&
+    event.round === e.state.round &&
+    event.fromSeat === fromSeat &&
+    event.toSeat === toSeat &&
+    Array.isArray(event.content.evidenceIds) && [...event.content.evidenceIds as string[]].sort().join(",") === key,
+  );
+}
+
+export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: number, question: string, evidenceIds?: string[]): Promise<{ ok: boolean; error?: string }> {
   const invalid = validateDiscussionAsk(e.state, fromSeat, toSeat);
   if (invalid) return { ok: false, error: invalid };
   const left = e.state.questionsLeft[String(fromSeat)] ?? 0;
   const text = question.trim().slice(0, 200);
   if (!text) return { ok: false, error: "问题不能为空" };
+  const legalEvidenceIds = legalPublicEvidenceIds(e, evidenceIds);
+  if (duplicateQuestion(e, fromSeat, toSeat, legalEvidenceIds)) return { ok: false, error: "本轮已围绕同一组证据问过这位玩家，请等待新线索" };
   e.state.questionsLeft[String(fromSeat)] = left - 1;
-  e.state.pendingAnswer = { fromSeat, toSeat, question: text };
+  e.state.pendingAnswer = { fromSeat, toSeat, question: text, ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) };
   // 提问 = 证明在参与，暂停提问者超时；作答结束后 step() 会经 ensureHumanTimeout 重新武装
   clearHumanTimeout(e, fromSeat);
   await e.recordEvent({
@@ -28,7 +48,7 @@ export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: nu
     fromSeat,
     toSeat,
     visibility: "public",
-    content: { text: `我问${e.speakerName(toSeat)}：${text}`, speakerName: e.speakerName(fromSeat) },
+    content: { text: `我问${e.speakerName(toSeat)}：${text}`, speakerName: e.speakerName(fromSeat), ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) },
   });
   await e.persist();
   return { ok: true };
@@ -74,7 +94,7 @@ export async function runAiDiscussionTurn(e: GameEngine, seat: number): Promise<
           AI_DECISION_TIMEOUT_MS,
         );
         if (asked) {
-          const result = await submitQuestion(e, seat, asked.toSeat, asked.question);
+          const result = await submitQuestion(e, seat, asked.toSeat, asked.question, asked.evidenceIds);
           if (result.ok) {
             e.pendingTick = true;
             return;

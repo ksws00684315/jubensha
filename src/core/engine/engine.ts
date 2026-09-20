@@ -70,6 +70,7 @@ export interface GameAction {
   publish?: boolean;
   target?: number;
   reason?: string;
+  evidenceIds?: string[];
   toSeat?: number;
   answers?: Array<{ questionId: string; optionId: string }>;
 }
@@ -167,6 +168,7 @@ export class GameEngine {
       state.votes ??= {};
       state.privateChat ??= {};
       state.readySeats ??= [];
+      state.readingPromptedSeats ??= [];
       state.spokenSeats ??= [];
       state.searchDealtRound ??= 0;
       state.questionsLeft ??= {};
@@ -312,7 +314,12 @@ export class GameEngine {
 
   /** 服务重启后重新挂定时器并推进：快照已恢复，内存定时器不会回来 */
   private resumeAfterLoad(): void {
-    if (this.state.phase === "ENDED") return;
+    // 即使快照已经是 ENDED，也要经过一次 step：旧版本可能在持久化 ENDED 后
+    // 因进程中断而漏写结束事件或房间结算。
+    if (this.state.phase === "ENDED") {
+      void this.exclusive(() => this.tickInner());
+      return;
+    }
     if (this.state.phase === "READING") {
       const ais = activeSeats(this.state).filter((i) => this.state.seats[i].kind === "ai" && !this.state.readySeats.includes(i));
       ais.forEach((seat, i) => {
@@ -396,12 +403,13 @@ export class GameEngine {
         await this.step();
         iterations++;
       } while (this.pendingTick && iterations < 200 && this.state.phase !== "ENDED");
-      if (iterations >= 200) {
-        await this.systemSay("（引擎连续推进超过 200 步，已暂停以防失控。请稍后重试。）").catch(() => null);
+      if (iterations >= 200 && this.pendingTick && this.state.phase !== "ENDED") {
+        console.error(`[engine] ${this.gameId} 单次 tick 连续推进达到 200 步，phase=${this.state.phase} round=${this.state.round}`);
       }
       this.revealRetries = 0;
     } catch (err) {
-      await this.systemSay(`（引擎遇到问题：${msgOf(err)}。你可以稍后重试或继续操作。）`).catch(() => null);
+      // 内部调度错误只进入服务日志；玩家端不应看见“200 步”或数据库等实现细节。
+      console.error(`[engine ${this.gameId}] tick failed: ${msgOf(err)}`);
       // REVEAL/ENDED 的收尾本应幂等重入，但触发下一次 tick 的来源只剩"玩家动作/重启"——
       // 给它一次定时兜底，避免终局卡在 REVEAL 只能靠真人点 nudge。上限 3 次防死循环。
       if ((this.state.phase === "REVEAL" || this.state.phase === "ENDED") && this.revealRetries < 3) {
@@ -420,9 +428,13 @@ export class GameEngine {
       case "READING": {
         for (const seat of seats) {
           if (state.readySeats.includes(seat) || state.seats[seat]?.kind !== "human") continue;
-          const hadDeadline = Boolean(state.humanDeadlines?.[String(seat)]);
+          state.readingPromptedSeats ??= [];
+          if (!state.readingPromptedSeats.includes(seat)) {
+            state.readingPromptedSeats.push(seat);
+            await this.persist();
+            await this.systemSay(`请阅读角色剧本，完成后点击“我准备好了”；超时将自动进入下一阶段。`, seat);
+          }
           await ensureHumanTimeout(this, seat, "读本确认");
-          if (!hadDeadline) await this.systemSay(`请阅读角色剧本，完成后点击“我准备好了”；超时将自动进入下一阶段。`, seat);
         }
         if (seats.every((i) => state.readySeats.includes(i))) {
           this.clearTimers("ready:");
@@ -464,6 +476,11 @@ export class GameEngine {
         const missing = seats.filter((i) => !state.searchChoices[String(i)]);
         if (missing.length) {
           for (const seat of missing) {
+            if (availableLocations(this, seat).length === 0) {
+              this.state.searchChoices[String(seat)] = "__no_search__";
+              await this.systemSay("本轮没有可搜的线索材料，系统已为你完成搜证。", seat);
+              continue;
+            }
             if (state.seats[seat].kind === "ai") {
               queueAiSearchChoice(this, seat);
             } else if (!this.searchAsked.has(seat)) {
@@ -683,7 +700,7 @@ export class GameEngine {
         return { ok: false, error: "当前不能自由发言" };
       }
       case "ask": {
-        return submitQuestion(this, seatIndex, action.toSeat ?? -1, action.text ?? "");
+        return submitQuestion(this, seatIndex, action.toSeat ?? -1, action.text ?? "", action.evidenceIds);
       }
       case "skip": {
         if (this.state.phase !== "SELF_INTRO" && this.state.phase !== "DISCUSSION") {
@@ -716,7 +733,7 @@ export class GameEngine {
         if (loc.ownerCharacterId === seatCharacterId(this, seatIndex)) {
           return { ok: false, error: "你不能搜自己的房间" };
         }
-        if (availableLocations(this, seatIndex).length > 0 && cluesAt(this, loc.name, seatIndex).length === 0) {
+        if (!availableLocations(this, seatIndex).includes(loc.name) || cluesAt(this, loc.name, seatIndex).length === 0) {
           return { ok: false, error: `「${loc.name}」的线索已搜完，请选择其他地点` };
         }
         this.state.searchChoices[String(seatIndex)] = loc.name;
@@ -749,7 +766,7 @@ export class GameEngine {
         const target = action.target;
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
-        await recordVote(this, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined);
+        await recordVote(this, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined, action.evidenceIds);
         clearHumanTimeout(this, seatIndex);
         // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时
         this.turnAsked.delete(`ask:VOTE:${seatIndex}`);

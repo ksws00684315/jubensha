@@ -12,6 +12,7 @@ export function initialState(seats: SeatInfo[]): GameState {
     clueStates: {},
     heldClues: {},
     readySeats: [],
+    readingPromptedSeats: [],
     spokenSeats: [],
     turnSeat: null,
     votes: {},

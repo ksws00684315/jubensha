@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { fullTimelineText, methodText, revealText, winText } from "@/core/script/compat";
+import { fullTimelineText, methodText, resolveFinaleOutcome, revealText } from "@/core/script/compat";
 import { publish } from "./bus";
 import { activeSeats } from "./state";
 import { computeQuizResult, ensureDiscussionState, nextAfterSearch, QUESTIONS_PER_PLAYER } from "./flow";
@@ -7,6 +7,7 @@ import type { GameEngine } from "./engine";
 import { scheduleEndedEviction } from "./registry";
 import { dispatchDmTurn } from "./turns";
 import { maybeScheduleSummarize } from "./social";
+import type { GameState } from "./types";
 
 /**
  * ★ 阶段流转 handler（批次 I1 自 engine.ts 拆出）★：
@@ -20,7 +21,7 @@ export async function beginGame(e: GameEngine): Promise<void> {
   await e.persist();
   dispatchDmTurn(
     e,
-    `游戏开始。请宣布开场：介绍剧本《${e.script.meta.title}》的背景（可直接取用公开背景大意）、案件情况（${e.script.meta.title} 中的死者与发现经过），宣布进入【读本环节】：每位玩家请阅读自己的角色剧本，读完后点击"我准备好了"。`,
+    `游戏开始。公开案件背景已经由界面展示，请不要复述任何背景、死者或发现经过。只用不超过两句话营造简短气氛，并宣布进入【读本环节】：每位玩家请阅读自己的角色剧本，读完后点击“我准备好了”。`,
     "READING",
     0,
     async () => {}
@@ -37,6 +38,26 @@ export async function beginGame(e: GameEngine): Promise<void> {
   });
 }
 
+/** 常规阶段切换使用确定性短提示，避免重复生成背景叙事。 */
+async function announcePhase(
+  e: GameEngine,
+  text: string,
+  phase: GameState["phase"],
+  round: number,
+  after: () => Promise<void>,
+): Promise<void> {
+  await e.recordEvent({
+    type: "phase",
+    phase,
+    round,
+    fromSeat: null,
+    toSeat: null,
+    visibility: "public",
+    content: { text, phase, round },
+  });
+  await after();
+}
+
 export async function transitionSelfIntro(e: GameEngine): Promise<void> {
   e.state.phase = "SELF_INTRO";
   e.state.round = 1;
@@ -47,7 +68,7 @@ export async function transitionSelfIntro(e: GameEngine): Promise<void> {
   const first = activeSeats(e.state)[0];
   e.state.turnSeat = first;
   await e.persist();
-  dispatchDmTurn(e, "宣布进入【自我介绍】环节：请各位按座位顺序简要介绍自己与死者的关系、今晚的大致行踪。", "SELF_INTRO", 1, async () => {
+  await announcePhase(e, "进入【自我介绍】环节。请按座位顺序简要介绍你与死者的关系和今晚的大致行踪。", "SELF_INTRO", 1, async () => {
     await e.tickInner();
   });
 }
@@ -60,9 +81,9 @@ export async function advanceSelfIntroRound(e: GameEngine): Promise<void> {
   e.turnAsked.clear();
   e.state.turnSeat = activeSeats(e.state)[0];
   await e.persist();
-  dispatchDmTurn(
+  await announcePhase(
     e,
-    `宣布进入【自我介绍】第 ${e.state.round} 轮：请补充上一轮没说完的信息，或回应他人提到的疑点。`,
+    `进入【自我介绍】第 ${e.state.round} 轮。请补充遗漏的信息，或回应他人提出的疑点。`,
     "SELF_INTRO",
     e.state.round,
     async () => {
@@ -89,9 +110,9 @@ export async function transitionSearch(e: GameEngine, round: number): Promise<vo
       const brief = act.brief?.length ? " " + act.brief.map((b) => ("text" in b ? b.text : "")).join(" ") : "";
       return `【第${round}幕 · ${act.title}】${brief}`.trim();
     });
-  dispatchDmTurn(
+  await announcePhase(
     e,
-    [`宣布进入【第 ${round} 轮搜证】：每位玩家选择一个地点进行搜证，找到的线索可以选择当场公开或私藏。轮次共 ${e.script.flow.searchRounds} 轮。`, ...actBriefs].join("\n\n"),
+    [`进入【第 ${round} 轮搜证】。每位玩家选择一个地点；获得线索后可选择公开或私藏。共 ${e.script.flow.searchRounds} 轮。`, ...actBriefs].join("\n\n"),
     "SEARCH",
     round,
     async () => {
@@ -120,9 +141,9 @@ export async function transitionDiscussion(e: GameEngine, round: number): Promis
   e.state.turnSeat = activeSeats(e.state)[0];
   await e.persist();
   maybeScheduleSummarize(e);
-  dispatchDmTurn(
+  await announcePhase(
     e,
-    `宣布进入【第 ${round} 轮圆桌讨论】：按座位顺序轮流发言，每人可当众提问三次。轮到你时请陈述或提问，被问到的人需要当场回答。发言时点名某位玩家，对方可能会立即插话回应；各位也可能收到其他玩家的悄悄私信，请留意界面提示。`,
+    `进入【第 ${round} 轮圆桌讨论】。按座位顺序发言，每人可当众提问三次；被问到的人需要当场回答。你可以陈述、提问或回应他人。`,
     "DISCUSSION",
     round,
     async () => {
@@ -159,7 +180,7 @@ export async function transitionVote(e: GameEngine): Promise<void> {
         ? "讨论结束，宣布进入【终局】环节：请每位玩家指认你认为的真凶并说明一句话理由，同时完成复盘答题卡（全部完成后立即揭晓真相与答案）。"
         : "讨论结束，宣布进入【投票】环节：请每位玩家指认你认为的真凶，并说明一句话理由。投票结束后将立即揭晓真相。";
   await e.persist();
-  dispatchDmTurn(e, task, "VOTE", 1, async () => {
+  await announcePhase(e, task.replace(/^讨论结束，宣布进入/, "进入").replace(/环节：/g, "环节。"), "VOTE", 1, async () => {
     await e.tickInner();
   });
 }
@@ -222,11 +243,16 @@ export async function finishReveal(e: GameEngine): Promise<void> {
   const result = e.state.voteResult;
   if (!result) return;
 
+  const finale = resolveFinaleOutcome(e.script, result);
+
   // 已宣读过（如重试重入）：直接推进终局
   if (e.events.some((ev) => ev.type === "reveal")) {
+    const hasEndedEvent = e.events.some((ev) => ev.type === "phase" && ev.content.phase === "ENDED");
     if (e.state.phase !== "ENDED") {
       e.state.phase = "ENDED";
       await e.persist();
+    }
+    if (!hasEndedEvent) {
       await e.recordEvent({
         type: "phase",
         phase: "ENDED",
@@ -249,14 +275,10 @@ export async function finishReveal(e: GameEngine): Promise<void> {
     .join("，") || "无人投票";
   let task: string;
   if (voteMode === "choice") {
-    task = `复盘时刻：本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评全场还原度，然后完整宣读真相复盘：手法、完整时间线、关键证据链。`;
+    task = `直接按案件事实复盘，不要重复开场背景或场景氛围。本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评全场还原度，然后完整说明手法、时间线和关键证据链。`;
   } else {
-    const verdict = !culpritSeated
-      ? `本期真凶是「${culpritName}」，但该角色并未在本局入座，任何指认都不成立`
-      : result.tiedSeats?.length
-        ? `${result.tiedSeats.map((s) => `座位${s + 1}`).join(" 与 ")} 平票，指认失败，真凶「${culpritName}」逃脱`
-        : `凶手是 ${e.speakerName(result.culpritSeat)}`;
-    task = `公布投票结果（${voteBrief}），然后宣布揭晓真相：${verdict}。请完整宣读真相复盘：手法、完整时间线、关键证据链，以及点评各位玩家今晚的表现（谁误导了大家、谁的推理最接近真相）。`;
+    const verdict = !culpritSeated ? finale.verdict : result.caught ? `凶手是 ${e.speakerName(result.culpritSeat)}，已被成功指认。` : finale.verdict;
+    task = `直接进入案件复盘，不要重述开场背景或描写场景氛围。公布投票结果（${voteBrief}），然后宣布揭晓真相：${verdict}。请依据剧本事实账本完整说明手法、时间线和关键证据链，并点评玩家今晚的表现。`;
     if (e.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评各位玩家的还原度。`;
   }
 
@@ -279,7 +301,7 @@ export async function finishReveal(e: GameEngine): Promise<void> {
           method: methodText(e.script),
           fullTimeline: fullTimelineText(e.script),
           reveal: revealText(e.script),
-          winText: winText(e.script),
+          finale,
           ...(e.state.quizResult ? { quiz: e.state.quizResult } : {}),
         },
       });
@@ -310,7 +332,7 @@ export async function finalizeEnded(e: GameEngine): Promise<void> {
     await tx.room.update({ where: { id: ended.roomId }, data: { status: "ended" } });
   });
   e.endFinalized = true;
-  publish(e.gameId, { kind: "end" });
+  publish(e.gameId, { kind: "end", lastEventSeq: e.events.at(-1)?.seq ?? "0" });
   scheduleEndedEviction(e);
 }
 

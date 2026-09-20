@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { clearScriptRuntimeCache, ingestScriptDoc, locationNames, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, resolveLocation, toLegacyScriptDoc } from "./compat";
+import { clearScriptRuntimeCache, ingestScriptDoc, locationNames, parseAnyScriptDoc, parseScriptForRuntime, narrativeToText, resolveFinaleOutcome, resolveLocation, toLegacyScriptDoc } from "./compat";
 import { parseScriptDoc } from "./schema";
 import { parseScriptDocV2, publicScriptViewV2 } from "./v2/schema";
 
@@ -65,5 +65,16 @@ describe("V1/V2 剧本兼容层", () => {
     expect(fourth.meta.title).toBe("改名后的剧本");
     expect(fourth).not.toBe(first);
     clearScriptRuntimeCache();
+  });
+
+  it("终局只投影命中的一个 outcome", () => {
+    const v2 = parseScriptDocV2(JSON.parse(readFileSync(v2Path, "utf8")));
+    const caught = resolveFinaleOutcome(v2, { culpritSeat: 1, caught: true });
+    const escaped = resolveFinaleOutcome(v2, { culpritSeat: 1, caught: false });
+    expect(caught.result).toBe("caught");
+    expect(caught.title).toBe("真凶被捕");
+    expect(caught.content).not.toContain("未能指认");
+    expect(escaped.result).toBe("escaped");
+    expect(escaped.title).toBe("真凶逃脱");
   });
 });

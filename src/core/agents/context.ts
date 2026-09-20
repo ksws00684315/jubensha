@@ -133,6 +133,10 @@ export function buildPlayerContext(
   const violationBlock = card.violation.length ? `\n红线（无论如何不能说破、不能做）：${card.violation.join("；")}` : "";
   const alibiBlock = card.alibi?.length ? `不在场证明（必要时可主动陈述）：${narrativeToText(card.alibi)}\n` : "";
   const tellBlock = card.tells.length ? `说谎时的小动作（演凶/撒谎时可带）：${card.tells.join("；")}\n` : "";
+  const activeDefenseHooks = (card.defenseHooks ?? []).filter((hook) => !hook.brokenByPublicClueIds.some((id) => state.clueStates[id]?.isPublic));
+  const defenseBlock = activeDefenseHooks.length
+    ? `可使用的辩解（只可基于这里写明的依据陈述；对应击破材料公开后立刻停止使用）：\n${activeDefenseHooks.map((hook) => `- ${hook.claim}（依据：${hook.basis}）`).join("\n")}\n`
+    : "";
 
   const system = `你正在参加一场文字剧本杀游戏《${script.meta.title}》，扮演其中一名角色。全程以第一人称、在戏内说话。
 
@@ -161,7 +165,7 @@ ${publicRoster(script, state)}
 你的时间线（你自己的经历，可按此陈述）：${timelineToText(card.timeline)}
 你额外知道的事：${card.knowledge.map(knowledgeLine).join("\n") || "（无）"}
 你的说话风格：${[card.persona.speechStyle, ...card.persona.traits].filter(Boolean).join("；")}
-${tellBlock}${violationBlock}
+${tellBlock}${defenseBlock}${violationBlock}
 
 ${strategy}
 

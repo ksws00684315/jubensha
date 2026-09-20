@@ -17,6 +17,8 @@ import { renderActionPlan } from "@/core/agents/plan";
  * AI 发言（真流式）：句子级增量守卫随到随播，泄露句不会被放出；
  * 流式失败时回退到非流式（带重试 + fallback 链 + 全文守卫）。
  */
+export type DispatchTurnStatus = "started" | "in_flight" | "skipped";
+
 export function dispatchTurn(
   e: GameEngine,
   args: {
@@ -30,10 +32,10 @@ export function dispatchTurn(
     /** produce 整体失败/看门狗超时：强制推进回合 */
     onAbort: () => Promise<void>;
   }
-): void {
+): DispatchTurnStatus {
+  if (e.state.phase === "ENDED") return "skipped";
   if (e.turnInFlight) {
-    e.pendingTick = true;
-    return;
+    return "in_flight";
   }
   e.turnInFlight = true;
   const token = ++e.turnToken;
@@ -84,6 +86,7 @@ export function dispatchTurn(
       e.continueTick();
     });
   }, args.timeoutMs * 2 + 5_000);
+  return "started";
 }
 
 /** AI 玩家正式发言回合（锁外生成，锁内提交）。after = 提交后的状态推进。 */

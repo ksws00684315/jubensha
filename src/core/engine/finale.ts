@@ -11,8 +11,14 @@ import type { GameEngine } from "./engine";
  */
 
 /** 记录一票：state.votes 为权威源，Vote 表写入失败重试一次并留痕（DM 视图优先读内存态）。 */
-export async function recordVote(e: GameEngine, seat: number, target: number, reason?: string): Promise<void> {
-  e.state.votes[String(seat)] = { target, reason };
+function legalPublicEvidenceIds(e: GameEngine, ids: readonly string[] | undefined): string[] {
+  const publicIds = new Set(e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id));
+  return [...new Set(ids ?? [])].filter((id) => publicIds.has(id));
+}
+
+export async function recordVote(e: GameEngine, seat: number, target: number, reason?: string, evidenceIds?: string[]): Promise<void> {
+  const legalEvidence = legalPublicEvidenceIds(e, evidenceIds);
+  e.state.votes[String(seat)] = { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}) };
   try {
     await db.vote.create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason } });
   } catch (err) {
@@ -28,7 +34,7 @@ export async function recordVote(e: GameEngine, seat: number, target: number, re
     fromSeat: seat,
     toSeat: null,
     visibility: "public",
-    content: { target, reason, text: `${e.speakerName(seat)} 投给 ${e.speakerName(target)}${reason ? `：${reason}` : ""}` },
+    content: { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}), text: `${e.speakerName(seat)} 投给 ${e.speakerName(target)}${reason ? `：${reason}` : ""}` },
   });
   await e.persist();
 }
@@ -38,17 +44,17 @@ export function queueAiVote(e: GameEngine, seat: number, candidates: number[]): 
   if (e.aiVoteAsked.has(seat)) return;
   e.aiVoteAsked.add(seat);
   e.scheduleBackground(`vote-ai:${seat}`, async () => {
-    let vote: { target: number; reason: string };
+    let vote: { target: number; reason: string; evidenceIds: string[] };
     try {
       vote = await withTimeout(agent.playerVote(e.ctx(), seat, candidates), AI_DECISION_TIMEOUT_MS);
     } catch {
-      vote = { target: candidates[Math.floor(Math.random() * candidates.length)], reason: "" };
+      vote = { target: candidates[Math.floor(Math.random() * candidates.length)], reason: "", evidenceIds: [] };
     }
     await e.exclusive(async () => {
       if (e.state.phase !== "VOTE" || e.state.votes[String(seat)]) return;
       const target = candidates.includes(vote.target) ? vote.target : candidates[0];
       if (target === undefined) return;
-      await recordVote(e, seat, target, vote.reason);
+      await recordVote(e, seat, target, vote.reason, vote.evidenceIds);
       await e.tickInner();
     });
   }, 50 + seat * 40);

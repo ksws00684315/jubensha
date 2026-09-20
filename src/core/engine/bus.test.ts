@@ -23,7 +23,7 @@ describe("gameBus 事件总线", () => {
   });
 
   it("无订阅者时 publish 不抛错（终局后的迟到消息按丢弃处理）", () => {
-    expect(() => publish("bus-nobody", { kind: "end" })).not.toThrow();
+    expect(() => publish("bus-nobody", { kind: "end", lastEventSeq: "0" })).not.toThrow();
   });
 
   it("evictBus：仍有监听者不驱逐；全部退订后驱逐，下次访问按需重建", () => {

@@ -33,6 +33,7 @@ export interface ClueRuntime {
 export interface VoteRecord {
   target: number;
   reason?: string;
+  evidenceIds?: string[];
 }
 
 /** 复盘答题统计：每题分布与正确项；每人得分（对/总/加权分） */
@@ -51,6 +52,8 @@ export interface GameState {
   /** 各座位持有的线索（含私藏） */
   heldClues: Record<number, string[]>;
   readySeats: number[];
+  /** 已发送过读本提醒的真人座位；避免无限时模式和重启后重复提醒。 */
+  readingPromptedSeats?: number[];
   /** SELF_INTRO / 轮流发言时已完成的座位 */
   spokenSeats: number[];
   /** 当前轮到谁发言（轮流阶段） */
@@ -71,7 +74,7 @@ export interface GameState {
   /** 讨论阶段每人剩余提问次数 */
   questionsLeft: Record<string, number>;
   /** 等待被提问者当众回答 */
-  pendingAnswer: { fromSeat: number; toSeat: number; question: string; forced?: boolean } | null;
+  pendingAnswer: { fromSeat: number; toSeat: number; question: string; evidenceIds?: string[]; forced?: boolean } | null;
   /** 每轮行动点（座位索引字符串 → 剩余点；技能系统开启时由阶段流转重置） */
   actionPoints?: Record<string, number>;
   /** 已用过的 once 技能（键 `${seat}:${skillId}`，整局有效） */
@@ -130,7 +133,7 @@ export type BusMessage =
   | { kind: "event"; event: EngineEvent }
   | { kind: "delta"; seat: number | "dm"; text: string; audience: "public" | number }
   | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number; generationId?: string }
-  | { kind: "end" };
+  | { kind: "end"; lastEventSeq: string };
 
 export interface EngineContext {
   gameId: string;

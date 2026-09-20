@@ -19,12 +19,15 @@ import path from "node:path";
 
 const hoisted = vi.hoisted(() => {
   const hang = { stream: false, chat: false };
+  let releaseStream: (() => void) | null = null;
   const tables = { rooms: [] as any[], games: [] as any[], events: [] as any[], seatStates: [] as any[], votes: [] as any[] };
+  const calls = { chatStream: 0 };
   let seq = BigInt(0);
   const gameRows = new Map<string, any>();
   return {
     tables,
     calls: { gameUpdate: 0, roomUpdate: 0 },
+    llmCalls: calls,
     nextEventRow(data: any) {
       seq += BigInt(1);
       const row = { seq, ...data, createdAt: new Date() };
@@ -33,6 +36,8 @@ const hoisted = vi.hoisted(() => {
     },
     gameRows,
     hang,
+    get releaseStream() { return releaseStream; },
+    set releaseStream(value: (() => void) | null) { releaseStream = value; },
     // AI 私信决策开关:null=拒绝;设为 {to,text} 则 AI 向该真人开窗（to 为 1 基座位号）
     whisperDecision: null as { to: number; text: string } | null,
   };
@@ -116,7 +121,8 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
       return { text, promptTokens: 10, completionTokens: 5, providerName: "mock", modelId: "mock" };
     }),
     chatStream: vi.fn(async function* () {
-      if (hoisted.hang.stream) await new Promise(() => {});
+      hoisted.llmCalls.chatStream += 1;
+      if (hoisted.hang.stream) await new Promise<void>((resolve) => { hoisted.releaseStream = resolve; });
       const speech = "我确认我当时一直待在房间里，哪里都没有去。";
       yield speech.slice(0, 10);
       yield speech.slice(10);
@@ -127,7 +133,8 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 
 import { GameEngine } from "./engine";
 import { maybeQueueWhisper } from "./social";
-import { tallyVotes } from "./phases";
+import { tallyVotes, transitionSelfIntro } from "./phases";
+import { dispatchClues } from "./search-deal";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
 const doc = parseScriptForRuntime(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
@@ -179,6 +186,8 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     hoisted.tables.votes.length = 0;
     hoisted.calls.gameUpdate = 0;
     hoisted.calls.roomUpdate = 0;
+    hoisted.llmCalls.chatStream = 0;
+    hoisted.releaseStream = null;
   });
 
   it("超时跳过 + 真人提问 + AI 全兜底,完整走完两轮讨论并结算", async () => {
@@ -261,6 +270,97 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     expect(discussionRounds.has(1)).toBe(true);
     expect(discussionRounds.has(2)).toBe(true);
   }, 120_000);
+
+  it("终局复盘生成在途时重复 tick 不会触发 200 步空转", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    await vi.advanceTimersByTimeAsync(500); // 让开场旁白完成
+
+    engine.state.phase = "REVEAL";
+    engine.state.voteResult = { counts: { "0": 1 }, culpritSeat: 0, caught: true };
+    hoisted.hang.stream = true;
+    await engine.tick();
+    await vi.advanceTimersByTimeAsync(50); // 终局 DM 生成开始并挂起
+
+    await engine.tick(); // 模拟投票完成时已排队的重复 tick
+
+    expect(eventsOf(engine).filter((event) => event.type === "system" && event.content.text?.includes("超过 200 步"))).toHaveLength(0);
+    expect(engine.state.phase).toBe("REVEAL");
+    hoisted.hang.stream = false;
+    hoisted.releaseStream?.();
+    await vi.advanceTimersByTimeAsync(1000);
+
+    const events = eventsOf(engine);
+    expect(events.filter((event) => event.type === "reveal")).toHaveLength(1);
+    expect(events.filter((event) => event.type === "phase" && event.content.phase === "ENDED")).toHaveLength(1);
+    const narrationIndex = events.findIndex((event) => event.type === "phase" && event.phase === "REVEAL" && Boolean(event.content.text));
+    const revealIndex = events.findIndex((event) => event.type === "reveal");
+    const endedIndex = events.findIndex((event) => event.type === "phase" && event.content.phase === "ENDED");
+    expect(narrationIndex).toBeLessThan(revealIndex);
+    expect(revealIndex).toBeLessThan(endedIndex);
+    await engine.tick();
+    expect(eventsOf(engine).filter((event) => event.type === "reveal")).toHaveLength(1);
+  }, 30_000);
+
+  it("无限真人时间下连续推进只向真人发送一次读本提示", async () => {
+    const room = { ...makeRoom(), unlimitedHumanTurns: true };
+    const engine = await GameEngine.start(room as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    await vi.advanceTimersByTimeAsync(100);
+    await engine.tick();
+    await engine.tick();
+    await engine.tick();
+
+    expect(eventsOf(engine).filter((event) => event.type === "system" && event.visibility === "seat:0" && event.content.text?.includes("请阅读角色剧本"))).toHaveLength(1);
+  }, 30_000);
+
+  it("常规阶段切换使用模板，不再额外调用 AI 主持", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    await vi.advanceTimersByTimeAsync(500);
+    expect(hoisted.llmCalls.chatStream).toBe(1); // 只有开场由 AI 主持
+
+    await transitionSelfIntro(engine);
+
+    expect(hoisted.llmCalls.chatStream).toBe(1);
+    expect(eventsOf(engine).some((event) => event.type === "phase" && event.phase === "SELF_INTRO" && event.content.text?.startsWith("进入【自我介绍】"))).toBe(true);
+  }, 30_000);
+
+  it("同一地点多人搜证时，一张线索最多交给一个座位", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    const location = doc.locations.find((candidate) => doc.clues.some((clue) => clue.locationId === candidate.id && !clue.forbiddenCharacterIds.includes("qinghe")))!;
+    engine.state.phase = "SEARCH";
+    engine.state.round = 1;
+    engine.state.searchChoices = { "0": location.name, "1": location.name, "2": "__no_search__", "3": "__no_search__", "4": "__no_search__" };
+
+    await dispatchClues(engine);
+
+    const held = Object.values(engine.state.heldClues).flat();
+    expect(new Set(held).size).toBe(held.length);
+    expect(Object.values(engine.state.clueStates).filter((clue) => clue.discoveredBy !== null).length).toBe(new Set(held).size);
+  }, 30_000);
+
+  it("座位没有任何可搜材料时自动完成搜证，不会要求选耗尽地点", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    engine.state.phase = "SEARCH";
+    engine.state.round = 1;
+    engine.state.clueStates = Object.fromEntries(doc.clues.map((clue) => [clue.id, { discoveredBy: null, isPublic: true }]));
+
+    await engine.tick();
+    expect(Object.values(engine.state.searchChoices)).toHaveLength(5);
+    expect(Object.values(engine.state.searchChoices).every((choice) => choice === "__no_search__")).toBe(true);
+    await engine.tick();
+    expect(engine.state.phase).toBe("DISCUSSION");
+  }, 30_000);
+
+  it("后端拒绝搜自己的房间", async () => {
+    const scripted = structuredClone(doc);
+    scripted.locations.push({ id: "qinghe_room", name: "清河的房间", ownerCharacterId: "qinghe", description: [] });
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(scripted)) });
+    engine.state.phase = "SEARCH";
+    engine.state.round = 1;
+
+    const result = await engine.handleAction(0, { type: "choose_location", location: "清河的房间" });
+
+    expect(result).toMatchObject({ ok: false, error: "你不能搜自己的房间" });
+  }, 30_000);
 });
 
 describe("回合执行器(审计 M6 核心回归)", () => {

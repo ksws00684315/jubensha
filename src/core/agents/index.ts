@@ -276,7 +276,7 @@ export const agent = {
     ctx: AgentCtx,
     seatIndex: number,
     candidates: number[],
-  ): Promise<{ toSeat: number; question: string } | null> {
+  ): Promise<{ toSeat: number; question: string; evidenceIds: string[] } | null> {
     if (!candidates.length) return null;
     const roster = candidates
       .map((i) => {
@@ -285,21 +285,28 @@ export const agent = {
         return `${i + 1}:${name}`;
       })
       .join("、");
-    const requireJson = `现在轮到你发言。若有一个具体疑点需要对方当众回答，可提问一次；没有必要就不要问。请只输出 JSON：{"ask":false} 或 {"ask":true,"target":座位号,"question":"一个具体问题"}。可问：${roster}。不要一次抛多个问题，也不要审问式连问。`;
+    const publicEvidenceIds = ctx.script.clues.filter((clue) => ctx.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id);
+    const askedThisRound = ctx.events
+      .filter((event) => event.type === "speech" && event.phase === "DISCUSSION" && event.round === ctx.state.round && event.fromSeat === seatIndex && event.toSeat !== null)
+      .map((event) => `${event.toSeat! + 1}:${event.content.text ?? ""}`)
+      .join("；");
+    const requireJson = `现在轮到你发言。若有一个具体疑点需要对方当众回答，可提问一次；没有必要就不要问。请只输出 JSON：{"ask":false} 或 {"ask":true,"target":座位号,"question":"一个具体问题","evidenceIds":["公开线索id"]}。可问：${roster}。可引用的公开线索 ID：${publicEvidenceIds.join("、") || "（暂无）"}。本轮你已经问过：${askedThisRound || "（暂无）"}。有公开线索时必须引用至少一张与问题相关的线索；不要重复相同目标和相同证据组合，不要一次抛多个问题，也不要审问式连问。`;
     const res = await chat({
       purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
       gameId: ctx.gameId,
       messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }),
       temperature: 0.5,
     });
-    const parsed = extractJson<{ ask?: boolean; target?: number; question?: string }>(res.text);
+    const parsed = extractJson<{ ask?: boolean; target?: number; question?: string; evidenceIds?: string[] }>(res.text);
     if (!parsed?.ask || parsed.target === undefined) return null;
     const toSeat = parsed.target - 1;
     // 提问会以本人公开发言进入事件流,同样要过泄露守卫;剥空则放弃提问
     const guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (parsed.question ?? "").trim());
     const question = guarded.text;
     if (!candidates.includes(toSeat) || !question) return null;
-    return { toSeat, question: question.slice(0, MAX_QUESTION_CHARS) };
+    const evidenceIds = [...new Set(parsed.evidenceIds ?? [])].filter((id) => publicEvidenceIds.includes(id));
+    if (publicEvidenceIds.length && !evidenceIds.length) return null;
+    return { toSeat, question: question.slice(0, MAX_QUESTION_CHARS), evidenceIds };
   },
 
   /** 复盘答题：根据情报与推理作答（问题id→选项id；非法/缺题由引擎随机兜底） */
@@ -320,27 +327,30 @@ export const agent = {
   },
 
   /** 玩家投票 */
-  async playerVote(ctx: AgentCtx, seatIndex: number, candidates: number[]): Promise<{ target: number; reason: string }> {
+  async playerVote(ctx: AgentCtx, seatIndex: number, candidates: number[]): Promise<{ target: number; reason: string; evidenceIds: string[] }> {
     const character = characterOf(ctx.script, ctx.state, seatIndex);
     const asCulprit = character?.privateCard.isCulprit;
+    const publicEvidenceIds = ctx.script.clues.filter((clue) => ctx.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id);
     const requireJson = asCulprit
-      ? `请只输出 JSON：{"target":座位号,"reason":"一句话理由"}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。把票投给一个能让你脱身的人，理由必须听起来像基于公开讨论。`
-      : `请只输出 JSON：{"target":座位号,"reason":"一句话理由"}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。你不是全知侦探：只根据公开发言和已公开线索投票，不要把只有你知道的私密情报当成全场共识。证据并不充分时，投疑点较大的人即可，不要表现得像已经知道答案。`;
+      ? `请只输出 JSON：{"target":座位号,"reason":"一句话理由","evidenceIds":["公开线索id"]}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。把票投给一个能让你脱身的人，理由必须听起来像基于公开讨论。可引用公开线索 ID：${publicEvidenceIds.join("、") || "（暂无）"}。`
+      : `请只输出 JSON：{"target":座位号,"reason":"一句话理由","evidenceIds":["公开线索id"]}。可投座位：${candidates.map((n) => n + 1).join("、")}（不能投自己）。你不是全知侦探：只根据公开发言和已公开线索投票，不要把只有你知道的私密情报当成全场共识。可引用公开线索 ID：${publicEvidenceIds.join("、") || "（暂无）"}。证据并不充分时，投疑点较大的人即可，不要表现得像已经知道答案。`;
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     for (let i = 0; i < JSON_DECISION_RETRIES; i++) {
       const res = await chat({ purpose, gameId: ctx.gameId, messages: buildPlayerContext(ctx.script, ctx.state, seatIndex, ctx.events, { requireJson }), temperature: 0.4 });
-      const parsed = extractJson<{ target?: number; reason?: string }>(res.text);
+      const parsed = extractJson<{ target?: number; reason?: string; evidenceIds?: string[] }>(res.text);
       if (parsed?.target !== undefined) {
         const t = parsed.target - 1;
         if (candidates.includes(t) && t !== seatIndex) {
           // 理由同样公开发言,过泄露守卫;剥空降级为无理由投票
           const reason = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (parsed.reason ?? "").trim()).text;
-          return { target: t, reason: reason.slice(0, MAX_VOTE_REASON_CHARS) };
+          const evidenceIds = [...new Set(parsed.evidenceIds ?? [])].filter((id) => publicEvidenceIds.includes(id));
+          if (publicEvidenceIds.length && !evidenceIds.length) continue;
+          return { target: t, reason: reason.slice(0, MAX_VOTE_REASON_CHARS), evidenceIds };
         }
       }
     }
     const fallback = candidates.filter((c) => c !== seatIndex);
-    return { target: fallback[Math.floor(Math.random() * fallback.length)], reason: "" };
+    return { target: fallback[Math.floor(Math.random() * fallback.length)], reason: "", evidenceIds: [] };
   },
 
   /** 私聊回复 */

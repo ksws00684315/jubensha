@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { clueText, resolveLocation } from "@/core/script/compat";
 import { agent } from "@/core/agents";
 import { activeSeats, clueReachable } from "./state";
+import { searchLocationOptions } from "./search-locations";
 import { afterSearchPhase } from "./phases";
 import { AI_DECISION_TIMEOUT_MS, HUMAN_TURN_TIMEOUT_MS, withTimeout } from "./util";
 import type { GameEngine } from "./engine";
@@ -30,15 +31,13 @@ export function publicClueIds(e: GameEngine): Set<string> {
 
 /** 某座位视角下可用的搜证地点（禁搜自己的房间/无可达线索的地点不列） */
 export function availableLocations(e: GameEngine, seatIndex?: number): string[] {
-  const seatChar = seatCharacterId(e, seatIndex);
-  return e.script.locations
-    .filter((loc) => {
-      if (seatChar && loc.ownerCharacterId === seatChar) return false;
-      return e.script.clues.some(
-        (c) => c.locationId === loc.id && e.state.clueStates[c.id] === undefined && clueReachable(c, { seatCharacterId: seatChar, round: e.state.round, publicClueIds: publicClueIds(e) })
-      );
-    })
-    .map((loc) => loc.name);
+  return searchLocationOptions({
+    locations: e.script.locations,
+    clues: e.script.clues,
+    clueStates: e.state.clueStates,
+    seatCharacterId: seatCharacterId(e, seatIndex),
+    round: e.state.round,
+  }).filter((option) => option.status === "available").map((option) => option.name);
 }
 
 /** 兜底地点：无视发放计划/禁搜线索，但绝不给本人房间——只在正常列表为空时使用，保证流程不卡死。 */
@@ -54,6 +53,7 @@ export function cluesAt(e: GameEngine, locationKey: string, seatIndex?: number) 
   const loc = resolveLocation(e.script, locationKey);
   if (!loc) return [];
   const seatChar = seatCharacterId(e, seatIndex);
+  if (seatChar && loc.ownerCharacterId === seatChar) return [];
   return e.script.clues.filter(
     (c) => c.locationId === loc.id && e.state.clueStates[c.id] === undefined && clueReachable(c, { seatCharacterId: seatChar, round: e.state.round, publicClueIds: publicClueIds(e) })
   );
@@ -71,10 +71,10 @@ export function queueAiSearchChoice(e: GameEngine, seat: number): void {
     try {
       loc = await withTimeout(agent.playerChooseLocation(e.ctx(), seat, locations), AI_DECISION_TIMEOUT_MS);
     } catch {
-      loc = locations[Math.floor(Math.random() * locations.length)] ?? e.script.locations[0]?.name ?? "";
+      loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
     }
     const resolved = resolveLocation(e.script, loc);
-    if (!resolved) loc = locations[Math.floor(Math.random() * locations.length)] ?? e.script.locations[0]?.name ?? "";
+    if (!resolved) loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
     else if (locations.length > 0 && !locations.includes(resolved.name)) loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
     if (!loc) return;
     await e.exclusive(async () => {
@@ -91,6 +91,7 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
   for (const seat of activeSeats(e.state)) {
     const loc = e.state.searchChoices[String(seat)];
     if (!loc) continue;
+    if (loc === "__no_search__") continue;
     const seatChar = seatCharacterId(e, seat);
     const chosen = resolveLocation(e.script, loc);
     if (seatChar && chosen?.ownerCharacterId === seatChar) {
