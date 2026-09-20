@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { locationNameOf, locationNames, narrativeToText, parseScriptForRuntime, publicBioText, timelineToText } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
-import { clueReachable, cluesVisibleToSeat } from "@/core/engine/state";
+import { cluesVisibleToSeat } from "@/core/engine/state";
+import { searchLocationOptions } from "@/core/engine/search-locations";
 import { unlockedActs } from "@/core/engine/flow";
 import { GameEngine } from "@/core/engine/engine";
 import type { GameState } from "@/core/engine/types";
@@ -69,21 +70,15 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
       // 观战（无有效座位 token）视角一律不下发搜证地点：
       // 否则"还有哪些地点有货、还剩几个"会变成一个免费的情报优势。
       if (mySeat === null) return [];
-      const myChar = doc.characters.find((c) => c.id === game.room.seats.find((s2) => s2.index === mySeat)?.characterId);
-      const seatChar = myChar?.id ?? null;
-      const publicClueIds = new Set(Object.entries(clueStates).filter(([, st]) => (st as { isPublic?: boolean }).isPublic).map(([id]) => id));
-      const round = game.round;
-      return doc.locations
-        .filter((location) => !(seatChar && location.ownerCharacterId === seatChar))
-        .filter((location) =>
-          doc.clues.some(
-            (clue) =>
-              clue.locationId === location.id &&
-              clueStates[clue.id] === undefined &&
-              clueReachable(clue, { seatCharacterId: seatChar, round, publicClueIds }),
-          ),
-        )
-        .map((location) => location.name);
+      const seatChar = game.room.seats.find((s2) => s2.index === mySeat)?.characterId ?? null;
+      return searchLocationOptions({ locations: doc.locations, clues: doc.clues, clueStates, seatCharacterId: seatChar, round: game.round })
+        .filter((option) => option.status === "available")
+        .map((option) => option.name);
+    })(),
+    searchLocationOptions: (() => {
+      if (mySeat === null) return [];
+      const seatChar = game.room.seats.find((s2) => s2.index === mySeat)?.characterId ?? null;
+      return searchLocationOptions({ locations: doc.locations, clues: doc.clues, clueStates, seatCharacterId: seatChar, round: game.round });
     })(),
     seats: game.room.seats.map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);

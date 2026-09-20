@@ -101,6 +101,7 @@ export interface GameSummary {
   };
   locations: string[];
   availableLocations: string[];
+  searchLocationOptions: Array<{ name: string; status: "available" | "own_room" | "exhausted" | "locked"; reason?: string }>;
   seats: Array<{
     index: number;
     kind: "human" | "ai" | "empty";

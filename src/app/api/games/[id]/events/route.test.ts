@@ -194,4 +194,30 @@ describe("events SSE：回放 / 鉴权降级 / 断线续传", () => {
     expect(seqsOf(msgs)).toEqual(["7"]);
     abort();
   });
+
+  it("结束通知携带最终事件序号", async () => {
+    const { msgs, waitFor, abort } = await openStream("?lastSeq=0");
+    await waitFor(() => msgs.some((m) => m.kind === "hello"));
+    publish(GAME_ID, { kind: "end", lastEventSeq: "42" });
+    await waitFor(() => msgs.some((m) => m.kind === "end"));
+    expect(msgs.find((m) => m.kind === "end")).toEqual({ kind: "end", lastEventSeq: "42" });
+    abort();
+  });
+
+  it("历史回放期间结束通知排在复盘、揭晓和 ENDED 事件之后", async () => {
+    let resolveHistory: (rows: unknown[]) => void = () => undefined;
+    mockFindEvents.mockImplementationOnce(() => new Promise((resolve) => { resolveHistory = resolve; }) as never);
+    const { msgs, waitFor, abort } = await openStream("?lastSeq=0");
+    publish(GAME_ID, { kind: "event", event: busEvent("6", { type: "phase", phase: "REVEAL", content: { text: "主持复盘", phase: "REVEAL" } }) });
+    publish(GAME_ID, { kind: "event", event: busEvent("7", { type: "reveal", phase: "REVEAL", content: { text: "结构化揭晓" } }) });
+    publish(GAME_ID, { kind: "event", event: busEvent("8", { type: "phase", phase: "ENDED", content: { text: "", phase: "ENDED" } }) });
+    publish(GAME_ID, { kind: "end", lastEventSeq: "8" });
+    resolveHistory([]);
+
+    await waitFor(() => msgs.some((m) => m.kind === "end"));
+    expect(seqsOf(msgs)).toEqual(["6", "7", "8"]);
+    expect(msgs.findIndex((m) => m.kind === "end")).toBeGreaterThan(msgs.findIndex((m) => m.kind === "event" && (m.event as EngineEvent).type === "phase" && (m.event as EngineEvent).phase === "ENDED"));
+    expect((msgs.find((m) => m.kind === "end") as { lastEventSeq: string }).lastEventSeq).toBe("8");
+    abort();
+  });
 });

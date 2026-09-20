@@ -89,6 +89,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
       // 历史查询期间暂存实时事件，回放完成后按序发送并去重。
       const delivered = new Set<string>();
       const pending: EngineEvent[] = [];
+      const pendingEnds: Extract<BusMessage, { kind: "end" }>[] = [];
       let replaying = true;
       const sendEvent = (ev: EngineEvent) => {
         if (delivered.has(ev.seq)) return;
@@ -102,6 +103,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
         } else if (msg.kind === "delta" || msg.kind === "thinking") {
           if (msg.audience !== "public" && !dmView && seatIndex !== msg.audience) return;
           send(msg);
+        } else if (msg.kind === "end" && replaying) {
+          pendingEnds.push(msg);
         } else {
           send(msg);
         }
@@ -123,6 +126,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
       for (const ev of pending) sendEvent(ev);
       const lastDelivered = history.length ? history[history.length - 1].seq.toString() : lastSeq.toString();
       send({ kind: "hello", lastSeq: lastDelivered });
+      for (const end of pendingEnds) send(end);
 
       // 2) 心跳保活 + 定期重验凭证（座位/DM token 轮换后,旧订阅随之失效）
       heartbeat = setInterval(() => {
