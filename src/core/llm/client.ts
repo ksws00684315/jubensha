@@ -6,6 +6,7 @@ import { decryptSecret } from "@/lib/crypto";
 import { candidateModelListUrls, normalizeProviderBaseUrl } from "./provider-url";
 import { emptyCompletionError, isRetryableLlmError, resolveMaxOutputTokens } from "./output-tokens";
 import { createHash, randomUUID } from "node:crypto";
+import { composeSegments, type PromptSegments } from "./prompt-segments";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
@@ -185,32 +186,61 @@ export function inputBudgetTokens(b: Pick<ResolvedBinding, "contextWindow">, max
   return Math.max(0, b.contextWindow - maxOutputTokens - safety);
 }
 
-/** 在不改变 system 规则和当前任务尾部的前提下裁剪最旧现场记录。 */
-export function fitMessagesToInputBudget(
+/**
+ * 分层预算降级：①裁 log 最旧（保最近）→②按序整块丢 droppable→③anchored 不降级，
+ * 仍超预算时原样返回，交由 assertContextBudget 显式抛错，绝不静默裁角色卡或任务指令。
+ * 未配置 contextWindow 的绑定整段跳过（维持旧行为）。
+ */
+export function fitSegmentsToInputBudget(
   b: Pick<ResolvedBinding, "contextWindow">,
-  messages: ChatMessage[],
+  segments: PromptSegments,
   maxOutputTokens: number,
-): ChatMessage[] {
+): PromptSegments {
   const budget = inputBudgetTokens(b, maxOutputTokens);
-  if (budget === null || estimateInputTokens(messages) <= budget) return messages;
-  const userIndex = messages.findIndex((m) => m.role === "user");
-  if (userIndex < 0) return messages;
-  const user = messages[userIndex].content;
-  const marker = "\n\n【你持有的线索卡】";
-  const markerIndex = user.indexOf(marker);
-  if (markerIndex < 0) return messages;
-  const growing = user.slice(0, markerIndex);
-  const tail = user.slice(markerIndex);
-  const fixedTokens = estimateInputTokens(messages.filter((_, i) => i !== userIndex).concat({ role: "user", content: tail }));
-  const availableGrowingTokens = budget - fixedTokens;
-  if (availableGrowingTokens < 64) return messages;
-  const maxChars = Math.floor(availableGrowingTokens * 3.5);
-  const clipped = growing.length > maxChars
-    ? `【较早现场记录因模型输入预算已裁剪，仅保留最近部分】\n${growing.slice(-maxChars)}`
-    : growing;
-  const out = messages.slice();
-  out[userIndex] = { ...out[userIndex], content: `${clipped}${tail}` };
-  return out;
+  if (budget === null) return segments;
+  const s: PromptSegments = { ...segments, droppable: [...segments.droppable] };
+  const tokens = () => estimateInputTokens(composeSegments(s));
+  if (tokens() <= budget) return segments;
+  const CLIP_HINT = "【较早现场记录因模型输入预算已裁剪，仅保留最近部分】\n";
+  // ① log 降级：保留尾部（最近的现场），头部加一行裁剪提示；迭代收敛——
+  // 提示行本身占位、trim 也有出入，一次算术估算不可靠，宁可多循环几次。
+  while (tokens() > budget && s.log.trim()) {
+    const overflow = estimateInputTokens(composeSegments(s)) - budget;
+    const dropChars = Math.max(256, Math.ceil(overflow * 3.5) + 64);
+    if (s.log.length <= CLIP_HINT.length + 32) {
+      s.log = "";
+      break;
+    }
+    const keep = s.log.startsWith(CLIP_HINT) ? s.log.slice(CLIP_HINT.length) : s.log;
+    s.log = CLIP_HINT + keep.slice(Math.min(dropChars, Math.floor(keep.length / 2)));
+  }
+  // ② droppable 按先丢→后丢整块移除，直到放得下 anchored 区
+  while (tokens() > budget && s.droppable.length > 0) s.droppable.shift();
+  // ③ 仍超预算：原样返回，上层断言抛错
+  return s;
+}
+
+/** 请求消息装配：有分段先按分层降级再组合；无分段（生成器等路径）沿用原消息。
+ * 顺序固定为 fit-at-segments → compose → toCompatibleMessages：
+ * system 拒绝降级并入 user 发生在裁剪之后，裁 log 永远不会吃掉并入的系统提示前缀。 */
+function prepareRequest(
+  b: ResolvedBinding,
+  opts: ChatOptions,
+  maxOutputTokens: number,
+  preserveSystem = preservesSystemMessages(b),
+): ChatMessage[] {
+  const segments = opts.segments ? fitSegmentsToInputBudget(b, opts.segments, maxOutputTokens) : null;
+  const messages = segments ? composeSegments(segments) : opts.messages;
+  return toCompatibleMessages(messages, preserveSystem);
+}
+
+/** 与 prepareRequest 同口径的预算诊断（进 UsageLog 的估算输入/预算）。 */
+function requestDiagnostics(b: ResolvedBinding, opts: ChatOptions): { inputTokensEstimate: number; budgetTokens: number | null } {
+  const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
+  return {
+    inputTokensEstimate: estimateInputTokens(prepareRequest(b, opts, maxOutputTokens)),
+    budgetTokens: inputBudgetTokens(b, maxOutputTokens),
+  };
 }
 
 function assertContextBudget(b: ResolvedBinding, messages: Array<{ content: string }>, maxOutputTokens: number): void {
@@ -229,10 +259,9 @@ async function callOnce(
   purpose: string,
   opts: ChatOptions
 ): Promise<{ text: string; prompt: number; completion: number; cached: number; latencyMs: number }> {
-  const rawMessages = toCompatibleMessages(opts.messages, preservesSystemMessages(b));
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
-  const messages = fitMessagesToInputBudget(b, rawMessages, maxOutputTokens);
+  const messages = prepareRequest(b, opts, maxOutputTokens);
   assertContextBudget(b, messages, maxOutputTokens);
 
   const invoke = async (extra?: Record<string, unknown>, invokeMessages = messages) => {
@@ -271,7 +300,8 @@ async function callOnce(
       // 网关声明支持 system 但实际拒绝时，在进程内记住该模型并合并到首条 user。
       // 下次调用直接走兼容格式，避免每轮重复一次必败请求。
       systemSupportOverrides.set(bindingSystemKey(b), false);
-      const compatible = toCompatibleMessages(opts.messages, false);
+      // 同样走 prepareRequest：fit→compose→并入 system，降级不再绕过预算裁剪
+      const compatible = prepareRequest(b, opts, maxOutputTokens, false);
       try {
         return await invoke({ thinking: { type: "disabled" } }, compatible);
       } catch (fallbackErr) {
@@ -300,10 +330,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
   let lastErr: unknown = null;
   let attempts = 0;
   let lastBinding = binding;
-  let lastDiagnostics = {
-    inputTokensEstimate: estimateInputTokens(fitMessagesToInputBudget(binding, toCompatibleMessages(opts.messages, preservesSystemMessages(binding)), resolveMaxOutputTokens(binding.maxTokens, opts.maxTokens))),
-    budgetTokens: inputBudgetTokens(binding, resolveMaxOutputTokens(binding.maxTokens, opts.maxTokens)),
-  };
+  let lastDiagnostics = requestDiagnostics(binding, opts);
   for (const b of slotsToTry) {
     for (const delay of [0, ...RETRY_DELAYS_MS]) {
       if (delay) {
@@ -323,10 +350,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
       opts.abortSignal?.throwIfAborted();
       attempts += 1;
       lastBinding = b;
-      lastDiagnostics = {
-        inputTokensEstimate: estimateInputTokens(fitMessagesToInputBudget(b, toCompatibleMessages(opts.messages, preservesSystemMessages(b)), resolveMaxOutputTokens(b.maxTokens, opts.maxTokens))),
-        budgetTokens: inputBudgetTokens(b, resolveMaxOutputTokens(b.maxTokens, opts.maxTokens)),
-      };
+      lastDiagnostics = requestDiagnostics(b, opts);
       try {
         const r = await callOnce(b, opts.purpose, opts);
         await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate: lastDiagnostics.inputTokensEstimate, budgetTokens: lastDiagnostics.budgetTokens, retryCount: attempts - 1 });
@@ -378,18 +402,16 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
 /** 流式对话：逐 token 产出文本；结束时记账。失败时抛出。 */
 export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   const b = await resolveBinding(opts.purpose);
-  const model = toLanguageModel(b, { thinking: { type: "disabled" } });
-  const rawMessages = toCompatibleMessages(opts.messages, preservesSystemMessages(b));
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
-  const messages = fitMessagesToInputBudget(b, rawMessages, maxOutputTokens);
+  const messages = prepareRequest(b, opts, maxOutputTokens);
   assertContextBudget(b, messages, maxOutputTokens);
   const requestId = opts.requestId ?? randomUUID();
   const inputTokensEstimate = estimateInputTokens(messages);
   const budgetTokens = inputBudgetTokens(b, maxOutputTokens);
   try {
     const result = streamText({
-      model,
+      model: toLanguageModel(b, { thinking: { type: "disabled" } }),
       messages,
       temperature: opts.temperature ?? b.temperature ?? 0.8,
       maxOutputTokens,

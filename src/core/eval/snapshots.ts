@@ -178,7 +178,7 @@ export function buildFixedEvaluationBundle(script: ScriptDocV2, seatIndex = firs
   const scoringKeys: EvalScoringKey[] = [];
   for (const scene of scenes) {
     const made = makeCase(script, scene, seatIndex, conditional);
-    const messages = buildPlayerContext(script, made.state, seatIndex, made.events, { extraInstruction: made.task });
+    const { messages } = buildPlayerContext(script, made.state, seatIndex, made.events, { extraInstruction: made.task });
     const snapshot: EvalSnapshot = {
       version: 1,
       id: `${scene}-${hash.slice(0, 12)}`,

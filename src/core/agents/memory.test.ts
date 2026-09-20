@@ -116,7 +116,7 @@ describe("分层记忆", () => {
         content: { clueId: "ledger", clueName: "锁在箱子里的账本", clueContent: "账本内容", private: true },
       },
     ];
-    const msgs = buildPlayerContext(doc, state, 1, events, {});
+    const msgs = buildPlayerContext(doc, state, 1, events, {}).messages;
     const joined = msgs.map((m) => m.content).join("\n");
     expect(joined).toContain("【现场记录·此前概要】");
     expect(joined).toContain("锁在箱子里的账本");
@@ -171,7 +171,7 @@ describe("世界书式线索提示", () => {
     const state = makeState();
     const events = [speechEv("1", 2, "我听说周伯家里有一把锁，还翻出过锁在箱子里的账本，对吧？")];
     expect(clueMentionHints(doc, state, 1, events)).toContain("锁在箱子里的账本");
-    const joined = buildPlayerContext(doc, state, 1, events, {}).map((m) => m.content).join("\n");
+    const joined = buildPlayerContext(doc, state, 1, events, {}).messages.map((m) => m.content).join("\n");
     expect(joined).toContain("【可打出的牌】");
   });
 

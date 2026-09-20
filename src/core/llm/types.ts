@@ -7,10 +7,27 @@ export interface ChatMessage {
   content: string;
 }
 
+/** 见 prompt-segments.ts：提供时预算裁剪按分段层级降级。 */
+export interface PromptSegments {
+  system: string;
+  log: string;
+  anchoredHead: string;
+  /** 按先丢→后丢排序 */
+  droppable: string[];
+  anchoredTail: string;
+}
+
+export interface PromptAssembly {
+  messages: ChatMessage[];
+  segments: PromptSegments;
+}
+
 export interface ChatOptions {
   /** 用途槽位，决定用哪个模型绑定 */
   purpose: Purpose;
   messages: ChatMessage[];
+  /** 与 messages 对应的分段结构（buildPlayerContext/buildDmContext 的返回）；提供时按分层降级裁剪。 */
+  segments?: PromptSegments;
   /** 期望返回 JSON（仍需调用方自行解析，见 extractJson） */
   jsonMode?: boolean;
   temperature?: number;

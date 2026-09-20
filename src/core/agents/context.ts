@@ -1,4 +1,5 @@
-import type { ChatMessage } from "@/core/llm/types";
+import type { ChatMessage, PromptAssembly } from "@/core/llm/types";
+import { composeSegments } from "@/core/llm/prompt-segments";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import { unlockedActs } from "@/core/engine/flow";
 import { clueMentionHints, renderLogWithMemory } from "./memory";
@@ -100,14 +101,18 @@ function publicRoster(script: ScriptDocV2, state: GameState): string {
     .join("\n");
 }
 
-/** 玩家 agent 的完整上下文（防火墙出口） */
+/**
+ * 玩家 agent 的完整上下文（防火墙出口）。
+ * 返回 messages + segments：segments 供 llm 客户端按分层预算降级（裁 log→丢 droppable→
+ * anchored 永不降级），messages 即 composeSegments(segments) 的结果。
+ */
 export function buildPlayerContext(
   script: ScriptDocV2,
   state: GameState,
   seatIndex: number,
   events: EngineEvent[],
   opts: { hint?: string; extraInstruction?: string; requireJson?: string; recall?: string; taskType?: PlayerTask }
-): ChatMessage[] {
+): PromptAssembly {
   const character = characterOf(script, state, seatIndex);
   if (!character) throw new Error(`座位 ${seatIndex} 未绑定角色`);
 
@@ -208,17 +213,21 @@ ${renderLogWithMemory(events, seatIndex, state.memory, true)}`;
     if (lines.length) actBlock = `【本幕新知】\n${lines.join("\n")}\n`;
   }
 
-  const tail = `【你持有的线索卡】
-${clueBlock}
-${mentionBlock ? `\n${mentionBlock}\n` : ""}
-${actBlock}${opts.recall ? `${opts.recall}\n` : ""}
-${publicEvidence ? `【公开证据登记】\n${publicEvidence}\n` : ""}
-${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
-${hardTail}
-${opts.extraInstruction ?? ""}
-${opts.requireJson ? `\n${opts.requireJson}` : ""}`;
+  // droppable 按「先丢→后丢」排序：召回是模糊近似记忆最先牺牲，其次证据登记、可打出的牌
+  const segments = {
+    system,
+    log: growingLog,
+    anchoredHead: `【你持有的线索卡】\n${clueBlock}`,
+    droppable: [
+      opts.recall?.trim() ?? "",
+      publicEvidence ? `【公开证据登记】\n${publicEvidence}` : "",
+      mentionBlock,
+    ],
+    anchoredTail: `${actBlock}${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
 
-  return cacheFriendlyMessages(system, growingLog, tail);
+${hardTail}${opts.extraInstruction ? `\n\n${opts.extraInstruction}` : ""}${opts.requireJson ? `\n\n${opts.requireJson}` : ""}`,
+  };
+  return { messages: composeSegments(segments), segments };
 }
 
 function isRevealPhase(state: GameState) {
@@ -241,7 +250,7 @@ export function buildDmContext(
   state: GameState,
   events: EngineEvent[],
   opts: { task: string; requireJson?: string; recall?: string }
-): ChatMessage[] {
+): PromptAssembly {
   const system = `你是一场剧本杀游戏的主持人（DM），剧本为《${script.meta.title}》。你只根据公开记录控场和渲染氛围。
 
 【公开背景】
@@ -268,16 +277,19 @@ ${publicRoster(script, state)}
   const growingLog = `【现场记录】
 ${renderLogWithMemory(events, null, state.memory, false)}`;
 
-  const tail = `【当前局面】${state.phase} 第${state.round}轮${state.turnSeat != null ? ` 轮到座位${state.turnSeat + 1}` : ""}
+  const segments = {
+    system,
+    log: growingLog,
+    anchoredHead: `【当前局面】${state.phase} 第${state.round}轮${state.turnSeat != null ? ` 轮到座位${state.turnSeat + 1}` : ""}
 【线索公开状态】
 ${clueStatus}
-${hostGuideBlock(script, state)}${opts.recall ? `\n${opts.recall}\n` : ""}
-${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
+${hostGuideBlock(script, state).trim()}`,
+    droppable: [opts.recall?.trim() ?? ""],
+    anchoredTail: `${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
 【你的任务】${opts.task}
-${hardTail}
-${opts.requireJson ? opts.requireJson : ""}`;
-
-  return cacheFriendlyMessages(system, growingLog, tail);
+${hardTail}${opts.requireJson ? `\n\n${opts.requireJson}` : ""}`,
+  };
+  return { messages: composeSegments(segments), segments };
 }
 
 /** DM 手册：分阶段提示 + 扶车指南（仅在讨论阶段注入，防卡关） */

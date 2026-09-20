@@ -230,7 +230,7 @@ describe("上下文消费", () => {
       d.characters[1].privateCard.tells = ["说谎时摸耳垂"];
     });
     const state = stateOf("DISCUSSION", 1);
-    const joined = buildPlayerContext(d2, state, 1, [], {}).map((m) => m.content).join("\n");
+    const joined = buildPlayerContext(d2, state, 1, [], {}).messages.map((m) => m.content).join("\n");
     expect(joined).toContain("必须找机会说出去");
     expect(joined).toContain("【传闻】");
     expect(joined).toContain("21:15 我在送茶。");
@@ -245,10 +245,10 @@ describe("上下文消费", () => {
         { actId: "act_2", knowledge: [{ id: "k_new", title: "新知", content: [{ type: "paragraph", text: "第二幕才知道的事" }], kind: "fact", source: "heard", relatedCharacterIds: [], relatedClueIds: [] }], objectives: [] },
       ];
     });
-    const later = buildPlayerContext(d2, stateOf("DISCUSSION", 2), 1, [], {}).map((m) => m.content).join("\n");
+    const later = buildPlayerContext(d2, stateOf("DISCUSSION", 2), 1, [], {}).messages.map((m) => m.content).join("\n");
     expect(later).toContain("【本幕新知】");
     expect(later).toContain("第二幕才知道的事");
-    const earlier = buildPlayerContext(d2, stateOf("DISCUSSION", 1), 1, [], {}).map((m) => m.content).join("\n");
+    const earlier = buildPlayerContext(d2, stateOf("DISCUSSION", 1), 1, [], {}).messages.map((m) => m.content).join("\n");
     expect(earlier).not.toContain("【本幕新知】");
     expect(earlier).not.toContain("第二幕才知道的事");
   });
@@ -287,10 +287,10 @@ describe("上下文消费", () => {
       };
     });
     const state = stateOf("DISCUSSION", 1);
-    const dmJoined = buildDmContext(d2, state, [], { task: "控场" }).map((m) => m.content).join("\n");
+    const dmJoined = buildDmContext(d2, state, [], { task: "控场" }).messages.map((m) => m.content).join("\n");
     expect(dmJoined).toContain("手册密语");
     for (let seat = 0; seat < d2.characters.length; seat++) {
-      const playerJoined = buildPlayerContext(d2, state, seat, [], {}).map((m) => m.content).join("\n");
+      const playerJoined = buildPlayerContext(d2, state, seat, [], {}).messages.map((m) => m.content).join("\n");
       expect(playerJoined).not.toContain("手册密语");
     }
   });
