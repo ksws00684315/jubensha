@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BrandMark, SoundIcon } from "@/components/VisualIcons";
 import { NarrativeBlocks } from "@/components/ScriptContent";
 import { PHASE_LABEL, type GameEventView, type GameSummary } from "@/lib/client";
+import { applyPendingWhisperResult, createPendingWhisper, editPendingWhisper, isPendingWhisperDue, retryPendingWhisper, type PendingWhisper } from "@/lib/pending-whisper";
 
 /**
  * ★ 中栏现场记录（批次 I3 自 play/[gameId]/page.tsx 拆出）★：
@@ -34,7 +35,7 @@ export interface ChatFeedProps {
   onInput: (value: string) => void;
   onSubmitSpeak: () => void;
   onSpeakEvent: (eventSeq: string) => void;
-  onSendWhisper: (toSeat: number, text: string) => void;
+  onSendWhisper: (toSeat: number, text: string) => Promise<boolean>;
 }
 
 export function ChatFeed(props: ChatFeedProps) {
@@ -67,6 +68,9 @@ export function ChatFeed(props: ChatFeedProps) {
   const atBottomRef = useRef(true);
   const [showJumpToBottom, setShowJumpToBottom] = useState(false);
   const [whisperText, setWhisperText] = useState<Record<number, string>>({});
+  const [pendingWhispers, setPendingWhispers] = useState<Record<number, PendingWhisper>>({});
+  const foundClueIds = new Set(events.filter((ev) => ev.type === "clue" && ev.visibility === `seat:${mySeat}`).map((ev) => ev.content.clueId).filter((id): id is string => typeof id === "string"));
+  const displayedEvents = events.filter((ev) => !(ev.type === "clue" && ev.visibility === "public" && typeof ev.content.clueId === "string" && foundClueIds.has(ev.content.clueId)));
 
   // 自动滚动：仅在用户贴底时跟随；上滑阅读历史时不打断
   useEffect(() => {
@@ -100,14 +104,36 @@ export function ChatFeed(props: ChatFeedProps) {
   };
   const replyWhisper = (toSeat: number) => {
     const text = (whisperText[toSeat] ?? "").trim();
-    if (!text) return;
-    onSendWhisper(toSeat, text);
+    if (!text || pendingWhispers[toSeat]) return;
+    setPendingWhispers((current) => ({ ...current, [toSeat]: createPendingWhisper(text, Date.now()) }));
     setWhisperText((w) => {
       const next = { ...w };
       delete next[toSeat];
       return next;
     });
   };
+
+  const flushWhisper = useCallback(async (toSeat: number, dueAt: number) => {
+    const pending = pendingWhispers[toSeat];
+    if (!pending || pending.dueAt !== dueAt || !isPendingWhisperDue(pending, Date.now())) return;
+    setPendingWhispers((current) => ({ ...current, [toSeat]: { ...current[toSeat], sending: true } }));
+    const ok = await onSendWhisper(toSeat, pending.text);
+    setPendingWhispers((current) => {
+      const next = { ...current };
+      const result = applyPendingWhisperResult(pending, ok);
+      if (result) next[toSeat] = result;
+      else delete next[toSeat];
+      return next;
+    });
+  }, [onSendWhisper, pendingWhispers]);
+
+  useEffect(() => {
+    const entry = Object.entries(pendingWhispers).find(([, value]) => !value.sending && !value.failed);
+    if (!entry) return;
+    const [seat, pending] = entry;
+    const timer = setTimeout(() => void flushWhisper(Number(seat), pending.dueAt), Math.max(0, pending.dueAt - Date.now()));
+    return () => clearTimeout(timer);
+  }, [pendingWhispers, flushWhisper]);
 
   return (
     <section className="game-panel relative flex h-[min(78vh,900px)] min-w-0 flex-col overflow-hidden">
@@ -141,7 +167,7 @@ export function ChatFeed(props: ChatFeedProps) {
           )}
         </div>
 
-        {events.map((ev) => (
+        {displayedEvents.map((ev) => (
           <div key={ev.seq}>
             <EventBubble
               ev={ev}
@@ -151,25 +177,48 @@ export function ChatFeed(props: ChatFeedProps) {
               onSpeak={onSpeakEvent}
             />
             {isLatestWhisper(ev) && (
-              <div className="mx-auto mt-1 flex max-w-[85%] gap-1.5">
+              <div className="mx-auto mt-1 max-w-[85%] space-y-1.5">
+                <div className="flex gap-1.5">
                 <input
                   aria-label="悄悄话回复"
-                  value={whisperText[ev.fromSeat ?? -1] ?? ""}
-                  onChange={(e) => setWhisperText((w) => ({ ...w, [ev.fromSeat ?? -1]: e.target.value }))}
+                  value={pendingWhispers[ev.fromSeat ?? -1]?.text ?? whisperText[ev.fromSeat ?? -1] ?? ""}
+                  disabled={pendingWhispers[ev.fromSeat ?? -1]?.sending}
+                  onChange={(e) => {
+                    const seat = ev.fromSeat ?? -1;
+                    if (pendingWhispers[seat]) {
+                      setPendingWhispers((current) => ({ ...current, [seat]: editPendingWhisper(current[seat], e.target.value, Date.now()) }));
+                    } else {
+                      setWhisperText((w) => ({ ...w, [seat]: e.target.value }));
+                    }
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && (whisperText[ev.fromSeat ?? -1] ?? "").trim()) replyWhisper(ev.fromSeat ?? -1);
                   }}
                   maxLength={300}
-                  placeholder={`悄悄回复 ${seatName(ev.fromSeat ?? 0)}（其他人看不到）…`}
+                  placeholder={`悄悄回复 ${seatName(ev.fromSeat ?? 0)}（3 秒后发送，可撤销）…`}
                   className="min-w-0 flex-1 rounded-lg border border-dashed border-secret-400/30 bg-ink-950 px-3 py-1.5 text-xs text-paper-50 outline-none placeholder:text-paper-500 focus:border-secret-400"
                 />
                 <button
                   onClick={() => replyWhisper(ev.fromSeat ?? -1)}
-                  disabled={!(whisperText[ev.fromSeat ?? -1] ?? "").trim()}
+                  disabled={!(whisperText[ev.fromSeat ?? -1] ?? "").trim() || Boolean(pendingWhispers[ev.fromSeat ?? -1])}
                   className="rounded-lg border border-secret-400/40 px-3 text-xs font-semibold text-secret-400 hover:bg-secret-400/10 disabled:opacity-40"
                 >
-                  回复
+                  准备发送
                 </button>
+                </div>
+                {pendingWhispers[ev.fromSeat ?? -1] && (
+                  <div className="flex items-center justify-between rounded-lg border border-secret-400/20 bg-secret-400/5 px-3 py-2 text-xs text-secret-300">
+                    <span>{pendingWhispers[ev.fromSeat ?? -1].sending ? "正在发送…" : pendingWhispers[ev.fromSeat ?? -1].failed ? "发送失败，可修改后重试" : "待发送 · 3 秒内可修改或撤销"}</span>
+                    <span className="flex gap-2">
+                      {pendingWhispers[ev.fromSeat ?? -1].failed && (
+                        <button type="button" onClick={() => setPendingWhispers((current) => ({ ...current, [ev.fromSeat ?? -1]: retryPendingWhisper(current[ev.fromSeat ?? -1], Date.now()) }))} className="underline">重试</button>
+                      )}
+                      {!pendingWhispers[ev.fromSeat ?? -1].sending && (
+                        <button type="button" onClick={() => setPendingWhispers((current) => { const next = { ...current }; delete next[ev.fromSeat ?? -1]; return next; })} className="underline">撤销</button>
+                      )}
+                    </span>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -261,22 +310,23 @@ export function ChatFeed(props: ChatFeedProps) {
 
 /** 真相揭晓 + 复盘答题成绩单（终局幕帘） */
 function RevealBlock({ summary, reveal, mySeat }: { summary: GameSummary; reveal: GameEventView; mySeat: number | null }) {
+  const finale = reveal.content.finale as { result: "caught" | "escaped"; title: string; content: string; verdict: string } | undefined;
   return (
     <div className="reveal-stage reveal-curtain p-6 text-center text-sm sm:p-8">
       <p className="eyebrow text-danger-400">Final Reveal · 真相揭晓</p>
       <BrandMark className="mx-auto mt-5 size-14 text-danger-400" />
       <h3 className="mt-3 text-2xl font-bold text-paper-50">真凶：{reveal.content.culpritName}</h3>
       <p className="mt-2 font-medium text-danger-400">
-        {reveal.content.caught
+        {finale?.verdict ?? (reveal.content.caught
           ? "凶手被指认，好人阵营胜利！"
           : reveal.content.culpritSeat !== undefined && reveal.content.culpritSeat < 0
             ? "真凶未在本局入座，指认无果。"
             : reveal.content.tiedSeats?.length
               ? `投票在${reveal.content.tiedSeats.map((s) => `座位${s + 1}`).join(" 与 ")}之间出现平票，指认失败，凶手逃脱……凶手阵营胜利！`
-              : "凶手逃脱了……凶手阵营胜利！"}
+              : "凶手逃脱了……凶手阵营胜利！")}
       </p>
       <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
-      <p className="mt-4 text-xs text-paper-500">{reveal.content.winText}</p>
+      <p className="mt-4 text-xs text-paper-500">{finale ? `${finale.title}：${finale.content}` : reveal.content.winText}</p>
       {(() => {
         const quizBoard = (reveal.content.quiz as GameSummary["quizResult"] | undefined) ?? summary.quizResult ?? null;
         if (!quizBoard || !summary.quiz) return null;
@@ -410,7 +460,7 @@ function EventBubble({
       }
       return (
         <p className="evidence-reveal mx-auto w-fit rounded-full border border-secret-400/20 bg-secret-400/5 px-3 py-1.5 text-center text-xs text-secret-400">
-          获得私密线索「{ev.content.clueName}」· 前往线索栏查看
+          你发现了线索「{ev.content.clueName}」（仅你可见）· 前往线索栏查看
         </p>
       );
     case "vote":

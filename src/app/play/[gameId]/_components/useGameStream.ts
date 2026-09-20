@@ -143,12 +143,17 @@ export function useGameStream(gameId: string, retryKey: number) {
       lastSeq: lastSeq.current,
     });
     const es = new EventSource(url);
+    let endAfterSeq: string | null = null;
+    const finishEndedStream = () => {
+      setSummary((s) => (s ? { ...s, status: "ended", phase: "ENDED" } : s));
+      es.close();
+    };
     es.onmessage = (m) => {
       const msg = JSON.parse(m.data) as
         | { kind: "event"; event: GameEventView }
         | { kind: "delta"; seat: number | "dm"; text: string; audience?: "public" | number }
         | { kind: "thinking"; seat: number | "dm" | null; audience?: "public" | number }
-        | { kind: "end" }
+        | { kind: "end"; lastEventSeq?: string }
         | { kind: "hello" };
       if (msg.kind === "event") {
         if (BigInt(msg.event.seq) <= BigInt(lastSeq.current)) return;
@@ -178,6 +183,7 @@ export function useGameStream(gameId: string, retryKey: number) {
         if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer" || ev.type === "vote") {
           queueSummaryRefresh();
         }
+        if (endAfterSeq && BigInt(lastSeq.current) >= BigInt(endAfterSeq)) finishEndedStream();
       } else if (msg.kind === "delta") {
         if (msg.seat === "dm") setDmDelta((t) => t + msg.text);
         else setDeltas((d) => ({ ...d, [msg.seat as number]: (d[msg.seat as number] ?? "") + msg.text }));
@@ -195,9 +201,12 @@ export function useGameStream(gameId: string, retryKey: number) {
           setThinking((t) => ({ ...t, [msg.seat as number]: true }));
         }
       } else if (msg.kind === "end") {
+        if (msg.lastEventSeq && BigInt(lastSeq.current) < BigInt(msg.lastEventSeq)) {
+          endAfterSeq = msg.lastEventSeq;
+          return;
+        }
         // 终局：服务端不会再推事件，主动收掉这条长连接（否则 EventSource 会一直空转重连）
-        setSummary((s) => (s ? { ...s, status: "ended", phase: "ENDED" } : s));
-        es.close();
+        finishEndedStream();
       }
     };
     es.onerror = () => {

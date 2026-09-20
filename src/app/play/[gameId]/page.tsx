@@ -101,16 +101,21 @@ export default function PlayPage() {
 
   const sendWhisper = useCallback(
     async (toSeat: number, text: string) => {
-      if (mySeat === null || !text.trim()) return;
+      if (mySeat === null || !text.trim()) return false;
       setError(null);
       try {
         const res = await api<{ ok: boolean; error?: string }>(`/api/games/${gameId}/actions`, {
           method: "POST",
           body: JSON.stringify({ seatIndex: mySeat, token: myToken, action: { type: "private_chat", toSeat, text } }),
         });
-        if (!res.ok) setError(res.error ?? "发送失败");
+        if (!res.ok) {
+          setError(res.error ?? "发送失败");
+          return false;
+        }
+        return true;
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
+        return false;
       }
     },
     [gameId, mySeat, myToken]
@@ -307,22 +312,23 @@ export default function PlayPage() {
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
                 <p className="text-xs text-paper-400">{sending ? sendingLabel : "选择搜证地点："}</p>
-                {summary.locations.map((loc) => {
+                {summary.searchLocationOptions.filter((option) => option.status !== "own_room").map(({ name: loc, status, reason }) => {
                   const desc = summary.scriptV2?.locations.find((item) => item.name === loc)?.description?.find((block) => block.type === "paragraph")?.text;
-                  const emptied = summary.availableLocations.length > 0 && !summary.availableLocations.includes(loc);
+                  const unavailable = status !== "available";
+                  const statusText = unavailable && reason ? `（${reason}）` : "";
                   return (
                   <button
                     key={loc}
-                    disabled={sending || emptied}
+                    disabled={sending || unavailable}
                     onClick={() => void send({ type: "choose_location", location: loc })}
                     className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400 disabled:opacity-50"
                   >
-                    <span className="block">{loc}{emptied ? "（已搜完）" : ""}</span>
+                    <span className="block">{loc}{statusText}</span>
                     {desc && <span className="mt-0.5 block text-xs leading-snug text-paper-500">{desc}</span>}
                   </button>
                   );
                 })}
-                {summary.availableLocations.length === 0 && <p className="pt-1 text-xs text-paper-500">所有地点的线索都已搜完，本轮仍可选择任意地点完成流程。</p>}
+                {!summary.searchLocationOptions.some((option) => option.status === "available") && <p className="pt-1 text-xs text-paper-500">目前没有可搜的线索，系统会自动完成本轮搜证。</p>}
               </div>
             )}
             {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
@@ -454,7 +460,7 @@ export default function PlayPage() {
                   </>
                 ) : (
                   <p className="text-xs text-paper-400">
-                    等待 {summary.turnSeat !== null ? seatName(summary.turnSeat) : "下一位"} 发言。本局讨论不开放私聊，也不能插话。
+                    等待 {summary.turnSeat !== null ? seatName(summary.turnSeat) : "下一位"} 发言。不能插话。{summary.flow.allowPrivateChat ? "如收到私聊窗口，你仍可在窗口内回复。" : "本局讨论不开放私聊。"}
                   </p>
                 )}
               </div>
@@ -525,7 +531,7 @@ export default function PlayPage() {
         onInput={setInput}
         onSubmitSpeak={() => void submitSpeak()}
         onSpeakEvent={(seq) => void speakEvent(seq)}
-        onSendWhisper={(toSeat, text) => void sendWhisper(toSeat, text)}
+        onSendWhisper={sendWhisper}
       />
 
       {/* 右栏：我的剧本 / 我的线索 / 时间线 */}
