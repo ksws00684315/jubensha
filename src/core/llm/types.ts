@@ -56,6 +56,8 @@ export interface ChatResult {
 }
 
 export interface ResolvedBinding {
+  bindingId?: string;
+  detectedSystemSupport?: boolean | null;
   providerId: string;
   providerName: string;
   protocol: string;

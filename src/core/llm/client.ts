@@ -31,6 +31,8 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
         throw new Error(`绑定槽位 "${slot}" 的 Provider「${binding.provider.name}」已被禁用，请到设置页检查`);
       }
       return {
+        bindingId: binding.id,
+        detectedSystemSupport: binding.detectedSystemSupport,
         providerId: binding.providerId,
         providerName: binding.provider.name,
         protocol: binding.provider.protocol,
@@ -123,6 +125,7 @@ async function logUsage(args: {
   taskType?: string;
   inputTokensEstimate?: number;
   budgetTokens?: number | null;
+  fallbackReason?: string;
   retryCount?: number;
   cancelled?: boolean;
 }): Promise<void> {
@@ -146,6 +149,7 @@ async function logUsage(args: {
         taskType: args.taskType ?? args.purpose,
         inputTokensEstimate: args.inputTokensEstimate,
         budgetTokens: args.budgetTokens ?? null,
+        fallbackReason: args.fallbackReason,
         retryCount: args.retryCount ?? 0,
         cancelled: args.cancelled ?? false,
       },
@@ -159,12 +163,18 @@ const RETRY_DELAYS_MS = [800, 2000];
 const REQUEST_TIMEOUT_MS = 180_000;
 const systemSupportOverrides = new Map<string, boolean>();
 
+async function recordSystemRejection(b: ResolvedBinding): Promise<void> {
+  systemSupportOverrides.set(bindingSystemKey(b), false);
+  if (!b.bindingId) return;
+  await db.modelBinding.updateMany({ where: { id: b.bindingId, providerId: b.providerId, modelId: b.modelId }, data: { detectedSystemSupport: false, capabilityDetectedAt: new Date() } }).catch(() => undefined);
+}
+
 function bindingSystemKey(b: ResolvedBinding): string {
   return `${b.providerId}:${b.modelId}`;
 }
 
 function preservesSystemMessages(b: ResolvedBinding): boolean {
-  return b.capabilities.system && systemSupportOverrides.get(bindingSystemKey(b)) !== false;
+  return b.capabilities.system && b.detectedSystemSupport !== false && systemSupportOverrides.get(bindingSystemKey(b)) !== false;
 }
 
 function isRetryable(err: unknown): boolean {
@@ -271,7 +281,7 @@ async function callOnce(
   b: ResolvedBinding,
   purpose: string,
   opts: ChatOptions
-): Promise<{ text: string; prompt: number; completion: number; cached: number; latencyMs: number }> {
+): Promise<{ text: string; prompt: number; completion: number; cached: number; latencyMs: number; internalRetries?: number; fallbackReason?: string }> {
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
   const messages = prepareRequest(b, opts, maxOutputTokens);
@@ -313,11 +323,11 @@ async function callOnce(
     if (/system messages? (are )?not allowed|instructions? option|system role/i.test(String(err))) {
       // 网关声明支持 system 但实际拒绝时，在进程内记住该模型并合并到首条 user。
       // 下次调用直接走兼容格式，避免每轮重复一次必败请求。
-      systemSupportOverrides.set(bindingSystemKey(b), false);
+      await recordSystemRejection(b);
       // 同样走 prepareRequest：fit→compose→并入 system，降级不再绕过预算裁剪
       const compatible = prepareRequest(b, opts, maxOutputTokens, false);
       try {
-        return await invoke({ thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }, compatible);
+        return { ...await invoke({ thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }, compatible), internalRetries: 1, fallbackReason: "system_role_rejected" };
       } catch (fallbackErr) {
         if (isRetryableLlmError(fallbackErr) && /unknown|unrecognized|unexpected.?field|invalid/i.test(String(fallbackErr))) return await invoke(undefined, compatible);
         throw fallbackErr;
@@ -367,7 +377,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
       lastDiagnostics = requestDiagnostics(b, opts);
       try {
         const r = await callOnce(b, opts.purpose, opts);
-        await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate: lastDiagnostics.inputTokensEstimate, budgetTokens: lastDiagnostics.budgetTokens, retryCount: attempts - 1 });
+        await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...r, ok: true, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate: lastDiagnostics.inputTokensEstimate, budgetTokens: lastDiagnostics.budgetTokens, retryCount: attempts - 1 + (r.internalRetries ?? 0), fallbackReason: r.fallbackReason });
         return {
           text: r.text,
           promptTokens: r.prompt,
@@ -418,63 +428,39 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
   const b = await resolveBinding(opts.purpose);
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
-  const messages = prepareRequest(b, opts, maxOutputTokens);
-  assertContextBudget(b, messages, maxOutputTokens);
   const requestId = opts.requestId ?? randomUUID();
-  const inputTokensEstimate = estimateInputTokens(messages);
-  const budgetTokens = inputBudgetTokens(b, maxOutputTokens);
-  try {
-    const result = streamText({
-      model: toLanguageModel(b, { thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }),
-      messages,
-      temperature: opts.temperature ?? b.temperature ?? 0.8,
-      maxOutputTokens,
-      abortSignal: opts.abortSignal ?? AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
-    for await (const chunk of result.textStream) {
-      yield chunk;
-    }
-    const usage = normalizeUsage(await result.usage);
-    await logUsage({
-      b,
-      purpose: opts.purpose,
-      gameId: opts.gameId,
-      ...usage,
-      latencyMs: Date.now() - started,
-      ok: true,
-      requestId,
-      generationId: opts.generationId,
-      taskType: opts.taskType,
-      inputTokensEstimate,
-      budgetTokens,
-    });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (preservesSystemMessages(b) && /system messages? (are )?not allowed|instructions? option|system role/i.test(msg)) {
-      systemSupportOverrides.set(bindingSystemKey(b), false);
-      // 流式接口已创建的请求不能改写消息，结束本次失败后用同一 requestId
-      // 以合并后的兼容格式重试，调用方仍只收到一条文本流。
-      await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: msg, requestId, generationId: opts.generationId, taskType: opts.taskType, inputTokensEstimate, budgetTokens });
-      for await (const chunk of chatStream({ ...opts, requestId })) yield chunk;
+  let retryCount = 0;
+  let fallbackReason: string | undefined;
+  while (true) {
+    const messages = prepareRequest(b, opts, maxOutputTokens);
+    assertContextBudget(b, messages, maxOutputTokens);
+    const diagnostics = { requestId, generationId: opts.generationId, taskType: opts.taskType,
+      inputTokensEstimate: estimateInputTokens(messages), budgetTokens: inputBudgetTokens(b, maxOutputTokens) };
+    let emitted = false;
+    let streamError: unknown;
+    try {
+      const result = streamText({
+        model: toLanguageModel(b, { thinking: { type: "disabled" }, ...buildSamplingExtraBody(opts, b.protocol) }),
+        messages, temperature: opts.temperature ?? b.temperature ?? 0.8, maxOutputTokens,
+        abortSignal: opts.abortSignal ?? AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        onError: ({ error }) => { streamError = error; },
+      });
+      for await (const chunk of result.textStream) { emitted ||= Boolean(chunk); yield chunk; }
+      if (streamError) throw streamError;
+      const usage = normalizeUsage(await result.usage);
+      await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, ...usage, latencyMs: Date.now() - started, ok: true, ...diagnostics, retryCount, fallbackReason });
       return;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (!emitted && retryCount === 0 && preservesSystemMessages(b) && /system messages? (are )?not allowed|instructions? option|system role/i.test(msg)) {
+        await recordSystemRejection(b);
+        retryCount = 1;
+        fallbackReason = "system_role_rejected";
+        continue;
+      }
+      await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: msg, ...diagnostics, retryCount, fallbackReason, cancelled: opts.abortSignal?.aborted || (err instanceof Error && err.name === "AbortError") });
+      throw new Error(`LLM 流式调用失败（${b.providerName}/${b.modelId}）: ${msg}`);
     }
-    await logUsage({
-      b,
-      purpose: opts.purpose,
-      gameId: opts.gameId,
-      prompt: 0,
-      completion: 0,
-      latencyMs: Date.now() - started,
-      ok: false,
-      error: msg,
-      requestId,
-      generationId: opts.generationId,
-      taskType: opts.taskType,
-      inputTokensEstimate,
-      budgetTokens,
-      cancelled: opts.abortSignal?.aborted || (err instanceof Error && err.name === "AbortError"),
-    });
-    throw new Error(`LLM 流式调用失败（${b.providerName}/${b.modelId}）: ${msg}`);
   }
 }
 

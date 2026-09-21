@@ -34,6 +34,9 @@ async function GET_IMPL(req: Request) {
       maxTokens: b.maxTokens,
       contextWindow: b.contextWindow,
       supportsSystem: b.supportsSystem,
+      detectedSystemSupport: b.detectedSystemSupport,
+      capabilityDetectedAt: b.capabilityDetectedAt,
+      actualMessageMode: b.supportsSystem && b.detectedSystemSupport !== false ? "system" : "merged_user",
       supportsJson: b.supportsJson,
       fallbackSlot: b.fallbackSlot,
       providerEnabled: b.provider.enabled,
@@ -52,6 +55,8 @@ async function PUT_IMPL(req: Request) {
   if (!provider) return NextResponse.json({ error: "Provider 不存在" }, { status: 404 });
   if (!provider.enabled) return NextResponse.json({ error: "该 Provider 已被禁用" }, { status: 400 });
 
+  const previous = await db.modelBinding.findUnique({ where: { slot: d.slot } });
+  const changedModel = previous?.providerId !== d.providerId || previous?.modelId !== d.modelId;
   const binding = await db.modelBinding.upsert({
     where: { slot: d.slot },
     create: {
@@ -66,6 +71,7 @@ async function PUT_IMPL(req: Request) {
       fallbackSlot: d.fallbackSlot ?? null,
     },
     update: {
+      ...(changedModel ? { detectedSystemSupport: null, capabilityDetectedAt: null } : {}),
       providerId: d.providerId,
       modelId: d.modelId,
       ...(d.temperature !== undefined ? { temperature: d.temperature } : {}),

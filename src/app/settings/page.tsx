@@ -27,6 +27,9 @@ interface BindingView {
   temperature: number | null;
   maxTokens: number | null;
   contextWindow: number | null;
+  detectedSystemSupport?: boolean | null;
+  capabilityDetectedAt?: string | null;
+  actualMessageMode?: string;
   supportsSystem: boolean;
   supportsJson: boolean;
   fallbackSlot: string | null;
@@ -580,6 +583,7 @@ function BindingsTab() {
                   )}
                 </h4>
                 <p className="mt-0.5 text-xs text-paper-400">{slot.description}</p>
+                {bound && <p className="mt-1 text-xs text-paper-400">system 配置：{bound.supportsSystem ? "支持" : "不支持"} · 检测：{bound.detectedSystemSupport == null ? "未检测" : bound.detectedSystemSupport ? "支持" : "不支持"} · 实际格式：{bound.actualMessageMode === "system" ? "system" : "合并至 user"} · 最后检测：{bound.capabilityDetectedAt ? new Date(bound.capabilityDetectedAt).toLocaleString() : "暂无"}</p>}
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <select
