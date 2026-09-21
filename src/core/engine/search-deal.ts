@@ -116,7 +116,7 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
       visibility: `seat:${seat}`,
       content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), location: loc, private: !autoPublic },
     });
-    await e.systemSay(`你在「${loc}」搜到了线索卡【${clue.name}】。${autoPublic ? "该线索为公开线索，已向全场公示。" : "你可以选择当场公开或私藏。"}`, seat);
+    await e.systemSay(`你在「${loc}」搜到了线索卡【${clue.name}】。${autoPublic ? "该线索为公开线索，已向全场公示。" : (e.script.hostGuide?.guaranteedPublicClues.some((item) => item.clueId === clue.id && item.deadlineRound <= e.state.round) ? "可公开或暂时私藏，本轮结束由主持公开。" : "你可以选择当场公开或私藏。")}`, seat);
     if (autoPublic) {
       await e.recordEvent({
         type: "clue",
@@ -131,15 +131,32 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
       e.state.pendingPublish[String(seat)] = [...(e.state.pendingPublish[String(seat)] ?? []), clue.id];
     }
   }
-  await dispatchGuaranteedPublicClues(e);
   // 更新 seatStates
   for (const seat of activeSeats(e.state)) {
     await syncSeatClueIds(e, seat);
   }
 }
 
+/** 唯一搜证结算入口：玩家决策完成后才补发，每批最多两张。调用方持有引擎锁。 */
+export async function finalizeSearchRound(e: GameEngine): Promise<void> {
+  if (e.state.phase !== "SEARCH" || e.state.searchDealtRound !== e.state.round) return;
+  if (Object.values(e.state.pendingPublish).some((ids) => ids.length)) return;
+  await dispatchGuaranteedPublicClues(e);
+  await e.persist();
+  const remaining = (e.script.hostGuide?.guaranteedPublicClues ?? []).some((item) =>
+    item.deadlineRound <= e.state.round && !e.state.hostHandouts?.[item.clueId] &&
+    e.script.clues.some((clue) => clue.id === item.clueId && clue.policy !== "keep_private"));
+  if (remaining) {
+    e.schedule(`search-finalize:${e.state.round}`, () => finalizeSearchRound(e), 1000);
+    return;
+  }
+  await afterSearchPhase(e);
+}
+
 /** 到达作者设定的截止轮次仍未公开时，主持自动补发材料；以状态记录保证幂等。 */
 export async function dispatchGuaranteedPublicClues(e: GameEngine): Promise<void> {
+  e.state.hostHandouts ??= {};
+  let emitted = 0;
   const guarantees = e.script.hostGuide?.guaranteedPublicClues ?? [];
   for (const item of guarantees) {
     if (item.deadlineRound > e.state.round || e.state.hostHandouts?.[item.clueId]) continue;
@@ -147,10 +164,21 @@ export async function dispatchGuaranteedPublicClues(e: GameEngine): Promise<void
     if (!clue || clue.policy === "keep_private") continue;
     const current = e.state.clueStates[item.clueId];
     if (current?.isPublic) {
+      // 线索可能刚由搜证获得、随后在同一结算中被主持保证公开。
+      // 此时必须同步清掉“等待公开/私藏”的决策，否则真人界面没有按钮，
+      // 引擎却会永久等待 pendingPublish 归零。
+      for (const seat of Object.keys(e.state.pendingPublish)) {
+        e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== item.clueId);
+      }
       e.state.hostHandouts![item.clueId] = { round: e.state.round, reason: "already_public" };
       continue;
     }
+    if (emitted >= 2) break;
+    emitted++;
     e.state.clueStates[item.clueId] = { discoveredBy: current?.discoveredBy ?? null, isPublic: true };
+    for (const seat of Object.keys(e.state.pendingPublish)) {
+      e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== item.clueId);
+    }
     e.state.hostHandouts![item.clueId] = { round: e.state.round, reason: "deadline_guarantee" };
     await e.recordEvent({
       type: "clue",
@@ -159,7 +187,7 @@ export async function dispatchGuaranteedPublicClues(e: GameEngine): Promise<void
       fromSeat: null,
       toSeat: null,
       visibility: "public",
-      content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), hostRelease: true, deadlineRound: item.deadlineRound },
+      content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), hostRelease: true, batchId: `search:${e.state.round}`, deadlineRound: item.deadlineRound },
     });
     await e.systemSay(`主持人公开补发关键材料：线索卡【${clue.name}】。`);
   }
@@ -203,7 +231,7 @@ export async function collectPublishDecisions(e: GameEngine): Promise<void> {
             e.state.pendingPublish[String(seat)] = [];
             await e.persist();
             if (Object.values(e.state.pendingPublish).every((arr) => !arr.length)) {
-              await afterSearchPhase(e);
+              await finalizeSearchRound(e);
             }
           }, HUMAN_TURN_TIMEOUT_MS);
         }

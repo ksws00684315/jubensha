@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+import { duplicateQuestion } from "./questions";
 import { agent } from "@/core/agents";
 import { forcedAnswerHint, validateDiscussionAsk } from "./flow";
 import { activeSeats } from "./state";
@@ -16,19 +18,6 @@ function legalPublicEvidenceIds(e: GameEngine, ids: readonly string[] | undefine
   return [...new Set(ids ?? [])].filter((id) => publicIds.has(id));
 }
 
-function duplicateQuestion(e: GameEngine, fromSeat: number, toSeat: number, evidenceIds: readonly string[]): boolean {
-  if (!evidenceIds.length) return false;
-  const key = [...evidenceIds].sort().join(",");
-  return e.events.some((event) =>
-    event.type === "speech" &&
-    event.phase === "DISCUSSION" &&
-    event.round === e.state.round &&
-    event.fromSeat === fromSeat &&
-    event.toSeat === toSeat &&
-    Array.isArray(event.content.evidenceIds) && [...event.content.evidenceIds as string[]].sort().join(",") === key,
-  );
-}
-
 export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: number, question: string, evidenceIds?: string[]): Promise<{ ok: boolean; error?: string }> {
   const invalid = validateDiscussionAsk(e.state, fromSeat, toSeat);
   if (invalid) return { ok: false, error: invalid };
@@ -36,9 +25,10 @@ export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: nu
   const text = question.trim().slice(0, 200);
   if (!text) return { ok: false, error: "问题不能为空" };
   const legalEvidenceIds = legalPublicEvidenceIds(e, evidenceIds);
-  if (duplicateQuestion(e, fromSeat, toSeat, legalEvidenceIds)) return { ok: false, error: "本轮已围绕同一组证据问过这位玩家，请等待新线索" };
+  if (duplicateQuestion(e.events, e.state.round, toSeat, text, legalEvidenceIds)) return { ok: false, error: "本轮已围绕同一组证据问过这位玩家，请等待新线索" };
   e.state.questionsLeft[String(fromSeat)] = left - 1;
-  e.state.pendingAnswer = { fromSeat, toSeat, question: text, ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) };
+  const questionId = randomUUID();
+  e.state.pendingAnswer = { questionId, fromSeat, toSeat, question: text, ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) };
   // 提问 = 证明在参与，暂停提问者超时；作答结束后 step() 会经 ensureHumanTimeout 重新武装
   clearHumanTimeout(e, fromSeat);
   await e.recordEvent({
@@ -48,7 +38,7 @@ export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: nu
     fromSeat,
     toSeat,
     visibility: "public",
-    content: { text: `我问${e.speakerName(toSeat)}：${text}`, speakerName: e.speakerName(fromSeat), ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) },
+    content: { questionId, question: text, text: `我问${e.speakerName(toSeat)}：${text}`, speakerName: e.speakerName(fromSeat), ...(legalEvidenceIds.length ? { evidenceIds: legalEvidenceIds } : {}) },
   });
   await e.persist();
   return { ok: true };
@@ -69,7 +59,7 @@ export async function resolvePendingAnswer(e: GameEngine): Promise<void> {
     });
     return;
   }
-  const askKey = `answer:${pending.fromSeat}:${target}:${e.state.round}`;
+  const askKey = `answer:${pending.questionId}`;
   if (!e.turnAsked.has(askKey)) {
     e.turnAsked.add(askKey);
     await armHumanTimeout(e, target, "回答提问", async () => {

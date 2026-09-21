@@ -132,7 +132,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 });
 
 import { GameEngine } from "./engine";
-import { maybeQueueWhisper } from "./social";
+import { maybeQueueWhisper, maybeQueueInterjection } from "./social";
 import { tallyVotes, transitionSelfIntro } from "./phases";
 import { dispatchClues } from "./search-deal";
 import { parseScriptForRuntime } from "@/core/script/compat";
@@ -188,6 +188,30 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     hoisted.calls.roomUpdate = 0;
     hoisted.llmCalls.chatStream = 0;
     hoisted.releaseStream = null;
+  });
+
+  it("正式问题取消排队插话，问题与唯一回答共享 ID", async () => {
+    const e = await GameEngine.start(makeRoom() as any, { id: "script-q", content: JSON.parse(JSON.stringify(doc)) });
+    e.clearTimers(""); e.turnInFlight = false; e.state.phase = "DISCUSSION"; e.state.round = 1; e.state.turnSeat = 0; e.state.questionsLeft = { "0": 3 };
+    maybeQueueInterjection(e, 0, "苏晚，你当时在哪里？");
+    expect((await e.handleAction(0, { type: "ask", toSeat: 1, text: "苏晚，你当时在哪里？" })).ok).toBe(true);
+    const id = e.state.pendingAnswer?.questionId;
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(e.events.filter((event) => event.content.answer && event.content.questionId === id)).toHaveLength(1);
+    expect(e.events.filter((event) => event.content.interjection)).toHaveLength(0);
+    e.clearTimers("");
+  });
+
+  it("真人投票必须引用合法公开证据，非法和私密引用被拒绝", async () => {
+    const e = await GameEngine.start(makeRoom() as any, { id: "script-v", content: JSON.parse(JSON.stringify(doc)) });
+    e.clearTimers(""); e.state.phase = "VOTE";
+    const clueId = doc.clues[0].id;
+    e.state.clueStates[clueId] = { isPublic: true, discoveredBy: 0 };
+    expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: ["hidden"] })).ok).toBe(false);
+    expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: [clueId, "hidden"] })).ok).toBe(true);
+    expect(e.state.votes["0"].evidenceIds).toEqual([clueId]);
+    expect(e.events.find((event) => event.type === "vote")?.content.evidenceIds).toEqual([clueId]);
+    e.clearTimers("");
   });
 
   it("超时跳过 + 真人提问 + AI 全兜底,完整走完两轮讨论并结算", async () => {

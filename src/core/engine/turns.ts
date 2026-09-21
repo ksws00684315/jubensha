@@ -50,6 +50,7 @@ export function dispatchTurn(
     } catch (err) {
       console.error(`[engine] 回合 ${token} 生成失败:`, err);
       await e.exclusive(async () => {
+        if (e.turnToken !== token) return;
         e.turnInFlight = false;
         if (e.activeAbortController === controller) e.activeAbortController = null;
         if (e.activeGenerationBoundary && e.turnToken === token) e.activeGenerationBoundary = null;
@@ -60,6 +61,7 @@ export function dispatchTurn(
       return;
     }
     await e.exclusive(async () => {
+      if (e.turnToken !== token) return;
       e.turnInFlight = false;
       if (e.activeAbortController === controller) e.activeAbortController = null;
       if (e.activeGenerationBoundary && e.turnToken === token) e.activeGenerationBoundary = null;
@@ -73,17 +75,18 @@ export function dispatchTurn(
     });
   }, 30);
   // 看门狗：produce 全链路（含降级）仍卡死时强制推进，回合绝不悬空
-  e.schedule(`turn-watchdog:${token}`, async () => {
+  e.scheduleBackground(`turn-watchdog:${token}`, async () => {
     if (!e.turnInFlight || e.turnToken !== token) return;
     console.error(`[engine] 回合 ${token} 超时未完成,强制跳过`);
     await e.exclusive(async () => {
       if (!e.turnInFlight || e.turnToken !== token) return;
       e.turnInFlight = false;
+      e.turnToken++;
       controller.abort();
       if (e.activeAbortController === controller) e.activeAbortController = null;
       if (e.activeGenerationBoundary && e.turnToken === token) e.activeGenerationBoundary = null;
       publish(e.gameId, { kind: "thinking", seat: null, audience: "public", generationId: String(token) });
-      await args.onAbort();
+      if (!args.stale()) await args.onAbort();
       e.continueTick();
     });
   }, args.timeoutMs * 2 + 5_000);
@@ -112,6 +115,8 @@ export function dispatchPlayerSpeech(
         await e.exclusive(async () => {
           if (e.state.phase === boundary.phase && e.state.round === boundary.round && e.state.turnSeat === boundary.turnSeat) {
             e.state.actionPlans ??= {};
+            const previous = e.state.actionPlans[String(seatIndex)]?.defenseHookId;
+            if (previous && previous !== plan!.defenseHookId) await e.systemSay(`辩解切换：${previous} → ${plan!.defenseHookId ?? "无"}`, seatIndex, { defenseSwitch: true, reason: "public_evidence_broke_previous" });
             e.state.actionPlans[String(seatIndex)] = plan!;
             await e.persist();
           }
@@ -150,7 +155,7 @@ export function dispatchPlayerSpeech(
           fromSeat: seatIndex,
           toSeat: null,
           visibility: "public",
-          content: { text, speakerName: e.speakerName(seatIndex) },
+          content: { text, speakerName: e.speakerName(seatIndex), claimSummary: e.state.actionPlans?.[String(seatIndex)]?.claimSummary ?? null, focusEvidenceIds: (e.state.actionPlans?.[String(seatIndex)]?.focusEvidenceIds ?? []).filter((id) => e.state.clueStates[id]?.isPublic) },
         });
       }
       await after();
@@ -194,7 +199,7 @@ export function dispatchAnswerTurn(e: GameEngine, target: number, hint: string, 
           fromSeat: target,
           toSeat: null,
           visibility: "public",
-          content: { text, speakerName: e.speakerName(target) },
+          content: { text, speakerName: e.speakerName(target), answer: true, questionId: e.state.pendingAnswer?.questionId, focusEvidenceIds: e.state.pendingAnswer?.evidenceIds ?? [] },
         });
       }
       e.state.pendingAnswer = null;

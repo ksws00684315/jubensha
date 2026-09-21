@@ -62,15 +62,22 @@ export function maybeQueueInterjection(e: GameEngine, fromSeat: number, text: st
   if (e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
   const target = mentionedAiSeats(e.script, e.state, text, fromSeat)[0];
   if (target === undefined) return;
+  const round = e.state.round;
+  const queuedAfter = e.events.at(-1)?.seq ?? "0";
+  const cancelled = () => e.state.phase !== "DISCUSSION" || e.state.round !== round ||
+    (e.state.pendingAnswer?.fromSeat === fromSeat && e.state.pendingAnswer.toSeat === target) ||
+    e.events.some((ev) => ev.content.questionId && !ev.content.answer && ev.fromSeat === fromSeat && ev.toSeat === target && BigInt(ev.seq) > BigInt(queuedAfter));
+  if (cancelled()) return;
   // key 带上双方座位：单一 key 会让同轮内的第二次点名取消并替换前一次的插话任务，
   // 名义上限是 3 次、实际每轮最多 1 次落地。上限仍由 interjections 计数守住。
   e.scheduleBackground(`interject:${fromSeat}:${target}`, async () => {
-    if (e.state.phase !== "DISCUSSION" || e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
+    if (cancelled() || e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
     await e.exclusive(async () => {
-      if (e.state.phase !== "DISCUSSION" || e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
+      if (cancelled() || e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
       e.state.interjections++;
       await e.persist();
     });
+    if (cancelled()) return;
     const opts = {
       hint: `${e.speakerName(fromSeat)} 刚才点名提到了你：「${text.slice(0, 120)}」。请作为插话立即简短回应。`,
       extraInstruction:
@@ -78,7 +85,7 @@ export function maybeQueueInterjection(e: GameEngine, fromSeat: number, text: st
     };
     let said = await consumeStream(
       (signal) => agent.streamPlayerSpeech(e.ctx(), target, { ...opts, abortSignal: signal }),
-      (delta) => publish(e.gameId, { kind: "delta", seat: target, text: delta, audience: "public" }),
+      (delta) => { if (!cancelled()) publish(e.gameId, { kind: "delta", seat: target, text: delta, audience: "public" }); },
       AI_DECISION_TIMEOUT_MS,
       new AbortController().signal
     );
@@ -91,7 +98,7 @@ export function maybeQueueInterjection(e: GameEngine, fromSeat: number, text: st
     }
     said = await agent.refineSpeech(e.ctx(), target, said);
     await e.exclusive(async () => {
-      if (e.state.phase !== "DISCUSSION" || !said.trim()) return;
+      if (cancelled() || !said.trim()) return;
       await e.recordEvent({
         type: "speech",
         phase: e.state.phase,

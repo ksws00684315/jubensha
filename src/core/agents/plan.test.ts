@@ -20,6 +20,7 @@ describe("角色行动计划", () => {
       nextAction: "probe",
     });
     expect(plan).toEqual({
+      focusEvidenceIds: [], claimSummary: null, defenseHookId: null,
       objectiveId: script.characters[0].privateCard.objectives[0].id,
       targetSeat: 1,
       discloseClueIds: [script.clues[0].id],
@@ -31,6 +32,7 @@ describe("角色行动计划", () => {
   it("非法格式回退为安全的观察计划", () => {
     const ctx = { script, state, events: [], gameId: "test" };
     expect(validatePlayerActionPlan(ctx, 0, { objectiveId: "truth", targetSeat: 99, nextAction: "mutate" })).toEqual({
+      focusEvidenceIds: [], claimSummary: null, defenseHookId: null,
       objectiveId: null,
       targetSeat: null,
       discloseClueIds: [],

@@ -1,3 +1,4 @@
+import { interactionRecaps } from "./interactions";
 import { db } from "@/lib/db";
 import { fullTimelineText, methodText, resolveFinaleOutcome, revealText } from "@/core/script/compat";
 import { publish } from "./bus";
@@ -282,6 +283,7 @@ export async function finishReveal(e: GameEngine): Promise<void> {
     if (e.state.quizResult) task += `随后进行答题复盘：逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评各位玩家的还原度。`;
   }
 
+  task += `角色抉择只能按实际记录回收，禁止代替玩家原谅或表态：${JSON.stringify(interactionRecaps(e))}。未记录的态度保持未定。`;
   // DM 宣读（锁外流式）→ 提交阶段按序落 reveal/ENDED 事件并结算
   dispatchDmTurn(e, task, "REVEAL", 0, async () => {
     if (!e.events.some((ev) => ev.type === "reveal")) {
@@ -302,6 +304,8 @@ export async function finishReveal(e: GameEngine): Promise<void> {
           fullTimeline: fullTimelineText(e.script),
           reveal: revealText(e.script),
           finale,
+          interactionChoices: interactionRecaps(e),
+          votes: e.state.votes,
           ...(e.state.quizResult ? { quiz: e.state.quizResult } : {}),
         },
       });

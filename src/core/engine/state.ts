@@ -28,6 +28,8 @@ export function initialState(seats: SeatInfo[]): GameState {
     hostHandouts: {},
     hostHints: {},
     actionPlans: {},
+    pendingInteraction: null,
+    interactionChoices: {},
   };
 }
 
@@ -111,6 +113,7 @@ export function renderEventLog(events: EngineEvent[], seatIndex: number | null, 
         lines.push(`【${who}】${ev.content.text ?? ""}`);
         break;
       }
+      case "interaction":
       case "system":
         lines.push(`【系统】${ev.content.text ?? ""}`);
         break;

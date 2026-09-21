@@ -1,3 +1,4 @@
+import { bigramSimilarity } from "@/core/engine/questions";
 import { chat, chatStream, extractJson } from "@/core/llm/client";
 import type { Purpose } from "@/core/llm/types";
 import { buildDmContext, buildPlayerContext, characterOf } from "./context";
@@ -77,9 +78,15 @@ function dmPrompt(ctx: AgentCtx, opts: Parameters<typeof buildDmContext>[3]) {
 }
 
 export const agent = {
+  async playerInteraction(ctx: AgentCtx, seatIndex: number, beat: NonNullable<AgentCtx["script"]["flow"]["interactionBeats"]>[number]): Promise<string> {
+    const res = await chat({ purpose: seatPurpose(ctx.script, ctx.state, seatIndex), gameId: ctx.gameId, taskType: "interaction_choice", maxTokens: 256,
+      ...playerPrompt(ctx, seatIndex, { requireJson: `按你的角色视角作出选择：${beat.prompt}。选项：${beat.choices.map((choice) => `${choice.id}: ${choice.label}`).join("；")}。只输出 JSON：{"choiceId":"选项id"}` }) });
+    const parsed = extractJson<{ choiceId?: string }>(res.text);
+    return beat.choices.some((choice) => choice.id === parsed?.choiceId) ? parsed!.choiceId! : beat.defaultChoiceId;
+  },
   /** 正式发言前的一次轻量规划；无效 JSON 不阻断原有发言流程。 */
   async playerActionPlan(ctx: AgentCtx, seatIndex: number): Promise<PlayerActionPlan | null> {
-    const requireJson = `请先做一个极简行动计划，只输出 JSON：{"objectiveId":"你当前最优先目标的 id 或 null","targetSeat":对方座位索引或 null,"discloseClueIds":["准备公开的线索 id"],"holdClueIds":["准备保留的线索 id"],"nextAction":"state|ask|defend|probe|exchange|wait"}。只能引用你当前合法可见的目标和线索，不要写秘密原文。`;
+    const requireJson = `请先做一个极简行动计划，只输出 JSON：{"objectiveId":"你当前最优先目标的 id 或 null","targetSeat":对方座位索引或 null,"discloseClueIds":["准备公开的线索 id"],"holdClueIds":["准备保留的线索 id"],"focusEvidenceIds":["本回合引用的可见线索id"],"claimSummary":"80字以内的唯一新增主张","defenseHookId":"仍成立的辩解id或null","nextAction":"state|ask|defend|probe|exchange|wait"}。只能引用你当前合法可见的目标和线索，不要写秘密原文。`;
     try {
       const res = await chat({ purpose: seatPurpose(ctx.script, ctx.state, seatIndex), gameId: ctx.gameId, ...playerPrompt(ctx, seatIndex, { requireJson, taskType: "plan" }), temperature: 0.3, maxTokens: 512, taskType: "action_plan" });
       return validatePlayerActionPlan(ctx, seatIndex, extractJson(res.text));
@@ -137,7 +144,7 @@ export const agent = {
         taskType: opts.taskType ?? (opts.intro ? "speech" : "speech"),
       });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
-    let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro" : "speech" })).text);
+    let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro" : opts.taskType ?? "speech" })).text);
     if (guarded.leaked.length) {
       const retry = await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro_retry" : "speech_retry" });
       const guarded2 = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, retry.text);
@@ -160,7 +167,7 @@ export const agent = {
     });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     const redactor = createSpeechRedactor(playerGuardMarkers(ctx.script, ctx.state, seatIndex));
-    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : "speech" })) {
+    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : opts.taskType ?? "speech" })) {
       const delta = redactor.push(chunk);
       if (delta) yield delta;
     }
@@ -174,7 +181,15 @@ export const agent = {
    */
   async refineSpeech(ctx: AgentCtx, seatIndex: number, text: string, opts: { abortSignal?: AbortSignal; generationId?: string } = {}): Promise<string> {
     const ownLast = lastOwnSpeechText(ctx.events, seatIndex);
-    if (!shouldReviewSpeech(text, ownLast)) return text;
+    const plan = ctx.state.actionPlans?.[String(seatIndex)];
+    const prior = ctx.events.filter((ev) => ev.type === "speech" && ev.visibility === "public" && ev.phase === ctx.state.phase && ev.round === ctx.state.round);
+    const repeated = (candidate: string) => prior.some((ev) => {
+      const refs = Array.isArray(ev.content.focusEvidenceIds) ? ev.content.focusEvidenceIds : [];
+      const newEvidence = (plan?.focusEvidenceIds ?? []).some((id) => !refs.includes(id));
+      return !newEvidence && bigramSimilarity(candidate, String(ev.content.text ?? "")) >= 0.72;
+    });
+    const duplicateClaim = plan?.claimSummary && prior.some((ev) => ev.content.claimSummary && bigramSimilarity(plan.claimSummary!, String(ev.content.claimSummary)) >= 0.72 && !(plan.focusEvidenceIds ?? []).some((id) => !(Array.isArray(ev.content.focusEvidenceIds) ? ev.content.focusEvidenceIds : []).includes(id)));
+    if (!shouldReviewSpeech(text, ownLast) && !repeated(text) && !duplicateClaim) return text;
     try {
       const res = await chat({
         purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
@@ -188,23 +203,23 @@ export const agent = {
           {
             role: "system",
             content:
-              "你是剧本杀台词审查员。检查给定台词是否违规：1) 出戏（出现 AI/助手/游戏机制/系统提示等元话语，或舞台指示）；2) 与该角色上一段发言几乎重复。只做最小修改、保持角色口吻与原意。只输出 JSON：{\"ok\":true} 或 {\"ok\":false,\"text\":\"修改后的台词\"}。",
+              "你是剧本杀台词审查员。检查给定台词是否违规：1) 出戏（出现 AI/助手/游戏机制/系统提示等元话语，或舞台指示）；2) 与本轮任何角色的主张重复且没有新证据；3) 主动承认推翻当前仍成立辩解的事实。只贡献一个新主张，40-120字。只做最小修改、保持角色口吻与原意。只输出 JSON：{\"ok\":true} 或 {\"ok\":false,\"text\":\"修改后的台词\"}。",
           },
           {
             role: "user",
-            content: `【台词】\n${text}\n${ownLast ? `\n【该角色上一段发言】\n${ownLast}` : ""}`,
+            content: `【本轮主张】${prior.map((ev) => ev.content.claimSummary ?? ev.content.text).join("；")}\n【当前辩解】${characterOf(ctx.script, ctx.state, seatIndex)?.privateCard.defenseHooks.find((h) => h.id === plan?.defenseHookId)?.claim ?? "无"}\n【台词】\n${text}\n${ownLast ? `\n【该角色上一段发言】\n${ownLast}` : ""}`,
           },
         ],
       });
       const parsed = extractJson<{ ok?: boolean; text?: string }>(res.text);
       if (parsed && parsed.ok === false && typeof parsed.text === "string") {
         const refined = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, parsed.text.trim());
-        if (refined.text.length >= Math.min(20, text.length)) return refined.text;
+        if (refined.text.length >= Math.min(20, text.length)) return repeated(refined.text) ? "我同意已有的判断，暂时没有新材料补充。" : refined.text;
       }
     } catch {
       /* 审查失败就用原文 */
     }
-    return text;
+    return repeated(text) || duplicateClaim ? "我同意已有的判断，暂时没有新材料补充。" : text;
   },
 
   /**
@@ -301,10 +316,10 @@ export const agent = {
       .join("、");
     const publicEvidenceIds = ctx.script.clues.filter((clue) => ctx.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id);
     const askedThisRound = ctx.events
-      .filter((event) => event.type === "speech" && event.phase === "DISCUSSION" && event.round === ctx.state.round && event.fromSeat === seatIndex && event.toSeat !== null)
+      .filter((event) => event.type === "speech" && event.phase === "DISCUSSION" && event.round === ctx.state.round && event.content.questionId && !event.content.answer && event.toSeat !== null)
       .map((event) => `${event.toSeat! + 1}:${event.content.text ?? ""}`)
       .join("；");
-    const requireJson = `现在轮到你发言。若有一个具体疑点需要对方当众回答，可提问一次；没有必要就不要问。请只输出 JSON：{"ask":false} 或 {"ask":true,"target":座位号,"question":"一个具体问题","evidenceIds":["公开线索id"]}。可问：${roster}。可引用的公开线索 ID：${publicEvidenceIds.join("、") || "（暂无）"}。本轮你已经问过：${askedThisRound || "（暂无）"}。有公开线索时必须引用至少一张与问题相关的线索；不要重复相同目标和相同证据组合，不要一次抛多个问题，也不要审问式连问。`;
+    const requireJson = `现在轮到你发言。若有一个具体疑点需要对方当众回答，可提问一次；没有必要就不要问。请只输出 JSON：{"ask":false} 或 {"ask":true,"target":座位号,"question":"一个具体问题","evidenceIds":["公开线索id"]}。可问：${roster}。可引用的公开线索 ID：${publicEvidenceIds.join("、") || "（暂无）"}。本轮全场已经问过：${askedThisRound || "（暂无）"}。有公开线索时必须引用至少一张与问题相关的线索；不要重复相同目标和相同证据组合，不要一次抛多个问题，也不要审问式连问。`;
     const res = await chat({
       purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
       gameId: ctx.gameId,
@@ -364,7 +379,7 @@ export const agent = {
       }
     }
     const fallback = candidates.filter((c) => c !== seatIndex);
-    return { target: fallback[Math.floor(Math.random() * fallback.length)], reason: "", evidenceIds: [] };
+    return { target: fallback[Math.floor(Math.random() * fallback.length)], reason: publicEvidenceIds.length ? "依据已公开材料暂作判断，仍需核实行为与动机。" : "公开材料不足，暂作判断。", evidenceIds: publicEvidenceIds.slice(0, 1) };
   },
 
   /** 私聊回复 */

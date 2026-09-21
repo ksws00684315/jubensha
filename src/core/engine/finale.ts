@@ -54,7 +54,9 @@ export function queueAiVote(e: GameEngine, seat: number, candidates: number[]): 
       if (e.state.phase !== "VOTE" || e.state.votes[String(seat)]) return;
       const target = candidates.includes(vote.target) ? vote.target : candidates[0];
       if (target === undefined) return;
-      await recordVote(e, seat, target, vote.reason, vote.evidenceIds);
+      const evidence = legalPublicEvidenceIds(e, vote.evidenceIds);
+      const fallback = e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).slice(0, 1).map((clue) => clue.id);
+      await recordVote(e, seat, target, evidence.length ? vote.reason : "依据公开材料暂作判断，仍需核实。", evidence.length ? evidence : fallback);
       await e.tickInner();
     });
   }, 50 + seat * 40);
@@ -112,7 +114,7 @@ export async function armVotePhaseHuman(e: GameEngine, seat: number): Promise<vo
       const candidates = activeSeats(e.state).filter((i) => i !== seat);
       const target = candidates[Math.floor(Math.random() * candidates.length)];
       if (!e.state.votes[String(seat)] && target !== undefined) {
-        await recordVote(e, seat, target, "（超时，系统代投）");
+        await recordVote(e, seat, target, "（超时，系统代投；依据公开材料暂作判断）", e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).slice(0, 1).map((clue) => clue.id));
       }
     }
     if (now.quiz.includes(seat)) await randomQuizAnswers(e, seat, "（超时，系统已代为作答。）");

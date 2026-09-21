@@ -1,3 +1,5 @@
+import { runInteractionBeats, chooseInteraction } from "./interactions";
+import { randomUUID } from "node:crypto";
 import { db } from "@/lib/db";
 import type { Room, Seat } from "@prisma/client";
 import { clueText, parseScriptForRuntime, resolveLocation } from "@/core/script/compat";
@@ -10,7 +12,6 @@ import { createHash } from "node:crypto";
 import { engineLoads, engines, rememberEngine } from "./registry";
 import { msgOf } from "./util";
 import {
-  afterSearchPhase,
   advanceSelfIntroRound,
   beginGame,
   finalizeEnded,
@@ -30,6 +31,7 @@ import {
   cluesAt,
   collectPublishDecisions,
   dispatchClues,
+  finalizeSearchRound,
   fallbackLocations,
   queueAiSearchChoice,
   seatCharacterId,
@@ -62,7 +64,9 @@ import { resolvePendingAnswer, runAiDiscussionTurn, submitQuestion } from "./dis
 const EVENT_REPLAY_LIMIT = 800;
 
 export interface GameAction {
-  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill" | "answer_quiz";
+  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill" | "answer_quiz" | "interaction";
+  beatId?: string;
+  choiceId?: string;
   text?: string;
   location?: string;
   clueId?: string;
@@ -122,6 +126,20 @@ export class GameEngine {
     this.state = state;
     this.events = events;
     this.unlimitedHumanTurns = unlimitedHumanTurns;
+    // 恢复已落事件、尚未落快照的幂等边界。
+    for (const event of events) {
+      if (event.type === "clue" && event.visibility === "public" && typeof event.content.clueId === "string") {
+        const id = event.content.clueId;
+        state.clueStates[id] = { discoveredBy: state.clueStates[id]?.discoveredBy ?? event.fromSeat, isPublic: true };
+        for (const key of Object.keys(state.pendingPublish)) state.pendingPublish[key] = state.pendingPublish[key].filter((clueId) => clueId !== id);
+      }
+      if (event.type === "interaction" && typeof event.content.beatId === "string") {
+        state.interactionChoices ??= {};
+        state.interactionChoices[event.content.beatId] = { seatIndex: event.fromSeat ?? -1, choiceId: String(event.content.choiceId ?? ""), round: event.round, skipped: event.content.skipped === true };
+        if (state.pendingInteraction?.beatId === event.content.beatId) state.pendingInteraction = null;
+      }
+      if (event.content.answer && event.content.questionId === state.pendingAnswer?.questionId) state.pendingAnswer = null;
+    }
   }
 
   static get(gameId: string): GameEngine | undefined {
@@ -182,6 +200,14 @@ export class GameEngine {
       state.hostHandouts ??= {};
       state.hostHints ??= {};
       state.actionPlans ??= {};
+      state.pendingInteraction ??= null;
+      state.interactionChoices ??= {};
+      if (state.pendingAnswer) state.pendingAnswer.questionId ??= `legacy:${gameId}:${state.round}:${state.pendingAnswer.fromSeat}:${state.pendingAnswer.toSeat}`;
+      // 兼容曾被主持保证公开、却仍残留在待决策队列中的快照。
+      // 玩家端不会为已公开线索显示“公开/私藏”按钮，若不清理会在搜证阶段死锁。
+      for (const seat of Object.keys(state.pendingPublish)) {
+        state.pendingPublish[seat] = (state.pendingPublish[seat] ?? []).filter((id) => !state.clueStates[id]?.isPublic);
+      }
       // 旧快照可能没有这个字段：不补默认会让 `undefined++` 变成 NaN，
       // 而 `NaN >= 上限` 恒为假 → 该轮插话上限彻底失效。字段虽标 deprecated，但仍在读写。
       state.interjections ??= 0;
@@ -510,7 +536,7 @@ export class GameEngine {
           await this.persist();
           return; // 等人类决定
         }
-        await afterSearchPhase(this);
+        await finalizeSearchRound(this);
         return;
       }
       case "DISCUSSION": {
@@ -520,6 +546,7 @@ export class GameEngine {
           return;
         }
         if (state.turnSeat === null) {
+          if (await runInteractionBeats(this)) return;
           const next = nextAfterDiscussion(state.round, this.script.flow.searchRounds, this.script.flow.discussionRounds);
           if (next === "SEARCH") await transitionSearch(this, state.round + 1);
           else if (next === "DISCUSSION") await transitionDiscussion(this, state.round + 1);
@@ -635,6 +662,8 @@ export class GameEngine {
     const seat = this.state.seats[seatIndex];
     if (!seat || seat.kind !== "human") return { ok: false, error: "无权操作该座位" };
     switch (action.type) {
+      case "interaction":
+        return chooseInteraction(this, seatIndex, action.beatId ?? "", action.choiceId ?? "");
       case "ready": {
         if (this.state.phase !== "READING") return { ok: false, error: "当前不在读本环节" };
         clearHumanTimeout(this, seatIndex);
@@ -673,7 +702,7 @@ export class GameEngine {
               fromSeat: seatIndex,
               toSeat: this.state.pendingAnswer.fromSeat,
               visibility: "public",
-              content: { text, speakerName: this.speakerName(seatIndex) },
+              content: { text, speakerName: this.speakerName(seatIndex), answer: true, questionId: this.state.pendingAnswer.questionId },
             });
             clearHumanTimeout(this, seatIndex);
             this.state.pendingAnswer = null;
@@ -766,6 +795,8 @@ export class GameEngine {
         const target = action.target;
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
+        const publicIds = this.script.clues.filter((clue) => this.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id);
+        if (publicIds.length && !(action.evidenceIds ?? []).some((id) => publicIds.includes(id))) return { ok: false, error: "请至少选择一张合法公开证据" };
         await recordVote(this, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined, action.evidenceIds);
         clearHumanTimeout(this, seatIndex);
         // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时
@@ -812,7 +843,7 @@ export class GameEngine {
         this.state.actionPoints[String(seatIndex)] = (this.state.actionPoints[String(seatIndex)] ?? 0) - skill.cost;
         this.state.usedSkills ??= [];
         if (skill.once) this.state.usedSkills.push(`${seatIndex}:${skill.id}`);
-        this.state.pendingAnswer = { fromSeat: seatIndex, toSeat, question: text, forced: true };
+        this.state.pendingAnswer = { questionId: randomUUID(), fromSeat: seatIndex, toSeat, question: text, forced: true };
         // 技能提问与普通提问一样，暂停提问者的回合超时；作答完成后由讨论推进重新武装。
         clearHumanTimeout(this, seatIndex);
         await this.recordEvent({
@@ -825,6 +856,7 @@ export class GameEngine {
           content: {
             text: `${this.speakerName(seatIndex)} 动用了技能【${skill.name}】，要求 ${this.speakerName(toSeat)} 当众正面回答：${text}`,
             skillId,
+            questionId: this.state.pendingAnswer.questionId,
           },
         });
         await this.persist();
