@@ -21,3 +21,14 @@ export function isRetryableLlmError(err: unknown): boolean {
     msg
   );
 }
+
+/**
+ * provider 的内容审核以"助手口吻拒绝"形式回报文（而非 HTTP 故障）。
+ * 只用于识别错误报文，不去扫正常正文——角色自己说"我很抱歉"是剧本里的常态。
+ */
+const SAFETY_REFUSAL =
+  /无法提供相应的信息|无法回答这(个|一)问题|无法为(您|你)(提供|回答)|抱歉，?(我)?(无法|不能)(提供|回答|帮助|讨论)|很抱歉[，,]?(我)?(无法|不能)|作为(一个)?(AI|人工智能|语言模型)|(I'?m|I am)\s+sorry|can'?t\s+(help|assist|answer|provide)|unable\s+to\s+(help|answer|provide|discuss)|as an AI language model|content policy/i;
+
+export function isSafetyRefusal(err: unknown): boolean {
+  return SAFETY_REFUSAL.test(err instanceof Error ? err.message : String(err));
+}
