@@ -2174,11 +2174,11 @@
       },
       {
         "clueId": "menjin_jilu",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "niming_duanxin",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "weixie_duanxin",
@@ -2186,15 +2186,15 @@
       },
       {
         "clueId": "guyupei",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "shouyang_wenjian",
-        "deadlineRound": 2
+        "deadlineRound": 3
       },
       {
         "clueId": "dna_baogao",
-        "deadlineRound": 2
+        "deadlineRound": 3
       },
       {
         "clueId": "jiaban_jiandu",
@@ -2202,11 +2202,11 @@
       },
       {
         "clueId": "zhou_zhenzhi_zhengci",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "liwei_chenjie_zhengci",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "vault_threshold_trace",

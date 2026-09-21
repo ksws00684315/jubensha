@@ -2188,7 +2188,7 @@
           "text": "长史院封存匣中有两份可核验的原件：一是江南“松溪庄”地契，买受人古延年，契价白银一万四千两；二是银庄留存的兑付副联，记载同日收款人为古延年，款项来自粮台拨银。两份原件的日期、数额和收款人可与粮台总册、银库复核副簿逐项核对，印押经银庄与府库验真。它们支持公款缺额流入古延年名下产业，仍须与现场绳索和死亡伪装材料结合，不能单独证明他行凶。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [
         "guyannian"
       ],
@@ -2701,19 +2701,19 @@
       },
       {
         "clueId": "anzishizhenzhe",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "duantaodehuazhou",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "xunyebu",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yutaohuan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "liangtaijiuzhang",

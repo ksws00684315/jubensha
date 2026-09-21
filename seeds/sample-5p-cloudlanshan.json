@@ -1578,7 +1578,7 @@
           "text": "摊开的一页写着：'苏晚的事，十年了，这把柄用得顺手。今日摊牌，她脸白得吓人。江山要用在手才值钱。'后几页被撕掉，撕口很新。字迹确认为沈万山本人。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": [],
       "release": {
@@ -1599,7 +1599,7 @@
           "text": "书房暗格保险柜（密码为死者生日）内有一份十年前的《医疗差错事故调查报告》复印件：某县医院夜班，实习护士配药错误、值班医生签字放行，患者死亡。责任医生签名栏是苏晚。报告下方压着一份未签署的《自愿承认医疗过失声明》。 物件状态：报告页边有多次翻阅形成的磨损，未签声明留有较新的反复折痕；它们与同柜其他多年未动的旧档纸张状态不同。痕迹支持这份报告近期被取出、展示或使用过，但不能确认是谁取用，也不能单独证明胁迫。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": [],
       "release": {
@@ -1662,7 +1662,7 @@
           "text": "苏晚房间窗台绿植盆的土里埋着一个眼药水瓶大小的棕色玻璃瓶，瓶内残留约一毫升液体。实验室快检：乌头碱阳性。瓶身原有标签被撕掉，撕痕边缘有指甲抠挖的痕迹。瓶内残液与参茶检出的毒物相同，证明此瓶是毒物来源之一；单凭房间归属仍需结合进入窗口和相关人的解释判断使用者。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": [],
       "release": {
@@ -2362,15 +2362,15 @@
       },
       {
         "clueId": "tea_autopsy",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "missing_key",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "late_sound",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "footprint",

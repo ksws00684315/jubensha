@@ -2326,7 +2326,7 @@
       },
       {
         "clueId": "bingge",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "dayin_pi",
@@ -2334,7 +2334,7 @@
       },
       {
         "clueId": "yaoping",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "zhitiao",
@@ -2350,7 +2350,7 @@
       },
       {
         "clueId": "luyin_bi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "houqin_ben",
@@ -2358,7 +2358,7 @@
       },
       {
         "clueId": "shuiping_kongping",
-        "deadlineRound": 1
+        "deadlineRound": 2
       }
     ]
   }

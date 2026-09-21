@@ -2859,23 +2859,23 @@
       },
       {
         "clueId": "fayan_ballistics",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "danke",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "qianggui_dengji",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "xingye_guangdian",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "dianming_ben",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "dianming_radio_huan",

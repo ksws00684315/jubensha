@@ -2102,11 +2102,11 @@
       },
       {
         "clueId": "chunjilidan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "shaojisipaib",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "xunyebu",
@@ -2130,7 +2130,7 @@
       },
       {
         "clueId": "c_peijiusi_testimony",
-        "deadlineRound": 2
+        "deadlineRound": 3
       },
       {
         "clueId": "c_bloodwash_trace",

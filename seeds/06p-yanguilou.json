@@ -2539,15 +2539,15 @@
       },
       {
         "clueId": "mixi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "gongwen",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "zhangben",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "mingtie",
@@ -2567,7 +2567,7 @@
       },
       {
         "clueId": "yaofen",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "guanxue",
@@ -2583,7 +2583,7 @@
       },
       {
         "clueId": "fayan_tox",
-        "deadlineRound": 1
+        "deadlineRound": 2
       }
     ]
   }

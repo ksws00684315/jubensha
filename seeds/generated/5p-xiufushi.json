@@ -2224,15 +2224,15 @@
       },
       {
         "clueId": "lingyong_dan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "paifeng_gongdan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "shouji_qunliao",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "taitai_bianhao",
@@ -2244,11 +2244,11 @@
       },
       {
         "clueId": "moxing_beixin",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "menjian_kongbai",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "shuming_youjian",

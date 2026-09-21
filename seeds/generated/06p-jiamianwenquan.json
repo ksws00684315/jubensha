@@ -2841,11 +2841,11 @@
       },
       {
         "clueId": "jiuhu_chen",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "guafan_tangzha",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yueya_hen",
@@ -2857,11 +2857,11 @@
       },
       {
         "clueId": "yaofang_queban",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "shougou_han",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yizhu_caogao",
@@ -2877,7 +2877,7 @@
       },
       {
         "clueId": "xueye_yanjiu",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "hesixi_pool_testimony",

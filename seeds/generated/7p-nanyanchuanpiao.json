@@ -3223,19 +3223,19 @@
       },
       {
         "clueId": "c_toxicology",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_naibei",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_lingyong",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_jiushui",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_kitchen_trace",

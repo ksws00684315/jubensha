@@ -2430,11 +2430,11 @@
       },
       {
         "clueId": "diaoyintai_rizhi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "menjin_buchuan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "cehua_yuangao",
@@ -2450,7 +2450,7 @@
       },
       {
         "clueId": "luyin_paiban",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "console_handover",

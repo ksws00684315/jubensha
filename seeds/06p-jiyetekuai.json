@@ -2609,19 +2609,19 @@
       },
       {
         "clueId": "yaoping",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yizhu_qian",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "zhiben_dai",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "cizhen_xue",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "sizhang",
@@ -2633,11 +2633,11 @@
       },
       {
         "clueId": "zhiban_jilu",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "niunai_xiaoxi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "dangju",
@@ -2649,7 +2649,7 @@
       },
       {
         "clueId": "reshui",
-        "deadlineRound": 1
+        "deadlineRound": 2
       }
     ]
   }

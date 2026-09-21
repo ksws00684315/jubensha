@@ -2688,11 +2688,11 @@
       },
       {
         "clueId": "c_xixiang",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_bazi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_liangzhangben",
@@ -2720,11 +2720,11 @@
       },
       {
         "clueId": "c_yixiang_rule",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_yue_humming",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "c_bazi_lingyong",

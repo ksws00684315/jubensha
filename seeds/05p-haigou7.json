@@ -2921,27 +2921,27 @@
       },
       {
         "clueId": "permission_matrix",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "bijian",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "jianxiu_rizhi",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "zhenjingji",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "zhiriao",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "command_cache",
-        "deadlineRound": 2
+        "deadlineRound": 3
       },
       {
         "clueId": "fengpian",

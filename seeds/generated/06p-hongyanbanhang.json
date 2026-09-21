@@ -2191,7 +2191,7 @@
       },
       {
         "clueId": "xiaozongping",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "fuwu_jiluyi",
@@ -2199,11 +2199,11 @@
       },
       {
         "clueId": "fuwu_liushui",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "gonggao_caogao",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yizhu_fulu",
@@ -2219,7 +2219,7 @@
       },
       {
         "clueId": "xishoujian_yao",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yaoping_jianyan",

@@ -3148,15 +3148,15 @@
     "guaranteedPublicClues": [
       {
         "clueId": "crew_deck_plan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "linen_chute_manual",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "door_lock_rules",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "chuyan_jilu",
@@ -3164,11 +3164,11 @@
       },
       {
         "clueId": "menjin_qingdan",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "yaoshi_jieyong",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "huaibiao",
