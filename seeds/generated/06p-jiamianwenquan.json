@@ -323,33 +323,46 @@
         "defenseHooks": [
           {
             "id": "defense_drone",
-            "claim": "无人机没有拍到脸，画面不能判断性别、衣带方向或身份；上山也不等于翻牌或进汤池。",
-            "basis": "雾遮挡面部，时间码只记录路线和汤札架晃动。",
+            "claim": "汤札翻转和雾中路线不能单独证明是我；闭汤标牌可被代挂，石阶足迹和身影都不具个人识别力。",
+            "basis": "无人机不拍脸、汤札只记登记状态；其他客人与员工也能走石阶。",
             "brokenByPublicClueIds": [
-              "wurenji_ka",
               "guafan_tangzha",
-              "beiyongjin"
+              "wurenji_ka",
+              "beiyongjin",
+              "zhusu_dengji",
+              "hesixi_pool_testimony"
             ]
           },
           {
             "id": "defense_medicine",
-            "claim": "药房有两把钥匙，药板缺失没有取药人记录；酒壶指纹重叠，不能据此确认是谁投药。",
-            "basis": "药房盘点簿和酒壶检验分别说明缺药与污染，均未识别行为人。",
+            "claim": "壶中有咪达唑仑不等于女将饮下，药板缺失也没有取药人签名；不能证明我给她下药。",
+            "basis": "酒壶指纹重叠，药房两把钥匙分属不同位置；壶中残留与缺药分别只能证明污染和短少。",
             "brokenByPublicClueIds": [
-              "yaofang_queban",
               "jiuhu_chen",
-              "yueya_hen"
+              "xueye_yanjiu",
+              "yaofang_queban",
+              "hesixi_pool_testimony"
             ]
           },
           {
             "id": "defense_identity",
-            "claim": "旧照片和登记资料只能说明名字与家属记录存在矛盾，女将的便签还只是核验计划。",
-            "basis": "没有单份材料完成身份确认，更不能由身份疑点推导出谋害。",
+            "claim": "旧登记只能说明阮星和阮月有不同记录，女将便签只是准备核验；没有可靠材料证明当晚住客冒用姐姐姓名。",
+            "basis": "历史照片不能自动对应当晚入住者，单靠疤痕或名字不能推导行凶。",
             "brokenByPublicClueIds": [
               "zhusu_dengji",
               "yueya_hen",
-              "guafan_tangzha",
-              "jiuhu_chen"
+              "guafan_tangzha"
+            ]
+          },
+          {
+            "id": "defense_accident",
+            "claim": "即使女将喝过酒，也可能自行失足落水；壶中镇静药和医师所见淤痕都不能单独证明有人按住她。",
+            "basis": "池沿湿滑，淤痕可能来自搬动或救助；目击者没看到池内动作。",
+            "brokenByPublicClueIds": [
+              "xueye_yanjiu",
+              "yankan_jilu",
+              "hesixi_pool_testimony",
+              "wurenji_ka"
             ]
           }
         ],
@@ -358,34 +371,33 @@
             "actId": "act_1",
             "knowledge": [
               {
-                "id": "ruanyue_stage1_knowledge",
-                "title": "第一幕应对",
+                "id": "ruanyue_act1_fact",
+                "title": "药物与闭汤时间",
                 "content": [
                   {
                     "type": "paragraph",
-                    "text": "若玩家围绕药房短缺或白粉单点指控，提醒他们两把钥匙和多人可接近酒壶；无人机也没有拍到脸。不要主动解释汤札。"
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
                   }
                 ],
-                "source": "inferred",
-                "relatedCharacterIds": [
-                  "mowenjin",
-                  "hesixi"
-                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
                 "relatedClueIds": [
-                  "yaofang_queban",
                   "jiuhu_chen",
-                  "wurenji_ka"
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
                 ]
               }
             ],
             "objectives": [
               {
-                "id": "ruanyue_stage1_objective",
-                "title": "分开药物与溺亡",
+                "id": "ruanyue_act1_goal",
+                "title": "核对第一幕",
                 "content": [
                   {
                     "type": "paragraph",
-                    "text": "讨论药物是否进入壶中、女将如何溺亡时，承认检验结果但质疑其不能确认行为人；把身份疑点留到第二幕。"
+                    "text": "分别陈述登记身份、翻牌时段和自身路线，拒绝把雾中影像当成脸部辨认。"
                   }
                 ],
                 "priority": "primary"
@@ -396,33 +408,35 @@
             "actId": "act_2",
             "knowledge": [
               {
-                "id": "ruanyue_stage2_knowledge",
-                "title": "第二幕应对",
+                "id": "ruanyue_act2_fact",
+                "title": "挣扎、路线与身份",
                 "content": [
                   {
                     "type": "paragraph",
-                    "text": "登记资料和便签会让冒名风险浮现，但无人机没有身份信息。承认女将可能怀疑你，强调她是否确认、以及谁实施各个行为仍需分别证明。"
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
                   }
                 ],
-                "source": "inferred",
-                "relatedCharacterIds": [
-                  "xiangyun"
-                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
                 "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
                   "zhusu_dengji",
-                  "yueya_hen",
-                  "wurenji_ka"
+                  "yueya_hen"
                 ]
               }
             ],
             "objectives": [
               {
-                "id": "ruanyue_stage2_objective",
-                "title": "避免身份替代行为证据",
+                "id": "ruanyue_act2_goal",
+                "title": "推动交叉讨论",
                 "content": [
                   {
                     "type": "paragraph",
-                    "text": "不要把讨论停在性别、肩带或疤痕；要求大家分别解释汤札、药壶和溺亡材料如何指向实际行为。"
+                    "text": "回应毒理和挣扎证词，要求他人说明药物摄入、强制行为与身份材料各能证明什么。"
                   }
                 ],
                 "priority": "primary"
@@ -616,7 +630,85 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "hesixi_act1_fact",
+                "title": "药物与闭汤时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiuhu_chen",
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hesixi_act1_goal",
+                "title": "核对第一幕",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代闭汤与查汤的常例、挂绳方向和当晚巡查时听到的动静。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "hesixi_act2_fact",
+                "title": "挣扎、路线与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
+                  "zhusu_dengji",
+                  "yueya_hen"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hesixi_act2_goal",
+                "title": "推动交叉讨论",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公开声证和借支单，邀请莫问津解释验看边界，再与向芸核对时间码。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -800,7 +892,85 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "duro_act1_fact",
+                "title": "药物与闭汤时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiuhu_chen",
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "duro_act1_goal",
+                "title": "核对第一幕",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释争执与遗嘱草稿误读，说明自己何时腌梅、谁可作证。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "duro_act2_fact",
+                "title": "挣扎、路线与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
+                  "zhusu_dengji",
+                  "yueya_hen"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "duro_act2_goal",
+                "title": "推动交叉讨论",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "询问程鹜收购谈判和药房使用情况，帮助把店产动机与投药行为分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1010,7 +1180,85 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "chengwu_act1_fact",
+                "title": "药物与闭汤时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiuhu_chen",
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chengwu_act1_goal",
+                "title": "核对第一幕",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动交代收购谈判和大堂言语，指出谈判只证明利益冲突。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "chengwu_act2_fact",
+                "title": "挣扎、路线与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
+                  "zhusu_dengji",
+                  "yueya_hen"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chengwu_act2_goal",
+                "title": "推动交叉讨论",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对自己在男汤的时间锚，并要求用独立来源判断池边挣扎和进入路线。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1257,7 +1505,85 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "xiangyun_act1_fact",
+                "title": "药物与闭汤时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiuhu_chen",
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiangyun_act1_goal",
+                "title": "核对第一幕",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "提交无人机原始卡和日志，说明面部、性别及衣带无法辨认。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "xiangyun_act2_fact",
+                "title": "挣扎、路线与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
+                  "zhusu_dengji",
+                  "yueya_hen"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "xiangyun_act2_goal",
+                "title": "推动交叉讨论",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "协助对齐23:43影像、汤札状态与贺四喜听声，不代替身份材料作结论。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1401,7 +1727,85 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "mowenjin_act1_fact",
+                "title": "药物与闭汤时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将壶中药物、药房缺失、实际摄入和闭汤时段分别作为待核事实；不要用嫌疑动机替代行为证据。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "jiuhu_chen",
+                  "yaofang_queban",
+                  "beiyongjin",
+                  "xueye_yanjiu"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mowenjin_act1_goal",
+                "title": "核对第一幕",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "公布验看所见，区分生前溺水、外力淤痕和正式死因。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "mowenjin_act2_fact",
+                "title": "挣扎、路线与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕把池中挣扎/死亡方式、汤札与路线、当晚入住身份拆开检验；无人机不辨人，声音不辨攻击者，身份不等于行为。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yankan_jilu",
+                  "hesixi_pool_testimony",
+                  "guafan_tangzha",
+                  "wurenji_ka",
+                  "zhusu_dengji",
+                  "yueya_hen"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mowenjin_act2_goal",
+                "title": "推动交叉讨论",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "比较药壶、药板、毒理复检与听声，解释镇静摄入顺序和强制行为仍有哪些不确定性。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1499,12 +1903,12 @@
     {
       "id": "jiuhu_chen",
       "locationId": "location_2",
-      "name": "清酒壶的沉渣",
+      "name": "清酒壶残酒与取样封签",
       "category": "object",
       "content": [
         {
           "type": "paragraph",
-          "text": "池沿倒伏的清酒壶残酒约三分之一，壶底有白色细粉。检验从残酒中检出咪达唑仑成分，浓度足以造成嗜睡；壶嘴内壁有多组重叠指纹，无法单独区分谁持壶。酒壶只能证明饮品受污染，不能证明投药人或溺亡过程。"
+          "text": "池沿倒伏的清酒壶残酒约三分之一，壶底有白色细粉。独立检验从残酒中检出咪达唑仑，浓度足以造成嗜睡；壶嘴内壁有多组重叠指纹，无法单独区分谁持壶。它证明壶中酒被污染，不证明女将喝下、投药者是谁或她如何溺亡。"
         }
       ],
       "policy": "manual_public",
@@ -1514,12 +1918,12 @@
     {
       "id": "guafan_tangzha",
       "locationId": "location_1",
-      "name": "挂反的汤札",
+      "name": "汤札架、闭汤值簿与雪地路线",
       "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "木牌架六枚汤札：女将“慧”字牌仍在出位；“星”字牌挂绳朝右，磨损面与平时记录相反。番头值簿记载，他在23:55查汤前，23:00闭汤时“星”牌仍在客房区。石阶道有一串被新雪部分覆盖的脚印。翻动发生在这段时间，但汤札无法辨认翻牌者。"
+          "text": "木牌架六枚汤札：女将“慧”字牌仍在出位；“星”字牌挂绳朝右，磨损面与平时记录相反。番头值簿记载23:00闭汤时“星”牌仍在客房区、23:55查汤前挂绳已翻转。石阶道有一串被新雪部分覆盖的脚印，通向隐汤入口。汤札制度只表示登记状态，可能被代挂；足迹也不具个人识别力。"
         }
       ],
       "policy": "manual_public",
@@ -1529,12 +1933,12 @@
     {
       "id": "yueya_hen",
       "locationId": "location_3",
-      "name": "耳后的月牙痕",
+      "name": "姐妹照片与女将核验便签",
       "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "女将居室抽屉里有姐妹童年合影，背面写着“星无月有”；旁边便签为女将笔迹：“耳后月牙，明日电话江城阮家核对旧照片。”她怀疑某位客人身份有异，但便签没有写出名字，也没有说明她是否已确认。"
+          "text": "女将居室抽屉里有姐妹童年合影，背面写着“星无月有”；照片上耳后月牙痕只出现在标注“阮月”的孩子身上。旁边便签为女将笔迹：“耳后月牙，明日电话江城阮家核对旧照片。”这表明她怀疑当前某位客人身份并准备核验，不说明她已经当面确认。"
         }
       ],
       "policy": "manual_public",
@@ -1544,12 +1948,12 @@
     {
       "id": "wurenji_ka",
       "locationId": "location_6",
-      "name": "无人机的存储卡",
+      "name": "无人机原始素材与飞行日志",
       "category": "digital",
       "content": [
         {
           "type": "paragraph",
-          "text": "向芸无人机原始素材（时间码连续，含飞行日志）：23:43 一道提灯身影沿石阶上行，脸部被雾遮挡，画面无法判断性别、身高或衣带系在哪侧；同一时间汤札架短暂晃动。23:20 有向芸自取机位的画面。该素材可校验路线和时间，不可识别身影身份。"
+          "text": "向芸无人机原始素材（时间码连续，含飞行日志）：23:43一道提灯身影沿石阶上行，脸部被雾遮挡，不能判断性别、身高或衣带方向；同一时间汤札架短暂晃动。23:20有向芸自取机位画面。素材可校验路线和汤札架动作，不能识别身影，也不证明此人进入汤池。"
         }
       ],
       "policy": "manual_public",
@@ -1559,12 +1963,12 @@
     {
       "id": "yaofang_queban",
       "locationId": "location_5",
-      "name": "药房缺失的药板",
+      "name": "药房盘点簿与空药板",
       "category": "document",
       "content": [
         {
           "type": "paragraph",
-          "text": "药房盘点簿显示处方安眠药咪达唑仑缺一板三粒；配药台边缘另采到白色细粉，尚不能仅凭外观认定成分。药房钥匙两把：一把随莫问津，另一把案发后仍锁在女将居室抽屉。盘点记录是缺药与钥匙状态的依据，不指向具体取药者。"
+          "text": "药房盘点簿显示处方安眠药咪达唑仑缺一板三粒；配药台边缘另采到白色细粉，外观不能定成分。药房钥匙两把：一把随莫问津，另一把案发后仍锁在女将居室抽屉。盘点没有领药签字，不能单独认定谁取药。"
         }
       ],
       "policy": "manual_public",
@@ -1618,18 +2022,50 @@
     },
     {
       "id": "zhusu_dengji",
-      "name": "旧住客登记与照片底档",
+      "name": "旧住客登记、事故档案与当晚核验照",
       "category": "document",
       "locationId": "location_7",
       "content": [
         {
           "type": "paragraph",
-          "text": "客房登记册及入住核验底档显示，当前住客以“阮星”登记；三年前一次入住资料附有两姐妹旧照和家属联系电话。照片背注将“耳后有月牙痕”的幼女标作阮月，另有雪山事故后的失踪/死亡报备对应阮星。登记资料能建立名字、照片与事故信息之间的矛盾，仍需与女将的旧照便签及其他路线材料合看。"
+          "text": "客房登记册显示当晚住客以“阮星”登记；入住核验底档附有当晚侧后方证件照，照片中客人耳后可见一道小月牙形疤痕。三年前的姐妹旧照及家属联系电话记载，带同样疤痕的是阮月；雪山事故的死亡/失踪报备对应阮星。登记、当前核验照和历史档案分别记录姓名与外貌，须与女将的旧照便签交叉，不能单凭一张照推断谋害。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [
         "ruanyue"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "xueye_yanjiu",
+      "locationId": "location_2",
+      "name": "血液与胃内容物毒理复检",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "落地后由县医院与警方分别封存复检：女将血液检出咪达唑仑及其代谢物，胃内容物也检出同一成分；代谢产物说明药物已被吸收，不是尸体入水后的表面污染。结合壶中残酒药物浓度，支持她在入水前饮下含药酒并已受镇静影响；不能精确到分钟，也不能证明她完全失去意识或谁递给她酒。药片辅料与药房缺失批次的配方相符。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "hesixi_pool_testimony",
+      "locationId": "location_1",
+      "name": "贺四喜的闭汤巡查补充陈述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "贺四喜补充：约23:44他在女汤外的员工廊道巡查，隔着屏风听见女将熟悉的声音急促说“别按我，松手”，紧接着两次剧烈水响，随后突然安静。他没有看见池内的人，也因女汤隐私没有闯入；23:55按常例入池检查时才发现女将。声音能证明池中发生过挣扎/强制接触并限定时间，不能辨认对方身份；他当时未及时查看也可能影响记忆。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "hesixi"
       ],
       "relatedTruthEventIds": []
     }
@@ -1646,67 +2082,69 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "阮月冒用已故姐姐阮星的身份入住。她先翻动“星”字汤札并藏身，再把咪达唑仑粉投入女将清酒；药物使女将嗜睡，随后她在认亲时将女将按入温泉水中致其溺亡。现场汤札、壶中残留、药房盘点、医师记录、无人机时间码和身份档案各自只回答一段问题；没有衣带方向、性别或单张卡能直接确认凶手。"
+          "text": "女将先饮下含咪达唑仑的酒，药物已进入血液并产生镇静作用；约23:44池中发生挣扎和强制接触，她生前吸入温泉水后溺亡。药房缺药、壶中残液、血液/胃内容物毒理、巡查证词、汤札与路线分别支持来源、摄入、强制行为和机会。各项不单独指认阮月；旧照片、当晚核验照与登记资料再建立她以阮星名义入住的身份风险。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "翻动汤札并利用巡查间隔",
+          "title": "药物进入酒壶并被女将摄入",
           "content": [
             {
               "type": "paragraph",
-              "text": "闭汤后至23:55查汤前，“星”牌被翻动又挂回，绳结方向与长期磨损记录不符。雪地脚印和无人机时间码显示有人沿石阶活动，但不能单独辨认此人。"
+              "text": "壶中残酒检出咪达唑仑，药房记录短少同种药物。血液和胃内容物复检检出药物及代谢物，证明女将实际摄入且药物已吸收；辅料配方与缺失药板批次相符。时间只能定位在饮酒至入水前后，无法单凭化验指认投药者。"
+            }
+          ],
+          "clueIds": [
+            "jiuhu_chen",
+            "yaofang_queban",
+            "xueye_yanjiu"
+          ]
+        },
+        {
+          "id": "method_step_2",
+          "title": "药物影响下发生强制溺水",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "验看确认女将生前吸入温泉水，指端对称按压淤痕提示外力。约23:44贺四喜在屏外听到女将说“别按我，松手”及两次剧烈水响；毒理复检说明她入水前已摄入镇静药。声音、医学和毒理材料共同支持先摄入、后有强制接触并溺亡，没人看见完整动作，事故解释仍需逐项回应。"
+            }
+          ],
+          "clueIds": [
+            "yankan_jilu",
+            "xueye_yanjiu",
+            "hesixi_pool_testimony"
+          ]
+        },
+        {
+          "id": "method_step_3",
+          "title": "对照汤札、路线与时间窗",
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "汤札值簿限定翻牌发生在23:00至23:55；无人机时间码和贺四喜巡查声证把隐汤附近活动限定在约23:43至23:44。二者共同说明有人利用闭汤间隔，但不因路线或挂绳方向单独指认身份。"
             }
           ],
           "clueIds": [
             "guafan_tangzha",
             "wurenji_ka",
+            "hesixi_pool_testimony",
             "beiyongjin"
-          ]
-        },
-        {
-          "id": "method_step_2",
-          "title": "取得药物并投入酒壶",
-          "content": [
-            {
-              "type": "paragraph",
-              "text": "药房盘点簿记载咪达唑仑缺一板，壶中残酒检出同种成分；这两项分别证明药品短缺和饮品受污染。女将的日常饮酒习惯与壶的用途由角色证词补充，仍需时序材料判断谁有机会接近。"
-            }
-          ],
-          "clueIds": [
-            "yaofang_queban",
-            "jiuhu_chen",
-            "beiyongjin"
-          ]
-        },
-        {
-          "id": "method_step_3",
-          "title": "药物作用与溺亡结果",
-          "content": [
-            {
-              "type": "paragraph",
-              "text": "壶中药物足以造成嗜睡；医师记录显示女将生前吸入温泉水，并有按压淤痕与抓握软木的迹象。药物、验看和现场壶塞痕迹共同还原先受药物影响、后被按入水中的过程。"
-            }
-          ],
-          "clueIds": [
-            "jiuhu_chen",
-            "yankan_jilu",
-            "guafan_tangzha"
           ]
         },
         {
           "id": "method_step_4",
-          "title": "核对客人身份与认亲动机",
+          "title": "核验登记身份和潜在动机",
           "content": [
             {
               "type": "paragraph",
-              "text": "登记核验底档把当前“阮星”与姐妹旧照、雪山事故报备连在一起；女将抽屉中的便签则显示她正在核对耳后月牙特征。两类材料交叉揭示冒名风险。无人机画面不参与身份判断，身份动机也不能替代投药、翻牌和溺亡证据。"
+              "text": "当晚入住核验照显示“阮星”登记者耳后有月牙疤；姐妹旧照将同一特征归于阮月，雪山事故档案对应阮星。女将的便签表明她正准备核验。身份暴露风险是动机背景，必须与摄入、挣扎和时间线分开。"
             }
           ],
           "clueIds": [
             "zhusu_dengji",
-            "yueya_hen"
+            "yueya_hen",
+            "yizhu_caogao"
           ]
         }
       ]
@@ -2167,10 +2605,13 @@
       }
     ],
     "keyEvidenceIds": [
-      "guafan_tangzha",
+      "yankan_jilu",
       "jiuhu_chen",
       "yaofang_queban",
-      "yankan_jilu",
+      "xueye_yanjiu",
+      "hesixi_pool_testimony",
+      "guafan_tangzha",
+      "wurenji_ka",
       "zhusu_dengji",
       "yueya_hen"
     ],
@@ -2182,25 +2623,34 @@
           "beiyongjin",
           "wurenji_ka"
         ],
-        "conclusion": "汤札磨损与值簿记录共同确认牌被翻动的时间段；无人机只补充石阶路线和架子晃动时间，不能辨认翻牌者。"
+        "conclusion": "汤札值簿确认翻动时间段，巡查制度给出关闭/查汤窗口，无人机补充石阶和架子晃动；合并支持有人利用了时间窗，但不识别身份。"
       },
       {
-        "id": "evidence_poison",
+        "id": "evidence_consumption",
         "clueIds": [
           "jiuhu_chen",
           "yaofang_queban",
-          "beiyongjin"
+          "xueye_yanjiu"
         ],
-        "conclusion": "壶中检出咪达唑仑，药房盘点簿又显示同种药物短缺；作息值簿提供女将独饮与巡查时间窗。三类材料说明药物进入酒壶及作案机会，不能由白色粉末或缺药单独锁定取药人。"
+        "conclusion": "酒壶有咪达唑仑，药房缺失同种药板，血液与胃内容物检出药物及代谢物，辅料配方相符。杯中污染、药源和实际摄入由物证、盘点记录与独立毒理复检交叉确认；都不单独指认投药者。"
       },
       {
-        "id": "evidence_drowning",
+        "id": "evidence_force",
         "clueIds": [
           "yankan_jilu",
-          "jiuhu_chen",
-          "wurenji_ka"
+          "hesixi_pool_testimony",
+          "xueye_yanjiu"
         ],
-        "conclusion": "验看记录确认生前溺水并发现外力痕迹，壶中药物解释嗜睡，无人机时间码提供石阶活动窗口。三者共同支持先投药、后按入水中的顺序，但画面不识别人。"
+        "conclusion": "验看确认生前溺水并有外力按压痕；贺四喜听见女将清楚拒绝、求松手后出现剧烈水响；毒理显示她已摄入镇静药。医学、证词和毒理共同支持先摄入再遭强制接触并溺亡，目击者没有看见实施者。"
+      },
+      {
+        "id": "evidence_route",
+        "clueIds": [
+          "guafan_tangzha",
+          "wurenji_ka",
+          "hesixi_pool_testimony"
+        ],
+        "conclusion": "汤札记录、路线影像和廊道听声把有人接近隐汤的时间限定在闭汤与查汤之间；挂绳、雾中身影和声音都不能单独识别阮月，仍需结合入住身份材料。"
       },
       {
         "id": "evidence_identity",
@@ -2208,7 +2658,7 @@
           "zhusu_dengji",
           "yueya_hen"
         ],
-        "conclusion": "住客登记底档与姐妹旧照建立当前“阮星”登记和事故记录之间的矛盾；女将的私人便签独立说明她正在核对耳后特征。两份不同来源的材料共同揭示冒名身份风险，不直接证明凶手行为。"
+        "conclusion": "当晚入住核验照将登记为阮星的客人与耳后月牙疤关联；姐妹旧照将该特征归于阮月，并记载阮星事故信息。两份材料交叉支持冒名身份风险，不直接证明下药或溺亡行为。"
       },
       {
         "id": "evidence_motive",
@@ -2217,7 +2667,7 @@
           "yueya_hen",
           "yizhu_caogao"
         ],
-        "conclusion": "登记与照片核验资料、女将认亲便签说明阮月的身份可能暴露；传店草稿说明其他人也有担忧或利益冲突。身份动机要与翻牌、投药和溺亡链合看，不能单独定罪。"
+        "conclusion": "登记身份与姐妹旧照/核验便签显示阮月身份可能暴露，传店草稿另说明杜若、程鹜等人的利益冲突。身份风险和店产争议都只是动机，必须结合行为链。"
       }
     ],
     "redHerrings": [
@@ -2306,7 +2756,7 @@
         "brief": [
           {
             "type": "paragraph",
-            "text": "先公开验看记录、清酒壶、药房盘点、汤札和值簿材料。引导玩家分别判断翻牌、药物污染和溺亡，不公布上山身影身份。"
+            "text": "第一轮分清酒壶污染、女将是否实际摄入以及药房缺药来源；公布独立血液/胃内容物毒理。药物摄入和药源不自动锁定投药者。"
           }
         ]
       },
@@ -2317,7 +2767,7 @@
         "brief": [
           {
             "type": "paragraph",
-            "text": "公开无人机原始素材、旧住客登记、女将便签及传店草稿。要求玩家把路线时序与身份材料分开推理，并讨论其他人的动机与机会。"
+            "text": "第二轮核对约23:44的拒绝声与剧烈水响、验看中的生前溺水和按压痕，再对照汤札、路线、身份资料。建立“先摄入镇静药、后遭强制接触并溺亡”的分层推论；没有一张线索识别实施者。"
           }
         ]
       }
@@ -2355,33 +2805,33 @@
       },
       {
         "phase": "SEARCH",
-        "notes": "第一轮保证公开汤札、值簿、药房盘点、酒壶和医师记录；第二轮保证公开无人机原始素材、登记底档、女将便签、传店草稿及收购函。主持人按轮次补发，关键卡不依赖角色自曝。"
+        "notes": "第一轮保证公开验看、酒壶、汤札、药房缺药、收购函和血液/胃内容物毒理复检；第二轮保证公开无人机、耳后旧照便签、入住核验照、遗嘱草稿、闭汤备用金值簿及贺四喜听到拒绝/挣扎的补充证词。12张线索分配为每轮6张，6人两轮容量内；关键资料不依赖莫问津或贺四喜主动自曝。"
       },
       {
         "phase": "DISCUSSION",
-        "notes": "依次讨论汤札何时被翻、药物如何进酒、女将如何溺亡、客人身份为何可疑。提醒玩家衣带方向和性别不构成身份识别。"
+        "notes": "先用壶中药、药房缺药和血液/胃内容物复检判断女将是否实际摄入及药源；再用验看和贺四喜在屏外听见的“别按我，松手”及剧烈水响讨论强制溺水；最后核对汤札、路线与当晚登记身份。酒壶、淤痕、单张照片、挂绳都不能单卡定论。"
       },
       {
         "phase": "VOTE",
-        "notes": "投票前确认每个关键判断都由至少两张不同类别材料支持；分别说明机会、药物、死亡方式与身份动机，避免单线索锁凶。"
+        "notes": "投票前分别说明：药物是否进入身体、药源与壶中残留是否匹配、挣扎和强制溺水的依据、隐汤路线与身份是否有关。至少以毒理/现场物证/证词各一类交叉论证；行为身份不得从性别或衣带方向推出。"
       }
     ],
     "stallBreakers": [
       {
-        "condition": "玩家把左肩系带或体型当作女性身份。",
-        "hint": "原始画面不能判断系带方向、性别或身高；请只用它核对时间和石阶路线。"
+        "condition": "玩家把无人机身影、左肩系带或性别直接当成阮月。",
+        "hint": "原片不能识别性别、衣带或身份。先用汤札值簿和巡查声证建立时间，再用当晚入住照与姐妹旧照独立核验身份。"
       },
       {
-        "condition": "玩家凭耳后便签直接认定阮月。",
-        "hint": "便签只表明女将准备核验；请找住客登记、旧照和事故记录之间的独立对应。"
+        "condition": "玩家只凭药房缺药或酒壶残酒指认投药者。",
+        "hint": "公开血液/胃内容物毒理复检；药物代谢物证明实际摄入，辅料与缺失药板相符，但投药者仍需靠路线、挣扎和身份交叉推断。"
       },
       {
-        "condition": "玩家只凭白粉或缺失药板认定投药人。",
-        "hint": "白粉需化验，缺药单没有取药人记录；把壶中成分、药房盘点和巡查时序交叉起来。"
+        "condition": "玩家认为女将可能自行失足溺水。",
+        "hint": "请对照生前吸水与按压痕、已经摄入的镇静药，以及贺四喜听见“别按我，松手”后随即发生的剧烈水响。证词不辨身份，但能检验事故解释。"
       },
       {
-        "condition": "玩家只依据外伤或木屐判断溺亡方式。",
-        "hint": "请结合肺内温泉水、指端痕迹、壶中镇静药和石阶时间线讨论死亡顺序。"
+        "condition": "玩家只凭旧照片或便签认定身份。",
+        "hint": "旧照说明姐妹特征，入住核验照把当晚登记客人与月牙疤关联；两份材料合看，不把身份等同于杀人。"
       }
     ],
     "guaranteedPublicClues": [
@@ -2398,19 +2848,27 @@
         "deadlineRound": 1
       },
       {
-        "clueId": "yaofang_queban",
-        "deadlineRound": 1
-      },
-      {
-        "clueId": "beiyongjin",
-        "deadlineRound": 1
+        "clueId": "yueya_hen",
+        "deadlineRound": 2
       },
       {
         "clueId": "wurenji_ka",
         "deadlineRound": 2
       },
       {
-        "clueId": "yueya_hen",
+        "clueId": "yaofang_queban",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shougou_han",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yizhu_caogao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "beiyongjin",
         "deadlineRound": 2
       },
       {
@@ -2418,11 +2876,11 @@
         "deadlineRound": 2
       },
       {
-        "clueId": "yizhu_caogao",
-        "deadlineRound": 2
+        "clueId": "xueye_yanjiu",
+        "deadlineRound": 1
       },
       {
-        "clueId": "shougou_han",
+        "clueId": "hesixi_pool_testimony",
         "deadlineRound": 2
       }
     ]

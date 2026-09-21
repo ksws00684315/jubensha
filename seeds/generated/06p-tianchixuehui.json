@@ -13,12 +13,12 @@
       "密闭空间",
       "雪夜"
     ],
-    "intro": "天池峰滑雪度假区暴雪封山，索道全停，山顶酒店连同缆车站成了一座雪中孤岛。20:00，投资公司老板傅崇礼被发现俯卧在缆车站一层候车厅——像极了一次酒后的失足坠落。可他白天滴酒未沾，二层检修平台的栏杆断口撬痕崭新。封山之夜，缆车站里来过的只有五个人。天亮索道恢复之前，你们得把真凶钉在这片雪里。"
+    "intro": "天池峰滑雪度假区暴雪封山，索道停运，酒店与缆车站成了雪中的封闭区域。20:00，投资公司老板傅崇礼被发现死在缆车站一层候车厅，二层检修平台栏杆断口有新鲜工具痕。现场既可能是人为推落，也可能是栏杆破坏后失足；枪击、跌落原因、谁接触过平台，都要靠不同材料核验。封山后仍留在区域内的六人各有行动空档，外部封闭不能替代对六人逐一查证。"
   },
   "background": [
     {
       "type": "paragraph",
-      "text": "天池峰滑雪度假区，海拔两千一百米，一年一度的'雪会'之夜——傅崇礼的崇礼资本每年在此宴请核心团队。今晚 19:40，风雪骤急，山顶索道全线停运，度假区封山，驻场医生与警力都在山下，天亮前没人能上来。傅崇礼，五十八岁，崇礼资本创始人，白天滴酒未沾——他宣布过：19:40 在缆车站二层会议室开临时董事会，'有一件大事'。19:40，五个人到齐，会议室空着。19:55 仍不见人。20:00，缆车站值班员谷雨下楼查看：傅崇礼俯卧在一层候车厅，后脑着地，雪镜摔碎在身侧，人已没了呼吸。他趴的位置正对二层检修平台正下方，乍看像一次失足坠落。可值班日志显示，19:02 之后只有他自己上过二层；风雪掩住了雪廊里所有的脚步声。五个人——副总裁、遗孀、助理、银行行长、滑雪教练，还有那个 19:02 目送他上楼的值班员——每个人在这条雪廊里都有一段说不清的两分钟。天亮之前，索道不会动，凶手也走不了。"
+      "text": "天池峰滑雪度假区，海拔两千一百米，一年一度的“雪会”之夜。19:40风雪骤急，索道停运、道路封闭，驻场医生与警力在山下，天亮前外人无法抵达。傅崇礼，五十八岁，崇礼资本创始人，白天滴酒未沾；他宣布19:40在缆车站二层会议室开临时董事会。19:40众人到场时会议室空着，20:00值班员谷雨发现傅崇礼死在一层候车厅，后脑着地，雪镜碎在身侧。平台西侧栏杆断口在尸身上方，但“在栏杆下方发现尸体”本身不能证明从该处坠落。封山后酒店与缆车站之间只有雪廊可通行；六名在场角色均可能进入相关区域，雪廊盲区和风雪使人员记录不完整。"
     }
   ],
   "characters": [
@@ -50,7 +50,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你就是凶手。19:20 你在二层检修平台与傅崇礼谈崩，他转身要走并说'明早停职、报案'，你从他身后发力将他推下平台，他后脑撞上一层的电缆盘。你事先把栏杆第三根立柱的螺栓拧松，伪造'扶栏失足'；事后把他外套的线头捡走，却漏了断口上缠着的深灰抓绒纤维——与你滑雪服同色，回房后你剪掉了右袖口沾纤维的一角。"
+                "text": "你就是凶手。下午16:00你用常见内六角工具把二层西侧第三根立柱的两颗螺栓拧退，为“扶栏失足”预设条件；19:15你以摆会为名进入雪廊，与傅崇礼谈崩后在19:20左右从背后推他坠落，他后枕撞上一层电缆盘死亡。人为松栓是预谋，推落是直接致死行为，两者不能混作“栏杆自然断”。事后你清理并剪下右袖口沾到的布角，丢进雪廊垃圾桶，再在19:32到酒吧制造公开露面。"
               }
             ],
             "disclosure": "never"
@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你 19:15-19:25 在雪廊里没有人证，这是你唯一的空窗，你要把它解释成'慢慢走、顺便抽烟'。主动说 19:32 之后你在酒吧拼桌——那是最硬的不在场证明，先把牌打出去。把嫌疑引向 19:15 在雪板柜出现过的乔曼和 19:58 出现在缆车站外的陆野。若有人提栏杆、提扳手，就说'下午谁都能上二层平台，撬痕未必是今晚的事'。"
+                "text": "你的主要风险是下午提前松动栏杆、19:15进入雪廊和右袖口缺角；审计草稿涂黑姓名、长工具袋未署名，都不能单独证明你是对象或工具使用者。可承认当天下午检查过平台但否认推人；强调旧巡检单的锈蚀背景和工具共用。遇到袖口碎片时质疑剪下时间与穿着者，遇到酒吧签单时指出它只证明19:32之后某段时间露面，不能把你的空档自动填满。"
               }
             ],
             "priority": "primary"
@@ -73,18 +73,18 @@
           {
             "id": "character_fangyu_event_1",
             "time": {
-              "display": "18:50",
+              "display": "16:00",
               "precision": "exact",
               "start": {
                 "dayOffset": 0,
-                "time": "18:50"
+                "time": "16:00"
               }
             },
-            "title": "在房间接傅崇礼内线电话",
+            "title": "用内六角工具松动平台螺栓",
             "content": [
               {
                 "type": "paragraph",
-                "text": "在房间接傅崇礼内线电话。"
+                "text": "在平台无人时松动两颗螺栓，预设失足条件。"
               }
             ],
             "characterIds": [],
@@ -93,18 +93,18 @@
           {
             "id": "character_fangyu_event_2",
             "time": {
-              "display": "19:10",
+              "display": "18:50",
               "precision": "exact",
               "start": {
                 "dayOffset": 0,
-                "time": "19:10"
+                "time": "18:50"
               }
             },
-            "title": "对大堂众人说'我去帮傅总摆会议室",
+            "title": "接到傅崇礼内线电话",
             "content": [
               {
                 "type": "paragraph",
-                "text": "对大堂众人说'我去帮傅总摆会议室'。"
+                "text": "接到关于次日审计和单独谈话的电话。"
               }
             ],
             "characterIds": [],
@@ -113,87 +113,29 @@
           {
             "id": "character_fangyu_event_3",
             "time": {
-              "display": "19:15",
-              "precision": "exact",
+              "display": "19:15-19:25",
+              "precision": "range",
               "start": {
                 "dayOffset": 0,
                 "time": "19:15"
-              }
-            },
-            "title": "进雪廊",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "进雪廊，与取雪板的陆野擦肩（你压了帽檐）。"
-              }
-            ],
-            "characterIds": [
-              "luye"
-            ],
-            "clueIds": []
-          },
-          {
-            "id": "character_fangyu_event_4",
-            "time": {
-              "display": "19:20",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "19:20"
-              }
-            },
-            "title": "在二层检修平台行凶",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "在二层检修平台行凶。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_fangyu_event_5",
-            "time": {
-              "display": "19:22",
-              "precision": "exact",
-              "start": {
-                "dayOffset": 0,
-                "time": "19:22"
-              }
-            },
-            "title": "简单布置现场",
-            "content": [
-              {
-                "type": "paragraph",
-                "text": "简单布置现场。"
-              }
-            ],
-            "characterIds": [],
-            "clueIds": []
-          },
-          {
-            "id": "character_fangyu_event_6",
-            "time": {
-              "display": "19:25",
-              "precision": "exact",
-              "start": {
+              },
+              "end": {
                 "dayOffset": 0,
                 "time": "19:25"
               }
             },
-            "title": "经雪廊返回主楼",
+            "title": "进入雪廊并与死者发生争执",
             "content": [
               {
                 "type": "paragraph",
-                "text": "经雪廊返回主楼。"
+                "text": "以摆会议室为由进入雪廊，争执后推死者坠落。"
               }
             ],
             "characterIds": [],
             "clueIds": []
           },
           {
-            "id": "character_fangyu_event_7",
+            "id": "character_fangyu_event_4",
             "time": {
               "display": "19:32",
               "precision": "exact",
@@ -202,22 +144,18 @@
                 "time": "19:32"
               }
             },
-            "title": "起在大堂酒吧与戴鸿、裴小北、陆野拼桌",
+            "title": "在大堂酒吧签单",
             "content": [
               {
                 "type": "paragraph",
-                "text": "起在大堂酒吧与戴鸿、裴小北、陆野拼桌，直到"
+                "text": "签单并与几人断续拼桌，制造露面记录。"
               }
             ],
-            "characterIds": [
-              "daihong",
-              "peixiaobei",
-              "luye"
-            ],
+            "characterIds": [],
             "clueIds": []
           },
           {
-            "id": "character_fangyu_event_9",
+            "id": "character_fangyu_event_5",
             "time": {
               "display": "20:05",
               "precision": "exact",
@@ -226,11 +164,11 @@
                 "time": "20:05"
               }
             },
-            "title": "随众人去缆车站'发现'现场",
+            "title": "随众人到候车厅",
             "content": [
               {
                 "type": "paragraph",
-                "text": "随众人去缆车站'发现'现场。"
+                "text": "随众人到场并假装刚发现死者。"
               }
             ],
             "characterIds": [],
@@ -285,7 +223,107 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "fangyu_act_1_knowledge",
+                "title": "解释站区行程",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明19:15进入雪廊的理由，承认审计通话但不把姓名涂黑解释成自己；对照巡查盲区、封山通道和死亡机制提出可检验的替代路线。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangyu_act_1_objective",
+                "title": "解释站区行程",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明19:15进入雪廊的理由，承认审计通话但不把姓名涂黑解释成自己；对照巡查盲区、封山通道和死亡机制提出可检验的替代路线。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "fangyu_act_2_knowledge",
+                "title": "回应破坏与衣物比对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认平台维修区可多人进入，要求区分螺栓工具痕、长工具袋和具体使用者；面对袖口比对，追问穿着、剪下时间与现场行为是否有独立证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fangyu_act_2_objective",
+                "title": "回应破坏与衣物比对",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认平台维修区可多人进入，要求区分螺栓工具痕、长工具袋和具体使用者；面对袖口比对，追问穿着、剪下时间与现场行为是否有独立证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "fangyu_defense_corrosion",
+            "claim": "平台栏杆本来就锈蚀松动，断裂是风雪和年久失修造成的；我没有预先破坏。",
+            "basis": "旧巡检确有“锈蚀待加固”，但该描述不等于螺栓已被拧退；他可否认人为改动。",
+            "brokenByPublicClueIds": [
+              "lanangan",
+              "luoshuo_gongju_jianyan",
+              "xunzha_rizhi"
+            ]
+          },
+          {
+            "id": "fangyu_defense_full_bar_alibi",
+            "claim": "我从19:32开始一直在酒吧，酒吧签单和拼桌证明我覆盖了全部死亡窗口，不可能接触缆车站。",
+            "basis": "签单只证明当时消费；侍应生记录是断续拼桌，且死亡时段从死者19:02进入雪廊延伸至20:00发现。",
+            "brokenByPublicClueIds": [
+              "qiandan",
+              "xunzha_rizhi",
+              "xuebangui",
+              "fengxue_tongxingjilu"
+            ]
+          }
+        ]
       }
     },
     {
@@ -508,7 +546,84 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "qiaoman_act_1_knowledge",
+                "title": "交代雪板柜停留",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动说明送胃药和在柜前停留，要求将模糊男性目击与个人身份分开；核对尸检是否足以排除失足。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qiaoman_act_1_objective",
+                "title": "交代雪板柜停留",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动说明送胃药和在柜前停留，要求将模糊男性目击与个人身份分开；核对尸检是否足以排除失足。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "qiaoman_act_2_knowledge",
+                "title": "拆分动机与现场行为",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明补充协议如何造成嫌疑但不能证明上平台；逐项讨论碎片、栏杆工具痕和其他人的路线。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qiaoman_act_2_objective",
+                "title": "拆分动机与现场行为",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明补充协议如何造成嫌疑但不能证明上平台；逐项讨论碎片、栏杆工具痕和其他人的路线。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -716,7 +831,84 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "daihong_act_1_knowledge",
+                "title": "公开抽贷与露台空档",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释银行调查和露台通话，承认该时段没有人证；核对封山记录是否仅排除外来人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "daihong_act_1_objective",
+                "title": "公开抽贷与露台空档",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释银行调查和露台通话，承认该时段没有人证；核对封山记录是否仅排除外来人。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "daihong_act_2_knowledge",
+                "title": "说明审计附件限度",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代并案批注为何没有姓名，避免把审计标记当成锁凶证据；比较能证明动机的独立材料与行为材料。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "daihong_act_2_objective",
+                "title": "说明审计附件限度",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代并案批注为何没有姓名，避免把审计标记当成锁凶证据；比较能证明动机的独立材料与行为材料。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -922,7 +1114,84 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "peixiaobei_act_1_knowledge",
+                "title": "核对会议通知和打印",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "出示旧版材料打印记录，说明打印机日志不能证明本人一直在旁；调查会议室空置的时间窗口。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peixiaobei_act_1_objective",
+                "title": "核对会议通知和打印",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "出示旧版材料打印记录，说明打印机日志不能证明本人一直在旁；调查会议室空置的时间窗口。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "peixiaobei_act_2_knowledge",
+                "title": "说明报销争议",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代报销单但将其与杀人行为分开；协助比对谁在雪廊、谁可能接触平台。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peixiaobei_act_2_objective",
+                "title": "说明报销争议",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代报销单但将其与杀人行为分开；协助比对谁在雪廊、谁可能接触平台。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1111,7 +1380,84 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "luye_act_1_knowledge",
+                "title": "补充取板目击边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明柜前女性与压帽男子的距离、能看见和不能辨认的细节；如实交代夜滑与19:58位置。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luye_act_1_objective",
+                "title": "补充取板目击边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明柜前女性与压帽男子的距离、能看见和不能辨认的细节；如实交代夜滑与19:58位置。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "luye_act_2_knowledge",
+                "title": "检验鞋印与栏杆",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将两处模糊足迹当作多人到场线索而非尺码鉴定；比较松栓、推落和雪具袋的不同解释。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luye_act_2_objective",
+                "title": "检验鞋印与栏杆",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "将两处模糊足迹当作多人到场线索而非尺码鉴定；比较松栓、推落和雪具袋的不同解释。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1337,7 +1683,84 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "guyu_act_1_knowledge",
+                "title": "公开巡查盲区",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代戴耳罩检修、何时回值班室和从窗口能看见的范围；主动指出日志不能证明雪廊内侧无人。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "yanshang_jilu",
+                  "fayan_gaozhui_jianyan",
+                  "fengxue_tongxingjilu",
+                  "xuebangui",
+                  "laoshucang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyu_act_1_objective",
+                "title": "公开巡查盲区",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交代戴耳罩检修、何时回值班室和从窗口能看见的范围；主动指出日志不能证明雪廊内侧无人。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "guyu_act_2_knowledge",
+                "title": "复核现场与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释“地面浮雪未乱”只是主观观察；配合法医和雪镜材料复核时间，不把值班身份当作排他性证据。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "lanangan",
+                  "luoshuo_gongju_jianyan",
+                  "banshou",
+                  "jianduanxiu",
+                  "fangyu_xueyi_quebian",
+                  "qiandan"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guyu_act_2_objective",
+                "title": "复核现场与时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释“地面浮雪未乱”只是主观观察；配合法医和雪镜材料复核时间，不把值班身份当作排他性证据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1360,7 +1783,8 @@
           "type": "paragraph",
           "text": "栏杆断口所在。螺栓、纤维和残留足迹需要蹲下去看；平台外侧风极大，说话几乎听不见。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guyu"
     },
     {
       "id": "location_3",
@@ -1370,7 +1794,8 @@
           "type": "paragraph",
           "text": "谷雨的值班室。日志、耳罩、窗外视野。从这里看不见雪廊门内侧。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guyu"
     },
     {
       "id": "location_4",
@@ -1380,7 +1805,8 @@
           "type": "paragraph",
           "text": "连接酒店与缆车站的封闭走廊。雪板柜、寄存的雪具包、通向主楼的垃圾桶都在这条廊里。"
         }
-      ]
+      ],
+      "ownerCharacterId": "luye"
     },
     {
       "id": "location_5",
@@ -1400,7 +1826,8 @@
           "type": "paragraph",
           "text": "空着的会议室。傅崇礼的公文包、打印材料还摊在桌上，19:40 的会没有开成。"
         }
-      ]
+      ],
+      "ownerCharacterId": "fangyu"
     }
   ],
   "clues": [
@@ -1412,7 +1839,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "乔曼的现场记录：后脑一处撞击伤、无对冲伤、指端无搏斗伤，符合坠落即刻昏迷；右手掌心攥有几点崭新的金属漆屑（坠落前本能抓握所致）；背面积雪薄而均匀、腕部有余温，推定死亡不晚于 19:50。结论：高坠致死，非击打，非猝死。"
+          "text": "乔曼的现场记录：后脑有一处重创、无明显对冲伤，指端未见明显搏斗伤；右手掌心攥有几粒新鲜浅色金属漆屑。尸身背面积雪与腕部余温只能说明发现时已死亡一段时间，无法精确到分钟。初步考虑高处坠落，但枪击、病发后坠落或被推落须待独立检验；本记录不识别行为人。"
         }
       ],
       "policy": "auto_public",
@@ -1427,7 +1854,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "西侧栏杆第三根立柱断裂，断口崭新，两颗膨胀螺栓被拧退到只剩一圈螺纹，螺口有内六角扳手的压痕——人工松动，非锈蚀自然断裂。断口缠着几缕深灰抓绒纤维，比死者手套纤维更细，断面齐整，像被剪刀剪过，而不是撕扯。"
+          "text": "西侧栏杆第三根立柱断裂，断口新鲜。两颗膨胀螺栓被拧退到只剩一圈螺纹，螺口有内六角扳手压痕，说明近期有人用工具松动，单靠锈蚀不足以解释。断口缠着几缕深灰抓绒纤维，断面齐整，像被剪过；颜色、粗细都不是个人特征，不能凭它归属某件衣服或某个人。此处证明栏杆被人为处理，不单独证明死者由此坠落。"
         }
       ],
       "policy": "manual_public",
@@ -1442,7 +1869,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者身侧的雪镜碎片分两层：下层是 19:50 之前的间歇细雪，上层压着 20:00 后的密雪。碎片散落方向与坠落点吻合，无二次摆放痕迹——雪镜是坠落瞬间飞脱的，坠落发生在 19:50 前。"
+          "text": "死者身侧的雪镜碎片散落方向与二层西侧栏杆下方的垂直落线大致相符；现场保护照片显示碎片被风雪覆盖，落雪层来自连续风暴。雪镜很可能在坠落或撞击时飞脱，但雪层没有足够清晰的逐分钟界面，不能据此把坠落定在19:50前或精确到分钟，也不能单独排除有人移动碎片。"
         }
       ],
       "policy": "manual_public",
@@ -1457,7 +1884,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "谷雨的记录：19:02 目送傅总进雪廊；19:10-19:45 东侧室外检修缆绳（戴耳罩，雪廊门内侧为盲区）；19:50 回值班室，窗外雪廊门无动静；19:55 引众人上二层，会议室空置；19:58 隔窗喝止夜滑的陆野；20:00 发现遗体。备注一行小字：'地面浮雪未乱，不像清醒坠地。'"
+          "text": "谷雨的记录：19:02目送傅总进入雪廊；19:10—19:45在东侧室外检修缆绳（戴耳罩，雪廊门内侧和缆车站内均为盲区）；19:50回值班室；19:55引众人上二层；20:00发现遗体。日志只记录她亲眼见到的时刻，不能证明整个站区无人进出。备注“地面浮雪未乱”是当时的主观判断，不足以判断死者是否清醒或是否受人推搡。"
         }
       ],
       "policy": "manual_public",
@@ -1472,7 +1899,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "19:32 方屿签单开第一瓶威士忌。侍应生证词：方屿、戴鸿、裴小北、陆野自 19:32 起断续同桌至 20:25；其间戴鸿 19:20 前后起身去露台接电话约十分钟（无人证），陆野 19:58 离席去缆车站外。签单时间与侍应生证词互相吻合。"
+          "text": "19:32方屿签单开第一瓶威士忌。侍应生证词：方屿、戴鸿、裴小北、陆野自19:32起断续拼桌至20:25；当时各人不一直同桌，没人能为方屿从19:02起的行踪作连续证明。戴鸿19:20前后曾离席去露台接电话约十分钟（无人证），陆野19:58离席去缆车站外。签单证明一笔消费发生，不等同全时段不在场。"
         }
       ],
       "policy": "manual_public",
@@ -1487,7 +1914,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "傅崇礼的公文包夹着一份审计草稿。页边批注字迹急促：'内部通道账户与基金头寸同进同出，浮亏约四千万。建议明日停职、报案。'姓名栏被墨水涂黑。另一页是通话备忘：'18:50 已约，19:15 缆车站单独谈。'没有写对象是谁。"
+          "text": "傅崇礼公文包夹着一份未完成的审计草稿。页边批注写着“内部通道账户与基金头寸同进同出，浮亏约四千万。建议明日停职、报案”；姓名栏被墨水涂黑，笔迹不能辨认。另页通话备忘为“18:50已约，19:15缆车站单独谈”，没有对象姓名。此材料能说明有人面临审计风险，不能单凭涂黑栏把风险归给任何具体角色。"
         }
       ],
       "policy": "manual_public",
@@ -1502,7 +1929,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "取用牌显示陆野 19:15 取板。柜前值班员工证词：19:15 前后有一名女士在柜前站了约两分钟，'一直在往缆车站方向张望，没进去'；同一时刻有高个男子从她身侧走向雪廊深处，压着帽檐。"
+          "text": "取用牌显示陆野19:15取板。柜前员工记录：19:15前后乔曼在柜前约两分钟，未进缆车站；同一时段有一名高个男子压着帽檐走向雪廊深处。风雪与距离使员工无法辨脸、服饰或所持物品；该记录证明有人通过，不证明就是方屿。"
         }
       ],
       "policy": "manual_public",
@@ -1532,7 +1959,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "雪廊寄存处一只未上锁的深灰雪具包，挂牌是酒店'管理层预留'，没有写名字。工具袋里内六角扳手的插袋空着，袋底有金属锈痕与几点白色漆屑。袋内其余工具齐全。若对照栏杆断口的旧漆，漆色接近。"
+          "text": "雪廊寄存处有一只未上锁的深灰雪具/长工具袋，挂牌仅写“管理层预留”，没有姓名。常用内六角扳手的插袋为空；袋底的金属锈迹和白色漆屑来自多次设备维护，外观颜色接近栏杆漆但未做个体化检验。袋子和工具可能被多人共用，空插袋不能证明袋主或使用者，也不能证明袋中这把工具拧过栏杆。"
         }
       ],
       "policy": "manual_public",
@@ -1577,11 +2004,73 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "雪廊通向主楼的垃圾桶里有一小角深灰抓绒，断面齐整，像剪刀剪的。纤维粗细与栏杆断口缠着的绒线相近，但无法单凭颜色认定主人——今晚至少三个人穿过深灰色抓绒外套。"
+          "text": "雪廊通向主楼的公共垃圾桶里有一小角深灰抓绒，断面齐整。显微观察显示纤维与栏杆断口抓绒线的结构接近；同色外套至少三人穿着，样品尚未匹配到具体衣物或个人。它支持有人剪过相似织物，不单独证明是谁剪、为何剪。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fayan_gaozhui_jianyan",
+      "locationId": "location_1",
+      "name": "独立法医复验与坠落轨迹",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "山下法医对现场照片、尸检和电缆盘擦痕复核：致命伤是后枕部重度钝性骨折，形态与从二层高度坠落后撞击一层电缆盘相符；伤道内无弹头、金属碎片或贯通孔，衣物无枪弹穿孔，未检出可见射击残留，因此枪击不是死亡原因。死者掌中浅色金属漆屑与栏杆新鲜涂层的分层颜色一致，支持其坠落前曾抓过该栏杆附近物体。尸检无法区分自行失足与被推，也不能确认推人者；尸温和风雪影响使死亡时刻不能缩窄到分钟。尸身垂直落线、栏杆和电缆盘相互对应，证明此站区是合理坠落来源，但并不排他到某个角色。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "luoshuo_gongju_jianyan",
+      "locationId": "location_2",
+      "name": "螺栓与工具痕复核",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "设备检修员复核断口：螺栓头的压痕符合常见5毫米内六角扳手反复施力，断口新鲜且两枚螺栓均被人为拧退；痕迹能证明“有人用同规格工具破坏”，不能识别具体扳手、工具袋或使用者。工具袋底的白漆和锈粉没有可比的断口微粒，不能将那只未署名长工具袋与栏杆破坏直接连起来。旧巡检单只记录锈蚀待加固，不是螺栓已退松的证据。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fengxue_tongxingjilu",
+      "locationId": "location_4",
+      "name": "封山与通行记录",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "度假区调度台记录：19:40起索道停运、山路封闭，驻场人员之外无外来人员抵达；酒店与缆车站之间的雪廊是唯一可步行通道。雪廊门内侧、平台和候车厅没有连续监控，门口巡查表也只登记值守而不记每名过客。封闭环境可把外来者排除在优先调查范围，却不能在六名角色之间排他地指认谁进入了缆车站；风雪覆盖脚印也不能当作某人从未到场。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fangyu_xueyi_quebian",
+      "locationId": "location_6",
+      "name": "深灰外套袖口比对",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "第二幕公开的物证比对：方屿寄放在会议室的深灰抓绒外套右袖口有一处新剪缺口；公共垃圾桶中的碎片边缘与缺口呈互补纤维断面，织法、染料层和缝线位置吻合。碎片与栏杆纤维也属于同款织物，但没有唯一化学标记；此比对能把碎片归到这件外套，不能单独证明谁在何时剪下、谁曾穿着它靠近栏杆，更不能单凭衣物认定推人行为。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "fangyu"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -1597,52 +2086,55 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "方屿因老鼠仓败露（浮亏四千万，明日停职报案）起意杀人。白天巡场时他发现二层检修平台栏杆螺栓锈蚀松动，16:00 用内六角扳手将其拧退到只剩一圈螺纹，为'失足坠落'预设陷阱。19:15 他借'帮摆会议室'进入雪廊，19:20 与傅崇礼在检修平台谈崩，趁其转身自背后发力将其推下，傅崇礼后脑撞上一层电缆盘当场死亡。他捡走外套线头、布置坠落现场，却漏了断口上缠着的抓绒纤维，回房后仓促剪掉右袖口沾纤维的一角。死亡时间被物证锁死在 19:15-19:45：雪镜碎片下层细雪、落雪分层与值班日志互相印证，而他 19:32 起的酒吧拼桌恰是精心安排的不在场证明。"
+          "text": "方屿因基金通道浮亏和次日审计起意。16:00他用常见内六角工具预先拧退二层栏杆两颗螺栓；19:15借摆会议室进入雪廊，与傅崇礼谈崩后从背后推其坠落，后枕撞上候车厅电缆盘致死。松栓是预谋性的现场破坏，推人是直接致死行为；破坏螺栓的工具痕不能单独证明推人者就是松栓者。方屿随后剪下右袖口布角丢入公共垃圾桶，19:32在酒吧短暂露面形成不完整的不在场印象。公开材料共同支持这条解释，但封山、审计标记和长工具袋均不单独识别他。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "预设陷阱",
+          "title": "预先松动栏杆",
           "content": [
             {
               "type": "paragraph",
-              "text": "方屿白天巡场时发现二层检修平台西侧栏杆第三根立柱螺栓锈蚀松动。16:00 他用随身雪具包中的内六角扳手将两颗膨胀螺栓拧退到只剩一圈螺纹，为'扶栏失足坠落'预设机械陷阱。"
+              "text": "16:00方屿在平台用常见内六角工具将两颗螺栓拧退，试图把栏杆预设为危险状态。现场新鲜工具痕证明人为松动；规格普通、工具多人可用，未能个体化到长工具袋。"
             }
           ],
           "clueIds": [
             "lanangan",
-            "banshou",
-            "jianduanxiu"
+            "luoshuo_gongju_jianyan",
+            "xunzha_rizhi"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "实施推杀",
+          "title": "争执后推落致死",
           "content": [
             {
               "type": "paragraph",
-              "text": "19:15 方屿借'帮摆会议室'进入雪廊，与取板的陆野擦肩。19:20 在二层检修平台与傅崇礼谈崩，傅崇礼转身要走并说'明早停职、报案'，方屿从其背后发力推下平台，傅崇礼后脑撞上一层电缆盘当场死亡，雪镜飞脱摔碎。"
+              "text": "19:15方屿借摆会议室进入雪廊并与傅崇礼谈话，后在二层平台争执后从背后推落。死者后枕撞击及落点轨迹符合高处坠落，且无枪弹伤；这是与预先松栓分开的直接行为。检验能确定死亡机制和来源，不能独立识别推人者。"
             }
           ],
           "clueIds": [
+            "fayan_gaozhui_jianyan",
+            "yanshang_jilu",
             "xuejing_sui",
-            "xuebangui",
-            "xieyin"
+            "xuebangui"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "布置现场与安排不在场证明",
+          "title": "剪除纤维并制造酒吧露面",
           "content": [
             {
               "type": "paragraph",
-              "text": "19:22 方屿布置坠落现场，捡走外套线头，却漏了断口上缠着的深灰抓绒纤维。19:25 经雪廊返回主楼，19:32 在大堂酒吧签单开第一瓶威士忌，与戴鸿、裴小北、陆野拼桌——用酒吧签单和人证链构建19:32之后的完整不在场证明。回房后仓促剪掉右袖口沾纤维的一角。"
+              "text": "方屿将外套右袖口沾到的布角剪下，丢入雪廊公共垃圾桶，之后在酒吧签单露面。袖口与碎片互补能归属衣物，签单并非连续人证；这两类信息须和站区路线、栏杆及现场时序交叉。"
             }
           ],
           "clueIds": [
+            "fangyu_xueyi_quebian",
+            "jianduanxiu",
             "qiandan",
-            "xunzha_rizhi"
+            "fengxue_tongxingjilu"
           ]
         }
       ]
@@ -2183,55 +2675,62 @@
       }
     ],
     "keyEvidenceIds": [
+      "fayan_gaozhui_jianyan",
       "lanangan",
-      "xuejing_sui",
-      "xunzha_rizhi",
+      "luoshuo_gongju_jianyan",
+      "fengxue_tongxingjilu",
+      "fangyu_xueyi_quebian",
       "laoshucang",
-      "banshou"
+      "xuebangui"
     ],
     "evidenceChain": [
       {
         "id": "evidence_1",
         "clueIds": [
-          "lanangan",
-          "jianduanxiu",
-          "yanshang_jilu"
+          "fayan_gaozhui_jianyan",
+          "yanshang_jilu",
+          "xuejing_sui"
         ],
-        "conclusion": "栏杆断口螺栓被人工拧退到只剩一圈螺纹，断口缠着的深灰抓绒纤维断面齐整，证明有人蓄意制造'失足坠落'陷阱，且事后修剪过一件同色抓绒外套。"
+        "conclusion": "独立法医确认后枕钝性重伤来自二层高处坠落并撞上候车厅电缆盘，没有枪弹伤或弹头；落点与平台栏杆垂直区域相符，雪镜碎片与现场落雪只提供宽泛的场景支持。它能把死亡机制和合理来源定位到缆车站，不区分自行失足与被推，也不能锁定推人者。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "xuejing_sui",
-          "yanshang_jilu"
+          "lanangan",
+          "luoshuo_gongju_jianyan",
+          "xunzha_rizhi"
         ],
-        "conclusion": "雪镜碎片下层压着19:50之前的间歇细雪、上层是20:00后的密雪，证明坠落发生在19:50之前，死者在雪中昏迷不足十分钟即死亡，并非长时间暴露。"
+        "conclusion": "栏杆螺栓的新鲜退松和标准内六角工具痕说明有人蓄意破坏，不是单纯锈蚀；工具痕不指向某一只扳手或某个持有人。破坏栏杆与后来推落是两项行为，只有结合坠落机制和人员行动，才能推断是否同一人实施。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
+          "fengxue_tongxingjilu",
+          "xuebangui",
           "xunzha_rizhi",
-          "xuejing_sui",
           "xieyin"
         ],
-        "conclusion": "谷雨19:10-19:45在东侧室外戴耳罩检修（雪廊门内侧为盲区），结合雪镜落雪分层，将作案窗口压缩到19:15-19:45这三十分钟内，且地面浮雪未乱说明死者昏迷极快。"
+        "conclusion": "封山只排除外来者，雪廊仍让六名在场者都可能接近缆车站；值班日志有内侧盲区，柜前目击只能确认一名模糊男性经过，平台两处鞋印也不能辨尺码。地域材料圈定站区和路线，不具有个人排他性。方屿进入雪廊的时段、平台痕迹与其他人的行程需交叉检验，不能以“只有六人”或某个鞋印直接锁凶。"
       },
       {
         "id": "evidence_4",
         "clueIds": [
-          "laoshucang",
+          "jianduanxiu",
+          "fangyu_xueyi_quebian",
+          "lanangan",
           "xuebangui"
         ],
-        "conclusion": "审计草稿揭示内部通道账户与基金头寸'同进同出'浮亏约四千万，姓名被涂黑；通话备忘把单独谈话约在 19:15 缆车站。它说明当晚有人将被停职报案，但公开文本不能直接指认是谁。"
+        "conclusion": "栏杆和垃圾桶的抓绒结构相近；袖口互补断面把垃圾桶碎片归到方屿的外套，但衣物可能被借用或转移，碎片也不证明具体剪下时间。再结合柜前模糊目击和他的行程空档，这构成对接触/善后行为的支持，而不是单卡身份结论；长工具袋仍无法归属于某人。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
-          "banshou",
-          "lanangan",
-          "yanshang_jilu"
+          "laoshucang",
+          "dayin_rizhi",
+          "qiandan",
+          "xuebangui"
         ],
-        "conclusion": "管理层预留的雪具包里内六角扳手插袋空着，袋底金属锈痕与白色漆屑和栏杆断口旧漆接近，证明有人用这只扳手松动过栏杆螺栓，事后扳手被拿走。挂牌没有写名字，需要结合谁在雪廊出现过才能对上人。"
+        "conclusion": "审计草稿及打印记录说明次日将处理内部账户异常，死者安排了未注明对象的单独谈话；审计姓名被涂黑，不能据此指名方屿。将此风险与方屿可核的基金通道管理关系、可进入雪廊的时间以及物证链合看，才形成动机推断；酒吧签单仅证明露面而非全程不在场。"
       }
     ],
     "redHerrings": [
@@ -2265,7 +2764,7 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是方屿。十六年的影子，在影子要被拆穿的前一夜伸手推了主人一把。他下午拧松的螺栓，是他给傅崇礼准备的'意外'；18:50 那通给自首机会的电话，成了最后的确认——傅崇礼要的是认罪，他交出去的是命。他算准了雪夜、算准了耳罩、算准了 19:32 的威士忌，只没算到断口会缠住袖口的绒线，没算到值班员咽回去的那句'地面浮雪没乱'。乔曼那没送出去的胃药、陆野那场违规的夜滑、戴鸿露台上的十分钟、裴小北打不完的报销单——都是这条雪廊里来来去去的雪雾，风一停，就看清了。"
+        "text": "真相：方屿先用常见内六角工具预先松动平台栏杆，再借摆会议室进入雪廊，与傅崇礼谈崩后将他推下平台，后枕撞上候车厅电缆盘致死。法医复验把死因指向高处钝性坠落并排除枪击，落点与二层平台相符；螺栓痕证明有人蓄意破坏，却不独自识别工具或行为人。长工具袋未署名、审计草稿姓名被涂黑，二者都不锁凶。抓绒碎片与方屿外套袖口互补，柜前目击、雪廊路线和他的酒吧空档提供其他行动材料；再结合次日审计风险，才形成对方屿的整体指向。破案依靠死因、现场破坏、行为机会、衣物痕迹和动机相互印证，而不是一张审计单或一只工具袋。"
       }
     ]
   },
@@ -2274,7 +2773,31 @@
     "searchRounds": 3,
     "discussionRounds": 2,
     "allowPrivateChat": false,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：死因与站区路线",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先确认后枕伤、坠落可能来源、雪镜与落雪材料的时间边界；再厘清雪廊是唯一外部通路但不是角色专属路线。不要从“封山”“审计涂黑姓名”或未署名工具袋直接推出凶手。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：人为破坏与行为归属",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "把栏杆近期被工具松动、是否由同一人推落、抓绒碎片归属、各人行动空档和审计动机拆开讨论。工具规格不是工具身份，衣物碎片不是穿着者身份，先提出竞争解释，再用跨类别材料检验。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2284,7 +2807,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "方屿十六年搭档的体面在雪夜里碎了个干净。栏杆断口的抓绒纤维、雪具包里消失的内六角、审计草稿上浮亏四千万的数字，把他精心布置的'失足坠落'一层层拆穿。天亮时索道恢复，暴雪停了，他押上的那杯威士忌没能替他买来一夜的安稳。"
+            "text": "方屿预先松动栏杆、争执后推落傅崇礼，再剪下袖口布角制造误导。法医排除枪击并确认坠落机制，工具检验只说明常见内六角工具被使用；审计姓名和未署名长工具袋都不能独自指认。袖口碎片、雪廊路线、行动空档与审计风险交叉后，真相才浮出雪夜。"
           }
         ]
       },
@@ -2294,9 +2817,117 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "暴雪替方屿掩住了所有的脚印。乔曼的亏空、陆野的夜滑、戴鸿的抽贷函、裴小北的报销单，五个人的秘密搅成一团雪雾，谁也看不清谁。那根被松动的螺栓断口沉默着，雪镜碎片的落雪分层没人能读，方屿在天亮索道恢复时随众人下山，十六年的影子，最后一次藏进了光里。"
+            "text": "风雪掩去了脚印，却没能让松动螺栓、坠落伤、袖口碎片与行动空档彼此吻合。审计姓名仍被涂黑，长工具袋也没有主人；若众人把这些各自当成结论，方屿就会随天亮索道复运离开。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "宣读封山、发现尸体及栏杆断口。说明目前只知道六名角色处在封闭区域，不预先宣布“只有六人去过平台”或坠落必为谋杀。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "全本16张公开线索，6人×3轮容量18。第一轮保证现场验伤、法医复验、雪镜碎片、巡查日志、封山通行记录；第二轮保证栏杆断口、工具痕复核、足迹、雪板柜目击、审计草稿和打印日志；第三轮保证长工具袋、抓绒碎片/袖口比对、酒吧签单、胃药等剩余材料。若搜索未命中，按轮次直接发出清单中的材料，不要求任何人自曝。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "依次讨论死因和枪械排除、坠落来源、栏杆人为松动、推落是否由同一人实施、接触机会、身份、动机。站区封闭只排除外来者；审计涂黑栏、工具袋和同色纤维都不是个人身份凭证。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求每人分别给出一项独立死因材料、一项人为破坏或推落材料、一项身份/行动材料和一项动机材料，并明确每项的局限。至少跨三类材料交叉论证，不接受单张工具袋、审计稿或衣物碎片定罪。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把尸体在栏杆下方当成从该处坠落的排他证明。",
+        "hint": "对照独立法医的后枕伤、落点和平台垂直线；这些定位合理来源，不识别谁推或是否失足。"
+      },
+      {
+        "condition": "玩家把锈蚀或螺栓工具痕直接归到长工具袋。",
+        "hint": "锈蚀待加固不等于螺栓已退松；标准内六角痕只能证明工具类型，袋子无姓名且漆屑不具个体性。"
+      },
+      {
+        "condition": "玩家认为封山即证明只有某一个人能到站区。",
+        "hint": "封山排除外部抵达，但六名角色均可走雪廊；值班日志有盲区，门口也没有逐人记录。"
+      },
+      {
+        "condition": "玩家从审计稿的墨涂姓名直接点名方屿。",
+        "hint": "公开稿没有可辨姓名；要求补充个人资金关系和独立行动证据，不能把动机风险当作行为证明。"
+      },
+      {
+        "condition": "玩家把抓绒颜色或袖口缺角当作唯一锁凶。",
+        "hint": "同色外套多人穿过；互补断面只把碎片归到衣物，仍需证明穿着者、时间、接触行为和机会。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yanshang_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fayan_gaozhui_jianyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xuejing_sui",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xunzha_rizhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fengxue_tongxingjilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "lanangan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "luoshuo_gongju_jianyan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "xieyin",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "xuebangui",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "laoshucang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "dayin_rizhi",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "qiandan",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "banshou",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "jianduanxiu",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "fangyu_xueyi_quebian",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "weiyao",
+        "deadlineRound": 3
       }
     ]
   }

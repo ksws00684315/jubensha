@@ -179,7 +179,11 @@ const defenseHookSchema = z
     id: idSchema,
     claim: leafText,
     basis: leafText,
-    brokenByPublicClueIds: z.array(idSchema).min(1),
+    brokenByPublicClueIds: z.array(idSchema).min(1).optional(),
+    brokenWhen: z.object({
+      allPublicClueIds: z.array(idSchema).min(1).optional(),
+      anyPublicClueIds: z.array(idSchema).min(1).optional(),
+    }).strict().optional(),
   })
   .strict();
 
@@ -284,6 +288,16 @@ export const truthV2Schema = z
 
 export const flowV2Schema = z
   .object({
+    interactionBeats: z.array(z.object({
+      id: idSchema,
+      round: z.number().int().min(1),
+      timing: z.literal("after_discussion"),
+      characterId: idSchema,
+      prompt: leafText,
+      choices: z.array(z.object({ id: idSchema, label: leafText, recap: leafText }).strict()).min(2).max(6),
+      defaultChoiceId: idSchema,
+      visibility: z.enum(["public", "private"]),
+    }).strict()).optional(),
     selfIntroRounds: z.number().int().min(1).max(3).default(1),
     searchRounds: z.number().int().min(1).max(4).default(2),
     discussionRounds: z.number().int().min(1).max(4).default(2),
@@ -400,7 +414,7 @@ export function publicScriptViewV2(doc: ScriptDocV2) {
     characters: doc.characters.map((c) => ({ id: c.id, name: c.name, gender: c.gender, age: c.age, publicProfile: c.publicProfile })),
     locations: doc.locations,
     clueCount: doc.clues.length,
-    flow: doc.flow,
+    flow: { ...doc.flow, interactionBeats: doc.flow.interactionBeats?.filter((beat) => beat.visibility === "public") },
   };
 }
 

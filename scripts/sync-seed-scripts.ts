@@ -7,6 +7,8 @@ import { validateScriptV2 } from "../src/core/script/v2/validate";
 import { resolveDatabaseUrl } from "../src/lib/app-config";
 import { DEMO_SCRIPT_FILES, FORMAL_SCRIPT_FILES } from "./formal-script-manifest";
 
+const fileArg = process.argv.find((arg) => arg.startsWith("--file="))?.slice(7);
+const expectedHash = process.argv.find((arg) => arg.startsWith("--expected-hash="))?.slice(16);
 const write = process.argv.includes("--write");
 const includeDemos = process.argv.includes("--include-demos");
 const database = resolveDatabaseUrl();
@@ -15,7 +17,10 @@ const db = new PrismaClient({ datasources: { db: { url: database.url } } });
 
 function seedFiles(): string[] {
   const files = [...FORMAL_SCRIPT_FILES, ...(includeDemos ? DEMO_SCRIPT_FILES : [])]
+    .filter((file) => !fileArg || file === fileArg)
     .map((file) => path.resolve(process.cwd(), file));
+  if (fileArg && !files.length) throw new Error("指定文件不在正式剧本清单内");
+  if (write && fileArg && !expectedHash) throw new Error("单本写入必须提供 dry-run 的 --expected-hash");
   const missing = files.filter((file) => !existsSync(file));
   if (missing.length) throw new Error(`正式剧本清单存在缺失文件：${missing.join("、")}`);
   return files;
@@ -36,7 +41,7 @@ function contentHash(value: unknown): string {
 
 async function main() {
   console.log(`同步范围：${includeDemos ? `${FORMAL_SCRIPT_FILES.length} 本正式剧本 + 演示样本` : `${FORMAL_SCRIPT_FILES.length} 本正式剧本（演示样本已排除）`}`);
-  const rows = await db.script.findMany({ where: { deleted: false }, select: { id: true, title: true } });
+  const rows = await db.script.findMany({ where: { deleted: false }, select: { id: true, title: true, content: true } });
   const byTitle = new Map<string, string[]>();
   for (const row of rows) {
     const list = byTitle.get(row.title) ?? [];
@@ -58,7 +63,7 @@ async function main() {
       const issues = validateScriptV2(ingested.doc);
       // error 阻断同步；warning 属内容审查债务，逐条打印但不拦截——
       // 存量剧本的 warning 清零前，若一并阻断会让这些剧本从此无法同步。
-      const errors = issues.filter((issue) => issue.level === "error");
+      const errors = issues.filter((issue) => issue.level === "error" || issue.message.startsWith("没有有效私藏窗口"));
       if (errors.length) {
         failed++;
         console.error(`✗ ${file}: ${errors.map((issue) => `${issue.path} ${issue.message}`).join("; ")}`);
@@ -69,6 +74,9 @@ async function main() {
         warned++;
       }
       const doc = ingested.doc;
+      const hash = contentHash(doc);
+      console.log(`内容 hash ${ingested.doc.meta.title}: ${hash}`);
+      if (expectedHash && hash !== expectedHash) throw new Error("内容 hash 与 dry-run 不一致，拒绝同步");
       const title = doc.meta.title;
       if (seen.has(title)) {
         console.error(`✗ 种子标题重复：${title} (${file})`);
@@ -77,6 +85,7 @@ async function main() {
       }
       seen.add(title);
       const ids = byTitle.get(title) ?? [];
+      for (const id of ids) console.log(`现存 hash ${id}: ${contentHash(rows.find((row) => row.id === id)?.content)}`);
       const data = {
         title: doc.meta.title,
         minPlayers: doc.meta.minPlayers,

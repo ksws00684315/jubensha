@@ -13,12 +13,12 @@
       "职场",
       "硬核推理"
     ],
-    "intro": "承叙拍卖行秋拍预展VIP夜场，距离明早九点开槌还有十个小时。22:03，创始人章砚秋被发现伏在预展大厅中庭的水景里，口鼻带着水底青苔——所有人的第一反应是'醉酒失足溺水'。可他双肩对称的指压瘀斑、干爽的袖口、以及死亡时刻那半黑的灯光，都在说这不是意外。水位只到池沿下四十厘米，一个清醒的成年人淹不死在这里；一个醉了的老人，得有人帮他把头按在水里。"
+    "intro": "承叙拍卖行秋拍VIP预展夜，22:03，创始人章砚秋被发现伏在中庭浅水景中。死者有梅尼埃眩晕病史、当晚饮过香槟，最初被当作意外；但肩部伤痕、衣物干湿分布、池水检验与灯光时间线都需要分别核验。水景深约四十厘米，究竟是失足、发病，还是有人使他无法抬头，成为今晚的问题。"
   },
   "background": [
     {
       "type": "paragraph",
-      "text": "承叙拍卖行，三十年老字号，明早九点开槌的秋拍以《寒林图》领衔。今晚是VIP预展夜场，19:00开幕，21:30开始清场。创始人章砚秋，六十八岁，有梅尼埃眩晕病史，今晚饮了两杯香槟。他这三周一直在查一件事：二十一件拍品的成交流水异常——落槌节奏'太整齐'，尾款都经过一家注册仅三年的'云衡贸易'。三天前，老鉴定顾问裴砚清交了一页内查提示函，章砚秋拍板：明早九点，审计进场，合槌前他亲自宣布，该报警报警。预展大厅中庭有一方养锦鲤的浅水景，池沿下四十厘米深，是章砚秋的风水讲究——'落槌之前看一眼鱼，鱼在，生意在'，他每晚亲自核看头拍拍品的悬挂，惯例雷打不动。22:03，私人律师秦斯年在中庭发现章砚秋伏在水景里，面部朝下。急救到场前，所有人默认是'醉酒失足'——直到有人看见他双肩对称的指压瘀斑，和那双干爽的袖口。案发窗口（21:45-22:00，一层灯光半黑）在场的，只有你们六个。"
+      "text": "承叙拍卖行，三十年老字号，明早九点开槌的秋拍以《寒林图》领衔。今晚是VIP预展夜场，19:00开幕，21:30开始清场，后台与闭馆盘点仍继续至22:00。创始人章砚秋，六十八岁，有梅尼埃眩晕病史，今晚饮了两杯香槟。他这三周一直在查二十一件拍品的成交流水异常：落槌节奏过于整齐，尾款都经过一家注册仅三年的‘云衡贸易’。三天前，老鉴定顾问裴砚清交了内查提示函；章砚秋决定明早九点审计进场，合槌前亲自宣布该报警就报警。中庭有一方水深约四十厘米的锦鲤池，章砚秋惯例在闭馆前亲自核看头拍拍品。22:03，私人律师秦斯年发现他面部朝下伏在池中。初判曾考虑眩晕或醉酒失足，需由现场、检验与时间材料判断。21:45至22:00间，馆内只剩六名核心工作人员与律师。"
     }
   ],
   "characters": [
@@ -275,7 +275,105 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "tuyiming_act_1_knowledge",
+                "title": "守住“例行调度”解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认电话和执行事实，但要求区分调光机会与水边行为；追问法医时间精度及织带是否能识别使用者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tuyiming_act_1_objective",
+                "title": "守住“例行调度”解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认电话和执行事实，但要求区分调光机会与水边行为；追问法医时间精度及织带是否能识别使用者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "tuyiming_act_2_knowledge",
+                "title": "拆分机会与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "若承认提前收尾，主张未到水边；逐条解释消防通道目击无法辨脸、织带残留未个体化。不要否认可被公开记录证实的调光。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tuyiming_act_2_objective",
+                "title": "拆分机会与身份",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "若承认提前收尾，主张未到水边；逐条解释消防通道目击无法辨脸、织带残留未个体化。不要否认可被公开记录证实的调光。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ],
+        "defenseHooks": [
+          {
+            "id": "tuyiming_defense_routine_light",
+            "claim": "我承认打电话让唐好提前收尾，但那是有明确排期或检修需求的普通演出调整，与制造水景空档无关。",
+            "basis": "用原计划中的闭馆/检修安排解释21:45调整，否认自己预见或利用其造成的暗区与音乐掩护。",
+            "brokenByPublicClueIds": [
+              "dengguang_rizhi",
+              "tanghao_guangchang_kouzheng",
+              "sizhe_shouji"
+            ]
+          },
+          {
+            "id": "tuyiming_defense_accident",
+            "claim": "章砚秋可能因梅尼埃眩晕或饮酒跌入浅池；即使现场有压痕，也不能证明有人持续按住他。",
+            "basis": "病史与饮酒真实存在，且单凭现场衣物、浅水和织带不能判定死亡机制。",
+            "brokenByPublicClueIds": [
+              "fayan_zhuizhen",
+              "xianchang_kanyan",
+              "beiyong_zhidai"
+            ]
+          }
+        ]
       }
     },
     {
@@ -475,7 +573,83 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "zhangliwen_act_1_knowledge",
+                "title": "交代佛首交易",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明20:20叔叔撞见交易及“明早”的语境，主动核实你21:10后办公室的出入记录。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhangliwen_act_1_objective",
+                "title": "交代佛首交易",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明20:20叔叔撞见交易及“明早”的语境，主动核实你21:10后办公室的出入记录。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "zhangliwen_act_2_knowledge",
+                "title": "提出可检验的替代线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指出他的案子有动机但不自动给出水景机会；要求比较你的行动路线与21:45后门禁、灯光记录。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhangliwen_act_2_objective",
+                "title": "提出可检验的替代线",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "指出他的案子有动机但不自动给出水景机会；要求比较你的行动路线与21:45后门禁、灯光记录。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -675,7 +849,83 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "gaoyuan_act_1_knowledge",
+                "title": "说明打包区行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认21:49进入打包区找箱子，要求公开货梯连续画面并核验你能否在不经过镜头的情况下离开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gaoyuan_act_1_objective",
+                "title": "说明打包区行踪",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认21:49进入打包区找箱子，要求公开货梯连续画面并核验你能否在不经过镜头的情况下离开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "gaoyuan_act_2_knowledge",
+                "title": "解释接触织带的竞争性",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认你有接触打包区的机会，说明并非只有你能取绑带；将门禁记录、织带痕迹和水边时间分别讨论。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gaoyuan_act_2_objective",
+                "title": "解释接触织带的竞争性",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认你有接触打包区的机会，说明并非只有你能取绑带；将门禁记录、织带痕迹和水边时间分别讨论。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -878,7 +1128,83 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "peiyanqing_act_1_knowledge",
+                "title": "交代内查提示函",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明你为何建议“缓一缓”及加急费用途，帮助大家把审计动机与杀人行为分开。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peiyanqing_act_1_objective",
+                "title": "交代内查提示函",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明你为何建议“缓一缓”及加急费用途，帮助大家把审计动机与杀人行为分开。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "peiyanqing_act_2_knowledge",
+                "title": "核验资金链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "对照008委托记录和云衡卷宗，指出这条链能说明审计风险与动机，不能单独证明谁按住死者。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peiyanqing_act_2_objective",
+                "title": "核验资金链",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "对照008委托记录和云衡卷宗，指出这条链能说明审计风险与动机，不能单独证明谁按住死者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1107,7 +1433,83 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "tanghao_act_1_knowledge",
+                "title": "解释调光执行",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明正常22:00收尾与本次21:45变更的差异，公开调试音乐的作用；明确你没有目击水边动作。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tanghao_act_1_objective",
+                "title": "解释调光执行",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明正常22:00收尾与本次21:45变更的差异，公开调试音乐的作用；明确你没有目击水边动作。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "tanghao_act_2_knowledge",
+                "title": "核验声音时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把闷响记录、调试音乐、门禁和死亡时间估算并列；承认听见声音不能识别凶手，回答你是否听见及何时反应。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tanghao_act_2_objective",
+                "title": "核验声音时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把闷响记录、调试音乐、门禁和死亡时间估算并列；承认听见声音不能识别凶手，回答你是否听见及何时反应。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1327,7 +1729,83 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act_1",
+            "knowledge": [
+              {
+                "id": "qinsinian_act_1_knowledge",
+                "title": "公开邀约与发现时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "出示死者21:52邀约和22:03报警时间，交代自己为何延迟到22:01才到水边。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "fayan_zhuizhen",
+                  "xianchang_kanyan",
+                  "dengguang_rizhi",
+                  "tanghao_guangchang_kouzheng",
+                  "sizhe_shouji"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinsinian_act_1_objective",
+                "title": "公开邀约与发现时间",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "出示死者21:52邀约和22:03报警时间，交代自己为何延迟到22:01才到水边。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act_2",
+            "knowledge": [
+              {
+                "id": "qinsinian_act_2_knowledge",
+                "title": "限定目击证言",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明21:57视线只能支持有人携长物离开，不能辨脸；与消防柜织带、门禁及人物行动路线交叉核实。"
+                  }
+                ],
+                "source": "inferred",
+                "relatedCharacterIds": [],
+                "relatedClueIds": [
+                  "beiyong_zhidai",
+                  "kufang_menjin",
+                  "qin_mujiben",
+                  "weituopai_008",
+                  "yunheng_didang"
+                ]
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qinsinian_act_2_objective",
+                "title": "限定目击证言",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说明21:57视线只能支持有人携长物离开，不能辨脸；与消防柜织带、门禁及人物行动路线交叉核实。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1350,7 +1828,8 @@
           "type": "paragraph",
           "text": "侧廊挂轴在灯下排成一列，半黑时只剩轮廓；廊柱与墙根之间留着窄窄的过道，脚步声在空廊里格外清楚。"
         }
-      ]
+      ],
+      "ownerCharacterId": "qinsinian"
     },
     {
       "id": "location_3",
@@ -1360,7 +1839,8 @@
           "type": "paragraph",
           "text": "二层灯光控制室的推子与回路排满一面墙，调试计划表摊在台上；办公桌抽屉半开，代办卷宗的纸边露出桌沿。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tuyiming"
     },
     {
       "id": "location_4",
@@ -1370,7 +1850,8 @@
           "type": "paragraph",
           "text": "打包区里回运箱码得半人高，缓冲棉与绑带散在台面；门禁读卡器亮着绿点，货梯铁门内侧没有读卡器，卷帘半落着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "gaoyuan"
     },
     {
       "id": "location_5",
@@ -1380,7 +1861,8 @@
           "type": "paragraph",
           "text": "消防通道的应急灯泛着绿光，消防栓柜的门缝里塞着一卷卷得异常紧的绑带；通道尽头的推杠门贴着封条，声控灯随脚步明灭。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tanghao"
     }
   ],
   "clues": [
@@ -1392,7 +1874,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者伏卧于水景中，面部朝下，口鼻有水底青苔与锦鲤黏液；双肩见对称指压瘀斑，拇指窝深陷，系被按压所致；肩背与袖口干燥，仅头面湿水——若自行失足栽入，前躯必湿。死者有梅尼埃病史，当晚饮香槟两杯，初判'醉酒眩晕失足'存疑。"
+          "text": "死者伏卧于水景中，面部朝下，口鼻有水底青苔与锦鲤黏液；双肩见對称指压瘀斑，拇指窝深陷，提示生前受外力按压，但仅凭外观不能定死因或施力者。肩背与袖口干燥、头面湿水，既可能是被按入水，也可能受姿势和衣着影响，不能单凭干湿排除失足。死者有梅尼埃病史，当晚饮香槟两杯，均是需要检验的竞争解释。"
         }
       ],
       "policy": "auto_public",
@@ -1422,7 +1904,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "调试计划表原件写明'22:00 一层收尾'，页边铅笔改注：'提前至21:45——涂'。日志：21:45 一层转入半亮、调试音乐开启，21:52 起中庭仅余应急地灯。执行人唐好备注：'涂总电话指示，提前收尾。'附送耳机登记：20:30-20:42 她曾给东侧办公角送监听耳机，听见章砚秋说'明早九点审计进场……该报警报警'。"
+          "text": "调试计划表原件写明‘22:00 一层收尾’，未安排提前测试；页边铅笔改注‘提前至21:45——涂’。日志显示21:45一层转入半亮、调试音乐开启，21:52起中庭仅余应急地灯。执行人唐好备注：‘涂总电话指示，提前收尾。’附送耳机登记：20:30—20:42她给东侧办公角送监听耳机，听见章砚秋说‘明早九点审计进场……该报警报警’。此记录能证明变更和执行时间，不能单独证明调光目的或谁在池边。"
         }
       ],
       "policy": "manual_public",
@@ -1512,12 +1994,51 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "秦斯年的手写便签：21:57在东侧侧廊，灯光半黑，一名穿套装的身影贴墙根从中庭快步往消防通道方向去，'手里攥着卷起的细长物件，高跟，步子稳'。他22:01赶到中庭，22:03报警（通话记录可证）。便签边缘反复涂改着一个没写完的姓。"
+          "text": "秦斯年的手写便签：21:57在东侧侧廊，灯光半黑，一名穿套装的身影贴墙根从中庭快步往消防通道方向去，手里攥着卷起的细长物件，步子稳。距离和光线不足以辨认脸、性别或衣物细节；不能仅凭此认出涂一鸣。秦22:01赶到中庭，22:03报警（通话记录可证）。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "fayan_zhuizhen",
+      "locationId": "location_1",
+      "name": "法医复验：溺水与肩部损伤",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "急救后法医复验：气道深部与肺泡内有大量水性泡沫，肺组织及胃内检出与中庭池水一致的藻类和锦鲤黏液，符合生前在该池持续吸入水而死亡；并非眩晕后已死亡、再被放入水中。双肩两处压痕有皮下出血，形态与对向持续按压一致，单纯跌倒通常不会形成这组对称压伤。尸体温度只能把死亡估在21:50至22:05，不能精确到分钟；检验不能识别施力者，也不能单独排除醉酒/眩晕先发。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": [
+        "truth_event_16"
+      ]
+    },
+    {
+      "id": "tanghao_guangchang_kouzheng",
+      "locationId": "location_3",
+      "name": "灯光执行人唐好的闭馆说明",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "唐好当众说明：原排期是22:00才收尾；21:45前没有灯光检修、彩排或贵宾离场流程，故提前十五分钟调暗不是当晚例行项目。她接到涂一鸣电话后才把中庭切到应急地灯并启动调试音乐；音乐使水景边的短促闷响不易从控制台分辨。她没有看见是谁在水边，也不能判断电话背后的目的。与灯光原计划、执行日志及21:52死者发出的“来吧，中庭水景”合看，提前调暗恰覆盖死者约会至估计死亡的独处窗口，并降低旁人发现动作的机会；这证明机会被制造，不等于单独证明涂一鸣实施按压。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "tanghao",
+        "tuyiming"
+      ],
+      "relatedTruthEventIds": [
+        "truth_event_11",
+        "truth_event_12",
+        "truth_event_16"
+      ]
     }
   ],
   "truth": {
@@ -1532,62 +2053,54 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "涂一鸣以'委托牌008'自托自抬洗钱三年，审计与报警定在明早。21:40她电话指示灯光师唐好把一层调光从22:00提前到21:45，制造半黑窗口；21:47借核对回运箱之名进打包区取一卷展品绑带（不留指纹，用后即弃）；21:55趁章砚秋在中庭水景边核看挂轴，从身后双肩按压将其摁入四十厘米深的水中溺毙，伪装成梅尼埃眩晕加醉酒失足；21:58把绑带塞进一层消防栓柜，人回前台核对位次表制造不在场。破绽：肩部对称指压瘀斑、干爽袖口、计划表铅笔改注、21:47-21:51打包区门禁，以及她抽屉里的008备用牌与云衡贸易底档。"
+          "text": "涂一鸣利用自己要求提前至21:45的调光和调试音乐，使中庭在死者21:52邀约后进入应急灯暗区；她从打包区取出绑带，在估计21:50至22:05的窗口对章砚秋肩部持续施压，使其面部留在池水中并因生前吸入池水死亡。她随后把绑带藏入消防柜，并回到前台制造不在场。法医仅能给出区间，不能精确到分钟。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "制造半黑窗口",
+          "title": "提前制造暗区",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:40涂一鸣电话指示灯光师唐好把一层调光从22:00提前到21:45，制造半黑作案窗口——调试计划表页边铅笔改注'提前至21:45——涂'及唐好的执行备注，是这一步的铁证。"
+              "text": "原计划22:00收尾，涂一鸣在21:40左右要求提前至21:45。唐好照办并開啟调试音乐，缩短中庭的可视、可听窗口。死者21:52邀约在水景，机会与实际行为仍需分开判断。"
             }
           ],
           "clueIds": [
-            "dengguang_rizhi"
+            "dengguang_rizhi",
+            "tanghao_guangchang_kouzheng",
+            "sizhe_shouji"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "取凶器",
+          "title": "取带并按压溺杀",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:47涂一鸣借核对回运箱之名刷卡进打包区，取走一卷展品绑带，21:51离开——打包区门禁流水完整记录了这四分钟的进出。"
+              "text": "涂一鸣21:47进入无值班的打包区，取一卷展品绑带；在估计21:50至22:05的死亡区间内，她从死者身后按压双肩，使其面部持续留在浅池水中，造成生前吸水溺亡。织带、肩部损伤与死者指甲纤维互相支持工具和机制，但不能单独识别操作者。"
             }
           ],
           "clueIds": [
-            "kufang_menjin"
+            "kufang_menjin",
+            "beiyong_zhidai",
+            "xianchang_kanyan",
+            "fayan_zhuizhen"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "实施溺杀",
+          "title": "藏带并返回前台",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:55涂一鸣趁章砚秋在中庭水景边核看挂轴，从身后用织带辅助双肩按压，将其摁入四十厘米深的水中溺毙——现场勘验显示双肩对称指压瘀斑、干爽袖口、指甲缝蓝色织带纤维，均非失足所能解释。"
+              "text": "她把使用过的绑带塞入消防栓柜，随后回到前台核对位次表。消防通道目击只见套装身影携带细长物件，门禁与物证需要与其交叉，而不是单独作身份认定。"
             }
           ],
           "clueIds": [
-            "xianchang_kanyan",
-            "beiyong_zhidai"
-          ]
-        },
-        {
-          "id": "method_step_4",
-          "title": "毁证与制造不在场",
-          "content": [
-            {
-              "type": "paragraph",
-              "text": "21:58涂一鸣把绑带塞进一层消防栓柜，人回前台核对拍品位次表制造不在场证明；抽屉里的008号备用委托牌与云衡贸易底档，则暴露了她三年洗钱的完整动机链。"
-            }
-          ],
-          "clueIds": [
-            "weituopai_008",
-            "yunheng_didang"
+            "qin_mujiben",
+            "beiyong_zhidai",
+            "kufang_menjin"
           ]
         }
       ]
@@ -2176,34 +2689,51 @@
       }
     ],
     "keyEvidenceIds": [
+      "fayan_zhuizhen",
+      "dengguang_rizhi",
+      "tanghao_guangchang_kouzheng",
       "beiyong_zhidai",
       "kufang_menjin",
-      "weituopai_008"
+      "weituopai_008",
+      "yunheng_didang"
     ],
     "evidenceChain": [
       {
         "id": "evidence_1",
         "clueIds": [
-          "beiyong_zhidai",
-          "xianchang_kanyan"
+          "fayan_zhuizhen",
+          "xianchang_kanyan",
+          "beiyong_zhidai"
         ],
-        "conclusion": "消防栓柜里的展品绑带受力磨痕与死者指甲缝纤维同批同色，说明凶器经过双臂对拉使用——这不是醉酒失足，而是有人从身后用织带辅助按压的蓄意溺杀。"
+        "conclusion": "法医确认死者生前在中庭池水中持续吸入水，肩部压伤与单纯跌倒不符；现场的干湿分布与织带受力痕迹提供相符的现场机制。梅尼埃病史和饮酒保留为先发眩晕的可能，但不能解释检验所见的持续压制。此链证明人为外力参与，不识别施力者。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
-          "kufang_menjin",
+          "dengguang_rizhi",
+          "tanghao_guangchang_kouzheng",
+          "sizhe_shouji",
           "qin_mujiben"
         ],
-        "conclusion": "货梯监控证明高原在死亡时刻全程未离打包区，排除其作案可能；而涂一鸣21:47-21:51的打包区进出记录，恰好与她取走凶器织带的时间窗口吻合。"
+        "conclusion": "灯光原定22:00收尾，涂一鸣电话要求提前至21:45，执行人确认当晚无检修/彩排理由，随后中庭进入应急灯并有音乐掩护；死者21:52约人在水景，死亡估时与21:57携长物离场目击相交。这组不同类型材料证明提前调整制造了适合接近和掩护的特定机会，但调光仍不等同实施按压。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
-          "weituopai_008",
-          "yunheng_didang"
+          "kufang_menjin",
+          "beiyong_zhidai",
+          "qin_mujiben"
         ],
-        "conclusion": "008号备用委托牌出现在涂一鸣的办公桌抽屉里，云衡贸易注册底档的对接人签字也是她——自托自抬洗钱三年的闭环由此坐实，这正是她不惜在审计进场前杀人的根本动机。"
+        "conclusion": "涂一鸣在暗区形成前后曾进入无值班的打包区，之后消防通道出现携长物离开的身影，柜内找到有受力痕迹且纤维与死者指甲一致的绑带；高原则被货梯画面限制在打包区。上述门禁、物证和目击互相补足接触机会与工具链，目击本身不能辨认身份。"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "weituopai_008",
+          "yunheng_didang",
+          "sizhe_shouji"
+        ],
+        "conclusion": "备用牌008与云衡贸易的代理竞价和资金中转相连，死者备忘录记有审计21件、008与报警，并已约定次日携授权书。文书与手机分别支持涂一鸣面临即时揭露的动机；动机不替代行为证据。"
       }
     ],
     "redHerrings": [
@@ -2275,7 +2805,7 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是首席拍卖师涂一鸣。三年'委托牌'把戏把承叙的金字招牌变成了洗钱的河道，而章砚秋的审计定在明早九点——她没有十个小时，只有21:45那半黑的一刻钟。一通电话借走了灯光，一卷织带借走了凶器的形状，四十厘米的水借走了'意外'两个字。她的破绽：怕人看见鞋跟，却没算到水会出卖按压的手；怕织带留指纹，却没算到死者的指甲会攥下纤维；怕审计查出云衡，却把008号牌亲手放进了抽屉。章立文的八十万、高原的箱子、裴老的两笔加急费、唐好页边的铅笔字、秦律师没写完的那个姓——都是这条金水河上的浮沫。落槌之前，先落的是人。"
+        "text": "真相：凶手是首席拍卖师涂一鸣。明早审计将揭开她借008号备用委托牌和云衡贸易洗钱的交易。原计划22:00收尾，她却要求提前至21:45调暗并启动音乐，恰逢章砚秋约人在中庭、法医推定的死亡窗口及携长物离开的目击。法医复验确认章砚秋生前在池中吸水死亡，肩部压伤不符合单纯跌倒；消防柜织带的受力痕迹与死者指甲纤维提供另一类现场支持。门禁证明涂一鸣有取用机会，目击与残留物补上工具去向，008及云衡文书说明动机。没有任何单张材料独自识别施力者，结论来自死因、机会、行为、身份与动机的交叉验证。"
       }
     ]
   },
@@ -2284,7 +2814,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act_1",
+        "title": "第一幕：意外还是外力",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先重建21:45至22:05的时间线。分别核验水景死亡机制、双肩损伤、灯光变更是否例行、死者约见和人员出入；梅尼埃病史、香槟与浅水都是竞争解释，不能先把病史当作死因或把调光者当作凶手。"
+          }
+        ]
+      },
+      {
+        "id": "act_2",
+        "title": "第二幕：机会、接触与动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "把按压动作、织带痕迹、取用机会、离场目击和调光窗口交叉核验，再单独评估008委托牌与云衡资金链的动机。承认调光不等于承认杀人；机会、行为、身份與动机应分别成立，任何一张卡都不足以定罪。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2307,6 +2861,94 @@
             "text": "涂一鸣把灯光借走了黑暗，把织带借走了凶器的形状，把四十厘米的水借走了'意外'两个字——满场的秘密替她挡了一夜。天亮了，秋拍照常开槌，可章砚秋的审计永远等不到明早。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "宣读发现现场及眩晕/失足的初始说法。不得将浅池或病史直接说成意外，也不得把灯光变更人直接指为凶手。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "两轮共11张线索，六人两轮容量12。第一轮主持保证公开现场勘验、法医复验、原灯光计划/执行记录、唐好闭馆说明、死者手机、打包区门禁；第二轮保证公开消防柜织带、秦斯年目击便签、008委托牌、云衡代办卷宗、章立文聊天。无人搜到时按清单直接发放，必要时可提前发关键材料。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "按死因、死亡窗口、调光是否例行、具体行为/接触机会、身份、动机分层讨论。病史、饮酒、织带、目击者单卡、调光记录或动机均不能单独锁凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求至少提出两类互相独立的公开材料支持死因与人为行为，并另说明机会/身份链及其限制；调光机会不能替代水边行为证明。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把梅尼埃病史、香槟或浅水直接当成意外证明。",
+        "hint": "对照法医复验与肩部压伤：病史可能解释眩晕风险，但检验须回答死亡时是否吸入池水以及压伤是否生前形成。"
+      },
+      {
+        "condition": "玩家认为调灯记录本身证明涂一鸣杀人。",
+        "hint": "用唐好说明和死者手机核对排期、执行、约见与暗区窗口；这证明被制造的机会，仍需织带/按压与人物行动材料。"
+      },
+      {
+        "condition": "玩家认为织带或消防通道身影能单卡定人。",
+        "hint": "织带只能支持工具接触和受力方式；目击不能辨脸。将它们与打包门禁、灯光时窗及动机文书交叉核验。"
+      },
+      {
+        "condition": "玩家把008牌/云衡卷宗直接等同杀人。",
+        "hint": "这组材料说明审计动机与交易关系；独立核对死因、现场行为和时间机会。"
+      },
+      {
+        "condition": "涂一鸣承认调光并称其例行。",
+        "hint": "让玩家对照原计划22:00、日志21:45和执行人所述无检修/彩排安排；即使推定她制造了机会，也仍需证明水边行为。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "xianchang_kanyan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fayan_zhuizhen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dengguang_rizhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "tanghao_guangchang_kouzheng",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "sizhe_shouji",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "kufang_menjin",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "beiyong_zhidai",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "qin_mujiben",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "weituopai_008",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yunheng_didang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhangliwen_liaotian",
+        "deadlineRound": 2
       }
     ]
   }

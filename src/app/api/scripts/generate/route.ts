@@ -6,7 +6,7 @@ import { cacheFriendlyMessages, GENERATOR_SYSTEM } from "@/core/agents/context";
 import { ingestScriptDoc } from "@/core/script/compat";
 import { parseScriptDocV2, scriptDocV2Schema } from "@/core/script/v2/schema";
 import { validateScriptV2 } from "@/core/script/v2/validate";
-import { SCHEMA_HINT } from "@/core/script/schema-hint";
+import { SCHEMA_HINT, PLAYTEST_FLOW_HINT } from "@/core/script/schema-hint";
 import { requireAdmin } from "@/lib/admin";
 
 const reqSchema = z.object({
@@ -51,7 +51,8 @@ async function POST_IMPL(req: Request) {
       purpose: "generator",
       messages: cacheFriendlyMessages(
         GENERATOR_SYSTEM,
-        `【任务】根据骨架写出完整剧本文档。\n${SCHEMA_HINT}`,
+        `【任务】根据骨架写出完整剧本文档。\n${SCHEMA_HINT}
+${PLAYTEST_FLOW_HINT}`,
         // 线索数量按 R1 预算给出口径：此前写死"8-14 张"与「人数×轮数」上限冲突，生成结果常被校验拦下
         `剧本骨架：\n${JSON.stringify(d.outline, null, 2)}\n\n请输出完整剧本文档 JSON。人物 id 用其姓名的小写拼音。线索数量按「人数 × 搜证轮数」取（例如 ${players} 人 × 2 轮 = ${players * 2} 张），不得超过该上限，且每一张都要真的能被搜到。`
       ),

@@ -1267,13 +1267,34 @@
                         "type": "string",
                         "pattern": "^[a-z][a-z0-9_]*$"
                       }
+                    },
+                    "brokenWhen": {
+                      "type": "object",
+                      "properties": {
+                        "allPublicClueIds": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          }
+                        },
+                        "anyPublicClueIds": {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   },
                   "required": [
                     "id",
                     "claim",
-                    "basis",
-                    "brokenByPublicClueIds"
+                    "basis"
                   ],
                   "additionalProperties": false
                 }
@@ -2776,6 +2797,85 @@
     "flow": {
       "type": "object",
       "properties": {
+        "interactionBeats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "round": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "timing": {
+                "type": "string",
+                "const": "after_discussion"
+              },
+              "characterId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 1
+              },
+              "choices": {
+                "minItems": 2,
+                "maxItems": 6,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "recap": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "recap"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "defaultChoiceId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "visibility": {
+                "type": "string",
+                "enum": [
+                  "public",
+                  "private"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "round",
+              "timing",
+              "characterId",
+              "prompt",
+              "choices",
+              "defaultChoiceId",
+              "visibility"
+            ],
+            "additionalProperties": false
+          }
+        },
         "selfIntroRounds": {
           "default": 1,
           "type": "integer",

@@ -1,3 +1,4 @@
+import { defenseBroken } from "./defense";
 import type { ChatMessage, PromptAssembly } from "@/core/llm/types";
 import { composeSegments } from "@/core/llm/prompt-segments";
 import type { EngineEvent, GameState } from "@/core/engine/types";
@@ -138,9 +139,9 @@ export function buildPlayerContext(
   const violationBlock = card.violation.length ? `红线（无论如何不能说破、不能做）：${card.violation.join("；")}` : "";
   const alibiBlock = card.alibi?.length ? `不在场证明（必要时可主动陈述）：${narrativeToText(card.alibi)}\n` : "";
   const tellBlock = card.tells.length ? `说谎时的小动作（演凶/撒谎时可带）：${card.tells.join("；")}\n` : "";
-  const activeDefenseHooks = (card.defenseHooks ?? []).filter((hook) => !hook.brokenByPublicClueIds.some((id) => state.clueStates[id]?.isPublic));
+  const activeDefenseHooks = (card.defenseHooks ?? []).filter((hook) => !defenseBroken(hook, state));
   const defenseBlock = activeDefenseHooks.length
-    ? `可使用的辩解（只可基于这里写明的依据陈述；对应击破材料公开后立刻停止使用）：\n${activeDefenseHooks.map((hook) => `- ${hook.claim}（依据：${hook.basis}）`).join("\n")}\n`
+    ? `可使用的辩解（只可基于这里写明的依据陈述；对应击破材料公开后立刻停止使用）：\n${activeDefenseHooks.map((hook) => `- ${hook.id}: ${hook.claim}（依据：${hook.basis}）`).join("\n")}\n`
     : "";
 
   const system = `你正在参加一场文字剧本杀游戏《${script.meta.title}》，扮演其中一名角色。全程以第一人称、在戏内说话。
@@ -171,13 +172,14 @@ ${publicRoster(script, state)}
 你额外知道的事：${card.knowledge.map(knowledgeLine).join("\n") || "（无）"}
 你的说话风格：${[card.persona.speechStyle, ...card.persona.traits].filter(Boolean).join("；")}
 ${tellBlock}${defenseBlock}
+本回合继续使用的辩解 ID：${activeDefenseHooks.find((hook) => hook.id === state.actionPlans?.[String(seatIndex)]?.defenseHookId)?.id ?? activeDefenseHooks[0]?.id ?? "无"}。当前辩解尚未被击破时，禁止主动承认推翻它的事实；继续上一回合仍成立的辩解，击破后才承认有限事实并换口径。
 
 ${strategy}`;
 
   // 近因区：语气死锁与行为禁令放在紧邻生成点的 tail 尾部（格式指令之前），
   // 对冲长局历史对硬约束的稀释；system 仍是整局常量，不破坏前缀缓存。
   const hardTail = `【发言要求】
-- 每次发言 60-180 字，中文，口语化，符合人设。不要输出任何舞台指示、括号动作或"我说"之类的前缀。
+- 普通陈述 40-120 字，回答提问 40-140 字；只贡献一个新主张、反驳或问题，禁止复述全场时间线，中文，口语化，符合人设。不要输出任何舞台指示、括号动作或"我说"之类的前缀。
 - 你看到的【线索·仅你可见】是你自己的情报，可以转述其中的内容（视为你亲手翻到的），但请用你的口吻，不要逐字念卡。
 - 除你持有的线索外，你不知道任何未公开的信息；其他玩家说的都是他们的陈述，真假自辨。${violationBlock ? `\n${violationBlock}` : ""}`;
 
@@ -223,7 +225,8 @@ ${renderLogWithMemory(events, seatIndex, state.memory, true)}`;
       publicEvidence ? `【公开证据登记】\n${publicEvidence}` : "",
       mentionBlock,
     ],
-    anchoredTail: `${actBlock}${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
+    anchoredTail: `【本轮已提出的主张目录（不可复述）】${events.filter((ev) => ev.round === state.round && ev.phase === state.phase && ev.visibility === "public" && ev.type === "speech").map((ev) => String(ev.content.claimSummary ?? ev.content.text ?? "").slice(0, 80)).join("；") || "暂无"}
+${actBlock}${phaseInstruction(script, state, seatIndex, opts.hint, opts.taskType)}
 
 ${hardTail}${opts.extraInstruction ? `\n\n${opts.extraInstruction}` : ""}${opts.requireJson ? `\n\n${opts.requireJson}` : ""}`,
   };

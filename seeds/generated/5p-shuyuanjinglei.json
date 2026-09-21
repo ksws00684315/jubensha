@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把死亡时刻钉死在亥时鸣钟之后——让全院相信山长亥时还活着、死在「失足」的楼梯上，而那时你正在明伦堂查斋，众目睽睽。裁下的丙戌页你已烧了，烧不透的残稿要抢先自认「帮山长焚稿」遮掩。若有人提钟声异样，就搬出晨钟夜钟本有差异的道理。你等了二十年，不能败在半个时辰上。"
+                "text": "解释亥时鸣钟属于你的日常职责，提醒钟声异样不能说明死亡时刻或操作人；承认楼钥、巡钟工作和训导院焚稿等可核实事实。推动大家核验仵作时间窗、聋伯的楼板震动和钟绳结法，再强调钥匙和值守权限并非你独占。若丙戌页被提起，可以承认整理废稿，但追问炭盆残字、血痕和经阁钥匙是否能证明同一人完成了整条行动链。"
               }
             ],
             "priority": "primary"
@@ -247,7 +247,96 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_pei_bell_means_alive",
+            "claim": "亥时惊雷钟是我按职责代鸣；照常鸣钟只能说明有人动了钟，不能说明山长在钟响时还活着。",
+            "basis": "训导职责包含司钟，钟室不锁，斋夫亦可巡楼；钟声异常可能由风势或仓促造成。",
+            "brokenByPublicClueIds": [
+              "yamen_fayan",
+              "longbo_vibration_statement",
+              "zhongsheng"
+            ]
+          },
+          {
+            "id": "defense_pei_burned_draft_not_page",
+            "claim": "我在训导院焚过废稿，但年谱裁页可能是山长自己整理，炭盆残纸也可能是别的旧稿。",
+            "basis": "训导日常会整理公文，楼钥与钟室并非我独占；没有人亲眼看见我裁页或击打山长。",
+            "brokenByPublicClueIds": [
+              "nianpugaoxia",
+              "tanpenbanban",
+              "jinganxuehen",
+              "louyao_jieling"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "peisongnian_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "仵作时间窗与聋伯的楼板震动均早于亥时钟；钟声不能证明山长仍活着。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peisongnian_act1_goal",
+                "title": "还原时间与现场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "区分钟声、死亡时间和现场动作，说明你的司钟职责，同时避免否认可核实的日常行踪。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "peisongnian_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "值守簿显示楼内及钟室并非你独占；裁页与炭盆残文是不同来源，需要解释它们的联系。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "peisongnian_act2_goal",
+                "title": "核验权限与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应丙戌页和炭盆残稿，提出可核验的解释，并追问其他有楼内权限者的行踪。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -452,7 +541,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "guxiangjun_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、死亡时间、尸身移动和钟声震动，不凭单一钟声认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guxiangjun_act1_goal",
+                "title": "还原时间与现场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一条自己亲历的时间点，说明来源是亲见、听闻或推断，并决定如何处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "guxiangjun_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕会公开钟室/经阁权限记录及年谱、炭盆材料；接触机会、旧事动机和现场动作不能混成一条结论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guxiangjun_act2_goal",
+                "title": "核验权限与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对钟室权限、书院文书和现场痕迹，向至少一位角色追问行动，处理自身利益或秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -644,7 +799,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "luhongfei_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、死亡时间、尸身移动和钟声震动，不凭单一钟声认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luhongfei_act1_goal",
+                "title": "还原时间与现场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一条自己亲历的时间点，说明来源是亲见、听闻或推断，并决定如何处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "luhongfei_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕会公开钟室/经阁权限记录及年谱、炭盆材料；接触机会、旧事动机和现场动作不能混成一条结论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "luhongfei_act2_goal",
+                "title": "核验权限与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对钟室权限、书院文书和现场痕迹，向至少一位角色追问行动，处理自身利益或秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -840,7 +1061,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "longbo_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、死亡时间、尸身移动和钟声震动，不凭单一钟声认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "longbo_act1_goal",
+                "title": "还原时间与现场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一条自己亲历的时间点，说明来源是亲见、听闻或推断，并决定如何处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "longbo_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕会公开钟室/经阁权限记录及年谱、炭盆材料；接触机会、旧事动机和现场动作不能混成一条结论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "longbo_act2_goal",
+                "title": "核验权限与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对钟室权限、书院文书和现场痕迹，向至少一位角色追问行动，处理自身利益或秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1029,7 +1316,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qianmushan_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、死亡时间、尸身移动和钟声震动，不凭单一钟声认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qianmushan_act1_goal",
+                "title": "还原时间与现场",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一条自己亲历的时间点，说明来源是亲见、听闻或推断，并决定如何处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qianmushan_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕会公开钟室/经阁权限记录及年谱、炭盆材料；接触机会、旧事动机和现场动作不能混成一条结论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qianmushan_act2_goal",
+                "title": "核验权限与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对钟室权限、书院文书和现场痕迹，向至少一位角色追问行动，处理自身利益或秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1052,7 +1405,8 @@
           "type": "paragraph",
           "text": "二层经阁满架善本，樟脑气息经年不散；经案侧一道拖拭过的痕迹通向楼梯口，案头青铜鹤形书镇静静立着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "peisongnian"
     },
     {
       "id": "location_3",
@@ -1062,7 +1416,8 @@
           "type": "paragraph",
           "text": "顶层钟室悬着'惊雷钟'，钟身刻痕经年；钟绳末端新系过，绳身一道新鲜勒痕沾着烛油，凭窗可望见全院灯火。"
         }
-      ]
+      ],
+      "ownerCharacterId": "peisongnian"
     },
     {
       "id": "location_4",
@@ -1072,7 +1427,8 @@
           "type": "paragraph",
           "text": "训导院里斋舍整洁，案头公文理得一丝不乱；屋里炭盆未熄，盆中纸灰尚温，风一吹就泛起细屑。"
         }
-      ]
+      ],
+      "ownerCharacterId": "peisongnian"
     },
     {
       "id": "location_5",
@@ -1082,7 +1438,8 @@
           "type": "paragraph",
           "text": "柴房里柴堆码得齐整，柴堆后藏着一只上着火漆封识的木箱；屋里昏暗，只有门缝漏进一线雪光。"
         }
-      ]
+      ],
+      "ownerCharacterId": "longbo"
     },
     {
       "id": "location_6",
@@ -1092,17 +1449,30 @@
           "type": "paragraph",
           "text": "山长院正屋书案上文房齐整，《白鹿年谱》稿匣开着，誊清本的裁口新鲜；朱笔搁在匣边，提纲墨迹未干。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guxiangjun"
     },
     {
       "id": "location_7",
-      "name": "西厢与客舍",
+      "name": "西厢",
       "description": [
         {
           "type": "paragraph",
-          "text": "西厢是女眷居处，书匣与针线收在案头；廊子那头的客舍住着外来宾朋，夜来灯熄得最晚，晨起门还闩着。"
+          "text": "西厢是女眷居处，顾湘君的书匣与针线收在案头；私订庚帖藏在书匣深处，窗外可见书院后院。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guxiangjun"
+    },
+    {
+      "id": "location_8",
+      "name": "外来客舍",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "客舍住着乡绅钱慕山与随从，捐账、公文和行李均存于此；夜间门扇从内闩着。"
+        }
+      ],
+      "ownerCharacterId": "qianmushan"
     }
   ],
   "clues": [
@@ -1114,7 +1484,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "顾云章仰面倒毙楼梯下，后脑一处创口，周身却无滚落楼梯应有的擦碰伤；阶面无血、无擦蹭痕；死者鞋底沾着二层经阁独有的樟脑灰，而楼梯阶面干干净净——尸身是从二层下来的，不是摔下去的。旁边倒着一盏打翻的灯笼，蜡泪凝在阶沿。"
+          "text": "顾云章仰面倒毙楼梯下，后脑有一处致命创口，衣袍背部有平行拖拽擦痕；楼梯阶面无连续血迹，也无滚落应有的多处擦伤。鞋底沾二层经阁独有的樟脑灰，说明尸身曾在二层活动后被移至楼梯下。旁有打翻的灯笼，蜡泪凝在阶沿；现场能说明移尸和伪装，不识别搬动者。"
         }
       ],
       "policy": "auto_public",
@@ -1144,7 +1514,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "顶层钟室的钟绳末端被重新系过，绳结是「夫子结」——训导裴松年司晨钟二十年惯用的打法；绳身有一道新鲜勒痕，勒痕处沾着一点烛油。惊雷钟鸣法讲究「缓提疾放」，与晨钟的「疾提」截然不同。"
+          "text": "顶层钟室钟绳末端有新系痕与一道新鲜勒痕，旁沾烛油；钟声第二响哑了半声。惊雷钟规矩为“缓提疾放”，晨钟为“疾提”，操作差异可能来自仓促、风势或不熟练；训导裴松年负责司晨钟，斋夫聂聋伯也获准巡楼清扫。绳结和异响只能提示有人动过钟，不能单独确定操作者，更不能证明楼长当时仍活着。"
         }
       ],
       "policy": "manual_public",
@@ -1159,7 +1529,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "山长院书案上的《白鹿年谱》稿匣开着，誊清本「丙戌年」整页被裁去，裁口新鲜。匣内留着山长朱笔提纲：「丙戌：松年顶亡兄名入泮，事出怜贫，然冒名终究冒名——录否？待与松年面议。」"
+          "text": "山长院书案《白鹿年谱》稿匣开着，誊清本丙戌年整页被裁去，裁口新鲜。匣内朱笔提纲写：“丙戌：松年顶亡兄名入泮，事出怜贫，然冒名终究冒名——录否？待与松年面议。”稿匣钥匙由山长和女儿保管；该页内容说明潜在旧事与被裁事实，不说明谁裁页。"
         }
       ],
       "policy": "manual_public",
@@ -1235,6 +1605,53 @@
         {
           "type": "paragraph",
           "text": "西厢书匣深处有顾湘君与陆鸿飞私换的庚帖，帖下压着同知府下聘的礼目单——一边是婚约，一边是聘礼，一纸批语就能定她终身；山长一死，两桩婚事都乱了。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "yamen_fayan",
+      "locationId": "location_1",
+      "name": "县衙仵作复验",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "县衙仵作次晨复验：后脑单次重击造成颅骨裂伤及致命颅内出血，伤缘形态与钝重、带棱物体相符；尸斑、尸温综合推定死亡在戌时末至亥时初（约20:30—21:10）。若按亥时整钟声推算“仍活着”，与尸检时间窗并不吻合。复验能说明死因与大致时间，不能识别凶器或凶手。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "longbo_vibration_statement",
+      "locationId": "location_1",
+      "name": "聂聋伯的楼板震动口述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "聂聋伯补述：戌时末他在一层搬书，脚底感到二层传来一次沉闷震动，随后听见短促拖擦声；他当时以为书箱倒地。亥时钟响时，楼板传来的震动更轻、节奏不同。聋伯耳背，不能凭震动认出是谁或确定具体动作；他的私藏禁书也使其口供需要其他材料核验。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "longbo"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "louyao_jieling",
+      "locationId": "location_3",
+      "name": "奎文楼钥匙与值守簿",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "书院值守簿记载：顾湘君保管楼门与稿匣钥匙；裴松年负责巡钟；聂聋伯获准洒扫一、二层；陆鸿飞有经阁借阅登记，钱慕山曾因捐书登记进入书库。钟室日常不另设封锁，楼门今晨无撬痕，记录也未逐次登记进入。至少数人能接触奎文楼或钟室；权限记录不能单独把作案机会锁给裴松年。"
         }
       ],
       "policy": "manual_public",
@@ -1545,19 +1962,41 @@
       {
         "id": "evidence_1",
         "clueIds": [
+          "yamen_fayan",
+          "loutixiashishen",
           "jinganxuehen",
-          "loutixiashishen"
+          "longbo_vibration_statement"
         ],
-        "conclusion": "经案血痕一路拖到楼梯口、青铜鹤形书镇鹤喙缝里嵌着未擦净的血痂——凶器与第一现场俱在二层经阁；而尸身无滚落擦碰伤、阶面无血、鞋底却沾二层独有的樟脑灰：死亡地点被搬动，'失足'是伪装。"
+        "conclusion": "仵作复验把死亡限定在戌时末至亥时初；聋伯独立记得钟响前的楼板重震和拖擦声；二层血痕、书镇血痂及尸身拖痕显示先在经阁受创、再被移至楼梯。医学、目击与实物分层建立死亡时间和移尸方式，仍不指认行动者。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
           "zhongsheng",
-          "nianpugaoxia",
-          "tanpenbanban"
+          "yamen_fayan",
+          "longbo_vibration_statement",
+          "louyao_jieling"
         ],
-        "conclusion": "钟绳被用'夫子结'重新系过——亥时鸣钟者只能是司晨钟二十年的训导裴松年，钟声把死亡时刻整整推后了半个时辰；稿匣里山长朱笔提纲直书'松年顶亡兄名入泮，然冒名终'、丙戌页被裁，炭盆里未烧透的余稿尚温——灭证的动机与动作都落在他一人身上。"
+        "conclusion": "亥时钟绳有新动痕、第二响不完整，但仵作时间窗显示山长可能早已死亡；聋伯感到的先后两次楼板震动与钟响节奏不同。值守簿表明多名角色有楼内或钟室接触机会，钟声只启动调查，不能证明山长鸣钟或单独锁定裴松年。"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "jinganxuehen",
+          "loutixiashishen",
+          "louyao_jieling"
+        ],
+        "conclusion": "书镇缝隙血痂、经案拖拭血痕与尸身后脑伤相互印证钝器击打后移尸；值守簿显示裴松年、聂聋伯、顾湘君及借书者均可接近楼内不同区域。此链证明行动方式与可接触范围，身份须另由时序和动机材料判断。"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "nianpugaoxia",
+          "tanpenbanban",
+          "zhongsheng",
+          "louyao_jieling"
+        ],
+        "conclusion": "年谱提纲点出裴松年冒名旧事，丙戌页被裁；炭盆残字确认该页内容曾被焚；钟绳和职责记录把裴与代鸣机会相连，但值守簿也显示权限并非独占。文书、焚烧残迹与钟室材料共同支持灭证动机和行动机会，仍需结合死亡时间及经阁血迹推断身份。"
       }
     ],
     "redHerrings": [
@@ -1617,7 +2056,31 @@
     "searchRounds": 3,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "死亡时刻与现场移尸",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先用仵作复验、聋伯的震动口述和经阁现场痕迹判断死亡时间、致命伤与移尸方式；亥时钟声只作为待核验线索。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "钟室、行动权限与旧年谱",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "核验谁能进入经阁和钟室，再对照裁页、焚稿残文和钟绳痕迹讨论身份与动机。保留聋伯、顾湘君、陆鸿飞、钱慕山等可接近楼内不同区域者的竞争解释。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1640,6 +2103,90 @@
             "text": "裴松年带着「裴二先生」的清白接掌了书院，学官满意而归。可他再登奎文楼鸣钟时，第二响又哑了半声——这一次，全院都听出来了。聋伯站在楼下，脚底板贴着地皮，一言不发。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开局公布楼梯下发现尸体与亥时钟响，不把钟声解释成死者仍活着。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮兜底 loutixiashishen、yamen_fayan、jinganxuehen、longbo_vibration_statement、zhongsheng（5张）；先讨论死亡时间、伤势、经阁第一现场与钟声差异。第2轮兜底 louyao_jieling、nianpugaoxia、tanpenbanban、jieshubu、chaifangjinshu（5张）；第3轮兜底 fankesongqian、sidinggengtie（2张），补足伪本与婚约等竞争动机。12张线索按5/5/2分布，不超过5人每轮的发现能力。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分开讨论死亡时刻、钝器击打与移尸、亥时钟声是否伪造、谁能进钟室/经阁、年谱动机与焚稿。钥匙与值守职责有多人共享，钟绳结法不得单独锁人。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "指认须同时引用死亡时间/行动方式材料与独立身份/动机材料；说明为何钟声不能证明死者当时存活，并回应楼内多角色有接触权限的竞争解释。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家认定亥时钟响即代表山长亥时仍活着。",
+        "hint": "先公开仵作尸温/尸斑估时和聋伯的楼板震动口述，再让玩家判断钟声能证明什么。"
+      },
+      {
+        "condition": "玩家凭“夫子结”或钟绳痕迹直接指认裴松年。",
+        "hint": "指出聋伯也获准巡楼、钟室非独占；要求结合伤势时间窗、经阁血痕和年谱动机。"
+      },
+      {
+        "condition": "玩家认定楼钥权限唯一。",
+        "hint": "公开值守簿，列出顾湘君、聂聋伯、陆鸿飞及捐书者的不同接触权限，再分别核验其时间与行为。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "loutixiashishen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yamen_fayan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "jinganxuehen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "longbo_vibration_statement",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhongsheng",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "louyao_jieling",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "nianpugaoxia",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "tanpenbanban",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "jieshubu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "chaifangjinshu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "fankesongqian",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "sidinggengtie",
+        "deadlineRound": 3
       }
     ]
   }

@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "咬定主席年事已高、赛程劳累。假签名就推给库房管理混乱；转账记录被翻出就承认卖题——卖题是错，不是死罪，把事情的分量降下来。绝不让卖题和毒茶被串成一件事。"
+                "text": "可以承认卖题和收款，明确把舞弊利益与投毒行为分开；说明直播只拍到你搬壶、没拍到壶内操作。推动大家核验库房原始登记、秦小满签名样本和多人共用的硝罐，指出签名异常不自动说明代签人。主动询问茶水员何时封盖、谁搬壶、谁看见饮用；若毒物和时间线被串起，提出镜头遮挡和共用设备的可核验限制，并讨论其他人的动机。"
               }
             ],
             "priority": "primary"
@@ -323,7 +323,98 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_hao_sold_exam_only",
+            "claim": "卖题我认，但那是利益纠纷；我只按节目流程搬过茶壶，镜头没有拍到我投毒。",
+            "basis": "直播确实只拍到搬壶而壶口被遮，评委席和后厨多人能接触器具；转账记录只证明卖题，不能证明杀人。",
+            "brokenByPublicClueIds": [
+              "chaohu_fuwu_kouzheng",
+              "fayan_toxicology",
+              "chahu",
+              "zhibo_suzhi"
+            ]
+          },
+          {
+            "id": "defense_hao_common_stock_and_forged_sign",
+            "claim": "硝罐和库房登记是共用的；签名不是秦小满写的，也不等于我领了硝水或把它放进茶壶。",
+            "basis": "库房缺少复核及交接见证，工位多人可接触，签名核验只能排除秦本人，不能辨认代签者。",
+            "brokenByPublicClueIds": [
+              "dengji_ben",
+              "lingyong_biji_bijiao",
+              "xiaoguan",
+              "zhibo_suzhi",
+              "chaohu_fuwu_kouzheng"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hao_yunlai_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "直播显示搬壶，壶盖遮住壶口；库房登记也无法单独识别代签者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hao_yunlai_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "承认可核验的卖题事实，说明直播画面局限，并追问库房多人权限。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hao_yunlai_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "毒理与服务证词将饮用、发作和摄入窗口相连；卖题是动机证据，不等于投毒证明。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hao_yunlai_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应茶壶流转和物料记录，说明两者能证明的范围，再质询至少一位证人。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -565,7 +656,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "tie_shao_wang_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别证明库存、签名、茶壶状态和搬运动作，任何一项都不直接等于投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tie_shao_wang_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告你亲历的一个时间点，说明信息来自亲眼所见、台账还是推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "tie_shao_wang_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将饮用时点、毒理潜伏期和卖题/其他利益线索分开讨论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tie_shao_wang_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对毒理时间窗、交易材料和竞争嫌疑，主动追问至少一位角色并处理自身秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -791,7 +948,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "jiang_manli_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别证明库存、签名、茶壶状态和搬运动作，任何一项都不直接等于投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiang_manli_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告你亲历的一个时间点，说明信息来自亲眼所见、台账还是推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "jiang_manli_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将饮用时点、毒理潜伏期和卖题/其他利益线索分开讨论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiang_manli_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对毒理时间窗、交易材料和竞争嫌疑，主动追问至少一位角色并处理自身秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1036,7 +1259,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qin_xiaoman_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别证明库存、签名、茶壶状态和搬运动作，任何一项都不直接等于投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qin_xiaoman_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告你亲历的一个时间点，说明信息来自亲眼所见、台账还是推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qin_xiaoman_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将饮用时点、毒理潜伏期和卖题/其他利益线索分开讨论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qin_xiaoman_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对毒理时间窗、交易材料和竞争嫌疑，主动追问至少一位角色并处理自身秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1283,7 +1572,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "he_dajiang_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别证明库存、签名、茶壶状态和搬运动作，任何一项都不直接等于投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_dajiang_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告你亲历的一个时间点，说明信息来自亲眼所见、台账还是推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "he_dajiang_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将饮用时点、毒理潜伏期和卖题/其他利益线索分开讨论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_dajiang_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对毒理时间窗、交易材料和竞争嫌疑，主动追问至少一位角色并处理自身秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1509,7 +1864,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "jiang_xiaomiao_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别证明库存、签名、茶壶状态和搬运动作，任何一项都不直接等于投毒。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiang_xiaomiao_act1_goal",
+                "title": "核验物料与茶壶",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告你亲历的一个时间点，说明信息来自亲眼所见、台账还是推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "jiang_xiaomiao_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕将饮用时点、毒理潜伏期和卖题/其他利益线索分开讨论。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiang_xiaomiao_act2_goal",
+                "title": "核验时间与动机",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "核对毒理时间窗、交易材料和竞争嫌疑，主动追问至少一位角色并处理自身秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1522,7 +1943,8 @@
           "type": "paragraph",
           "text": "备赛后厨里灶火正旺，卤水台上硝罐敞着盖；工位旁的工具箱半开，料格后塞着两盒高汤块，油烟把灯光熏得发黄。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tie_shao_wang"
     },
     {
       "id": "location_2",
@@ -1542,7 +1964,8 @@
           "type": "paragraph",
           "text": "库房里米面粮油码得整齐，领用登记本挂在门边；当值库管的凳子倒扣在账台上，硝水桶的封条垂着一角。"
         }
-      ]
+      ],
+      "ownerCharacterId": "qin_xiaoman"
     },
     {
       "id": "location_4",
@@ -1552,7 +1975,8 @@
           "type": "paragraph",
           "text": "导演工作间里多块屏幕闪着回放画面，工作电脑的聊天窗口还开着；导播台贴满流程便签，对讲机的电流声没停过。"
         }
-      ]
+      ],
+      "ownerCharacterId": "hao_yunlai"
     },
     {
       "id": "location_5",
@@ -1562,7 +1986,8 @@
           "type": "paragraph",
           "text": "演员通道两侧贴满选手海报，应急灯照着昏黄的走廊；角落里架着一台备用机的云台，镜头正对评委席的方向。"
         }
-      ]
+      ],
+      "ownerCharacterId": "jiang_xiaomiao"
     }
   ],
   "clues": [
@@ -1570,11 +1995,11 @@
       "id": "chahu",
       "locationId": "location_2",
       "name": "清口茶壶",
-      "category": "document",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "主席专属的紫砂清口茶壶，壶内残茶检出亚硝酸盐，浓度足以致死；壶嘴内侧有细白粉结块。死者口唇青紫，初判急性亚硝酸盐中毒，发作时间与 16:12 饮茶吻合。这把壶二十年来只泡淡茶，从不离主席三步。"
+          "text": "主席专属紫砂清口茶壶壶底与壶嘴内侧留有细白粉结块，残液初筛检出亚硝酸盐；壶盖、壶柄未提取到可辨认的单人指纹。茶壶平时由评委席保管，但中场由工作人员短暂搬动。此物证证明壶中有毒，不能证明谁投毒或投毒的具体时刻。"
         }
       ],
       "policy": "auto_public",
@@ -1589,7 +2014,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "库房领用登记：15:56 烟熏肉展示用，硝水一勺，签名模仿秦小满的连笔——满字最后一钩是直的，她的回锋做不了假。当值库管回忆：来领料的是个端着奶茶杯的男人，说秦总厨让我来。"
+          "text": "库房原始领用登记记载：15:56“烟熏肉展示用，硝水一勺”，领用人栏写“秦小满”。该本没有工牌号、复核签字或物料交接见证；登记只能说明有人以秦小满名义领料，不能单独确认实际领用者。"
         }
       ],
       "policy": "manual_public",
@@ -1604,7 +2029,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "铁勺王工位的卤水硝罐少了约一勺，罐口有湿指痕，旁边茶匙残留白色晶体；料格后藏着两盒曼食速享金汤高汤块——卫冕厨王的汤，原来也是买的。"
+          "text": "铁勺王工位硝罐较早班盘点少约一勺，罐口有湿指痕，旁边茶匙留有白色晶体；罐台为多人共用，班中没有二次盘点，无法从缺量确认是谁取用。料格后另藏两盒曼食速享金汤高汤块，属于铁勺王的违规预制菜线索，与毒茶来源需分开判断。"
         }
       ],
       "policy": "manual_public",
@@ -1619,7 +2044,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "导演工作电脑的聊天软件：三笔押题费——何大江五万、已淘汰选手两笔各五万，备注都是保熟，决赛稳；最近一笔在上周五 21:47。收款方是郝运来的个人账户。"
+          "text": "导演工作电脑保存三笔决赛押题费聊天与转账：何大江五万、两名已淘汰选手各五万，备注“保熟，决赛稳”，收款方为郝运来个人账户，最近一笔在上周五21:47。记录能证明卖题及收入，不能说明他是否投毒。"
         }
       ],
       "policy": "manual_public",
@@ -1649,7 +2074,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "备用机素材三段：15:50 蒋曼丽在隔间门口拉扯被推；15:58 郝运来端茶壶回来，手抖，壶嘴在袖口蹭了一下；16:26 主席栽倒全程未切镜，16:31 画面里郝运来喊叫救护车，双脚没动。"
+          "text": "备用机素材三段：15:50蒋曼丽与主席隔间争执；15:58郝运来从评委席隔间方向提着紫砂壶返回，面部和工作牌可辨，手有些发抖、壶嘴擦过袖口。镜头只拍到他搬运茶壶，壶口被壶盖遮住，未拍到投粉、倒液或壶内状态；16:26主席倒下，16:31郝运来喊救护车但双脚未动。视频记录的是可见动作和时间，不是投毒过程。"
         }
       ],
       "policy": "manual_public",
@@ -1699,6 +2124,56 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fayan_toxicology",
+      "locationId": "location_2",
+      "name": "急救检验与胃内容物报告",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "急救中心检验记录：袁守味16:26发作时血样及胃内容物检出高浓度亚硝酸盐，达到急性中毒范围；临床症状与摄入后约十至二十分钟的潜伏期相符。报告不能单独判断毒物经哪只容器进入，亦不识别投毒者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "chaohu_fuwu_kouzheng",
+      "locationId": "location_2",
+      "name": "评委席茶水交接证词",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "茶水服务员口述：15:50秦小满布杯后离开评委席，紫砂壶当时加盖放在隔间内；15:58郝运来提壶离开隔间方向，壶盖仍在；16:12主席从该壶倒茶并饮下一口。服务员没有看见壶内，也没看见任何人投粉；其证词只确认茶壶状态、搬运和饮用时点。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "qin_xiaoman",
+        "hao_yunlai"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "lingyong_biji_bijiao",
+      "locationId": "location_3",
+      "name": "领用签名核验单",
+      "category": "document",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "节目资料员将库房登记原页与秦小满十余份当日备菜单交叉核对：登记上的“满”字末钩为直笔，而她稳定使用回锋；其余两字也有临摹停顿。核验能说明签名不像秦小满本人所写，却不能仅凭笔迹确认代签者是谁，库房多名工作人员均可接触登记本。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "qin_xiaoman"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -2175,38 +2650,54 @@
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "evidence_poison",
         "clueIds": [
           "chahu",
-          "xiaoguan"
+          "fayan_toxicology",
+          "chaohu_fuwu_kouzheng"
         ],
-        "conclusion": "清口茶壶残茶检出亚硝酸盐、壶嘴内侧有细白粉结块，而 15:50 秦小满布杯时壶是干净的——毒是在布杯之后、16:12 饮茶之前被投入的，投毒窗口恰好是中场十五分钟。"
+        "conclusion": "壶内残液检出亚硝酸盐，独立血样/胃内容物报告确认致死摄入，茶水员又确认主席16:12从这只壶饮茶。物证、医学报告与服务证词共同支持毒物经该壶摄入；没有一项记录谁投毒。"
       },
       {
-        "id": "evidence_2",
+        "id": "evidence_access",
         "clueIds": [
           "dengji_ben",
+          "lingyong_biji_bijiao",
+          "xiaoguan",
           "zhibo_suzhi"
         ],
-        "conclusion": "15:56 领用登记本上「秦小满」的签名满字最后一钩是直的，而秦小满的真迹是回锋——签名系伪造，领硝水的是一个端着奶茶杯的男人，正是郝运来。"
+        "conclusion": "登记本记一勺硝水以秦小满名义领用，签名核验排除她本人书写，罐量与残粉说明有物料缺失；直播只记录郝运来搬运茶壶，不能看见壶内动作。纸面、现场痕迹和影像相互补充领用/接触机会，但库房共用权限仍是竞争解释。"
       },
       {
-        "id": "evidence_3",
+        "id": "evidence_timing",
+        "clueIds": [
+          "zhibo_suzhi",
+          "chaohu_fuwu_kouzheng",
+          "fayan_toxicology",
+          "chahu"
+        ],
+        "conclusion": "视频与茶水员口述分别记录15:58搬壶和16:12饮用；毒理报告给出约十至二十分钟潜伏期，与16:26发作相符。该时间链限定可能的投毒窗口，却不把搬壶动作等同于下毒。"
+      },
+      {
+        "id": "evidence_motive",
         "clueIds": [
           "zhuanzhang_jilu",
           "duanxin",
-          "shoutiao"
+          "shoutiao",
+          "baocai_ben"
         ],
-        "conclusion": "三笔押题费共十五万汇入郝运来个人账户，备注均为「保熟」——袁守味已掌握名单并限其明早交出，卖题败露是郝运来灭口的直接动机。"
+        "conclusion": "转账与收条互证郝运来向选手卖题牟利，主席短信草稿显示次晨将移交名单，小抄本也记下主席准备公开评审流程。卖题败露提供强烈动机，但动机材料不证明投毒。"
       },
       {
-        "id": "evidence_4",
+        "id": "evidence_identity",
         "clueIds": [
-          "zhibo_suzhi",
           "dengji_ben",
-          "chahu"
+          "lingyong_biji_bijiao",
+          "zhibo_suzhi",
+          "chaohu_fuwu_kouzheng",
+          "zhuanzhang_jilu"
         ],
-        "conclusion": "直播素材拍到 15:58 郝运来端茶壶回来时手在抖、壶嘴在袖口蹭了一下，16:26 主席栽倒后他喊救护车但双脚半步未动——投毒动作与心虚反应被镜头全程锁定。"
+        "conclusion": "伪签领用、多人共用硝罐和郝运来搬运壶分别显示物料流与容器接触；独立服务证词确认之后主席饮用，毒理报告确认摄入时间，卖题记录说明他面临公开追责。合并可支持郝运来实施投毒的推断，但直播本身没有拍到投毒动作，其他人员接触仍需被讨论。"
       }
     ],
     "redHerrings": [
@@ -2276,7 +2767,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "硝水领用与茶壶状态",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先分别核对硝罐缺量、领用登记和签名真伪，再确定评委席茶壶何时布置、封盖、搬运。直播画面只记录搬壶，不等于拍到投毒。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "饮用时点、毒理与卖题动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "对照服务员口述、主席饮茶时间、毒理潜伏期与倒下时间；最后讨论押题交易和次晨揭发。允许承认卖题但否认投毒，要求行为链跨来源回应。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2299,6 +2814,90 @@
             "text": "郝运来把主席的死推给年事已高、赛程劳累，把假签名推给库房管理混乱，把卖题的分量降到「错不至死」。投票未能指认郝运来，那只清口茶壶里最后的残茶被倒掉了，连同三笔押题费的秘密一起冲进了下水道。厨王争霸的舞台上灯光依旧，只是评委席上，再没有人端起那杯茶。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场交代16:26主席倒下、茶壶残液异常；不以镜头画面直接宣布投毒者。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮保证 chahu、fayan_toxicology、dengji_ben、lingyong_biji_bijiao、xiaoguan、zhibo_suzhi（6张）；分别给出茶壶物证、毒理、原始登记、签名核验、硝罐状态与影像。第2轮保证 chaohu_fuwu_kouzheng、zhuanzhang_jilu、duanxin、shoutiao、guanming_han、baocai_ben（6张）；补饮用时点与各方动机。总计12张，正好是6人×2轮上限。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分开讨论领用登记、实际取用、壶中状态、搬壶、主席饮用、发作时间和卖题动机。库房与评委席都有多人权限；镜头不显示壶内，搬运不是投毒动作。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "认定郝运来时至少引用一项物料链、一项容器/饮用时间材料及独立毒理结果；单独的卖题记录或直播镜头均不足以认定投毒。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家凭15:58直播镜头直接认定投毒。",
+        "hint": "让他们说明镜头有没有拍到壶内；再对照服务员交接、饮用时间和毒理潜伏期。"
+      },
+      {
+        "condition": "玩家凭秦小满名义领用记录指认她或代签者。",
+        "hint": "对照签名核验和多人共用硝罐；领用人身份与最终使用者须分开证明。"
+      },
+      {
+        "condition": "玩家把卖题动机等同于投毒。",
+        "hint": "先独立判断毒物、物料与壶流转；交易和短信只说明动机及期限。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "chahu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fayan_toxicology",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dengji_ben",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "lingyong_biji_bijiao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xiaoguan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhibo_suzhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "chaohu_fuwu_kouzheng",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zhuanzhang_jilu",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "duanxin",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "shoutiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "guanming_han",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "baocai_ben",
+        "deadlineRound": 2
       }
     ]
   }

@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "「义弟报恩」的皮要披到底——把案子往「外乡绸商压价起争执」「小姐摔门说过狠话」上引，自己做个痛心的和事佬。信匣、夜航船、油纸药包是三样催命符，要设法抢先料理。更次簿记着你「亥时初上、二刻下」，你就咬定「上楼时兄长还谈笑风生」，把时间往毒发后挪。谁提条案，你就笑着认「等酒等得急」。"
+                "text": "把自己在条案边的停留解释成等酒，把三楼封楼解释成东家饮酒后清静休息的常规安排；承认可以核实的上楼、下楼与口头指令，不要否认物证。追问油纸封角是否专属、谁能接触外柜包装；强调仵作只证明壶中有毒，没看见谁下毒。若盘账与信匣被翻出，承认经手外柜，但要求账房说明几笔银两的去向，再把傅月娥的狠话、白子安提亲和何百川的绸价冲突一并摆上桌。"
               }
             ],
             "priority": "primary"
@@ -239,7 +239,96 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_liuchengye_waiting_wine",
+            "claim": "我在条案边只是等酒，外柜封角纸又是多名伙计共用；油纸和下毒没有指向我个人。",
+            "basis": "麻三娘只看见我停留，白子安只看见我提满壶上楼，两人都没目睹投毒；封角纸并非个人专属。",
+            "brokenByPublicClueIds": [
+              "youtiyaobao",
+              "tiaowan_zhengci",
+              "fating_yanshi"
+            ]
+          },
+          {
+            "id": "defense_liuchengye_closing_floor",
+            "claim": "三楼封楼是东家饮酒后清静休息的常规安排，我只是在履行楼内管事职责，并不知道他会中毒。",
+            "basis": "东家常独自饮酒，封楼能避免客人打扰；更次簿和伙计口供只能证明下令与延迟发现，不能证明我知道毒发。",
+            "brokenByPublicClueIds": [
+              "gengcibu",
+              "fenglou_koubei",
+              "fating_yanshi",
+              "yehangchuan"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "liuchengye_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "仵作检验确认壶中毒物与死者检材相符，但不能认出下毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liuchengye_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释条案停留、上楼提壶和外柜封角纸的多义性，观察他人如何陈述时点。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "liuchengye_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "更次簿与伙计口供证明封楼及延迟发现，但饮酒清静的正常解释仍成立。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liuchengye_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应下令封楼与账目线索，提出可核验的常规职责解释并追问证词来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -395,7 +484,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "fuyuee_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明毒物、包装来源和上楼目击；没有任何单卡证明投毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fuyuee_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出一个亲历时间点，区分目击、登记和推断，并决定何时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "fuyuee_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕账目与口供支持盘账压力；封楼可能是职责，但造成发现延迟。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fuyuee_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交叉核验账目、封楼口供和发现时间；向至少一位角色追问行动，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -587,7 +742,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "baizian_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明毒物、包装来源和上楼目击；没有任何单卡证明投毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baizian_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出一个亲历时间点，区分目击、登记和推断，并决定何时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "baizian_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕账目与口供支持盘账压力；封楼可能是职责，但造成发现延迟。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "baizian_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交叉核验账目、封楼口供和发现时间；向至少一位角色追问行动，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -788,7 +1009,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "masanniang_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明毒物、包装来源和上楼目击；没有任何单卡证明投毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "masanniang_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出一个亲历时间点，区分目击、登记和推断，并决定何时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "masanniang_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕账目与口供支持盘账压力；封楼可能是职责，但造成发现延迟。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "masanniang_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交叉核验账目、封楼口供和发现时间；向至少一位角色追问行动，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -980,7 +1267,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hebaichuan_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明毒物、包装来源和上楼目击；没有任何单卡证明投毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hebaichuan_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出一个亲历时间点，区分目击、登记和推断，并决定何时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hebaichuan_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕账目与口供支持盘账压力；封楼可能是职责，但造成发现延迟。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hebaichuan_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交叉核验账目、封楼口供和发现时间；向至少一位角色追问行动，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1157,7 +1510,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "chaishu_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明毒物、包装来源和上楼目击；没有任何单卡证明投毒者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chaishu_act1_goal",
+                "title": "判断死因与投毒时窗",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "说出一个亲历时间点，区分目击、登记和推断，并决定何时处理自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "chaishu_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕账目与口供支持盘账压力；封楼可能是职责，但造成发现延迟。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chaishu_act2_goal",
+                "title": "核验账目与封楼",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "交叉核验账目、封楼口供和发现时间；向至少一位角色追问行动，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1180,7 +1599,8 @@
           "type": "paragraph",
           "text": "大堂里柜台与楼梯口条案隔道相对，条案四面临空；柜上暗格与礼目匣齐整，更次簿翻在今夜那页，灯影里人声漫上楼来。"
         }
-      ]
+      ],
+      "ownerCharacterId": "masanniang"
     },
     {
       "id": "location_3",
@@ -1190,7 +1610,8 @@
           "type": "paragraph",
           "text": "灯铺里各式花灯挂了满架，走马灯的灯壁夹层藏得下薄物；铺外灯河如昼，人声与更鼓混作一处，竹篾彩纸的碎屑扫作一堆。"
         }
-      ]
+      ],
+      "ownerCharacterId": "baizian"
     },
     {
       "id": "location_4",
@@ -1200,7 +1621,8 @@
           "type": "paragraph",
           "text": "河埠头的石阶浸在水里，一条雇定的快船泊在暗处；舱里账箱贴着新封条，浆糊未干，灯市的喧嚣到这儿只剩水声。"
         }
-      ]
+      ],
+      "ownerCharacterId": "liuchengye"
     }
   ],
   "clues": [
@@ -1212,7 +1634,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "傅锦堂伏案气绝，口角涎沫带血丝，面青、指甲青——鹤顶红入腹之相。案头白瓷壶残酒，银簪探入即黑；壶是酒保从「上元福酒」坛现打的，坛口封泥完好，酉时共饮的头一壶无事。雅阁门未闩，后梯虚掩。"
+          "text": "傅锦堂伏案气绝，口角涎沫带血丝，面青、指甲青。雅阁白瓷壶残酒银簪试之发黑；酒保登记显示此壶由“上元福酒”坛现打，坛口封泥完好，酉时共饮的头一壶无人不适。壶中异常只说明这壶酒被污染，不能指认下毒者。雅阁门未闩，后梯虚掩。"
         }
       ],
       "policy": "auto_public",
@@ -1223,11 +1645,11 @@
       "id": "youtiyaobao",
       "locationId": "location_2",
       "name": "楼梯口的油纸药包",
-      "category": "document",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "楼梯口条案的案缝里扫出折起的油纸一角，纸上残粉以银簪试之发黑——正是盛鹤顶红的药纸；油纸上留着半枚淡红押角，是「锦记」外柜包货专用的封角纸。条案四面临空，亥时初前后只有一人背对柜台在案边站过。"
+          "text": "楼梯口条案案缝扫出一角折叠油纸，内侧残粉经银簪试验发黑，符合含砒类毒物反应；纸角有半枚淡红押印，与锦记外柜常用包货封角相同。该封角纸由外柜多名伙计共用，只能提示毒包来源范围，不能识别具体经手人。条案四面临空，纸上没有可辨认的指纹。"
         }
       ],
       "policy": "manual_public",
@@ -1242,7 +1664,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "更次簿今夜页：「戌时三刻，傅姑娘上，一刻下。戌时末，白灯匠上。亥时初，白灯匠下，柳二爷上。亥时二刻，柳二爷下，吩咐三楼今夜不待人。亥时三刻，麻掌柜欲上，被柳二爷劝回。子时，傅姑娘由后梯上。」——亥时初之后，三楼只进不去。"
+          "text": "更次簿今夜页记：“戌时三刻，傅姑娘上，一刻下；戌时末，白灯匠上；亥时初，白灯匠下，柳二爷上；亥时二刻，柳二爷下，并吩咐三楼今夜不待人；亥时三刻，麻掌柜欲上，被劝回；子时，傅姑娘由后梯上。”簿页是麻三娘所记，能给出出入与劝返时点；封楼究竟是常规清静安排还是为了拖延发现，须结合其他证词判断。"
         }
       ],
       "policy": "manual_public",
@@ -1257,7 +1679,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "柜台暗格里藏着柳承业常年寄存的信匣：外埠印子钱庄的流水底页，抬头俱盖「锦记外柜」私印；末页夹着一张字条：「总庄盘账在即，外柜必露，盘前须清。」——柳承业的笔迹。"
+          "text": "柜台暗格里有柳承业常年寄存的信匣：外埠印子钱庄的流水底页，抬头俱盖“锦记外柜”私印；末页夹条“总庄盘账在即，外柜必露，盘前须清”，笔迹经店中账房辨认为柳承业。信匣证明他与外柜往来并担心盘账，不能单独证明亏空金额或杀人。"
         }
       ],
       "policy": "manual_public",
@@ -1317,11 +1739,78 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "柴叔寄存柜上的账匣里，压着傅锦堂的手令：「正月二十盘总库，内账外账一并盘。」账匣底下另有柴叔自己一本没上总账的「贴己流水」——三十年老管家，手上也有见不得总账的一页。"
+          "text": "柴叔寄存柜上的账匣压着傅锦堂手令：“正月二十盘总库，内账外账一并盘。”账匣底下另有柴叔自己一本未上总账的贴己流水。手令确定盘账日期；贴己流水说明店内不止一人有账目压力，盘账本身不能单独锁定柳承业。"
         }
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fating_yanshi",
+      "locationId": "location_1",
+      "name": "仵作复验与酒样检验",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "次日由县衙仵作复验：傅锦堂的体温、尸斑推算死亡约在亥时一刻至三刻（21:15—22:30）；血样和胃内容物检出高剂量砒类成分，足以致命。酒壶残液也检出相同成分，楼下酒坛封泥内外样本未检出。此检验独立确认毒物经酒壶进入，并给出死亡时间范围；不能说明何时、由谁下毒。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "tiaowan_zhengci",
+      "locationId": "location_2",
+      "name": "柜台与上楼目击口供",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "麻三娘口述：亥时初她见柳承业在楼梯口条案边背对柜台停留片刻，当时以为他在等酒。白子安另述：同一时段下楼时与柳错身，看见柳提一只壶嘴滴酒的满壶上楼。两人的视角、时点各自独立；都没看见投毒动作，且楼梯口条案是共用区域。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "masanniang",
+        "baizian"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fenglou_koubei",
+      "locationId": "location_2",
+      "name": "三楼封楼值守口供",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "当夜值守伙计口述：亥时二刻柳承业下楼后吩咐“东家吃多了，三楼今夜不待人”，并让他把后梯门拴上；有人来问也先挡回去。平日东家饮酒后偶尔也会清静歇息，故这项职责本身有正当解释；但此令确实使傅月娥直到子时才上楼发现父亲。口供证明谁下令及其造成的延迟，不证明下令者当时知道酒中有毒。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "liuchengye"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "waigui_zhangfang",
+      "locationId": "location_2",
+      "name": "外柜账房的盘账证词",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "外柜老账房补述：柳承业经手的印子钱往来有数笔未入总账，账面银两与钱庄回单对不上；他曾让账房“盘总库前把外柜先清一遍”。账房只经手登记，不知道银两最终去向；此证词与信匣流水、傅锦堂的盘账手令相互核对，支持柳面临查账压力，但不单独证明贪污或杀人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "liuchengye"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -1635,20 +2124,40 @@
       {
         "id": "evidence_1",
         "clueIds": [
+          "yageshishen",
+          "fating_yanshi",
           "youtiyaobao",
-          "yageshishen"
+          "tiaowan_zhengci"
         ],
-        "conclusion": "死者银簪探残酒即黑、面青指甲青，是鹤顶红入腹之相；而酒坛封泥完好，毒不在坛中——楼梯口条案缝里的油纸药包残粉遇银发黑、且留有'锦记外柜'专用押角，说明毒是在酒提上楼之前、由带外柜封角的人弹入现打的贺灯酒壶里的。"
+        "conclusion": "雅阁酒壶银簪反应、仵作对尸体/胃内容物与壶液的检验、条案油纸残粉彼此支持鹤顶红经壶入腹；楼下酒坛样本无毒。白子安另称柳承业提着一只满壶上楼，补出污染壶在分酒后被带上楼的时序。实物、检验和目击共同支持毒物来源与投毒范围，不识别投毒者。"
       },
       {
         "id": "evidence_2",
         "clueIds": [
           "gengcibu",
-          "yehangchuan",
-          "guizhongxinxia",
-          "yageshishen"
+          "tiaowan_zhengci",
+          "youtiyaobao"
         ],
-        "conclusion": "更次簿一笔一笔记着'亥时初柳二爷上、亥时二刻下、吩咐三楼今夜不待人'——投毒时窗与拖延发现的手法俱在其身；河埠头又泊着连夜双倍船钱雇定的快船、账箱新封条未干，预谋退路坐实蓄意杀人。"
+        "conclusion": "更次簿记柳承业亥时初上楼；麻三娘在条案边见他停留，白子安随后见他提满壶上楼；条案发现有毒油纸。登记、两份独立目击和实物残留支持投毒时窗与机会，但谁把毒粉放进壶仍须结合动机及账目核验。"
+      },
+      {
+        "id": "evidence_3",
+        "clueIds": [
+          "gengcibu",
+          "fenglou_koubei",
+          "fating_yanshi"
+        ],
+        "conclusion": "更次簿及值守伙计口供说明柳承业下楼后下令封楼、后梯上闩；仵作给出死亡范围，傅月娥子时才上楼发现。封楼客观造成发现延迟，但“东家饮酒后清静休息”仍是职责竞争解释，不能单凭封楼定为凶手。"
+      },
+      {
+        "id": "evidence_4",
+        "clueIds": [
+          "guizhongxinxia",
+          "pankushouling",
+          "waigui_zhangfang",
+          "youtiyaobao"
+        ],
+        "conclusion": "信匣流水、盘账手令和账房口述跨材料显示柳承业经手的外柜款项有未入总账之处，盘账日期迫近；油纸封角来自他管理的外柜包装体系。材料支持查账压力和可能的毒包来源，但外柜纸由多人共用，不能单独证明他下毒。"
       }
     ],
     "redHerrings": [
@@ -1720,7 +2229,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": false,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "毒酒与投毒窗口",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先分开确认酒壶是否有毒、毒从酒壶进入、毒包来源与谁有机会接近壶。银簪发黑及外柜封角都不是个人指纹；必须结合不同来源的目击与独立仵作检验。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "封楼延迟与盘账动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "核对更次簿、三楼封楼口供、发现时间和盘账资料，分别判断封楼是否造成延迟、柳承业是否面临账目追查，以及这些事实是否足以证明他下毒。职责行为保留正常经营的竞争解释。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1743,6 +2276,90 @@
             "text": "柳承业把鹤顶红弹进了贺灯酒里，又把满楼的隐情——月娥的狠话、白子安的提亲、何百川的拍桌、柴叔的流水——全变成了替他挡风的影子。灯市散了，快船走了，傅锦堂的账，只能等河埠头的水慢慢冲淡。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开局说明傅锦堂死于雅阁，白瓷壶残酒和上元酒坛均在现场；不要提前宣布具体毒物或投毒者。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮保证 yageshishen、fating_yanshi、youtiyaobao、gengcibu、tiaowan_zhengci、zoumadengjiapa；先分开毒物与包装来源，再建立投毒窗口。第2轮保证 fenglou_koubei、guizhongxinxia、yehangchuan、tuihuidgengtie、pankushouling、waigui_zhangfang；逐步公开封楼后果、账目背景和其他人的动机。12条卡均列入兜底，恰为6人×2轮上限。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别讨论毒物是否经酒壶进入、药包来自何处、谁接近过分酒位置、封楼造成的发现延迟、外柜账目动机。酒楼管事职责、共用封角纸和私人楼层清静安排都保留竞争解释。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "指认柳承业时至少跨用仵作/实物、独立目击/更次记录和账目来源；要求回应“只是等酒”和“按职责封楼”两条辩解，不得把职责或动机直接当成投毒证明。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把银簪发黑或油纸封角当成柳承业的个人指纹。",
+        "hint": "指出外柜封角纸由多人共用；请结合麻三娘、白子安的独立目击和仵作检验。"
+      },
+      {
+        "condition": "玩家认为封楼必定是灭口手段。",
+        "hint": "先确定更次簿和伙计口述能证明的时间与指令，再看尸检死亡窗和傅月娥发现时间；允许“饮酒后清静休息”的职责解释。"
+      },
+      {
+        "condition": "玩家只凭外柜亏空动机定凶。",
+        "hint": "提醒账房口述只证明账目不合与盘账压力；要求另找投毒窗口和毒物链。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yageshishen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fating_yanshi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "youtiyaobao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "gengcibu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "tiaowan_zhengci",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zoumadengjiapa",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "guizhongxinxia",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yehangchuan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "tuihuidgengtie",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "pankushouling",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "fenglou_koubei",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "waigui_zhangfang",
+        "deadlineRound": 2
       }
     ]
   }

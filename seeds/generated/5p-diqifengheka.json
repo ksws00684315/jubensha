@@ -697,34 +697,38 @@
         ],
         "defenseHooks": [
           {
-            "id": "defense_search",
-            "claim": "那部旧手机和账号曾用于班级群设备，浏览页只能证明有人查过，不能证明是谁查的或为什么查。",
-            "basis": "手机没有排他性归属证明，搜索记录也没有留下实际用药或投放行为。",
-            "brokenByPublicClueIds": [
-              "shouji_sousuo",
-              "diancan_cungen",
-              "jizhen_jilu"
-            ]
+            "id": "defense_unaware",
+            "claim": "我当晚不知道郑国栋服用头孢，也没听到他提药；旧手机的搜索不能证明是我本人查的。",
+            "basis": "手机曾用于班级群设备，搜索页本身不能识别操作者；但多人证词可能反驳我没听见用药。",
+            "brokenWhen": {
+              "allPublicClueIds": [
+                "shouji_sousuo",
+                "fuwuyuan_zhengci"
+              ]
+            }
           },
           {
-            "id": "defense_group_drink",
-            "claim": "我替大家签了酒水单，之后多人斟酒、起哄；安排饮料不等于知道头孢风险或强迫班长喝下。",
-            "basis": "点单只记录整桌饮料，未记录各杯的斟酒人和具体饮用量。",
-            "brokenByPublicClueIds": [
-              "diancan_cungen",
-              "huanjiu_bianqian",
-              "yaohe_xiaopiao"
-            ]
+            "id": "defense_no_pressure",
+            "claim": "我只是替全桌签了酒水单，没有在得知头孢后继续催郑国栋喝酒。",
+            "basis": "酒水单不记录谁给他斟酒；证人对原话的记忆仍可质疑，但有独立陈述可核验。",
+            "brokenWhen": {
+              "allPublicClueIds": [
+                "diancan_cungen",
+                "huanjiu_bianqian",
+                "fuwuyuan_zhengci"
+              ]
+            }
           },
           {
-            "id": "defense_old_records",
-            "claim": "档案显示我获益、郑国栋经手改表，但没有证据证明我本人动过志愿表；贺卡也没点名指责谁。",
-            "basis": "复核页没有赵凯签字，贺卡只说明郑国栋想道歉，旧事责任链并不完整。",
-            "brokenByPublicClueIds": [
-              "zhiyuan_dangan",
-              "chengji_didan",
-              "diqifengheka"
-            ]
+            "id": "defense_no_benefit",
+            "claim": "我没有占用林素芬的保送名额，是普通统考入学，与那份改动后的档案没有受益关系。",
+            "basis": "原表经手栏写的是郑国栋而非我；档案流向和实际报到身份仍可分别核对。",
+            "brokenWhen": {
+              "allPublicClueIds": [
+                "zhiyuan_dangan",
+                "zhongshi_baodaoce"
+              ]
+            }
           }
         ]
       }
@@ -1425,9 +1429,7 @@
             "disclosure": "conditional",
             "condition": "当车里那半页红章复印件被搜出、或公文包里缺的两页被追问时，认下偷拆偷抽的事，把'想研究保送门道'的原话说出口。",
             "trigger": {
-              "publicClueIds": [
-                "hongzhang_canhou"
-              ]
+              "publicClueIds": []
             }
           }
         ],
@@ -1788,17 +1790,15 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "郑国栋帆布包里有一封未寄出的贺卡：“素芬同学，前六封你都收到了。第七封，我想当着大家的面把欠你的那句话说完。”信中没有写明旧事细节，也没有点出任何人的责任；信纸边缘有反复折叠的痕迹。"
+          "text": "郑国栋帆布包里有一封未寄出的贺卡：“素芬同学，前六封你都收到了。第七封，我想当着大家的面把欠你的那句话说完。”信中没有写明旧事细节，也没有点出任何人的责任；信纸边缘有反复折叠的痕迹。 同一封存包内附郑国栋手机的会后提取页：20:58陈曼问“国栋，你想清楚了？”，21:02郑国栋回“今晚过后，一身轻松”；更早的对话中，他发过六张除夕贺卡照片，说第七封要当面念。聊天只说明两人的约定，不指认下药者。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": [],
       "release": {
         "round": 2,
-        "afterCluePublicIds": [
-          "liaotian_jilu"
-        ]
+        "afterCluePublicIds": []
       }
     },
     {
@@ -1809,7 +1809,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "林素芬挎包夹层里有一张折成方块的1995年毕业考成绩底单：总分589，全年级第一，高于当年县师范保送划线。背面有褪色字迹：“爸，等我拿到通知书，咱家就熬出头了。”它证明她当年有资格，却不能单独说明名额为何变更。"
+          "text": "林素芬挎包夹层里有一张折成方块的1995年毕业考成绩底单：总分589，全年级第一，高于当年县师范保送划线。背面有褪色字迹：“爸，等我拿到通知书，咱家就熬出头了。”它证明她当年有资格，却不能单独说明名额为何变更。 这份个人成绩记录与教育局扫描页的录取条件可相互核对，但不揭示改表者。"
         }
       ],
       "policy": "manual_public",
@@ -1831,7 +1831,7 @@
           "text": "赵凯座位缝里找到一部旧手机，浏览记录分散在一周内，涉及头孢与酒精相互作用、相关急救和聚会拒酒话术；页面没有搜索“致死”“判例”等字样。手机账号也曾用于工作室的班级群设备，设备归属尚需核实。它显示有人查过药物风险，不足以证明搜索者身份、意图或实际用药。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": [],
       "release": {
@@ -1839,25 +1839,6 @@
         "afterCluePublicIds": [
           "diancan_cungen"
         ]
-      }
-    },
-    {
-      "id": "liaotian_jilu",
-      "locationId": "location_1",
-      "name": "手机里的聊天记录",
-      "category": "digital",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "死者手机（未锁）摊在桌上，与备注为曼的对话：20:58 陈曼：国栋，你想清楚了？21:02 郑国栋：今晚过后，一身轻松。更早的记录里，他连发六张除夕贺卡的照片，说：第六封了，第七封我想当面念。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": [],
-      "release": {
-        "round": 2,
-        "afterCluePublicIds": []
       }
     },
     {
@@ -1882,25 +1863,6 @@
       }
     },
     {
-      "id": "hongzhang_canhou",
-      "locationId": "location_3",
-      "name": "车里的红章残页",
-      "category": "document",
-      "content": [
-        {
-          "type": "paragraph",
-          "text": "高鹏车内副驾烟灰缸下压着一页档案复印件，标题为《关于九五届保送生资格复核的函》，有县教育局档案室红章，正文缺失。公文包里对应位置少了两页；这能证明材料被取走，不能说明取走人为何拿走，也不能还原改表责任。"
-        }
-      ],
-      "policy": "manual_public",
-      "relatedCharacterIds": [],
-      "relatedTruthEventIds": [],
-      "release": {
-        "round": 2,
-        "afterCluePublicIds": []
-      }
-    },
-    {
       "id": "jizhen_jilu",
       "name": "急救交接记录",
       "category": "document",
@@ -1911,7 +1873,7 @@
           "text": "急救交接单及医院检验回报：郑国栋约20:55后饮用白酒，21:18出现面部潮红、恶心、呕吐及血压下降；血液检出酒精和头孢相关成分。医院结合用药史与检查结果，判定为双硫仑样反应。记录能确认服药、饮酒与死亡之间的因果关系，不能鉴定是谁安排酒水或劝酒。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [
         "zhao_kai"
       ],
@@ -1925,15 +1887,63 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "县教育局旧档案的复核扫描件：林素芬原始志愿为县师范，归档底册改为县财校；变更经手栏只有当年班主任郑国栋的签名，名额最终录入赵凯。附件备注称当年复核未查到赵凯本人签字或申请。材料能说明名额流向与流程疑点，不足以证明赵凯亲手改表。"
+          "text": "县教育局旧档案复核扫描件：林素芬原始志愿为县师范，归档底册后改为县财校；变更经手栏只有当年班主任郑国栋的签名，名额最终录入赵凯。附件未见赵凯本人签字或申请。此扫描页显示改表结果和利益流向；另由县师范原始报到名册核验其确以该保送名额入学。材料能证明受益与档案流向，不能证明赵凯亲手改表。"
         }
       ],
-      "policy": "manual_public",
+      "policy": "auto_public",
       "relatedCharacterIds": [
         "lin_sufen",
         "zhao_kai"
       ],
-      "relatedTruthEventIds": []
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2
+      }
+    },
+    {
+      "id": "fuwuyuan_zhengci",
+      "name": "服务员与同桌的分别陈述",
+      "category": "testimony",
+      "locationId": "location_2",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "急救后，包厢服务员和陈曼分别向警方作了笔录，二人此前没有互相核对说法。服务员称20:48听见郑国栋提到自己在吃头孢，赵凯随即回应“药不差这一会儿”，又举杯说“最后三杯，不喝不给面子”；陈曼也独立记得赵凯拿着药盒说过“药不差这一会儿”，并催郑国栋饮酒。两份笔录支持赵凯当时知道用药并主动施压，但不是录音，不能单独证明他想致死。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "zhao_kai",
+        "chen_man"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 1,
+        "afterCluePublicIds": []
+      }
+    },
+    {
+      "id": "zhongshi_baodaoce",
+      "name": "县师范学校报到名册摘录",
+      "category": "document",
+      "locationId": "location_1",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "县师范学校保存的1995级新生报到名册经档案室核验：赵凯以“保送”类别报到，名册注明名额来源为县一中；同届普通统考录取名单中没有他的姓名。该校原始名册与教育局志愿复核扫描件由不同单位保存，交叉确认赵凯实际占用了争议名额。它证明受益关系，不证明他本人改写志愿表或何时得知改动。"
+        }
+      ],
+      "policy": "auto_public",
+      "relatedCharacterIds": [
+        "zhao_kai"
+      ],
+      "relatedTruthEventIds": [],
+      "release": {
+        "round": 2,
+        "afterCluePublicIds": [
+          "zhiyuan_dangan"
+        ]
+      }
     }
   ],
   "truth": {
@@ -1941,14 +1951,14 @@
     "motive": [
       {
         "type": "paragraph",
-        "text": "旧档案显示名额最终录入赵凯，而经手变更的签名属于郑国栋；赵凯从这份旧事中获益，并担心档案重查影响家人前途。第七封贺卡则呈现郑国栋迟来的道歉意愿，以及他与林素芬、陈曼之间未说完的情感。旧档案解释利害，贺卡解释今晚的情感张力，两者都不能单独证明杀人。"
+        "text": "教育局档案复核页与县师范原始报到名册分别证明赵凯从争议保送名额中受益；经手改表者仍是郑国栋，公开材料不证明赵凯亲手改表。郑国栋准备公开道歉的贺卡构成当晚压力背景。"
       }
     ],
     "method": {
       "summary": [
         {
           "type": "paragraph",
-          "text": "赵凯提出把果茶换成白酒，并在众人起哄时拿郑国栋的药盒说“药不差这一会儿”，但换酒本身、头孢是否及时服用、饮酒量和实际死因是不同问题。急救记录与医疗检验共同支持药物和酒精相互作用致死；点单与服务生记忆只能复原换酒经过。赵凯的旧手机搜索不能单独证明其身份或杀人意图，旧志愿档案和第七封贺卡则分别提供历史利益与情感背景。"
+          "text": "赵凯在郑国栋提到头孢后仍安排并催促饮酒。急救/医院材料确认头孢与酒精相互作用致死；独立证词、手机风险搜索和点单行动共同支持他知道风险且主动促酒。点单与传菜口只还原换酒，不证明谁斟了每杯。旧档案扫描与学校报到名册证明他受益，但不证明他亲手改表。"
         }
       ],
       "steps": [
@@ -1996,18 +2006,20 @@
         },
         {
           "id": "method_step_4",
-          "title": "核对赵凯的风险认知和动机",
+          "title": "核对赵凯的风险认知和旧名额利益",
           "content": [
             {
               "type": "paragraph",
-              "text": "赵凯旧手机出现药物风险查询，但设备及搜索者仍需核实，搜索只证明有人查过。旧档案显示名额流向赵凯而改表经手人为郑国栋；第七封贺卡保留了郑国栋准备道歉的情感线索。把这些材料与赵凯公开施压饮酒的行动合看，才能判断其动机与计划。"
+              "text": "赵凯旧手机浏览过药物风险，但设备归属有争议；服务员与陈曼分别记得他在提到头孢后说“药不差这一会儿”并催饮，独立支持他知道风险且主动促酒。教育局档案扫描显示改表结果流向赵凯，县师范原始报到册又确认他以保送名额入学；两项证据证明受益关联而非他亲手改表。与点单和医疗记录交叉后可判断其行为意图。"
             }
           ],
           "clueIds": [
             "shouji_sousuo",
+            "fuwuyuan_zhengci",
+            "diancan_cungen",
             "zhiyuan_dangan",
-            "diqifengheka",
-            "diancan_cungen"
+            "zhongshi_baodaoce",
+            "chengji_didan"
           ]
         }
       ]
@@ -2179,16 +2191,12 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "郑国栋碍于面子连干三杯，林素芬"
+            "text": "郑国栋碍于面子连干三杯。"
           }
         ],
-        "characterIds": [
-          "lin_sufen"
-        ],
+        "characterIds": [],
         "clueIds": [],
-        "participantIds": [
-          "lin_sufen"
-        ]
+        "participantIds": []
       },
       {
         "id": "truth_event_8",
@@ -2200,16 +2208,20 @@
             "time": "20:58"
           }
         },
-        "title": "回包厢喊你在吃头孢",
+        "title": "林素芬回包厢提醒郑国栋正在服用头孢",
         "content": [
           {
             "type": "paragraph",
-            "text": "回包厢喊你在吃头孢，为时已晚。"
+            "text": "林素芬回包厢提醒郑国栋正在服用头孢，但此时他已经饮酒。"
           }
         ],
-        "characterIds": [],
+        "characterIds": [
+          "lin_sufen"
+        ],
         "clueIds": [],
-        "participantIds": []
+        "participantIds": [
+          "lin_sufen"
+        ]
       },
       {
         "id": "truth_event_9",
@@ -2273,7 +2285,7 @@
             "time": "21:35"
           }
         },
-        "title": "王大力趁乱把三十年前的班费欠条塞回班长相…",
+        "title": "王大力整理班长相册",
         "content": [
           {
             "type": "paragraph",
@@ -2370,19 +2382,21 @@
         "id": "evidence_intent",
         "clueIds": [
           "shouji_sousuo",
+          "fuwuyuan_zhengci",
           "diancan_cungen",
           "jizhen_jilu"
         ],
-        "conclusion": "旧手机显示有人查过药物风险，点单存根确认赵凯安排了酒水，急救记录则确认饮酒与发病的时间关系。三者结合可检验其行为是否有预谋；手机归属和搜索意图都不能由搜索页单独下结论。"
+        "conclusion": "旧手机搜索与两名分别作出的陈述提供风险认知的不同来源；陈述称赵凯在头孢被提及时仍说“药不差这一会儿”并催酒，点单存根确认他安排酒水，急救记录确认饮酒、服药与发病相衔接。搜索记录不能单独识别搜索者，证词也不是录音；交叉后可检验其明知风险仍主动促酒的行为。"
       },
       {
         "id": "evidence_motive",
         "clueIds": [
           "zhiyuan_dangan",
+          "zhongshi_baodaoce",
           "chengji_didan",
           "diqifengheka"
         ],
-        "conclusion": "复核页与成绩底单说明林素芬原本达到保送条件、名额后来流向赵凯；第七封贺卡显示郑国栋准备向她道歉。它们解释赵凯的利益和当晚的情感背景，却不能替代投放或促酒证据。"
+        "conclusion": "教育局复核扫描记录志愿变更后名额流向赵凯，县师范学校独立保存的报到名册确认他以保送身份实际入学，成绩底单可核对林素芬当年资格；这些材料交叉证明赵凯从改表结果中受益，但未证明他亲手改表。第七封贺卡及附页聊天呈现郑国栋准备道歉的背景。"
       }
     ],
     "redHerrings": [
@@ -2398,37 +2412,13 @@
             "text": "林素芬的药店小票与成绩底单"
           }
         ]
-      },
-      {
-        "id": "red_herring_3",
-        "clueIds": [
-          "liaotian_jilu"
-        ],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "陈曼的暧昧微信"
-          }
-        ]
-      },
-      {
-        "id": "red_herring_4",
-        "clueIds": [
-          "hongzhang_canhou"
-        ],
-        "explanation": [
-          {
-            "type": "paragraph",
-            "text": "高鹏抽走的红章残页。"
-          }
-        ]
       }
     ],
     "supplemental": [],
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相是赵凯借同学会公开压力，促成郑国栋在服用头孢后饮酒。签单、传菜口便签和多人回忆各自只覆盖一段换酒过程；头孢药盒、急救记录与最终检验分开说明用药、发病和死因。赵凯旧手机上的搜索给出风险认知的线索，仍须与他安排酒水、当众谈药盒的行动互证。旧志愿档案说明他因名额获益，贺卡则保留郑国栋迟来的道歉，以及素芬与陈曼各自等待的那句话。证据揭示了责任，也留下了三十年友情和感情无法由投票抹平的余波。"
+        "text": "真相是赵凯明知郑国栋在服用头孢，仍推动撤茶上酒，并在当众听见用药后以“药不差这一会儿”和同学情面催他继续喝。急救和医院材料确认双硫仑样反应致死；点单、传菜口便签只复原换酒，服务员与陈曼的分别陈述、旧手机搜索和赵凯的安排行为交叉支持其风险认知与促酒。教育局档案复核页与县师范独立报到名册共同证明赵凯占用了争议保送名额，但没有材料证明他亲手改表。第七封贺卡和附页聊天留下的，是郑国栋迟来的道歉以及素芬与陈曼各自等待的话。"
       }
     ]
   },
@@ -2446,7 +2436,7 @@
         "brief": [
           {
             "type": "paragraph",
-            "text": "先公开药盒、急救记录、酒水单和传菜口便签。引导玩家分别复原谁提出换酒、谁知道用药、何时出现症状；不要把任何一项直接等同于谋杀。"
+            "text": "先核实药盒与急救记录中的基础事实。点单、换酒便签和分别陈述可由持有者保留到下一轮，逐步交叉核对知情与促酒行为。"
           }
         ]
       },
@@ -2457,9 +2447,63 @@
         "brief": [
           {
             "type": "paragraph",
-            "text": "公开旧档案复核页、成绩底单、贺卡和手机搜索页。对照档案与情感关系，确认赵凯的利害与风险认知；留时间让素芬和陈曼回应郑国栋迟来的道歉。"
+            "text": "对照风险认知和旧事利益材料，补齐仍缺失的关键证据。第七封贺卡公开后，林素芬和陈曼将在本轮讨论结束时分别作出自己的选择。"
           }
         ]
+      }
+    ],
+    "interactionBeats": [
+      {
+        "id": "lin_apology",
+        "round": 2,
+        "timing": "after_discussion",
+        "characterId": "lin_sufen",
+        "prompt": "第七封贺卡已经公开。面对迟到的道歉，林素芬愿意如何回应？",
+        "choices": [
+          {
+            "id": "accept",
+            "label": "接受迟到的道歉",
+            "recap": "选择接受这份迟到的道歉。"
+          },
+          {
+            "id": "refuse",
+            "label": "拒绝原谅",
+            "recap": "明确选择不原谅。"
+          },
+          {
+            "id": "wait",
+            "label": "暂不回应",
+            "recap": "选择暂不回应，把决定留给自己。"
+          }
+        ],
+        "defaultChoiceId": "wait",
+        "visibility": "public"
+      },
+      {
+        "id": "chen_words",
+        "round": 2,
+        "timing": "after_discussion",
+        "characterId": "chen_man",
+        "prompt": "第七封贺卡已经公开。陈曼是否愿意说出自己等了许久的话？",
+        "choices": [
+          {
+            "id": "speak",
+            "label": "说出自己等待的话",
+            "recap": "选择说出自己一直等待的话：愿迟来的交代终于被听见。"
+          },
+          {
+            "id": "secret",
+            "label": "继续保守秘密",
+            "recap": "选择继续保守自己的秘密。"
+          },
+          {
+            "id": "silent",
+            "label": "保持沉默",
+            "recap": "选择保持沉默，尚未表达接受或拒绝。"
+          }
+        ],
+        "defaultChoiceId": "silent",
+        "visibility": "public"
       }
     ]
   },
@@ -2471,7 +2515,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "指认赵凯成功。玩家用药盒与急救记录判断死亡因果，用酒水单与传菜口便签复原换酒，再把旧手机风险查询与他的公开行为对照。档案复核页说明他从旧事获益，却没有替任何人完成全部定罪；第七封贺卡留下郑国栋向素芬道歉的心愿。素芬没有立刻原谅，陈曼也把那句迟到三十年的交代听完。"
+            "text": "赵凯被成功指认。众人交叉核对用药与死因、安排酒水与促酒、风险认知与利益流向，重建了行动链。第七封贺卡留下迟到的道歉。林素芬与陈曼如何回应，以本局记录的角色抉择为准；没有表态不等于原谅。"
           }
         ]
       },
@@ -2481,7 +2525,7 @@
         "content": [
           {
             "type": "paragraph",
-            "text": "赵凯没有被指认。众人无法把点单、药物风险和发病因果串成完整行动链；旧档案只说明名额流向，搜索页的归属也遭到质疑。第七封贺卡最终没有被当众读完，素芬和陈曼各自带走了没等到答案的那句话。"
+            "text": "赵凯未被成功指认。公开材料中的行为、风险认知和动机未能形成足够一致的指认。第七封贺卡留下迟到的道歉。林素芬与陈曼如何回应，以本局记录的角色抉择为准；没有表态不等于原谅。"
           }
         ]
       }
@@ -2495,15 +2539,15 @@
       },
       {
         "phase": "SEARCH",
-        "notes": "第一轮保证公开药盒、急救交接记录、酒水存根及传菜口便签；第二轮保证公开旧手机、档案复核页、成绩底单、第七封贺卡。主持人按轮次补齐关键材料，不要求角色主动交卡。"
+        "notes": "共10张材料，5人两轮容量正好用满。第一轮保证药盒、急救交接记录、点单存根、传菜口便签、服务员与陈曼分别作出的陈述；第二轮保证旧手机搜索、教育局档案复核页、成绩底单、第七封贺卡及附页聊天、县师范原始报到名册。必要时直接发卡或宣读，不依赖玩家搜到私人物品或角色自曝。"
       },
       {
         "phase": "DISCUSSION",
-        "notes": "逐项讨论：换酒是谁提出、头孢是否服用及何时服用、饮酒如何导致症状、谁从中获益。允许素芬与陈曼围绕贺卡和未说完的话展开情感互动。"
+        "notes": "逐项讨论：头孢服用、饮酒和死因；点单与斟酒边界；搜索和两名证词如何支持风险认知；改表流向与实际受益；最后再讨论贺卡和情感背景。证词不是录音，档案不证明赵凯亲手改表。"
       },
       {
         "phase": "VOTE",
-        "notes": "投票前确认至少使用一份医疗/急救材料、一份酒水或证词材料，以及旧档案或数字记录中的交叉证据；提醒搜索记录单独不能锁凶。"
+        "notes": "投票前要求至少交叉医疗材料、点单/传菜材料与独立陈述，并用教育局扫描件和学校报到名册核实受益关系。不得将点单、传菜口单证、单条搜索记录或单张档案直接等同于完整犯罪事实。"
       }
     ],
     "stallBreakers": [
@@ -2513,15 +2557,15 @@
       },
       {
         "condition": "玩家把手机搜索记录当成赵凯的直接认罪。",
-        "hint": "提示手机账号和设备归属尚待核实；让玩家再核对酒水单、传菜口记录和公开谈话。"
+        "hint": "搜索记录单独不能锁定操作者。请对照服务员与陈曼分别作出的陈述：他们是否独立记得赵凯听到头孢后仍说“药不差这一会儿”并催酒；再结合点单与急救材料。"
       },
       {
         "condition": "玩家只争论1995年谁改了志愿表。",
-        "hint": "档案说明名额流向及经手人，不等于当晚杀人；请回到赵凯安排酒水的行动与死者发病时间。"
+        "hint": "教育局档案扫描与县师范独立报到名册可确认赵凯受益，但不证明他亲手改表。请将旧利害与当晚风险认知、点单、促酒证词分别核验。"
       },
       {
         "condition": "情感互动被证据讨论挤掉。",
-        "hint": "请主持人给素芬和陈曼各留一轮回应第七封贺卡：她们等待的道歉并不相同。"
+        "hint": "请主持人给素芬和陈曼各留一轮回应第七封贺卡及附页聊天：她们等待的道歉并不相同。"
       }
     ],
     "guaranteedPublicClues": [
@@ -2535,11 +2579,15 @@
       },
       {
         "clueId": "diancan_cungen",
-        "deadlineRound": 1
+        "deadlineRound": 2
       },
       {
         "clueId": "huanjiu_bianqian",
-        "deadlineRound": 1
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "fuwuyuan_zhengci",
+        "deadlineRound": 2
       },
       {
         "clueId": "shouji_sousuo",
@@ -2550,15 +2598,11 @@
         "deadlineRound": 2
       },
       {
-        "clueId": "chengji_didan",
+        "clueId": "zhongshi_baodaoce",
         "deadlineRound": 2
       },
       {
         "clueId": "diqifengheka",
-        "deadlineRound": 2
-      },
-      {
-        "clueId": "liaotian_jilu",
         "deadlineRound": 2
       }
     ]

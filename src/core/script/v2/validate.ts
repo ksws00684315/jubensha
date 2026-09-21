@@ -141,7 +141,10 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
       }
     }
     for (const [dIndex, hook] of character.privateCard.defenseHooks.entries()) {
-      checkRefs(issues, hook.brokenByPublicClueIds, clueIds, `characters.${index}.privateCard.defenseHooks.${dIndex}.brokenByPublicClueIds`);
+      checkRefs(issues, hook.brokenWhen?.allPublicClueIds ?? [], clueIds, `characters.${index}.privateCard.defenseHooks.${dIndex}.brokenWhen.allPublicClueIds`);
+      checkRefs(issues, hook.brokenWhen?.anyPublicClueIds ?? [], clueIds, `characters.${index}.privateCard.defenseHooks.${dIndex}.brokenWhen.anyPublicClueIds`);
+      if (!hook.brokenByPublicClueIds?.length && !hook.brokenWhen?.allPublicClueIds?.length && !hook.brokenWhen?.anyPublicClueIds?.length) issue(issues, "error", `characters.${index}.privateCard.defenseHooks.${dIndex}`, "辩解必须有击破条件");
+      checkRefs(issues, hook.brokenByPublicClueIds ?? [], clueIds, `characters.${index}.privateCard.defenseHooks.${dIndex}.brokenByPublicClueIds`);
     }
     if (!character.privateCard.isCulprit && character.privateCard.defenseHooks.length) {
       issue(issues, "warning", `characters.${index}.privateCard.defenseHooks`, "通常只为真凶配置辩解钩子；请确认这不是误填");
@@ -176,9 +179,22 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
     visited.add(id);
   };
   for (const id of releaseGraph.keys()) walkRelease(id, []);
+  checkUniqueIds(issues, doc.flow.interactionBeats ?? [], "flow.interactionBeats");
+  for (const [i, beat] of (doc.flow.interactionBeats ?? []).entries()) {
+    checkRefs(issues, [beat.characterId], characterIds, `flow.interactionBeats.${i}.characterId`);
+    checkUniqueIds(issues, beat.choices, `flow.interactionBeats.${i}.choices`);
+    if (!beat.choices.some((choice) => choice.id === beat.defaultChoiceId)) issue(issues, "error", `flow.interactionBeats.${i}`, "默认选项不存在");
+    if (beat.round > doc.flow.discussionRounds) issue(issues, "error", `flow.interactionBeats.${i}`, "互动轮次超过讨论轮数");
+  }
+  const guaranteedIds = new Set<string>();
   for (const [index, item] of (doc.hostGuide?.guaranteedPublicClues ?? []).entries()) {
+    if (guaranteedIds.has(item.clueId)) issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}`, "重复保证公开材料");
+    guaranteedIds.add(item.clueId);
     if (!clueIds.has(item.clueId)) issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.clueId`, `线索不存在: ${item.clueId}`);
     const clue = doc.clues.find((c) => c.id === item.clueId);
+    if (clue?.policy === "manual_public" && item.deadlineRound === (clue.release?.round ?? 1)) {
+      issue(issues, "warning", `hostGuide.guaranteedPublicClues.${index}.deadlineRound`, "没有有效私藏窗口：请改为 auto_public、延后截止轮次或取消保证");
+    }
     if (clue?.policy === "keep_private") issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}.clueId`, "keep_private 线索不能配置为主持保证公开");
     if (item.deadlineRound > doc.flow.searchRounds) issue(issues, "warning", `hostGuide.guaranteedPublicClues.${index}.deadlineRound`, `截止轮次(${item.deadlineRound})超过搜证轮数(${doc.flow.searchRounds})`);
     if (clue?.release?.round !== undefined && clue.release.round > item.deadlineRound) {

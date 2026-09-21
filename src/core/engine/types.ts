@@ -13,6 +13,9 @@ export interface PlayerActionPlan {
   targetSeat: number | null;
   discloseClueIds: string[];
   holdClueIds: string[];
+  focusEvidenceIds?: string[];
+  claimSummary?: string | null;
+  defenseHookId?: string | null;
   nextAction: "state" | "ask" | "defend" | "probe" | "exchange" | "wait";
 }
 
@@ -74,7 +77,7 @@ export interface GameState {
   /** 讨论阶段每人剩余提问次数 */
   questionsLeft: Record<string, number>;
   /** 等待被提问者当众回答 */
-  pendingAnswer: { fromSeat: number; toSeat: number; question: string; evidenceIds?: string[]; forced?: boolean } | null;
+  pendingAnswer: { questionId?: string; fromSeat: number; toSeat: number; question: string; evidenceIds?: string[]; forced?: boolean } | null;
   /** 每轮行动点（座位索引字符串 → 剩余点；技能系统开启时由阶段流转重置） */
   actionPoints?: Record<string, number>;
   /** 已用过的 once 技能（键 `${seat}:${skillId}`，整局有效） */
@@ -101,11 +104,14 @@ export interface GameState {
   suggestions?: Record<string, string[]>;
   /** 每座位最近一次正式发言计划；仅作为运行时提示，不能直接改变游戏状态。 */
   actionPlans?: Record<string, PlayerActionPlan>;
+  pendingInteraction?: { beatId: string; seatIndex: number; deadlineAt?: number } | null;
+  interactionChoices?: Record<string, { seatIndex: number; choiceId: string; round: number; skipped?: boolean }>;
+
 }
 
 export interface EngineEvent {
   seq: string;
-  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer";
+  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer" | "interaction";
   phase: Phase;
   round: number;
   fromSeat: number | null;

@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "把死亡钉死在「帮主醉后查仓失足」上。水程簿那三行字要变成「受潮洇了」——你有账房钥匙，有灯油，有袖子。若有人提赏酒，反问「帮主赏弟兄的酒，谁敢不喝」，顺势把铁锁钉在「守夜贪杯」上。口供咬死「子时初上船回报票信，未见帮主」——舱底黑的，谁看得见谁？你时辰的缝里站满了人：铁锁醉着，郑朝奉陪着你，计多星不敢开口。"
+                "text": "把帮主之死解释成醉后落水，强调铁锁贪杯、计多星私押、郑朝奉改册各有问题；可以承认二舵爷按规矩代散赏酒和自己上过船，但要求区分职务、物证与亲手下药/杀人。若水程簿被翻出，质疑它由计多星书写；若靴印被提起，提出借靴和共用鞋的可能，并追问是否有独立目击。不要否认能由不同材料核实的事实。"
               }
             ],
             "priority": "primary"
@@ -281,7 +281,95 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_qilianbo_award_wine",
+            "claim": "赏夜酒是帮里常例，二舵爷代散不等于我亲手把蒙汗药放进铁锁的壶；铁锁醉后记忆也不可靠。",
+            "basis": "帮规授权代散赏酒，壶中残末不能识别投药者，铁锁只记得递酒、随后昏沉。",
+            "brokenByPublicClueIds": [
+              "shouyejiuhu",
+              "tiesuo_kougong"
+            ]
+          },
+          {
+            "id": "defense_qilianbo_log_and_boot",
+            "claim": "水程簿是计多星记的，他有私押花押的把柄；黑油泥和靴印也只能证明有人穿这双共用靴到过船边。",
+            "basis": "水程簿并非独立目击，鞋靴可借穿，远处的灯影看不清脸。",
+            "brokenByPublicClueIds": [
+              "shuichengbu",
+              "qilianbo_ship_trace",
+              "langhuawenanxin",
+              "zheng_kouju"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qilianbo_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qilianbo_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "强调落水可被误作醉后失足，讨论赏酒与船上行动的证据边界。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qilianbo_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qilianbo_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应水程簿、靴印和铁锁口述，提出竞争解释并转问其他人的利益关系。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -461,7 +549,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "tiesuo_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tiesuo_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告一个本人知道的案发时间点，并明确区分亲见、传闻和推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "tiesuo_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tiesuo_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动核对至少两类公开材料，提出一项可查证的问题并处理自己的秘密或利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -650,7 +804,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "gaoxiaobo_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gaoxiaobo_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告一个本人知道的案发时间点，并明确区分亲见、传闻和推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "gaoxiaobo_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "gaoxiaobo_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动核对至少两类公开材料，提出一项可查证的问题并处理自己的秘密或利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -826,7 +1046,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "zhengzhaofeng_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhengzhaofeng_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告一个本人知道的案发时间点，并明确区分亲见、传闻和推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "zhengzhaofeng_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "zhengzhaofeng_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动核对至少两类公开材料，提出一项可查证的问题并处理自己的秘密或利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -978,7 +1264,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "caosanniang_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "caosanniang_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告一个本人知道的案发时间点，并明确区分亲见、传闻和推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "caosanniang_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "caosanniang_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动核对至少两类公开材料，提出一项可查证的问题并处理自己的秘密或利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1191,7 +1543,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "jiduoxing_act1_fact",
+                "title": "第一幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "尸体、夹仓和酒壶分别说明死因、货物问题和守夜状态。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiduoxing_act1_goal",
+                "title": "陈述案发事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "报告一个本人知道的案发时间点，并明确区分亲见、传闻和推断。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "jiduoxing_act2_fact",
+                "title": "第二幕材料边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "账册、口述、靴印和暗信所证明的内容不同，任何一项都可能有来源局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "jiduoxing_act2_goal",
+                "title": "交叉核验与回应",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "主动核对至少两类公开材料，提出一项可查证的问题并处理自己的秘密或利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1214,7 +1632,8 @@
           "type": "paragraph",
           "text": "栈桥木板被水汽浸得发滑，公房里一盏油灯未熄；官仓的米色册摊在案上，涂改的墨痕上盖着小小的私印，茶盏还温着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "zhengzhaofeng"
     },
     {
       "id": "location_3",
@@ -1224,7 +1643,8 @@
           "type": "paragraph",
           "text": "香堂账房里幔帐森然，案上水程簿翻在今夜那页，三次蘸写的墨色深浅不一；账房匣底压着旧条，窗口正对栈桥。"
         }
-      ]
+      ],
+      "ownerCharacterId": "qilianbo"
     },
     {
       "id": "location_4",
@@ -1234,7 +1654,8 @@
           "type": "paragraph",
           "text": "水手铺里通铺挤挤挨挨，褥子卷得松散；铺前地上搁着一支锡壶，壶身系着香堂的红绳，屋里一股酒气混着河腥气。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tiesuo"
     },
     {
       "id": "location_5",
@@ -1244,7 +1665,8 @@
           "type": "paragraph",
           "text": "桩船泊在芦苇荡深处，舱里香案供着河神，案下压得住薄物；舱口的灯早灭了，苇叶间只听得见水拍船帮的声音。"
         }
-      ]
+      ],
+      "ownerCharacterId": "caosanniang"
     },
     {
       "id": "location_6",
@@ -1254,7 +1676,8 @@
           "type": "paragraph",
           "text": "帮主舱房陈设简朴，案头压着手书草帖，朱笔圈了三圈；墙上挂着帮主的旧蓑衣，灯台里的油还剩小半。"
         }
-      ]
+      ],
+      "ownerCharacterId": "gaoxiaobo"
     }
   ],
   "clues": [
@@ -1262,11 +1685,11 @@
       "id": "cangdishishen",
       "locationId": "location_1",
       "name": "舱底尸身",
-      "category": "document",
+      "category": "medical",
       "content": [
         {
           "type": "paragraph",
-          "text": "雷震江面朝下伏于舱底积水，口鼻有黑泥水藻，指甲缝嵌着舱底青苔与麻絮——是活人被水呛的，不是磕晕；后脑无伤。舱口横着一支滑跌的船桨，他的酒葫芦滚在舱口、酒气冲鼻，「醉后失足」做得十足；腰间帮主花押袋还在——不为财。"
+          "text": "雷震江面朝下伏于舱底积水，口鼻有黑泥水藻，指甲缝嵌着舱底青苔与麻絮；后脑无致命伤。仵作复验认为他生前吸入积水，颈肩有挣扎性擦伤，支持被压入水中而非先撞晕后落水。酒葫芦滚在舱口、酒气明显，帮主花押袋仍在身上；尸检能说明死因和大致过程，不指认实施者。"
         }
       ],
       "policy": "auto_public",
@@ -1307,11 +1730,11 @@
       "id": "shouyejiuhu",
       "locationId": "location_4",
       "name": "守夜酒壶",
-      "category": "document",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "铁锁铺前的赏夜酒锡壶，壶底沉着褐色药末——蒙汗药；壶身系着香堂「赏」字红绳，而赏酒例由二舵爷代散。铁锁一夜睡死，全在这壶里。"
+          "text": "铁锁铺前的赏夜酒锡壶，壶底检出蒙汗药残末；壶身系香堂“赏”字红绳。帮规中赏酒通常由二舵爷代散，但这只能说明职责与物证，不证明谁亲手下药。铁锁饮后昏睡，需由其本人对送酒经过作证。"
         }
       ],
       "policy": "manual_public",
@@ -1326,7 +1749,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "水程簿今夜页：「亥时三刻，雷帮主上金满仓号，未下。子时初，戚二爷上。子时二刻，戚二爷下。」墨色分三次蘸写，是计多星亲笔——帮主上船之后，只有戚连波一人上下过那艘船。"
+          "text": "水程簿今夜页记：“亥时三刻，雷帮主上金满仓号，未下；子时初，戚二爷上；子时二刻，戚二爷下。”三段墨色、笔压和蘸墨间隔显示不是一次写成，账房香主计多星承认是他记的。簿页能证明有人如此记录，但计多星有私押花押的把柄，须以船上实物痕迹和芦苇荡目击交叉核验。"
         }
       ],
       "policy": "manual_public",
@@ -1391,6 +1814,55 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "tiesuo_kougong",
+      "locationId": "location_4",
+      "name": "铁锁醒后的口述",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "铁锁回忆：戚连波约亥时末把系红绳的锡壶递给他，说是帮主赏守夜弟兄的酒；他只喝了几口便发沉，之后断片。醒来后记得壶还在铺前，未看见是谁往里下药。口述能识别送酒者，药末检验另证壶中有蒙汗药；他的记忆不能证明投药动作由谁完成。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "tiesuo"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "qilianbo_ship_trace",
+      "locationId": "location_2",
+      "name": "戚连波靴底与跳板痕迹",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "戚连波常穿的黑布靴底新沾一层黑油泥和湿麻絮；金满仓号跳板边的半枚湿印，纹路、左跟缺口与靴底相合。船舱附近有同类油泥。鞋可被借穿，痕迹证明这双靴在船边活动，不能单独证明当时穿靴的人就是戚连波或实施了杀害。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "zheng_kouju",
+      "locationId": "location_2",
+      "name": "郑朝奉的公房口供",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "郑朝奉补述：子时二刻戚连波来公房“对票”，靴底湿黑，袖口有河腥气；他当时说帮主刚上金满仓号。郑朝奉承认自己正要对官仓米色册，和戚连波有利益往来，供词可能有自保动机。该口供可与水程簿、靴底/跳板痕迹和官票时刻核对，不能单独认定戚连波行凶。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "zhengzhaofeng"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -1707,18 +2179,21 @@
         "id": "evidence_1",
         "clueIds": [
           "yanyindidan",
-          "xiangtangdacao"
+          "xiangtangdacao",
+          "shouyejiuhu"
         ],
-        "conclusion": "盐引底单抬头有「浪里花」花押，正是戚连波的江湖号——帮主贴身收着的私盐命脉不知何时流入义子铺中，说明帮主已掌握水脊身份。"
+        "conclusion": "盐引底单上的浪里花花押及帮主清帮规草帖显示私盐线可能将受查；赏酒壶中另检出蒙汗药，且按帮规由二舵爷代散。文件、现场残留与职责相互补充，支持有人准备掩护行动，但不能只凭身份或酒壶认定戚连波。"
       },
       {
         "id": "evidence_3",
         "clueIds": [
+          "cangdishishen",
           "shuichengbu",
-          "shouyejiuhu",
-          "misese"
+          "qilianbo_ship_trace",
+          "langhuawenanxin",
+          "zheng_kouju"
         ],
-        "conclusion": "水程簿记「亥时三刻帮主上船未下，子时初戚二爷上，子时二刻戚二爷下」——帮主上船后只有戚连波一人上下过金满仓号，他独占了整个作案时间窗口。"
+        "conclusion": "尸检支持帮主生前在舱底被压入积水；水程簿记录戚连波在帮主登船后上、下船，靴底与跳板湿印相合；曹三娘的暗信和子夜灯灭影子补充独立时点。郑朝奉承认戚连波子时二刻带湿泥到公房，虽有利益冲突，仍与船边物证和记录交叉。簿记、物证和口供共同建立机会链，单独都不能证明穿靴者实施了杀害。"
       },
       {
         "id": "evidence_4",
@@ -1726,16 +2201,18 @@
           "misese",
           "jiacangmikang"
         ],
-        "conclusion": "米色册三仓「上白改中白」的改痕上盖着郑朝奉的小印，官票存根对票时刻恰是子时二刻——戚连波替帮主挡驾后与郑朝奉对坐吃茶，两人互为对方人证的同时也暴露出官仓与私盐线的勾连。"
+        "conclusion": "官仓米色册上的改账与金满仓夹仓掺糠、夹私盐的实物相互印证；郑朝奉印记和对票时间构成另一条利益链，解释为何他可能与戚连波互作不在场证人，但不取代对戚连波行凶的判断。"
       },
       {
         "id": "evidence_5",
         "clueIds": [
           "langhuawenanxin",
           "shuichengbu",
-          "misese"
+          "misese",
+          "qilianbo_ship_trace",
+          "zheng_kouju"
         ],
-        "conclusion": "浪花纹暗信写明「子夜、金满仓、三百引、老规矩」，曹三娘子夜望见舱口灯灭、人影下跳板——暗信接头时辰与水程簿记录的戚连波离船时辰完全吻合。"
+        "conclusion": "浪花纹暗信写明子夜在金满仓交接；水程簿、戚连波靴底湿印与郑朝奉所述戚在子时二刻带湿泥来公房，都指向同一往返窗口。米色册揭示官仓对票的利益关联。暗号文件、现场痕迹和有利害关系的口供互相校验机会与接头背景，仍需结合尸检判断实际杀人。"
       }
     ],
     "redHerrings": [
@@ -1819,7 +2296,31 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "落水还是被害",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先核验尸体是否生前入水、夹仓货物和守夜酒壶；区分死因、船上货物问题和铁锁失职。不要把帮主的花押袋仍在身上等同于任何人无罪。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "船上时刻、暗线与互证",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "对照水程簿、靴印、芦苇荡暗信、赏酒口述和官仓米色册，分别回答谁有机会、谁可能投药、谁有动机、谁的互证存在利益冲突。每个结论至少跨文书/人证/实物两类材料。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1842,6 +2343,90 @@
             "text": "戚连波把铁锁钉在守夜贪杯上，把郑朝奉的对坐茶变成互保铁证，把水程簿那三行字引向「受潮洇了」。投票未能指认戚连波，帮主的死被定性为醉后失足。水脊依然在暗处淌着，运河上的规矩，终究敌不过一壶好茶。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开局只公布帮主伏在积水中的现场状态和官方“醉后失足”初判，提醒玩家水下痕迹需仵作复验。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮保证公开 cangdishishen、jiacangmikang、shouyejiuhu、shuichengbu、yanyindidan；第2轮保证公开其余线索，尤其是 qilianbo_ship_trace、tiesuo_kougong、langhuawenanxin、misese 与 xiangtangdacao。全部11张线索均有兜底，未超过6人×2轮=12张容量。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "按死亡方式、守夜酒、登船机会、私盐动机、郑朝奉/计多星的利益冲突五层讨论。水程簿由计多星书写，酒壶按帮规由二舵爷代散，靴可以借穿；要求分别说明这些限制如何被独立痕迹、口述和暗信补足。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "最终指认戚连波需至少引用尸检、船上时间记录、实物靴印或独立目击中的两类材料，并回应“赏酒常例”和“水程簿可伪造”两条防御。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家认定醉酒落水就是意外。",
+        "hint": "让他们查看口鼻泥藻、指甲青苔麻絮、颈肩挣扎痕迹，并由仵作说明生前入水。"
+      },
+      {
+        "condition": "玩家凭水程簿单卡锁定戚连波。",
+        "hint": "提醒该簿由计多星书写且其有私押把柄；要求用靴印、曹三娘的灯影时点和水脊暗信交叉核验。"
+      },
+      {
+        "condition": "玩家只因铁锁昏睡就认定戚连波下药。",
+        "hint": "区分赏酒职责与亲手投药；先听铁锁口述，再核对壶底药末和红绳来源。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "cangdishishen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "jiacangmikang",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yanyindidan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shouyejiuhu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shuichengbu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "huayajiutiao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "misese",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "langhuawenanxin",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "xiangtangdacao",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "tiesuo_kougong",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "qilianbo_ship_trace",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "zheng_kouju",
+        "deadlineRound": 2
       }
     ]
   }

@@ -264,7 +264,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "liusangeng_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liusangeng_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "验尸查毒、主持公道是你的本分，你要找出真凶洗清客栈的干系。但绝对不能让任何人翻看你手账里'三月十七夜，改路引一张'那一页。若有人问起你与官府的旧怨，就叹气说往事不提。 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "liusangeng_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "liusangeng_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "验尸查毒、主持公道是你的本分，你要找出真凶洗清客栈的干系。但绝对不能让任何人翻看你手账里'三月十七夜，改路引一张'那一页。若有人问起你与官府的旧怨，就叹气说往事不提。 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -486,7 +552,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "suxiuxiu_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suxiuxiu_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶，最好让所有人相信是钱万贯仇家太多、死不足惜。绝不能让人搜出玉佩和那张写着你本姓的名帖。若被问及与死者的关系，就说'卖唱的与客人，能有甚么关系'。 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "suxiuxiu_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "suxiuxiu_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶，最好让所有人相信是钱万贯仇家太多、死不足惜。绝不能让人搜出玉佩和那张写着你本姓的名帖。若被问及与死者的关系，就说'卖唱的与客人，能有甚么关系'。 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -686,7 +818,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "yanshisan_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yanshisan_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你有不在场的理直气壮——递完信 20:25 就下楼了，毒是之后下的，与你无关。但买凶杀人的委托绝不能曝光，否则官府眼里你就是凶手。若有人问，就说'拿人钱财替人送信，江湖营生'。主动说出恐吓信的事会引火烧身，但必要时可以暗示：'姓钱的仇家，能从这里排到雁门关。' 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "yanshisan_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "yanshisan_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你有不在场的理直气壮——递完信 20:25 就下楼了，毒是之后下的，与你无关。但买凶杀人的委托绝不能曝光，否则官府眼里你就是凶手。若有人问，就说'拿人钱财替人送信，江湖营生'。主动说出恐吓信的事会引火烧身，但必要时可以暗示：'姓钱的仇家，能从这里排到雁门关。' 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -866,7 +1064,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "fubo_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fubo_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶。你清楚：东家一死，那三千两的账就'死无对证'——你心里有个声音说这对你好，但你更怕'账房弑主'四个字。主动交出暗账可自证'若是我杀的，何必留下把柄'，但这话得选对时机说。 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "fubo_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "fubo_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶。你清楚：东家一死，那三千两的账就'死无对证'——你心里有个声音说这对你好，但你更怕'账房弑主'四个字。主动交出暗账可自证'若是我杀的，何必留下把柄'，但这话得选对时机说。 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1026,7 +1290,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "tieyi_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tieyi_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你武艺最高、又与死者有隙，是所有人眼里'最有能力杀人'的。你要用'后院有人证''门闩反锁'自证清白，并协助查案——只有找出真凶，'镖师怀恨杀人'的嫌疑才能彻底洗掉。 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "tieyi_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tieyi_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你武艺最高、又与死者有隙，是所有人眼里'最有能力杀人'的。你要用'后院有人证''门闩反锁'自证清白，并协助查案——只有找出真凶，'镖师怀恨杀人'的嫌疑才能彻底洗掉。 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1226,7 +1556,94 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_mayi_no_poison_source",
+            "claim": "我从未持有牵机散；柴房药末可能是别人遗落的白粉。",
+            "basis": "药包来源不能单独认人，但行囊药包、驿站药纸与柴房残渣成分/包装可交叉检验。",
+            "brokenByPublicClueIds": [
+              "yaobao_laiyuan",
+              "yaofen",
+              "fayan_tox"
+            ]
+          },
+          {
+            "id": "defense_mayi_wine_not_cause",
+            "claim": "壶里残酒即使有毒，也不能证明钱万贯喝过；他可能死于旧疾或别的原因。",
+            "basis": "残酒不等于摄入；需要外部尸检的胃内容物、血液与酒液成分互证。",
+            "brokenByPublicClueIds": [
+              "jiuhu",
+              "fayan_tox"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "mayicheng_act1_fact",
+                "title": "毒酒与死因待核",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕将药包、壶内残酒、死者饮用和死亡原因分开；指出各材料的来源和边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mayicheng_act1_goal",
+                "title": "提交一项可核验的时间/物品",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "活过今夜。你官身有便利：主持封城、拟上报文书、'协助'查案——你要把水搅浑，把嫌疑引向燕十三（买凶传闻、江湖人）、福伯（账房亏空）、苏绣袖（死者生前对她言语轻薄人尽皆知）。若有人提起 20:35-20:55 你在雅间的那两刻钟，就说'奉命对账，公务在身，楼里人人都看见了，我要是下毒，敢待到 20:55 才走？'——你赌柳掌柜的手账只记了你的时间，记不了你的作为。 第一幕请提出一项你亲历或持有的材料，并说明它能证明什么、不能证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "mayicheng_act2_fact",
+                "title": "来源、机会与灭证",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕分别核验药包来源、投酒机会、毒发时间和炭盆灭证；最后独处者不自动成为凶手。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mayicheng_act2_goal",
+                "title": "回应最后独处以外的证据",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "活过今夜。你官身有便利：主持封城、拟上报文书、'协助'查案——你要把水搅浑，把嫌疑引向燕十三（买凶传闻、江湖人）、福伯（账房亏空）、苏绣袖（死者生前对她言语轻薄人尽皆知）。若有人提起 20:35-20:55 你在雅间的那两刻钟，就说'奉命对账，公务在身，楼里人人都看见了，我要是下毒，敢待到 20:55 才走？'——你赌柳掌柜的手账只记了你的时间，记不了你的作为。 第二幕请主动回应一个竞争嫌疑或“最后独处”的局限，并给出可核验依据。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1249,7 +1666,8 @@
           "type": "paragraph",
           "text": "柜台大堂。往来账目与宿客名册都在柜上，灯火通宵不熄。"
         }
-      ]
+      ],
+      "ownerCharacterId": "liusangeng"
     },
     {
       "id": "location_3",
@@ -1269,7 +1687,8 @@
           "type": "paragraph",
           "text": "绣娘苏绣袖的房间。绷架上的活计没收，针线笸箩摆在窗下。"
         }
-      ]
+      ],
+      "ownerCharacterId": "suxiuxiu"
     },
     {
       "id": "location_5",
@@ -1279,7 +1698,8 @@
           "type": "paragraph",
           "text": "镖师燕十三的通铺。刀靠入鞘，行囊打的结谁也解不开。"
         }
-      ]
+      ],
+      "ownerCharacterId": "yanshisan"
     },
     {
       "id": "location_6",
@@ -1287,9 +1707,10 @@
       "description": [
         {
           "type": "paragraph",
-          "text": "账房与账房先生铁衣的通铺。算盘册页堆了半床，灯油管够。"
+          "text": "账房与福伯通铺一间，算盘与货款账册堆在床沿；暗账藏在铺底，柜台字条夹在账本末页。"
         }
-      ]
+      ],
+      "ownerCharacterId": "fubo"
     },
     {
       "id": "location_7",
@@ -1299,7 +1720,30 @@
           "type": "paragraph",
           "text": "驿站公房。公文库、印信匣俱在此处，出入须登记。"
         }
-      ]
+      ],
+      "ownerCharacterId": "mayicheng"
+    },
+    {
+      "id": "location_8",
+      "name": "驿丞公房行囊",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "马驿丞的公房内放着官印匣、文书和随身行囊；夹层药包与家书属于驿丞个人物件，可由主持按搜证轮次公开。"
+        }
+      ],
+      "ownerCharacterId": "mayicheng"
+    },
+    {
+      "id": "location_9",
+      "name": "铁衣的通铺行囊",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "铁衣铺位边的包袱里压着写了一半的辞呈，水洇的墨迹尚未干透；行囊属铁衣个人。"
+        }
+      ],
+      "ownerCharacterId": "tieyi"
     }
   ],
   "clues": [
@@ -1311,7 +1755,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "雅间案头的锡酒壶倒翻在地，柳掌柜验残酒留了样：牵机散，无色微苦，中者一炷香内抽搐而亡。壶内剩酒约三成，壶嘴有新续酒的酒渍——死者案发前续过酒。雅间门闩从里面插上，木销完好。"
+          "text": "雅间案头的锡酒壶倒翻在地，柳掌柜验残酒留了样：牵机散，无色微苦，中者一炷香内抽搐而亡。壶内剩酒约三成，壶嘴有新续酒的酒渍——死者案发前续过酒。雅间门闩从里面插上，木销完好。 柳掌柜在残酒中检出牵机散，但这只能证明壶内酒受污染；是否入口、入口时间和是否因此死亡，须由独立尸检检验。死者案前自行续酒会把入口时间与投毒时间分开。雅间内闩完好，表示离开后死者可自行插闩，不能据此认定房内只有一名外人。"
         }
       ],
       "policy": "auto_public",
@@ -1356,7 +1800,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "柜台手账（柳掌柜记客商进出的簿子）：'戌时二刻（20:35）马驿丞上雅间，三刻有余方下（约 20:55）。福账房戌时初上，一炷香下。燕客戌时一刻上，二刻下。'记录与各人自述均可印证。"
+          "text": "柜台手账（柳掌柜记客商进出的簿子）：'戌时二刻（20:35）马驿丞上雅间，三刻有余方下（约 20:55）。福账房戌时初上，一炷香下。燕客戌时一刻上，二刻下。'记录与各人自述均可印证。 这份手账只记录马驿丞与死者独处到约20:55；不记录酒壶何时被污染，也不证明独处者就是下毒者，其他人可能在此前后接触酒壶。"
         }
       ],
       "policy": "manual_public",
@@ -1410,7 +1854,7 @@
     },
     {
       "id": "cizheng",
-      "locationId": "location_6",
+      "locationId": "location_9",
       "name": "写了一半的辞呈",
       "category": "document",
       "content": [
@@ -1431,7 +1875,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "柴房地上有一个踩灭的烟头，旁边洒着一小摊白色粉末，白色粗布药包揉在柴堆后，包布上残留朱砂封识的碎屑——细看封识纹样，是驿站随公文用的火漆料配药纸。粉末以银针试之微黑：牵机散余渣。"
+          "text": "柴房地上有一个踩灭的烟头，旁边洒着一小摊白色粉末，白色粗布药包揉在柴堆后，包布上残留朱砂封识的碎屑——细看封识纹样，是驿站随公文用的火漆料配药纸。粉末以银针试之微黑：牵机散余渣。 粉末检验只定出牵机散残渣；驿站火漆药纸能追溯包装类别，不能凭纸张证明是谁携带、何时投进酒壶。"
         }
       ],
       "policy": "manual_public",
@@ -1461,7 +1905,39 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "驿站公房炭盆里有一页没烧透的册纸残角，余字可辨：'……三百石，画押……戌时……'纸灰未冷。公房案头笔架上的狼毫笔尖有纸纤维与一点点白色粉末。"
+          "text": "驿站公房炭盆里有一页没烧透的册纸残角，余字可辨：'……三百石，画押……戌时……'纸灰未冷。公房案头笔架上的狼毫笔尖有纸纤维与一点点白色粉末。 残角的纸张纤维和撕边与死者密信抄件纸张相符，白色粉末与柴房药包残渣同类；这提示有人试图焚掉账册证据，但炭盆属于驿站公房，能接近者不止马驿丞。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "yaobao_laiyuan",
+      "locationId": "location_8",
+      "name": "驿丞行囊中的旧药包与家书",
+      "category": "trace",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "驿丞行囊夹层搜出一个半空粗布药包和母亲家书。信中写：“郎中说咳得急时此药只可少量，不可多服；我留了半包给你，夜里咳起来再用。”药包所用火漆配药纸与驿站公文药纸同类，包内残末经县医初筛为牵机散，与柴房白色药末成分相符。它为柴房药包提供一个可能来源，并证明马驿丞有接触该药的机会；行囊可被搜查、药包也可能转交或被放置，不能单凭此认定其投酒。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "mayicheng"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fayan_tox",
+      "locationId": "location_1",
+      "name": "县医独立尸检与胃内容物毒理",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "官差在场后由县医独立尸检：死者血液与胃内容物均检出牵机散，剂量达到致死范围；胃中酒液成分与雅间酒壶同批，确认死者实际饮下被污染的酒。尸检未见针孔或其他给药途径，死因是经口摄入牵机散后的中毒死亡。结合牵机散通常约一炷香起效和手账20:55马驿丞离开、21:10发现，推定最后一口受污染酒在20:50—21:00之间饮下、死亡约21:05—21:15；毒理时间存在个体差异，不能精确到分钟，也不能据此单独认定谁下毒。"
         }
       ],
       "policy": "manual_public",
@@ -1481,62 +1957,67 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "马驿丞借'送公文对账'入雅间，趁钱万贯低头翻册时将随身牵机散（其母咳药）尽数弹入酒壶；钱万贯 20:50 续饮毒酒，约一刻钟后毒发身亡，其间马驿丞已从容下楼并刻意在柜台留下'闲话'人证。"
+          "text": "马驿丞挪用军粮三百石，钱万贯以核账抄件逼他画押。驿丞行囊里的母亲来信和药包、柴房牵机散残渣及公文配药纸共同说明药物来源；20:35—20:55他与死者在雅间独处，残酒检出牵机散，死者续酒并饮下。县医胃内容物与酒液成分确认实际摄入，起效时间和发现时间将死亡限定在约21:05—21:15。炭盆烧页显示有人试图销毁账册；来源、投酒、入口致死与灭证是不同事件，手账所记最后独处本身不证明谁下毒。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "备毒与入室",
+          "title": "药包来源与携带",
           "content": [
             {
               "type": "paragraph",
-              "text": "马驿丞将随身携带的牵机散（其母咳药，半包入药可镇咳）从药包中取出备用；20:35 他以'送公文对账'为名应约上二楼雅间，钱万贯当面摔出'短粮三百石'的核账抄件逼他画押认罪。"
+              "text": "马驿丞留有母亲来信和半空药包，包内牵机散与柴房残渣相符；驿站配药纸可解释包装。药包在其行囊中且有来源线索，但物件可能被转交/放置，单独不证明投酒。"
             }
           ],
           "clueIds": [
-            "gongwen",
-            "mixi",
+            "yaobao_laiyuan",
             "yaofen"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "下毒",
+          "title": "进入雅间与酒壶污染",
           "content": [
             {
               "type": "paragraph",
-              "text": "20:50 趁钱万贯低头翻阅账册之机，马驿丞将牵机散尽数弹入桌上新续的酒壶；钱万贯仰头饮尽毒酒，浑然不觉。"
+              "text": "20:35—20:55马驿丞以公文对账进入雅间。死者军粮抄件与公文封套说明会面内容；他是该时段的最后独处者，但并非唯一能接触酒壶的人。残酒和新续酒渍证明酒壶被污染且死者续过酒，须由胃内容物判断摄入。"
             }
           ],
           "clueIds": [
+            "gongwen",
+            "mixi",
+            "zhangben",
             "jiuhu"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "从容撤离与制造人证",
+          "title": "摄入、毒发与死亡",
           "content": [
             {
               "type": "paragraph",
-              "text": "20:55 马驿丞以'去拟文'为由告退，死者自行闩门；马驿丞下楼后刻意在柜台与柳掌柜搭话说'雪停了要加派人手扫官道'，留下从容闲话的人证。约 21:05 毒发，死者伏案而亡。"
+              "text": "县医独立复验在胃内容物与血液中检出致死范围牵机散，酒液成分相合；起效时程把饮用估在20:50—21:00、死亡估在21:05—21:15。残酒检验、尸检与发现时间三者构成因果链，不把最后独处时间当作死亡时间或身份结论。"
             }
           ],
           "clueIds": [
-            "zhangben"
+            "jiuhu",
+            "fayan_tox"
           ]
         },
         {
           "id": "method_step_4",
-          "title": "灭证与搅浑水",
+          "title": "烧毁核账页",
           "content": [
             {
               "type": "paragraph",
-              "text": "案发后马驿丞以官身主持封城，借'查看现场'之机碰翻酒壶试图销毁残酒（被柳掌柜抢先留样）；当夜回驿站公房拟案情文书时，将撕下的'短粮三百石'账册页塞入炭盆焚烧——但未烧透。"
+              "text": "炭盆中的未烧透册页余字与抄件纸纤维相符，提示有人试图销毁核账证据；白色粉末同类并不能识别放入者。马驿丞有动机与公房接触机会，但灭证仍需结合其行踪，不能当作下毒本身的直接目击。"
             }
           ],
           "clueIds": [
-            "tanpen"
+            "tanpen",
+            "mixi",
+            "yaofen"
           ]
         }
       ]
@@ -1604,7 +2085,9 @@
         "characterIds": [
           "fubo"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "anzhang"
+        ],
         "participantIds": [
           "fubo"
         ]
@@ -1650,7 +2133,10 @@
         "characterIds": [
           "yanshisan"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "zhangben",
+          "jiuhu"
+        ],
         "participantIds": [
           "yanshisan"
         ]
@@ -1673,7 +2159,9 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "weituo"
+        ],
         "participantIds": []
       },
       {
@@ -1717,7 +2205,11 @@
         "characterIds": [
           "mayicheng"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "gongwen",
+          "mixi",
+          "zhangben"
+        ],
         "participantIds": [
           "mayicheng"
         ]
@@ -1742,7 +2234,12 @@
         "characterIds": [
           "mayicheng"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "yaobao_laiyuan",
+          "yaofen",
+          "jiuhu",
+          "fayan_tox"
+        ],
         "participantIds": [
           "mayicheng"
         ]
@@ -1767,7 +2264,9 @@
         "characterIds": [
           "mayicheng"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "zhangben"
+        ],
         "participantIds": [
           "mayicheng"
         ]
@@ -1790,7 +2289,10 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "jiuhu",
+          "fayan_tox"
+        ],
         "participantIds": []
       },
       {
@@ -1817,7 +2319,11 @@
           "tieyi",
           "mayicheng"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "zhangben",
+          "tanpen",
+          "fayan_tox"
+        ],
         "participantIds": [
           "suxiuxiu",
           "yanshisan",
@@ -1828,27 +2334,54 @@
       }
     ],
     "keyEvidenceIds": [
+      "jiuhu",
+      "fayan_tox",
+      "yaobao_laiyuan",
+      "yaofen",
+      "zhangben",
       "gongwen",
-      "zhangben"
+      "mixi",
+      "tanpen"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_3",
+        "id": "evidence_ingestion_cause",
         "clueIds": [
-          "gongwen",
-          "mixi",
-          "tanpen"
+          "jiuhu",
+          "fayan_tox"
         ],
-        "conclusion": "公文封套证明马驿丞以'公务对账'为由进入雅间，而死者怀中搜出的密信'驿丞马有禄名下短粮三百石'揭示了他被逼画押的杀人动机——亏空败露即抄家流放。"
+        "conclusion": "酒壶残酒检出牵机散，壶中有新续酒渍；独立尸检在胃内容物和血液中检出致死剂量并确认酒液成分相合，毒发时程与21:10发现相容。文书、法医和现场信息互证污染酒被实际饮下并导致死亡；这些证据不指认投酒者。"
       },
       {
-        "id": "evidence_4",
+        "id": "evidence_drug_source",
+        "clueIds": [
+          "yaobao_laiyuan",
+          "yaofen",
+          "gongwen",
+          "fayan_tox"
+        ],
+        "conclusion": "马驿丞行囊药包、柴房残渣和公文配药纸的来源与成分相符，县医确认同类牵机散进入死者体内。药包支持药物来源与持有机会，但可被转交/放置；它不证明是谁将药撒入酒壶。"
+      },
+      {
+        "id": "evidence_opportunity_motive",
         "clueIds": [
           "zhangben",
-          "yaofen",
-          "tanpen"
+          "gongwen",
+          "mixi",
+          "anzhang",
+          "fayan_tox"
         ],
-        "conclusion": "柳掌柜手账记录马驿丞在雅间独处两刻钟（20:35-20:55），是死前最后与死者独处之人；柴房白色药末检出牵机散且药包封识为驿站火漆配药纸，炭盆中未烧透的账册残页余字'三百石'——三条证据链合拢：毒源、时间、灭证三者指向同一人。"
+        "conclusion": "手账记录马驿丞与死者20:35—20:55独处；公文封套支持公务会面，密信和炭盆残页提示短粮三百石的灭证动机。独处、动机和毒理分别成立，但其他人可能在更早时段接触壶具，不能以“最后独处”直接定凶。"
+      },
+      {
+        "id": "evidence_destruction",
+        "clueIds": [
+          "tanpen",
+          "mixi",
+          "yaofen",
+          "zhangben"
+        ],
+        "conclusion": "炭盆残页纸纤维/撕边与军粮抄件相符，公房笔尖有同类粉末；这些说明有人焚页、现场可能有药粉，却不能仅凭公房归属和最后独处认定马驿丞灭证。需与药包来源、会面内容和其行为合并推断。"
       }
     ],
     "redHerrings": [
@@ -1903,16 +2436,40 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是马驿丞。他挪用军粮三百石填前任的亏空，被替边军采买军粮的钱万贯当夜拿住把柄，逼他画押认罪。官身、体面、前程，一瞬间都要塌了——于是这位'唯一的官'用他母亲咳药里的牵机散，把债主留在了雅间。他算准了时刻：毒发时他已下楼两刻钟，门是死者自己闩的，柜台有人证，封城后他还是主持查案的官。他唯一没算到的是柳掌柜的手账记得太细、柴房里那包来不及处理的药渣、以及炭盆里没烧透的半页纸。满楼的人都有秘密：燕十三收钱恐吓、福伯挪空、绣袖藏身、铁衣辞行——正是这些秘密，替他遮了半夜的夜。"
+        "text": "真相：凶手是马驿丞。他挪用军粮三百石填前任的亏空，被替边军采买军粮的钱万贯当夜拿住把柄，逼他画押认罪。官身、体面、前程，一瞬间都要塌了——于是这位'唯一的官'用他母亲咳药里的牵机散，把债主留在了雅间。他算准了时刻：毒发时他已下楼两刻钟，门是死者自己闩的，柜台有人证，封城后他还是主持查案的官。他唯一没算到的是柳掌柜的手账记得太细、柴房里那包来不及处理的药渣、以及炭盆里没烧透的半页纸。满楼的人都有秘密：燕十三收钱恐吓、福伯挪空、绣袖藏身、铁衣辞行——正是这些秘密，替他遮了半夜的夜。 但最后独处者不等于下毒者：残酒证实壶被污染，独立尸检才证明死者实际饮下并因此死亡；行囊药包和柴房残渣只追踪毒源，炭盆残页只说明灭证。马驿丞的身份要由这些不同证据与对账动机合并判断。"
       }
     ]
   },
   "flow": {
     "selfIntroRounds": 1,
-    "searchRounds": 2,
+    "searchRounds": 3,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "酒壶污染与死亡因果",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先区分药包里的牵机散、毒进入酒壶、死者是否饮下、何时起效及死亡原因。残酒中有毒不能单独证明实际摄入；县医独立尸检与胃内容物报告会分别核对入口和因果。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "毒包来源、投酒机会与灭证",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二幕比较驿丞行囊药包、柴房药渣、炭盆烧页和公文封套；再结合手账、门闩与其他人出入推断谁可能接触酒壶。最后独处者只具备机会，不直接等于凶手。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -1935,6 +2492,98 @@
             "text": "雪化了，官道通了，马驿丞以'案情未明'为由封了卷宗，自己拟的那份文书把案子引向了'江湖仇杀'。燕十三翻墙走了，福伯照旧拨算盘，苏绣袖抱着琵琶唱她的曲——雁归楼的日子照过，只是二楼雅间的那壶酒，再没人敢碰。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "先确认酒壶残酒有牵机散，但暂不认定已经饮下或因此死亡；封门和最后独处都是现场/机会信息。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "要求角色区分药物来源、包装、壶内污染、实际饮用、死因和焚页行为；说清直接目击与推断。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证酒壶残液、死者密信、公文封套、柜台手账、柴房药末和县医独立毒理共6张；第二轮保证药包来源、军粮泥印、公房炭盆和其他角色竞争材料共6张；第三轮保证辞呈等余下个人材料。13张线索分三轮投放，不超过6人三轮18次搜证容量。主持不得提前公开药包等主人未授权线索，可在截止轮兜底发放。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "依次讨论药包来源（行囊/柴房包装）、何时及如何进入酒壶（新续酒渍/残酒）、是否实际摄入与死因（胃内容物/血液毒理）、何时毒发（起效时程/发现时间）、灭证（炭盆残页）。柳掌柜手账只证明谁最后独处，不等于证明谁投毒；其他人也可能早先接触酒壶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前要求每人引用至少两类不同来源材料说明来源、摄入因果、行动机会或灭证，并明确回应“最后独处者不必然是凶手”。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家以最后独处时间直接锁定马驿丞。",
+        "hint": "并列出示雅间酒壶新续酒渍、独立胃内容物报告和其他人此前进出时间；要求区分机会与实施。"
+      },
+      {
+        "condition": "玩家把残酒阳性直接说成已经致死。",
+        "hint": "等外部县医报告，核胃内容物、血液浓度、酒液成分和毒发时程。"
+      },
+      {
+        "condition": "玩家只靠柴房药包就认定下毒者。",
+        "hint": "对照公房配药纸、驿丞行囊药包和炭盆残页；说明来源/持有/实际投酒是不同层次。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "jiuhu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "mixi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "gongwen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "zhangben",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "mingtie",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "weituo",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "anzhang",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "cizheng",
+        "deadlineRound": 3
+      },
+      {
+        "clueId": "yaofen",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "guanxue",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "tanpen",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yaobao_laiyuan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "fayan_tox",
+        "deadlineRound": 1
       }
     ]
   }

@@ -27,3 +27,5 @@ export const SCHEMA_HINT = `输出必须是一个 JSON 对象，version 固定�
 可选增强（写了就生效，不写不影响入库）：分幕读本 acts + 角色 stages、DM 手册 hostGuide、技能卡 skills（需同时把 flow.actionPointsPerRound 设为 >0）、线索转交 allowClueTransfer、线索发放计划 release / forbiddenCharacterIds、房间主人 ownerCharacterId、knowledge.kind 区分亲见/听说/推断、disclosure=must_share 表示"必须在合适时机主动交代"、alibi / violation / tells。
 
 只输出 JSON，不要任何其他文本。`;
+
+export const PLAYTEST_FLOW_HINT = "flow.interactionBeats 可配置 after_discussion 角色选择（id/round/characterId/prompt/choices[id,label,recap]/defaultChoiceId/visibility）。defenseHooks 优先使用 brokenWhen.allPublicClueIds（全部公开）或 anyPublicClueIds（任一公开）；保留旧 brokenByPublicClueIds 兼容。manual_public 保证材料必须有至少跨一轮的私藏窗口。";

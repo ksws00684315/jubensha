@@ -63,7 +63,7 @@
             "content": [
               {
                 "type": "paragraph",
-                "text": "你的身份（'小飞'）与内鬼勾当一旦曝光，旧案新罪并案，你插翅难逃——所以必须把案件钉在'流寇趁沙暴行凶'上。策略：主动配合'找枪''查沙梁'，第一个提出'盗掘坑'叙事；用你执笔的点名记录撑住'死者活到深夜'的假象；若被问代答，咬死'他确实应了，声音低哑'。你的死穴：巴根知道你的旧名、半埋的登山靴、和那一瞬被拍下来的枪口焰。"
+                "text": "把点名代答解释为值班惯例，把夜间巡营解释为向导职责；不要宣称手写本或单帧光点能证明沈万钧活着。要求大家分别核验枪柜钥匙与弹药批次、枪击距离、对讲缓存、红柳靴痕和巴根的目击。若被问查发电机，承认你按职责巡视，但追问是否有独立证据证明你携枪、埋枪或进入帐篷；主动质疑照片光点的辨识度，同时回应旧名与次晨通话。"
               }
             ],
             "priority": "primary"
@@ -331,7 +331,98 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_hude_rollcall_routine",
+            "claim": "我按值班惯例替沈万钧应过点名；值班本写“代应”就是代班，不证明他当时已死，更不证明我开枪。",
+            "basis": "点名由我执笔、电台应答有风噪，营地值班时常由同伴代报；21:51光点也不是可确认的枪口焰。",
+            "brokenByPublicClueIds": [
+              "dianming_ben",
+              "dianming_radio_huan",
+              "yanshi_jilu",
+              "fayan_ballistics"
+            ]
+          },
+          {
+            "id": "defense_hude_patrol_boots",
+            "claim": "我夜里查发电机、围栏和营地边界都属向导职责；靴子可以借用，红柳须和硝烟不能证明我埋枪或进过死者帐篷。",
+            "basis": "向导日常巡营会接触沙地与装备，靴架同型号靴多人可领用；巴根是旧识，可能把熟人认错。",
+            "brokenByPublicClueIds": [
+              "banmai_dengshanxue",
+              "bagen_kouju",
+              "dianchi_qianshou",
+              "danke",
+              "fayan_ballistics"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "hude_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕能确定近距枪击和死亡时间范围；光点、弹药批次和点名记录各有辨识局限。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hude_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "解释点名代答和向导巡营职责，同时说明枪柜/点名证据的局限。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "hude_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕会公开红柳靴迹、巴根口述和旧案报信材料；巡营职责、共同钥匙与私人行动须分开。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "hude_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "回应红柳目击与枪源材料，提出可核验的替代解释，并质询至少一位角色。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -519,7 +610,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "quyiming_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、弹药来源、影像光点与点名情况，不凭单条记录认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "quyiming_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一个案发时间点，明确它来自亲见、日志还是推断；决定何时公开自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "quyiming_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕材料将埋枪路线、旧名、通讯和竞争嫌疑人行为交叉核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "quyiming_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用两类以上公开证据核验一条时间或路线，向至少一位角色追问，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -707,7 +864,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "chixiaoman_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、弹药来源、影像光点与点名情况，不凭单条记录认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chixiaoman_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一个案发时间点，明确它来自亲见、日志还是推断；决定何时公开自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "chixiaoman_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕材料将埋枪路线、旧名、通讯和竞争嫌疑人行为交叉核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "chixiaoman_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用两类以上公开证据核验一条时间或路线，向至少一位角色追问，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -932,7 +1155,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "guanhe_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、弹药来源、影像光点与点名情况，不凭单条记录认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guanhe_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一个案发时间点，明确它来自亲见、日志还是推断；决定何时公开自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "guanhe_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕材料将埋枪路线、旧名、通讯和竞争嫌疑人行为交叉核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "guanhe_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用两类以上公开证据核验一条时间或路线，向至少一位角色追问，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1116,7 +1405,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "wengu_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、弹药来源、影像光点与点名情况，不凭单条记录认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wengu_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一个案发时间点，明确它来自亲见、日志还是推断；决定何时公开自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "wengu_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕材料将埋枪路线、旧名、通讯和竞争嫌疑人行为交叉核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "wengu_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用两类以上公开证据核验一条时间或路线，向至少一位角色追问，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1333,7 +1688,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "bagen_act1_fact",
+                "title": "第一幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕材料分别说明伤势、弹药来源、影像光点与点名情况，不凭单条记录认人。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "bagen_act1_goal",
+                "title": "还原枪击与点名",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "陈述一个案发时间点，明确它来自亲见、日志还是推断；决定何时公开自己的秘密。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "bagen_act2_fact",
+                "title": "第二幕证据边界",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕材料将埋枪路线、旧名、通讯和竞争嫌疑人行为交叉核验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "bagen_act2_goal",
+                "title": "核验身份与行动",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用两类以上公开证据核验一条时间或路线，向至少一位角色追问，并处理自身利益。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1356,7 +1777,8 @@
           "type": "paragraph",
           "text": "物资帐篷里货箱与水罐架堆得满满当当，角落的枪柜上着原配挂锁，门边挂着取用登记簿；水罐架后渗沙堆起，半埋着零星物件。"
         }
-      ]
+      ],
+      "ownerCharacterId": "quyiming"
     },
     {
       "id": "location_3",
@@ -1366,7 +1788,8 @@
           "type": "paragraph",
           "text": "值班帐篷里电台值机正对帐门，卫星电话与对讲机依次排开；点名值班本翻开着，昨夜几行墨色还新，帐外的风声呜呜不歇。"
         }
-      ]
+      ],
+      "ownerCharacterId": "hude"
     },
     {
       "id": "location_4",
@@ -1376,7 +1799,8 @@
           "type": "paragraph",
           "text": "队医帐里帆布床与医务箱并排摆着，碘伏纱布一字铺开；验看记录还摊在小桌上，帐灯的火苗压得很低，夜寒贴着帐布轻响。"
         }
-      ]
+      ],
+      "ownerCharacterId": "chixiaoman"
     },
     {
       "id": "location_5",
@@ -1386,7 +1810,8 @@
           "type": "paragraph",
           "text": "营地院区的帐灯在风里摇晃，沙脊的背风坡是拍星的好位置；三脚架在脊线上立得笔稳，北面沙包间红柳丛稀稀落落。"
         }
-      ]
+      ],
+      "ownerCharacterId": "guanhe"
     }
   ],
   "clues": [
@@ -1398,7 +1823,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "队医记录：左胸单发枪创，入口周围灼痕与烟晕清晰，射击距离不足两米；无抵抗伤、指端干净，死者至死未防备；结合尸僵进度与血泊干涸程度，死亡时间不晚于昨晚 23:00。备注：创口特征与营地防狼枪制式弹药吻合，'流寇远距离枪击'说法与创口特征矛盾。"
+          "text": "队医记录：左胸单发枪创，入口周围灼痕与烟晕清晰，推定射击距离不足两米；无抵抗伤，指端干净。尸僵与血泊干涸只能把死亡限定在昨晚22时前后至23:00之间，不能精确到分钟。创口提示近距离枪击，但仅凭尸检不能证明枪来自营地或识别射手。"
         }
       ],
       "policy": "auto_public",
@@ -1413,7 +1838,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "行军床下抛落一枚黄铜弹壳（半自动枪械退壳），批号与物资帐篷枪柜弹药盒对上——该盒昨夜盘点少两发（压弹一发、试扣扳机空击一发？改为：压弹一发、上一发留膛）。弹壳落点与床面弹孔、创口走向构成完整弹道：凶手站在床尾，死者至死未起。"
+          "text": "行军床下发现一枚半自动枪械抛出的黄铜弹壳。壳底批号与营地库存弹药批次相同；床面弹孔、创口方向支持射手站在床尾近距离击发。批号只把弹药来源连到营地库存，不证明使用哪一支枪或是谁开枪。"
         }
       ],
       "policy": "manual_public",
@@ -1424,11 +1849,11 @@
       "id": "qianggui_dengji",
       "locationId": "location_2",
       "name": "枪柜登记簿与弹药盒",
-      "category": "digital",
+      "category": "document",
       "content": [
         {
           "type": "paragraph",
-          "text": "营规：取枪必登记。昨夜登记簿整页空白——但弹药盒少两发、枪箱空置、挂锁无损（钥匙是原配，门后钉板取用无需撬锁）。知道'取枪必登记'却又绕开登记的，只有天天替营规跑腿的人。"
+          "text": "营规要求取枪登记。昨夜登记簿整页空白，枪柜挂锁无损、钥匙仍挂在物资帐篷门后钉板；弹药盒少两发。枪柜供值班及巡营人员使用，锁梁无撬痕只说明使用了原配钥匙或柜门未锁，不能据此认定某个岗位或某个领用人。"
         }
       ],
       "policy": "manual_public",
@@ -1443,7 +1868,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "物资帐篷角落的水罐架后被半埋进渗沙堆：一双 41 码营用登山靴，靴底嵌着红柳须与死者帐篷外帐的布纤维，靴筒内侧有新鲜硝烟味残留。营地靴架清点，该靴属于谁，鞋垫上的姓名缩写被剪去一角。"
+          "text": "物资帐篷水罐架后半埋一双41码营用登山靴，鞋垫姓名缩写被剪去一角。靴底嵌红柳须与一小片外帐布纤维，靴筒有硝烟残留；鞋架上同型号靴多人可领用或互借，单看尺寸、纤维和沙尘不能确定穿靴者。"
         }
       ],
       "policy": "manual_public",
@@ -1458,7 +1883,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "电台值班台卫星电话通话条目：21:47，主叫（拨号操作：呼德），通话 4 分 12 秒，对端为县城文物站。死者 21:50 帐内便条底稿：'老周：明早八点，我把照片和人一起带下去，你通知所里。呼德的事，当面说。'——通话在案发前 13 分钟结束。"
+          "text": "电台值班台卫星电话记录：21:47由呼德拨出，通话4分12秒，对端为县城文物站。死者桌上便条底稿写：“老周：明早八点，我把照片和人一起带下去，你通知所里。呼德的事，当面说。”记录和底稿显示死者准备追查营地泄密，并约次晨处理；通话内容未被录音，不能单凭它证明呼德的旧案身份或杀人动机。"
         }
       ],
       "policy": "manual_public",
@@ -1473,7 +1898,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "沙暴夜营规：22:00/24:00/2:00/4:00 对讲机点名，执笔：呼德。22:00 栏：'沈应答（灯亮，声低哑）'；24:00 栏：'沈睡，咳一声代应'。两行笔迹均为呼德，且'代应'二字墨色更晚——死者 22:00 前后已死，'应答'只存在于执笔人的记录里。"
+          "text": "沙暴夜值班本安排22:00、24:00、2:00、4:00对讲点名，执笔人为呼德。22:00栏记“沈应答（灯亮，声低哑）”；24:00栏记“沈睡，咳一声代应”，两条均为呼德笔迹，后一条墨色更新。值班本是单人手写记录，不是死者本人签名，也不能独立证明当时帐内有人。"
         }
       ],
       "policy": "manual_public",
@@ -1503,7 +1928,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "关禾沙脊连拍 RAW 原片（21:48-21:52，间隔定时）：21:51 那帧死者帐篷门帘缝隙方向有一粒橘红色光点，亮度衰减曲线与枪口明火吻合（烟头不发光）。照片方位角与死者帐篷门帘实测方位一致，时间码与机身序列号完整。"
+          "text": "关禾21:48—21:52的相机RAW连拍中，21:51帧在死者帐篷门帘方向出现一个橘红色小光点。该帧为数秒长曝光，点光位置与帐篷方位大致吻合，但像素已饱和；摄影师无法排除火柴、灯芯反光或其他短暂光源，也不能从单帧判定为枪口焰。时间码与机身序列可验证，光点只能提示该时段帐篷附近出现过亮光。"
         }
       ],
       "policy": "manual_public",
@@ -1523,6 +1948,55 @@
       ],
       "policy": "manual_public",
       "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "fayan_ballistics",
+      "locationId": "location_4",
+      "name": "县站弹道复核单",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "县站刑技人员复核：死者体内取出的弹头与床下弹壳口径相符，弹头变形、近距射入方向与队医记录吻合；该批弹药与营地库存同批。营内有多支同口径枪械且可由值班人员按规领用，复核不能把弹头唯一对应某支枪或某个人。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "dianming_radio_huan",
+      "locationId": "location_3",
+      "name": "对讲机缓存与值班员口述",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "值班台对讲机缓存保留22:00和24:00点名的时间戳，但只录下短促、受风噪影响的应答，无法可靠做声纹认人；值班员记得呼德执笔并操作电台。该材料独立证明点名呼叫发生过，不验证沈万钧本人应答；与手写值班本对照可见所谓“代应”是值班安排，不等于死者存活。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "hude"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "bagen_kouju",
+      "locationId": "location_5",
+      "name": "巴根的红柳方向目击",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "巴根补充口述：23:00起夜查设备时，看见呼德从北面红柳沙包方向回营，裤腿挂着红柳须；他认得呼德常穿的走路姿势，但当时没有看清手中物品。北面红柳并非发电机巡检路线；巴根与呼德是旧识，且自己家人也牵涉旧案，证词应与靴上红柳、外帐纤维和硝烟痕迹核验。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "bagen"
+      ],
       "relatedTruthEventIds": []
     }
   ],
@@ -2186,47 +2660,52 @@
     ],
     "evidenceChain": [
       {
-        "id": "evidence_1",
+        "id": "evidence_shot_time",
         "clueIds": [
-          "danke",
           "yanshi_jilu",
-          "qianggui_dengji",
+          "fayan_ballistics",
+          "danke",
           "dianming_ben"
         ],
-        "conclusion": "行军床下的弹壳批号与枪柜弹药盒吻合，弹道指向床尾近距离射击——死者至死未起，凶手是熟人，枪来自营地内部而非'流寇'。"
+        "conclusion": "队医记录与县站复核支持近距离枪击，床下弹壳与体内弹头相合且弹药批次来自营地；点名簿另提供可核对的22:00时间锚，但为呼德手写，不能证明死者本人应答。枪击机制、枪源与点名时间互相校验，不唯一指向枪柜某支枪或某个射手。"
       },
       {
-        "id": "evidence_2",
+        "id": "evidence_time",
         "clueIds": [
+          "yanshi_jilu",
           "xingye_guangdian",
           "dianming_ben",
-          "yanshi_jilu"
+          "dianming_radio_huan"
         ],
-        "conclusion": "21:51星野连拍中死者帐篷方向的橘红色光点符合枪口焰亮度衰减曲线而非烟头反光——枪响发生在22:00前后，比点名记录所暗示的23:40'沙暴最烈时'早了近两小时。"
+        "conclusion": "尸检把死亡限定在22时前后至23:00；21:51照片只记录帐篷方向一处无法定性的短暂光点；22:00/24:00点名有手写记录和对讲缓存，但都不能确认死者本人应答。钟点、影像、尸检及通讯资料分层限制时间，光点不单独证明枪击。"
       },
       {
-        "id": "evidence_3",
+        "id": "evidence_access",
         "clueIds": [
-          "dianming_ben",
-          "yanshi_jilu"
+          "qianggui_dengji",
+          "danke",
+          "dianchi_qianshou"
         ],
-        "conclusion": "值班本22:00栏'沈应答（灯亮，声低哑）'与24:00栏'沈睡，咳一声代应'均为呼德笔迹，而死者22:00前已死——'应答'只存在于执笔人的一支笔里，代答者就是凶手。"
+        "conclusion": "枪柜无撬痕、纸质登记簿空白、弹药少两发，弹壳与库存批次一致；多名值班/巡营人员能接触原配钥匙，故材料证明枪来自营地且有人绕过登记，不证明具体取枪人。瞿一鸣领电池与呼德外出记录构成不同的行动线索，需与枪击时间及红柳路线合看。"
       },
       {
-        "id": "evidence_4",
-        "clueIds": [
-          "weixing_dianhua",
-          "heishi_zhaopian"
-        ],
-        "conclusion": "21:47呼德替死者拨通文物站电话4分12秒，死者便条底稿'明早八点，照片和人一起带下去，呼德的事当面说'——向导的旧案身份即将暴露，这是案发前13分钟的杀人动机。"
-      },
-      {
-        "id": "evidence_5",
+        "id": "evidence_recovery",
         "clueIds": [
           "banmai_dengshanxue",
-          "dianming_ben"
+          "bagen_kouju",
+          "danke",
+          "fayan_ballistics"
         ],
-        "conclusion": "半埋登山靴靴底嵌着红柳须与死者外帐纤维、靴筒有硝烟味残留、鞋垫姓名缩写被剪去一角——靴主人去过北面红柳沙包埋枪，也去过死者帐内开枪。"
+        "conclusion": "半埋靴上有红柳须、外帐纤维和硝烟残留；巴根在23:00看见呼德从红柳沙包方向返回；弹道材料确认发生近距枪击。实物与目击相互支持有人把枪藏在北面并与帐篷现场有关，呼德身份仍需结合目击可信度和靴可互借的限制判断。"
+      },
+      {
+        "id": "evidence_motive",
+        "clueIds": [
+          "weixing_dianhua",
+          "heishi_zhaopian",
+          "bagen_kouju"
+        ],
+        "conclusion": "卫星电话记录和死者便条显示次晨将带照片及“呼德的事”交文物站；黑市照片与营地出土物相关，巴根能补充呼德旧名。通讯、现场文件和知情人口供共同支持暴露风险这一动机，但动机不等于开枪。"
       }
     ],
     "redHerrings": [
@@ -2290,7 +2769,31 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "枪击时间与弹药来源",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "分别核验近距枪伤、弹头/弹壳批次、枪柜登记和21:51光点；影像只提示短暂亮光，不能单独判定枪响。点名记录和对讲缓存也不能证明死者本人应答。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "代答、埋枪路线与身份动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "结合值班记录、红柳靴痕、巴根目击、夜巡记录和死者次晨报信计划还原行动。枪柜与巡营职责多人共享，需区分正常任务、个人越界行动和动机。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2313,6 +2816,90 @@
             "text": "呼德成功将'流寇趁沙暴作案'的叙事钉死在营地共识里：五十公里外沙梁上的盗掘坑是现成的背景，沙暴抹掉了营地外的一切痕迹，枪永远找不到。巴根把23:00的目击吞回了肚子里——他阿哥1998年也拉过一趟沙，这把火他不敢点。风停了，向导照旧领队收拾营地，裤腿上的红柳须早被他拍干净了。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开场公布沈万钧被发现于帐篷、值班本记录点名和照片中出现光点；不得把光点直接称为枪口焰。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第1轮保证 yanshi_jilu、fayan_ballistics、danke、qianggui_dengji、xingye_guangdian、dianming_ben（6张）；第2轮保证 dianming_radio_huan、banmai_dengshanxue、bagen_kouju、dianchi_qianshou、weixing_dianhua、heishi_zhaopian（6张）。两轮各6张，符合6人×2轮预算。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分层讨论枪伤/弹道、枪柜与弹药、死亡时间、点名代答、红柳埋枪路线、旧案动机。明确枪械与钥匙有多人权限，夜巡是正常职责；光点可能是其他短时光源，照片不确认枪击。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "指认须结合至少一项射击/弹药证据、一项红柳路线独立材料和一项身份/动机材料；回应“点名代答是惯例”与“靴刺来自巡营”两条辩解。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把21:51光点认定为枪口焰。",
+        "hint": "说明长曝光过曝，光源可能是火柴、灯芯或反光；先用尸检和弹道确定枪击，再把光点只作为时间旁证。"
+      },
+      {
+        "condition": "玩家凭空白枪柜登记或库存弹药单卡锁凶。",
+        "hint": "公开枪柜钥匙可由多名值班/巡营人员接触；要求配合弹壳、行动路线和目击。"
+      },
+      {
+        "condition": "玩家凭巴根对旧友的单独指认锁定呼德。",
+        "hint": "将巴根口述与红柳须、外帐纤维、硝烟和弹道来源交叉核对，并讨论旧友情谊对证词的影响。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "yanshi_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "fayan_ballistics",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "danke",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "qianggui_dengji",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xingye_guangdian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dianming_ben",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "dianming_radio_huan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "banmai_dengshanxue",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "bagen_kouju",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "dianchi_qianshou",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "weixing_dianhua",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "heishi_zhaopian",
+        "deadlineRound": 2
       }
     ]
   }

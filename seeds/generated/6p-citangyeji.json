@@ -13,12 +13,12 @@
       "南方",
       "夜祭"
     ],
-    "intro": "岭南岑氏宗祠，冬至夜祭。78岁的族老按例独自守夜，23:10 被发现倒在偏殿门槛内，手背两个针孔样齿痕——银环蛇毒，神经麻痹，起病无声。毒不在茶里，不在饭里，现场连一个容器都没有。守夜的祠堂里，每个房头都有不能宣读的账。"
+    "intro": "岭南岑氏宗祠，冬至夜祭。78岁的族老按例独自守夜，23:10被发现倒在偏殿门槛内，手背有两个针孔样齿痕。初判指向银环蛇毒、神经麻痹。茶食未见异常，现场没有药瓶或毒罐，只剩一只敞口火漆蛇袋和几片鳞片；蛇已不见。供品坛封泥有新旧之别。守夜的祠堂里，每个房头都有不能宣读的账。"
   },
   "background": [
     {
       "type": "paragraph",
-      "text": "岭南岑氏宗祠，冬至夜祭。族老岑松年掌祭田账目四十年，今晚 19:30 他在祖宗牌位前宣布：明晚开祠堂大会，宣读祭田账本、新旧遗嘱、二房字据——有账的要还，有错的要认。一句话，满祠堂的人都变了脸色。20:00 各房散去，族老按例独自守夜。21:00，三房管事岑有财提着鼓鼓的布袋进偏殿添灯油，出来时袋子瘪了。21:40，族老开供桌下的樟木锦盒取炭，手背被咬了一口——不痛，不肿，他以为是蚊虫。22:20 他视物模糊爬向殿门，22:40 倒在门槛内，23:10 才被发现。乡医无力回天：银环蛇毒，神经麻痹，呼吸衰竭。现场没有蛇，没有针，没有一杯异常的茶。祠堂里守夜的五个人和一名不请自来的外人，人人守着一份见不得光的账。"
+      "text": "岭南岑氏宗祠，冬至夜祭。族老岑松年掌祭田账目四十年，今晚19:30在祖宗牌位前宣布：明晚开祠堂大会，宣读祭田账本、新旧遗嘱、二房字据。23:10，他被发现倒在偏殿门槛内，手背有两处针孔样齿痕，乡医初判为银环蛇毒。偏殿供桌下发现一只双道火漆麻布袋和零散鳞片，但祠堂内外未找到蛇；三日前蛇酒坊有一条银环蛇出库，供品蛇酒坛口也有新封泥。现有记录能否说明蛇的来源、如何到达偏殿、是否有人主动放出，以及致死咬伤发生的时段？各房头的账目、遗嘱和行踪都等着被核验。"
     }
   ],
   "characters": [
@@ -261,7 +261,96 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_youcai_offering_jar",
+            "claim": "蛇可能是新封泥的供品蛇酒坛自行漏出，现场麻布袋只是常年放在供桌下的旧物。",
+            "basis": "这能解释酒坛异常但须面对同纹火漆袋、新鲜蛇鳞和21:00鼓袋进出画面；画面仍不辨人，不能单独指认我。",
+            "brokenByPublicClueIds": [
+              "lujiashu_shiyin",
+              "huoqi_shadai",
+              "chuhuo_dan"
+            ]
+          },
+          {
+            "id": "defense_youcai_bag_never_opened",
+            "claim": "我没有把活蛇放进锦盒；有人提袋进殿不等于袋里有蛇，袋子也可能只是添灯油的。",
+            "basis": "须核对装蛇人对蛇种/袋式的证言、袋身由鼓变瘪、现场袋鳞与炭灰蛇鳞；这些能反驳“袋子从未装蛇/未打开”，但仍不能从视频认脸。",
+            "brokenByPublicClueIds": [
+              "youcai_chushou_zhengyan",
+              "lujiashu_shiyin",
+              "huoqi_shadai",
+              "yinshang_fayan"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "cen_youcai_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_youcai_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "咬定蛇是意外：偏殿旧物多，供品里本就有蛇酒，坛里爬出来的说法你已备好。出货单经手栏是空的，往离场伙计身上推。账本一旦翻出，就哭穷认手头紧借了公款，把命案和钱案切开说。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "cen_youcai_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_youcai_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "咬定蛇是意外：偏殿旧物多，供品里本就有蛇酒，坛里爬出来的说法你已备好。出货单经手栏是空的，往离场伙计身上推。账本一旦翻出，就哭穷认手头紧借了公款，把命案和钱案切开说。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -481,7 +570,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "cen_shouzhuo_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_shouzhuo_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "阻止或拖延明晚的大会，想办法在宣读前借走字据。绝不能让人查出你今晚惦记过账房——你 20:30 起守正殿寸步未离，何秋和守夜的香客都能作证，这是你唯一的救命稻草。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "cen_shouzhuo_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_shouzhuo_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "阻止或拖延明晚的大会，想办法在宣读前借走字据。绝不能让人查出你今晚惦记过账房——你 20:30 起守正殿寸步未离，何秋和守夜的香客都能作证，这是你唯一的救命稻草。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -721,7 +876,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "he_qiu_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_qiu_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "新遗嘱不能见光。被问神龛就说祭前擦拭是老规矩。遗嘱若被发现，就哭诉一小妇人的哪敢动祖宗的东西，把水引向那些贪了祭田的男人——他们比你有得可查。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "he_qiu_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_qiu_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "新遗嘱不能见光。被问神龛就说祭前擦拭是老规矩。遗嘱若被发现，就哭诉一小妇人的哪敢动祖宗的东西，把水引向那些贪了祭田的男人——他们比你有得可查。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -961,7 +1182,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "cen_wanqing_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_wanqing_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你没杀人，但必须抢在警方之前理清蛇从哪来——全世界只有你能随手搞到银环蛇，这层嫌疑你赖不掉。同时护住陆嘉树，别让恋情把他也卷进来。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "cen_wanqing_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_wanqing_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "你没杀人，但必须抢在警方之前理清蛇从哪来——全世界只有你能随手搞到银环蛇，这层嫌疑你赖不掉。同时护住陆嘉树，别让恋情把他也卷进来。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1202,7 +1489,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "cen_azhao_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_azhao_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "别让除名发生，把篡改族谱说成订正讹误。你守前殿一整晚，全祠堂的进出你都看在眼里——这是你换清白的筹码。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "cen_azhao_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cen_azhao_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "别让除名发生，把篡改族谱说成订正讹误。你守前殿一整晚，全祠堂的进出你都看在眼里——这是你换清白的筹码。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1403,7 +1756,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "lu_jiashu_act1_fact",
+                "title": "死因与现场事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分蛇毒致死、蛇袋/鳞片现场痕迹与对行动者的推断；说明你掌握的事实来源。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lu_jiashu_act1_goal",
+                "title": "给出一条可核验信息",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用素材换活路：主动交出 21:00 的画面，换一个配合调查的定性；死守与晚晴的合影和 20:40 那段——恋情一旦曝光，你在集团的项目和晚晴的族籍一起完。 第一幕请公开一项与你相关的时间、物品或目击信息，并说明能否识别携带者。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "lu_jiashu_act2_fact",
+                "title": "来源与竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕比较酒坊来源、袋子运输、是否主动投放、蛇袭击与事后去向；供品坛意外与蛇自行逃逸需保留并检验。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "lu_jiashu_act2_goal",
+                "title": "回应一项竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "用素材换活路：主动交出 21:00 的画面，换一个配合调查的定性；死守与晚晴的合影和 20:40 那段——恋情一旦曝光，你在集团的项目和晚晴的族籍一起完。 第二幕请回应“酒坛意外逸蛇”或“蛇自行逃逸”的其中一种解释，提供可核验材料或时间。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1426,7 +1845,8 @@
           "type": "paragraph",
           "text": "正殿祖宗牌位层层而立，神龛夹层的灰尘有新翻动的痕；香炉里三炷香燃到一半，蒲团上还留着跪过的印。"
         }
-      ]
+      ],
+      "ownerCharacterId": "he_qiu"
     },
     {
       "id": "location_3",
@@ -1436,7 +1856,8 @@
           "type": "paragraph",
           "text": "账房里文书堆叠半人高，暗格开着，手抄账本摊在案上；页脚一行小字墨迹未干，算盘珠子拨到一半停着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cen_shouzhuo"
     },
     {
       "id": "location_4",
@@ -1456,7 +1877,19 @@
           "type": "paragraph",
           "text": "后院车棚里越野车与电动车并肩停着，后备箱敞开，空蛇笼与折叠捕蛇袋洗过未干；车筐文件袋的一角露在灯影外。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cen_wanqing"
+    },
+    {
+      "id": "location_6",
+      "name": "阿照的电动车筐与文件袋",
+      "description": [
+        {
+          "type": "paragraph",
+          "text": "电动车停在后院车棚边，筐里夹着族谱软件的后台改录截图和族老字条；文件袋属于岑阿照，搜查时可以询问本人。"
+        }
+      ],
+      "ownerCharacterId": "cen_azhao"
     }
   ],
   "clues": [
@@ -1468,7 +1901,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "死者左手背两个针孔样齿痕，间距约一厘米，局部不红不肿；乡医与县法医电话初判：银环蛇毒致神经麻痹、呼吸衰竭，咬伤至死亡约一个半小时，与守夜时段吻合。现场搜遍偏殿，没有蛇，没有任何盛毒容器。"
+          "text": "死者左手背两个针孔样齿痕，间距约一厘米，局部不红不肿；乡医与县法医电话初判：银环蛇毒致神经麻痹、呼吸衰竭，咬伤至死亡约一个半小时，与守夜时段吻合。现场搜遍偏殿，没有蛇，没有任何盛毒容器。 县法医复验在伤口组织和血液中检出银环蛇神经毒素，齿距与银环蛇相符；结合发病与死亡间隔，推定咬伤约在21:30—21:50，死亡约在22:50—23:10。尸体发现后在祠内外搜查未找到蛇；“蛇不在现场”不等于能证明它由谁带来或是否自行逃逸。"
         }
       ],
       "policy": "auto_public",
@@ -1483,7 +1916,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "供桌下樟木锦盒旁，一只敞口的麻布袋，双道火漆印有财蛇酒坊，袋内残留蛇鳞两片；锦盒底的炭灰里也有一片。锦盒是族老守夜取炭的地方——袋子的位置，正对着他每晚弯腰伸手的角度。"
+          "text": "供桌下樟木锦盒旁，一只敞口的麻布袋，双道火漆印有财蛇酒坊，袋内残留蛇鳞两片；锦盒底的炭灰里也有一片。锦盒是族老守夜取炭的地方——袋子的位置，正对着他每晚弯腰伸手的角度。 现场蛇袋双道火漆印的纹样可与酒坊封袋样式比对；袋口敞开、袋身瘪塌并留下鳞片，说明活物曾被装运且袋内后来空了，但蛇可能被主动放出，也可能自行逃出。炭灰中的一片鳞片只证明蛇曾到锦盒附近，不记录是谁放袋或蛇咬人的瞬间。"
         }
       ],
       "policy": "manual_public",
@@ -1498,7 +1931,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "账房文书堆里的出货单存根：三日前，有财蛇酒坊出库银环蛇壹条，名目泡酒用，经手人栏空白。同批进贡的三坛蛇酒里，有一坛坛口封泥是新封的，泥色发白——坛，可能根本没封上过。"
+          "text": "账房文书堆里的出货单存根：三日前，有财蛇酒坊出库银环蛇壹条，名目泡酒用，经手人栏空白。同批进贡的三坛蛇酒里，有一坛坛口封泥是新封的，泥色发白——坛，可能根本没封上过。 此存根只记酒坊出货和“泡酒用”，经手栏空白；它既可解释蛇的合法来源，也可支持误封的酒坛逸蛇，不能仅凭出货单归责岑有财。"
         }
       ],
       "policy": "manual_public",
@@ -1558,7 +1991,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "晚晴越野车后备箱：空蛇笼、折叠捕蛇袋、救助站放生登记本——上月放生银环蛇壹条，地点青云山保护区。笼内没有新鲜蛇蜕，捕蛇袋洗过；保护区离祠堂九十里，登记本上有两名同事的联名签字。"
+          "text": "晚晴越野车后备箱：空蛇笼、折叠捕蛇袋、救助站放生登记本——上月放生银环蛇壹条，地点青云山保护区。笼内没有新鲜蛇蜕，捕蛇袋洗过；保护区离祠堂九十里，登记本上有两名同事的联名签字。 该登记距案发一个月，旧捕蛇袋已清洗且没有新鲜蛇蜕；它说明晚晴有捕蛇器材和旧放生经历，但不证明她当晚带蛇到祠堂。"
         }
       ],
       "policy": "manual_public",
@@ -1567,7 +2000,7 @@
     },
     {
       "id": "gailu_jietu",
-      "locationId": "location_5",
+      "locationId": "location_6",
       "name": "族谱改录的截图",
       "category": "digital",
       "content": [
@@ -1594,6 +2027,53 @@
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "youcai_chushou_zhengyan",
+      "locationId": "location_3",
+      "name": "酒坊装蛇人证言与封袋样式",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "酒坊装蛇伙计公开作证：三日前岑有财亲自到后院取走一条银环蛇，要求用双道火漆麻布袋装，口头说要拿去泡酒；出货存根中的蛇种、日期和数量与其记忆一致。伙计没有跟车，未看见蛇是否被放进酒坛或送到祠堂，也不清楚经手栏为何空白。此证言和酒坊存根共同支持岑有财取得本案蛇源，但“泡酒用途”仍可能是实情，不能单独证明杀人计划。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "lujiashu_shiyin",
+      "locationId": "location_4",
+      "name": "陆嘉树手机原始视频与时间码",
+      "category": "digital",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "陆嘉树交出未剪辑手机原片及自动时间码：21:00左右，一个提着鼓胀双道火漆麻布袋的人进入偏殿，停留约两分钟后出来时袋身明显瘪下；镜头看清酒坊双印，却被柱子挡住脸和手部动作。之后镜头未拍到蛇本体离开。片段证明案发前有人把装有活物的袋子送到锦盒附近、离开时袋子已空；无法辨认提袋者，也无法区分他打开袋子放蛇、蛇从袋口自行逃出，或袋里原本另有物品。原片的哈希与设备时间日志一致，无剪辑痕迹。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "lu_jiashu"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "yinshang_fayan",
+      "locationId": "location_1",
+      "name": "伤口、毒素与死亡区间独立复验",
+      "category": "medical",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "独立县法医与蛇类救护站专家复核：死者手背新鲜双孔伤口的间距、深度和组织撕裂特征符合银环蛇咬伤；血液及伤口组织检出同类神经毒素，造成进行性神经麻痹和呼吸衰竭，排除茶食中毒及单纯心疾猝死。毒性进程结合尸温将死亡推定为22:50—23:10、咬伤约在21:30—21:50；此检验确认攻击与死亡因果，但不能判断蛇来自供品坛还是布袋、是否受人驱使或由谁带来。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
@@ -1608,61 +2088,68 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "岑有财三日前从自家蛇场提出一条银环蛇，21:00 借添灯油把敞口的火漆蛇袋放进族老守夜取炭的樟木锦盒；21:40 族老取炭时被咬——银环蛇毒不痛不肿、神经麻痹起病无声，22:40 族老倒在偏殿门槛内，23:10 才被发现。毒是活的，不在茶里不在饭里，现场不留容器。"
+          "text": "岑有财从有财蛇酒坊取得一条银环蛇，装入双道火漆麻布袋。陆嘉树21:00原始视频拍到有人提鼓袋进入偏殿，出来时袋身变瘪；现场同印袋与鳞片、锦盒炭灰中的蛇鳞证明活蛇到过取炭处。族老约21:30—21:50被咬，独立毒理确认银环蛇神经毒素致死，蛇在发现前自行离开或逃失，现场搜索未获。材料支持有人将蛇源带到取炭点并发生致命咬伤，但视频不辨人脸、不拍放蛇瞬间，因此“由谁运输、是否主动放出、蛇是否自行逸出”须结合证言、行踪、动机和竞争解释判断。"
         }
       ],
       "steps": [
         {
           "id": "method_step_1",
-          "title": "备蛇与出库",
+          "title": "取得蛇源",
           "content": [
             {
               "type": "paragraph",
-              "text": "岑有财三日前从自家蛇场提出一条银环蛇，以火漆蛇袋封装——有财蛇酒坊出货单记录出库银环蛇壹条名目泡酒用，经手人栏刻意留空。"
+              "text": "三日前有财蛇酒坊出库银环蛇一条。装蛇伙计称岑有财亲自提走并要求双道火漆麻布袋，出货存根相合；经手栏为空、名目为泡酒，因此来源可以推到酒坊蛇源，但用途仍可争辩。"
             }
           ],
           "clueIds": [
-            "chuhuo_dan"
+            "chuhuo_dan",
+            "youcai_chushou_zhengyan"
           ]
         },
         {
           "id": "method_step_2",
-          "title": "投放蛇袋入锦盒",
+          "title": "运输并将蛇袋带入取炭点",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:00 岑有财借添灯油提鼓布袋进偏殿，将敞口火漆蛇袋放进供桌下樟木锦盒上层——锦盒正是族老守夜取炭的习惯位置，袋口对着他每晚弯腰伸手的角度。"
+              "text": "陆嘉树的连续原片在21:00拍到有人提双印鼓袋进偏殿、停留后带着瘪袋离开。现场发现同纹火漆空袋和鳞片，锦盒炭灰另有鳞片；视频看不到脸和手，且不记录蛇出袋的瞬间，证明运输与袋内活物后来不在袋中，不单独证明岑有财亲自投放。"
             }
           ],
           "clueIds": [
+            "lujiashu_shiyin",
             "huoqi_shadai"
           ]
         },
         {
           "id": "method_step_3",
-          "title": "毒发与伪装",
+          "title": "咬伤、毒发与蛇去向",
           "content": [
             {
               "type": "paragraph",
-              "text": "21:40 族老开锦盒取炭被银环蛇咬伤手背，银环蛇毒不痛不肿、神经麻痹起病无声，族老只当蚊叮。22:20 视物模糊爬向殿门，22:40 倒在门槛内，23:10 才被发现——现场无蛇、无容器，毒是活的，不在茶里不在饭里。"
+              "text": "法医与救护站专家确认银环蛇咬伤、神经毒素与22:50—23:10死亡区间，倒推咬伤约21:30—21:50，与夜祭取炭习惯窗口相合。受害者伸手取炭时蛇可能咬伤后自行钻离；发现后搜寻未获，无法仅凭蛇已不在现场证明它被谁收走。"
             }
           ],
           "clueIds": [
-            "chihen_shijian"
+            "chihen_shijian",
+            "yinshang_fayan",
+            "huoqi_shadai"
           ]
         },
         {
           "id": "method_step_4",
-          "title": "动机掩盖",
+          "title": "检验意外解释与杀机",
           "content": [
             {
               "type": "paragraph",
-              "text": "岑有财企图以'蛇从供品坛里意外爬出'掩盖真相，但祭田账本与族老短信揭穿了真正的杀机：四十七万八的亏空即将在明晚祠堂大会上被当众清算。"
+              "text": "新封泥蛇酒坛和出货单给出意外逸蛇的可能；但原片中的鼓袋运输、现场双印袋和鳞片把活蛇带到族老取炭点。族老短信与祭田账本另示有财面临公开清算，动机与运输链相互支持，但动机不能替代攻击因果或身份辨认。"
             }
           ],
           "clueIds": [
-            "jitian_zhangben",
-            "duanxin"
+            "chuhuo_dan",
+            "lujiashu_shiyin",
+            "huoqi_shadai",
+            "duanxin",
+            "jitian_zhangben"
           ]
         }
       ]
@@ -1689,7 +2176,10 @@
           "he_qiu",
           "lu_jiashu"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "jitian_zhangben",
+          "duanxin"
+        ],
         "participantIds": [
           "he_qiu",
           "lu_jiashu"
@@ -1805,7 +2295,11 @@
           "he_qiu",
           "lu_jiashu"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "lujiashu_shiyin",
+          "huoqi_shadai",
+          "youcai_chushou_zhengyan"
+        ],
         "participantIds": [
           "cen_youcai",
           "he_qiu",
@@ -1830,7 +2324,9 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "lujiashu_shiyin"
+        ],
         "participantIds": []
       },
       {
@@ -1851,7 +2347,10 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "chihen_shijian",
+          "yinshang_fayan"
+        ],
         "participantIds": []
       },
       {
@@ -1872,7 +2371,10 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "chihen_shijian",
+          "yinshang_fayan"
+        ],
         "participantIds": []
       },
       {
@@ -1893,7 +2395,10 @@
           }
         ],
         "characterIds": [],
-        "clueIds": [],
+        "clueIds": [
+          "chihen_shijian",
+          "yinshang_fayan"
+        ],
         "participantIds": []
       },
       {
@@ -1916,7 +2421,10 @@
         "characterIds": [
           "lu_jiashu"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "chihen_shijian",
+          "yinshang_fayan"
+        ],
         "participantIds": [
           "lu_jiashu"
         ]
@@ -1942,7 +2450,9 @@
           "he_qiu",
           "lu_jiashu"
         ],
-        "clueIds": [],
+        "clueIds": [
+          "yinshang_fayan"
+        ],
         "participantIds": [
           "he_qiu",
           "lu_jiashu"
@@ -1950,25 +2460,53 @@
       }
     ],
     "keyEvidenceIds": [
+      "yinshang_fayan",
+      "youcai_chushou_zhengyan",
+      "lujiashu_shiyin",
+      "huoqi_shadai",
       "chuhuo_dan",
+      "duanxin",
       "jitian_zhangben"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_3",
+        "id": "evidence_cause",
         "clueIds": [
-          "chuhuo_dan",
-          "huoqi_shadai"
+          "chihen_shijian",
+          "yinshang_fayan",
+          "huoqi_shadai",
+          "youcai_chushou_zhengyan"
         ],
-        "conclusion": "三日前有财蛇酒坊出库银环蛇壹条、经手人栏空白，且坛口封泥异常——蛇的来源直指岑有财的蛇场，出货时间与案发时间吻合，说明凶器并非意外爬出而是有人蓄意投放。"
+        "conclusion": "现场齿痕与独立复验的伤口间距、组织毒素和血液毒理相符，确认银环蛇咬伤导致神经麻痹死亡，并给出约21:30—21:50咬伤窗口；这条医学链不识别带蛇者。 现场袋鳞和酒坊装蛇人证言进一步把具体蛇类物件与该死亡场景连接；该来源链不替代医学死因，也不单独证明放蛇者。"
       },
       {
-        "id": "evidence_4",
+        "id": "evidence_source_transport",
+        "clueIds": [
+          "chuhuo_dan",
+          "youcai_chushou_zhengyan",
+          "lujiashu_shiyin",
+          "huoqi_shadai"
+        ],
+        "conclusion": "酒坊出货存根和装蛇伙计证言支持岑有财从酒坊取得银环蛇；原始视频显示一名身份不明者把鼓袋带入偏殿后带出瘪袋；现场同印空袋与鳞片把运输终点连到锦盒炭灰处。来源、运输、投放地点分由交易文书、证言、录像与物证支持，但没有一项单独拍到放蛇或辨认携带者。"
+      },
+      {
+        "id": "evidence_placement_vs_escape",
+        "clueIds": [
+          "lujiashu_shiyin",
+          "huoqi_shadai",
+          "chuhuo_dan",
+          "yinshang_fayan"
+        ],
+        "conclusion": "鼓袋由鼓胀到瘪、袋口敞开及袋内/炭灰鳞片支持活蛇曾离袋并进入取炭区域，之后搜索未找到蛇；无法判断蛇被人主动放出还是自行逃出并自行咬人。供品酒坛新封泥仍提供误封逸蛇竞争解释，但它不能解释原片拍到的火漆蛇袋为何出现在锦盒边，需要比较两种解释。"
+      },
+      {
+        "id": "evidence_motive",
         "clueIds": [
           "jitian_zhangben",
-          "duanxin"
+          "duanxin",
+          "youcai_chushou_zhengyan"
         ],
-        "conclusion": "三年祭田租金四十七万八千，大半流入有财蛇酒坊，岑有财有巨大的贪腐亏空；族老三日前短信定下明晚祠堂大会当众宣读账本——'明晚大会'四个字就是岑有财不惜杀人的动机。"
+        "conclusion": "祭田账本显示有财蛇酒坊是异常大额收款方，族老短信明确约定次日公开对账；这与酒坊出蛇证言共同支持有财动机和蛇源接触，但短信、账本或出货都不能证明他亲自把蛇送入祠堂。"
       }
     ],
     "redHerrings": [
@@ -2044,7 +2582,31 @@
     "searchRounds": 2,
     "discussionRounds": 3,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "蛇毒死因与物证链",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "先由独立法医复验确认咬伤、蛇种、死亡区间和毒理因果，再检查现场双道火漆袋、鳞片和供品坛封泥。袋子空了不等于已证明有人主动放蛇；毒性证据也不能识别蛇的来源或携带者。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "蛇的来源、运输、投放与责任",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二轮公开酒坊装蛇人证言、陆嘉树原始视频，分开讨论来源、运输、袋子到偏殿、蛇如何出袋、咬伤与事后去向。保留供品坛误封逸蛇及袋中活蛇自行逃逸的竞争解释，再结合有财的账本与短信动机推断是否人为投放。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2067,6 +2629,94 @@
             "text": "岑有财咬死了蛇是意外，众人终究没能把火漆蛇袋、出货单和祭田账本串成一条线。祠堂散了，蛇酒坊的灯还亮着——族老的账，只能等列祖列宗去算了。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "开局先由法医确认银环蛇咬伤；现场没有蛇，不等于死因不明。告知蛇酒坛封泥异常，但不要先宣布人为投放。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "每人分清亲见、持有物、旧记录和推测；蛇源、携带者、放蛇者、攻击者及事后去向是不同判断。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证公开齿痕初判、蛇袋与鳞片、酒坊出货单、族老短信和祭田账本。第二轮保证公开装蛇伙计证言、陆嘉树原始视频、独立毒理/死亡区间复验及其他角色竞争线索。12张材料对应6人两轮搜证容量，关键链不得留在私人卡里。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "依次讨论蛇的来源（酒坊/野生蛇可能）、运输（出货与原片）、到达取炭处（袋与鳞片）、咬伤及死因（法医/毒理）、事后去向（蛇未找到）。保留供品坛误封逸蛇、蛇自行逃逸再袭击的解释；用原片和袋鳞证据检验而不是直接排除。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前至少引用三种不同来源材料，分别说清毒理因果、蛇袋运输/到达和嫌疑人身份；解释原片不辨脸带来的限制，并回应有财的账本/短信动机及晚晴的捕蛇器材。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家认定蛇毒已确认就等于证明岑有财投蛇。",
+        "hint": "分开法医因果链与蛇源/运输链；法医不认人，必须核酒坊证言、出货、原片和现场双印蛇袋。"
+      },
+      {
+        "condition": "玩家把供品坛封泥新、或蛇袋空了直接当成意外逸蛇。",
+        "hint": "比较连续原片袋子进出时的体积变化、蛇袋和锦盒周边鳞片，并明确视频不显示脸或蛇出袋瞬间，讨论它能削弱什么、不能证明什么。"
+      },
+      {
+        "condition": "玩家把晚晴的笼子和旧放生记录当作当晚来源。",
+        "hint": "提醒登记距案发一个月，捕蛇袋洗过、没有新鲜蛇蜕；再对照酒坊出货时间和同纹蛇袋。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "chihen_shijian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "huoqi_shadai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "chuhuo_dan",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "duanxin",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "jitian_zhangben",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "yizhu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "shelong",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "gailu_jietu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "kance_tu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "youcai_chushou_zhengyan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "lujiashu_shiyin",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "yinshang_fayan",
+        "deadlineRound": 2
       }
     ]
   }

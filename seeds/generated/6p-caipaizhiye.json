@@ -245,7 +245,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "cheng_yifei_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cheng_yifei_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶——但更要抢在警方前找到借条原件或还款凭证，别让新郎杀婚庆老板上头条。被问钱的事就说公司流水正常周转。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "cheng_yifei_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "cheng_yifei_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "找出真凶——但更要抢在警方前找到借条原件或还款凭证，别让新郎杀婚庆老板上头条。被问钱的事就说公司流水正常周转。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -471,7 +537,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "su_tiantian_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "su_tiantian_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "亲手指认真凶——婚礼出事又查不出人，你的账号会被凶案流量反噬。同时别让投诉信被翻出来，那会让你显得动机最大。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "su_tiantian_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "su_tiantian_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "亲手指认真凶——婚礼出事又查不出人，你的账号会被凶案流量反噬。同时别让投诉信被翻出来，那会让你显得动机最大。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -694,7 +826,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "tie_jun_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tie_jun_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把茅台的事烂在肚子里，实在被逼急就主动认换酒——换酒是贪，不是杀人。用地库的时间线证明你不在宴会厅。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "tie_jun_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "tie_jun_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "把茅台的事烂在肚子里，实在被逼急就主动认换酒——换酒是贪，不是杀人。用地库的时间线证明你不在宴会厅。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -916,7 +1114,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "he_xiaolu_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_xiaolu_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "抢先回看素材、锁定白手套的主人，让它在正确时机公开。绝不能让人发现你早就预判了现场，那解释不清。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "he_xiaolu_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "he_xiaolu_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "抢先回看素材、锁定白手套的主人，让它在正确时机公开。绝不能让人发现你早就预判了现场，那解释不清。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1180,7 +1444,95 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": true
+        "isCulprit": true,
+        "defenseHooks": [
+          {
+            "id": "defense_qianjin_normal_maintenance",
+            "claim": "吊环保险销只是旧损缺失，灯架坠落属于设备老化，没人当晚拧松或临时固定它。",
+            "basis": "若是旧损，不应同时出现三圈连续反向新痕、扳手齿口吻合擦痕和带水印的临时胶带；这些材料反驳事故说，但工具接触本身不识别持有人。",
+            "brokenByPublicClueIds": [
+              "zhuideng_deng",
+              "banshou",
+              "xiaolu_yuanshi_zhengyan"
+            ]
+          },
+          {
+            "id": "defense_qianjin_no_camera_activity",
+            "claim": "检修口19:18—19:36没有人活动；白手套影像可能是剪辑补入，不能证明天桥有人。",
+            "basis": "原始素材连续性及拍摄者的登记可公开核验，这条辩护只针对画面是否真实连续，不声称视频辨认了身份。",
+            "brokenByPublicClueIds": [
+              "sucai",
+              "xiaolu_yuanshi_zhengyan",
+              "menjin_jilu"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "qian_jin_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qian_jin_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "咬定坠落是设备老化加婚庆超期使用：灯是婚庆自带的，保养记录你已抽走。门禁记录就说是例行消防巡检，胶带是高空作业常规固定。把水搅向金满堂结仇的每一个人。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "qian_jin_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "qian_jin_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "咬定坠落是设备老化加婚庆超期使用：灯是婚庆自带的，保养记录你已抽走。门禁记录就说是例行消防巡检，胶带是高空作业常规固定。把水搅向金满堂结仇的每一个人。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -1441,7 +1793,73 @@
           "habits": [],
           "taboos": []
         },
-        "isCulprit": false
+        "isCulprit": false,
+        "stages": [
+          {
+            "actId": "act1",
+            "knowledge": [
+              {
+                "id": "mi_qi_act1_fact",
+                "title": "事故机制与接触事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第一幕区分吊点实际损坏、工具与胶带接触、白手套影像、工牌权限；不要把团队权限等同于实施者。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mi_qi_act1_goal",
+                "title": "提供一个可核查事实",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "拿回署名和欠薪——现在只有你能证明他的方案值多少钱。同时把 19:00 贵宾室外听到的话说出来：勒索别人的不止一个。 第一幕请说明一项亲历/持有/核验事实，并明确它不能单独证明什么。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          },
+          {
+            "actId": "act2",
+            "knowledge": [
+              {
+                "id": "mi_qi_act2_fact",
+                "title": "跨来源核验",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "第二幕公开原始素材和工程权限规程，需解释共享钥匙、共用工具与个人行为之间的边界。"
+                  }
+                ],
+                "kind": "fact",
+                "source": "possessed",
+                "relatedCharacterIds": [],
+                "relatedClueIds": []
+              }
+            ],
+            "objectives": [
+              {
+                "id": "mi_qi_act2_goal",
+                "title": "回应竞争解释",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "text": "拿回署名和欠薪——现在只有你能证明他的方案值多少钱。同时把 19:00 贵宾室外听到的话说出来：勒索别人的不止一个。 第二幕请针对一项证据给出可检验的竞争解释，并指出可核验来源。"
+                  }
+                ],
+                "priority": "primary"
+              }
+            ]
+          }
+        ]
       }
     }
   ],
@@ -1464,7 +1882,8 @@
           "type": "paragraph",
           "text": "后台化妆间的镜前灯还亮着，遗物托盘里搁着一部手机；工位上胶带粘回的辞职信压着工资条，粉饼盒下的信纸露出一角。"
         }
-      ]
+      ],
+      "ownerCharacterId": "mi_qi"
     },
     {
       "id": "location_3",
@@ -1474,7 +1893,8 @@
           "type": "paragraph",
           "text": "工程部的控制台指示灯成排闪动，检修口工具间的挂架上扳手少了位置；门禁打印条吐在台面，天桥入口的铁门虚掩着。"
         }
-      ]
+      ],
+      "ownerCharacterId": "qian_jin"
     },
     {
       "id": "location_4",
@@ -1484,7 +1904,8 @@
           "type": "paragraph",
           "text": "地下车库的婚车扎着花球，后备箱敞着，空瓶与散装酒桶并排放着；便利贴的字迹被灯光照得发白，车库里回声一层压一层。"
         }
-      ]
+      ],
+      "ownerCharacterId": "tie_jun"
     },
     {
       "id": "location_5",
@@ -1494,7 +1915,8 @@
           "type": "paragraph",
           "text": "库房里婚庆的物料箱堆到顶棚，喜糖礼盒倒了一地；垃圾篓里纸片撕得很碎，拼得起来的那大半张还沾着糖渍。"
         }
-      ]
+      ],
+      "ownerCharacterId": "cheng_yifei"
     }
   ],
   "clues": [
@@ -1502,11 +1924,11 @@
       "id": "zhuideng_deng",
       "locationId": "location_1",
       "name": "坠落的追光灯",
-      "category": "medical",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "灯架吊环保险销缺失，固定螺纹被反向拧松三圈；吊环上残留透明胶带，胶带上印着云顶国际的水印。法医初判：重物砸击致颅脑损伤死亡，死者倒在舞台中央的追光圈里——那是他亲自指定的站位。"
+          "text": "灯架吊环保险销缺失，固定螺纹被反向拧松三圈；吊环上残留透明胶带，胶带上印着云顶国际的水印。法医初判：重物砸击致颅脑损伤死亡，死者倒在舞台中央的追光圈里——那是他亲自指定的站位。 黄铜吊环的固定螺纹留有三圈连续反向新鲜擦痕，擦痕宽度与活动扳手齿口吻合；缺失的保险销与临时胶带说明吊点被人为改动。胶带水印只能追溯供应来源，不能单独识别贴胶带的人；现场未保留可辨认指纹。"
         }
       ],
       "policy": "auto_public",
@@ -1521,7 +1943,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "门禁系统打印条：19:18 刷入、19:36 刷出，工牌 B072，持有人宴会厅经理钱进。同一时段近一个月无任何巡检登记，消防巡检本应两人同行——记录里只有他一个人。"
+          "text": "门禁系统打印条：19:18 刷入、19:36 刷出，工牌 B072，持有人宴会厅经理钱进。同一时段近一个月无任何巡检登记，消防巡检本应两人同行——记录里只有他一个人。 B072的打印条证明钱进的工牌被刷，不证明他本人一定持卡；工程主管说明天桥门平时还可由检修组共享机械钥匙开启，登记册没有钥匙借还栏。"
         }
       ],
       "policy": "manual_public",
@@ -1532,11 +1954,11 @@
       "id": "banshou",
       "locationId": "location_3",
       "name": "工具间里的活动扳手",
-      "category": "digital",
+      "category": "trace",
       "content": [
         {
           "type": "paragraph",
-          "text": "检修口工具间挂架上少了一把活动扳手，在天桥护栏角落找到：手柄有缠过胶带的残胶，齿口嵌着黄铜屑——吊环正是黄铜材质。工具借用登记显示，这把活动扳手由钱进长期保管。"
+          "text": "检修口工具间挂架上少了一把活动扳手，在天桥护栏角落找到：手柄有缠过胶带的残胶，齿口嵌着黄铜屑——吊环正是黄铜材质。工具借用登记显示，这把活动扳手由钱进长期保管。 扳手齿口缺损位置与吊环新鲜擦痕的间隔吻合，黄铜屑成分与吊环相同，支持这把扳手实际接触过该吊环；工具长期由钱进保管但放在共用工具间，其他有权限的工程人员也可能取用。残胶和金属屑能证明工具接触，不能证明是谁握持。"
         }
       ],
       "policy": "manual_public",
@@ -1596,7 +2018,7 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "何小鹿备用机素材：19:33 检修口探出一双白手套又缩回；19:40 米琪摔流程册冲出后台；19:50 库房门口两个男人影拉扯；20:18 灯架坠落全程未切镜——吊环上的胶带在灯光下反着光。"
+          "text": "何小鹿备用机素材：19:33 检修口探出一双白手套又缩回；19:40 米琪摔流程册冲出后台；19:50 库房门口两个男人影拉扯；20:18 灯架坠落全程未切镜——吊环上的胶带在灯光下反着光。 画面未经剪辑，但白手套遮住手部、镜头只拍到检修口边缘；它证明有人在该处活动，不足以识别身份或确认此人是否触碰吊环。"
         }
       ],
       "policy": "manual_public",
@@ -1632,6 +2054,38 @@
       "policy": "manual_public",
       "relatedCharacterIds": [],
       "relatedTruthEventIds": []
+    },
+    {
+      "id": "xiaolu_yuanshi_zhengyan",
+      "locationId": "location_1",
+      "name": "跟拍素材原始记录人证言",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "何小鹿当晚负责跟拍，交出相机原始卡与拍摄登记：19:30—20:20这段画面连续、未暂停或剪切；19:33检修口处确有一只白手套伸出后缩回，但人脸、袖口和手套标识均未拍到，无法判断这只手套是否属于钱进、是否就是吊环操作人。她还确认20:18灯架坠落全程入镜，没人能在视频后期替换画面。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [
+        "he_xiaolu"
+      ],
+      "relatedTruthEventIds": []
+    },
+    {
+      "id": "gongcheng_tianqiao_quanxian",
+      "locationId": "location_3",
+      "name": "检修组天桥权限与工具借用规程",
+      "category": "testimony",
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "工程主管根据值班规程说明：天桥消防巡检应两人同行，但检修组四名持证员工都能从值班室领用共享机械钥匙；活动扳手挂在共用工具架，钱进虽是长期保管人，夜间并无个人封存或专属借用记录。门禁上的单人B072记录因此只提供与钱进相符的进入线索，不排除他人借卡/用钥匙；反过来，共享权限也不说明其他人真的上过天桥。主管核对工具后确认扳手缺损齿口与吊环擦痕形态吻合，但不能识别握持者。"
+        }
+      ],
+      "policy": "manual_public",
+      "relatedCharacterIds": [],
+      "relatedTruthEventIds": []
     }
   ],
   "truth": {
@@ -1646,7 +2100,7 @@
       "summary": [
         {
           "type": "paragraph",
-          "text": "钱进趁 19:18-19:36 的消防巡检时段刷工牌登上检修天桥，拧松追光灯吊环保险销，用印有自家酒店水印的透明胶带临时缠固；20:00 他借满堂彩模式让灯全功率预热，旋转震动后胶带脱开，20:18 灯架坠落砸死金满堂。事后他拉总闸、封天桥，以安全管理之名拖延吊点检查。"
+          "text": "钱进趁 19:18-19:36 的消防巡检时段刷工牌登上检修天桥，拧松追光灯吊环保险销，用印有自家酒店水印的透明胶带临时缠固；20:00 他借满堂彩模式让灯全功率预热，旋转震动后胶带脱开，20:18 灯架坠落砸死金满堂。事后他拉总闸、封天桥，以安全管理之名拖延吊点检查。 分层推断：门禁/工牌和共享机械钥匙说明谁有机会登桥；白手套只证明有人在检修口活动；吊环反向擦痕与扳手齿口、黄铜屑证明该扳手实际接触过吊环。工具及权限均为团队共享，不能直接等同于钱进本人实施；身份还须结合其工牌时段、工具长期保管、胶带来源和勒索动机。"
         }
       ],
       "steps": [
@@ -1656,12 +2110,14 @@
           "content": [
             {
               "type": "paragraph",
-              "text": "19:18 钱进借消防巡检名义刷工牌登上检修天桥，用长期保管的活动扳手拧松追光灯吊环保险销三圈，再用印有云顶国际水印的透明胶带缠住吊环临时固定，19:36 刷工牌离开。"
+              "text": "19:18 钱进借消防巡检名义刷工牌登上检修天桥，用长期保管的活动扳手拧松追光灯吊环保险销三圈，再用印有云顶国际水印的透明胶带缠住吊环临时固定，19:36 刷工牌离开。 齿口和吊环新痕的形态匹配可证明扳手参与实际改动；扳手是共用器材，门禁工牌也可能转交，二者单独不能识别操作者。"
             }
           ],
           "clueIds": [
             "menjin_jilu",
-            "banshou"
+            "banshou",
+            "xiaolu_yuanshi_zhengyan",
+            "gongcheng_tianqiao_quanxian"
           ]
         },
         {
@@ -2023,26 +2479,46 @@
       }
     ],
     "keyEvidenceIds": [
+      "zhuideng_deng",
       "menjin_jilu",
-      "banshou"
+      "banshou",
+      "sucai",
+      "xiaolu_yuanshi_zhengyan",
+      "gongcheng_tianqiao_quanxian",
+      "bianqian"
     ],
     "evidenceChain": [
       {
-        "id": "evidence_2",
+        "id": "evidence_access",
         "clueIds": [
           "menjin_jilu",
           "zhuideng_deng",
-          "sucai"
+          "sucai",
+          "xiaolu_yuanshi_zhengyan",
+          "gongcheng_tianqiao_quanxian"
         ],
-        "conclusion": "19:18-19:36 期间钱进独自刷工牌登上检修天桥，近一个月无任何巡检登记，消防巡检本应两人同行——案发前十八分钟只有他一人进入吊灯上方区域。"
+        "conclusion": "门禁打印记录显示B072在19:18—19:36进入天桥区域，连续原始素材记录同一时段检修口有白手套活动；何小鹿证实素材未剪切，但看不见身份或手部动作。工程规程证明工牌/共享机械钥匙均可能被他人使用，因此这条链确认登桥机会与现场有人活动，不唯一识别钱进。"
       },
       {
-        "id": "evidence_3",
+        "id": "evidence_contact",
         "clueIds": [
           "banshou",
-          "zhuideng_deng"
+          "zhuideng_deng",
+          "gongcheng_tianqiao_quanxian",
+          "xiaolu_yuanshi_zhengyan"
         ],
-        "conclusion": "钱进长期保管的活动扳手齿口嵌着黄铜屑（与吊环材质一致），手柄残留胶带残胶——正是拧松保险销并用胶带临时缠固的作案工具。"
+        "conclusion": "吊环保险销缺失、三圈反向新鲜擦痕和水印胶带证明吊点被人为处理；活动扳手齿口缺损与擦痕吻合，黄铜屑和残胶支持它实际接触吊环。工程主管证实该工具在共用架上、多人可取；白手套影像证明检修口有人活动但不可辨认。材料能从“有权限”推进到“工具参与接触”，仍不能单独认定持扳手者。"
+      },
+      {
+        "id": "evidence_motive",
+        "clueIds": [
+          "bianqian",
+          "maotai",
+          "danbao",
+          "cuzhi",
+          "tousu"
+        ],
+        "conclusion": "手机转账截图及场地费威胁说明金满堂以回扣证据要挟钱进；其他角色各有债务、欠薪、酒水调包或投诉秘密。动机不能替代实际接触和行动机会。"
       }
     ],
     "redHerrings": [
@@ -2100,7 +2576,7 @@
     "reveal": [
       {
         "type": "paragraph",
-        "text": "真相：凶手是宴会厅经理钱进。金满堂握着他和吊装供应商吃回扣的转账截图，勒索场地费全免——今晚正是最后期限。二十年老酒店人没骂一句，他只是照常巡检：拧松保险销，缠上自家水印的胶带，再亲手把满堂彩调到最亮。灯越亮，胶带化得越快，人死得越像意外。他忘了两件事：一台不肯切镜的跟拍机位，和他自己刷过的门禁。那只在天桥上稳了二十年的手，终究留下了三处指纹一样的把柄。"
+        "text": "真相：凶手是宴会厅经理钱进。金满堂握着他和吊装供应商吃回扣的转账截图，勒索场地费全免——今晚正是最后期限。二十年老酒店人没骂一句，他只是照常巡检：拧松保险销，缠上自家水印的胶带，再亲手把满堂彩调到最亮。灯越亮，胶带化得越快，人死得越像意外。他忘了两件事：一台不肯切镜的跟拍机位，和他自己刷过的门禁。那只在天桥上稳了二十年的手，终究留下了三处指纹一样的把柄。 但推理不能把团队共享权限、工牌刷卡、共用扳手或白手套影像中的任何一项直接说成钱进的个人指纹：门禁证明凭证，录像证明有人，扳手痕迹证明接触工具。只有这些独立材料与钱进长期保管扳手、胶带供应来源和被勒索动机合并后，才支持他实施改动。"
       }
     ]
   },
@@ -2109,7 +2585,31 @@
     "searchRounds": 2,
     "discussionRounds": 2,
     "allowPrivateChat": true,
-    "privateChatMessageLimit": 3
+    "privateChatMessageLimit": 3,
+    "acts": [
+      {
+        "id": "act1",
+        "title": "坠落机制与设备接触",
+        "roundStart": 1,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第一轮先确认吊环保险销缺失、螺纹反拧、胶带临时固定与坠落致死，再讨论扳手是否实际接触吊环。手套、工具保管和工牌刷卡各自有边界；同一设备组共享天桥钥匙和工具，先不要由权限或外观认人。"
+          }
+        ]
+      },
+      {
+        "id": "act2",
+        "title": "行动者、权限竞争与动机",
+        "roundStart": 2,
+        "brief": [
+          {
+            "type": "paragraph",
+            "text": "第二轮由原始拍摄者与工程主管补充证言，交叉核验录像连续性、共享钥匙规则、工牌和工具接触。再结合勒索转账、吊装回扣与其他角色秘密，区分“谁能上天桥”“谁的工具碰过吊环”“谁实施改动”。"
+          }
+        ]
+      }
+    ]
   },
   "ending": {
     "outcomes": [
@@ -2132,6 +2632,90 @@
             "text": "钱进咬定设备老化、婚庆超期使用，把水搅向每一个与金满堂有仇的人。投票未能指认钱进，那张回扣的转账截图随他一起沉入黑暗。金满堂在台上说了最后一句话，钱进在台下布置了最后一盏灯——真相被永远留在了那间宴会厅里。"
           }
         ]
+      }
+    ]
+  },
+  "hostGuide": {
+    "perPhase": [
+      {
+        "phase": "READING",
+        "notes": "先厘清吊环保险销缺失、反向新痕、临时胶带与重物砸击致死。工牌、白手套、扳手保管和实际接触是不同命题。"
+      },
+      {
+        "phase": "SELF_INTRO",
+        "notes": "玩家陈述时区分本人刷卡、团队钥匙权限、工具保管/借用、亲眼所见与推断。"
+      },
+      {
+        "phase": "SEARCH",
+        "notes": "第一轮保证公开现场灯架、门禁条、活动扳手、素材卡、手机便签及各角色竞争动机线索；第二轮必须保证公开原始素材记录人证言与工程主管权限/工具规程。全案11张卡，不超过6人两轮12次搜证容量。"
+      },
+      {
+        "phase": "DISCUSSION",
+        "notes": "分别讨论：谁能进入检修天桥（工牌/共享钥匙）；谁实际在检修口（连续素材/白手套）；什么工具接触吊环（匹配痕迹/黄铜屑）；谁最能解释动机与个人保管责任。工程组共享权限是竞争解释，不得由工牌或扳手一项直接定凶。"
+      },
+      {
+        "phase": "VOTE",
+        "notes": "投票前引用至少两种不同来源材料，说明其分别证明机会、现场活动、工具接触或动机中的哪一层，并回应共享机械钥匙和共用工具。"
+      }
+    ],
+    "stallBreakers": [
+      {
+        "condition": "玩家把B072门禁记录当成钱进本人绝对独占的身份记录。",
+        "hint": "公开工程主管规程：检修组多人可领共享机械钥匙，工牌能转交；门禁只记凭证。"
+      },
+      {
+        "condition": "玩家把白手套直接认作钱进或把保管扳手直接当成握持扳手。",
+        "hint": "看何小鹿原始卡与其证言，确认画面不能辨脸；再看扳手齿口与吊环擦痕，说明它能证明工具接触而非持有人。"
+      },
+      {
+        "condition": "玩家把灯架坠落归为老化事故。",
+        "hint": "对照吊环三圈反向新痕、缺失保险销、扳手上的黄铜屑与透明胶带水印，判断是否存在人为改动。"
+      }
+    ],
+    "guaranteedPublicClues": [
+      {
+        "clueId": "zhuideng_deng",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "menjin_jilu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "banshou",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "bianqian",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "danbao",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "maotai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "sucai",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "cuzhi",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "tousu",
+        "deadlineRound": 1
+      },
+      {
+        "clueId": "xiaolu_yuanshi_zhengyan",
+        "deadlineRound": 2
+      },
+      {
+        "clueId": "gongcheng_tianqiao_quanxian",
+        "deadlineRound": 2
       }
     ]
   }
