@@ -171,6 +171,7 @@ export function ChatFeed(props: ChatFeedProps) {
           <div key={ev.seq}>
             <EventBubble
               ev={ev}
+              publicEvidence={summary.publicEvidence ?? []}
               mySeat={mySeat}
               seatName={seatName}
               ttsSeats={aiSeatSet}
@@ -326,6 +327,7 @@ function RevealBlock({ summary, reveal, mySeat }: { summary: GameSummary; reveal
               : "凶手逃脱了……凶手阵营胜利！")}
       </p>
       <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
+      {Array.isArray(reveal.content.interactionChoices) && <div className="mt-4 text-left"><h4>角色抉择</h4>{(reveal.content.interactionChoices as Array<{ beatId: string; text: string }>).map((choice) => <p key={choice.beatId}>{choice.text}</p>)}</div>}
       <p className="mt-4 text-xs text-paper-500">{finale ? `${finale.title}：${finale.content}` : reveal.content.winText}</p>
       {(() => {
         const quizBoard = (reveal.content.quiz as GameSummary["quizResult"] | undefined) ?? summary.quizResult ?? null;
@@ -384,12 +386,14 @@ function RevealBlock({ summary, reveal, mySeat }: { summary: GameSummary; reveal
 
 function EventBubble({
   ev,
+  publicEvidence,
   mySeat,
   seatName,
   ttsSeats,
   onSpeak,
 }: {
   ev: GameEventView;
+  publicEvidence: Array<{ id: string; name: string }>;
   mySeat: number | null;
   seatName: (i: number) => string;
   ttsSeats: Set<number>;
@@ -419,6 +423,7 @@ function EventBubble({
     case "speech": {
       const text = ev.content.text ?? "";
       const canSpeak = ev.fromSeat !== null && ttsSeats.has(ev.fromSeat) && text;
+      const evidenceRefs = Array.isArray(ev.content.focusEvidenceIds ?? ev.content.evidenceIds) ? (ev.content.focusEvidenceIds ?? ev.content.evidenceIds) as string[] : [];
       const isInterjection = ev.content.interjection === true;
       return (
         <div className={`fade-up flex ${mine ? "justify-end" : "justify-start"}`}>
@@ -440,10 +445,12 @@ function EventBubble({
               )}
             </p>
             <p className="mt-1 whitespace-pre-wrap leading-relaxed text-paper-200">{text}</p>
+            <p className="mt-2 text-xs text-paper-500">{evidenceRefs.length ? `引用公开线索：${evidenceRefs.map((id) => publicEvidence.find((clue) => clue.id === id)?.name ?? id).join("、")}` : "角色陈述"}</p>
           </div>
         </div>
       );
     }
+    case "interaction":
     case "system":
       return <p className="mx-auto w-fit rounded-full border border-gold-400/10 bg-ink-950/70 px-3 py-1 text-center text-xs text-paper-500">{ev.content.text}</p>;
     case "clue":

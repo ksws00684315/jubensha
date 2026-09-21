@@ -64,7 +64,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
     round: game.round,
     scriptTitle: doc.meta.title,
     background: narrativeToText(doc.background),
-    flow: doc.flow,
+    flow: { ...doc.flow, interactionBeats: doc.flow.interactionBeats?.filter((beat) => beat.visibility === "public") },
     locations: locationNames(doc),
     availableLocations: (() => {
       // 观战（无有效座位 token）视角一律不下发搜证地点：
@@ -112,6 +112,9 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           : null,
       };
     }),
+        publicEvidence: doc.clues.filter((clue) => clueStates[clue.id]?.isPublic).map(({ id, name }) => ({ id, name })),
+    guaranteedDeadlines: Object.fromEntries((doc.hostGuide?.guaranteedPublicClues ?? []).map((item) => [item.clueId, item.deadlineRound])),
+    pendingInteraction: runtimeState.pendingInteraction?.seatIndex === mySeat ? doc.flow.interactionBeats?.find((beat) => beat.id === runtimeState.pendingInteraction?.beatId) ?? null : null,
     mySeat,
     myClues: (myState as { clueIds?: string[] } | null)?.clueIds ?? [],
     clues: visibleClues,

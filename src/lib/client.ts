@@ -52,7 +52,7 @@ export interface RoomView {
 
 export interface GameEventView {
   seq: string;
-  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer";
+  type: "phase" | "speech" | "system" | "clue" | "vote" | "private" | "reveal" | "thinking" | "transfer" | "interaction";
   phase: string;
   round: number;
   fromSeat: number | null;
@@ -126,6 +126,9 @@ export interface GameSummary {
   myCluesV2: ClueV2[];
   turnSeat: number | null;
   questionsLeft: number;
+  publicEvidence?: Array<{ id: string; name: string }>;
+  guaranteedDeadlines?: Record<string, number>;
+  pendingInteraction?: { id: string; prompt: string; choices: Array<{ id: string; label: string }> } | null;
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
   /** 本座位限时截止时间（epoch ms）；不限时或未在计时为 null */
   humanDeadline: number | null;

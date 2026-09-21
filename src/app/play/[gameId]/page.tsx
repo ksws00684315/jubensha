@@ -31,6 +31,7 @@ export default function PlayPage() {
   const [sendingLabel, setSendingLabel] = useState("正在提交…");
   const [input, setInput] = useState("");
   const [askTarget, setAskTarget] = useState<number | null>(null);
+  const [askEvidence, setAskEvidence] = useState<string[]>([]);
   const [askText, setAskText] = useState("");
   const [skillActiveId, setSkillActiveId] = useState<string | null>(null);
   const [skillToSeat, setSkillToSeat] = useState<number | null>(null);
@@ -403,6 +404,7 @@ export default function PlayPage() {
                 })}
               </div>
             )}
+            {summary.pendingInteraction && <div className="space-y-2 rounded border border-gold-400/30 p-3"><p>{summary.pendingInteraction.prompt}</p>{summary.pendingInteraction.choices.map((choice) => <button key={choice.id} disabled={sending} className="mr-2 rounded bg-gold-500 px-3 py-2 text-ink-950" onClick={() => void send({ type: "interaction", beatId: summary.pendingInteraction!.id, choiceId: choice.id })}>{choice.label}</button>)}</div>}
             {phase === "DISCUSSION" && (
               <div className="space-y-2">
                 {summary.pendingAnswer?.toSeat === mySeat ? (
@@ -419,8 +421,8 @@ export default function PlayPage() {
                         <p className="text-xs text-gold-400">当众提问（全场讨论共 {summary.questionsLeft} 次）：</p>
                         <select
                           aria-label="选择提问对象"
-                          value={askTarget ?? ""}
-                          onChange={(e) => setAskTarget(Number(e.target.value))}
+                          value={activeSeats.some((seat) => seat.index === askTarget && seat.index !== mySeat) ? askTarget! : ""}
+                          onChange={(e) => setAskTarget(e.target.value === "" ? null : Number(e.target.value))}
                           className="w-full rounded-lg border border-gold-400/20 bg-ink-950 px-2 py-2 text-sm outline-none focus:border-gold-400"
                         >
                           <option value="" disabled>
@@ -430,10 +432,11 @@ export default function PlayPage() {
                             .filter((s) => s.index !== mySeat)
                             .map((s) => (
                               <option key={s.index} value={s.index}>
-                                {s.characterName}
+                                {s.characterName ?? s.playerName ?? `座位 ${s.index + 1}`}
                               </option>
                             ))}
                         </select>
+                        <fieldset className="text-xs text-paper-300"><legend>引用公开证据（可选）</legend>{(summary.publicEvidence ?? []).map((clue) => <label key={clue.id} className="flex gap-2"><input type="checkbox" checked={askEvidence.includes(clue.id)} onChange={(event) => setAskEvidence((ids) => event.target.checked ? [...ids, clue.id] : ids.filter((id) => id !== clue.id))} />{clue.name}</label>)}</fieldset>
                         <div className="flex gap-2">
                           <input
                             aria-label="单独提问问题"
@@ -445,8 +448,7 @@ export default function PlayPage() {
                           <button
                             onClick={() => {
                               if (askTarget !== null && askText.trim()) {
-                                void send({ type: "ask", toSeat: askTarget, text: askText });
-                                setAskText("");
+                                void send({ type: "ask", toSeat: askTarget, text: askText, evidenceIds: askEvidence }).then((ok) => { if (ok) { setAskText(""); setAskEvidence([]); } });
                               }
                             }}
                             disabled={sending || askTarget === null || !askText.trim()}

@@ -250,7 +250,7 @@ export function InfoRail({
                         }}
                         className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60"
                       >
-                        私藏
+                        {(summary.guaranteedDeadlines?.[c.id] ?? Infinity) <= summary.round ? "暂时私藏，本轮结束由主持公开" : "私藏"}
                       </button>
                     </div>
                   )}

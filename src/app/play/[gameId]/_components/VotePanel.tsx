@@ -23,6 +23,7 @@ export function VotePanel({
   send: (action: Record<string, unknown>) => Promise<boolean>;
 }) {
   const [voteTarget, setVoteTarget] = useState<number | null>(null);
+  const [evidenceIds, setEvidenceIds] = useState<string[]>([]);
   const [voteReason, setVoteReason] = useState("");
   const [quizPicks, setQuizPicks] = useState<Record<string, string>>({});
 
@@ -46,6 +47,10 @@ export function VotePanel({
                 {s.characterName}
               </button>
             ))}
+          <fieldset className="space-y-1 text-xs text-paper-300">
+            <legend>投票证据{summary.publicEvidence?.length ? "（至少一张）" : "（暂无公开材料）"}</legend>
+            {(summary.publicEvidence ?? []).map((clue) => <label key={clue.id} className="flex gap-2"><input type="checkbox" checked={evidenceIds.includes(clue.id)} onChange={(event) => setEvidenceIds((ids) => event.target.checked ? [...ids, clue.id] : ids.filter((id) => id !== clue.id))} />{clue.name}</label>)}
+          </fieldset>
           <input
             aria-label="投票理由"
             value={voteReason}
@@ -55,9 +60,9 @@ export function VotePanel({
           />
           <button
             onClick={() => {
-              if (voteTarget !== null) void send({ type: "vote", target: voteTarget, reason: voteReason }).then(() => setVoteTarget(null));
+              if (voteTarget !== null) void send({ type: "vote", target: voteTarget, reason: voteReason, evidenceIds }).then(() => setVoteTarget(null));
             }}
-            disabled={voteTarget === null}
+            disabled={sending || voteTarget === null || Boolean(summary.publicEvidence?.length && !evidenceIds.length)}
             className="w-full rounded-lg bg-danger-400 py-2.5 text-sm font-semibold text-ink-950 hover:brightness-110 disabled:opacity-40"
           >
             投票
