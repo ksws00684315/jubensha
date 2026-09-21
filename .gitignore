@@ -51,3 +51,6 @@ next-env.d.ts
 # 工具与审计草稿目录
 .workbuddy/
 .zcode/
+
+# 迁移前的整库备份脚本：会导出 provider/binding 密文与对局快照，只在本地跑
+scripts/playtest-backup.ts
