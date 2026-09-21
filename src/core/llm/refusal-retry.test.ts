@@ -104,7 +104,20 @@ describe("内容审核拒答的角色锚定重试", () => {
     expect(err?.message).toContain("LLM 调用失败");
     expect(err?.message).not.toContain(REFUSAL);
     expect(mock.callRequests).toHaveLength(2);
-    expect(mock.logs[mock.logs.length - 1]).toMatchObject({ ok: false, error: REFUSAL });
+    expect(mock.logs[mock.logs.length - 1]).toMatchObject({ ok: false, error: REFUSAL, retryCount: 1, fallbackReason: "safety_refusal_reanchored" });
+  });
+
+  it("非流式：带 segments 时锚定追加进硬区尾部，随消息一起发出", async () => {
+    mock.logs.length = 0; mock.callRequests.length = 0; mock.calls.mode = "anchored_ok";
+    const { chat } = await import("./client");
+    await chat({
+      ...opts,
+      segments: { system: "规则", log: "现场记录", anchoredHead: "角色卡", droppable: [], anchoredTail: "输出要求" },
+    });
+    expect(mock.callRequests).toHaveLength(2);
+    expect(anchored(mock.callRequests[1])).toBe(true);
+    expect(mock.callRequests[1].some((m) => m.content.includes("输出要求"))).toBe(true);
+    expect(mock.logs[0]).toMatchObject({ ok: true, retryCount: 1, fallbackReason: "safety_refusal_reanchored" });
   });
 });
 

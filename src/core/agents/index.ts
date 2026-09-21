@@ -1,5 +1,6 @@
 import { bigramSimilarity } from "@/core/engine/questions";
-import { chat, chatStream, extractJson } from "@/core/llm/client";
+import { chat, chatStream, extractJson, ROLE_ANCHOR } from "@/core/llm/client";
+import { isRefusalBoilerplate, isSafetyRefusal } from "@/core/llm/output-tokens";
 import type { Purpose } from "@/core/llm/types";
 import { buildDmContext, buildPlayerContext, characterOf } from "./context";
 import { buildSummarizeMessages } from "./memory";
@@ -136,18 +137,25 @@ export const agent = {
 
   /** 玩家自我介绍 / 发言（带泄密守卫与一次重试） */
   async playerSpeak(ctx: AgentCtx, seatIndex: number, opts: { intro?: boolean; hint?: string; recall?: string; abortSignal?: AbortSignal; generationId?: string; taskType?: "speech" | "answer" } = {}): Promise<string> {
-    const build = () =>
+    const build = (anchor = false) =>
       playerPrompt(ctx, seatIndex, {
         hint: opts.hint,
-        extraInstruction: opts.intro ? "这是你的自我介绍环节。" : undefined,
+        extraInstruction: [opts.intro ? "这是你的自我介绍环节。" : "", anchor ? ROLE_ANCHOR : ""].filter(Boolean).join("\n") || undefined,
         recall: opts.recall,
         taskType: opts.taskType ?? (opts.intro ? "speech" : "speech"),
       });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
-    let guarded = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro" : opts.taskType ?? "speech" })).text);
+    const say = async (taskType: string, anchor = false) =>
+      guardPlayerSpeech(ctx.script, ctx.state, seatIndex, (await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(anchor), taskType })).text);
+    let guarded = await say(opts.intro ? "self_intro" : opts.taskType ?? "speech");
+    // 拒绝语被当成正文返回时不报错，只能按台词判定：补角色锚定重发一次，仍是被拒就当没有发言。
+    if (isRefusalBoilerplate(guarded.text)) {
+      console.warn(`[llm] speech_refusal_reanchor task=${opts.intro ? "self_intro" : opts.taskType ?? "speech"} seat=${seatIndex}`);
+      guarded = await say("speech_refusal_reanchor", true);
+    }
+    if (isRefusalBoilerplate(guarded.text)) return "";
     if (guarded.leaked.length) {
-      const retry = await chat({ purpose, gameId: ctx.gameId, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, ...build(), taskType: opts.intro ? "self_intro_retry" : "speech_retry" });
-      const guarded2 = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, retry.text);
+      const guarded2 = await say(opts.intro ? "self_intro_retry" : "speech_retry");
       if (guarded2.text.length >= Math.min(20, guarded.text.length)) guarded = guarded2;
     }
     return guarded.text;
@@ -167,12 +175,27 @@ export const agent = {
     });
     const purpose = seatPurpose(ctx.script, ctx.state, seatIndex);
     const redactor = createSpeechRedactor(playerGuardMarkers(ctx.script, ctx.state, seatIndex));
-    for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : opts.taskType ?? "speech" })) {
-      const delta = redactor.push(chunk);
-      if (delta) yield delta;
+    let emitted = false;
+    try {
+      for await (const chunk of chatStream({ purpose, gameId: ctx.gameId, ...prompt, temperature: 0.85, ...NARRATIVE_SAMPLING, abortSignal: opts.abortSignal, generationId: opts.generationId, taskType: opts.intro ? "self_intro" : opts.taskType ?? "speech" })) {
+        const delta = redactor.push(chunk);
+        // 审核话术有时被当正文吐出：不放出也不计入文本，让调用方按"没有发言"兜底重发。
+        if (!delta || isRefusalBoilerplate(delta)) continue;
+        emitted = true;
+        yield delta;
+      }
+      const { delta } = redactor.flush();
+      if (delta && !isRefusalBoilerplate(delta)) {
+        emitted = true;
+        yield delta;
+      }
+    } catch (err) {
+      if (!emitted && isSafetyRefusal(err)) {
+        console.warn(`[llm] stream_refusal_fallback task=${opts.intro ? "self_intro" : opts.taskType ?? "speech"} seat=${seatIndex}`);
+        return;
+      }
+      throw err;
     }
-    const { delta } = redactor.flush();
-    if (delta) yield delta;
   },
 
   /**

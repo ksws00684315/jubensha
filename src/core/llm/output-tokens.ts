@@ -32,3 +32,19 @@ const SAFETY_REFUSAL =
 export function isSafetyRefusal(err: unknown): boolean {
   return SAFETY_REFUSAL.test(err instanceof Error ? err.message : String(err));
 }
+
+/**
+ * 内容审核除了报错（TEXT_AUDIT_ANSWER_NOT_PASS），也可能把拒绝话术当正文交回来，
+ * 所以台词层要单独判一次。判定从严：自称 AI，或「拒绝动词＋客服式收尾」同时出现——
+ * 角色自己说「抱歉，我不能提供他的住处」是正常台词，不能误判。
+ */
+const AI_SELF = /作为\s*(AI|人工智能|语言模型)|as an AI( language model)?|(I'?m|I am)\s+sorry,?\s+but|(I )?can'?t\s+(help|assist|provide|answer)|unable to (assist|answer|provide)|content policy/i;
+const CANNED_REFUSAL = /(无法|不能|没法)(提供|回答|讨论|解答|透露)/;
+const CANNED_CLOSING = /(相应的信息|相关的?(信息|内容|帮助)|其他(问题|需要|疑问)|更多(信息|帮助|内容)|安全(策略|规定|准则)|很(愿意|乐意)(为)?(您|你)?(回答|服务|帮助|解答))/;
+
+export function isRefusalBoilerplate(text: string): boolean {
+  const t = (text ?? "").trim();
+  if (!t || t.length > 160) return false;
+  if (AI_SELF.test(t)) return true;
+  return CANNED_REFUSAL.test(t) && CANNED_CLOSING.test(t);
+}
