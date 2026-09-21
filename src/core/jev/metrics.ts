@@ -164,7 +164,7 @@ export function summarizeVoteOutcomes(outcomes: JevVoteOutcome[]) {
     {
       name: "合法率 ≥99%",
       pass: jevAnswered.length >= 20 && jevLegal.length / jevAnswered.length >= 0.99,
-      detail: `${jevLegal.length}/${jevAnswered.length} = ${((jevLegal.length / Math.max(1, jevAnswered.length)) * 100).toFixed(1)}%`,
+      detail: `${jevLegal.length}/${jevAnswered.length} = ${((jevLegal.length / Math.max(1, jevAnswered.length)) * 100).toFixed(1)}%${jevAnswered.length < 20 ? `（样本不足 20，比率再高也不判过）` : ""}`,
     },
     {
       name: "p95 时延不劣于现网重放",
