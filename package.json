@@ -18,6 +18,7 @@
     "sample:audit": "npx tsx scripts/audit-sample-playability.ts",
     "blind-read:build": "npx tsx scripts/build-seat-blind-read.ts",
     "blind-read:eval": "npx tsx scripts/run-blind-read-eval.ts",
+    "jev:dataset": "npx tsx scripts/build-jev-vote-set.ts",
     "script:schema": "tsx scripts/script-v2-schema.ts",
     "script:validate": "tsx scripts/validate-script-v2.ts",
     "script:migrate": "tsx scripts/migrate-script-v1.ts",
