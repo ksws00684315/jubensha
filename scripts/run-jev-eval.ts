@@ -20,8 +20,16 @@ const maxCalls = Number(process.argv.find((a) => a.startsWith("--max-calls="))?.
 const datasetPath = resolve(process.argv.find((a) => a.startsWith("--dataset="))?.split("=")[1] ?? ".workbuddy/jev-eval/dataset.jsonl");
 const out = resolve(process.argv.find((a) => a.startsWith("--out="))?.split("=")[1] ?? ".workbuddy/jev-eval/runs/latest.json");
 
-const apiKey = process.env.JEV_API_KEY ?? "";
-const endpoint = { baseUrl: process.env.JEV_BASE_URL ?? "https://api.typesafe.ai", apiKey, modelId: process.env.JEV_MODEL ?? "jev-latest" };
+/** tsx 不像 next/prisma 那样自动读 .env；这里只为 JEV_* 三个变量做回退，密钥因此可以留在 .env 里不进命令行。 */
+function dotenvValue(key: string): string | undefined {
+  if (process.env[key]) return process.env[key];
+  if (!existsSync(".env")) return undefined;
+  const line = readFileSync(".env", "utf8").split("\n").find((l) => l.startsWith(`${key}=`));
+  return line?.slice(key.length + 1).trim().replace(/^["']|["']$/g, "");
+}
+
+const apiKey = dotenvValue("JEV_API_KEY") ?? "";
+const endpoint = { baseUrl: dotenvValue("JEV_BASE_URL") ?? "https://api.typesafe.ai", apiKey, modelId: dotenvValue("JEV_MODEL") ?? "jev-latest" };
 
 function loadSamples(): JevVoteSample[] {
   if (!existsSync(datasetPath)) throw new Error(`语料不存在：${datasetPath}，请先运行 npm run jev:dataset`);
