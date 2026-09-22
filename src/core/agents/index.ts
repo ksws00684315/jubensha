@@ -5,7 +5,7 @@ import type { Purpose } from "@/core/llm/types";
 import { buildDmContext, buildPlayerContext, characterOf } from "./context";
 import { buildSummarizeMessages } from "./memory";
 import { createSpeechRedactor, dmGuardMarkers, guardDmSpeech, guardPlayerSpeech, playerGuardMarkers } from "./guard";
-import { lastOwnSpeechText, shouldReviewSpeech } from "./review";
+import { degradedSpeechLine, lastOwnSpeechText, makeNoveltyJudge, shouldReviewSpeech } from "./review";
 import { recallRelevantStatements } from "./recall";
 import type { EngineEvent, GameState, PlayerActionPlan } from "@/core/engine/types";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
@@ -201,18 +201,24 @@ export const agent = {
   /**
    * ★ 二次审查 ★（critique→refine）：启发式怀疑出戏/复读时，用一次廉价调用判定并最小修改。
    * 通过守卫的台词通常直接返回原文本（零额外成本）；审查失败时保留原文。
+   * 本地启发式只负责「值不值得送审」，改不改以审查员的判断为准（它判 ok 就保留原文）；
+   * 只有审查员自己给出改写、或改写后仍然冗余、或审查调用失败时，才退到该座位的短话。
    */
   async refineSpeech(ctx: AgentCtx, seatIndex: number, text: string, opts: { abortSignal?: AbortSignal; generationId?: string } = {}): Promise<string> {
     const ownLast = lastOwnSpeechText(ctx.events, seatIndex);
     const plan = ctx.state.actionPlans?.[String(seatIndex)];
     const prior = ctx.events.filter((ev) => ev.type === "speech" && ev.visibility === "public" && ev.phase === ctx.state.phase && ev.round === ctx.state.round);
-    const repeated = (candidate: string) => prior.some((ev) => {
-      const refs = Array.isArray(ev.content.focusEvidenceIds) ? ev.content.focusEvidenceIds : [];
-      const newEvidence = (plan?.focusEvidenceIds ?? []).some((id) => !refs.includes(id));
-      return !newEvidence && bigramSimilarity(candidate, String(ev.content.text ?? "")) >= 0.72;
-    });
-    const duplicateClaim = plan?.claimSummary && prior.some((ev) => ev.content.claimSummary && bigramSimilarity(plan.claimSummary!, String(ev.content.claimSummary)) >= 0.72 && !(plan.focusEvidenceIds ?? []).some((id) => !(Array.isArray(ev.content.focusEvidenceIds) ? ev.content.focusEvidenceIds : []).includes(id)));
-    if (!shouldReviewSpeech(text, ownLast) && !repeated(text) && !duplicateClaim) return text;
+    const novelty = makeNoveltyJudge(ctx.script, ctx.events, ctx.state.phase, ctx.state.round, plan?.focusEvidenceIds ?? []);
+    const repeated = (candidate: string) => novelty.judgeable && prior.some((ev) => bigramSimilarity(candidate, String(ev.content.text ?? "")) >= 0.72 && !novelty.novelVs(candidate, ev));
+    const duplicateClaim = Boolean(novelty.judgeable && plan?.claimSummary && prior.some((ev) => ev.content.claimSummary && bigramSimilarity(plan.claimSummary!, String(ev.content.claimSummary)) >= 0.72 && !novelty.novelVs(text, ev)));
+    const suspicion = [shouldReviewSpeech(text, ownLast) ? "ooc" : "", repeated(text) ? "repeated" : "", duplicateClaim ? "claim" : ""].filter(Boolean).join("+");
+    const trace = (outcome: string, finalText: string) => {
+      if (finalText === text && outcome === "keep") return;
+      console.warn(`[agents] speech_refine game=${ctx.gameId} seat=${seatIndex} fired=${suspicion} outcome=${outcome} from="${text.slice(0, 40)}" to="${finalText.slice(0, 40)}"`);
+    };
+    if (!suspicion) return text;
+    const targetName = plan?.targetSeat == null ? null : characterOf(ctx.script, ctx.state, plan.targetSeat)?.name ?? ctx.state.seats[plan.targetSeat]?.playerName ?? null;
+    const degraded = () => degradedSpeechLine(plan, targetName);
     try {
       const res = await chat({
         purpose: seatPurpose(ctx.script, ctx.state, seatIndex),
@@ -235,14 +241,30 @@ export const agent = {
         ],
       });
       const parsed = extractJson<{ ok?: boolean; text?: string }>(res.text);
+      if (parsed?.ok === true) {
+        trace("reviewer_keep", text);
+        return text;
+      }
       if (parsed && parsed.ok === false && typeof parsed.text === "string") {
         const refined = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, parsed.text.trim());
-        if (refined.text.length >= Math.min(20, text.length)) return repeated(refined.text) ? "我同意已有的判断，暂时没有新材料补充。" : refined.text;
+        if (refined.text.length >= Math.min(20, text.length)) {
+          if (repeated(refined.text)) {
+            trace("reviewer_redundant", degraded());
+            return degraded();
+          }
+          trace("reviewer_fix", refined.text);
+          return refined.text;
+        }
       }
     } catch {
-      /* 审查失败就用原文 */
+      /* 审查失败就按本地判据处理 */
     }
-    return repeated(text) || duplicateClaim ? "我同意已有的判断，暂时没有新材料补充。" : text;
+    if (repeated(text) || duplicateClaim) {
+      trace("degraded", degraded());
+      return degraded();
+    }
+    trace("keep", text);
+    return text;
   },
 
   /**
