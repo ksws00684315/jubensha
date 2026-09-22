@@ -198,6 +198,34 @@ describe("Validator 新规则", () => {
     });
     expect(validateScriptV2(d2).some((i) => i.level === "error" && i.message.includes("幕不存在"))).toBe(true);
   });
+
+  const withClueText = (id: string, text: string) =>
+    cloneWith((d) => {
+      d.clues.find((c: any) => c.id === id).content = [{ type: "paragraph", text }];
+    });
+
+  it("样板种子本身不触发锁凶门禁", () => {
+    const issues = validateScriptV2(parseScriptDocV2(raw));
+    expect(issues.some((i) => i.message.includes("单卡锁凶") || i.message.includes("推理链条偏短"))).toBe(false);
+  });
+
+  it("一张卡给齐姓名＋行为＋明知且无出口 → error", () => {
+    const d2 = withClueText("bottle", "瓶身标签上写着苏晚的名字，她明知沈万山在服镇静剂，仍催他把这杯茶一口喝干。");
+    expect(validateScriptV2(d2).some((i) => i.level === "error" && i.message.includes("单卡锁凶"))).toBe(true);
+  });
+
+  it("点名加行为但留了观察出口：不报单卡锁凶", () => {
+    const d2 = withClueText("bottle", "苏晚在传菜口催过酒，但没人看见她把什么东西放进杯子。");
+    expect(validateScriptV2(d2).some((i) => i.message.includes("单卡锁凶"))).toBe(false);
+  });
+
+  it("第 1 轮两卡即可凑齐三要素 → warning", () => {
+    const d2 = cloneWith((d) => {
+      d.clues.find((c: any) => c.id === "missing_key").content = [{ type: "paragraph", text: "备用房卡全楼只有一张，登记簿上那晚领走它的是苏晚。" }];
+      d.clues.find((c: any) => c.id === "teacup").content = [{ type: "paragraph", text: "杯沿指纹之外，还查到有人明知茶里有异物仍劝沈万山喝下。" }];
+    });
+    expect(validateScriptV2(d2).some((i) => i.level === "warning" && i.message.includes("推理链条偏短"))).toBe(true);
+  });
 });
 
 describe("引擎纯函数", () => {

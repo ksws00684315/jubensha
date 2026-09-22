@@ -1,6 +1,7 @@
 import type { Narrative, ScriptDocV2, TimelineTime } from "./schema";
 import { isPlaceholderTimelineTime, isPlaceholderTimelineTitle, isTruncatedTimelineText } from "./timeline";
 import { narrativeToText } from "../compat";
+import { computeLockMetric } from "../lock-metric";
 
 export interface ScriptV2Issue {
   level: "error" | "warning";
@@ -270,6 +271,32 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   for (const [index, clue] of doc.clues.entries()) {
     checkRefs(issues, clue.forbiddenCharacterIds, characterIds, `clues.${index}.forbiddenCharacterIds`);
     if (clue.release) checkRefs(issues, clue.release.afterCluePublicIds, clueIds, `clues.${index}.release.afterCluePublicIds`);
+  }
+
+  // 几卡锁凶：只看桌上真正会露出来的材料，不看作者声明的 evidenceChain。
+  // 一张卡就把 姓名＋加害行为＋明知 给齐且没有观察出口 → 玩家不需要推理，直接 error。
+  const lock = computeLockMetric(doc);
+  const lockedFirstRound = new Map<string, number>();
+  for (const view of lock.rounds) {
+    for (const clueId of view.singleCardClueIds) if (!lockedFirstRound.has(clueId)) lockedFirstRound.set(clueId, view.round);
+  }
+  for (const [clueId, round] of lockedFirstRound) {
+    const index = doc.clues.findIndex((clue) => clue.id === clueId);
+    issue(
+      issues,
+      "error",
+      `clues.${index}.content`,
+      `第 ${round} 轮单卡锁凶：「${doc.clues[index]?.name ?? clueId}」一张卡同时给出真凶姓名、加害行为和"明知"，且没有留观察层面的出口；请把判词搬进 hostGuide，或给这条观察一个竞争解释`,
+    );
+  }
+  const firstRoundView = lock.rounds.find((view) => view.round === 1);
+  if (firstRoundView?.lockInTable && firstRoundView.lockInTable.count === 2) {
+    issue(
+      issues,
+      "warning",
+      "clues",
+      `第 1 轮两张卡（${firstRoundView.lockInTable.clueIds.join(" + ")}）即可凑齐锁凶三要素，推理链条偏短`,
+    );
   }
   for (const [index, location] of doc.locations.entries()) {
     if (location.ownerCharacterId && !characterIds.has(location.ownerCharacterId)) {

@@ -1,5 +1,6 @@
 import type { ScriptDocV2 } from "./v2/schema";
 import type { AuthorDesignPackage } from "./design";
+import { computeLockMetric } from "./lock-metric";
 
 export interface PlayabilityIssue {
   level: "error" | "warning";
@@ -63,6 +64,17 @@ export function auditScriptPlayability(doc: ScriptDocV2, design?: AuthorDesignPa
     const clue = clueById.get(evidenceId);
     if (!clue) continue;
     if (clue.forbiddenCharacterIds.length >= doc.characters.length) report("error", `truth.keyEvidenceIds.${index}`, `关键证据 ${evidenceId} 无任何获取路径`);
+  }
+
+  // 卡片文本口径：判词和抹名目击都是"作者替玩家把话说完了"，只报 warning 供改稿时清账
+  const lock = computeLockMetric(doc);
+  for (const clueId of lock.verdictClueIds) {
+    const index = doc.clues.findIndex((clue) => clue.id === clueId);
+    report("warning", `clues.${index}.content`, `「${doc.clues[index]?.name ?? clueId}」在卡片里替玩家下判词（能证明／不足以说明…），这类结论请写进 hostGuide 或 truth.evidenceChain`);
+  }
+  for (const hit of lock.blankedWitnesses) {
+    const index = doc.characters.findIndex((character) => character.id === hit.characterId);
+    report("warning", `characters.${index}.privateCard.${hit.section}`, `${hit.characterName} 的目击被写成"有人/那人"（${hit.excerpt}），玩家台上只能说空话；请点名并留出归因错的出口`);
   }
 
   if (design) {

@@ -63,12 +63,21 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }
     ...validateScriptV2(ingested.doc),
   ];
   const errors = issues.filter((i) => i.level === "error");
-  if (errors.length) return NextResponse.json({ error: "剧本逻辑校验失败", issues: errors }, { status: 400 });
 
   const designParsed = body.designPackage === undefined ? null : authorDesignPackageSchema.safeParse(body.designPackage);
   if (designParsed && !designParsed.success) return NextResponse.json({ error: "作者设计包结构校验失败", issues: designParsed.error.issues }, { status: 400 });
   const designIssues = designParsed?.success ? validateAuthorDesignPackage(designParsed.data, ingested.doc) : [];
   if (designIssues.some((issue) => issue.level === "error")) return NextResponse.json({ error: "作者设计包引用校验失败", issues: designIssues }, { status: 400 });
+
+  // 审稿门禁：新设计包或库里既有审稿记录标着 needs_revision，且仍有 error 级问题 → 不 force 就退回
+  const reviewStatus = (designParsed?.success ? designParsed.data.review.status : undefined) ?? (existing.designReview as { status?: string } | null)?.status;
+  if (reviewStatus === "needs_revision" && errors.length && body.force !== true) {
+    return NextResponse.json(
+      { error: "审稿结论为 needs_revision 且仍有 error 级问题未处理：请先修改，确认无误再带 force:true 强制入库", issues: errors },
+      { status: 409 },
+    );
+  }
+  if (errors.length) return NextResponse.json({ error: "剧本逻辑校验失败", issues: errors }, { status: 400 });
 
   const script = await db.script.update({
     where: { id },

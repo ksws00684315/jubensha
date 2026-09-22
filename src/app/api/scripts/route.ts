@@ -52,6 +52,14 @@ async function POST_IMPL(req: Request) {
     ...validateScriptV2(doc),
   ];
   const errors = issues.filter((i) => i.level === "error");
+  // 审稿门禁：设计包标着 needs_revision 却还带着 error 级问题，说明这一版没被处理过；
+  // 不 force 就退回去改，避免审稿意见被无声忽略。
+  if (designParsed?.success && designParsed.data.review.status === "needs_revision" && errors.length && body.force !== true) {
+    return NextResponse.json(
+      { error: "审稿结论为 needs_revision 且仍有 error 级问题未处理：请先修改，确认无误再带 force:true 强制入库", issues },
+      { status: 409 },
+    );
+  }
   if (errors.length) {
     return NextResponse.json({ error: "剧本逻辑校验失败", issues }, { status: 400 });
   }
