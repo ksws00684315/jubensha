@@ -328,7 +328,9 @@ export const agent = {
       const parsed = extractJson<{ location?: string }>(res.text);
       if (parsed?.location && locations.includes(parsed.location)) return parsed.location;
     }
-    return locations[Math.floor(Math.random() * locations.length)];
+    // 不再自己随机：抛给引擎的兜底分支，那边才知道"这一票/这一步不是模型决定"，
+    // 也才能在同一处先问一次 Jev 再落回随机。
+    throw new Error(`agent_decision_unavailable:location seat=${seatIndex}`);
   },
 
   /** 玩家决定线索公开还是私藏 */
@@ -342,7 +344,7 @@ export const agent = {
       const parsed = extractJson<{ publish?: boolean }>(res.text);
       if (typeof parsed?.publish === "boolean") return parsed.publish;
     }
-    return false;
+    throw new Error(`agent_decision_unavailable:publish seat=${seatIndex} clue=${clueId}`);
   },
 
   /** 讨论阶段：决定是否当众提问。无必要则返回 null。 */
@@ -423,8 +425,7 @@ export const agent = {
         }
       }
     }
-    const fallback = candidates.filter((c) => c !== seatIndex);
-    return { target: fallback[Math.floor(Math.random() * fallback.length)], reason: publicEvidenceIds.length ? "依据已公开材料暂作判断，仍需核实行为与动机。" : "公开材料不足，暂作判断。", evidenceIds: publicEvidenceIds.slice(0, 1) };
+    throw new Error(`agent_decision_unavailable:vote seat=${seatIndex}`);
   },
 
   /** 私聊回复 */

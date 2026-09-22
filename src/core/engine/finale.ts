@@ -4,6 +4,7 @@ import { activeSeats } from "./state";
 import { finaleMissing } from "./flow";
 import { AI_DECISION_TIMEOUT_MS, withTimeout } from "./util";
 import { armHumanTimeout } from "./human-turn";
+import { jevVoteFallback, shadowVote } from "@/core/jev/live";
 import type { GameEngine } from "./engine";
 
 /**
@@ -45,11 +46,15 @@ export function queueAiVote(e: GameEngine, seat: number, candidates: number[]): 
   e.aiVoteAsked.add(seat);
   e.scheduleBackground(`vote-ai:${seat}`, async () => {
     let vote: { target: number; reason: string; evidenceIds: string[] };
+    let modelTarget: number | null = null;
     try {
       vote = await withTimeout(agent.playerVote(e.ctx(), seat, candidates), AI_DECISION_TIMEOUT_MS);
+      modelTarget = vote.target;
     } catch {
-      vote = { target: candidates[Math.floor(Math.random() * candidates.length)], reason: "", evidenceIds: [] };
+      const jev = await jevVoteFallback(e.ctx(), seat);
+      vote = { target: jev?.target ?? candidates[Math.floor(Math.random() * candidates.length)], reason: "", evidenceIds: [] };
     }
+    if (modelTarget !== null) void shadowVote(e.ctx(), seat, modelTarget);
     await e.exclusive(async () => {
       if (e.state.phase !== "VOTE" || e.state.votes[String(seat)]) return;
       const target = candidates.includes(vote.target) ? vote.target : candidates[0];

@@ -264,3 +264,31 @@ model TtsCache {
 
   @@map("tts_cache")
 }
+
+/// 实机影子：真实对局里并行问 Jev 得到的离散决策。默认只记账、不参与结果；
+/// 仅在现网本来就要随机兜底的那条路径上，usedForAction 为 true 表示这一条被用上了。
+model JevShadowLog {
+  id            String   @id @default(cuid())
+  gameId        String
+  slot          String // vote | location | publish
+  seatIndex     Int
+  phase         String
+  round         Int
+  jevKey        String? // Jev 选中的 criteria 键；rejected 时为 null
+  jevProbability Float?
+  jevConfidence Float?
+  actualKey     String? // 该局实际采用的决策（同键空间）
+  agreed        Boolean? // 与现网是否同选；实际决策不存在时为空
+  legal         Boolean  @default(false) // Jev 的选择在该局规则下是否合法可用
+  usedForAction Boolean  @default(false)
+  inputTokens   Int      @default(0)
+  stateChars    Int      @default(0)
+  latencyMs     Int      @default(0)
+  ok            Boolean  @default(true)
+  error         String?
+  createdAt     DateTime @default(now())
+
+  @@map("jev_shadow_logs")
+  @@index([gameId, slot])
+  @@index([createdAt])
+}

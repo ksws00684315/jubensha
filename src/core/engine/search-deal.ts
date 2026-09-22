@@ -5,6 +5,7 @@ import { activeSeats, clueReachable } from "./state";
 import { searchLocationOptions } from "./search-locations";
 import { afterSearchPhase } from "./phases";
 import { AI_DECISION_TIMEOUT_MS, HUMAN_TURN_TIMEOUT_MS, withTimeout } from "./util";
+import { jevLocationFallback, shadowLocation, shadowPublish } from "@/core/jev/live";
 import type { GameEngine } from "./engine";
 
 /**
@@ -68,14 +69,17 @@ export function queueAiSearchChoice(e: GameEngine, seat: number): void {
     if (e.state.searchChoices[String(seat)]) return;
     const locations = availableLocations(e, seat);
     let loc: string;
+    let modelChoice: string | null = null;
     try {
       loc = await withTimeout(agent.playerChooseLocation(e.ctx(), seat, locations), AI_DECISION_TIMEOUT_MS);
+      modelChoice = loc;
     } catch {
-      loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
+      loc = (await jevLocationFallback(e.ctx(), seat, locations)) ?? locations[Math.floor(Math.random() * locations.length)] ?? "";
     }
     const resolved = resolveLocation(e.script, loc);
     if (!resolved) loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
     else if (locations.length > 0 && !locations.includes(resolved.name)) loc = locations[Math.floor(Math.random() * locations.length)] ?? "";
+    if (modelChoice !== null) void shadowLocation(e.ctx(), seat, locations, modelChoice);
     if (!loc) return;
     await e.exclusive(async () => {
       if (e.state.phase !== "SEARCH" || e.state.searchChoices[String(seat)]) return;
@@ -251,11 +255,15 @@ export function queueAiPublish(e: GameEngine, seat: number): void {
     const decisions: Array<[string, boolean]> = [];
     for (const clueId of clueIds) {
       let publish = false;
+      let decided = false;
       try {
         publish = await withTimeout(agent.playerChoosePublish(e.ctx(), seat, clueId), AI_DECISION_TIMEOUT_MS);
+        decided = true;
       } catch {
+        // 这条兜底不是随机而是"私藏"，没有可让 Jev 接管的空间，只留影子对照
         publish = false;
       }
+      if (decided) void shadowPublish(e.ctx(), seat, clueId, publish);
       decisions.push([clueId, publish]);
     }
     await e.exclusive(async () => {
