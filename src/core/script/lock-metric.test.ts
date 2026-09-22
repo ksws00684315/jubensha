@@ -23,14 +23,22 @@ function withClueText(id: string, text: string) {
 
 describe("单卡锁凶判定", () => {
   it("点名＋行为＋明知同落一人且无落空点：判为单卡锁凶", () => {
-    const doc = parseScriptDocV2(raw);
-    const clue = doc.clues.find((c) => c.id === "fuwuyuan_zhengci")!;
-    const facts = analyzeClue(doc, clue);
+    const doc = withClueText("fuwuyuan_zhengci", "赵凯明知郑国栋在吃头孢，仍催他连干三杯，说不喝就是不给他面子。");
+    const facts = analyzeClue(doc, doc.clues.find((c) => c.id === "fuwuyuan_zhengci")!);
     expect(facts.accusing).toBe(true);
     expect(facts.knowing).toBe(true);
     expect(facts.exculpated).toBe(false);
     expect(isSingleCardLock(facts)).toBe(true);
     expect(computeLockMetric(doc).rounds[0].singleCardClueIds).toContain("fuwuyuan_zhengci");
+  });
+
+  /** 这张卡曾经三要素齐备又无出口，是玩家抱怨"一卡锁凶"的那张；判词搬进 hostGuide 后不得回退 */
+  it("样板种子里不再有任何单卡锁凶、卡内判词或抹名目击", () => {
+    const report = computeLockMetric(parseScriptDocV2(raw));
+    expect(report.culpritName).toBe("赵凯");
+    expect(report.rounds.every((r) => r.singleCardClueIds.length === 0)).toBe(true);
+    expect(report.verdictClueIds).toEqual([]);
+    expect(report.blankedWitnesses).toEqual([]);
   });
 
   it("姓名只在受话人位置（听见老板对白某说）不算明知", () => {
@@ -120,8 +128,7 @@ describe("抹名式目击", () => {
 
 describe("判词卡", () => {
   it("卡内出现证明类判词即计入清单", () => {
-    const report = computeLockMetric(parseScriptDocV2(raw));
-    expect(report.verdictClueIds.length).toBeGreaterThan(0);
-    expect(report.culpritName).toBe("赵凯");
+    const doc = withClueText("huanjiu_bianqian", "这张便签不能证明递钱者是谁，只能说明当晚确有人催促上酒。");
+    expect(computeLockMetric(doc).verdictClueIds).toContain("huanjiu_bianqian");
   });
 });

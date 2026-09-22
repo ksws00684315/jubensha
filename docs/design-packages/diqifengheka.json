@@ -24,7 +24,7 @@
   ],
   "acts": [
     {"actId":"act1","question":"死者为何会在聚会上突然倒下？","newKnowledge":["头孢与白酒存在致命组合","换酒行为需要证人确认"],"publicClueIds":["yaohe_xiaopiao","diancan_cungen","huanjiu_bianqian"]},
-    {"actId":"act2","question":"谁提前知道风险，谁最害怕第七封贺卡被念出？","newKnowledge":["赵凯有预先搜索","旧志愿表构成动机","其他人的秘密提供竞争解释"],"publicClueIds":["shouji_sousuo","diqifengheka","liaotian_jilu"]}
+    {"actId":"act2","question":"谁提前知道风险，谁最害怕第七封贺卡被念出？","newKnowledge":["赵凯有预先搜索","旧志愿表构成动机","其他人的秘密提供竞争解释"],"publicClueIds":["shouji_sousuo","diqifengheka","fuwuyuan_zhengci"]}
   ],
   "review":{"status":"needs_revision","issues":[{"level":"warning","message":"需盲读确认情感线不会被‘赵凯搜索记录’单点锁凶；第二轮应先让玩家处理王大力、高鹏的条件秘密。","path":"inferenceGraph.i_planning"}]}
 }

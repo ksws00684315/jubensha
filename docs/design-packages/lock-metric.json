@@ -1,130 +1,7 @@
 {
-  "generatedAt": "2026-09-22T11:59:40.479Z",
+  "generatedAt": "2026-09-22T12:28:19.006Z",
   "corpus": "seeds/*.json + seeds/generated/*.json",
   "reports": [
-    {
-      "title": "第七封贺卡",
-      "culpritId": "zhao_kai",
-      "culpritName": "赵凯",
-      "clueCount": 10,
-      "namingClueIds": [
-        "diancan_cungen",
-        "shouji_sousuo",
-        "zhiyuan_dangan",
-        "fuwuyuan_zhengci",
-        "zhongshi_baodaoce"
-      ],
-      "accusingClueIds": [
-        "diancan_cungen",
-        "fuwuyuan_zhengci"
-      ],
-      "verdictClueIds": [
-        "yaohe_xiaopiao",
-        "diancan_cungen",
-        "diqifengheka",
-        "chengji_didan",
-        "shouji_sousuo",
-        "zhiyuan_dangan",
-        "fuwuyuan_zhengci",
-        "zhongshi_baodaoce"
-      ],
-      "blankedWitnesses": [
-        {
-          "characterId": "wang_dali",
-          "characterName": "王大力",
-          "section": "timeline",
-          "excerpt": "看见有人跟服务员比划 你在走廊看见有人跟服务员比划，声音压得低，"
-        },
-        {
-          "characterId": "wang_dali",
-          "characterName": "王大力",
-          "section": "knowledge",
-          "excerpt": "亲眼看见有人让服务员换酒，你以为只是换酒，没多想"
-        },
-        {
-          "characterId": "chen_man",
-          "characterName": "陈曼",
-          "section": "objectives",
-          "excerpt": "听到的话原样说出来——那人那句药不差这一会儿，你听得清清楚楚"
-        },
-        {
-          "characterId": "chen_man",
-          "characterName": "陈曼",
-          "section": "knowledge",
-          "excerpt": "亲耳听到有人说这玩意儿等回家再吃，不差这一会儿"
-        },
-        {
-          "characterId": "gao_peng",
-          "characterName": "高鹏",
-          "section": "timeline",
-          "excerpt": "看见有人冲服务员摆手，话没听全"
-        },
-        {
-          "characterId": "gao_peng",
-          "characterName": "高鹏",
-          "section": "knowledge",
-          "excerpt": "看见有人在传菜口让服务员换东西，当时没在意"
-        }
-      ],
-      "rounds": [
-        {
-          "round": 1,
-          "shared": [
-            "yaohe_xiaopiao",
-            "jizhen_jilu"
-          ],
-          "held": [
-            "diancan_cungen",
-            "chengji_didan",
-            "fuwuyuan_zhengci"
-          ],
-          "singleCardClueIds": [
-            "fuwuyuan_zhengci"
-          ],
-          "lockInShared": null,
-          "lockInTable": {
-            "count": 1,
-            "clueIds": [
-              "fuwuyuan_zhengci"
-            ]
-          }
-        },
-        {
-          "round": 2,
-          "shared": [
-            "yaohe_xiaopiao",
-            "diancan_cungen",
-            "diqifengheka",
-            "shouji_sousuo",
-            "huanjiu_bianqian",
-            "jizhen_jilu",
-            "zhiyuan_dangan",
-            "fuwuyuan_zhengci",
-            "zhongshi_baodaoce"
-          ],
-          "held": [
-            "chengji_didan"
-          ],
-          "singleCardClueIds": [
-            "fuwuyuan_zhengci"
-          ],
-          "lockInShared": {
-            "count": 1,
-            "clueIds": [
-              "fuwuyuan_zhengci"
-            ]
-          },
-          "lockInTable": {
-            "count": 1,
-            "clueIds": [
-              "fuwuyuan_zhengci"
-            ]
-          }
-        }
-      ],
-      "earliestTwoCardLockRound": 1,
-      "file": "seeds/generated/5p-diqifengheka.json"
-    },
     {
       "title": "报馆风云·夜印号外",
       "culpritId": "niudeshan",
@@ -298,6 +175,78 @@
       ],
       "earliestTwoCardLockRound": 1,
       "file": "seeds/generated/6p-chamagudao.json"
+    },
+    {
+      "title": "第七封贺卡",
+      "culpritId": "zhao_kai",
+      "culpritName": "赵凯",
+      "clueCount": 10,
+      "namingClueIds": [
+        "diancan_cungen",
+        "shouji_sousuo",
+        "zhiyuan_dangan",
+        "fuwuyuan_zhengci",
+        "zhongshi_baodaoce"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yaohe_xiaopiao",
+            "jizhen_jilu"
+          ],
+          "held": [
+            "diancan_cungen",
+            "chengji_didan",
+            "fuwuyuan_zhengci"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "diancan_cungen",
+              "fuwuyuan_zhengci"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yaohe_xiaopiao",
+            "diancan_cungen",
+            "diqifengheka",
+            "chengji_didan",
+            "shouji_sousuo",
+            "huanjiu_bianqian",
+            "jizhen_jilu",
+            "zhiyuan_dangan",
+            "fuwuyuan_zhengci",
+            "zhongshi_baodaoce"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "diancan_cungen",
+              "diqifengheka"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "diancan_cungen",
+              "diqifengheka"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/5p-diqifengheka.json"
     },
     {
       "title": "极夜特快",
@@ -2906,32 +2855,8 @@
         "bottle"
       ],
       "accusingClueIds": [],
-      "verdictClueIds": [
-        "safe_report",
-        "missing_key",
-        "footprint",
-        "bottle"
-      ],
-      "blankedWitnesses": [
-        {
-          "characterId": "qinghe",
-          "characterName": "沈青禾",
-          "section": "knowledge",
-          "excerpt": "看见有人拎着墨绿色出诊包上楼，那人说是给叔叔送安神药"
-        },
-        {
-          "characterId": "zhoubo",
-          "characterName": "周伯",
-          "section": "timeline",
-          "excerpt": "看见有人从房间方向走过来，进了书房，手里拎着出诊包"
-        },
-        {
-          "characterId": "luxiaokai",
-          "characterName": "陆小开",
-          "section": "timeline",
-          "excerpt": "看见有人拎着墨绿色出诊包走进书房 你看见有人拎着墨绿色出诊包走进"
-        }
-      ],
+      "verdictClueIds": [],
+      "blankedWitnesses": [],
       "rounds": [
         {
           "round": 1,

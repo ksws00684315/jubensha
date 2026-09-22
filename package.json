@@ -22,7 +22,7 @@
     "jev:dataset": "npx tsx scripts/build-jev-vote-set.ts",
     "jev:eval": "npx tsx scripts/run-jev-eval.ts",
     "script:schema": "tsx scripts/script-v2-schema.ts",
-    "script:validate": "tsx scripts/validate-script-v2.ts",
+    "script:validate": "npx tsx scripts/validate-script-v2.ts",
     "script:migrate": "tsx scripts/migrate-script-v1.ts",
     "script:migrate-db": "tsx scripts/migrate-db-scripts-v2.ts"
   },
