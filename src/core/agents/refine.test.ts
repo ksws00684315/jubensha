@@ -87,6 +87,14 @@ describe("台词二次审查：本地启发式不得单独否决审查员", () =
     expect(text).toContain("苦味");
   });
 
+  it("出戏元话语仍然送审，并被审查员的改写替换", async () => {
+    mock.replies.push('{"ok":false,"text":"那晚我全程在包厢里，出来时只看见走廊的灯亮着。"}');
+    const { agent } = await import("./index");
+    const text = await agent.refineSpeech(ctxFor(), 0, "这局剧本杀里我一直没有离开座位。");
+    expect(mock.calls).toBe(1);
+    expect(text).toContain("走廊的灯");
+  });
+
   it("审查调用失败且确实判为复读时，降级为符合本轮意图的短话（不再是全场同一句）", async () => {
     mock.failure = true;
     const { agent } = await import("./index");
