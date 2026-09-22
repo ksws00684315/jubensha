@@ -4,7 +4,7 @@ import path from "node:path";
 import { parseScriptDocV2 } from "@/core/script/v2/schema";
 import { initialState } from "@/core/engine/state";
 import type { EngineEvent, GameState } from "@/core/engine/types";
-import { jevLocationFallback, jevVoteFallback, shadowCallsUsed, shadowLocation, shadowPublish, shadowVote } from "./live";
+import { jevLocationFallback, jevVoteFallback, liveCallsUsed, shadowLocation, shadowPublish, shadowVote, type JevLiveMode } from "./live";
 
 const rec = vi.hoisted(() => ({
   rows: [] as Array<Record<string, unknown>>,
@@ -56,18 +56,23 @@ function makeCtx(phase: GameState["phase"], round: number): { script: typeof doc
   return { script: doc, state, events, gameId: `g-${phase}-${round}-${(gameSeq += 1)}` };
 }
 
-function enableEnv(slots = "vote,location,publish", maxCalls?: number) {
-  process.env.JEV_SHADOW = "1";
+/** 两个开关默认同时打开，好让同一局里影子与接管各自都能被验到 */
+function enableEnv(modes: JevLiveMode[] = ["shadow", "fallback"], slots = "vote,location,publish", caps: Partial<Record<JevLiveMode, number>> = {}) {
   process.env.JEV_API_KEY = "test-key";
-  process.env.JEV_SHADOW_SLOTS = slots;
-  if (maxCalls) process.env.JEV_SHADOW_MAX_CALLS = String(maxCalls);
+  process.env.JEV_SHADOW = modes.includes("shadow") ? "1" : "0";
+  process.env.JEV_FALLBACK = modes.includes("fallback") ? "1" : "0";
+  process.env.JEV_LIVE_SLOTS = slots;
+  if (caps.shadow) process.env.JEV_SHADOW_MAX_CALLS = String(caps.shadow);
+  if (caps.fallback) process.env.JEV_FALLBACK_MAX_CALLS = String(caps.fallback);
 }
 
 afterEach(() => {
   delete process.env.JEV_SHADOW;
+  delete process.env.JEV_FALLBACK;
   delete process.env.JEV_API_KEY;
-  delete process.env.JEV_SHADOW_SLOTS;
+  delete process.env.JEV_LIVE_SLOTS;
   delete process.env.JEV_SHADOW_MAX_CALLS;
+  delete process.env.JEV_FALLBACK_MAX_CALLS;
   rec.calls = 0;
   rec.rows = [];
   rec.requests = [];
@@ -89,27 +94,64 @@ const boom = (message: string) => () => {
   throw new Error(message);
 };
 
-describe("影子开关", () => {
-  it("未配 JEV_SHADOW/API_KEY 时整体静默：不请求、不写库、不占预算", async () => {
+describe("两个开关各自独立", () => {
+  it("未配 JEV_SHADOW/JEV_FALLBACK/API_KEY 时整体静默：不请求、不写库、不占预算", async () => {
     const ctx = makeCtx("VOTE", 2);
     await expect(shadowVote(ctx, 0, 1)).resolves.toBeUndefined();
     expect(await jevVoteFallback(ctx, 0)).toBeNull();
     expect(rec.calls).toBe(0);
     expect(rec.rows).toHaveLength(0);
-    expect(shadowCallsUsed(ctx.gameId)).toBe(0);
+    expect(liveCallsUsed(ctx.gameId, "shadow")).toBe(0);
+    expect(liveCallsUsed(ctx.gameId, "fallback")).toBe(0);
   });
 
-  it("只开 vote 槽时选址与公开都不问", async () => {
-    enableEnv("vote");
-    const ctx = makeCtx("SEARCH", 1);
+  it("只开影子：接管入口静默，影子照常一问一记", async () => {
+    enableEnv(["shadow"]);
+    rec.replies = [choice("1")];
+    const ctx = makeCtx("VOTE", 2);
+    await shadowVote(ctx, 0, 1);
+    expect(await jevVoteFallback(ctx, 1)).toBeNull();
+    expect(rec.calls).toBe(1);
+    expect(rec.rows).toHaveLength(1);
+    expect(rec.rows[0]).toMatchObject({ usedForAction: false });
+  });
+
+  it("只开接管：影子入口静默（不烧那 $2/局），兜底那一问照记", async () => {
+    enableEnv(["fallback"]);
+    rec.replies = [choice("2", 0.61)];
+    const ctx = makeCtx("VOTE", 2);
+    await shadowVote(ctx, 0, 1);
     await shadowLocation(ctx, 0, ["书房", "温室"], "书房");
     await shadowPublish(ctx, 0, "teacup", true);
+    expect(await jevVoteFallback(ctx, 1)).toEqual({ target: 2, probability: 0.61 });
+    expect(rec.calls).toBe(1);
+    expect(rec.rows).toHaveLength(1);
+    expect(rec.rows[0]).toMatchObject({ slot: "vote", jevKey: "2", actualKey: null, usedForAction: true });
+  });
+
+  it("两份额度互不饿死：影子挂满后接管仍能问", async () => {
+    enableEnv(["shadow", "fallback"], "vote", { shadow: 1 });
+    rec.replies = [choice("1"), choice("2"), choice("3")];
+    const ctx = makeCtx("VOTE", 2);
+    await shadowVote(ctx, 0, 1);
+    await shadowVote(ctx, 1, 2);
+    expect(liveCallsUsed(ctx.gameId, "shadow")).toBe(1);
+    expect(await jevVoteFallback(ctx, 3)).not.toBeNull();
+    expect(liveCallsUsed(ctx.gameId, "fallback")).toBe(1);
+    expect(rec.calls).toBe(2);
+  });
+
+  it("槽位开关对两种模式共用：只开 vote 时选址与公开都不问", async () => {
+    enableEnv(["shadow", "fallback"], "vote");
+    const ctx = makeCtx("SEARCH", 1);
+    await shadowLocation(ctx, 0, ["书房", "温室"], "书房");
+    expect(await jevLocationFallback(ctx, 0, ["书房", "温室"])).toBeNull();
     expect(rec.calls).toBe(0);
     expect(rec.rows).toHaveLength(0);
   });
 
   it("每局额度用满后即停，不再产生请求与记账", async () => {
-    enableEnv("vote", 2);
+    enableEnv(["shadow"], "vote", { shadow: 2 });
     rec.replies = [choice("1"), choice("2")];
     const ctx = makeCtx("VOTE", 2);
     await shadowVote(ctx, 0, 1);
@@ -117,7 +159,7 @@ describe("影子开关", () => {
     await shadowVote(ctx, 2, 1);
     expect(rec.calls).toBe(2);
     expect(rec.rows).toHaveLength(2);
-    expect(shadowCallsUsed(ctx.gameId)).toBe(2);
+    expect(liveCallsUsed(ctx.gameId, "shadow")).toBe(2);
   });
 });
 
