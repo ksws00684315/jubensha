@@ -1,0 +1,2990 @@
+{
+  "generatedAt": "2026-09-22T11:59:40.479Z",
+  "corpus": "seeds/*.json + seeds/generated/*.json",
+  "reports": [
+    {
+      "title": "第七封贺卡",
+      "culpritId": "zhao_kai",
+      "culpritName": "赵凯",
+      "clueCount": 10,
+      "namingClueIds": [
+        "diancan_cungen",
+        "shouji_sousuo",
+        "zhiyuan_dangan",
+        "fuwuyuan_zhengci",
+        "zhongshi_baodaoce"
+      ],
+      "accusingClueIds": [
+        "diancan_cungen",
+        "fuwuyuan_zhengci"
+      ],
+      "verdictClueIds": [
+        "yaohe_xiaopiao",
+        "diancan_cungen",
+        "diqifengheka",
+        "chengji_didan",
+        "shouji_sousuo",
+        "zhiyuan_dangan",
+        "fuwuyuan_zhengci",
+        "zhongshi_baodaoce"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "wang_dali",
+          "characterName": "王大力",
+          "section": "timeline",
+          "excerpt": "看见有人跟服务员比划 你在走廊看见有人跟服务员比划，声音压得低，"
+        },
+        {
+          "characterId": "wang_dali",
+          "characterName": "王大力",
+          "section": "knowledge",
+          "excerpt": "亲眼看见有人让服务员换酒，你以为只是换酒，没多想"
+        },
+        {
+          "characterId": "chen_man",
+          "characterName": "陈曼",
+          "section": "objectives",
+          "excerpt": "听到的话原样说出来——那人那句药不差这一会儿，你听得清清楚楚"
+        },
+        {
+          "characterId": "chen_man",
+          "characterName": "陈曼",
+          "section": "knowledge",
+          "excerpt": "亲耳听到有人说这玩意儿等回家再吃，不差这一会儿"
+        },
+        {
+          "characterId": "gao_peng",
+          "characterName": "高鹏",
+          "section": "timeline",
+          "excerpt": "看见有人冲服务员摆手，话没听全"
+        },
+        {
+          "characterId": "gao_peng",
+          "characterName": "高鹏",
+          "section": "knowledge",
+          "excerpt": "看见有人在传菜口让服务员换东西，当时没在意"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yaohe_xiaopiao",
+            "jizhen_jilu"
+          ],
+          "held": [
+            "diancan_cungen",
+            "chengji_didan",
+            "fuwuyuan_zhengci"
+          ],
+          "singleCardClueIds": [
+            "fuwuyuan_zhengci"
+          ],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 1,
+            "clueIds": [
+              "fuwuyuan_zhengci"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yaohe_xiaopiao",
+            "diancan_cungen",
+            "diqifengheka",
+            "shouji_sousuo",
+            "huanjiu_bianqian",
+            "jizhen_jilu",
+            "zhiyuan_dangan",
+            "fuwuyuan_zhengci",
+            "zhongshi_baodaoce"
+          ],
+          "held": [
+            "chengji_didan"
+          ],
+          "singleCardClueIds": [
+            "fuwuyuan_zhengci"
+          ],
+          "lockInShared": {
+            "count": 1,
+            "clueIds": [
+              "fuwuyuan_zhengci"
+            ]
+          },
+          "lockInTable": {
+            "count": 1,
+            "clueIds": [
+              "fuwuyuan_zhengci"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/5p-diqifengheka.json"
+    },
+    {
+      "title": "报馆风云·夜印号外",
+      "culpritId": "niudeshan",
+      "culpritName": "牛德山",
+      "clueCount": 10,
+      "namingClueIds": [
+        "c_dengjibu",
+        "c_huipiao",
+        "c_qianzi",
+        "c_xuetu_zhengci"
+      ],
+      "accusingClueIds": [
+        "c_xuetu_zhengci"
+      ],
+      "verdictClueIds": [
+        "c_yanshi",
+        "c_dengjibu",
+        "c_qianzi",
+        "c_xuetu_zhengci"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_tongxian",
+            "c_dayang",
+            "c_dengjibu",
+            "c_huipiao",
+            "c_maijia",
+            "c_fuben",
+            "c_qianzi",
+            "c_qianbao",
+            "c_xuetu_zhengci"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_dengjibu",
+              "c_xuetu_zhengci"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_tongxian",
+            "c_dayang",
+            "c_dengjibu",
+            "c_huipiao",
+            "c_maijia",
+            "c_fuben",
+            "c_qianzi",
+            "c_qianbao",
+            "c_xuetu_zhengci"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "c_dengjibu",
+              "c_xuetu_zhengci"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_dengjibu",
+              "c_xuetu_zhengci"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/5p-baoguanfengyun.json"
+    },
+    {
+      "title": "茶马古道·蛮云驿",
+      "culpritId": "xutashan",
+      "culpritName": "许踏山",
+      "clueCount": 12,
+      "namingClueIds": [
+        "c_caowugao",
+        "c_fenhuozhang",
+        "c_ahei_zhengci",
+        "c_xinwen_zhang"
+      ],
+      "accusingClueIds": [
+        "c_fenhuozhang",
+        "c_ahei_zhengci"
+      ],
+      "verdictClueIds": [
+        "c_yanguo",
+        "c_qiaozhaxin",
+        "c_renzi",
+        "c_caowugao",
+        "c_fenhuozhang",
+        "c_wudu_jianyan",
+        "c_xinwen_zhang"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_yanguo",
+            "c_qiaozhaxin",
+            "c_renzi",
+            "c_caowugao",
+            "c_guohuoshan",
+            "c_guosuo",
+            "c_dinghuo",
+            "c_fenhuozhang",
+            "c_wudu_jianyan",
+            "c_ahei_zhengci",
+            "c_xinwen_zhang"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_qiaozhaxin",
+              "c_xinwen_zhang"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_yanguo",
+            "c_qiaozhaxin",
+            "c_renzi",
+            "c_caowugao",
+            "c_guohuoshan",
+            "c_guosuo",
+            "c_dinghuo",
+            "c_fenhuozhang",
+            "c_wudu_jianyan",
+            "c_ahei_zhengci",
+            "c_xinwen_zhang"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "c_qiaozhaxin",
+              "c_xinwen_zhang"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_qiaozhaxin",
+              "c_xinwen_zhang"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/6p-chamagudao.json"
+    },
+    {
+      "title": "极夜特快",
+      "culpritId": "baizeyu",
+      "culpritName": "白泽宇",
+      "clueCount": 12,
+      "namingClueIds": [
+        "yizhu_qian",
+        "cizhen_xue",
+        "sizhang",
+        "sizhang2"
+      ],
+      "accusingClueIds": [
+        "sizhang2"
+      ],
+      "verdictClueIds": [
+        "yizhu_qian",
+        "sizhang2",
+        "zhiban_jilu",
+        "jianding",
+        "reshui"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "luxiaoman",
+          "characterName": "郑晓满",
+          "section": "knowledge",
+          "excerpt": "看见有人出来，端着空餐盘，'步子很稳，就是右手一直攥着'"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "shijian_lu"
+          ],
+          "held": [
+            "yaoping",
+            "yizhu_qian",
+            "zhiben_dai",
+            "cizhen_xue",
+            "sizhang",
+            "sizhang2",
+            "zhiban_jilu",
+            "niunai_xiaoxi",
+            "dangju",
+            "jianding",
+            "reshui"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "cizhen_xue",
+              "dangju"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "shijian_lu",
+            "yaoping",
+            "yizhu_qian",
+            "zhiben_dai",
+            "cizhen_xue",
+            "sizhang",
+            "sizhang2",
+            "zhiban_jilu",
+            "niunai_xiaoxi",
+            "dangju",
+            "jianding",
+            "reshui"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "cizhen_xue",
+              "dangju"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "cizhen_xue",
+              "dangju"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/06p-jiyetekuai.json"
+    },
+    {
+      "title": "剧本杀编辑部",
+      "culpritId": "jiang_xue",
+      "culpritName": "江雪",
+      "clueCount": 10,
+      "namingClueIds": [
+        "bingge",
+        "dayin_pi",
+        "yaoping",
+        "shouquan_shu",
+        "shuiping_kongping"
+      ],
+      "accusingClueIds": [
+        "bingge"
+      ],
+      "verdictClueIds": [
+        "dayin_pi",
+        "yaoping",
+        "shouquan_shu",
+        "luyin_bi"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "xiao_lu",
+          "characterName": "小鹿",
+          "section": "timeline",
+          "excerpt": "看见有人在茶水间取冰 你看见一个身影从茶水间拿起冰格；快递架挡住"
+        },
+        {
+          "characterId": "xiao_lu",
+          "characterName": "小鹿",
+          "section": "secrets",
+          "excerpt": "看见有人在茶水间拿冰格"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "jiaonang_ke"
+          ],
+          "held": [
+            "bingge",
+            "dayin_pi",
+            "yaoping",
+            "zhitiao",
+            "shouquan_shu",
+            "cuizhi_xin",
+            "luyin_bi",
+            "houqin_ben",
+            "shuiping_kongping"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "bingge",
+              "dayin_pi"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "jiaonang_ke",
+            "bingge",
+            "dayin_pi",
+            "yaoping",
+            "zhitiao",
+            "shouquan_shu",
+            "cuizhi_xin",
+            "luyin_bi",
+            "houqin_ben",
+            "shuiping_kongping"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "bingge",
+              "dayin_pi"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "bingge",
+              "dayin_pi"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/5p-bianjibu.json"
+    },
+    {
+      "title": "决胜局",
+      "culpritId": "luxiao",
+      "culpritName": "陆骁",
+      "clueCount": 10,
+      "namingClueIds": [
+        "jiahetong_saomiao"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "tuiliu_houtai",
+        "zhibo_luping",
+        "damen_menjin"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "shufang_kanyan",
+            "jianqiao_xueji"
+          ],
+          "held": [
+            "jianqiao_xuedi",
+            "tuiliu_houtai",
+            "zhibo_luping",
+            "jiahetong_saomiao",
+            "xuchong_taoxin",
+            "fangqing_jizhang",
+            "wensheng_songshui",
+            "damen_menjin"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "jiahetong_saomiao",
+              "wensheng_songshui"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "shufang_kanyan",
+            "jianqiao_xuedi",
+            "tuiliu_houtai",
+            "zhibo_luping",
+            "jiahetong_saomiao",
+            "xuchong_taoxin",
+            "fangqing_jizhang",
+            "wensheng_songshui",
+            "damen_menjin",
+            "jianqiao_xueji"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "jiahetong_saomiao",
+              "wensheng_songshui"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "jiahetong_saomiao",
+              "wensheng_songshui"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/5p-jueshengju.json"
+    },
+    {
+      "title": "落槌之前",
+      "culpritId": "tuyiming",
+      "culpritName": "涂一鸣",
+      "clueCount": 11,
+      "namingClueIds": [
+        "kufang_menjin",
+        "weituopai_008",
+        "yunheng_didang",
+        "tanghao_guangchang_kouzheng"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "dengguang_rizhi",
+        "qin_mujiben",
+        "tanghao_guangchang_kouzheng"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "gaoyuan",
+          "characterName": "高原",
+          "section": "knowledge",
+          "excerpt": "看见一个抱着外套的背影——个子不矮，步子很急，别的没看清"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xianchang_kanyan"
+          ],
+          "held": [
+            "beiyong_zhidai",
+            "dengguang_rizhi",
+            "kufang_menjin",
+            "sizhe_shouji",
+            "weituopai_008",
+            "yunheng_didang",
+            "zhangliwen_liaotian",
+            "qin_mujiben",
+            "fayan_zhuizhen",
+            "tanghao_guangchang_kouzheng"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "dengguang_rizhi",
+              "weituopai_008"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xianchang_kanyan",
+            "beiyong_zhidai",
+            "dengguang_rizhi",
+            "kufang_menjin",
+            "sizhe_shouji",
+            "weituopai_008",
+            "yunheng_didang",
+            "zhangliwen_liaotian",
+            "qin_mujiben",
+            "fayan_zhuizhen",
+            "tanghao_guangchang_kouzheng"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "dengguang_rizhi",
+              "weituopai_008"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "dengguang_rizhi",
+              "weituopai_008"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/6p-luocuizhiqian.json"
+    },
+    {
+      "title": "最后一支舞·琼华夜宴",
+      "culpritId": "baiqiuchi",
+      "culpritName": "白秋池",
+      "clueCount": 13,
+      "namingClueIds": [
+        "c_yanshi",
+        "c_qingling",
+        "c_yaozhang",
+        "c_dengji",
+        "c_yaotong_koulu",
+        "c_jinma_koulu",
+        "c_zhenji_zhuyu"
+      ],
+      "accusingClueIds": [
+        "c_qingling",
+        "c_yaotong_koulu"
+      ],
+      "verdictClueIds": [
+        "c_yanshi",
+        "c_anpao",
+        "c_qingling",
+        "c_yaozhang",
+        "c_yaotong_koulu",
+        "c_jinma_koulu"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_anpao",
+            "c_baoxiangui",
+            "c_qingling",
+            "c_yaozhang",
+            "c_jiazhang",
+            "chuanpiao",
+            "c_zhuangxia",
+            "c_dengji",
+            "c_yaotong_koulu",
+            "c_jinma_koulu",
+            "c_duwu_fuyan",
+            "c_zhenji_zhuyu"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_yanshi",
+              "c_yaotong_koulu"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_anpao",
+            "c_baoxiangui",
+            "c_qingling",
+            "c_yaozhang",
+            "c_jiazhang",
+            "chuanpiao",
+            "c_zhuangxia",
+            "c_dengji",
+            "c_yaotong_koulu",
+            "c_jinma_koulu",
+            "c_duwu_fuyan",
+            "c_zhenji_zhuyu"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "c_yanshi",
+              "c_yaotong_koulu"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_yanshi",
+              "c_yaotong_koulu"
+            ]
+          }
+        },
+        {
+          "round": 3,
+          "shared": [
+            "c_yanshi",
+            "c_anpao",
+            "c_baoxiangui",
+            "c_qingling",
+            "c_yaozhang",
+            "c_jiazhang",
+            "chuanpiao",
+            "c_zhuangxia",
+            "c_dengji",
+            "c_yaotong_koulu",
+            "c_jinma_koulu",
+            "c_duwu_fuyan",
+            "c_zhenji_zhuyu"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "c_yanshi",
+              "c_yaotong_koulu"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "c_yanshi",
+              "c_yaotong_koulu"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 1,
+      "file": "seeds/generated/6p-zuihouyizhiwu.json"
+    },
+    {
+      "title": "假面温泉",
+      "culpritId": "ruanyue",
+      "culpritName": "阮月",
+      "clueCount": 12,
+      "namingClueIds": [
+        "yueya_hen",
+        "zhusu_dengji"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "jiuhu_chen",
+        "yueya_hen",
+        "wurenji_ka",
+        "shougou_han",
+        "yizhu_caogao",
+        "zhusu_dengji",
+        "xueye_yanjiu",
+        "hesixi_pool_testimony"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yankan_jilu"
+          ],
+          "held": [
+            "jiuhu_chen",
+            "guafan_tangzha",
+            "yueya_hen",
+            "wurenji_ka",
+            "yaofang_queban",
+            "shougou_han",
+            "yizhu_caogao",
+            "beiyongjin",
+            "zhusu_dengji",
+            "xueye_yanjiu",
+            "hesixi_pool_testimony"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": {
+            "count": 3,
+            "clueIds": [
+              "hesixi_pool_testimony",
+              "jiuhu_chen",
+              "yueya_hen"
+            ]
+          }
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yankan_jilu",
+            "jiuhu_chen",
+            "guafan_tangzha",
+            "yueya_hen",
+            "wurenji_ka",
+            "yaofang_queban",
+            "shougou_han",
+            "yizhu_caogao",
+            "beiyongjin",
+            "zhusu_dengji",
+            "xueye_yanjiu",
+            "hesixi_pool_testimony"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 3,
+            "clueIds": [
+              "hesixi_pool_testimony",
+              "jiuhu_chen",
+              "yueya_hen"
+            ]
+          },
+          "lockInTable": {
+            "count": 3,
+            "clueIds": [
+              "hesixi_pool_testimony",
+              "jiuhu_chen",
+              "yueya_hen"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/06p-jiamianwenquan.json"
+    },
+    {
+      "title": "彩排之夜",
+      "culpritId": "qian_jin",
+      "culpritName": "钱进",
+      "clueCount": 11,
+      "namingClueIds": [
+        "menjin_jilu",
+        "banshou",
+        "gongcheng_tianqiao_quanxian"
+      ],
+      "accusingClueIds": [
+        "banshou"
+      ],
+      "verdictClueIds": [
+        "menjin_jilu",
+        "banshou",
+        "sucai",
+        "gongcheng_tianqiao_quanxian"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "cheng_yifei",
+          "characterName": "程亦飞",
+          "section": "timeline",
+          "excerpt": "听到他和那人吵截图、场地费"
+        },
+        {
+          "characterId": "tie_jun",
+          "characterName": "铁军",
+          "section": "knowledge",
+          "excerpt": "听到那人和金满堂在吵，那人的声音又尖又急"
+        },
+        {
+          "characterId": "mi_qi",
+          "characterName": "米琪",
+          "section": "timeline",
+          "excerpt": "听到金满堂和那人争执截图、场地费全免，你退了两步没敢敲门"
+        },
+        {
+          "characterId": "mi_qi",
+          "characterName": "米琪",
+          "section": "knowledge",
+          "excerpt": "听到那人和金满堂在贵宾室谈截图，那人答应场地费全免"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "zhuideng_deng"
+          ],
+          "held": [
+            "menjin_jilu",
+            "banshou",
+            "bianqian",
+            "danbao",
+            "maotai",
+            "sucai",
+            "cuzhi",
+            "tousu",
+            "xiaolu_yuanshi_zhengyan",
+            "gongcheng_tianqiao_quanxian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "zhuideng_deng",
+            "menjin_jilu",
+            "banshou",
+            "bianqian",
+            "danbao",
+            "maotai",
+            "sucai",
+            "cuzhi",
+            "tousu",
+            "xiaolu_yuanshi_zhengyan",
+            "gongcheng_tianqiao_quanxian"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-caipaizhiye.json"
+    },
+    {
+      "title": "漕运风云·金满仓",
+      "culpritId": "qilianbo",
+      "culpritName": "戚连波",
+      "clueCount": 12,
+      "namingClueIds": [
+        "misese",
+        "tiesuo_kougong",
+        "qilianbo_ship_trace",
+        "zheng_kouju"
+      ],
+      "accusingClueIds": [
+        "tiesuo_kougong"
+      ],
+      "verdictClueIds": [
+        "cangdishishen",
+        "shouyejiuhu",
+        "shuichengbu",
+        "tiesuo_kougong",
+        "qilianbo_ship_trace"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "cangdishishen"
+          ],
+          "held": [
+            "jiacangmikang",
+            "yanyindidan",
+            "shouyejiuhu",
+            "shuichengbu",
+            "huayajiutiao",
+            "misese",
+            "langhuawenanxin",
+            "xiangtangdacao",
+            "tiesuo_kougong",
+            "qilianbo_ship_trace",
+            "zheng_kouju"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "cangdishishen",
+            "jiacangmikang",
+            "yanyindidan",
+            "shouyejiuhu",
+            "shuichengbu",
+            "huayajiutiao",
+            "misese",
+            "langhuawenanxin",
+            "xiangtangdacao",
+            "tiesuo_kougong",
+            "qilianbo_ship_trace",
+            "zheng_kouju"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-caoyunfengyun.json"
+    },
+    {
+      "title": "厨王争霸",
+      "culpritId": "hao_yunlai",
+      "culpritName": "郝运来",
+      "clueCount": 12,
+      "namingClueIds": [
+        "zhuanzhang_jilu",
+        "zhibo_suzhi",
+        "chaohu_fuwu_kouzheng"
+      ],
+      "accusingClueIds": [
+        "zhibo_suzhi"
+      ],
+      "verdictClueIds": [
+        "chahu",
+        "zhuanzhang_jilu",
+        "zhibo_suzhi"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "jiang_manli",
+          "characterName": "蒋曼丽",
+          "section": "timeline",
+          "excerpt": "看见有人端着奶茶进隔间… 之间你在通道镜子里看见有人端着奶茶进隔"
+        },
+        {
+          "characterId": "he_dajiang",
+          "characterName": "何大江",
+          "section": "timeline",
+          "excerpt": "看见有人进隔间，门上映出主席拍桌的影子"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "chahu"
+          ],
+          "held": [
+            "dengji_ben",
+            "xiaoguan",
+            "zhuanzhang_jilu",
+            "duanxin",
+            "zhibo_suzhi",
+            "shoutiao",
+            "guanming_han",
+            "baocai_ben",
+            "fayan_toxicology",
+            "chaohu_fuwu_kouzheng",
+            "lingyong_biji_bijiao"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "chahu",
+            "dengji_ben",
+            "xiaoguan",
+            "zhuanzhang_jilu",
+            "duanxin",
+            "zhibo_suzhi",
+            "shoutiao",
+            "guanming_han",
+            "baocai_ben",
+            "fayan_toxicology",
+            "chaohu_fuwu_kouzheng",
+            "lingyong_biji_bijiao"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-chuwangzhengba.json"
+    },
+    {
+      "title": "祠堂夜祭",
+      "culpritId": "cen_youcai",
+      "culpritName": "岑有财",
+      "clueCount": 12,
+      "namingClueIds": [
+        "huoqi_shadai",
+        "chuhuo_dan",
+        "duanxin",
+        "jitian_zhangben",
+        "youcai_chushou_zhengyan"
+      ],
+      "accusingClueIds": [
+        "youcai_chushou_zhengyan"
+      ],
+      "verdictClueIds": [
+        "chihen_shijian",
+        "huoqi_shadai",
+        "shelong",
+        "youcai_chushou_zhengyan",
+        "lujiashu_shiyin"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "he_qiu",
+          "characterName": "何秋",
+          "section": "timeline",
+          "excerpt": "看见有人提布袋进偏殿添灯油，出来时袋子瘪了"
+        },
+        {
+          "characterId": "cen_azhao",
+          "characterName": "岑阿照",
+          "section": "timeline",
+          "excerpt": "看见有人提鼓布袋进偏殿 你抬头看见有人提鼓布袋进偏殿，出来时袋子"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "chihen_shijian"
+          ],
+          "held": [
+            "huoqi_shadai",
+            "chuhuo_dan",
+            "duanxin",
+            "jitian_zhangben",
+            "yizhu",
+            "shelong",
+            "gailu_jietu",
+            "kance_tu",
+            "youcai_chushou_zhengyan",
+            "lujiashu_shiyin",
+            "yinshang_fayan"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "chihen_shijian",
+            "huoqi_shadai",
+            "chuhuo_dan",
+            "duanxin",
+            "jitian_zhangben",
+            "yizhu",
+            "shelong",
+            "gailu_jietu",
+            "kance_tu",
+            "youcai_chushou_zhengyan",
+            "lujiashu_shiyin",
+            "yinshang_fayan"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-citangyeji.json"
+    },
+    {
+      "title": "海沟七号",
+      "culpritId": "wenshu",
+      "culpritName": "温书",
+      "clueCount": 15,
+      "namingClueIds": [
+        "jianxiu_rizhi",
+        "chaoshengdao",
+        "fengpian",
+        "shoutao",
+        "qianming"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "jianxiu_rizhi",
+        "chaoshengdao",
+        "fengpian",
+        "command_cache"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yaoc_e"
+          ],
+          "held": [
+            "mifeng_jian",
+            "bijian",
+            "jianxiu_rizhi",
+            "chaoshengdao",
+            "fengpian",
+            "shoutao",
+            "beiping",
+            "zhenjingji",
+            "zhiriao",
+            "zhitiao",
+            "qianming",
+            "permission_matrix"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yaoc_e",
+            "mifeng_jian",
+            "bijian",
+            "jianxiu_rizhi",
+            "chaoshengdao",
+            "fengpian",
+            "zhenjingji",
+            "zhiriao",
+            "permission_matrix"
+          ],
+          "held": [
+            "shoutao",
+            "beiping",
+            "zhitiao",
+            "qianming",
+            "command_cache",
+            "valve_residue"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "yaoc_e",
+            "mifeng_jian",
+            "bijian",
+            "jianxiu_rizhi",
+            "chaoshengdao",
+            "fengpian",
+            "shoutao",
+            "beiping",
+            "zhenjingji",
+            "zhiriao",
+            "zhitiao",
+            "qianming",
+            "permission_matrix",
+            "command_cache",
+            "valve_residue"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/05p-haigou7.json"
+    },
+    {
+      "title": "红眼航班",
+      "culpritId": "miaosuihan",
+      "culpritName": "苗岁寒",
+      "clueCount": 12,
+      "namingClueIds": [
+        "fuwu_jiluyi",
+        "weichi_aisle_statement",
+        "zhenyao_baojian"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "jijiu_jilu",
+        "xiaozongping",
+        "fuwu_jiluyi",
+        "fuwu_liushui",
+        "gonggao_caogao",
+        "chufang_zhipian",
+        "xishoujian_yao",
+        "yaoping_jianyan",
+        "weichi_aisle_statement",
+        "zhenyao_baojian"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "jijiu_jilu"
+          ],
+          "held": [
+            "xiaozongping",
+            "fuwu_jiluyi",
+            "fuwu_liushui",
+            "gonggao_caogao",
+            "yizhu_fulu",
+            "duzhai_duanxin",
+            "chufang_zhipian",
+            "xishoujian_yao",
+            "yaoping_jianyan",
+            "weichi_aisle_statement",
+            "zhenyao_baojian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "jijiu_jilu",
+            "xiaozongping",
+            "fuwu_jiluyi",
+            "fuwu_liushui",
+            "gonggao_caogao",
+            "yizhu_fulu",
+            "duzhai_duanxin",
+            "chufang_zhipian",
+            "xishoujian_yao",
+            "yaoping_jianyan",
+            "weichi_aisle_statement",
+            "zhenyao_baojian"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/06p-hongyanbanhang.json"
+    },
+    {
+      "title": "荒漠营地",
+      "culpritId": "hude",
+      "culpritName": "呼德",
+      "clueCount": 12,
+      "namingClueIds": [
+        "weixing_dianhua",
+        "dianming_ben",
+        "dianchi_qianshou",
+        "dianming_radio_huan",
+        "bagen_kouju"
+      ],
+      "accusingClueIds": [
+        "dianming_ben"
+      ],
+      "verdictClueIds": [
+        "yanshi_jilu",
+        "danke",
+        "weixing_dianhua",
+        "dianming_ben",
+        "dianming_radio_huan"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yanshi_jilu"
+          ],
+          "held": [
+            "danke",
+            "qianggui_dengji",
+            "banmai_dengshanxue",
+            "weixing_dianhua",
+            "dianming_ben",
+            "heishi_zhaopian",
+            "xingye_guangdian",
+            "dianchi_qianshou",
+            "fayan_ballistics",
+            "dianming_radio_huan",
+            "bagen_kouju"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yanshi_jilu",
+            "danke",
+            "qianggui_dengji",
+            "banmai_dengshanxue",
+            "weixing_dianhua",
+            "dianming_ben",
+            "heishi_zhaopian",
+            "xingye_guangdian",
+            "dianchi_qianshou",
+            "fayan_ballistics",
+            "dianming_radio_huan",
+            "bagen_kouju"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/06p-huangmoyingdi.json"
+    },
+    {
+      "title": "火锅局",
+      "culpritId": "lao_zhou",
+      "culpritName": "老周",
+      "clueCount": 8,
+      "namingClueIds": [
+        "su_cai",
+        "cao_tiaoliao_zhengyan"
+      ],
+      "accusingClueIds": [
+        "su_cai"
+      ],
+      "verdictClueIds": [
+        "youdie_yaohe",
+        "dinaxian_dai",
+        "su_cai",
+        "cao_tiaoliao_zhengyan"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "cao_jie",
+          "characterName": "曹姐",
+          "section": "objectives",
+          "excerpt": "看见有人给老雷调了油碟"
+        },
+        {
+          "characterId": "cao_jie",
+          "characterName": "曹姐",
+          "section": "knowledge",
+          "excerpt": "看见有人在调料台给老雷调油碟，当时只当稀罕事"
+        },
+        {
+          "characterId": "a_liang",
+          "characterName": "阿亮",
+          "section": "knowledge",
+          "excerpt": "看见有人在调料台，手里捏着个小袋子"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "youdie_yaohe",
+            "yaowu_jilu"
+          ],
+          "held": [
+            "dinaxian_dai",
+            "su_cai",
+            "jishiben",
+            "diliao_zhangben",
+            "shouji_zhaopian",
+            "cao_tiaoliao_zhengyan"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "youdie_yaohe",
+            "dinaxian_dai",
+            "su_cai",
+            "jishiben",
+            "diliao_zhangben",
+            "shouji_zhaopian",
+            "yaowu_jilu",
+            "cao_tiaoliao_zhengyan"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/4p-huoguoju.json"
+    },
+    {
+      "title": "旧影楼·暗房灯火",
+      "culpritId": "shenhuaimin",
+      "culpritName": "沈怀民",
+      "clueCount": 10,
+      "namingClueIds": [
+        "c_zhangben",
+        "c_dangpiao",
+        "c_fenghuo_zhengci"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "c_yanshi",
+        "c_sangpizhi",
+        "c_shimei",
+        "c_zhangben",
+        "c_yaofang",
+        "c_fenghuo_zhengci"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "alu",
+          "characterName": "阿禄",
+          "section": "secrets",
+          "excerpt": "看见里面有人翻账本却没敢吱声——这事你不愿说，怕人问你怎么不去睡"
+        },
+        {
+          "characterId": "ruanjingqiu",
+          "characterName": "阮静秋",
+          "section": "knowledge",
+          "excerpt": "看见暗房那扇小窗透着红灯，红灯下有人影动——21:20 他还坐在"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_sangpizhi",
+            "c_shimei",
+            "c_zhangben",
+            "c_dangpiao",
+            "c_huaibiao",
+            "c_yaofang",
+            "c_zhaidan",
+            "c_dipian",
+            "c_fenghuo_zhengci"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_sangpizhi",
+            "c_shimei",
+            "c_zhangben",
+            "c_dangpiao",
+            "c_huaibiao",
+            "c_yaofang",
+            "c_zhaidan",
+            "c_dipian",
+            "c_fenghuo_zhengci"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/5p-jiuyinglou.json"
+    },
+    {
+      "title": "科场疑云·金莲烛",
+      "culpritId": "qinjiuzhang",
+      "culpritName": "秦九章",
+      "clueCount": 14,
+      "namingClueIds": [
+        "wanjia_zhang",
+        "zhenxin_canliu"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "yuzhucanzhu",
+        "shoujishouji",
+        "mifengzongce",
+        "yaoxiakongge",
+        "chengyilidan",
+        "puzhouxiujuan",
+        "zhuhe_jiaojie",
+        "wanjia_zhang",
+        "zhenxin_canliu"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yuzhucanzhu"
+          ],
+          "held": [
+            "shoujishouji",
+            "mifengzongce",
+            "guanjiezitiao",
+            "yaoxiakongge",
+            "chengyilidan",
+            "xiangdiyajuan",
+            "puzhouxiujuan",
+            "zhuanfengfengtiao",
+            "yangu_jianyan",
+            "xie_shijian",
+            "zhuhe_jiaojie",
+            "wanjia_zhang",
+            "zhenxin_canliu"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yuzhucanzhu",
+            "shoujishouji",
+            "mifengzongce",
+            "guanjiezitiao",
+            "yaoxiakongge",
+            "chengyilidan",
+            "xiangdiyajuan",
+            "puzhouxiujuan",
+            "zhuanfengfengtiao",
+            "yangu_jianyan",
+            "xie_shijian",
+            "zhuhe_jiaojie",
+            "wanjia_zhang",
+            "zhenxin_canliu"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "yuzhucanzhu",
+            "shoujishouji",
+            "mifengzongce",
+            "guanjiezitiao",
+            "yaoxiakongge",
+            "chengyilidan",
+            "xiangdiyajuan",
+            "puzhouxiujuan",
+            "zhuanfengfengtiao",
+            "yangu_jianyan",
+            "xie_shijian",
+            "zhuhe_jiaojie",
+            "wanjia_zhang",
+            "zhenxin_canliu"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-kechangyiyun.json"
+    },
+    {
+      "title": "南洋船票·海澄号",
+      "culpritId": "xiewangbei",
+      "culpritName": "谢望北",
+      "clueCount": 15,
+      "namingClueIds": [
+        "c_lingyong",
+        "c_qiandao",
+        "c_jiushui",
+        "c_tray_testimony",
+        "c_paper_stock",
+        "c_oldlog",
+        "c_signbook_compare"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "c_naibei",
+        "c_lingyong",
+        "c_qiandao",
+        "c_dianbao",
+        "c_lianzi",
+        "c_toxicology",
+        "c_oldlog",
+        "c_signbook_compare"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_yishu",
+            "c_naibei",
+            "c_guquan",
+            "c_lingyong",
+            "c_qiandao",
+            "c_jiushui",
+            "c_dianbao",
+            "c_lianzi",
+            "c_toxicology",
+            "c_kitchen_trace",
+            "c_tray_testimony",
+            "c_paper_stock",
+            "c_oldlog",
+            "c_signbook_compare"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_yishu",
+            "c_naibei",
+            "c_lingyong",
+            "c_qiandao",
+            "c_jiushui",
+            "c_dianbao",
+            "c_lianzi",
+            "c_toxicology",
+            "c_kitchen_trace",
+            "c_tray_testimony",
+            "c_paper_stock",
+            "c_oldlog",
+            "c_signbook_compare"
+          ],
+          "held": [
+            "c_guquan"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "c_yanshi",
+            "c_yishu",
+            "c_naibei",
+            "c_lingyong",
+            "c_qiandao",
+            "c_jiushui",
+            "c_dianbao",
+            "c_lianzi",
+            "c_toxicology",
+            "c_kitchen_trace",
+            "c_tray_testimony",
+            "c_paper_stock",
+            "c_oldlog",
+            "c_signbook_compare"
+          ],
+          "held": [
+            "c_guquan"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/7p-nanyanchuanpiao.json"
+    },
+    {
+      "title": "上元灯影·贺灯酒",
+      "culpritId": "liuchengye",
+      "culpritName": "柳承业",
+      "clueCount": 12,
+      "namingClueIds": [
+        "guizhongxinxia",
+        "tiaowan_zhengci",
+        "fenglou_koubei",
+        "waigui_zhangfang"
+      ],
+      "accusingClueIds": [
+        "fenglou_koubei"
+      ],
+      "verdictClueIds": [
+        "yageshishen",
+        "guizhongxinxia",
+        "fenglou_koubei",
+        "waigui_zhangfang"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "chaishu",
+          "characterName": "柴叔",
+          "section": "knowledge",
+          "excerpt": "亲眼看见有人提着酒壶上楼——壶是酒保从「上元福酒」坛里现打的"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yageshishen"
+          ],
+          "held": [
+            "youtiyaobao",
+            "gengcibu",
+            "guizhongxinxia",
+            "yehangchuan",
+            "zoumadengjiapa",
+            "tuihuidgengtie",
+            "pankushouling",
+            "fating_yanshi",
+            "tiaowan_zhengci",
+            "fenglou_koubei",
+            "waigui_zhangfang"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yageshishen",
+            "youtiyaobao",
+            "gengcibu",
+            "guizhongxinxia",
+            "yehangchuan",
+            "zoumadengjiapa",
+            "tuihuidgengtie",
+            "pankushouling",
+            "fating_yanshi",
+            "tiaowan_zhengci",
+            "fenglou_koubei",
+            "waigui_zhangfang"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-shangyuandengying.json"
+    },
+    {
+      "title": "深夜食堂",
+      "culpritId": "fangxiaofang",
+      "culpritName": "方晓芳",
+      "clueCount": 8,
+      "namingClueIds": [],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "qunuanqi_yu",
+        "paifeng_juanlian",
+        "bianlidian_jiankong",
+        "paojiu_tangcai"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xianchang_kanyan"
+          ],
+          "held": [
+            "qunuanqi_yu",
+            "paifeng_juanlian",
+            "bianlidian_jiankong",
+            "zhangben_sijiao",
+            "paojiu_tangcai",
+            "panjueshu_fuyinjian",
+            "jiangchunlai_zhengyan"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xianchang_kanyan",
+            "qunuanqi_yu",
+            "paifeng_juanlian",
+            "bianlidian_jiankong",
+            "zhangben_sijiao",
+            "paojiu_tangcai",
+            "panjueshu_fuyinjian",
+            "jiangchunlai_zhengyan"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/4p-shenyeshitang.json"
+    },
+    {
+      "title": "深夜食堂·还原问答",
+      "culpritId": "fangxiaofang",
+      "culpritName": "方晓芳",
+      "clueCount": 7,
+      "namingClueIds": [],
+      "accusingClueIds": [],
+      "verdictClueIds": [],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xianchang_kanyan"
+          ],
+          "held": [
+            "qunuanqi_yu",
+            "paifeng_juanlian",
+            "bianlidian_jiankong",
+            "zhangben_sijiao",
+            "paojiu_tangcai",
+            "panjueshu_fuyinjian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xianchang_kanyan"
+          ],
+          "held": [
+            "qunuanqi_yu",
+            "paifeng_juanlian",
+            "bianlidian_jiankong",
+            "zhangben_sijiao",
+            "paojiu_tangcai",
+            "panjueshu_fuyinjian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/sample-4p-quiz.json"
+    },
+    {
+      "title": "守陵疑云·辞陵礼",
+      "culpritId": "kandachuan",
+      "culpritName": "阚大川",
+      "clueCount": 11,
+      "namingClueIds": [
+        "shoulingbuzhengben",
+        "shangchengbu",
+        "c_peijiusi_testimony"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "chunjilidan",
+        "shoulingbuzhengben",
+        "dangpupiaozi",
+        "huolangshouhuozhang",
+        "c_bronze_trace"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xiangdianshishen"
+          ],
+          "held": [
+            "chunjilidan",
+            "shoulingbuzhengben",
+            "dangpupiaozi",
+            "xunyebu",
+            "shaojisipaib",
+            "huolangshouhuozhang",
+            "shangchengbu"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xiangdianshishen",
+            "chunjilidan",
+            "shoulingbuzhengben",
+            "dangpupiaozi",
+            "xunyebu",
+            "shaojisipaib",
+            "huolangshouhuozhang",
+            "shangchengbu"
+          ],
+          "held": [
+            "c_bloodwash_trace",
+            "c_peijiusi_testimony",
+            "c_bronze_trace"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "xiangdianshishen",
+            "chunjilidan",
+            "shoulingbuzhengben",
+            "dangpupiaozi",
+            "xunyebu",
+            "shaojisipaib",
+            "huolangshouhuozhang",
+            "shangchengbu",
+            "c_bloodwash_trace",
+            "c_peijiusi_testimony",
+            "c_bronze_trace"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/5p-shoulingyiyun.json"
+    },
+    {
+      "title": "书院惊雷·藏书楼",
+      "culpritId": "peisongnian",
+      "culpritName": "裴松年",
+      "clueCount": 12,
+      "namingClueIds": [
+        "zhongsheng",
+        "nianpugaoxia",
+        "tanpenbanban",
+        "louyao_jieling"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "zhongsheng",
+        "nianpugaoxia"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "qianmushan",
+          "characterName": "钱慕山",
+          "section": "knowledge",
+          "excerpt": "看见二层经阁窗纸上有人影来回走动——那时楼里至少还有一个人醒着"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "loutixiashishen"
+          ],
+          "held": [
+            "jinganxuehen",
+            "zhongsheng",
+            "nianpugaoxia",
+            "tanpenbanban",
+            "jieshubu",
+            "chaifangjinshu",
+            "fankesongqian",
+            "sidinggengtie",
+            "yamen_fayan",
+            "longbo_vibration_statement",
+            "louyao_jieling"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "loutixiashishen",
+            "jinganxuehen",
+            "zhongsheng",
+            "nianpugaoxia",
+            "tanpenbanban",
+            "jieshubu",
+            "chaifangjinshu",
+            "yamen_fayan",
+            "longbo_vibration_statement",
+            "louyao_jieling"
+          ],
+          "held": [
+            "fankesongqian",
+            "sidinggengtie"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "loutixiashishen",
+            "jinganxuehen",
+            "zhongsheng",
+            "nianpugaoxia",
+            "tanpenbanban",
+            "jieshubu",
+            "chaifangjinshu",
+            "fankesongqian",
+            "sidinggengtie",
+            "yamen_fayan",
+            "longbo_vibration_statement",
+            "louyao_jieling"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/5p-shuyuanjinglei.json"
+    },
+    {
+      "title": "天池雪会",
+      "culpritId": "fangyu",
+      "culpritName": "方屿",
+      "clueCount": 16,
+      "namingClueIds": [
+        "qiandan",
+        "fangyu_xueyi_quebian"
+      ],
+      "accusingClueIds": [
+        "fangyu_xueyi_quebian"
+      ],
+      "verdictClueIds": [
+        "lanangan",
+        "xunzha_rizhi",
+        "qiandan",
+        "xuebangui",
+        "banshou",
+        "dayin_rizhi",
+        "jianduanxiu",
+        "fayan_gaozhui_jianyan",
+        "luoshuo_gongju_jianyan",
+        "fengxue_tongxingjilu",
+        "fangyu_xueyi_quebian"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "daihong",
+          "characterName": "戴鸿",
+          "section": "knowledge",
+          "excerpt": "看见雪廊方向有人影进进出出——风雪太大，你只记得'有两拨，都不是"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yanshang_jilu"
+          ],
+          "held": [
+            "lanangan",
+            "xuejing_sui",
+            "xunzha_rizhi",
+            "qiandan",
+            "laoshucang",
+            "xuebangui",
+            "weiyao",
+            "banshou",
+            "xieyin",
+            "dayin_rizhi",
+            "jianduanxiu",
+            "fayan_gaozhui_jianyan",
+            "luoshuo_gongju_jianyan",
+            "fengxue_tongxingjilu",
+            "fangyu_xueyi_quebian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yanshang_jilu",
+            "lanangan",
+            "xuejing_sui",
+            "xunzha_rizhi",
+            "laoshucang",
+            "xuebangui",
+            "xieyin",
+            "dayin_rizhi",
+            "fayan_gaozhui_jianyan",
+            "luoshuo_gongju_jianyan",
+            "fengxue_tongxingjilu"
+          ],
+          "held": [
+            "qiandan",
+            "weiyao",
+            "banshou",
+            "jianduanxiu",
+            "fangyu_xueyi_quebian"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "yanshang_jilu",
+            "lanangan",
+            "xuejing_sui",
+            "xunzha_rizhi",
+            "qiandan",
+            "laoshucang",
+            "xuebangui",
+            "weiyao",
+            "banshou",
+            "xieyin",
+            "dayin_rizhi",
+            "jianduanxiu",
+            "fayan_gaozhui_jianyan",
+            "luoshuo_gongju_jianyan",
+            "fengxue_tongxingjilu",
+            "fangyu_xueyi_quebian"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/06p-tianchixuehui.json"
+    },
+    {
+      "title": "王府年宴·灯下折",
+      "culpritId": "guyannian",
+      "culpritName": "古延年",
+      "clueCount": 12,
+      "namingClueIds": [
+        "changshisitao",
+        "sitao_tongyuan",
+        "liangtai_zhengbu",
+        "jiangnan_zhuangkuan"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "ninghuitangshishen",
+        "changshisitao",
+        "sitao_tongyuan",
+        "liangtai_zhengbu",
+        "jiangnan_zhuangkuan"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "ninghuitangshishen"
+          ],
+          "held": [
+            "changshisitao",
+            "anzishizhenzhe",
+            "duantaodehuazhou",
+            "xunyebu",
+            "yutaohuan",
+            "liangtaijiuzhang",
+            "zhuangqidangpiao",
+            "duipaicungen",
+            "sitao_tongyuan",
+            "liangtai_zhengbu"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "ninghuitangshishen",
+            "changshisitao",
+            "anzishizhenzhe",
+            "duantaodehuazhou",
+            "xunyebu",
+            "yutaohuan",
+            "liangtaijiuzhang",
+            "zhuangqidangpiao",
+            "duipaicungen",
+            "sitao_tongyuan",
+            "liangtai_zhengbu",
+            "jiangnan_zhuangkuan"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/7p-wangfunianyan.json"
+    },
+    {
+      "title": "尾舱来客",
+      "culpritId": "niehuaiyuan",
+      "culpritName": "聂怀远",
+      "clueCount": 12,
+      "namingClueIds": [
+        "menjin_qingdan",
+        "yaodeng_jilu",
+        "yaoshi_jieyong",
+        "jianding_digao",
+        "jianggao_pizhu"
+      ],
+      "accusingClueIds": [
+        "yaoshi_jieyong",
+        "jianding_digao"
+      ],
+      "verdictClueIds": [
+        "yaodeng_jilu",
+        "yaoshi_jieyong",
+        "crew_deck_plan",
+        "door_lock_rules"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "chuyan_jilu"
+          ],
+          "held": [
+            "huaibiao",
+            "menjin_qingdan",
+            "yaodeng_jilu",
+            "yaoshi_jieyong",
+            "jianxiu_kanyan",
+            "jianding_digao",
+            "yizhu_beiwang",
+            "jianggao_pizhu",
+            "crew_deck_plan",
+            "linen_chute_manual",
+            "door_lock_rules"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "chuyan_jilu",
+            "huaibiao",
+            "menjin_qingdan",
+            "yaodeng_jilu",
+            "yaoshi_jieyong",
+            "jianxiu_kanyan",
+            "jianding_digao",
+            "jianggao_pizhu",
+            "crew_deck_plan",
+            "linen_chute_manual",
+            "door_lock_rules"
+          ],
+          "held": [
+            "yizhu_beiwang"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/06p-weicanglaike.json"
+    },
+    {
+      "title": "午夜电台",
+      "culpritId": "shenyinuo",
+      "culpritName": "沈一诺",
+      "clueCount": 13,
+      "namingClueIds": [
+        "cehua_yuangao",
+        "luyin_paiban",
+        "console_handover",
+        "spare_card_log",
+        "engineering_receipt",
+        "engineering_audit",
+        "uniform_fiber_check"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "diaoyintai_rizhi",
+        "menjin_buchuan",
+        "cehua_yuangao",
+        "luyin_paiban",
+        "console_handover",
+        "spare_card_log",
+        "engineering_audit",
+        "cushion_transfer"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xianchang_kanyan",
+            "engineering_audit",
+            "cushion_transfer",
+            "uniform_fiber_check"
+          ],
+          "held": [
+            "diaoyintai_rizhi",
+            "menjin_buchuan",
+            "cehua_yuangao",
+            "qinke_liushui",
+            "jianbao_dian",
+            "luyin_paiban",
+            "console_handover",
+            "spare_card_log",
+            "engineering_receipt"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xianchang_kanyan",
+            "diaoyintai_rizhi",
+            "menjin_buchuan",
+            "cehua_yuangao",
+            "qinke_liushui",
+            "jianbao_dian",
+            "luyin_paiban",
+            "console_handover",
+            "spare_card_log",
+            "engineering_receipt",
+            "engineering_audit",
+            "cushion_transfer",
+            "uniform_fiber_check"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "xianchang_kanyan",
+            "diaoyintai_rizhi",
+            "menjin_buchuan",
+            "cehua_yuangao",
+            "qinke_liushui",
+            "jianbao_dian",
+            "luyin_paiban",
+            "console_handover",
+            "spare_card_log",
+            "engineering_receipt",
+            "engineering_audit",
+            "cushion_transfer",
+            "uniform_fiber_check"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/5p-wuyediantai.json"
+    },
+    {
+      "title": "雾锁戏班·万年台",
+      "culpritId": "gujiujin",
+      "culpritName": "古九斤",
+      "clueCount": 12,
+      "namingClueIds": [
+        "c_bazi_lingyong"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "c_yanshi",
+        "c_kebanrizhi",
+        "c_yue_humming",
+        "c_bazi_lingyong"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "yuezhaoying",
+          "characterName": "月照影",
+          "section": "objectives",
+          "excerpt": "听到有人哼西皮；你没有看见屋内的人，也不能认出声音"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "c_yanshi"
+          ],
+          "held": [
+            "c_xixiang",
+            "c_bazi",
+            "c_liangzhangben",
+            "c_yinpiao",
+            "c_chapeng",
+            "c_wushengtan",
+            "c_kebanrizhi",
+            "c_diancui",
+            "c_yixiang_rule",
+            "c_yue_humming",
+            "c_bazi_lingyong"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "c_yanshi",
+            "c_xixiang",
+            "c_bazi",
+            "c_liangzhangben",
+            "c_yinpiao",
+            "c_chapeng",
+            "c_wushengtan",
+            "c_kebanrizhi",
+            "c_diancui",
+            "c_yixiang_rule",
+            "c_yue_humming",
+            "c_bazi_lingyong"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/6p-wuoxixiban.json"
+    },
+    {
+      "title": "修复室",
+      "culpritId": "chengyan",
+      "culpritName": "程砚",
+      "clueCount": 10,
+      "namingClueIds": [
+        "lingyong_dan",
+        "paifeng_gongdan",
+        "taitai_bianhao",
+        "jietiao_daijia",
+        "menjian_kongbai",
+        "fengdao_fengmen_fuhe"
+      ],
+      "accusingClueIds": [
+        "fengdao_fengmen_fuhe"
+      ],
+      "verdictClueIds": [
+        "lingyong_dan",
+        "paifeng_gongdan",
+        "menjian_kongbai"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "xiandai_kanyan"
+          ],
+          "held": [
+            "lingyong_dan",
+            "paifeng_gongdan",
+            "shouji_qunliao",
+            "taitai_bianhao",
+            "jietiao_daijia",
+            "moxing_beixin",
+            "menjian_kongbai",
+            "shuming_youjian",
+            "fengdao_fengmen_fuhe"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "xiandai_kanyan",
+            "lingyong_dan",
+            "paifeng_gongdan",
+            "shouji_qunliao",
+            "taitai_bianhao",
+            "jietiao_daijia",
+            "moxing_beixin",
+            "menjian_kongbai",
+            "shuming_youjian",
+            "fengdao_fengmen_fuhe"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/5p-xiufushi.json"
+    },
+    {
+      "title": "雪乡夜话",
+      "culpritId": "baihua",
+      "culpritName": "白桦",
+      "clueCount": 10,
+      "namingClueIds": [
+        "dianmu_xue",
+        "xunqin_kuaijian",
+        "weijin_muxie",
+        "guocui_mujizhengci"
+      ],
+      "accusingClueIds": [
+        "xunqin_kuaijian"
+      ],
+      "verdictClueIds": [
+        "changguang_sheying",
+        "dianmu_xue",
+        "tuozhuai_hen",
+        "weijin_muxie"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "yankan_jilu"
+          ],
+          "held": [
+            "changguang_sheying",
+            "dianmu_xue",
+            "tuozhuai_hen",
+            "xunqin_kuaijian",
+            "weijin_muxie",
+            "qianpiao_san",
+            "jiebie_fukou",
+            "yanxia_yantou",
+            "guocui_mujizhengci"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "yankan_jilu",
+            "changguang_sheying",
+            "dianmu_xue",
+            "tuozhuai_hen",
+            "xunqin_kuaijian",
+            "weijin_muxie",
+            "qianpiao_san",
+            "jiebie_fukou",
+            "yanxia_yantou",
+            "guocui_mujizhengci"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/05p-xuexiangyehua.json"
+    },
+    {
+      "title": "雁归楼·断钗记",
+      "culpritId": "mayicheng",
+      "culpritName": "马驿丞",
+      "clueCount": 13,
+      "namingClueIds": [
+        "mixi",
+        "zhangben",
+        "guanxue",
+        "yaobao_laiyuan",
+        "fayan_tox"
+      ],
+      "accusingClueIds": [
+        "fayan_tox"
+      ],
+      "verdictClueIds": [
+        "jiuhu",
+        "zhangben",
+        "yaofen",
+        "yaobao_laiyuan"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "jiuhu"
+          ],
+          "held": [
+            "mixi",
+            "gongwen",
+            "zhangben",
+            "mingtie",
+            "weituo",
+            "anzhang",
+            "cizheng",
+            "yaofen",
+            "guanxue",
+            "tanpen",
+            "yaobao_laiyuan",
+            "fayan_tox"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "jiuhu",
+            "mixi",
+            "gongwen",
+            "zhangben",
+            "mingtie",
+            "weituo",
+            "anzhang",
+            "yaofen",
+            "guanxue",
+            "tanpen",
+            "yaobao_laiyuan",
+            "fayan_tox"
+          ],
+          "held": [
+            "cizheng"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "jiuhu",
+            "mixi",
+            "gongwen",
+            "zhangben",
+            "mingtie",
+            "weituo",
+            "anzhang",
+            "cizheng",
+            "yaofen",
+            "guanxue",
+            "tanpen",
+            "yaobao_laiyuan",
+            "fayan_tox"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/06p-yanguilou.json"
+    },
+    {
+      "title": "夜航号",
+      "culpritId": "chenjie",
+      "culpritName": "陈捷",
+      "clueCount": 12,
+      "namingClueIds": [
+        "shouyang_wenjian",
+        "dna_baogao",
+        "jiaban_jiandu",
+        "liwei_chenjie_zhengci",
+        "vault_threshold_trace",
+        "sim_device_trace"
+      ],
+      "accusingClueIds": [
+        "liwei_chenjie_zhengci"
+      ],
+      "verdictClueIds": [
+        "weixie_duanxin",
+        "shouyang_wenjian",
+        "dna_baogao",
+        "zhou_zhenzhi_zhengci",
+        "vault_threshold_trace",
+        "sim_device_trace"
+      ],
+      "blankedWitnesses": [],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "tongzhenzhi",
+            "jiaban_jiandu"
+          ],
+          "held": [
+            "menjin_jilu",
+            "niming_duanxin",
+            "guyupei",
+            "zhou_zhenzhi_zhengci",
+            "liwei_chenjie_zhengci",
+            "vault_threshold_trace",
+            "sim_device_trace"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "tongzhenzhi",
+            "menjin_jilu",
+            "niming_duanxin",
+            "guyupei",
+            "jiaban_jiandu",
+            "zhou_zhenzhi_zhengci",
+            "liwei_chenjie_zhengci",
+            "vault_threshold_trace"
+          ],
+          "held": [
+            "weixie_duanxin",
+            "shouyang_wenjian",
+            "dna_baogao",
+            "sim_device_trace"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 3,
+          "shared": [
+            "tongzhenzhi",
+            "menjin_jilu",
+            "niming_duanxin",
+            "weixie_duanxin",
+            "guyupei",
+            "shouyang_wenjian",
+            "dna_baogao",
+            "jiaban_jiandu",
+            "zhou_zhenzhi_zhengci",
+            "liwei_chenjie_zhengci",
+            "vault_threshold_trace",
+            "sim_device_trace"
+          ],
+          "held": [],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        }
+      ],
+      "earliestTwoCardLockRound": null,
+      "file": "seeds/generated/05p-yehanghao.json"
+    },
+    {
+      "title": "云澜山庄的雪夜",
+      "culpritId": "suwan",
+      "culpritName": "苏晚",
+      "clueCount": 10,
+      "namingClueIds": [
+        "diary",
+        "safe_report",
+        "bottle"
+      ],
+      "accusingClueIds": [],
+      "verdictClueIds": [
+        "safe_report",
+        "missing_key",
+        "footprint",
+        "bottle"
+      ],
+      "blankedWitnesses": [
+        {
+          "characterId": "qinghe",
+          "characterName": "沈青禾",
+          "section": "knowledge",
+          "excerpt": "看见有人拎着墨绿色出诊包上楼，那人说是给叔叔送安神药"
+        },
+        {
+          "characterId": "zhoubo",
+          "characterName": "周伯",
+          "section": "timeline",
+          "excerpt": "看见有人从房间方向走过来，进了书房，手里拎着出诊包"
+        },
+        {
+          "characterId": "luxiaokai",
+          "characterName": "陆小开",
+          "section": "timeline",
+          "excerpt": "看见有人拎着墨绿色出诊包走进书房 你看见有人拎着墨绿色出诊包走进"
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "shared": [
+            "teacup"
+          ],
+          "held": [
+            "missing_key",
+            "footprint",
+            "ledger",
+            "spare_key",
+            "tea_autopsy",
+            "late_sound"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": null,
+          "lockInTable": null
+        },
+        {
+          "round": 2,
+          "shared": [
+            "teacup",
+            "missing_key",
+            "footprint",
+            "bottle",
+            "tea_autopsy",
+            "late_sound",
+            "diary",
+            "safe_report"
+          ],
+          "held": [
+            "ledger",
+            "spare_key"
+          ],
+          "singleCardClueIds": [],
+          "lockInShared": {
+            "count": 2,
+            "clueIds": [
+              "bottle",
+              "late_sound"
+            ]
+          },
+          "lockInTable": {
+            "count": 2,
+            "clueIds": [
+              "bottle",
+              "late_sound"
+            ]
+          }
+        }
+      ],
+      "earliestTwoCardLockRound": 2,
+      "file": "seeds/sample-5p-cloudlanshan.json"
+    }
+  ]
+}

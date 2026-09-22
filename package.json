@@ -16,6 +16,7 @@
     "eval:snapshots": "tsx scripts/build-eval-snapshots.ts",
     "design:validate": "npx tsx scripts/validate-design-packages.ts",
     "sample:audit": "npx tsx scripts/audit-sample-playability.ts",
+    "script:lock": "npx tsx scripts/audit-script-lock.ts",
     "blind-read:build": "npx tsx scripts/build-seat-blind-read.ts",
     "blind-read:eval": "npx tsx scripts/run-blind-read-eval.ts",
     "jev:dataset": "npx tsx scripts/build-jev-vote-set.ts",
