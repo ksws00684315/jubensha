@@ -501,10 +501,12 @@ export class GameEngine {
       case "SEARCH": {
         const missing = seats.filter((i) => !state.searchChoices[String(i)]);
         if (missing.length) {
+          let autoCompleted = false;
           for (const seat of missing) {
             if (availableLocations(this, seat).length === 0) {
               this.state.searchChoices[String(seat)] = "__no_search__";
-              await this.systemSay("本轮没有可搜的线索材料，系统已为你完成搜证。", seat);
+              autoCompleted = true;
+              await this.systemSay("本轮没有可搜的线索材料，系统已自动完成搜证，将进入下一环节。", seat);
               continue;
             }
             if (state.seats[seat].kind === "ai") {
@@ -524,6 +526,10 @@ export class GameEngine {
             }
           }
           await this.persist();
+          // 自动结掉的位置不会带来任何"玩家动作"，也就没人再 tick 一次；
+          // 全员同时耗尽时（线索数 < 人数×轮数的硬核本末轮）本步一 return，
+          // 对局就永远停在"搜证·第 N 轮"，而文案已经承诺"将进入下一环节"。
+          if (autoCompleted && seats.every((i) => this.state.searchChoices[String(i)])) this.pendingTick = true;
           return;
         }
         // 所有人已选 → 分派线索（每轮只发一次）

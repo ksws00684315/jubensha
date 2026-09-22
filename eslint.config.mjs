@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // 本地排查脚本（gitignored），不该把 npm run lint 弄红
+    ".workbuddy/**",
   ]),
 ]);
 

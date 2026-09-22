@@ -367,10 +367,12 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     engine.state.round = 1;
     engine.state.clueStates = Object.fromEntries(doc.clues.map((clue) => [clue.id, { discoveredBy: null, isPublic: true }]));
 
+    // 回归：全员同时耗尽时不产生任何"玩家动作"，也就没有下一次 tick 来救场。
+    // 同一次 tick 内必须自己走完搜证，否则对局停在"搜证·第 N 轮"，
+    // 而屏幕上已经承诺"将进入下一环节"（科场疑云 6 人 3 轮 14 线索，QM4AF/WFYHL 两局卡死）。
     await engine.tick();
     expect(Object.values(engine.state.searchChoices)).toHaveLength(5);
     expect(Object.values(engine.state.searchChoices).every((choice) => choice === "__no_search__")).toBe(true);
-    await engine.tick();
     expect(engine.state.phase).toBe("DISCUSSION");
   }, 30_000);
 
