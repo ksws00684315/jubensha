@@ -174,7 +174,7 @@ export function summarizeVoteOutcomes(outcomes: JevVoteOutcome[]) {
     {
       name: "单票输入成本 ≤ 现网 2 倍",
       pass: baseTokens > 0 && jevTokens <= baseTokens * 2,
-      detail: `Jev 中位输入 ${jevTokens} tokens ×$42/B ≈ $${((jevTokens * 42) / 1e9).toFixed(5)}/票；现网重放中位 ${baseTokens} tokens（单价按各自 provider 另行核对）`,
+      detail: `Jev 中位输入 ${jevTokens} tokens ×$42/M ≈ $${((jevTokens * 42) / 1e6).toFixed(4)}/票；现网重放中位 ${baseTokens} tokens（单价按各自 provider 另行核对）`,
     },
     {
       name: "弃权组合不劣于现网记录组合",

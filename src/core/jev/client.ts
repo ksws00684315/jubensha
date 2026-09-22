@@ -12,8 +12,8 @@ const DEFAULT_MODEL = "jev-latest";
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** 429/5xx/网络错误的退避间隔；决策模型走在线路径，宁可快速失败也不拖长回合 */
 const DEFAULT_RETRY_DELAYS_MS = [400, 1200];
-/** Jev 1.13：输入 $42/1M tokens（$0.000042/1k）；输出免费 */
-export const JEV_INPUT_COST_PER_TOKEN_USD = 42 / 1_000_000_000;
+/** Jev 1.13：输入 $42/1M tokens（$0.042/1k）；输出免费 */
+export const JEV_INPUT_COST_PER_TOKEN_USD = 42 / 1_000_000;
 /** 官方声明的 Choice 原语候选上限 */
 export const MAX_CHOICE_OPTIONS = 255;
 
