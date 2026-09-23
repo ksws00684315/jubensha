@@ -24,7 +24,7 @@ export const SCHEMA_HINT = `输出必须是一个 JSON 对象，version 固定�
 7) voteMode=culprit 时 quiz 留空数组；hybrid/choice 时必须有题，且 correctOptionId 必须在 options 内。
 8) 每个角色都有秘密/目标/时间线/persona；秘密 1-2 个（可有与案情弱相关的次级秘密增加可演性），至少一个用 disclosure="conditional" 并写清 condition（被逼问到什么/什么时机才承认），与角色 objectives 呼应。
 
-可选增强（写了就生效，不写不影响入库）：分幕读本 acts + 角色 stages、DM 手册 hostGuide、技能卡 skills（需同时把 flow.actionPointsPerRound 设为 >0）、线索转交 allowClueTransfer、线索发放计划 release / forbiddenCharacterIds、房间主人 ownerCharacterId、knowledge.kind 区分亲见/听说/推断、disclosure=must_share 表示"必须在合适时机主动交代"、alibi / violation / tells。
+可选增强（写了就生效，不写不影响入库）：分幕读本 acts + 角色 stages（acts[].brief 是主持手册，只进 DM 面板和 AI 主持上下文，不会念给玩家；要给玩家的本幕新知识写进 stages）、DM 手册 hostGuide、技能卡 skills（需同时把 flow.actionPointsPerRound 设为 >0）、线索转交 allowClueTransfer、线索发放计划 release / forbiddenCharacterIds、房间主人 ownerCharacterId、knowledge.kind 区分亲见/听说/推断、disclosure=must_share 表示"必须在合适时机主动交代"、alibi / violation / tells。
 
 只输出 JSON，不要任何其他文本。`;
 

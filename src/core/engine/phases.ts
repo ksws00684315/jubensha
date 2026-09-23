@@ -104,7 +104,10 @@ export async function transitionSearch(e: GameEngine, round: number): Promise<vo
   e.turnAsked.clear();
   resetActionPoints(e);
   await e.persist();
-  // 分幕读本：该轮对应的幕合并在同一份旁白里宣读，角色卡 stages 随之解锁
+  // 分幕读本：该轮对应的幕旁白是**主持手册**，不念给玩家。
+  // 早期版本把它拼进公开公告，于是「不宣布唯一经手人」这类调度指令被全场听见，
+  // 侦查方向也白送（现网 66 条阶段公告全部 visibility=public 可证）。
+  // 真人主持在 DM 面板看这条 dm 可见事件；AI 主持由 buildDmContext 注入同一段旁白。
   const actBriefs = e.script.flow.acts
     .filter((a) => a.roundStart === round)
     .map((act) => {
@@ -113,10 +116,21 @@ export async function transitionSearch(e: GameEngine, round: number): Promise<vo
     });
   await announcePhase(
     e,
-    [`进入【第 ${round} 轮搜证】。每位玩家选择一个地点；获得线索后可选择公开或私藏。共 ${e.script.flow.searchRounds} 轮。`, ...actBriefs].join("\n\n"),
+    `进入【第 ${round} 轮搜证】。每位玩家选择一个地点；获得线索后可选择公开或私藏。共 ${e.script.flow.searchRounds} 轮。`,
     "SEARCH",
     round,
     async () => {
+      if (actBriefs.length) {
+        await e.recordEvent({
+          type: "phase",
+          phase: "SEARCH",
+          round,
+          fromSeat: null,
+          toSeat: null,
+          visibility: "dm",
+          content: { text: actBriefs.join("\n\n"), phase: "SEARCH", round, hostOnly: true },
+        });
+      }
       maybeScheduleSummarize(e);
       await e.tickInner();
     }

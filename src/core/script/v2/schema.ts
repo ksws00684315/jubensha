@@ -309,7 +309,10 @@ export const flowV2Schema = z
     actionPointsPerRound: z.number().int().min(0).max(3).default(0),
     /** 结局模式：culprit=指凶（现状）；hybrid=指凶+答题；choice=纯答题（还原本/情感本） */
     voteMode: z.enum(["culprit", "hybrid", "choice"]).default("culprit"),
-    /** 分幕：进入对应搜证轮时由 DM 宣幕，角色 stages 同步解锁 */
+    /**
+     * 分幕：roundStart 那一轮搜证开始时解锁角色 stages。
+     * acts[].brief 是主持材料（DM 面板 + AI 主持上下文），不广播给玩家。
+     */
     acts: z.array(actSchema).default([]),
   })
   .strict();

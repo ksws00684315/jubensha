@@ -286,13 +286,30 @@ ${renderLogWithMemory(events, null, state.memory, false)}`;
     anchoredHead: `【当前局面】${state.phase} 第${state.round}轮${state.turnSeat != null ? ` 轮到座位${state.turnSeat + 1}` : ""}
 【线索公开状态】
 ${clueStatus}
-${hostGuideBlock(script, state).trim()}`,
+${hostGuideBlock(script, state).trim()}
+${actBriefBlock(script, state).trim()}`,
     droppable: [opts.recall?.trim() ?? ""],
     anchoredTail: `${isRevealPhase(state) ? `${truthBrief(script)}\n` : "【控场】你没有上帝视角，不要补写未公开的案情。"}
 【你的任务】${opts.task}
 ${hardTail}${opts.requireJson ? `\n\n${opts.requireJson}` : ""}`,
   };
   return { messages: composeSegments(segments), segments };
+}
+
+/**
+ * 本幕旁白（`flow.acts[].brief`）：与 hostGuide 同级的主持材料。
+ * 引擎不再把它广播给全场（见 phases.ts transitionSearch），AI 主持要靠这里读到，
+ * 否则分幕调度的信息在 AI 主持局里等于丢了。
+ */
+function actBriefBlock(script: ScriptDocV2, state: GameState): string {
+  const lines = unlockedActs(script.flow.acts ?? [], state)
+    .map((act) => {
+      const brief = act.brief?.length ? act.brief.map((b) => ("text" in b ? b.text : "")).join(" ") : "";
+      return brief ? `· 【${act.title}】${brief}` : "";
+    })
+    .filter(Boolean);
+  if (!lines.length) return "";
+  return `\n【本幕要点（主持材料，不要照读给玩家）】\n${lines.join("\n")}\n`;
 }
 
 /** DM 手册：分阶段提示 + 扶车指南（仅在讨论阶段注入，防卡关） */

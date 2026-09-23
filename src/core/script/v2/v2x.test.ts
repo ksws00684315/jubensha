@@ -332,4 +332,17 @@ describe("上下文消费", () => {
       expect(playerJoined).not.toContain("手册密语");
     }
   });
+
+  it("幕旁白与 hostGuide 同级：只进 DM 上下文，绝不进玩家上下文", () => {
+    const d2 = cloneWith((d) => {
+      d.flow.acts = [{ id: "act_1", title: "第一幕：冰源", roundStart: 1, brief: [{ type: "paragraph", text: "幕旁白密令：不宣布唯一经手人" }] }];
+    });
+    const state = stateOf("SEARCH", 1);
+    const dmJoined = buildDmContext(d2, state, [], { task: "控场" }).messages.map((m) => m.content).join("\n");
+    expect(dmJoined).toContain("幕旁白密令");
+    for (let seat = 0; seat < d2.characters.length; seat++) {
+      const playerJoined = buildPlayerContext(d2, state, seat, [], {}).messages.map((m) => m.content).join("\n");
+      expect(playerJoined).not.toContain("幕旁白密令");
+    }
+  });
 });
