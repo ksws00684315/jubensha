@@ -182,6 +182,16 @@ describe("Validator 新规则", () => {
     expect(errors.some((e) => e.message.includes("超过可发现上限"))).toBe(true);
   });
 
+  it("R1 反方向：线索数少于 人数×搜证轮数 → 只 warning，后段轮次必然有人空手", () => {
+    const d2 = cloneWith((d) => {
+      d.flow.searchRounds = 3; // 5 人 × 3 轮 = 15 张需求，样板只有 10 张
+    });
+    const issues = validateScriptV2(d2);
+    expect(issues.some((i) => i.level === "warning" && i.message.includes("少于可搜需求"))).toBe(true);
+    expect(issues.some((i) => i.level === "error" && i.message.includes("少于可搜需求"))).toBe(false);
+    expect(validateScriptV2(parseScriptDocV2(raw)).some((i) => i.message.includes("少于可搜需求"))).toBe(false);
+  });
+
   it("R2 证据链单线索支撑 → warning；合法姓名关系不再误报", () => {
     const d2 = cloneWith((d) => {
       d.truth.evidenceChain = [{ id: "c1", clueIds: ["bottle"], conclusion: "毒源即凶器来源。" }];

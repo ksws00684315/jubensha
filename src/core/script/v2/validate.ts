@@ -238,6 +238,17 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
   if (doc.clues.length > maxDiscoverable) {
     issue(issues, "error", "clues", `线索数(${doc.clues.length})超过可发现上限(${doc.characters.length}人×${doc.flow.searchRounds}轮=${maxDiscoverable})，必有线索永不出现`);
   }
+  // 反方向：每人每轮只会发到一张卡（search-deal.ts dispatchClues），材料少于需求时
+  // 后段轮次必然有人翻遍全场一无所获；该座位可选地点清空后运行时会自动完成搜证，
+  // 流程不卡死但那几轮没有戏。只 warning——短本玩家本就搜不满，是节奏取舍不是错误。
+  if (doc.clues.length > 0 && doc.clues.length < maxDiscoverable) {
+    issue(
+      issues,
+      "warning",
+      "clues",
+      `线索数(${doc.clues.length})少于可搜需求(${doc.characters.length}人×${doc.flow.searchRounds}轮=${maxDiscoverable})，后段轮次必然有人空手；建议补材料或减少搜证轮数`,
+    );
+  }
 
   // 分幕校验：acts 唯一、roundStart 不超过搜证轮数；stages 必须指向已定义的 act
   const actIds = new Set(doc.flow.acts.map((a) => a.id));
