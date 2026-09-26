@@ -1,0 +1,4 @@
+#!/bin/sh
+# 提交前快速门禁：typecheck + lint（不跑全量测试，控制在 60s 内）。
+# 安装：npm run hooks:install （设置 git config core.hooksPath scripts/git-hooks）
+npm run --silent typecheck && npm run --silent lint

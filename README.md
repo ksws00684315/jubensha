@@ -90,6 +90,12 @@ npm test          # Vitest：剧本校验 / 防火墙 / 输出守卫 单测
 node scripts/smoke-m3.mjs   # 端到端冒烟：1 真人 + 4 AI 走完全场（需 dev server 运行中；未配模型时 AI 发言降级为提示，流程仍应闭环）
 ```
 
+可选：安装本地提交钩子（提交前自动跑 typecheck + lint）：
+
+```bash
+npm run hooks:install
+```
+
 ## 目录结构
 
 ```
