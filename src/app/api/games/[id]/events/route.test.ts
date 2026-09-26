@@ -97,7 +97,7 @@ async function openStream(query: string, headers: Record<string, string> = {}) {
 
 const seqsOf = (msgs: Record<string, unknown>[]) => msgs.filter((m) => m.kind === "event").map((m) => (m.event as EngineEvent).seq);
 
-describe("events SSE：回放 / 鉴权降级 / 断线续传", () => {
+describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断线续传", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockFindGame.mockResolvedValue(gameRow() as never);
