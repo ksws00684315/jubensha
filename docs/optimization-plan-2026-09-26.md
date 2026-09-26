@@ -25,8 +25,8 @@
 
 每一步（`Sx.y`）严格按以下循环执行，**不得跳步合并**：
 
-1. **读**：读本步全文 + 本步「涉及范围」列出的所有文件。发现代码事实与本文描述不一致时，以代码为准，在台账「偏差」栏记录，并判断是否影响本步设计；影响设计时停下来报告，不自行改方案。
-2. **查前置**：确认「前置」列出的步骤在台账中为 `DONE`；确认所需决策点（§1.4）已有答复。
+1. **读**：读本步全文 + 本步「涉及范围」列出的所有文件。发现代码事实与本文描述不一致时，以代码为准，在台账「偏差」栏记录，并判断是否影响本步设计；影响设计时按 §0.2「设计错误」的规则处理（无人值守，不提问）。
+2. **查前置**：确认「前置」列出的步骤在台账中为 `DONE`；按 §1.4 的最终决策执行。
 3. **跑基线**：执行标准门禁 `G-std`（§2.1），记录结果。基线不绿时先修复或报告，不在红基线上开发。
 4. **实施**：只做本步「具体操作」列出的改动。不顺手改进相邻代码（全局 CLAUDE.md §3）。
 5. **测**：按本步「测试」小节补写/执行测试。
@@ -37,23 +37,38 @@
 ### 0.2 失败处理
 
 - 同一步验收失败：最多 3 轮修复尝试。第 3 轮仍失败 → 台账标 `BLOCKED`，写清失败的验收项、已尝试方案、怀疑的根因，然后跳到**不依赖本步**的下一步。
-- 发现本计划有设计错误（例如某前提不成立）：标 `NEEDS-DECISION`，在台账写明问题与 2 个以内的备选方案，暂停依赖它的步骤。
+- 发现本计划有设计错误（例如某前提不成立）：本计划以**无人值守**方式执行，不向用户提问。处理方式：
+  1. 在台账「偏差」栏写明问题、备选方案（≤ 2 个）；
+  2. 选择**改动面最小、可回滚、不改变对外行为**的方案继续执行，并标注 `DONE(deviation)`；
+  3. 如果所有备选方案都会改变对外行为或数据结构，就标 `NEEDS-DECISION`，跳过本步及依赖它的步骤，继续执行其他步骤。
 - 任何时候 `G-std` 由绿转红且无法在本步内修复：`git restore`/`git revert` 回到上一绿点，不带红提交。
+- 环境类故障（docker 未启动、端口被占用、网络不通）：先自行排查修复（启动 docker、换端口 3100→3110 等）；30 分钟内修不好就标 `BLOCKED(env)`，跳到不依赖该环境的步骤。
+- **只有在剩余全部步骤都处于 BLOCKED / NEEDS-DECISION 时才停止**，并输出最终报告（见 §0.5）。
+
+### 0.5 停止条件与最终报告
+
+执行在以下两种情况之一时结束：(a) §5 整体验收全部满足；(b) 剩余步骤全部无法推进。结束时：
+
+1. 更新台账到最终状态并提交、push `opt/2026-09`；
+2. 在台账末尾追加「最终报告」一节：完成步骤数 / 总步骤数、§2.4 指标的最终值对照表、所有 BLOCKED 和 NEEDS-DECISION 的清单（附原因与建议）、R1–R9 的最后一次结果、需要用户后续处理的事项（例如合并 `opt/2026-09` 到 main、在生产库执行 S8.1 的检查 SQL）。
 
 ### 0.3 提交规范
 
 - Conventional commits，中文描述，scope 后带步骤号：`test(api): 路由鉴权矩阵覆盖 games/* [S2.2]`。
 - 一步至少一个提交，每个提交单独满足 `G-std`。重构步骤（P7）要求「纯搬移」与「行为修改」分开提交。
 - **只提交本步改动的文件**：用 `git add <path>` 逐个添加，禁止 `git add -A` / `git add .`（工作区可能有用户未提交的改动）。
-- 提交需要用户已答复 D1（§1.4）；push 需要 D4。未获授权时只在本地工作区完成改动并在台账标注「待提交」。
+- 提交与 push 的授权范围见 §1.4 的 D1、D4：只在 `opt/2026-09` 上提交；每完成一个阶段（P）push 一次 `opt/2026-09`，并在台账记录 CI 运行结果。push 失败（未登录、网络问题）不阻塞，记为 `push-pending`，下个阶段再试。
+- 提交信息末尾附加：`Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`。
 
 ### 0.4 禁止事项
 
 - 不连接、不修改用户日常使用的数据库（`local.app.json` / `.env` 里的 `DATABASE_URL`）。所有需要真库的测试只用 §3.4 定义的专用库 `jubensha_test` / `jubensha_e2e`。
 - 不重启用户的 pm2 进程 `jubensha`（:3000）。实机测试一律起独立实例于 :3100（§3.5）。
-- 不在未获 D5 授权时调用真实 LLM（真模型实机测试 R8 除外，且需 D5）。
+- 除 R8（按 D5 限额）外，不调用任何真实 LLM；L1–L3 与 R1–R7、R9 一律在无模型或 mock 模式下运行。
 - 不引入 §1.4 未批准的新依赖。
-- 不删除、不重写用户的 WIP 改动（S0.1 的处理需 D1）。
+- 不改写 main 的历史，不在 main 上提交。
+- 不切回 main 做任何修改；不执行 `git reset --hard`、`git clean`、`git push --force`、`git branch -D`。
+- 不修改 `.env`、`local.app.json`、`local.init.json`、`local.llm.json`；不读取或输出其中的密钥值。
 
 ---
 
@@ -64,7 +79,7 @@
 | 指标 | 基线值 | 采集命令 |
 |---|---|---|
 | 测试文件 / 用例 | 55 / 387，全通过，约 4s | `npx vitest run` |
-| tsc 错误 | 2（`src/core/engine/engine.longflow.test.ts`，`doc.hostGuide` possibly undefined；位于用户 WIP 改动内） | `npx tsc --noEmit` |
+| tsc 错误 | 0（审查时为 2，已在 main `39a81da` 中修复） | `npx tsc --noEmit` |
 | eslint | 0 error / 1 warning（`src/core/engine/flow.ts:18` `_discussionRounds`） | `npx eslint src` |
 | 非测试代码 `console.*` | 27 处 | `grep -rn 'console\.\(log\|warn\|error\)' src --include='*.ts' --include='*.tsx' \| grep -v '\.test\.' \| wc -l` |
 | 非测试代码 `as unknown as` | 12 处 | 同上，模式换成 `as unknown as` |
@@ -76,7 +91,7 @@
 | `engine.events` 读取点 | 19 处 | grep `\.events\.` |
 | npm audit | 3 high（`prisma → @prisma/config → deepmerge-ts`，CLI 链路） | `npm audit` |
 | CI | 无（无 `.github/`）；远端 `origin = github.com/ksws00684315/jubensha` | — |
-| 未提交 WIP | 43 个已修改 + 9 个未跟踪（含 witness/settlement/evidence/turns.test 等新模块） | `git status --short` |
+| 未提交 WIP | 0（用户已于 main `39a81da` 提交全部 WIP，含本计划初版） | `git status --short` |
 | `.env.example` | **未被 git 跟踪**（被 `.gitignore` 的 `.env*` 吞掉） | `git ls-files .env.example` 输出为空 |
 | 种子剧本 | `seeds/*.json` + `seeds/generated/*.json` 共 25 个 V2 文件（以实际 `ls` 为准） | — |
 
@@ -103,19 +118,21 @@
 5. **错误不外泄**：路由 500 只回固定文案（`withRoute`）；日志中不得出现 apiKey、座位 token、DM token、hostToken、管理口令明文。
 6. **无行为漂移**：标注为「重构」的步骤，前后同一组测试必须全部通过，且不修改任何现有断言（只允许新增）。
 
-### 1.4 需用户拍板的决策点
+### 1.4 决策点（2026-09-26 用户已全部批准，按「最终决策」列执行）
 
-agent 在执行到依赖步骤前，若决策未答复，须停下提问（一次性把待决项列齐），不得自行假设。
+全部决策已定，执行期间**不再向用户提问**。下表「最终决策」列即为授权范围，超出范围的动作仍然禁止。
 
-| ID | 问题 | 建议默认 | 阻塞的步骤 |
+| ID | 问题 | 最终决策（已批准） | 影响的步骤 |
 |---|---|---|---|
-| D1 | 当前 WIP（43+9 个文件）如何处理：A) 用户自己提交；B) agent 按功能拆分后在 main 提交；C) agent 建 `wip/2026-09-26` 分支整体提交，优化工作另开分支 | C | S0.1 及之后所有提交 |
-| D2 | 开房策略：`open`（现状）/ `admin`（仅管理员可建含 AI 座位的房）/ `invite`（需邀请码） | 生产 `admin`，开发 `open` | S3.1 |
-| D3 | 每日 LLM token 预算上限（整数，0 表示关闭） | 2,000,000 tokens/天 | S3.2 |
-| D4 | 是否允许 push 到 GitHub（触发 CI） | 允许 push 到非 main 分支 | S1.3 的在线验证 |
-| D5 | 真模型实机测试（R8）的单次花费上限与执行频率 | 单次 ≤ 300k tokens，只在 P4、P7 结束后各跑一次 | R8 |
-| D6 | 是否允许新增 dev 依赖 `@vitest/coverage-v8`（与 vitest 同版本） | 允许 | S2.1 覆盖率指标 |
-| D7 | Docker 部署是否替代 pm2 | 并存：新增 compose，pm2 保留 | S8.4 |
+| D1 | 当前 WIP 如何处理 | **C**（优化工作另开分支）。WIP 已由用户提交到 main（`39a81da`），因此不再需要 `wip/` 分支：从 main 切出 `opt/2026-09` 作为本计划唯一工作分支。**授权 agent 在 `opt/2026-09` 上提交**；main 不提交、不合并 | S0.1 及之后所有提交 |
+| D2 | 开房策略 | `ROOM_CREATE_POLICY` 默认值：`NODE_ENV=production` 时为 `admin`，其余为 `open`；同时实现 `invite` 模式备用 | S3.1 |
+| D3 | 每日 LLM token 预算 | `LLM_DAILY_TOKEN_BUDGET` 在 `.env.example` 中示例为 `2000000`；代码中未设置时视为 0（关闭），不改变现有部署的行为 | S3.2 |
+| D4 | push 到 GitHub | 允许 push `opt/2026-09`（及验证 CI 用的 `ci-probe/*` 临时分支，验证后删除远端分支）。**禁止 push main、禁止 force push、禁止开 PR 合并到 main** | S1.3 及之后 |
+| D5 | 真模型实机测试（R8） | 单次 ≤ 300,000 tokens，只在 P4、P7 结束时各跑 1 次。凭证来源见 §3.5「真模型模式」；拿不到凭证时 R8 记为 `SKIPPED(no-credentials)`，不阻塞 | R8 |
+| D6 | 新增 dev 依赖 `@vitest/coverage-v8` | 允许，版本与已装 vitest 完全一致 | S0.4、S2.2 覆盖率 |
+| D7 | Docker 与 pm2 | 并存：新增 Dockerfile + compose；`ecosystem.config.js` 保留（仅做 S8.4 规定的 `cwd` 修正） | S8.4 |
+
+**除上表外，不得新增任何依赖**（`npx --yes` 临时运行的检查工具，如 madge、yaml-lint，不算新增依赖，但不得写进 package.json）。
 
 ---
 
@@ -163,7 +180,7 @@ npm run e2e:down
 
 | 指标 | 基线 | 目标 | 采集方式 |
 |---|---|---|---|
-| tsc 错误 | 2 | 0 | `npx tsc --noEmit` |
+| tsc 错误 | 0 | 0（保持） | `npx tsc --noEmit` |
 | eslint warning | 1 | 0 | `npx eslint src --max-warnings=0` |
 | 有 L2 测试的 API 处理器 | 1/35 | 100%（35 个现有处理器 + 计划中新增的 health、stream-ticket） | §3.3 表逐项打勾 + `npm run test:api` |
 | L2 用例数 | ~8 | ≥ 140 | vitest 报告 |
@@ -294,7 +311,7 @@ npm run e2e:down
 - 独立实例：`npm run build` 后以 `PORT=3100 APP_CONFIG_PATH=./.e2e/app.json DATABASE_URL=...jubensha_e2e NODE_ENV=production ADMIN_TOKEN=e2e-admin-<随机> SECRET_MASTER_KEY=<随机>` 启动 `next start`，由 `scripts/e2e/up.mjs` 管理（写 pid 文件，`down.mjs` 负责杀进程并 drop 库）。
 - 种子：`up.mjs` 在启动后用管理员口令调用 `POST /api/scripts` 导入 `seeds/sample-5p-cloudlanshan.json` 与 `seeds/generated/` 中 2 本（4 人本、6 人本各 1）。
 - **无模型模式（默认）**：e2e 库不配置任何 binding，AI 发言按现有逻辑降级为提示，流程仍须闭环。零花费、结果可重复。
-- **真模型模式（R8，需 D5）**：通过 `PUT /api/bindings` 写入用户提供的测试 provider；只跑 1 局。
+- **真模型模式（R8，按 D5 限额）**：凭证只从 agent 进程的环境变量读取：`E2E_LLM_PROTOCOL`（`openai_compatible`|`anthropic`）、`E2E_LLM_BASE_URL`、`E2E_LLM_API_KEY`、`E2E_LLM_MODEL`。脚本 `scripts/e2e/r8.mjs` 用管理员口令调用 `POST /api/providers` + `PUT /api/bindings`，把 dm、culprit、player 三个槽位绑定到该模型，并设 `LLM_DAILY_TOKEN_BUDGET=300000` 作为硬上限；只跑 1 局，结束后读 `/api/usage` 记录花费。环境变量缺失时 R8 记为 `SKIPPED(no-credentials)`。**严禁**从 `.env`、`local.*.json` 或用户数据库读取、解密任何已有的 provider 密钥。
 - 所有 e2e 脚本启动时校验：`SMOKE_BASE` 端口不是 3000，否则拒绝运行（除非显式设 `E2E_ALLOW_3000=1`）。
 
 **场景：**
@@ -308,7 +325,7 @@ npm run e2e:down
 | R5 | 多实例单写者（S4.1 后启用） | 同库再起一个 :3101 实例，两个实例都用座位 token 触发懒恢复 | 同一局只有 1 个实例写事件（按 `game_events` 统计，每个回合的 speech 事件数与单实例一致，无重复发言）；另一个实例日志出现 `lease held by` |
 | R6 | SSE 负载（S5.1 前后各测一次） | `scripts/e2e/sse-load.mjs`：50 个观战 SSE 连接保持 5 分钟；开启 Prisma query 日志计数（`DEBUG_PRISMA_QUERY_COUNT=1`，S6.1 提供） | S5.1 之前：基线约 150 次/分钟；之后：稳态 **0** 次/分钟（与连接数无关）；进程 RSS 增长 < 50MB |
 | R7 | API 延迟 | `scripts/e2e/latency.mjs`：对 `GET /api/scripts`、`GET /api/rooms/[code]`、`GET /api/games/[id]`（带座位 token）、`POST actions`（skip 类）各请求 200 次 | p95 < 300ms，p99 < 500ms；Prisma 单查询耗时 p95 < 100ms（查询日志） |
-| R8 | 真模型对局（需 D5） | R1 脚本 + 真实 binding，1 局 | 到达 ENDED；`system` 事件中「后台 AI 操作失败」= 0；usage_logs 总 token ≤ D5 上限；预算熔断未误触发 |
+| R8 | 真模型对局（D5 限额；无凭证则 SKIPPED） | R1 脚本 + 真实 binding，1 局 | 到达 ENDED；`system` 事件中「后台 AI 操作失败」= 0；usage_logs 总 token ≤ D5 上限；预算熔断未误触发 |
 | R9 | 浏览器实机（UI） | 用浏览器自动化工具（内置 Browser 面板）打开 :3100，按下方清单执行，每项截图存到 `.e2e/screens/<步骤号>/` | 清单全部通过；控制台 0 条 error（CSP report-only 告警单独记录） |
 
 **R9 浏览器检查清单**（桌面 1280×800 + 移动 375×812 各跑一遍）：
@@ -331,33 +348,35 @@ npm run e2e:down
 
 ### P0 止血与基线（全部 P0，预计 0.5 天）
 
-#### S0.1 WIP 归档与工作区清洁
+#### S0.1 建立工作分支
 
-- **目标**：让工作区只剩本计划的改动，确保用户已有的工作不丢失。
-- **前置**：D1。
-- **涉及范围**：`git status` 中全部 43 个已修改 + 9 个未跟踪文件。
-- **输入**：`git status --short`、`git diff --stat`。
+- **目标**：在干净的 `opt/2026-09` 分支上开展本计划，main 保持不动。
+- **前置**：无。
+- **涉及范围**：git 分支；`docs/optimization-plan-2026-09-26.md`（本计划，含 D1–D7 决策的更新版）。
+- **输入**：`git status --short`、`git rev-parse main`。
 - **具体操作**：
-  - D1=A：停止，等用户提交完成后继续。
-  - D1=B：按功能聚类（witness、settlement、evidence、jev、seeds 数据、play UI、engine turns……），每类 `git add <files>` + 一个 conventional commit；每个提交前跑 `npx vitest run`（此时 tsc 的 2 个错误在 S0.2 修，允许存在，但须在提交信息里注明）。
-  - D1=C：`git switch -c wip/2026-09-26`，逐个 `git add` 全部 WIP 文件，一次提交 `chore(wip): 归档 2026-09-26 前未提交改动`；再从这个分支切出 `opt/2026-09` 作为本计划的工作分支。
-- **输出**：WIP 提交哈希（记入台账）；工作分支名。
-- **测试**：`npx vitest run` 通过（387/387 或当时的实际数）。
+  1. 记录 `git rev-parse main`，写入台账作为基线提交（应为 `39a81da` 或之后的提交）。
+  2. `git status --short`：预期只有本计划文件处于修改状态。如果还有其他改动（用户新写的），**不要 add 它们**；执行 `git switch -c` 时这些改动会随工作区一起带到新分支，保持原样、不提交。在台账中记录这些文件名，此后所有 `git add` 都必须避开它们。
+  3. 安全检查：`git status --short` 中不得出现 `.env`、`local.app.json`、`local.init.json`、`local.llm.json`。
+  4. `git switch -c opt/2026-09`。
+  5. `git add -- docs/optimization-plan-2026-09-26.md`，提交 `docs(plan): 写入 D1–D7 决策，改为无人值守执行 [S0.1]`（附 Co-Authored-By 行）。
+  6. `git push -u origin opt/2026-09`（失败按 §0.3 记为 push-pending）。
+- **输出**：基线提交哈希、计划提交哈希，写入台账。
+- **测试**：`npx vitest run` 通过。
 - **验收标准**：
-  1. `git status --short` 输出为空（`.next/` 等已忽略文件除外）；
-  2. `git stash list` 没有新增 stash（不靠 stash 藏改动）；
-  3. WIP 提交的文件数 = 43 + 9（D1=B 时各提交合计）；
-  4. vitest 全部通过。
-- **回滚**：`git reset --soft <基线HEAD>`，改动回到工作区。
-- **风险**：误把 `.env`、`local.*.json` 带进提交 → 提交前 `git diff --cached --name-only | grep -E '^\.env$|local\.(app|init|llm)\.json'` 必须为空。
+  1. `git branch --show-current` = `opt/2026-09`；
+  2. `git status --short` 只剩第 2 步记录的「用户改动」（没有则为空）；
+  3. main 的 HEAD 等于第 1 步记录的哈希；
+  4. vitest 全部通过，用例数 ≥ 387。
+- **回滚**：`git switch main`（opt 分支保留，不删除）。
 
 #### S0.2 类型与 lint 归零
 
 - **目标**：`G-std` 全绿，作为后续所有步骤的基线。
 - **前置**：S0.1。
-- **涉及范围**：`src/core/engine/engine.longflow.test.ts`、`src/core/engine/flow.ts`。
+- **涉及范围**：`src/core/engine/flow.ts`（若复测时 tsc 又出现错误，也在本步修复，且只改出错的文件）。
 - **具体操作**：
-  - 按 tsc 实际报错位置修正（如对 `doc.hostGuide` 加非空断言，或在测试开头 `expect(doc.hostGuide).toBeDefined()` 后收窄类型）；只改测试文件。
+  - 复测 `npx tsc --noEmit`；2026-09-26 复测为 0 error，如有新增错误就按报错位置修正。
   - `flow.ts:18` 的未使用参数：确认调用方签名后，删参数或改用 `_` 前缀并加 eslint 允许注释——**优先删参数**，前提是所有调用点都同步调整；如调用方较多（> 3 处），改为 eslint 配置 `argsIgnorePattern: "^_"`，并在台账记录这一选择。
 - **测试**：`G-std`。
 - **验收标准**：tsc 0 error；eslint `--max-warnings=0` 退出码 0；vitest 通过数不变。
@@ -432,7 +451,7 @@ npm run e2e:down
 - **验收标准**：
   1. workflow 的 YAML 语法合法（`npx --yes yaml-lint` 或 GitHub 界面无语法报错）；
   2. D4 允许时，线上运行 `check` job 绿，耗时 < 10 分钟，运行链接记入台账；
-  3. 故意推一个 lint 失败的提交到临时分支，CI 变红（验证后删除该分支）。D4 不允许时，第 2、3 条标为「待在线验证」，不阻塞后续步骤。
+  3. 从 `opt/2026-09` 切出 `ci-probe/lint-fail`，提交一处 lint 错误并 push，CI 变红后执行 `git push origin --delete ci-probe/lint-fail` 并删除本地分支（这是唯一允许的远端分支删除）。push 不可用时，第 2、3 条标为 `push-pending`，不阻塞后续步骤。
 
 #### S1.4 本地提交钩子（轻量，不引入依赖）
 
@@ -442,7 +461,7 @@ npm run e2e:down
 - **具体操作**：pre-commit 执行 `npm run typecheck && npm run lint`（不跑全量测试，控制在 60s 内）。不自动安装，README 加一句说明。
 - **验收标准**：执行 `hooks:install` 后，故意制造 lint 错误时 `git commit` 被拒；耗时 < 60s；未执行安装的人不受影响。
 
-**P1 阶段验收**：`npm run check` 可用且为绿；CI `check` job 绿（或在台账标注待 D4）；`APP_CONFIG_PATH` 生效。
+**P1 阶段验收**：`npm run check` 可用且为绿；CI `check` job 绿（push 失败时台账标 `push-pending`，不阻塞）；`APP_CONFIG_PATH` 生效。
 
 ---
 
@@ -858,7 +877,7 @@ npm run e2e:down
 1. **步骤**：§4 中全部 39 步的状态为 `DONE`；任何 `BLOCKED` 或 `NEEDS-DECISION` 都必须已由用户明确接受为「本期不做」，并在台账中留有记录。
 2. **门禁**：在最终提交上 `npm run check`、`npm run test:int` 退出码均为 0；CI 最近一次运行为绿（D4）。
 3. **指标**：§2.4 表中每一项都达到目标值，且台账中有实测证据。
-4. **实机**：R1 连续 3 次通过；R2–R7 通过；R9 桌面与移动均通过；R8（D5）在 P4、P7 结束时各通过一次。
+4. **实机**：R1 连续 3 次通过；R2–R7 通过；R9 桌面与移动均通过；R8（D5）在 P4、P7 结束时各通过一次；无凭证时记为 `SKIPPED(no-credentials)`，不视为未通过，但要写进最终报告。
 5. **不变式**：§1.3 的 6 条不变式在最终代码上逐条核对并记录：
    - 防火墙：`grep` 确认 AI prompt 的构造只从 `context.ts` 进入；
    - 前缀缓存：抽查 1 局中同一座位多次调用的 system 哈希相同；
@@ -882,12 +901,18 @@ npm run e2e:down
 ## 决策记录
 | ID | 答复 | 日期 | 备注 |
 |---|---|---|---|
-| D1 | | | |
+| D1 | C：WIP 已在 main 39a81da；opt/2026-09 工作 | 2026-09-26 | 用户批准 |
+| D2 | 生产 admin / 开发 open，另实现 invite | 2026-09-26 | 用户批准 |
+| D3 | 示例 2,000,000；未设置 = 关闭 | 2026-09-26 | 用户批准 |
+| D4 | 允许 push opt/ci-probe 分支；禁 main、禁 force | 2026-09-26 | 用户批准 |
+| D5 | 单次 ≤ 300k，P4、P7 各 1 次；无凭证则 SKIPPED | 2026-09-26 | 用户批准 |
+| D6 | 允许 @vitest/coverage-v8（同版本） | 2026-09-26 | 用户批准 |
+| D7 | Docker 与 pm2 并存 | 2026-09-26 | 用户批准 |
 
 ## 指标看板
 | 指标 | 基线 | 当前 | 目标 | 最近更新步骤 |
 |---|---|---|---|---|
-| tsc 错误 | 2 | | 0 | |
+| tsc 错误 | 0 | | 0 | |
 | L2 覆盖处理器 | 1/35 | | 35/35 | |
 | ...（§2.4 全部指标） | | | | |
 
