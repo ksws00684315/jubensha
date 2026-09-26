@@ -1,12 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { mockDbInstance } from "@/test/api";
 import { db } from "@/lib/db";
 import { GameEngine } from "@/core/engine/engine";
 import { publish } from "@/core/engine/bus";
 import type { EngineEvent } from "@/core/engine/types";
 
-vi.mock("@/lib/db", () => ({
-  db: { game: { findUnique: vi.fn() }, gameEvent: { findMany: vi.fn() } },
-}));
+vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
 // 路由只需 get/load 判定懒恢复；真引擎模块图（LLM/定时器）与 SSE 测试无关
 vi.mock("@/core/engine/engine", () => ({
   GameEngine: { get: vi.fn(() => null), load: vi.fn(async () => ({})) },
