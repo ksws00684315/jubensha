@@ -15,7 +15,7 @@ export function nextAfterDiscussion(round: number, searchRounds: number, discuss
  * 讨论轮数少于搜证轮数时，多出来的搜证不再直接投票。
  * discussionRounds 只在搜证都配对过讨论之后，决定还要不要追加讨论。
  */
-export function nextAfterSearch(round: number, searchRounds: number, _discussionRounds: number): Phase {
+export function nextAfterSearch(round: number, searchRounds: number): Phase {
   if (round <= searchRounds) return "DISCUSSION";
   return "VOTE";
 }

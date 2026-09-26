@@ -17,12 +17,12 @@ import { initialState } from "./state";
 describe("阶段轮次推进", () => {
   it("搜证轮数多于讨论轮数时，每一轮搜证之后仍讨论", () => {
     expect(nextAfterDiscussion(2, 3, 2)).toBe("SEARCH");
-    expect(nextAfterSearch(3, 3, 2)).toBe("DISCUSSION");
+    expect(nextAfterSearch(3, 3)).toBe("DISCUSSION");
   });
 
   it("讨论轮数多于搜证轮数时，搜证结束后继续讨论", () => {
     expect(nextAfterDiscussion(2, 2, 3)).toBe("DISCUSSION");
-    expect(nextAfterSearch(2, 2, 3)).toBe("DISCUSSION");
+    expect(nextAfterSearch(2, 2)).toBe("DISCUSSION");
   });
 
   it("讨论提问次数每人 3 次，且不覆盖已有余额", () => {
@@ -235,7 +235,7 @@ describe("相等轮数组合的完整路径(回归:2/2 曾跳过最后一轮讨�
     for (let i = 0; i < 40; i++) {
       if (phase === "SEARCH") {
         path.push(`S${round}`);
-        const next = nextAfterSearch(round, searchRounds, discussionRounds);
+        const next = nextAfterSearch(round, searchRounds);
         if (next === "VOTE") { path.push("VOTE"); return path; }
         if (next === "SEARCH") { round += 1; continue; }
         phase = "DISCUSSION";

@@ -358,7 +358,7 @@ export async function finalizeEnded(e: GameEngine): Promise<void> {
 
 export async function afterSearchPhase(e: GameEngine): Promise<void> {
   if (e.state.phase !== "SEARCH") return;
-  const next = nextAfterSearch(e.state.round, e.script.flow.searchRounds, e.script.flow.discussionRounds);
+  const next = nextAfterSearch(e.state.round, e.script.flow.searchRounds);
   if (next === "DISCUSSION") await transitionDiscussion(e, e.state.round);
   else if (next === "SEARCH") await transitionSearch(e, e.state.round + 1);
   else await transitionVote(e);
