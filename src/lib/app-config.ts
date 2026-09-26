@@ -8,7 +8,8 @@ export type AppConfig = {
 export const APP_CONFIG_FILE = "local.app.json";
 
 export function appConfigPath(): string {
-  return path.join(process.cwd(), APP_CONFIG_FILE);
+  // 测试与 e2e 实例用它把配置指向隔离文件，绝不误读 cwd 下的 local.app.json。
+  return process.env.APP_CONFIG_PATH ?? path.join(process.cwd(), APP_CONFIG_FILE);
 }
 
 /**
