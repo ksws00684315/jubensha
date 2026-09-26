@@ -30,7 +30,10 @@
     "script:validate": "npx tsx scripts/validate-script-v2.ts",
     "script:migrate": "tsx scripts/migrate-script-v1.ts",
     "script:migrate-db": "tsx scripts/migrate-db-scripts-v2.ts",
-    "hooks:install": "git config core.hooksPath scripts/git-hooks"
+    "hooks:install": "git config core.hooksPath scripts/git-hooks",
+    "test:int": "vitest run -c vitest.int.config.ts",
+    "db:test:up": "docker compose -f docker-compose.test.yml up -d --wait",
+    "db:test:down": "docker compose -f docker-compose.test.yml down -v"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.45",

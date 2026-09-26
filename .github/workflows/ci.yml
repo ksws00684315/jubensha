@@ -20,9 +20,8 @@ jobs:
       - run: npx prisma generate
       - run: npm run check
 
-  # S2.3 完成 L3 集成测试基建后启用（改为 if: true）。
+  # S2.3 已完成 L3 集成测试基建：本 job 启用。
   integration:
-    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:

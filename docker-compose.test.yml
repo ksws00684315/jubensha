@@ -1,0 +1,19 @@
+# L3 集成测试 / L4 实机共用 PostgreSQL。仅用于 jubensha_test 与 jubensha_e2e 两个库。
+# tmpfs 数据卷：测试库无需持久化。
+services:
+  pg-test:
+    image: postgres:16-alpine
+    container_name: jubensha-pg-test
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: jubensha_test
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
