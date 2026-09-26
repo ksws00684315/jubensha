@@ -2,7 +2,7 @@
  * Jev 投票决策离线对照评测。
  *   npx tsx scripts/run-jev-eval.ts                      # 干跑：只校验装配，不发请求
  *   JEV_API_KEY=… npx tsx scripts/run-jev-eval.ts --real --max-calls=20
- *   # 去掉 --max-calls 即跑全量（147 条 ≈ 一次性几美分），先小样本打通再放全量
+ *   # 去掉 --max-calls 即跑全量（147 条约几美分），先小样本打通再放全量
  *   … --real --baseline                                   # 同时把现网聊天模型在同 ctx 上重放
  * 依赖 scripts/build-jev-vote-set.ts 先产出 dataset.jsonl。
  */

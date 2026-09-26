@@ -90,6 +90,8 @@ export interface GameState {
   unlockedSecrets?: Record<string, boolean>;
   /** 主持保证公开材料的发放记录；用于重启后的幂等与复盘。 */
   hostHandouts?: Record<string, { round: number; reason: string }>;
+  /** 本轮预算发不完的保证材料，推迟到该搜证轮再考虑。键为线索 id。 */
+  guaranteeDeferUntil?: Record<string, number>;
   /** 主持人手动使用的分级提示记录；键为提示在手册中的索引。 */
   hostHints?: Record<string, { round: number; condition: string; hint: string }>;
   /** 真人限时截止时间（epoch ms，座位索引字符串 → 截止）。仅限时模式下 armHumanTimeout 写入，供前端倒计时展示。 */

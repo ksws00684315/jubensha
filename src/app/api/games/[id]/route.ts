@@ -7,6 +7,7 @@ import { cluesVisibleToSeat } from "@/core/engine/state";
 import { searchLocationOptions } from "@/core/engine/search-locations";
 import { unlockedActs } from "@/core/engine/flow";
 import { GameEngine } from "@/core/engine/engine";
+import { buildSeatSettlement } from "@/core/engine/settlement";
 import type { GameState } from "@/core/engine/types";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
@@ -46,6 +47,22 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   const runtimeState = (game.state as unknown as GameState) ?? { clueStates: {}, heldClues: {} };
   const clueStates = runtimeState.clueStates ?? {};
   const myState = mySeat !== null ? seatStates.find((s) => s.seatIndex === mySeat)?.data : null;
+  const mySeatCharacterId = mySeat !== null ? game.room.seats.find((s) => s.index === mySeat)?.characterId ?? null : null;
+  const searchOptions = mySeat === null
+    ? []
+    : searchLocationOptions({ locations: doc.locations, clues: doc.clues, clueStates, seatCharacterId: mySeatCharacterId, round: game.round });
+  const publicEvidenceIds = new Set(doc.clues.filter((clue) => clueStates[clue.id]?.isPublic).map((clue) => clue.id));
+  const myVote = mySeat !== null ? runtimeState.votes?.[String(mySeat)] ?? null : null;
+  const voteResult = mySeat !== null ? runtimeState.voteResult ?? null : null;
+  // 结算投影：凶手座拿凶手专属结算卡，非凶手座拿侦探结算卡，二者互斥（choice 模式/观战者均为 null）
+  const { settlement, culpritSettlement } = buildSeatSettlement({
+    doc,
+    mySeat,
+    myCharacterId: mySeatCharacterId,
+    voteResult,
+    publicEvidenceIds,
+    myVote,
+  });
 
   const visibleClues = mySeat !== null
     ? cluesVisibleToSeat(
@@ -66,20 +83,12 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
     background: narrativeToText(doc.background),
     flow: { ...doc.flow, interactionBeats: doc.flow.interactionBeats?.filter((beat) => beat.visibility === "public") },
     locations: locationNames(doc),
-    availableLocations: (() => {
-      // 观战（无有效座位 token）视角一律不下发搜证地点：
-      // 否则"还有哪些地点有货、还剩几个"会变成一个免费的情报优势。
-      if (mySeat === null) return [];
-      const seatChar = game.room.seats.find((s2) => s2.index === mySeat)?.characterId ?? null;
-      return searchLocationOptions({ locations: doc.locations, clues: doc.clues, clueStates, seatCharacterId: seatChar, round: game.round })
-        .filter((option) => option.status === "available")
-        .map((option) => option.name);
-    })(),
-    searchLocationOptions: (() => {
-      if (mySeat === null) return [];
-      const seatChar = game.room.seats.find((s2) => s2.index === mySeat)?.characterId ?? null;
-      return searchLocationOptions({ locations: doc.locations, clues: doc.clues, clueStates, seatCharacterId: seatChar, round: game.round });
-    })(),
+    startedAt: game.createdAt.toISOString(),
+    endedAt: game.endedAt?.toISOString() ?? null,
+    elapsedMs: Math.max(0, (game.endedAt?.getTime() ?? Date.now()) - game.createdAt.getTime()),
+    availableLocations: searchOptions.filter((option) => option.status === "available").map((option) => option.name),
+    searchExhausted: mySeat !== null && !searchOptions.some((option) => option.status === "available"),
+    searchLocationOptions: searchOptions,
     seats: game.room.seats.map((s) => {
       const c = doc.characters.find((ch) => ch.id === s.characterId);
       const isMine = mySeat === s.index;
@@ -112,15 +121,18 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           : null,
       };
     }),
-        publicEvidence: doc.clues.filter((clue) => clueStates[clue.id]?.isPublic).map(({ id, name }) => ({ id, name })),
+    publicEvidence: doc.clues.filter((clue) => clueStates[clue.id]?.isPublic).map(({ id, name }) => ({ id, name })),
     guaranteedDeadlines: Object.fromEntries((doc.hostGuide?.guaranteedPublicClues ?? []).map((item) => [item.clueId, item.deadlineRound])),
+    pendingPublishClueIds: mySeat !== null ? runtimeState.pendingPublish?.[String(mySeat)] ?? [] : [],
     pendingInteraction: runtimeState.pendingInteraction?.seatIndex === mySeat ? doc.flow.interactionBeats?.find((beat) => beat.id === runtimeState.pendingInteraction?.beatId) ?? null : null,
     mySeat,
     myClues: (myState as { clueIds?: string[] } | null)?.clueIds ?? [],
     clues: visibleClues,
     scriptV2: { background: v2.background, characters: v2.characters, locations: v2.locations },
-    myCluesV2: doc.clues.filter((clue) => visibleClues.some((visible) => visible.id === clue.id)),
-    voteResult: mySeat !== null ? runtimeState.voteResult ?? null : null,
+    myCluesV2: doc.clues
+      .filter((clue) => visibleClues.some((visible) => visible.id === clue.id))
+      .map(({ id, name, locationId, category, content, policy }) => ({ id, name, locationId, category, content, policy })),
+    voteResult,
     // 结构化结局：模式 + 答题卡（题面公开不含正确项；myAnswers 仅本人）
     voteMode: doc.flow.voteMode,
     quiz:
@@ -135,6 +147,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
             myAnswers: mySeat !== null ? runtimeState.quizAnswers?.[String(mySeat)] ?? null : null,
           },
     quizResult: runtimeState.phase === "ENDED" ? runtimeState.quizResult ?? null : null,
+    settlement,
+    culpritSettlement,
     turnSeat: runtimeState.turnSeat ?? null,
     questionsLeft: mySeat !== null ? runtimeState.questionsLeft?.[String(mySeat)] ?? 0 : 0,
     // 在途质询只发给有座位的参与者：题干本身在公开发言里，但"谁被问、还没答"不该给观战者看

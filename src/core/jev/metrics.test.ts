@@ -108,4 +108,15 @@ describe("jev 投票指标口径", () => {
     expect(twoProportionP(10, 10, 1, 10)).toBe(1);
     expect(twoProportionP(20, 40, 2, 40)).toBeLessThan(0.001);
   });
+
+  it("两比例双侧 p 值在显著性边界附近保持正确", () => {
+    // 30/50 vs 20/50 的双侧 z 检验 p≈0.0455，必须能通过 p<0.05 门槛。
+    expect(twoProportionP(30, 50, 20, 50)).toBeCloseTo(0.0455, 3);
+  });
+
+  it("全命中样本的 Wilson 区间上界为 1", () => {
+    const s = summarizeVoteOutcomes(Array.from({ length: 16 }, (_, i) => base({ sampleId: `history:g:${i}`, jevKey: 2 })));
+    expect(s.innocent.jev.ci?.[0]).toBeCloseTo(0.8064, 3);
+    expect(s.innocent.jev.ci?.[1]).toBe(1);
+  });
 });

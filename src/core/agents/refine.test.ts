@@ -72,11 +72,12 @@ describe("台词二次审查：本地启发式不得单独否决审查员", () =
     mock.calls = 0;
   });
 
-  it("审查员判 ok 时保留原台词，哪怕本地 bigram 认定重复", async () => {
+  it("本地已判定复读时，不接受审查员的 ok", async () => {
     mock.replies.push('{"ok":true}');
     const { agent } = await import("./index");
     const text = await agent.refineSpeech(ctxFor({ nextAction: "ask", targetSeat: 1 }), 0, ECHO);
-    expect(text).toBe(ECHO);
+    expect(text).not.toBe(ECHO);
+    expect(text).toContain("这一点我刚才说过了");
     expect(mock.calls).toBe(1);
   });
 

@@ -71,7 +71,9 @@ export function dispatchTurn(
         return;
       }
       await args.commit(text);
-      e.continueTick();
+      const pause = readingPauseMs(text);
+      if (pause > 0) e.scheduleBackground(`read:${token}`, () => e.continueTick(), pause);
+      else e.continueTick();
     });
   }, 30);
   // 看门狗：produce 全链路（含降级）仍卡死时强制推进，回合绝不悬空
@@ -91,6 +93,21 @@ export function dispatchTurn(
     });
   }, args.timeoutMs * 2 + 5_000);
   return "started";
+}
+
+/** 一句说完再叫下一位，按字数留出阅读时间。 */
+export function readingPauseMs(text: string): number {
+  const length = text.trim().length;
+  if (length < 12) return 0;
+  return Math.min(8_000, Math.max(3_500, length * 60));
+}
+
+function alreadySaid(e: GameEngine, seatIndex: number): string {
+  const lines = e.events
+    .filter((ev) => ev.type === "speech" && ev.fromSeat === seatIndex && ev.phase === e.state.phase && ev.round === e.state.round && ev.content.text)
+    .map((ev) => String(ev.content.text));
+  if (!lines.length) return "";
+  return `你本轮已经说过：${lines.join(" / ")}。只补充新事实；没有新事实就说没有要补充的，不要换个说法再讲一遍。`;
 }
 
 /** AI 玩家正式发言回合（锁外生成，锁内提交）。after = 提交后的状态推进。 */
@@ -123,7 +140,7 @@ export function dispatchPlayerSpeech(
         });
       }
       let text = await consumeStream(
-        (signal) => agent.streamPlayerSpeech(e.ctx(), seatIndex, { ...opts, extraInstruction: plan ? `${opts.hint ?? ""}\n${renderActionPlan(plan)}` : undefined, abortSignal: signal, generationId: String(e.turnToken) }),
+        (signal) => agent.streamPlayerSpeech(e.ctx(), seatIndex, { ...opts, extraInstruction: [opts.hint, plan ? renderActionPlan(plan) : "", alreadySaid(e, seatIndex)].filter(Boolean).join("\n"), abortSignal: signal, generationId: String(e.turnToken) }),
         (delta) => publish(e.gameId, { kind: "delta", seat: seatIndex, text: delta, audience: "public" }),
         AI_DECISION_TIMEOUT_MS,
         abortSignal
@@ -175,7 +192,7 @@ export function dispatchAnswerTurn(e: GameEngine, target: number, hint: string, 
     produce: async (abortSignal) => {
       publish(e.gameId, { kind: "thinking", seat: target, audience: "public", generationId: String(e.turnToken) });
       let text = await consumeStream(
-        (signal) => agent.streamPlayerSpeech(e.ctx(), target, { hint, taskType: "answer", abortSignal: signal, generationId: String(e.turnToken) }),
+        (signal) => agent.streamPlayerSpeech(e.ctx(), target, { hint: [hint, alreadySaid(e, target)].filter(Boolean).join("\n"), taskType: "answer", abortSignal: signal, generationId: String(e.turnToken) }),
         (delta) => publish(e.gameId, { kind: "delta", seat: target, text: delta, audience: "public" }),
         AI_DECISION_TIMEOUT_MS,
         abortSignal

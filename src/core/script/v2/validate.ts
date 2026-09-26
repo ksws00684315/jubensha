@@ -31,7 +31,7 @@ function minuteValue(point: { dayOffset: number; time: string }) {
   return point.dayOffset * 24 * 60 + hour * 60 + minute;
 }
 
-function checkTimelineOrder(issues: ScriptV2Issue[], entries: Array<{ time: TimelineTime }>, path: string) {
+function checkTimelineOrder(issues: ScriptV2Issue[], entries: Array<{ time: TimelineTime }>, path: string, strict: boolean) {
   let previous: number | null = null;
   for (const [index, entry] of entries.entries()) {
     if (!entry.time.start) {
@@ -40,7 +40,7 @@ function checkTimelineOrder(issues: ScriptV2Issue[], entries: Array<{ time: Time
     }
     const current = minuteValue(entry.time.start);
     if (previous !== null && current < previous) {
-      issue(issues, "warning", `${path}.${index}.time`, "时间早于上一事件；数组顺序仍作为权威顺序");
+      issue(issues, strict ? "error" : "warning", `${path}.${index}.time`, strict ? "时间早于上一事件，请按时间重排" : "时间早于上一事件；数组顺序仍作为权威顺序");
     }
     if (entry.time.end && minuteValue(entry.time.end) < current) {
       issue(issues, "error", `${path}.${index}.time.end`, "结束时间早于开始时间");
@@ -65,7 +65,12 @@ type TimelineEntryLike = {
  *  - 占位标题 → 会原样进入 AI prompt 与 DM 复盘宣读，必须报；
  *  - 首尾明显被切断的条目 → 渲染层无法还原，报出来交作者重写。
  */
-function checkTimelineContent(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string) {
+function titleIsBodyPrefix(title: string, body: string): boolean {
+  const normalized = title.replace(/(?:…|\.\.\.)+$/g, "").trim();
+  return normalized.length > 0 && body.startsWith(normalized) && normalized !== body.trim();
+}
+
+function checkTimelineContent(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string, strict: boolean) {
   for (const [index, entry] of entries.entries()) {
     if (isPlaceholderTimelineTitle(entry.title)) {
       issue(
@@ -80,16 +85,20 @@ function checkTimelineContent(issues: ScriptV2Issue[], entries: TimelineEntryLik
     } else if (entry.time.precision === "relative" && /^(?:前后|稍后|之后|期间|某时|当时|夜间|白天)$/.test(entry.time.display.trim())) {
       issue(issues, "warning", `${path}.${index}.time.display`, "相对时间标签缺少可识别的事件或时段信息，建议补充具体时段");
     }
-    if (isTruncatedTimelineText(narrativeToText(entry.content))) {
-      issue(issues, "warning", `${path}.${index}.content`, "时间线条目首尾被截断（缺上一句或下一句），建议重写为完整叙述");
+    const body = narrativeToText(entry.content);
+    if (isTruncatedTimelineText(body)) {
+      issue(issues, strict ? "error" : "warning", `${path}.${index}.content`, "时间线条目首尾被截断（缺上一句或下一句），请重写为完整叙述");
+    }
+    if (titleIsBodyPrefix(entry.title, body)) {
+      issue(issues, "warning", `${path}.${index}.title`, "时间线标题是正文的截断前缀；宣读时会省略标题，建议改成不重复正文开头的摘要");
     }
   }
 }
 
-function checkTimelineEntries(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string, locationIds: Set<string>, clueIds: Set<string>, characterIds: Set<string>, truthEventIds?: Set<string>) {
+function checkTimelineEntries(issues: ScriptV2Issue[], entries: TimelineEntryLike[], path: string, locationIds: Set<string>, clueIds: Set<string>, characterIds: Set<string>, truthEventIds?: Set<string>, strict = false) {
   checkUniqueIds(issues, entries, path);
-  checkTimelineOrder(issues, entries, path);
-  checkTimelineContent(issues, entries, path);
+  checkTimelineOrder(issues, entries, path, strict);
+  checkTimelineContent(issues, entries, path, strict);
   for (const [index, entry] of entries.entries()) {
     if (entry.locationId && !locationIds.has(entry.locationId)) issue(issues, "error", `${path}.${index}.locationId`, `地点不存在: ${entry.locationId}`);
     checkRefs(issues, entry.clueIds, clueIds, `${path}.${index}.clueIds`);
@@ -187,7 +196,17 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
     if (!beat.choices.some((choice) => choice.id === beat.defaultChoiceId)) issue(issues, "error", `flow.interactionBeats.${i}`, "默认选项不存在");
     if (beat.round > doc.flow.discussionRounds) issue(issues, "error", `flow.interactionBeats.${i}`, "互动轮次超过讨论轮数");
   }
+  if (doc.flow.discussionRounds < doc.flow.searchRounds) {
+    issue(issues, "error", "flow.discussionRounds", `讨论轮数(${doc.flow.discussionRounds})少于搜证轮数(${doc.flow.searchRounds})，每一轮搜证之后都要有讨论`);
+  }
   const guaranteedIds = new Set<string>();
+  const guaranteesPerRound = new Map<number, number>();
+  for (const item of doc.hostGuide?.guaranteedPublicClues ?? []) {
+    guaranteesPerRound.set(item.deadlineRound, (guaranteesPerRound.get(item.deadlineRound) ?? 0) + 1);
+  }
+  for (const [round, count] of guaranteesPerRound) {
+    if (count > 2) issue(issues, "warning", "hostGuide.guaranteedPublicClues", `第 ${round} 轮保证公开 ${count} 张，运行时每轮只补发 2 张，其余推迟到后续搜证或投票前`);
+  }
   for (const [index, item] of (doc.hostGuide?.guaranteedPublicClues ?? []).entries()) {
     if (guaranteedIds.has(item.clueId)) issue(issues, "error", `hostGuide.guaranteedPublicClues.${index}`, "重复保证公开材料");
     guaranteedIds.add(item.clueId);
@@ -206,7 +225,7 @@ export function validateScriptV2(doc: ScriptDocV2): ScriptV2Issue[] {
     }
   }
 
-  checkTimelineEntries(issues, doc.truth.timeline, "truth.timeline", locationIds, clueIds, characterIds);
+  checkTimelineEntries(issues, doc.truth.timeline, "truth.timeline", locationIds, clueIds, characterIds, undefined, true);
   for (const [index, event] of doc.truth.timeline.entries()) {
     checkRefs(issues, event.participantIds, characterIds, `truth.timeline.${index}.participantIds`);
   }

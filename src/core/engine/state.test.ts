@@ -58,4 +58,22 @@ describe("线索转交事件的可见性与渲染", () => {
     expect(visibleTo(ev, 0)).toBe(true);
     expect(visibleTo(ev, 2)).toBe(false);
   });
+
+  it("未开票前只有投票者看见自己的票，公开计票全场可见", () => {
+    const sealed = {
+      seq: "1",
+      type: "vote" as const,
+      phase: "VOTE" as const,
+      round: 1,
+      fromSeat: 0,
+      toSeat: null,
+      visibility: "seat:0",
+      content: { target: 1, text: "你投给了乙" },
+      createdAt: "",
+    };
+    expect(visibleTo(sealed, 0)).toBe(true);
+    expect(visibleTo(sealed, 1)).toBe(false);
+    const tally = { ...sealed, fromSeat: null, visibility: "public", content: { counts: { "1": 2 }, text: "甲 投给 乙\n丙 投给 乙", tally: true } };
+    expect(visibleTo(tally, 1)).toBe(true);
+  });
 });

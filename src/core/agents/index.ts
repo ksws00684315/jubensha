@@ -9,7 +9,8 @@ import { degradedSpeechLine, lastOwnSpeechText, makeNoveltyJudge, shouldReviewSp
 import { recallRelevantStatements } from "./recall";
 import type { EngineEvent, GameState, PlayerActionPlan } from "@/core/engine/types";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
-import { clueText, locationNameOf } from "@/core/script/compat";
+import { clueText, locationNameOf, narrativeToText, timelineToText } from "@/core/script/compat";
+import { rewriteAppropriatedWitness } from "./witness";
 import { quizPrompt } from "@/core/engine/flow";
 import type { QuizQuestionV2 } from "@/core/script/v2/schema";
 import { validatePlayerActionPlan } from "./plan";
@@ -205,18 +206,33 @@ export const agent = {
    * 只有审查员自己给出改写、或改写后仍然冗余、或审查调用失败时，才退到该座位的短话。
    */
   async refineSpeech(ctx: AgentCtx, seatIndex: number, text: string, opts: { abortSignal?: AbortSignal; generationId?: string } = {}): Promise<string> {
+    const character = characterOf(ctx.script, ctx.state, seatIndex);
+    const card = character?.privateCard;
+    const held = new Set(ctx.state.heldClues[seatIndex] ?? []);
+    const ownCorpus = [
+      card ? narrativeToText(card.backstory) : "",
+      card ? timelineToText(card.timeline) : "",
+      ...(card?.knowledge.map((item) => narrativeToText(item.content)) ?? []),
+      ...(card?.secrets.map((item) => narrativeToText(item.content)) ?? []),
+      ...ctx.script.clues.filter((clue) => held.has(clue.id) || ctx.state.clueStates[clue.id]?.isPublic).map((clue) => clueText(clue)),
+    ].join("\n");
+    const others = ctx.events
+      .filter((ev) => ev.type === "speech" && ev.fromSeat !== seatIndex && ev.fromSeat != null && ev.content.text)
+      .map((ev) => ({ name: String(ev.content.speakerName ?? "对方"), text: String(ev.content.text) }));
+    const spoken = rewriteAppropriatedWitness(text, ownCorpus, others);
     const ownLast = lastOwnSpeechText(ctx.events, seatIndex);
     const plan = ctx.state.actionPlans?.[String(seatIndex)];
     const prior = ctx.events.filter((ev) => ev.type === "speech" && ev.visibility === "public" && ev.phase === ctx.state.phase && ev.round === ctx.state.round);
     const novelty = makeNoveltyJudge(ctx.script, ctx.events, ctx.state.phase, ctx.state.round, plan?.focusEvidenceIds ?? []);
     const repeated = (candidate: string) => novelty.judgeable && prior.some((ev) => bigramSimilarity(candidate, String(ev.content.text ?? "")) >= 0.72 && !novelty.novelVs(candidate, ev));
+    if (spoken !== text && !shouldReviewSpeech(spoken, ownLast) && !repeated(spoken)) return spoken;
     const duplicateClaim = Boolean(novelty.judgeable && plan?.claimSummary && prior.some((ev) => ev.content.claimSummary && bigramSimilarity(plan.claimSummary!, String(ev.content.claimSummary)) >= 0.72 && !novelty.novelVs(text, ev)));
     const suspicion = [shouldReviewSpeech(text, ownLast) ? "ooc" : "", repeated(text) ? "repeated" : "", duplicateClaim ? "claim" : ""].filter(Boolean).join("+");
     const trace = (outcome: string, finalText: string) => {
       if (finalText === text && outcome === "keep") return;
       console.warn(`[agents] speech_refine game=${ctx.gameId} seat=${seatIndex} fired=${suspicion} outcome=${outcome} from="${text.slice(0, 40)}" to="${finalText.slice(0, 40)}"`);
     };
-    if (!suspicion) return text;
+    if (!suspicion) return spoken;
     const targetName = plan?.targetSeat == null ? null : characterOf(ctx.script, ctx.state, plan.targetSeat)?.name ?? ctx.state.seats[plan.targetSeat]?.playerName ?? null;
     const degraded = () => degradedSpeechLine(plan, targetName);
     try {
@@ -236,14 +252,18 @@ export const agent = {
           },
           {
             role: "user",
-            content: `【本轮主张】${prior.map((ev) => ev.content.claimSummary ?? ev.content.text).join("；")}\n【当前辩解】${characterOf(ctx.script, ctx.state, seatIndex)?.privateCard.defenseHooks.find((h) => h.id === plan?.defenseHookId)?.claim ?? "无"}\n【台词】\n${text}\n${ownLast ? `\n【该角色上一段发言】\n${ownLast}` : ""}`,
+            content: `【本轮主张】${prior.map((ev) => ev.content.claimSummary ?? ev.content.text).join("；")}\n【当前辩解】${characterOf(ctx.script, ctx.state, seatIndex)?.privateCard.defenseHooks.find((h) => h.id === plan?.defenseHookId)?.claim ?? "无"}\n【台词】\n${spoken}\n${ownLast ? `\n【该角色上一段发言】\n${ownLast}` : ""}`,
           },
         ],
       });
       const parsed = extractJson<{ ok?: boolean; text?: string }>(res.text);
       if (parsed?.ok === true) {
-        trace("reviewer_keep", text);
-        return text;
+        if (repeated(text) || duplicateClaim) {
+          trace("reviewer_keep_rejected", degraded());
+          return degraded();
+        }
+        trace("reviewer_keep", spoken);
+        return spoken;
       }
       if (parsed && parsed.ok === false && typeof parsed.text === "string") {
         const refined = guardPlayerSpeech(ctx.script, ctx.state, seatIndex, parsed.text.trim());
@@ -263,8 +283,8 @@ export const agent = {
       trace("degraded", degraded());
       return degraded();
     }
-    trace("keep", text);
-    return text;
+    trace("keep", spoken);
+    return spoken;
   },
 
   /**

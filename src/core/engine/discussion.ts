@@ -7,16 +7,12 @@ import { AI_DECISION_TIMEOUT_MS, withTimeout } from "./util";
 import { dispatchAnswerTurn, dispatchPlayerSpeech } from "./turns";
 import { armHumanTimeout, clearHumanTimeout } from "./human-turn";
 import { maybeQueueWhisper } from "./social";
+import { legalPublicEvidenceIds } from "./evidence";
 import type { GameEngine } from "./engine";
 
 /**
  * ★ 讨论域（批次 I1 自 engine.ts 拆出）★：当众提问/作答链路 + AI 讨论回合。
  */
-
-function legalPublicEvidenceIds(e: GameEngine, ids: readonly string[] | undefined): string[] {
-  const publicIds = new Set(e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id));
-  return [...new Set(ids ?? [])].filter((id) => publicIds.has(id));
-}
 
 export async function submitQuestion(e: GameEngine, fromSeat: number, toSeat: number, question: string, evidenceIds?: string[]): Promise<{ ok: boolean; error?: string }> {
   const invalid = validateDiscussionAsk(e.state, fromSeat, toSeat);
@@ -54,9 +50,7 @@ export async function resolvePendingAnswer(e: GameEngine): Promise<void> {
     const hint = pending.forced
       ? forcedAnswerHint(base)
       : `${base}请正面回答这个问题；可以藏秘密，但不能装作没听见。`;
-    dispatchAnswerTurn(e, target, hint, async () => {
-      await e.tickInner();
-    });
+    dispatchAnswerTurn(e, target, hint, async () => {});
     return;
   }
   const askKey = `answer:${pending.questionId}`;
@@ -102,7 +96,7 @@ export async function runAiDiscussionTurn(e: GameEngine, seat: number): Promise<
     { hint: `现在轮到你当众发言。根据公开信息和你愿意拿出的情报做一段陈述，不要连珠炮质问，也不要替别人作答。` },
     async () => {
       e.markSpoken(seat);
-      await e.nextTurnOrAdvance();
+      await e.nextTurnOrAdvance({ tick: false });
       maybeQueueWhisper(e, seat);
     }
   );

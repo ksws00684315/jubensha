@@ -180,7 +180,7 @@ export function useGameStream(gameId: string, retryKey: number) {
           setDmDelta("");
           setSummary((s) => (s ? { ...s, phase: ev.phase, round: ev.round, status: ev.phase === "ENDED" ? "ended" : s.status } : s));
         }
-        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer" || ev.type === "vote") {
+        if (ev.type === "clue" || ev.type === "speech" || ev.type === "system" || ev.type === "phase" || ev.type === "private" || ev.type === "transfer" || ev.type === "vote" || ev.type === "reveal") {
           queueSummaryRefresh();
         }
         if (endAfterSeq && BigInt(lastSeq.current) >= BigInt(endAfterSeq)) finishEndedStream();
@@ -232,14 +232,14 @@ export function useGameStream(gameId: string, retryKey: number) {
     []
   );
 
-  // 限时倒计时：仅在截止时间进入最后 60 秒窗口后才需要每秒刷新
+  // 游戏总计时与人类回合倒计时共用一个时钟，避免页面同时维护多个 interval。
   useEffect(() => {
-    const deadline = summary?.humanDeadline ?? null;
-    if (deadline === null) return;
+    if (!summary?.startedAt) return;
     setNow(Date.now());
+    if (summary.endedAt || summary.phase === "ENDED" || summary.status === "ended") return;
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
-  }, [summary?.humanDeadline]);
+  }, [summary?.startedAt, summary?.endedAt, summary?.phase, summary?.status, summary?.humanDeadline]);
 
   return {
     summary,

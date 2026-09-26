@@ -33,6 +33,7 @@ import {
   dispatchClues,
   finalizeSearchRound,
   fallbackLocations,
+  NO_SEARCH_CHOICE,
   queueAiSearchChoice,
   seatCharacterId,
   skillOf,
@@ -40,6 +41,7 @@ import {
 } from "./search-deal";
 import { armVotePhaseHuman, queueAiQuiz, queueAiVote, recordVote } from "./finale";
 import { resolvePendingAnswer, runAiDiscussionTurn, submitQuestion } from "./discussion";
+import { validateVoteEvidence } from "./evidence";
 
 /**
  * ★ GameEngine——编排门面（批次 I1 拆分后）★
@@ -198,6 +200,7 @@ export class GameEngine {
       state.quizResult ??= null;
       state.unlockedSecrets ??= {};
       state.hostHandouts ??= {};
+      state.guaranteeDeferUntil ??= {};
       state.hostHints ??= {};
       state.actionPlans ??= {};
       state.pendingInteraction ??= null;
@@ -482,7 +485,7 @@ export class GameEngine {
           if (this.turnInFlight) return; // 回合在飞,提交回调会续跑
           dispatchPlayerSpeech(this, seat, { intro: true }, async () => {
             this.markSpoken(seat);
-            await this.nextTurnOrAdvance();
+            await this.nextTurnOrAdvance({ tick: false });
           });
         } else {
           const askKey = `ask:${state.phase}:${state.round}:${seat}`;
@@ -504,7 +507,7 @@ export class GameEngine {
           let autoCompleted = false;
           for (const seat of missing) {
             if (availableLocations(this, seat).length === 0) {
-              this.state.searchChoices[String(seat)] = "__no_search__";
+              this.state.searchChoices[String(seat)] = NO_SEARCH_CHOICE;
               autoCompleted = true;
               await this.systemSay("本轮没有可搜的线索材料，系统已自动完成搜证，将进入下一环节。", seat);
               continue;
@@ -622,7 +625,7 @@ export class GameEngine {
     if (!this.state.spokenSeats.includes(seat)) this.state.spokenSeats.push(seat);
   }
 
-  async nextTurnOrAdvance(): Promise<void> {
+  async nextTurnOrAdvance(opts?: { tick?: boolean }): Promise<void> {
     const seats = activeSeats(this.state);
     const unspoken = seats.filter((i) => !this.state.spokenSeats.includes(i));
     if (unspoken.length) {
@@ -631,7 +634,8 @@ export class GameEngine {
       this.state.turnSeat = null;
     }
     await this.persist();
-    this.continueTick();
+    // AI 发言的提交回调里不能立刻推进：dispatchTurn 还要按字数留阅读时间。
+    if (opts?.tick !== false) this.continueTick();
   }
 
   /** 已在 tick 内则记 pending；否则等当前互斥释放后再推进，避免挡住 HTTP。 */
@@ -674,7 +678,7 @@ export class GameEngine {
         if (this.state.phase !== "READING") return { ok: false, error: "当前不在读本环节" };
         clearHumanTimeout(this, seatIndex);
         if (!this.state.readySeats.includes(seatIndex)) this.state.readySeats.push(seatIndex);
-        await this.systemSay("我已阅读完剧本。", seatIndex);
+        await this.systemSay("你已确认读完剧本。", seatIndex);
         await this.persist();
         this.continueTick();
         return { ok: true };
@@ -762,7 +766,11 @@ export class GameEngine {
       }
       case "choose_location": {
         if (this.state.phase !== "SEARCH") return { ok: false, error: "当前不在搜证环节" };
-        if (this.state.searchChoices[String(seatIndex)]) return { ok: false, error: "本轮已经选过地点" };
+        const chosen = this.state.searchChoices[String(seatIndex)];
+        if (chosen) {
+          // 哨兵值代表"本轮已无可搜、系统自动跳过"，与玩家主动选过地点是两回事，文案必须可区分
+          return { ok: false, error: chosen === NO_SEARCH_CHOICE ? "本轮已无可搜地点，系统已自动完成搜证，无需选择" : "本轮已经选过地点" };
+        }
         const loc = resolveLocation(this.script, action.location ?? "");
         if (!loc) return { ok: false, error: "地点不合法" };
         if (loc.ownerCharacterId === seatCharacterId(this, seatIndex)) {
@@ -801,8 +809,8 @@ export class GameEngine {
         const target = action.target;
         if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
         if (target === seatIndex) return { ok: false, error: "不能投自己" };
-        const publicIds = this.script.clues.filter((clue) => this.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id);
-        if (publicIds.length && !(action.evidenceIds ?? []).some((id) => publicIds.includes(id))) return { ok: false, error: "请至少选择一张合法公开证据" };
+        const evidenceError = validateVoteEvidence(this.script.clues, this.state.clueStates, action.evidenceIds);
+        if (evidenceError) return { ok: false, error: evidenceError };
         await recordVote(this, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined, action.evidenceIds);
         clearHumanTimeout(this, seatIndex);
         // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时

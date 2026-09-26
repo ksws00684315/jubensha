@@ -15,9 +15,9 @@ import {
 import { initialState } from "./state";
 
 describe("阶段轮次推进", () => {
-  it("搜证轮数多于讨论轮数时，讨论结束后仍进入剩余搜证", () => {
+  it("搜证轮数多于讨论轮数时，每一轮搜证之后仍讨论", () => {
     expect(nextAfterDiscussion(2, 3, 2)).toBe("SEARCH");
-    expect(nextAfterSearch(3, 3, 2)).toBe("VOTE");
+    expect(nextAfterSearch(3, 3, 2)).toBe("DISCUSSION");
   });
 
   it("讨论轮数多于搜证轮数时，搜证结束后继续讨论", () => {
@@ -253,8 +253,7 @@ describe("相等轮数组合的完整路径(回归:2/2 曾跳过最后一轮讨�
 
   const expected = (s: number, d: number) => {
     const seq: string[] = [];
-    for (let r = 1; r <= Math.min(s, d); r++) seq.push(`S${r}`, `D${r}`);
-    for (let r = d + 1; r <= s; r++) seq.push(`S${r}`);
+    for (let r = 1; r <= s; r++) seq.push(`S${r}`, `D${r}`);
     for (let r = s + 1; r <= d; r++) seq.push(`D${r}`);
     seq.push("VOTE");
     return seq;

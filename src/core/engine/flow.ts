@@ -11,13 +11,12 @@ export function nextAfterDiscussion(round: number, searchRounds: number, discuss
 }
 
 /**
- * 搜证第 R 轮结束后:第 R 轮的讨论必然还没发生,只要 R 在讨论轮数预算内就进讨论。
- * 之前用 `round < discussionRounds` 会把 searchRounds == discussionRounds 的最后一轮讨论跳过
- * （2/2 配置实际只讨论 1 轮,历史对局已印证）。
+ * 每一轮搜证结束后都进入同轮讨论。
+ * 讨论轮数少于搜证轮数时，多出来的搜证不再直接投票。
+ * discussionRounds 只在搜证都配对过讨论之后，决定还要不要追加讨论。
  */
-export function nextAfterSearch(round: number, searchRounds: number, discussionRounds: number): Phase {
-  if (round <= discussionRounds) return "DISCUSSION";
-  if (round < searchRounds) return "SEARCH";
+export function nextAfterSearch(round: number, searchRounds: number, _discussionRounds: number): Phase {
+  if (round <= searchRounds) return "DISCUSSION";
   return "VOTE";
 }
 

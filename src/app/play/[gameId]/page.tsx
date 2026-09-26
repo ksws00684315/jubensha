@@ -13,6 +13,15 @@ import { useGameStream } from "./_components/useGameStream";
 import { VotePanel } from "./_components/VotePanel";
 import type { GameEventView } from "@/lib/client";
 
+function formatElapsed(startedAt: string, endedAt: string | null, now: number): string {
+  const end = endedAt ? Date.parse(endedAt) : now;
+  const seconds = Math.max(0, Math.floor((end - Date.parse(startedAt)) / 1000));
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const rest = seconds % 60;
+  return hours > 0 ? `${hours}:${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}` : `${String(minutes).padStart(2, "0")}:${String(rest).padStart(2, "0")}`;
+}
+
 /**
  * ★ 对局页编排层（批次 I3 拆分后）★
  * 页面保留：身份动作（send/发言/私信/DM 指令/TTS）+ 左栏「你的行动」阶段面板 + 三栏组装。
@@ -197,6 +206,9 @@ export default function PlayPage() {
   const phaseIdx = phaseSteps.indexOf(phase === "ENDED" ? "REVEAL" : phase);
   const aiSeatSet = new Set(summary.seats.filter((s) => s.kind === "ai").map((s) => s.index));
   const showLeftRail = Boolean(me || isDm || !ended);
+  // 全量地点选项：可搜的可点，不可搜的置灰并给出原因（你的房间/线索已搜完/未开放）
+  const searchOptions = summary.searchLocationOptions;
+  const elapsed = formatElapsed(summary.startedAt, summary.endedAt, now);
 
   return (
     <div className="game-shell min-w-0 space-y-4">
@@ -212,8 +224,12 @@ export default function PlayPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-[10px] font-semibold tracking-[0.16em] text-paper-500">ELAPSED · 已进行</p>
+              <p className="text-sm font-medium tabular-nums text-paper-200">{elapsed}</p>
+            </div>
             {!ended && (
-              <div className="text-right">
+              <div className="border-l border-gold-400/15 pl-3 text-right">
                 <p className="text-[10px] font-semibold tracking-[0.16em] text-paper-500">CURRENT ACT</p>
                 <p className="text-sm font-medium text-gold-400">
                   {PHASE_LABEL[phase]}
@@ -260,11 +276,11 @@ export default function PlayPage() {
               <h3 className="text-sm font-medium text-paper-200">在场玩家</h3>
               <span className="text-[10px] font-semibold tracking-widest text-success-400">{activeSeats.length} ONLINE</span>
             </div>
-            <ul className="mt-2 space-y-1.5 text-sm">
+              <ul className="mt-2 space-y-1.5 text-sm">
               {activeSeats.map((s) => (
                 <li key={s.index} className={`flex items-center justify-between rounded-lg px-2 py-1.5 ${s.index === mySeat ? "bg-gold-400/7 text-gold-400" : "text-paper-200"}`}>
                   <span className="min-w-0 truncate">
-                    {s.characterName}
+                    <span className="text-paper-500">座位 {s.index + 1} · </span>{s.characterName}
                     <span className="ml-1.5 text-xs text-paper-500">
                       {s.index === mySeat ? "（你）" : s.kind === "ai" ? "AI" : s.playerName}
                     </span>
@@ -313,23 +329,30 @@ export default function PlayPage() {
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
                 <p className="text-xs text-paper-400">{sending ? sendingLabel : "选择搜证地点："}</p>
-                {summary.searchLocationOptions.filter((option) => option.status !== "own_room").map(({ name: loc, status, reason }) => {
+                {searchOptions.map(({ name: loc, status, reason }) => {
                   const desc = summary.scriptV2?.locations.find((item) => item.name === loc)?.description?.find((block) => block.type === "paragraph")?.text;
-                  const unavailable = status !== "available";
-                  const statusText = unavailable && reason ? `（${reason}）` : "";
-                  return (
+                  const available = status === "available";
+                  return available ? (
                   <button
                     key={loc}
-                    disabled={sending || unavailable}
+                    disabled={sending}
                     onClick={() => void send({ type: "choose_location", location: loc })}
                     className="w-full rounded-lg border border-clue-400/20 bg-clue-400/5 px-3 py-2 text-left text-sm text-paper-200 transition hover:border-clue-400/60 hover:text-clue-400 disabled:opacity-50"
                   >
-                    <span className="block">{loc}{statusText}</span>
+                    <span className="block">{loc}</span>
                     {desc && <span className="mt-0.5 block text-xs leading-snug text-paper-500">{desc}</span>}
                   </button>
+                  ) : (
+                  <div key={loc} className="w-full cursor-not-allowed rounded-lg border border-paper-500/10 bg-paper-500/5 px-3 py-2 text-left text-sm text-paper-500 opacity-60">
+                    <span className="flex items-center justify-between gap-2">
+                      <span>{loc}</span>
+                      <span className="shrink-0 text-xs">{reason}</span>
+                    </span>
+                    {desc && <span className="mt-0.5 block text-xs leading-snug text-paper-500/70">{desc}</span>}
+                  </div>
                   );
                 })}
-                {!summary.searchLocationOptions.some((option) => option.status === "available") && <p className="pt-1 text-xs text-paper-500">目前没有可搜的线索，系统会自动完成本轮搜证。</p>}
+                {summary.searchExhausted && <p className="rounded-lg border border-paper-500/20 bg-paper-500/5 px-3 py-2 text-xs text-paper-400">本轮暂无可搜线索，系统已自动完成搜证，将进入下一环节。</p>}
               </div>
             )}
             {phase === "SEARCH" && iChoseLocation && <p className="text-xs text-paper-400">已选择，等待其他玩家搜证…</p>}
@@ -417,8 +440,9 @@ export default function PlayPage() {
                   <>
                     <p className="text-xs text-paper-400">轮到你发言。可当众陈述，也可提问（剩余 {summary.questionsLeft} 次）。结束后请点「结束发言」。</p>
                     {summary.questionsLeft > 0 && (
-                      <div className="space-y-2 border-t border-gold-400/20 pt-3">
-                        <p className="text-xs text-gold-400">当众提问（全场讨论共 {summary.questionsLeft} 次）：</p>
+                      <fieldset className="space-y-2 border-t border-gold-400/20 pt-3">
+                        <legend className="text-xs font-semibold text-gold-400">公开质询 · 剩余 {summary.questionsLeft} 次</legend>
+                        <p className="text-[11px] text-paper-500">问题和引用的证据会进入全场记录，并由对方当众回答。</p>
                         <select
                           aria-label="选择提问对象"
                           value={activeSeats.some((seat) => seat.index === askTarget && seat.index !== mySeat) ? askTarget! : ""}
@@ -438,8 +462,10 @@ export default function PlayPage() {
                         </select>
                         <fieldset className="text-xs text-paper-300"><legend>引用公开证据（可选）</legend>{(summary.publicEvidence ?? []).map((clue) => <label key={clue.id} className="flex gap-2"><input type="checkbox" checked={askEvidence.includes(clue.id)} onChange={(event) => setAskEvidence((ids) => event.target.checked ? [...ids, clue.id] : ids.filter((id) => id !== clue.id))} />{clue.name}</label>)}</fieldset>
                         <div className="flex gap-2">
+                          <label className="sr-only" htmlFor="public-question">公开质询问题</label>
                           <input
-                            aria-label="单独提问问题"
+                            id="public-question"
+                            aria-label="公开质询问题"
                             value={askText}
                             onChange={(e) => setAskText(e.target.value)}
                             placeholder="一个具体问题…"
@@ -454,10 +480,10 @@ export default function PlayPage() {
                             disabled={sending || askTarget === null || !askText.trim()}
                             className="rounded-lg bg-gold-500 px-3 text-sm font-semibold text-ink-950 hover:bg-gold-400 disabled:opacity-40"
                           >
-                            提问
+                            提交质询
                           </button>
                         </div>
-                      </div>
+                      </fieldset>
                     )}
                   </>
                 ) : (

@@ -13,6 +13,9 @@ import type { GameEngine } from "./engine";
  * 地点可见性、线索发放/兜底补发、公开/私藏决策（人类限时 + AI 后台）。
  */
 
+/** 本轮无可搜地点时占位 searchChoices 的哨兵值：分发放线索时跳过，选点报错时给出区分文案。 */
+export const NO_SEARCH_CHOICE = "__no_search__";
+
 /** 某座位角色的 id（线索发放权限/禁搜自己房间判定用） */
 export function seatCharacterId(e: GameEngine, seatIndex: number | null | undefined): string | null {
   if (seatIndex == null) return null;
@@ -95,7 +98,7 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
   for (const seat of activeSeats(e.state)) {
     const loc = e.state.searchChoices[String(seat)];
     if (!loc) continue;
-    if (loc === "__no_search__") continue;
+    if (loc === NO_SEARCH_CHOICE) continue;
     const seatChar = seatCharacterId(e, seat);
     const chosen = resolveLocation(e.script, loc);
     if (seatChar && chosen?.ownerCharacterId === seatChar) {
@@ -120,7 +123,17 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
       visibility: `seat:${seat}`,
       content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), location: loc, private: !autoPublic },
     });
-    await e.systemSay(`你在「${loc}」搜到了线索卡【${clue.name}】。${autoPublic ? "该线索为公开线索，已向全场公示。" : (e.script.hostGuide?.guaranteedPublicClues.some((item) => item.clueId === clue.id && item.deadlineRound <= e.state.round) ? "可公开或暂时私藏，本轮结束由主持公开。" : "你可以选择当场公开或私藏。")}`, seat);
+    const guarantee = e.script.hostGuide?.guaranteedPublicClues.find((item) => item.clueId === clue.id);
+    const guaranteeRound = guarantee ? effectiveGuaranteeRound(e, clue.id, guarantee.deadlineRound) : null;
+    const dueThisRound = guaranteeRound !== null && guaranteeRound <= e.state.round;
+    const privateHint = autoPublic
+      ? "该线索为公开线索，已向全场公示。"
+      : dueThisRound
+        ? "可公开或暂时私藏，本轮结束由主持公开。"
+        : guaranteeRound !== null
+          ? `你可以选择当场公开或私藏；该线索最迟第 ${guaranteeRound} 轮结束将由主持公开。`
+          : "你可以选择当场公开或私藏。";
+    await e.systemSay(`你在「${loc}」搜到了线索卡【${clue.name}】。${privateHint}`, seat);
     if (autoPublic) {
       await e.recordEvent({
         type: "clue",
@@ -141,59 +154,96 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
   }
 }
 
-/** 唯一搜证结算入口：玩家决策完成后才补发，每批最多两张。调用方持有引擎锁。 */
+const GUARANTEE_BUDGET_PER_ROUND = 2;
+
+function effectiveGuaranteeRound(e: GameEngine, clueId: string, deadlineRound: number): number {
+  return Math.max(deadlineRound, e.state.guaranteeDeferUntil?.[clueId] ?? deadlineRound);
+}
+
+/** 本轮是否还欠着、且生效截止不晚于本轮的保证材料。 */
+function guaranteeStillDue(e: GameEngine): boolean {
+  return (e.script.hostGuide?.guaranteedPublicClues ?? []).some((item) => {
+    if (effectiveGuaranteeRound(e, item.clueId, item.deadlineRound) > e.state.round) return false;
+    if (e.state.hostHandouts?.[item.clueId]) return false;
+    const clue = e.script.clues.find((candidate) => candidate.id === item.clueId);
+    return Boolean(clue && clue.policy !== "keep_private" && !e.state.clueStates[item.clueId]?.isPublic);
+  });
+}
+
+/** 唯一搜证结算入口：玩家决策完成后才补发。每轮最多两张，发不完的推迟到下一轮。 */
 export async function finalizeSearchRound(e: GameEngine): Promise<void> {
   if (e.state.phase !== "SEARCH" || e.state.searchDealtRound !== e.state.round) return;
   if (Object.values(e.state.pendingPublish).some((ids) => ids.length)) return;
   await dispatchGuaranteedPublicClues(e);
   await e.persist();
-  const remaining = (e.script.hostGuide?.guaranteedPublicClues ?? []).some((item) =>
-    item.deadlineRound <= e.state.round && !e.state.hostHandouts?.[item.clueId] &&
-    e.script.clues.some((clue) => clue.id === item.clueId && clue.policy !== "keep_private"));
-  if (remaining) {
-    e.schedule(`search-finalize:${e.state.round}`, () => finalizeSearchRound(e), 1000);
-    return;
-  }
+  if (guaranteeStillDue(e)) return;
   await afterSearchPhase(e);
 }
 
-/** 到达作者设定的截止轮次仍未公开时，主持自动补发材料；以状态记录保证幂等。 */
+async function publishGuarantee(e: GameEngine, clueId: string, reason: "deadline_guarantee" | "vote_flush"): Promise<void> {
+  const clue = e.script.clues.find((candidate) => candidate.id === clueId);
+  if (!clue || clue.policy === "keep_private" || e.state.hostHandouts?.[clueId]) return;
+  const current = e.state.clueStates[clueId];
+  if (current?.isPublic) {
+    for (const seat of Object.keys(e.state.pendingPublish)) {
+      e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== clueId);
+    }
+    e.state.hostHandouts![clueId] = { round: e.state.round, reason: "already_public" };
+    return;
+  }
+  e.state.clueStates[clueId] = { discoveredBy: current?.discoveredBy ?? null, isPublic: true };
+  for (const seat of Object.keys(e.state.pendingPublish)) {
+    e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== clueId);
+  }
+  e.state.hostHandouts![clueId] = { round: e.state.round, reason };
+  await e.recordEvent({
+    type: "clue",
+    phase: e.state.phase,
+    round: e.state.round,
+    fromSeat: null,
+    toSeat: null,
+    visibility: "public",
+    content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), hostRelease: true, batchId: `search:${e.state.round}`, deadlineRound: e.state.round },
+  });
+  await e.systemSay(`主持人公开补发关键材料：线索卡【${clue.name}】。`);
+  // 原发现人私藏的牌被强制公开，必须让他第一时间知道，而不是等公开线索刷出来自己发现
+  if (current?.discoveredBy != null) {
+    await e.systemSay(`你私藏的【${clue.name}】已到保底公开时限，主持人已当众公开。`, current.discoveredBy);
+  }
+}
+
+/** 到达生效截止轮仍未公开时补发。一轮最多两张，其余推迟到下一搜证轮。 */
 export async function dispatchGuaranteedPublicClues(e: GameEngine): Promise<void> {
   e.state.hostHandouts ??= {};
+  e.state.guaranteeDeferUntil ??= {};
   let emitted = 0;
+  const deferred: string[] = [];
   const guarantees = e.script.hostGuide?.guaranteedPublicClues ?? [];
   for (const item of guarantees) {
-    if (item.deadlineRound > e.state.round || e.state.hostHandouts?.[item.clueId]) continue;
+    if (effectiveGuaranteeRound(e, item.clueId, item.deadlineRound) > e.state.round || e.state.hostHandouts?.[item.clueId]) continue;
     const clue = e.script.clues.find((candidate) => candidate.id === item.clueId);
     if (!clue || clue.policy === "keep_private") continue;
-    const current = e.state.clueStates[item.clueId];
-    if (current?.isPublic) {
-      // 线索可能刚由搜证获得、随后在同一结算中被主持保证公开。
-      // 此时必须同步清掉“等待公开/私藏”的决策，否则真人界面没有按钮，
-      // 引擎却会永久等待 pendingPublish 归零。
-      for (const seat of Object.keys(e.state.pendingPublish)) {
-        e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== item.clueId);
-      }
-      e.state.hostHandouts![item.clueId] = { round: e.state.round, reason: "already_public" };
+    if (e.state.clueStates[item.clueId]?.isPublic) {
+      await publishGuarantee(e, item.clueId, "deadline_guarantee");
       continue;
     }
-    if (emitted >= 2) break;
-    emitted++;
-    e.state.clueStates[item.clueId] = { discoveredBy: current?.discoveredBy ?? null, isPublic: true };
-    for (const seat of Object.keys(e.state.pendingPublish)) {
-      e.state.pendingPublish[seat] = (e.state.pendingPublish[seat] ?? []).filter((id) => id !== item.clueId);
+    if (emitted >= GUARANTEE_BUDGET_PER_ROUND) {
+      deferred.push(item.clueId);
+      continue;
     }
-    e.state.hostHandouts![item.clueId] = { round: e.state.round, reason: "deadline_guarantee" };
-    await e.recordEvent({
-      type: "clue",
-      phase: e.state.phase,
-      round: e.state.round,
-      fromSeat: null,
-      toSeat: null,
-      visibility: "public",
-      content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), hostRelease: true, batchId: `search:${e.state.round}`, deadlineRound: item.deadlineRound },
-    });
-    await e.systemSay(`主持人公开补发关键材料：线索卡【${clue.name}】。`);
+    emitted++;
+    await publishGuarantee(e, item.clueId, "deadline_guarantee");
+  }
+  for (const clueId of deferred) e.state.guaranteeDeferUntil[clueId] = e.state.round + 1;
+}
+
+/** 进入投票前把仍未公开的保证材料一次补完，避免被轮预算永久拦住。 */
+export async function flushRemainingGuarantees(e: GameEngine): Promise<void> {
+  e.state.hostHandouts ??= {};
+  for (const item of e.script.hostGuide?.guaranteedPublicClues ?? []) {
+    const clue = e.script.clues.find((candidate) => candidate.id === item.clueId);
+    if (!clue || clue.policy === "keep_private" || e.state.hostHandouts?.[item.clueId]) continue;
+    await publishGuarantee(e, item.clueId, "vote_flush");
   }
 }
 

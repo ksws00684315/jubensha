@@ -3,9 +3,9 @@
  *
  * - `JEV_FALLBACK=1`（接管；建议常开）：只在现网本来就要 Math.random 的那几步上把 Jev 的选择
  *   真的用上——那条路径是 agent 调用抛错/超时，玩家看不到新增行为，它只会比随机好。
- *   8 局实测触发 2 次、单次两美分量级，都是 provider 审核拒答把一整步决策打成随机。
+ *   8 局实测触发 2 次、单次约 $0.00002，都是 provider 审核拒答把一整步决策打成随机。
  * - `JEV_SHADOW=1`（影子；按需开）：每个 AI 座位的投票/选址/公开决定都并行问一次并记账，
- *   结果不变，只出对照。8 局实测 ≈$2/局，其中 4 张影子票占 $1.7，所以不默认开。
+ *   结果不变，只出对照。8 局实测约 $0.002/局；仍按需开启以控制实验流量与数据外发。
  *
  * 两个开关都关或未配 JEV_API_KEY 时本模块整体静默：不调用、不写库、不占预算。
  * 两份额度也各自独立——挂满影子额度不能把接管饿死，反之亦然。
@@ -111,8 +111,10 @@ interface LiveRow {
 }
 
 async function writeLiveRow(row: LiveRow, mode: JevLiveMode): Promise<void> {
-  const agreed = row.jevKey !== null && row.actualKey !== null ? row.jevKey === row.actualKey : null;
-  const usedForAction = mode === "fallback";
+  const usedForAction = mode === "fallback" && row.ok && row.legal && row.jevKey !== null;
+  // 接管成功时 Jev 的合法键就是实际采用值；失败/非法时调用方会继续走原随机兜底。
+  const actualKey = usedForAction ? row.jevKey : row.actualKey;
+  const agreed = row.jevKey !== null && actualKey !== null ? row.jevKey === actualKey : null;
   try {
     await db.jevShadowLog.create({
       data: {
@@ -124,7 +126,7 @@ async function writeLiveRow(row: LiveRow, mode: JevLiveMode): Promise<void> {
         jevKey: row.jevKey,
         jevProbability: row.jevProbability,
         jevConfidence: row.jevConfidence,
-        actualKey: row.actualKey,
+        actualKey,
         agreed,
         legal: row.legal,
         usedForAction,
@@ -141,7 +143,7 @@ async function writeLiveRow(row: LiveRow, mode: JevLiveMode): Promise<void> {
   const costUsd = row.inputTokens * JEV_INPUT_COST_PER_TOKEN_USD;
   totalCostUsd += costUsd;
   totalCalls += 1;
-  console.log(`[jev] ${mode} game=${row.gameId.slice(0, 8)} slot=${row.slot} seat=${row.seatIndex} jev=${row.jevKey ?? "-"} actual=${row.actualKey ?? "-"} legal=${row.legal} tok=${row.inputTokens} ms=${row.latencyMs} ≈$${costUsd.toFixed(4)} 累计$${totalCostUsd.toFixed(2)}`);
+  console.log(`[jev] ${mode} game=${row.gameId.slice(0, 8)} slot=${row.slot} seat=${row.seatIndex} jev=${row.jevKey ?? "-"} actual=${actualKey ?? "-"} legal=${row.legal} used=${usedForAction} tok=${row.inputTokens} ms=${row.latencyMs} ≈$${costUsd.toFixed(6)} 累计$${totalCostUsd.toFixed(4)}`);
 }
 
 let totalCalls = 0;
@@ -180,6 +182,7 @@ async function askAndRecord(args: {
 }): Promise<AskResult | null> {
   const { cfg, slot, mode } = args;
   if (!takeBudget(cfg, args.gameId, mode, slot)) return null;
+  const started = Date.now();
   try {
     const res = await askSystemOne(cfg.endpoint, { state: args.state, questions: args.questions }, { timeoutMs: cfg.timeoutMs });
     const answer = res.answers[args.questionId];
@@ -223,7 +226,7 @@ async function askAndRecord(args: {
       legal: false,
       inputTokens: 0,
       stateChars: args.stateChars,
-      latencyMs: 0,
+      latencyMs: Date.now() - started,
       ok: false,
       error: err instanceof Error ? err.message : String(err),
     }, mode);

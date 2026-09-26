@@ -264,8 +264,10 @@ export function ChatFeed(props: ChatFeedProps) {
 
       {/* 输入区 */}
       {showComposer && (
-        <div className="border-t border-gold-400/10 bg-ink-950/45 p-4">
+        <fieldset className="border-t border-gold-400/10 bg-ink-950/45 p-4">
+          <legend className="px-1 text-xs font-semibold text-gold-400">{answering ? "当众回答" : "当众陈述"}</legend>
           {error && <p className="mb-2 text-xs text-danger-400">{error}</p>}
+          <p className="mb-2 text-[11px] text-paper-500">这段内容会进入全场记录。需要向特定玩家提问，请使用左侧“公开质询”区域。</p>
           {/* 推荐回复：轮到你发言时后台生成的建议短句，点击直接填入 */}
           {mySpeakTurn && !sending && (summary.suggestions?.length ?? 0) > 0 && (
             <div className="mb-2 flex flex-wrap items-center gap-1.5">
@@ -283,6 +285,7 @@ export function ChatFeed(props: ChatFeedProps) {
           )}
           <div className="flex gap-2">
             <input
+              id="public-speech"
               value={input}
               onChange={(e) => onInput(e.target.value)}
               onKeyDown={(e) => {
@@ -290,7 +293,7 @@ export function ChatFeed(props: ChatFeedProps) {
               }}
               disabled={!canSpeak || sending}
               placeholder={speakPlaceholder}
-              aria-label="发言内容"
+              aria-label={answering ? "当众回答内容" : "当众陈述内容"}
               className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2.5 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400 disabled:opacity-50"
             />
             <button
@@ -303,7 +306,7 @@ export function ChatFeed(props: ChatFeedProps) {
               {answering ? "回答" : "发言"}
             </button>
           </div>
-        </div>
+        </fieldset>
       )}
     </section>
   );
@@ -329,6 +332,28 @@ function RevealBlock({ summary, reveal, mySeat }: { summary: GameSummary; reveal
       <p className="mx-auto mt-4 max-w-2xl whitespace-pre-wrap text-left leading-7 text-paper-300">{reveal.content.reveal}</p>
       {Array.isArray(reveal.content.interactionChoices) && <div className="mt-4 text-left"><h4>角色抉择</h4>{(reveal.content.interactionChoices as Array<{ beatId: string; text: string }>).map((choice) => <p key={choice.beatId}>{choice.text}</p>)}</div>}
       <p className="mt-4 text-xs text-paper-500">{finale ? `${finale.title}：${finale.content}` : reveal.content.winText}</p>
+      {summary.settlement && (
+        <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-gold-400/20 bg-ink-950/60 p-4 text-left">
+          <p className="text-[10px] font-semibold tracking-[0.16em] text-gold-400">RESULT · 本局结算</p>
+          <div className="mt-3 grid gap-2 text-sm sm:grid-cols-4">
+            <div><p className="text-xs text-paper-500">阵营结果</p><p className="mt-1 text-paper-200">{summary.settlement.outcome === "caught" ? "成功抓获真凶" : "真凶逃脱"}</p></div>
+            <div><p className="text-xs text-paper-500">你的投票</p><p className={summary.settlement.voteCorrect ? "mt-1 text-success-400" : "mt-1 text-danger-400"}>{summary.settlement.voteCorrect ? "正确" : "未命中"}</p></div>
+            <div><p className="text-xs text-paper-500">有效证据</p><p className="mt-1 text-paper-200">{summary.settlement.evidenceCount} 条</p></div>
+            <div><p className="text-xs text-paper-500">表现分</p><p className="mt-1 text-gold-400">{summary.settlement.score}/100</p></div>
+          </div>
+        </div>
+      )}
+      {summary.culpritSettlement && (
+        <div className="mx-auto mt-5 max-w-2xl rounded-xl border border-danger-400/30 bg-ink-950/60 p-4 text-left">
+          <p className="text-[10px] font-semibold tracking-[0.16em] text-danger-400">RESULT · 凶手结算</p>
+          <div className="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+            <div><p className="text-xs text-paper-500">你的身份</p><p className={`mt-1 font-medium ${summary.culpritSettlement.outcome === "exposed" ? "text-danger-400" : "text-success-400"}`}>{summary.culpritSettlement.outcome === "exposed" ? "已被当场识破" : "全身而退"}</p></div>
+            <div><p className="text-xs text-paper-500">指认你的票数</p><p className="mt-1 text-paper-200">{summary.culpritSettlement.votesAgainst} 票</p></div>
+            <div><p className="text-xs text-paper-500">结局</p><p className="mt-1 text-paper-200">{summary.culpritSettlement.title}</p></div>
+          </div>
+          {summary.culpritSettlement.verdict && <p className="mt-2 text-xs text-paper-400">{summary.culpritSettlement.verdict}</p>}
+        </div>
+      )}
       {(() => {
         const quizBoard = (reveal.content.quiz as GameSummary["quizResult"] | undefined) ?? summary.quizResult ?? null;
         if (!quizBoard || !summary.quiz) return null;
@@ -451,8 +476,15 @@ function EventBubble({
       );
     }
     case "interaction":
-    case "system":
-      return <p className="mx-auto w-fit rounded-full border border-gold-400/10 bg-ink-950/70 px-3 py-1 text-center text-xs text-paper-500">{ev.content.text}</p>;
+    case "system": {
+      const onlyMe = mySeat !== null && ev.visibility === `seat:${mySeat}`;
+      return (
+        <p className={`mx-auto w-fit rounded-full border px-3 py-1 text-center text-xs ${onlyMe ? "border-secret-400/20 bg-secret-400/5 text-secret-400" : "border-gold-400/10 bg-ink-950/70 text-paper-500"}`}>
+          {ev.content.text}
+          {onlyMe && <span className="ml-1.5 rounded-full border border-secret-400/30 px-1.5 py-0.5 text-[10px]">仅你可见</span>}
+        </p>
+      );
+    }
     case "clue":
       if (ev.visibility === "public") {
         return (

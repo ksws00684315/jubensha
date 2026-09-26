@@ -170,7 +170,9 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
     log("quiz:", JSON.stringify(await act({ type: "answer_quiz", answers })));
   }
   if (me.voteMode !== "choice") {
-    log("vote:", JSON.stringify(await act({ type: "vote", target: seatCount > 4 ? 3 : 1, reason: "综合讨论与线索，此人的疑点最大" })));
+    // 投票需引用公开证据（evidenceIds），取当前已公开线索卡前 3 张
+    const evidenceIds = (me.publicEvidence ?? []).slice(0, 3).map((c) => c.id);
+    log("vote:", JSON.stringify(await act({ type: "vote", target: seatCount > 4 ? 3 : 1, reason: "综合讨论与线索，此人的疑点最大", ...(evidenceIds.length ? { evidenceIds } : {}) })));
   }
 
   const final = await waitUntil("ENDED", (g) => g.phase === "ENDED", 300000);

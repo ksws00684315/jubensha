@@ -26,6 +26,7 @@ export function initialState(seats: SeatInfo[]): GameState {
     pendingAnswer: null,
     unlockedSecrets: {},
     hostHandouts: {},
+    guaranteeDeferUntil: {},
     hostHints: {},
     actionPlans: {},
     pendingInteraction: null,

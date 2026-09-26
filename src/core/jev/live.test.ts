@@ -116,7 +116,7 @@ describe("两个开关各自独立", () => {
     expect(rec.rows[0]).toMatchObject({ usedForAction: false });
   });
 
-  it("只开接管：影子入口静默（不烧那 $2/局），兜底那一问照记", async () => {
+  it("只开接管：影子入口静默，兜底那一问照记", async () => {
     enableEnv(["fallback"]);
     rec.replies = [choice("2", 0.61)];
     const ctx = makeCtx("VOTE", 2);
@@ -126,7 +126,7 @@ describe("两个开关各自独立", () => {
     expect(await jevVoteFallback(ctx, 1)).toEqual({ target: 2, probability: 0.61 });
     expect(rec.calls).toBe(1);
     expect(rec.rows).toHaveLength(1);
-    expect(rec.rows[0]).toMatchObject({ slot: "vote", jevKey: "2", actualKey: null, usedForAction: true });
+    expect(rec.rows[0]).toMatchObject({ slot: "vote", jevKey: "2", actualKey: "2", agreed: true, usedForAction: true });
   });
 
   it("两份额度互不饿死：影子挂满后接管仍能问", async () => {
@@ -202,15 +202,15 @@ describe("投票影子", () => {
     rec.replies = [choice("0")];
     const ctx = makeCtx("VOTE", 2);
     expect(await jevVoteFallback(ctx, 0)).toBeNull();
-    expect(rec.rows[0]).toMatchObject({ jevKey: "0", legal: false, usedForAction: true, agreed: null });
+    expect(rec.rows[0]).toMatchObject({ jevKey: "0", legal: false, usedForAction: false, actualKey: null, agreed: null });
   });
 
-  it("接管成功时返回座位索引并标 usedForAction，actual 留空", async () => {
+  it("接管成功时返回座位索引，并把实际采用值与 usedForAction 一起记下", async () => {
     enableEnv();
     rec.replies = [choice("4", 0.55)];
     const ctx = makeCtx("VOTE", 2);
     expect(await jevVoteFallback(ctx, 0)).toEqual({ target: 4, probability: 0.55 });
-    expect(rec.rows[0]).toMatchObject({ jevKey: "4", actualKey: null, agreed: null, legal: true, usedForAction: true });
+    expect(rec.rows[0]).toMatchObject({ jevKey: "4", actualKey: "4", agreed: true, legal: true, usedForAction: true });
   });
 
   it("调用失败写一条 ok=false，不抛给引擎", async () => {
@@ -219,6 +219,7 @@ describe("投票影子", () => {
     const ctx = makeCtx("VOTE", 2);
     await expect(shadowVote(ctx, 0, 1)).resolves.toBeUndefined();
     expect(await jevVoteFallback(ctx, 1)).toBeNull();
+    expect(rec.rows[1]).toMatchObject({ ok: false, legal: false, usedForAction: false, actualKey: null });
     expect(rec.rows[0]).toMatchObject({ ok: false, legal: false, error: "max_tokens_exceeded", inputTokens: 0 });
   });
 });
@@ -231,7 +232,7 @@ describe("选址与公开影子", () => {
     await shadowLocation(ctx, 0, ["书房", "温室", "门厅"], "温室");
     expect(rec.rows[0]).toMatchObject({ slot: "location", jevKey: "1", actualKey: "1", agreed: true, legal: true, usedForAction: false });
     expect(await jevLocationFallback(ctx, 1, ["书房", "温室", "门厅"])).toBe("书房");
-    expect(rec.rows[1]).toMatchObject({ slot: "location", jevKey: "0", actualKey: null, usedForAction: true });
+    expect(rec.rows[1]).toMatchObject({ slot: "location", jevKey: "0", actualKey: "0", agreed: true, usedForAction: true });
   });
 
   it("选址越界或没有候选地点都不接管", async () => {

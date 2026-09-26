@@ -134,7 +134,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 import { GameEngine } from "./engine";
 import { maybeQueueWhisper, maybeQueueInterjection } from "./social";
 import { tallyVotes, transitionSelfIntro } from "./phases";
-import { dispatchClues } from "./search-deal";
+import { dispatchClues, dispatchGuaranteedPublicClues, NO_SEARCH_CHOICE } from "./search-deal";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
 const doc = parseScriptForRuntime(JSON.parse(readFileSync(path.join(process.cwd(), "seeds/sample-5p-cloudlanshan.json"), "utf-8")));
@@ -207,8 +207,16 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     e.clearTimers(""); e.state.phase = "VOTE";
     const clueId = doc.clues[0].id;
     e.state.clueStates[clueId] = { isPublic: true, discoveredBy: 0 };
+    // 场上已有公开证据却不附 evidenceIds：报错需指明字段名
+    const missing = await e.handleAction(0, { type: "vote", target: 1 });
+    expect(missing.ok).toBe(false);
+    expect(missing.error).toContain("evidenceIds");
     expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: ["hidden"] })).ok).toBe(false);
-    expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: [clueId, "hidden"] })).ok).toBe(true);
+    // 严格拒绝：混合合法与非法 id 时整体拒绝并列出非法项，不再静默过滤
+    const mixed = await e.handleAction(0, { type: "vote", target: 1, evidenceIds: [clueId, "hidden"] });
+    expect(mixed.ok).toBe(false);
+    expect(mixed.error).toBe(`证据含非法或未公开的线索卡：hidden`);
+    expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: [clueId] })).ok).toBe(true);
     expect(e.state.votes["0"].evidenceIds).toEqual([clueId]);
     expect(e.events.find((event) => event.type === "vote")?.content.evidenceIds).toEqual([clueId]);
     e.clearTimers("");
@@ -272,7 +280,8 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
 
     // 关键回归:提问者的超时必须被重新武装——3 分钟挂机后自动跳过,流程不得卡死
     const before = engine.state.spokenSeats.length;
-    await vi.advanceTimersByTimeAsync(181_000);
+    // 回答落库后会先留出阅读时间，3 分钟才开始算，所以要比 180 秒多留一轮停顿。
+    await vi.advanceTimersByTimeAsync(200_000);
     const timeoutEvent = eventsOf(engine).find((e) => e.type === "system" && String(e.content.text ?? "").includes("自动跳过"));
     expect(timeoutEvent).toBeTruthy();
     expect(engine.state.spokenSeats.length).toBeGreaterThan(before);
@@ -386,6 +395,83 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     const result = await engine.handleAction(0, { type: "choose_location", location: "清河的房间" });
 
     expect(result).toMatchObject({ ok: false, error: "你不能搜自己的房间" });
+  }, 30_000);
+
+  it("搜证选点报错区分三种情形：已选过/无可搜哨兵/地点搜尽，哨兵建立时发定向说明", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    engine.state.phase = "SEARCH";
+    engine.state.round = 1;
+    const location = doc.locations.find((candidate) => doc.clues.some((clue) => clue.locationId === candidate.id && !clue.forbiddenCharacterIds.includes("qinghe")))!;
+
+    // ① 正常选过地点
+    engine.state.searchChoices = { "0": location.name };
+    expect(await engine.handleAction(0, { type: "choose_location", location: location.name })).toMatchObject({ ok: false, error: "本轮已经选过地点" });
+
+    // ② 系统自动跳过（哨兵）：文案必须与"已选过"可区分
+    engine.state.searchChoices = { "0": NO_SEARCH_CHOICE };
+    expect(await engine.handleAction(0, { type: "choose_location", location: location.name })).toMatchObject({
+      ok: false,
+      error: "本轮已无可搜地点，系统已自动完成搜证，无需选择",
+    });
+
+    // ③ 地点线索已搜尽
+    engine.state.searchChoices = {};
+    engine.state.clueStates = Object.fromEntries(doc.clues.map((clue) => [clue.id, { discoveredBy: null, isPublic: true }]));
+    expect(await engine.handleAction(0, { type: "choose_location", location: location.name })).toMatchObject({
+      ok: false,
+      error: `「${location.name}」的线索已搜完，请选择其他地点`,
+    });
+
+    // 哨兵建立（step 自动完成搜证）时，该座位收到定向 systemSay
+    engine.state.searchChoices = {};
+    await engine.tick();
+    expect(
+      eventsOf(engine).some(
+        (event) => event.type === "system" && event.visibility === "seat:0" && event.content.text === "本轮没有可搜的线索材料，系统已自动完成搜证，将进入下一环节。",
+      ),
+    ).toBe(true);
+    engine.clearTimers("");
+  }, 30_000);
+
+  it("搜到保底公开线索时预告公开轮次；到期强制公开时私讯原发现人", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-g", content: JSON.parse(JSON.stringify(doc)) });
+    engine.clearTimers("");
+    engine.state.phase = "SEARCH";
+    engine.state.round = 1;
+    const pick = doc.hostGuide!.guaranteedPublicClues.find((item) => {
+      const clue = doc.clues.find((candidate) => candidate.id === item.clueId);
+      return item.deadlineRound > 1 && clue?.policy === "manual_public" && !clue.forbiddenCharacterIds?.includes("qinghe") && !clue.release?.round;
+    })!;
+    const clue = doc.clues.find((candidate) => candidate.id === pick.clueId)!;
+    const locName = doc.locations.find((location) => location.id === clue.locationId)!.name;
+    // 把同地点其他线索标记为已搜出，保证派发给座位 0 的正是这张保底线索
+    engine.state.clueStates = Object.fromEntries(doc.clues.filter((c) => c.id !== clue.id).map((c) => [c.id, { discoveredBy: null, isPublic: true }]));
+    engine.state.searchChoices = { "0": locName };
+    await dispatchClues(engine);
+
+    const notice = eventsOf(engine).find((event) => event.type === "system" && event.visibility === "seat:0" && event.content.text?.includes(clue.name))?.content.text ?? "";
+    expect(notice).toContain(`该线索最迟第 ${pick.deadlineRound} 轮结束将由主持公开`);
+
+    // 到期：主持人强制公开，原发现人收到定向私讯
+    engine.state.round = pick.deadlineRound;
+    await dispatchGuaranteedPublicClues(engine);
+    expect(eventsOf(engine).some((event) => event.type === "clue" && event.content.hostRelease && event.content.clueId === clue.id)).toBe(true);
+    expect(
+      eventsOf(engine).some((event) => event.type === "system" && event.visibility === "seat:0" && event.content.text === `你私藏的【${clue.name}】已到保底公开时限，主持人已当众公开。`),
+    ).toBe(true);
+    engine.clearTimers("");
+  }, 30_000);
+
+  it("无人发现过的保底线索补发时只发公开消息，不发私人提醒", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-g2", content: JSON.parse(JSON.stringify(doc)) });
+    engine.clearTimers("");
+    engine.state.phase = "SEARCH";
+    engine.state.round = 2;
+    const teacup = doc.hostGuide!.guaranteedPublicClues.find((item) => item.clueId === "teacup")!;
+    await dispatchGuaranteedPublicClues(engine);
+    expect(eventsOf(engine).some((event) => event.type === "clue" && event.content.hostRelease && event.content.clueId === teacup.clueId)).toBe(true);
+    expect(eventsOf(engine).some((event) => event.type === "system" && event.content.text?.includes("你私藏的"))).toBe(false);
+    engine.clearTimers("");
   }, 30_000);
 });
 

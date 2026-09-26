@@ -62,6 +62,8 @@ export function maybeQueueInterjection(e: GameEngine, fromSeat: number, text: st
   if (e.state.interjections >= MAX_INTERJECTIONS_PER_ROUND) return;
   const target = mentionedAiSeats(e.script, e.state, text, fromSeat)[0];
   if (target === undefined) return;
+  // 还没轮到的正式发言留给本回合，避免插话和正式回合各说一遍。
+  if (!e.state.spokenSeats.includes(target)) return;
   const round = e.state.round;
   const queuedAfter = e.events.at(-1)?.seq ?? "0";
   const cancelled = () => e.state.phase !== "DISCUSSION" || e.state.round !== round ||

@@ -57,7 +57,7 @@ function rate(n: number, hits: number): Rate {
   const d = 1 + (z * z) / n;
   const c = p + (z * z) / (2 * n);
   const h = z * Math.sqrt((p * (1 - p) + (z * z) / (4 * n)) / n);
-  return { n, hits, rate: p, ci: [(Math.max(0, c - h) / d), (Math.min(1, c + h) / d)] };
+  return { n, hits, rate: p, ci: [Math.max(0, (c - h) / d), Math.min(1, (c + h) / d)] };
 }
 
 /** 两比例 z 检验（双侧，正态近似）；样本太小时返回 1，宁可不判显著 */
@@ -67,12 +67,11 @@ export function twoProportionP(k1: number, n1: number, k2: number, n2: number): 
   const se = Math.sqrt(p * (1 - p) * (1 / n1 + 1 / n2));
   if (!se) return 1;
   const z = (k1 / n1 - k2 / n2) / se;
-  // erfc 近似标准正态双侧 p
-  const t = Math.abs(z) / Math.SQRT2;
-  const tau = 1 / (1 + 0.2316419 * t);
-  const d = 0.3989423 * Math.exp((-t * t) / 2);
-  const prob = d * tau * (1.0614054 + tau * (-1.4549985 + tau * (2.9718205 + tau * (-3.879864 + tau * 1.968542))));
-  return Math.max(0, Math.min(1, prob));
+  // Abramowitz-Stegun 7.1.26 的 erf 近似；双侧 p = erfc(|z| / sqrt(2))。
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + 0.3275911 * x);
+  const erf = 1 - (((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t) * Math.exp(-x * x);
+  return Math.max(0, Math.min(1, 1 - erf));
 }
 
 function percentile(values: number[], q: number): number | null {
@@ -172,9 +171,9 @@ export function summarizeVoteOutcomes(outcomes: JevVoteOutcome[]) {
       detail: `Jev p50=${jevP50}ms p95=${jevP95}ms；重放 p50=${baseP50}ms p95=${baseP95}ms`,
     },
     {
-      name: "单票输入成本 ≤ 现网 2 倍",
+      name: "单票输入 token ≤ 现网 2 倍",
       pass: baseTokens > 0 && jevTokens <= baseTokens * 2,
-      detail: `Jev 中位输入 ${jevTokens} tokens ×$42/M ≈ $${((jevTokens * 42) / 1e6).toFixed(4)}/票；现网重放中位 ${baseTokens} tokens（单价按各自 provider 另行核对）`,
+      detail: `Jev 中位输入 ${jevTokens} tokens ×$42/B ≈ $${((jevTokens * 42) / 1e9).toFixed(6)}/票；现网重放中位 ${baseTokens} tokens（金额需按各自 provider 单价比较）`,
     },
     {
       name: "弃权组合不劣于现网记录组合",

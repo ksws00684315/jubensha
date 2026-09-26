@@ -28,17 +28,24 @@ describe("搜证截止结算", () => {
     expect(e.events).toHaveLength(published ? 0 : 1);
     expect(e.state.phase).toBe("DISCUSSION");
   });
-  it("超时私藏与重启快照继续结算，单批最多两张", async () => {
-    const e = fixture(5);
+  it("一轮最多补发两张，其余推迟到后面的搜证轮", async () => {
+    const e = fixture(6);
     e.state.pendingPublish = {};
     await finalizeSearchRound(e);
     expect(e.events).toHaveLength(2);
-    expect(e.state.phase).toBe("SEARCH");
+    expect(e.state.phase).toBe("DISCUSSION");
+    expect(e.schedule).not.toHaveBeenCalled();
     e.state = JSON.parse(JSON.stringify(e.state));
+    e.state.phase = "SEARCH";
+    e.state.round = 2;
+    e.state.searchDealtRound = 2;
     await finalizeSearchRound(e);
     expect(e.events).toHaveLength(4);
+    e.state.phase = "SEARCH";
+    e.state.round = 3;
+    e.state.searchDealtRound = 3;
     await finalizeSearchRound(e);
-    expect(e.events).toHaveLength(5);
+    expect(e.events).toHaveLength(6);
     expect(e.state.phase).toBe("DISCUSSION");
   });
 });

@@ -12,8 +12,8 @@ const DEFAULT_MODEL = "jev-latest";
 const DEFAULT_TIMEOUT_MS = 15_000;
 /** 429/5xx/网络错误的退避间隔；决策模型走在线路径，宁可快速失败也不拖长回合 */
 const DEFAULT_RETRY_DELAYS_MS = [400, 1200];
-/** Jev 1.13：输入 $42/1M tokens（$0.042/1k）；输出免费 */
-export const JEV_INPUT_COST_PER_TOKEN_USD = 42 / 1_000_000;
+/** Jev 1.13：输入 $0.042/1M tokens（$42/1B）；输出免费 */
+export const JEV_INPUT_COST_PER_TOKEN_USD = 42 / 1_000_000_000;
 /** 官方声明的 Choice 原语候选上限 */
 export const MAX_CHOICE_OPTIONS = 255;
 
@@ -119,7 +119,18 @@ function validate(endpoint: JevEndpoint, req: JevRequest): void {
   }
 }
 
-const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+function sleep(ms: number, signal: AbortSignal): Promise<void> {
+  if (signal.aborted) return Promise.resolve();
+  return new Promise((resolve) => {
+    const timer = setTimeout(done, ms);
+    signal.addEventListener("abort", done, { once: true });
+    function done() {
+      clearTimeout(timer);
+      signal.removeEventListener("abort", done);
+      resolve();
+    }
+  });
+}
 
 /** 一次请求可批量带多个 questions：同批决策共享 state 的输入计费只算一次。 */
 export async function askSystemOne(endpoint: JevEndpoint, req: JevRequest, opts: JevCallOptions = {}): Promise<JevResult> {
@@ -129,12 +140,12 @@ export async function askSystemOne(endpoint: JevEndpoint, req: JevRequest, opts:
   const delays = opts.retryDelaysMs ?? DEFAULT_RETRY_DELAYS_MS;
   const timeoutMs = opts.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const started = Date.now();
+  // timeoutMs 是整次逻辑调用的总预算；所有重试和退避共用同一截止信号。
+  const timeoutSignal = AbortSignal.timeout(timeoutMs);
+  const signal = opts.signal ? AbortSignal.any([timeoutSignal, opts.signal]) : timeoutSignal;
   let lastError = new JevError("Jev 调用失败");
 
   for (let attempt = 0; attempt <= delays.length; attempt++) {
-    const signals = [AbortSignal.timeout(timeoutMs)];
-    if (opts.signal) signals.push(opts.signal);
-    const signal = AbortSignal.any(signals);
     try {
       const res = await fetch(url, {
         method: "POST",
@@ -161,10 +172,21 @@ export async function askSystemOne(endpoint: JevEndpoint, req: JevRequest, opts:
       if (res.status !== 429 && res.status < 500) break;
     } catch (err) {
       if (opts.signal?.aborted) throw new JevError("Jev 调用已取消");
+      if (timeoutSignal.aborted) {
+        lastError = new JevError(`Jev 调用超时（${timeoutMs}ms）`);
+        break;
+      }
       lastError = err instanceof JevError ? err : new JevError(`Jev 调用失败：${err instanceof Error ? err.message : String(err)}`);
       if (!(lastError.status === undefined || lastError.status >= 500 || lastError.status === 429)) break;
     }
-    if (attempt < delays.length) await sleep(delays[attempt]);
+    if (attempt < delays.length) {
+      await sleep(delays[attempt], signal);
+      if (opts.signal?.aborted) throw new JevError("Jev 调用已取消");
+      if (timeoutSignal.aborted) {
+        lastError = new JevError(`Jev 调用超时（${timeoutMs}ms）`);
+        break;
+      }
+    }
   }
   throw lastError;
 }

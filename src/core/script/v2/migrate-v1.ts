@@ -41,7 +41,8 @@ function parseTime(text: string): TimelineTime {
 }
 
 function timelineParts(text: string) {
-  return text
+  const shielded = text.replace(/[（(][^）)]*[）)]/g, (segment) => segment.replace(/\d{1,2}:\d{2}/g, "时刻"));
+  return shielded
     .split(splitMarker)
     .map((part) => part.trim())
     .filter(Boolean);
@@ -57,7 +58,8 @@ function timelineEntries(text: string, prefix: string, warnings: MigrationWarnin
       warnings.push({ path: prefix, message: `第 ${index + 1} 段无法识别时间，已保留为补充内容` });
     }
     const marker = part.match(timeMarker);
-    const content = marker && marker.index === 0 ? part.slice(marker[0].length).trim() : part;
+    const rawContent = marker && marker.index === 0 ? part.slice(marker[0].length).trim() : part;
+    const content = rawContent.replace(/[，,、：:]+$/g, "。").replace(/^[）)】」.。]+/, "").trim();
     const participantIds = characterNames.filter((character) => part.includes(character.name)).map((character) => character.id);
     return {
       id: `${prefix.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}_${index + 1}`,
@@ -69,7 +71,14 @@ function timelineEntries(text: string, prefix: string, warnings: MigrationWarnin
       ...(includeParticipants && participantIds.length ? { participantIds } : {}),
     };
   });
-  const timedEntries = entries.filter((entry) => entry.time.precision !== "relative");
+  const timedEntries = entries
+    .filter((entry) => entry.time.precision !== "relative")
+    .filter((entry) => entry.content.some((block) => block.type === "paragraph" && block.text.replace(/[。．\s]/g, "").length >= 6))
+    .sort((a, b) => {
+      const left = a.time.start ? a.time.start.dayOffset * 1440 + Number(a.time.start.time.slice(0, 2)) * 60 + Number(a.time.start.time.slice(3)) : 0;
+      const right = b.time.start ? b.time.start.dayOffset * 1440 + Number(b.time.start.time.slice(0, 2)) * 60 + Number(b.time.start.time.slice(3)) : 0;
+      return left - right;
+    });
   // 如果整段使用“戌时/一炷香”等非 HH:mm 表达，保留为相对时间事件；
   // 只有在同一段同时存在明确时刻时，才把无法拆分的尾部移入 supplemental。
   return { entries: timedEntries.length ? timedEntries : entries, supplemental: timedEntries.length ? supplemental : [] };
@@ -161,7 +170,7 @@ export function migrateV1ToV2(input: ScriptDoc): MigrationResult {
       supplemental: truthTimeline.supplemental.length ? blocks(truthTimeline.supplemental.join("\n")) : [],
       reveal: blocks(input.truth.reveal),
     },
-    flow: input.flow,
+    flow: { ...input.flow, discussionRounds: Math.max(input.flow.discussionRounds, input.flow.searchRounds) },
     ending: {
       outcomes: [
         { result: "culprit_caught" as const, title: "真凶被捕", content: blocks(input.ending.winText) },

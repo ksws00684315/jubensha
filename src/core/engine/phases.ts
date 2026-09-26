@@ -178,6 +178,8 @@ export function resetActionPoints(e: GameEngine): void {
 }
 
 export async function transitionVote(e: GameEngine): Promise<void> {
+  const { flushRemainingGuarantees } = await import("./search-deal");
+  await flushRemainingGuarantees(e);
   e.state.phase = "VOTE";
   e.state.round = 1;
   e.state.votes = {};

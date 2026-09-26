@@ -89,6 +89,9 @@ export interface GameSummary {
   status: string;
   phase: string;
   round: number;
+  startedAt: string;
+  endedAt: string | null;
+  elapsedMs: number;
   scriptTitle: string;
   background: string;
   flow: {
@@ -101,6 +104,7 @@ export interface GameSummary {
   };
   locations: string[];
   availableLocations: string[];
+  searchExhausted: boolean;
   searchLocationOptions: Array<{ name: string; status: "available" | "own_room" | "exhausted" | "locked"; reason?: string }>;
   seats: Array<{
     index: number;
@@ -123,11 +127,12 @@ export interface GameSummary {
   myClues: string[];
   clues: Array<{ id: string; name: string; location: string }>;
   scriptV2: Pick<PublicScriptViewV2, "background" | "characters" | "locations"> | null;
-  myCluesV2: ClueV2[];
+  myCluesV2: Array<Pick<ClueV2, "id" | "name" | "locationId" | "category" | "content" | "policy">>;
   turnSeat: number | null;
   questionsLeft: number;
   publicEvidence?: Array<{ id: string; name: string }>;
   guaranteedDeadlines?: Record<string, number>;
+  pendingPublishClueIds?: string[];
   pendingInteraction?: { id: string; prompt: string; choices: Array<{ id: string; label: string }> } | null;
   pendingAnswer: { fromSeat: number; toSeat: number; question: string } | null;
   /** 本座位限时截止时间（epoch ms）；不限时或未在计时为 null */
@@ -160,6 +165,26 @@ export interface GameSummary {
   quizResult: {
     perSeat: Record<string, { correct: number; total: number; score: number }>;
     perQuestion: Array<{ questionId: string; counts: Record<string, number>; correctOptionId: string }>;
+  } | null;
+  voteResult: {
+    counts: Record<string, number>;
+    culpritSeat: number;
+    caught: boolean;
+    tiedSeats?: number[];
+  } | null;
+  settlement: {
+    outcome: "caught" | "escaped";
+    voteCorrect: boolean;
+    evidenceCount: number;
+    score: number;
+    myVoteTarget: number | null;
+  } | null;
+  /** 凶手座位的专属结算卡（与 settlement 互斥：凶手座 settlement 恒为 null） */
+  culpritSettlement: {
+    outcome: "exposed" | "escaped";
+    title: string;
+    verdict: string;
+    votesAgainst: number;
   } | null;
 }
 

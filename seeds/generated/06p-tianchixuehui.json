@@ -2771,7 +2771,7 @@
   "flow": {
     "selfIntroRounds": 1,
     "searchRounds": 3,
-    "discussionRounds": 2,
+    "discussionRounds": 3,
     "allowPrivateChat": false,
     "privateChatMessageLimit": 3,
     "acts": [

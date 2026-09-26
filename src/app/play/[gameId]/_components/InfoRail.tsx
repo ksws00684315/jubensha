@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { NarrativeBlocks, TimelineList } from "@/components/ScriptContent";
 import { PHASE_LABEL, type GameEventView, type GameSummary } from "@/lib/client";
-import type { ClueV2 } from "@/core/script/v2/schema";
 import type { DmView } from "./useGameStream";
 
 type SeatView = GameSummary["seats"][number];
@@ -13,7 +12,7 @@ interface ClueCard {
   name: string;
   content: string;
   private: boolean;
-  structured: ClueV2 | null;
+  structured: GameSummary["myCluesV2"][number] | null;
 }
 
 /**
@@ -75,6 +74,7 @@ export function InfoRail({
     if (ev.toSeat !== mySeat) myClueMap.delete(id);
   }
   const myClueCardsUnique = [...myClueMap.values()];
+  const pendingPublish = new Set(summary.pendingPublishClueIds ?? []);
 
   return (
     <aside className="game-panel overflow-hidden">
@@ -223,34 +223,41 @@ export function InfoRail({
             {myClueCardsUnique.length === 0 && <p className="text-paper-500">还没有获得任何线索。搜证阶段选择地点后在这里查看。</p>}
             {myClueCardsUnique.map((c) => {
               const isPublic = events.some((e) => e.type === "clue" && e.visibility === "public" && e.content.clueId === c.id);
-              const needDecision = phase === "SEARCH" && c.private && !isPublic && !decidedClues.has(c.id);
+              const needDecision = phase === "SEARCH" && pendingPublish.has(c.id) && !isPublic && !decidedClues.has(c.id);
+              const deadline = summary.guaranteedDeadlines?.[c.id];
               const canTransfer = Boolean(summary.flow?.allowClueTransfer) && phase === "DISCUSSION" && !isPublic && !ended;
               return (
                 <div key={c.id} className="clue-card evidence-reveal p-3">
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-clue-400">{c.name}</span>
-                    <span className="rounded-full border border-clue-400/20 px-2 py-0.5 text-[10px] text-clue-400">{isPublic ? "已公开" : "私藏证据"}</span>
+                    <span className={`rounded-full border px-2 py-0.5 text-[10px] ${isPublic ? "border-clue-400/20 text-clue-400" : deadline !== undefined ? "border-secret-400/30 text-secret-400" : "border-paper-500/20 text-paper-400"}`}>
+                      {isPublic ? "已公开" : deadline !== undefined ? `暂未公开 · 第 ${deadline} 轮结束自动公开` : "暂未公开"}
+                    </span>
                   </div>
                   {c.structured ? <NarrativeBlocks blocks={c.structured.content} className="mt-2 leading-relaxed text-paper-300" /> : <p className="mt-2 leading-relaxed text-paper-300">{c.content}</p>}
                   {needDecision && (
                     <div className="mt-2 flex gap-2">
                       <button
                         onClick={() => {
-                          setDecidedClues((s) => new Set(s).add(c.id));
-                          void send({ type: "publish", clueId: c.id, publish: true });
+                          void send({ type: "publish", clueId: c.id, publish: true }).then((ok) => {
+                            if (ok) setDecidedClues((s) => new Set(s).add(c.id));
+                          });
                         }}
+                        disabled={sending}
                         className="rounded-lg bg-clue-400 px-3 py-1.5 text-xs font-semibold text-ink-950 hover:brightness-110"
                       >
                         当场公开
                       </button>
                       <button
                         onClick={() => {
-                          setDecidedClues((s) => new Set(s).add(c.id));
-                          void send({ type: "publish", clueId: c.id, publish: false });
+                          void send({ type: "publish", clueId: c.id, publish: false }).then((ok) => {
+                            if (ok) setDecidedClues((s) => new Set(s).add(c.id));
+                          });
                         }}
+                        disabled={sending}
                         className="rounded-lg border border-secret-400/30 px-3 py-1.5 text-xs text-secret-400 hover:border-secret-400/60"
                       >
-                        {(summary.guaranteedDeadlines?.[c.id] ?? Infinity) <= summary.round ? "暂时私藏，本轮结束由主持公开" : "私藏"}
+                        {deadline !== undefined ? `暂时私藏（第 ${deadline} 轮结束公开）` : "确认暂不公开"}
                       </button>
                     </div>
                   )}

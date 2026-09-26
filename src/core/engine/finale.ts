@@ -5,6 +5,7 @@ import { finaleMissing } from "./flow";
 import { AI_DECISION_TIMEOUT_MS, withTimeout } from "./util";
 import { armHumanTimeout } from "./human-turn";
 import { jevVoteFallback, shadowVote } from "@/core/jev/live";
+import { legalPublicEvidenceIds } from "./evidence";
 import type { GameEngine } from "./engine";
 
 /**
@@ -12,10 +13,6 @@ import type { GameEngine } from "./engine";
  */
 
 /** 记录一票：state.votes 为权威源，Vote 表写入失败重试一次并留痕（DM 视图优先读内存态）。 */
-function legalPublicEvidenceIds(e: GameEngine, ids: readonly string[] | undefined): string[] {
-  const publicIds = new Set(e.script.clues.filter((clue) => e.state.clueStates[clue.id]?.isPublic).map((clue) => clue.id));
-  return [...new Set(ids ?? [])].filter((id) => publicIds.has(id));
-}
 
 export async function recordVote(e: GameEngine, seat: number, target: number, reason?: string, evidenceIds?: string[]): Promise<void> {
   const legalEvidence = legalPublicEvidenceIds(e, evidenceIds);
@@ -34,9 +31,35 @@ export async function recordVote(e: GameEngine, seat: number, target: number, re
     round: e.state.round,
     fromSeat: seat,
     toSeat: null,
-    visibility: "public",
-    content: { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}), text: `${e.speakerName(seat)} 投给 ${e.speakerName(target)}${reason ? `：${reason}` : ""}` },
+    visibility: `seat:${seat}`,
+    content: { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}), text: `你投给了 ${e.speakerName(target)}${reason ? `：${reason}` : ""}` },
   });
+  const seats = activeSeats(e.state);
+  if (seats.every((index) => e.state.votes[String(index)])) {
+    const counts: Record<string, number> = {};
+    for (const index of seats) {
+      const targetIndex = e.state.votes[String(index)]?.target;
+      if (targetIndex === undefined) continue;
+      counts[String(targetIndex)] = (counts[String(targetIndex)] ?? 0) + 1;
+    }
+    const text = seats
+      .map((index) => {
+        const vote = e.state.votes[String(index)];
+        if (!vote) return "";
+        return `${e.speakerName(index)} 投给 ${e.speakerName(vote.target)}${vote.reason ? `：${vote.reason}` : ""}`;
+      })
+      .filter(Boolean)
+      .join("\n");
+    await e.recordEvent({
+      type: "vote",
+      phase: e.state.phase,
+      round: e.state.round,
+      fromSeat: null,
+      toSeat: null,
+      visibility: "public",
+      content: { counts, text, tally: true },
+    });
+  }
   await e.persist();
 }
 

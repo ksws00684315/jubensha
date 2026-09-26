@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { askSystemOne, JevError, MAX_CHOICE_OPTIONS, type JevEndpoint } from "./client";
+import { askSystemOne, JevError, JEV_INPUT_COST_PER_TOKEN_USD, MAX_CHOICE_OPTIONS, type JevEndpoint } from "./client";
 
 const endpoint: JevEndpoint = { baseUrl: "https://api.typesafe.ai", apiKey: "test-key" };
 
@@ -23,6 +23,10 @@ const voteChoice = { type: "choice" as const, instructions: "谁是凶手", crit
 const noDelay = { retryDelaysMs: [] as number[] };
 
 describe("请求装配", () => {
+  it("按官方 $42/B input tokens 计费", () => {
+    expect(1_000_000 * JEV_INPUT_COST_PER_TOKEN_USD).toBeCloseTo(0.042, 10);
+  });
+
   it("按 /v1/systemone 协议装配：state+questions，不走 OpenAI 兼容字段", async () => {
     const calls = stubFetch(() => json({ answers: { vote: { type: "choice", choice: "2", probabilities: { "2": 0.61 }, confidence: 0.6 } }, usage: { input_tokens: 120, output_tokens: 0 } }));
     const res = await askSystemOne(endpoint, { state: { 座位: 1 }, questions: { vote: voteChoice } }, noDelay);
@@ -105,6 +109,19 @@ describe("失败与退避", () => {
     const res = await askSystemOne(endpoint, { state: "s", questions: { vote: voteChoice } }, { retryDelaysMs: [1] });
     expect(n).toBe(2);
     expect(res.answers.vote).toMatchObject({ key: "3" });
+  });
+
+  it("所有重试共用一个总超时信号", async () => {
+    const signals: AbortSignal[] = [];
+    vi.stubGlobal("fetch", async (_url: string, init: RequestInit) => {
+      signals.push(init.signal as AbortSignal);
+      return signals.length === 1
+        ? new Response("down", { status: 503 })
+        : json({ answers: { vote: { choice: "3" } } });
+    });
+    await askSystemOne(endpoint, { state: "s", questions: { vote: voteChoice } }, { timeoutMs: 1_000, retryDelaysMs: [1] });
+    expect(signals).toHaveLength(2);
+    expect(signals[1]).toBe(signals[0]);
   });
 });
 

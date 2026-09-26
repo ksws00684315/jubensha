@@ -83,12 +83,17 @@ export function narrativeToText(blocks: Narrative): string {
  * 占位标题（「事件 N」）直接丢弃，退化为「时刻 + 正文」——
  * prompt 与宣读里绝不应该出现「事件 1」这种无信息量标签。
  */
+function titleRepeatsBody(title: string, body: string): boolean {
+  const normalized = title.replace(/(?:…|\.\.\.)+$/g, "").trim();
+  return normalized.length > 0 && body.startsWith(normalized);
+}
+
 export function timelineToText(entries: Array<{ time: { display: string }; title: string; content: Narrative }>) {
   return entries
     .map((entry) => {
       const body = narrativeToText(entry.content);
       const title = entry.title.trim();
-      if (!title || isPlaceholderTimelineTitle(title)) return `${entry.time.display} ${body}`;
+      if (!title || isPlaceholderTimelineTitle(title) || titleRepeatsBody(title, body)) return `${entry.time.display} ${body}`;
       return `${entry.time.display} ${title}：${body}`;
     })
     .join("\n");
