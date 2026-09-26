@@ -25,7 +25,7 @@ describe("复读检测 findRepetitionLoop", () => {
   it("只在尾部窗口内扫描：窗口外的旧重复不再触发", () => {
     const fresh = "新".repeat(4000);
     expect(findRepetitionLoop(`${UNIT}${UNIT}${UNIT}${fresh}`)).toBeNull();
-  });
+  }, 20_000); // 4000 字尾部窗口扫描本身接近默认 5s，覆盖率插桩与 CI 单核下会超时
 });
 
 describe("增量守卫 createRepetitionGuard", () => {
