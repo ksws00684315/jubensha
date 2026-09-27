@@ -458,14 +458,14 @@ async function main() {
       await p.click(subst(action.click));
       await sleep(action.settleMs ?? settle);
     } else if (action.clickIf) {
-      if (!(await exists(p, action.clickIf))) return `skip:${action.clickIf}`;
+      if (!(await exists(p, action.clickIf))) return `skip:${subst(action.clickIf)}`;
       await p.click(subst(action.clickIf));
       await sleep(action.settleMs ?? settle);
     } else if (action.type) {
       await p.type(subst(action.type), subst(action.value ?? ""));
       await sleep(150);
     } else if (action.typeIf) {
-      if (!(await exists(p, action.typeIf))) return `skip:${action.typeIf}`;
+      if (!(await exists(p, action.typeIf))) return `skip:${subst(action.typeIf)}`;
       await p.type(subst(action.typeIf), subst(action.value ?? ""));
       await sleep(150);
     } else if (action.pick) {
@@ -474,9 +474,9 @@ async function main() {
       if (v === "missing") throw new Error(`下拉框不存在: ${action.pick}`);
       await sleep(action.settleMs ?? settle);
     } else if (action.pickIf) {
-      if (!(await exists(p, action.pickIf))) return `skip:${action.pickIf}`;
+      if (!(await exists(p, action.pickIf))) return `skip:${subst(action.pickIf)}`;
       const v = await p.select(subst(action.pickIf), subst(action.value ?? ""));
-      if (v === "missing") return `skip:${action.pickIf}`;
+      if (v === "missing") return `skip:${subst(action.pickIf)}`;
       await sleep(action.settleMs ?? settle);
     } else if (action.clickFirst) {
       if (action.clickFirst.startsWith("optional:")) {
@@ -588,6 +588,8 @@ async function main() {
   const allPages = [...new Set([page, ...Object.values(named)])];
   const consoleErrors = allPages.flatMap((p) => p.consoleErrors);
   const exceptions = allPages.flatMap((p) => p.exceptions);
+  // CSP 违规单独计数：转强制执行后「违规 0」是判据，不能只混在 console error 总数里
+  const cspViolations = consoleErrors.filter((t) => /Content Security Policy|Refused to (?:load|execute|apply|display|connect|install|bypass)/i.test(t));
   const tokenRequests = [...new Set(allPages.flatMap((p) => p.requests.filter((r) => r.hasTokenQuery).map((r) => r.url)))];
   const layout = await state.page.eval("return __r9.layout();").catch(() => null);
   const pages = Object.fromEntries(
@@ -596,13 +598,13 @@ async function main() {
   writeFileSync(
     // 同一 plan 在桌面/移动各跑一遍时报告不能互相覆盖：文件名带上 --shot-prefix（d / m）
     path.join(screens, `${plan.step ?? "run"}${shotPrefix ? `-${shotPrefix}` : ""}-report.json`),
-    JSON.stringify({ ...report, consoleErrors, exceptions, tokenQueryRequests: tokenRequests, layout, pages, elapsedMs: Date.now() - t0 }, null, 2) + "\n"
+    JSON.stringify({ ...report, consoleErrors, cspViolations, exceptions, tokenQueryRequests: tokenRequests, layout, pages, elapsedMs: Date.now() - t0 }, null, 2) + "\n"
   );
   appendFileSync(
     path.join(E2E_DIR, "screens", "console-errors.jsonl"),
-    JSON.stringify({ at: new Date().toISOString(), plan: String(argv.plan), step: plan.step, viewport: vp, consoleErrors, exceptions }) + "\n"
+    JSON.stringify({ at: new Date().toISOString(), plan: String(argv.plan), step: plan.step, viewport: vp, consoleErrors, cspViolations, exceptions }) + "\n"
   );
-  log(`完成：${report.steps.length} 步，失败 ${report.failures.length}，控制台 error ${consoleErrors.length}，未捕获异常 ${exceptions.length}`);
+  log(`完成：${report.steps.length} 步，失败 ${report.failures.length}，控制台 error ${consoleErrors.length}（其中 CSP 违规 ${cspViolations.length}），未捕获异常 ${exceptions.length}`);
   // --keep-browser 只保留标签页（供下一步 plan 附着），WebSocket 必须关掉否则进程不退出
   if (!argv["keep-browser"]) {
     for (const p of allPages) await cdp.send("Target.closeTarget", { targetId: p.id }).catch(() => {});
