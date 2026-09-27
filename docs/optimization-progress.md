@@ -26,6 +26,7 @@
 | 凭证比较方式（座位 / DM / 房主） | 7 处裸 `===` / `!==` + join.ts 4 处，长度与内容可被计时探测；`games/[id]` 还是 query 优先（BUG-01） | 全部经 `src/lib/credentials.ts`（`timingSafeEqual`，任一侧为空即不匹配），验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `join.ts` 为空；header 优先已修正 | 无常量时间以外的凭证比较 | S3.3 |
 | 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
 | 单日 LLM token 上限 | 无：授权被绕过后可一路消耗 | `LLM_DAILY_TOKEN_BUDGET` 熔断，`chat`/`chatStream`/`embedTexts` 第一行拦截 + 看板显示今日已用；L1 13 用例 + L3 I11 3 用例 | 超预算不崩溃、对局仍走到 ENDED | S3.2 |
+| CSP 执行模式 | 全站只有 `Content-Security-Policy-Report-Only`，含 `'unsafe-eval'`，不拦截任何资源 | 生产 `Content-Security-Policy` 强制、`script-src` 无 `'unsafe-eval'`；开发仍 report-only + eval（Next 需要） | 生产强制 | S3.4 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
 | src/core/engine 行覆盖率（同上） | 71.98%（1166/1620） | 71.98% | ≥ 基线 | S0.4 |
@@ -39,10 +40,10 @@
 | npm audit --omit=dev | 3 high（复测仍含 CLI 链路，见偏差 DEV-01） | 3 high | 0 | S0.4 |
 | CI | 无（无 .github/） | 无 | push 自动 check | S0.4 |
 | R1 无模型冒烟 | 未测 | 连续 4 次通过，~61s/次（e2e 实例 :3110/:3120） | 连续 3 次 | S2.5 |
-| R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败，6/6 清单通过 | 两遍全绿 | S2.6 |
-| R9 控制台 error / 未捕获异常 | 未测 | error 2（12 次运行合计，全部是第 1 项故意的 404）/ 异常 0 | 除故意负向用例外为 0 | S2.6 |
-| UI 基线截图（`.e2e/screens/S2.6/`，不入库） | 0 | 64 张（桌面 d01–d31a 32 + 移动 m01–m31a 32） | ≥ 20 | S2.6 |
-| SSE URL 带 `token=` 的请求（R9 网络捕获，每玩家标签页） | 未测 | 1 | 0（S3.5） | S2.6 |
+| R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败；S3.4 在强制 CSP 下全量重跑 12/12 exit 0（合计 342 步、驱动内 113.2s） | 两遍全绿 | S3.4 |
+| R9 控制台 error / 未捕获异常 | 未测 | error 2（12 次运行合计，全部是第 1 项故意的 404）/ 异常 0 / **CSP 违规 0** | 除故意负向用例外为 0 | S3.4 |
+| UI 基线截图（`.e2e/screens/S2.6/`，不入库） | 0 | 78 张：桌面 d01–d31a 32 + 移动 m01–m31a 32（S3.4 全量重跑已重生成）+ 决策分支验证 pd 14 | ≥ 20 | S3.4 |
+| SSE URL 带 `token=` 的请求（R9 网络捕获，每玩家标签页） | 未测 | 每遍 2 条（d3 建连 1 + d5 刷新重连 1），S3.4 重跑 12 次运行合计 4 | 0（S3.5） | S3.4 |
 | API 处理器总数（grep export const GET|POST|…） | 34（计划 §1.1 记 35，复测为准） | 34 | — | S0.4 |
 | recordEvent/persist 调用点（src/core 非测试） | 86（计划记 84） | 86 | — | S0.4 |
 | engine.events 读取点（`\.events\.` 模式） | 10（`\.events` 宽匹配 26；计划记 19） | 10 | — | S0.4 |
@@ -67,7 +68,8 @@
 | S2.6 | DONE | 79b66f5/（本提交） | 2026-09-27 | 2026-09-27 | R9 清单 1–6 项桌面 1280×800 与移动 375×812 各一遍，6 份清单 ×2 = 12 次运行 exit 0、每遍 171 步 0 失败；截图 64 张；控制台 error 基线 2（均为第 1 项故意的 404）+ 未捕获异常 0；13 个布局采样无横向滚动；公开/私藏两分支与真人票均有 DB 侧证；第 7 项首轮为基线（无可比截图） | DEV-06, DEV-07, FIND-04, FIND-05, FIND-06 |
 | S3.1 | DONE | 2ab7417/5dcc91e/dfefd64/f6816a9 | 2026-09-27 | 2026-09-27 | 三种策略与 D2 默认值逐项对上（证据节）；L2 新增 23 用例（A22 14 + A24 9，两文件 21/17），`npm run check` exit 0（78 files / 581 过 + 2 expected fail，6.0s）、`test:api` 188 过、`test:int` 10 过；实机 R1/R2/R3/R4 全绿（实例按生产默认 admin 跑，未放宽），R9 桌面续跑链 115 步 0 失败、新增负向清单 9 步 0 失败 | DEV-08, DEV-09 |
 | S3.2 | DONE | 9c32200/7d4c17b/29aa39c/fdc28da | 2026-09-27 | 2026-09-27 | 三入口第一行拦截 + 关闭时零库调用 + 60s 缓存 + ≥ 才拦 + 本地当天口径，L1 13 用例逐条对上（证据节）；计划验收的「关闭时 chat 查询数与改动前相同」以 mock 计数断言覆盖，「超预算对局仍走到 ENDED」由 L3 I11 覆盖（阶段轨迹逐个走完、真人发言 ≥2、模型请求 0）；`npm run check` exit 0（79 files / 595 过 + 2 expected fail，5.9s）、`test:api` 189 过（2.0s）、`test:int` 13 过（4 files，15.2s）；commit 9c32200 单独 worktree 复验 tsc 0 + 13 过 | DEV-10, FIND-07 |
-| S3.3 | DONE | 8e44e16/db34130/9aea713/ab7bf76/（本提交） | 2026-09-27 | 2026-09-27 | 9 个文件里的全部裸凭证比较（座位 / DM / 房主，含 SSE 心跳重验与 join 判定）改为 17 处 `verify*` 调用，验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `src/lib/join.ts` **输出为空**；BUG-01 关闭（header 优先，A28 的 it.fails 翻正 + 补兼容期用例）；L1 新增 12 用例；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，4.0s）、`test:api` 191 过（1.0s）、`test:int` 13 过（14.8s）、`next build` exit 0；实机 R1/R2/R3 全绿（R2 含错 token 403 / DM 200 / 观战与座位流过滤），实例日志异常 0 | DEV-11 |
+| S3.3 | DONE | 8e44e16/db34130/9aea713/ab7bf76/69f8917 | 2026-09-27 | 2026-09-27 | 9 个文件里的全部裸凭证比较（座位 / DM / 房主，含 SSE 心跳重验与 join 判定）改为 17 处 `verify*` 调用，验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `src/lib/join.ts` **输出为空**；BUG-01 关闭（header 优先，A28 的 it.fails 翻正 + 补兼容期用例）；L1 新增 12 用例；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，4.0s）、`test:api` 191 过（1.0s）、`test:int` 13 过（14.8s）、`next build` exit 0；实机 R1/R2/R3 全绿（R2 含错 token 403 / DM 200 / 观战与座位流过滤），实例日志异常 0 | DEV-11 |
+| S3.4 | DONE | 6dd4872/4205c38/cc093b2/（本提交） | 2026-09-27 | 2026-09-27 | 生产 `Content-Security-Policy` 强制、`script-src` 无 `'unsafe-eval'`（curl 实读），开发仍 report-only + eval（不启 dev 服务、直接对 `next.config.ts` 求值取两分支）；R9 全量重跑 12/12 exit 0、每遍 171 步 0 失败、**CSP 违规 0/12**、未捕获异常 0、控制台 error 2（均为第 1 项故意的 404）；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，3.6s）、`test:int` 13 过（14.9s）；顺带修掉 DEV-10 无效的 e2e 半边（实例真出网 240 条 ≈$0.0100 → 重启后 0）与 R9 清单里从 S2.6 起就是空操作的搜证决策步 | DEV-10（更正）, DEV-12, FIND-08 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -285,6 +287,44 @@
 - 实例日志 `.e2e/instance.log`（434 行）异常计数 `grep -cE 'unhandled|UnhandledPromiseRejection|FATAL'` → **0**。
 - 收尾：`npm run e2e:down` → `jubensha_e2e` 计数 0；`pm2 describe jubensha` → online、restarts **25 → 25**（:3000 未被触碰）。R4（进程重启恢复）与 R9（浏览器走查）按计划留给 S3.4 的全量重跑与 P3 阶段验收。
 
+### S3.4 CSP 从 report-only 转为强制执行
+
+**落点**
+- `next.config.ts:9` `isDev`；`:16-29` `cspHeaderValue()` —— `:17` 只在开发分支把 `'unsafe-eval'` 放进 `script-src`，`:28` 按分支选 `Content-Security-Policy-Report-Only` / `Content-Security-Policy`；`:36` 仍挂在 `/:path*` 上。除这两处外，8 条指令逐字照搬 S2.6 观察期的值（`default-src`/`style-src`/`img-src`/`media-src`/`connect-src`/`font-src`/`frame-ancestors` 未动）。
+- 依据（本仓库自带的 Next 文档，非记忆）：`node_modules/next/dist/docs/01-app/02-guides/content-security-policy.md:42` —— `'unsafe-eval'` 只因 React 在开发期用 `eval` 还原服务端错误栈，生产不需要。
+- `scripts/e2e/browser.mjs:591` 新增 `cspViolations`（按 `Content Security Policy` / `Refused to load|execute|apply|display|connect|install|bypass` 从 console error 里单独筛出），写进报告 JSON（`:601`）、`console-errors.jsonl`（`:605`）与完成日志（`:607`）。没有这个计数，「CSP 违规 = 0」只能靠人肉读 12 份报告的 error 文本。
+
+**验收标准逐条**
+1. *强制头且不含 unsafe-eval*：`curl -sI http://127.0.0.1:3120/ | grep -i content-security-policy` →
+   `Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; connect-src 'self'; font-src 'self' data:; frame-ancestors 'self'`。
+   头名是 `Content-Security-Policy`（非 `-Report-Only`），全文无 `unsafe-eval`。计划写的是 :3100，本机 :3100 被遗留进程占用，按 DEV-04 的端口回退落在 :3120，判据不变。
+2. *开发环境仍 report-only*：不启 dev 服务（会与 :3120 抢同一份 `.next`），改为直接对配置文件求值两分支：`node --experimental-strip-types .e2e/csp-probe.mjs` →
+   `development: Content-Security-Policy-Report-Only | unsafe-eval=true`
+   `production: Content-Security-Policy | unsafe-eval=false`
+3. *R9 通过 + 控制台 CSP 违规 = 0*（生产构建、全新实例 pid=13502、无 Jev 出网）：桌面 1280×800 与移动 375×812 各 6 份清单，**12/12 exit 0**，每遍 171 步、合计 342 步 0 失败，驱动内耗时合计 113.2s（桌面 57.2s / 移动 56.0s）。
+
+| 运行 | 步数 | 失败 | 控制台 error | **CSP 违规** | 未捕获异常 | token query |
+|---|---|---|---|---|---|---|
+| d1–d6（桌面） | 31/25/36/32/29/18 | 0 | 1/0/0/0/0/0 | **0**（全部 12 次） | 0 | 0/0/1/0/1/0 |
+| m1–m6（移动） | 31/25/36/32/29/18 | 0 | 1/0/0/0/0/0 | **0**（全部 12 次） | 0 | 0/0/1/0/1/0 |
+
+   合计：控制台 error **2** 条，都是清单第 1 项故意访问 `/no-such-page` 产生的 404（S2.6 已按「故意负向用例」豁免）；**CSP 违规 0**、未捕获异常 0。生产强制头下没有任何合法资源被误伤：脚本、内联样式、`blob:` 音频（TTS）、`data:` 字体与图片、SSE `connect-src 'self'` 全部照常工作，这一点由「12 次运行 0 失败 + 走到 ENDED 的整局」共同证明，而不是靠头文本推断。
+4. 布局回归：13 个采样点 `horizontalOverflow` 全为 false（报告 `layout` 字段），与 S2.6 基线一致。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 80 / Tests 609 passed | 1 expected fail（3.6s；expected fail 仍是 BUG-03）。
+- `npm run db:test:up` + `DATABASE_URL=…jubensha_test npm run test:int` → 4 files / 13 passed（14.9s）。
+- 本步无新增 vitest 用例（改动面是 HTTP 头与实机基建），判据由 curl 实读 + 配置求值 + R9 12 次运行承担。
+
+**过程中修掉的两处基建缺陷（都不是 CSP 问题，但挡住了「R9 通过」这条判据）**
+1. **DEV-10 的 e2e 半边从来无效**：`up.mjs` 删的是父进程 env，`next start` 子进程首次实例化 Prisma Client 时自己读仓库根 `.env`，把 `JEV_SHADOW` / `JEV_FALLBACK` / `JEV_API_KEY` 灌回来。证据：`.e2e/instance.log` 前 444 行含 **240 条 `[jev]` 出网记账**（覆盖当天 30 局、S3.1–S3.4 的全部 e2e 运行），逐条 `≈$…` 求和 **≈$0.0100**。改为显式 `ENV.JEV_SHADOW="0"` / `ENV.JEV_FALLBACK="0"`（dotenv 不覆盖已存在的键）并重启实例后，第 445 行起 `[jev]` 计数 **0**、本轮 R9 全程零出网。L3 那半边（`src/test/int.ts:14`）确实有效——I11 的 fetch 探针断言「0 次出网」在 S3.4 重跑里仍绿，两者机制差别见 DEV-10 第 2 条的更正。
+2. **R9 清单的搜证决策步是空操作**：`r9-d4a-play-early.json` 写的是 `"clickIf": "{decisionFirst}"`，替换后是裸串 `暂时私藏`，被 `document.querySelector` 当成**标签选择器**（合法 CSS，永不命中）→ 记 `skip`、判 `ok`。S2.6 首轮真人恰好抽到公开线索（本就没有决策窗），缺陷没暴露；本轮抽到【遗体初验与胃内容物试验】（需当场公开/私藏）后：SEARCH 第 1 轮停等 **5 分 26 秒**（08:52:08 → 08:57:34，`game_events` seq 49→63），由后续 `d4b` 的 until 循环补点才推进，于是 d4a 的「公开质询」步骤 300s 超时失败。第二遍重跑桌面与移动**同时**失败（`EXIT_D_D4A=1`、`EXIT_M_D4A=1`），确认是确定性缺陷不是偶发。补上 `text:` 前缀后：同一分支（真人抽到需决策线索，`pd` 前缀第 2 次运行）线索卡 09:24:43 到手、**09:24:48 由 d4a 自己记下「你决定私藏线索【遗体初验与胃内容物试验】」**并立刻进入圆桌讨论（seq 688→690），d4a 32 步 0 失败。
+   顺带把 `browser.mjs` 的 `skip:` 记录改成替换后的选择器（原来打印 `{decisionFirst}`，看不出驱动到底找过什么）。
+
+**发现**：真人的「线索公开/私藏」决策没有回合限时（FIND-08）——`armHumanTimeout` 覆盖读本、自我介绍、选搜证地点、圆桌发言、回答提问、投票六处，独缺这一处，所以真人不做决策可以让 SEARCH 无限停等；上面那次 5 分 26 秒就是实测读数。
+
+**收尾**：`node scripts/e2e/browser.mjs --shutdown` 只杀本 profile 的 Chrome（11 个进程），用户日常 Chrome（pid 1960）存活未受影响；e2e 实例保留在 :3120 供 P3 阶段验收续用，`pm2 jubensha`（:3000）未触碰。
+
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
 - **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
@@ -309,7 +349,8 @@
 | FIND-04 | S2.6 | 前端 SSE 建连把座位 token 放进 URL query：`GET /api/games/{id}/events?seat=0&token=…`，会进浏览器历史与反向代理访问日志（不变式 5 的暴露面）。R9 网络捕获基线 = 每个玩家标签 1 条 | scripts/e2e/browser.mjs 的 `tokenQueryRequests`（`.e2e/screens/S2.6/S2.6-d5-{d,m}-report.json`） | OPEN（S3.5 一次性票据关闭） | |
 | FIND-05 | S2.6 | 无模型局 ChatFeed 里「（AI 玩家「X」思考时遇到问题：用途槽位 "player" 尚未绑定模型…）」这类降级提示按座位×回合重复记录为公开事件：一局 5 人出现 12 条事件、只有 4 种文案，同屏 5 组重复行，观众也能看到。事件不重复（渲染无 bug），是引擎侧提示未去重 | R9 `r9-d5` 的 `identityBefore/After.bubbles vs uniqueTexts` + `psql … group by type,visibility`（台账 S2.6 证据节） | OPEN（建议 S7.3 关闭：同类 notice 按回合合并） | |
 | FIND-06 | S2.6 | 未匹配路由渲染的是 Next 内置 404，正文为英文 `This page could not be found`，与全站中文文案不一致（项目无 `src/app/not-found.tsx`） | R9 `r9-d1` 的 `notFoundText`（截图 `d06-404.png` / `m06-404.png`） | OPEN（S2.6 只建基线不改代码；建议 S7.3 一并处理） | |
-| FIND-07 | S3.2 | Jev 影子/接管走独立 HTTP 通道（`src/core/jev/live.ts` 直连 `JEV_BASE_URL`，默认 `https://api.typesafe.ai/v1/systemone`），**不经 `chat`/`chatStream`，因此 S3.2 的预算熔断管不到它**：单日花费上限对这条通道无效，且它的开关来自 `@prisma/client` 自动加载的仓库根 `.env`。本步只在测试与 e2e 侧删键止血（DEV-10），生产部署若开着 `JEV_*` 仍在守卫之外 | I11 的 fetch 探针：首轮同一配置下抓到 12 次出网，加删键后为 0 | OPEN（计划 P3 内无对应步骤：建议作为 P3 追加项，或并入 S6.1 的成本/日志口径时一并给 Jev 独立额度与显式开关） | |
+| FIND-07 | S3.2 | Jev 影子/接管走独立 HTTP 通道（`src/core/jev/live.ts` 直连 `JEV_BASE_URL`，默认 `https://api.typesafe.ai/v1/systemone`），**不经 `chat`/`chatStream`，因此 S3.2 的预算熔断管不到它**：单日花费上限对这条通道无效，且它的开关来自 `@prisma/client` 自动加载的仓库根 `.env`。本步只在测试与 e2e 侧删键止血（DEV-10），生产部署若开着 `JEV_*` 仍在守卫之外。**S3.4 追加实证**：删键对实机子进程根本无效（`next start` 里的 Prisma Client 自己读 `.env`），当天 :3120 实例日志累计 240 条 `[jev]` 出网记账 ≈$0.0100；改显式置 0 后新日志计数 0。生产侧仍未收口 | I11 的 fetch 探针：首轮同一配置下抓到 12 次出网，加删键后为 0；`.e2e/instance.log` 第 444/445 行前后 `[jev]` 计数 240 → 0（台账 S3.4 证据节） | OPEN（计划 P3 内无对应步骤：建议作为 P3 追加项，或并入 S6.1 的成本/日志口径时一并给 Jev 独立额度与显式开关） | |
+| FIND-08 | S3.4 | 真人的「线索公开/私藏」决策没有回合限时：`armHumanTimeout` 覆盖读本（`engine.ts:466`）、自我介绍（`:496`）、选搜证地点（`:519`）、圆桌发言（`:574`）、回答提问（`discussion.ts:59`）、投票（`finale.ts:139`），独缺公开/私藏这一步。真人不做该决策时 SEARCH 阶段无限停等，全桌卡住；这是 FIND-03 那一族（真人回合限时口径）的一个确定实例 | 无需专用测试：R9 清单去掉缺陷后同一分支 5 秒内自行决策；缺陷运行留下实测读数（`game_events` seq 49→63 停等 5 分 26 秒） | OPEN（建议 S6.3 卡局告警一并处理：给这一步补限时与兜底，或在告警里显式点名） | |
 
 ## 实机测试记录
 | 日期 | 阶段 | 场景 | 结果 | 耗时 | 证据路径 |
@@ -329,6 +370,10 @@
 | 2026-09-27 | P3/S3.3 | R1 无模型冒烟（凭证比对改走 credentials 后的整局） | PASSED，`voteResult {"caught":false,"counts":{"1":2,"3":1,"4":2},"tiedSeats":[1,4],"culpritSeat":3}`、`!! action failed` 0 | 未单独计时（run.mjs 不输出分段耗时） | /tmp/s33-e2esmoke.log（会话临时）；台账 S3.3 证据节 |
 | 2026-09-27 | P3/S3.3 | R2 鉴权负向（座位/DM/房主三类凭证正负向，实机 HTTP） | PASSED（错 token action 403 / DM force_ready 200 / 观战与座位流过滤 / 无口令建 AI 房 403 / 纯真人房 201 / providers 401×2） | 未单独计时 | scripts/e2e/auth.mjs；/tmp/s33-e2esmoke.log |
 | 2026-09-27 | P3/S3.3 | R3 SSE 断线续传（含心跳凭证重验路径） | PASSED（lastSeq=97 全量回放 1 条 → 补传 3 条 → seq 严格递增、与 DB 全集一致） | 未单独计时 | scripts/e2e/sse-resume.mjs；/tmp/s33-e2esmoke.log |
+| 2026-09-27 | P3/S3.4 | R9 全量重跑 桌面 1280×800（生产强制 CSP，全新实例 pid=13502、无 Jev 出网） | PASSED 6/6 清单、31+25+36+32+29+18=171 步 0 失败；**CSP 违规 0**、控制台 error 1（故意的 404）、异常 0；13 个布局采样无横向滚动 | 57.2s（驱动内） | .e2e/chain-s34-r3.log、.e2e/screens/S2.6/{d01–d31a}.png + S2.6-d*-{d}-report.json |
+| 2026-09-27 | P3/S3.4 | R9 全量重跑 移动 375×812（同一实例、同一套清单） | PASSED 6/6 清单、171 步 0 失败；**CSP 违规 0**、error 1（同上）、异常 0 | 56.0s（驱动内） | .e2e/chain-s34-r3.log、.e2e/screens/S2.6/{m01–m31a}.png + S2.6-d*-{m}-report.json |
+| 2026-09-27 | P3/S3.4 | R9 缺陷运行（清单决策步未生效那一次） | 第 1 遍桌面 d4a FAILED（`等待元素超时: text:公开质询`，SEARCH 停等 5 分 26 秒）；第 2 遍桌面 + 移动 d4a 同时同因 FAILED → 判定为清单缺陷而非偶发，修复见 DEV-12 | 每遍各多花 ~5 分钟停等 | .e2e/chain-s34.log、.e2e/chain-s34-r2.log；`game_events` seq 49→63（game cmujkxw1d…） |
+| 2026-09-27 | P3/S3.4 | 搜证决策分支定向验证（`pd` 前缀，跑到出现需决策线索为止） | 第 1 次无决策窗（skip 正确）；第 2 次真人抽到需决策线索 → **5 秒内自行点「暂时私藏」**并立刻进入圆桌讨论，d4a 32 步 0 失败 | ~40s/次 | .e2e/prove-decision.log、S2.6-d4a-pd-report.json；`game_events` seq 674→688→690（game cmujm3scd…） |
 
 ## 推送与 CI 记录
 | 日期 | 分支 | 推送范围 | CI |
@@ -361,9 +406,15 @@
 - **DEV-09（S3.1）**：自伤记录。第一次 R9 续跑链运行失败（漏 `--keep-browser`，且当时 `--var` 只保留最后一个参数，见 DEV-08 第 4 条），那次失败运行用新局数据**覆盖了 S2.6 的 3 份桌面报告**（`S2.6-d4a-d` / `S2.6-d5-d` / `S2.6-d4b-d`）。修正后的重跑已生成结构相同、但属于另一局的报告。影响范围：这些是 gitignore 的本地产物、不入库；S2.6 台账引用的数字（气泡数 32→31、seq 侧证等）出自当时的原始运行，现已无法从磁盘复现。S2.6 的结论与判据不改，其完整基线将在 S3.4 的全量 R9 重跑中重建。
 - **DEV-10（S3.2）**：两处计划范围之外的改动，都是被 I11 的 fetch 探针逼出来的（不改就会在测试与实机里真花钱）：
   1. `src/test/int.ts:14` 的 `setupIntEnv()` 删除 `process.env` 里所有 `JEV_*` 键。根因：`@prisma/client` 会把仓库根 `.env` 自动加载进 `process.env`，本机 `.env` 开着 `JEV_SHADOW=1` / `JEV_FALLBACK=1`，于是每个 L3 对局都会对外部决策端点发真付费请求（首轮探针抓到 12 次）。测试环境不该由个人本地 `.env` 决定要不要出网。
-  2. `scripts/e2e/up.mjs:95` 从实例 ENV 里同样删掉 `JEV_*`。**这是实机行为变化**：以前本机 `.env` 开着影子/接管时，实机实例会跟着走真外部决策；现在 e2e 实例一律是「无 Jev」链路。理由：§3.5 的实机判据本来就建立在无模型链路上，R8 的真模型场景走独立的 `E2E_LLM_*`；一次 e2e 是否花钱取决于开发者本地 `.env` 是不可接受的。需要在实机验证 Jev 时手工带 `JEV_*` 起实例，不通过 e2e 基建。
+  2. `scripts/e2e/up.mjs:95` 从实例 ENV 里同样删掉 `JEV_*`。**这是实机行为变化**：以前本机 `.env` 开着影子/接管时，实机实例会跟着走真外部决策；现在 e2e 实例一律是「无 Jev」链路。理由：§3.5 的实机判据本来就建立在无模型链路上，R8 的真模型场景走独立的 `E2E_LLM_*`；一次 e2e 是否花钱取决于开发者本地 `.env` 是不可接受的。需要在实机验证 Jev 时手工带 `JEV_*` 起实例，不通过 e2e 基建。**S3.4 更正**：这一处当时其实没有生效——删的是 `up.mjs` 父进程的 env，`next start` 子进程首次实例化 Prisma Client 时会自己读仓库根 `.env` 把键灌回来，当天实机仍出网 240 条（≈$0.0100）。已改为显式 `ENV.JEV_SHADOW="0"` / `ENV.JEV_FALLBACK="0"`（dotenv 不覆盖已存在的键），重启后新日志 `[jev]` 计数 0。第 1 条（L3 侧删键）经复核确实有效：I11 的 fetch 探针断言「0 次出网」在 S3.4 重跑里仍绿，不再展开机制解释。
   3. I11 的 fetch 探针保留为常驻守卫：L3 任何用例发出出网请求都会立刻失败，而不是悄悄产生账单。熔断管不到这条通道本身，另计 FIND-07。
 - **DEV-11（S3.3）**：本步 3 处计划外/口径性处理，均不改认证语义：
   1. `gameEventsUrl` 从 `src/lib/join.ts` 拆到新的 `src/lib/game-events-url.ts`。计划把 join.ts 列为涉及范围，但 join.ts 同时被客户端 hook `useGameStream.ts` 引用，而 `credentials → admin` 依赖 `node:crypto` 与 `next/headers`；直接引用来会让生产构建失败（实测 `next build` exit 1：`You're importing a module that depends on "next/headers" … ./src/lib/credentials.ts [Client Component Browser]`）。拆开后 join.ts 为服务端专用，`gameEventsUrl` 的 4 条用例与断言原样保留只改 import 路径。**连带影响**：S3.5 的涉及范围里「`src/lib/join.ts` 的 `gameEventsUrl`」此后指向 `src/lib/game-events-url.ts`。
   2. 计划给的验收 grep `token\s*!==|!==\s*.*[Tt]oken` 会误报与凭证无关的行（`d.maxTokens !== undefined`、`s.kind !== "human" ? { token: null }`，以及任何「先判 `!== null` 再调 `verify*Token`」的写法）。为让判据字面成立而非另起一套口径，做了两处等价重写（`bindings/route.ts:78` 改成 `=== undefined` 分支、`rooms/[code]/route.ts` 的座位投影改成 `=== "human" ? {} : { token: null }`），并把另外两处改成不含 `!==` 的单行写法。两文件均非凭证逻辑，行为逐字不变。
   3. `verifyDmToken` 只回答「这是不是该房间的 DM token」，不含 `humanDm` 开关判断：`rooms/[code]` 的观战授权路径原本就不看 `humanDm`，其余调用点自己保留 `humanDm &&`。若要统一成「带模式判断」，需要先确认 `dmToken != null && !humanDm` 这一状态不可达（当前只有 `dm-join` 在 `humanDm: true` 条件下写 dmToken），属于另一件事，不在纯替换步里顺手改。
+- **DEV-12（S3.4）**：S3.4 的涉及范围只有 `next.config.ts`，但「R9 全量重跑」这条判据在实机跑不通，为把判据真的立起来动了三处实机基建（都不改产品行为）：
+  1. `scripts/e2e/up.mjs:96-99` 显式把 `JEV_SHADOW` / `JEV_FALLBACK` 置 0 —— DEV-10 第 2 条的更正，属于止血。
+  2. `scripts/e2e/plans/r9-d4a-play-early.json:90,94` 给两个搜证决策步补 `text:` 前缀。**这是 R9 清单的行为变化**：从 S2.6 起这一步从未点过任何按钮（裸串被当标签选择器），修好后真人抽到需决策线索时会真的由 d4a 当场作出公开/私藏决定（桌面先私藏、移动先公开，与该清单原设计一致）。连带更正：S2.6 台账「公开/私藏两分支…有 DB 侧证」那条，当时作出决策的是后续 `d4b` 的 until 循环补点，不是 d4a 的真人决策步；「真人自己在决策窗里点」这条路径是 S3.4 才第一次真正跑到（`.e2e/prove-decision.log` 第 2 次运行 + `game_events` seq 688）。
+  3. `scripts/e2e/browser.mjs:461/468/477/479` 的 `skip:` 记录改为替换后的选择器（纯报告口径，让「驱动到底找过什么」在报告里可读）。
+  本步没有新增或修改任何 vitest 用例与断言，也没有放宽阈值；唯一的产品行为变化是生产 `script-src` 去掉 `'unsafe-eval'` 并转为强制头，由 R9 12 次运行「CSP 违规 0 + 整局走到 ENDED」证明没有合法资源被误伤。
+
