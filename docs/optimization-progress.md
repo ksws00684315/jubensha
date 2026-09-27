@@ -375,6 +375,16 @@
   - **L2 覆盖 35/35**：`grep -oE "describe\(.A[0-9]{2}"` 去重得 A01–A35 全在；`npm run test:api` → 23 files / 165 passed + 2 expected fail（2.5s）；22 个 `route.ts`（34 个导出处理器）全部有同名 `route.test.ts`。
   - 台账「发现的缺陷」栏：BUG-01–03、FIND-01–06 完整登记（FIND-01 已关闭，其余 OPEN 并标注归属步骤）。
   - R9（S2.6）双视口基线见证据节；推送与 CI 见「推送与 CI 记录」。
+- **P3（2026-09-27，S3.1–S3.5）**：
+  - `npm run check` → exit 0：Test Files 81 / Tests 625 passed | 1 expected fail（BUG-03 仍 OPEN）；tsc 0 / eslint 0 warning / seeds 校验通过。
+  - `npm run db:test:up` + `DATABASE_URL=…jubensha_test npm run test:int` → **4 files / 13 passed（15.2s）**，且本阶段内连跑 4 次全绿（S3.5 修掉 I06 的整批并发竞态后，见 FIND-09）。
+  - `G-e2e`（同一轮全新库，:3120）：`e2e:down` → `e2e:up` → `e2e:smoke` → **R1 PASSED**（`ENDED ✓ voteResult {"caught":false,"counts":{"0":1,"2":2,"3":1,"4":1},"culpritSeat":3}`，无 `!! action failed`）、**R2 PASSED**（无口令建 AI 房 403 / 纯真人房 201 / 错 token action 403 / DM force_ready 200 / 观战流只见公开 / providers 401×2）、**R3 PASSED**（原断言不变 + ticket 段：座位票流 5 条 ⊇ 公开全集 4 条且地址无 `token=`、DM 票 5 条、重放票被服务端降级、兼容期 query 可用并记废弃告警）；随后 **R4 PASSED**（停等 `DISCUSSION r1 turn=0` → `e2e:down --keep-db`（pid=95944 已停止）→ `e2e:up --keep-db` → `重启后首读核对一致：DISCUSSION r1 turn=0` → `恢复后推进到 ENDED ✓ voteResult {"caught":false,"counts":{"1":2,"2":1,"3":1,"4":1},"culpritSeat":3}`）。整轮 18:22:09 → 18:24:18（含两次实例重启与 keep-db 续跑）。
+  - **R9 在强制 CSP 下通过**：S3.4 与 S3.5 各做一轮全量重跑，两轮都是 **12/12 exit 0、每遍 171 步、合计 342 步 0 失败、CSP 违规 0、未捕获异常 0**；S3.5 这轮额外把「SSE URL 里的长期凭证」这条判据做实：`token=` 请求 **0 条**（S3.4 基线 4 条）、`ticket=` 4 条。
+  - 实机副作用与不变式：实例日志 `ERROR` 0、`Unhandled` 0，`[jev]` 出网累计 **240 未增加**（DEV-10 更正后 e2e 一律无 Jev）；本轮两局 gameId 在服务端日志里 **0 行**（无降级、无废弃告警）；日志/report/台账均无 token、apiKey、口令明文（不变式 5，R9 对 `token|dmtoken|ticket` 统一掩码）。
+  - 清理与无影响证明：`npm run e2e:down` → `jubensha_e2e 库已删除`，`pg_database` 里 `jubensha_e2e`/`jubensha_test` 计数 **1**（只剩测试库）；`pm2 describe jubensha` → status online、restarts **25 → 25**、unstable restarts 0，:3000 由同一 next-server（pid 59887，已运行 6 小时+）监听，本阶段未触碰。
+  - **L2 覆盖 23/23 文件 / 35 个导出处理器**：`npm run test:api` → 24 files / 206 passed + 1 expected fail（1.2s）；A 编号去重得 **A01–A35 + A37 共 36 个**（A36 按计划在 S6.2 给 `/api/health`，本阶段未占用）。
+  - 台账「发现的缺陷」栏：BUG-01 CLOSED（S3.3）、BUG-02/03 OPEN、FIND-01 CLOSED、FIND-02～FIND-09 登记并标注归属步骤；其中 **FIND-04（token 进 URL）由 S3.5 关闭**，FIND-07（Jev 通道在预算守卫之外）**仍 OPEN**——生产侧未收口，本阶段只保证了测试与实机不出网。
+  - 偏差：DEV-08～DEV-13；其中 DEV-13 第 1 条是计划内部矛盾（步骤卡前置 vs 依赖速查），按速查执行并把 S5.1 需要的凭证快照留在连接作用域，使后续「心跳去 DB 化」不需要回退。
 
 ## 发现的缺陷
 | 编号 | 发现于 | 描述 | 复现测试 | 状态 | 关闭提交 |
