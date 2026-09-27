@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import crypto from "node:crypto";
 import { decideJoin } from "@/lib/join";
 import { checkJoinRateLimit } from "@/lib/rate-limit";
+import { publish } from "@/core/engine/bus";
 
 const joinSchema = z.object({
   code: z.string().min(3),
@@ -45,6 +46,7 @@ async function POST_IMPL(req: Request) {
   if (decision.type === "resume") {
     const token = newToken();
     await db.seat.update({ where: { id: decision.seat.id }, data: { token } });
+    if (room.game?.id) publish(room.game.id, { kind: "revoke", seat: decision.seat.index });
     return NextResponse.json({
       roomId: room.id,
       seatIndex: decision.seat.index,
@@ -71,6 +73,7 @@ async function POST_IMPL(req: Request) {
       data: { playerName: name, token },
     });
     if (claimed.count !== 1) continue;
+    if (room.game?.id) publish(room.game.id, { kind: "revoke", seat: openSeat.index });
     const seat = await db.seat.findUnique({ where: { id: openSeat.id } });
     if (!seat) continue;
     return NextResponse.json({

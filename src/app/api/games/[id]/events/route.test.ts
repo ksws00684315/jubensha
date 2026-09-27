@@ -208,6 +208,44 @@ describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断�
     abort();
   });
 
+  it("R6：50 个观战 SSE 连接保持 5 分钟期间没有数据库查询", async () => {
+    vi.useFakeTimers({ toFake: ["setInterval"] });
+    const streams: Awaited<ReturnType<typeof openStream>>[] = [];
+    const rssBefore = process.memoryUsage().rss;
+    try {
+      for (let i = 0; i < 50; i++) streams.push(await openStream("?lastSeq=0"));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(streams.every((stream) => stream.msgs.some((msg) => msg.kind === "hello"))).toBe(true);
+      expect(mockFindGame).toHaveBeenCalledTimes(50); // 每条流仅建连查询
+
+      await vi.advanceTimersByTimeAsync(5 * 60_000);
+      expect(mockFindGame).toHaveBeenCalledTimes(50); // 只有每条流建连时查询一次
+      expect(mockFindEvents).toHaveBeenCalledTimes(50);
+      expect(streams.every((stream) => !stream.isEnded())).toBe(true);
+      expect(process.memoryUsage().rss - rssBefore).toBeLessThan(50 * 1024 * 1024);
+    } finally {
+      for (const stream of streams) stream.abort();
+      vi.useRealTimers();
+    }
+  });
+
+  it("匹配座位的 revoke 即时收流，其他座位不受影响", async () => {
+    const seat0 = await openStream("?seat=0&token=tok-0&lastSeq=0");
+    const seat1 = await openStream("?seat=1&token=tok-1&lastSeq=0");
+    await Promise.all([seat0.waitFor(() => seat0.msgs.some((msg) => msg.kind === "hello")), seat1.waitFor(() => seat1.msgs.some((msg) => msg.kind === "hello"))]);
+
+    publish(GAME_ID, { kind: "revoke", seat: 1 });
+    await Promise.resolve();
+    expect(seat0.isEnded()).toBe(false);
+    expect(seat1.isEnded()).toBe(true);
+
+    publish(GAME_ID, { kind: "revoke", seat: 0 });
+    await Promise.resolve();
+    expect(seat0.isEnded()).toBe(true);
+    seat0.abort();
+    seat1.abort();
+  });
+
   it("历史回放期间结束通知排在复盘、揭晓和 ENDED 事件之后", async () => {
     let resolveHistory: (rows: unknown[]) => void = () => undefined;
     mockFindEvents.mockImplementationOnce(() => new Promise((resolve) => { resolveHistory = resolve; }) as never);
@@ -321,7 +359,7 @@ describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断�
       abort();
     });
 
-    it("心跳按签发时的凭证快照重验：凭证未变则保活，token 轮换后一个心跳周期内收流", async () => {
+    it("5 分钟心跳只发送 ping，不重新查询凭证", async () => {
       vi.useFakeTimers({ toFake: ["setInterval"] });
       try {
         const { ticket } = issueStreamTicket(GAME_ID, { kind: "seat", seat: 0, credential: "tok-0" });
@@ -329,15 +367,13 @@ describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断�
         await vi.advanceTimersByTimeAsync(0); // 让回放与 hello 的微任务跑完
         expect(seqsOf(stream.msgs)).toEqual(["6", "7"]);
         expect(stream.isEnded()).toBe(false);
+        expect(mockFindGame).toHaveBeenCalledTimes(1);
 
-        await vi.advanceTimersByTimeAsync(20_000); // 凭证未轮换的心跳
+        await vi.advanceTimersByTimeAsync(5 * 60_000);
+        expect(mockFindGame).toHaveBeenCalledTimes(1);
         expect(stream.isEnded()).toBe(false);
-
-        mockFindGame.mockResolvedValueOnce(
-          gameRow({ room: { humanDm: false, dmToken: null, seats: [{ index: 0, token: "rotated" }] } }) as never
-        );
-        await vi.advanceTimersByTimeAsync(20_000); // 轮换后的心跳：主动断开
-        expect(stream.isEnded()).toBe(true);
+        expect(stream.msgs.filter((msg) => msg.kind === "hello")).toHaveLength(1);
+        stream.abort();
       } finally {
         vi.useRealTimers();
       }

@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import crypto from "node:crypto";
 import { decideDmJoin } from "@/lib/join";
 import { checkJoinRateLimit } from "@/lib/rate-limit";
+import { publish } from "@/core/engine/bus";
 
 const schema = z.object({
   code: z.string().min(3),
@@ -41,6 +42,7 @@ async function POST_IMPL(req: Request) {
   const token = crypto.randomBytes(16).toString("hex");
   if (decision === "resume") {
     await db.room.update({ where: { id: room.id }, data: { dmToken: token } });
+    if (room.game?.id) publish(room.game.id, { kind: "revoke", dm: true });
     return NextResponse.json({ roomId: room.id, token, gameId: room.game?.id ?? null, resumed: true });
   }
   if (decision === "taken") {
@@ -54,6 +56,7 @@ async function POST_IMPL(req: Request) {
   if (claimed.count !== 1) {
     return NextResponse.json({ error: "本房间的 DM 已有人担任。若是你本人，请填写认领时用的昵称。" }, { status: 400 });
   }
+  if (room.game?.id) publish(room.game.id, { kind: "revoke", dm: true });
   return NextResponse.json({ roomId: room.id, token, gameId: room.game?.id ?? null, resumed: false });
 }
 

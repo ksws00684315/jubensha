@@ -7,6 +7,7 @@ import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 import { checkRoomRateLimit } from "@/lib/rate-limit";
 import { requireRoomCreateAuth } from "@/lib/room-policy";
 import { verifyDmToken, verifyHostToken, verifySeatToken } from "@/lib/credentials";
+import { publish } from "@/core/engine/bus";
 
 async function loadRoom(code: string) {
   const room = await db.room.findUnique({
@@ -120,6 +121,12 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ code: string }>
       ];
     })
   );
+  if (room.game?.id) {
+    for (const s of parsed.data.seats) {
+      const seat = room.seats.find((x) => x.index === s.index);
+      if (seat?.token && s.kind !== "human") publish(room.game.id, { kind: "revoke", seat: s.index });
+    }
+  }
   return NextResponse.json({ ok: true });
 }
 

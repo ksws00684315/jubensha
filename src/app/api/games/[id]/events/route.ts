@@ -114,6 +114,17 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           closed = true;
         }
       };
+      const close = () => {
+        if (closed) return;
+        closed = true;
+        unsubscribe?.();
+        if (heartbeat) clearInterval(heartbeat);
+        try {
+          controller.close();
+        } catch {
+          /* already closed */
+        }
+      };
 
       // 先订阅再查询历史，避免查询与订阅之间产生事件丢失。
       // 历史查询期间暂存实时事件，回放完成后按序发送并去重。
@@ -133,6 +144,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
         } else if (msg.kind === "delta" || msg.kind === "thinking") {
           if (msg.audience !== "public" && !dmView && seatIndex !== msg.audience) return;
           send(msg);
+        } else if (msg.kind === "revoke") {
+          if ((msg.seat !== undefined && msg.seat === seatIndex) || (msg.dm && dmView)) close();
         } else if (msg.kind === "end" && replaying) {
           pendingEnds.push(msg);
         } else {
@@ -158,52 +171,20 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
       send({ kind: "hello", lastSeq: lastDelivered });
       for (const end of pendingEnds) send(end);
 
-      // 2) 心跳保活 + 定期重验凭证（座位/DM token 轮换后,旧订阅随之失效）
-      heartbeat = setInterval(() => {
-        if (closed) return;
-        void (async () => {
+      // 2) 心跳只保活；凭证轮换由写入端通过总线即时吊销，不在连接期间轮询数据库。
+      if (!closed) {
+        heartbeat = setInterval(() => {
+          if (closed) return;
           try {
-            const fresh = await db.game.findUnique({
-              where: { id },
-              select: { room: { select: { seats: { select: { index: true, token: true } }, dmToken: true, humanDm: true } } },
-            });
-            const stillValid =
-              !!fresh &&
-              (seatIndex === null || verifySeatToken(fresh.room.seats, seatIndex, seatCredential)) &&
-              (!dmView || (fresh.room.humanDm && verifyDmToken(fresh.room, dmCredential)));
-            if (!stillValid) {
-              closed = true;
-              unsubscribe?.();
-              if (heartbeat) clearInterval(heartbeat);
-              try {
-                controller.close();
-              } catch {
-                /* already closed */
-              }
-              return;
-            }
+            controller.enqueue(encoder.encode(": ping\n\n"));
           } catch {
-            /* 查询失败不断开,下个心跳再试 */
+            close();
           }
-          if (!closed) {
-            try {
-              controller.enqueue(encoder.encode(": ping\n\n"));
-            } catch {
-              closed = true;
-            }
-          }
-        })();
-      }, 20_000);
+        }, 20_000);
+      }
 
       req.signal.addEventListener("abort", () => {
-        closed = true;
-        unsubscribe?.();
-        if (heartbeat) clearInterval(heartbeat);
-        try {
-          controller.close();
-        } catch {
-          /* already closed */
-        }
+        close();
       });
     },
     cancel() {

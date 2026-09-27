@@ -2,8 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { adminHeaders, ctx, makeReq, mockDbInstance, resetRateLimits, TEST_ADMIN_TOKEN } from "@/test/api";
 import { db } from "@/lib/db";
 import { roomRow, seatRow, scriptRow } from "@/test/fixtures";
+import { publish } from "@/core/engine/bus";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
+vi.mock("@/core/engine/bus", () => ({ publish: vi.fn() }));
 
 afterEach(() => vi.unstubAllEnvs());
 beforeEach(() => {
@@ -111,6 +113,19 @@ describe("A24 PATCH /api/rooms/[code]", () => {
     const data = aiCall![0] as unknown as { data: { kind: string; token: string | null } };
     expect(data.data.kind).toBe("ai");
     expect(data.data.token).toBeNull();
+  });
+
+  it("事务成功后才吊销被改成非真人座位的旧流", async () => {
+    vi.mocked(db.room.findUnique).mockResolvedValue(lobbyRoom({ game: { id: "running-game" } }) as never);
+    vi.mocked(db.script.findUnique).mockResolvedValue(scriptRow() as never);
+    vi.mocked(db.seat.update).mockResolvedValue(seatRow() as never);
+    const { PATCH } = await import("./route");
+    const res = await PATCH(makeReq("PATCH", "/api/rooms/ABCDE", {
+      body: { ...payload, seats: [{ index: 0, kind: "ai" }, ...payload.seats.slice(1)] },
+    }), ctx({ code: "ABCDE" }));
+    expect(res.status).toBe(200);
+    expect(vi.mocked(db.$transaction).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(publish).mock.invocationCallOrder[0]);
+    expect(publish).toHaveBeenCalledWith("running-game", { kind: "revoke", seat: 0 });
   });
 });
 

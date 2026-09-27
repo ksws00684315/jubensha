@@ -2,8 +2,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ctx, makeReq, mockDbInstance, resetRateLimits } from "@/test/api";
 import { db } from "@/lib/db";
 import { roomRow, seatRow } from "@/test/fixtures";
+import { publish } from "@/core/engine/bus";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
+vi.mock("@/core/engine/bus", () => ({ publish: vi.fn() }));
 
 beforeEach(() => {
   resetRateLimits();
@@ -62,6 +64,20 @@ describe("A26 POST /api/rooms/join", () => {
     expect(body.resumed).toBe(true);
     expect(body.token).toMatch(/^[0-9a-f]{32}$/);
     expect(body.token).not.toBe("seat-token-1");
+  });
+
+  it("开局后恢复座位凭证：写库成功后立即发布该座位的 revoke", async () => {
+    vi.mocked(db.room.findUnique).mockResolvedValue(roomRow({
+      status: "started",
+      game: { id: "running-game" },
+      seats: lobbyRoom().seats,
+    }) as never);
+    vi.mocked(db.seat.update).mockResolvedValue(seatRow() as never);
+    const { POST } = await import("./route");
+    const res = await POST(makeReq("POST", "/api/rooms/join", { body: { code: "ABCDE", name: "玩家一", token: "seat-token-1" } }), ctx({}));
+    expect(res.status).toBe(200);
+    expect(vi.mocked(db.seat.update).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(publish).mock.invocationCallOrder[0]);
+    expect(publish).toHaveBeenCalledWith("running-game", { kind: "revoke", seat: 0 });
   });
 
   it("满员 → full 400", async () => {

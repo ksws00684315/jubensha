@@ -2,8 +2,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ctx, makeReq, mockDbInstance, resetRateLimits } from "@/test/api";
 import { db } from "@/lib/db";
 import { roomRow } from "@/test/fixtures";
+import { publish } from "@/core/engine/bus";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
+vi.mock("@/core/engine/bus", () => ({ publish: vi.fn() }));
 
 beforeEach(() => {
   resetRateLimits();
@@ -48,6 +50,22 @@ describe("A27 POST /api/rooms/dm-join", () => {
     const body = await res.json();
     expect(body.resumed).toBe(true);
     expect(body.token).toMatch(/^[0-9a-f]{32}$/);
+  });
+
+  it("对局中恢复 DM 凭证：写库成功后立即发布 DM revoke", async () => {
+    vi.mocked(db.room.findUnique).mockResolvedValue(roomRow({
+      status: "started",
+      game: { id: "running-game" },
+      humanDm: true,
+      dmToken: "dm-old",
+      dmName: "主持",
+    }) as never);
+    vi.mocked(db.room.update).mockResolvedValue(roomRow() as never);
+    const { POST } = await import("./route");
+    const res = await POST(makeReq("POST", "/api/rooms/dm-join", { body: { code: "ABCDE", name: "主持", token: "dm-old" } }), ctx({}));
+    expect(res.status).toBe(200);
+    expect(vi.mocked(db.room.update).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(publish).mock.invocationCallOrder[0]);
+    expect(publish).toHaveBeenCalledWith("running-game", { kind: "revoke", dm: true });
   });
 
   it("首次认领 → updateMany 原子占位成功", async () => {

@@ -153,6 +153,7 @@ export type BusMessage =
   | { kind: "event"; event: EngineEvent }
   | { kind: "delta"; seat: number | "dm"; text: string; audience: "public" | number }
   | { kind: "thinking"; seat: number | "dm" | null; audience: "public" | number; generationId?: string }
+  | { kind: "revoke"; seat?: number; dm?: true }
   | { kind: "end"; lastEventSeq: string };
 
 export interface EngineContext {
