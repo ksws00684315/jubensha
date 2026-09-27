@@ -1,9 +1,25 @@
 import { PrismaClient } from "@prisma/client";
+import { appendFileSync } from "node:fs";
+import { resolve, sep } from "node:path";
 import { resolveDatabaseUrl } from "@/lib/app-config";
 
 const g = globalThis as unknown as { prisma?: PrismaClient; prismaUrl?: string };
 
 function createClient(url: string): PrismaClient {
+  const timingFile = process.env.E2E_QUERY_TIMINGS_FILE;
+  if (timingFile) {
+    const e2eDir = `${resolve(process.cwd(), ".e2e")}${sep}`;
+    const timingPath = resolve(timingFile);
+    if (!timingPath.startsWith(e2eDir)) throw new Error("E2E_QUERY_TIMINGS_FILE must be inside .e2e");
+    const client = new PrismaClient({
+      datasources: { db: { url } },
+      log: [{ emit: "event", level: "query" }],
+    });
+    client.$on("query", (event) => {
+      appendFileSync(timingPath, `${event.duration}\n`);
+    });
+    return client;
+  }
   return new PrismaClient({ datasources: { db: { url } } });
 }
 
