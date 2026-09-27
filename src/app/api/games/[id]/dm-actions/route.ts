@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { clueText, locationNameOf, narrativeToText, parseScriptForRuntime, publicBioText, timelineToText } from "@/core/script/compat";
 import { GameEngine } from "@/core/engine/engine";
+import { verifyDmToken } from "@/lib/credentials";
 
 const actionSchema = z.object({
   token: z.string().min(1),
@@ -25,7 +26,7 @@ async function POST_IMPL(req: Request, ctx: { params: Promise<{ id: string }> })
 
   const game = await db.game.findUnique({ where: { id }, include: { room: true } });
   if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
-  if (!game.room.humanDm || !game.room.dmToken || game.room.dmToken !== parsed.data.token) {
+  if (!game.room.humanDm || !verifyDmToken(game.room, parsed.data.token)) {
     return NextResponse.json({ error: "DM 鉴权失败" }, { status: 403 });
   }
 
@@ -47,7 +48,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
 
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: { orderBy: { index: "asc" } } } }, script: true, votes: true } });
   if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
-  if (!game.room.humanDm || !game.room.dmToken || game.room.dmToken !== token) {
+  if (!game.room.humanDm || !verifyDmToken(game.room, token)) {
     return NextResponse.json({ error: "DM 鉴权失败" }, { status: 403 });
   }
 

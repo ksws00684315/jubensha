@@ -6,6 +6,7 @@ import { parseScriptForRuntime, publicBioText } from "@/core/script/compat";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 import { checkRoomRateLimit } from "@/lib/rate-limit";
 import { requireRoomCreateAuth } from "@/lib/room-policy";
+import { verifyDmToken, verifyHostToken, verifySeatToken } from "@/lib/credentials";
 
 async function loadRoom(code: string) {
   const room = await db.room.findUnique({
@@ -25,11 +26,11 @@ async function GET_IMPL(_req: Request, ctx: { params: Promise<{ code: string }> 
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });
   const doc = parseScriptForRuntime(scriptRow.content);
-  const hostAuthorized = Boolean(room.hostToken && (url.searchParams.get("hostToken") ?? _req.headers.get("x-host-token")) === room.hostToken);
+  const hostAuthorized = verifyHostToken(room, url.searchParams.get("hostToken") ?? _req.headers.get("x-host-token"));
   const seatIndex = Number(url.searchParams.get("seat"));
   const seatToken = url.searchParams.get("token") ?? _req.headers.get("x-seat-token");
-  const seatAuthorized = Number.isInteger(seatIndex) && room.seats.some((s) => s.index === seatIndex && s.token && s.token === seatToken);
-  const dmAuthorized = Boolean(room.dmToken && (url.searchParams.get("dmToken") ?? _req.headers.get("x-dm-token")) === room.dmToken);
+  const seatAuthorized = Number.isInteger(seatIndex) && verifySeatToken(room.seats, seatIndex, seatToken);
+  const dmAuthorized = verifyDmToken(room, url.searchParams.get("dmToken") ?? _req.headers.get("x-dm-token"));
   const canSeeNames = hostAuthorized || dmAuthorized;
   return NextResponse.json({
     id: room.id,
@@ -75,7 +76,7 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ code: string }>
   const body = await req.json().catch(() => null);
   const parsed = patchSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });
-  if (!room.hostToken || room.hostToken !== parsed.data.hostToken) {
+  if (!verifyHostToken(room, parsed.data.hostToken)) {
     return NextResponse.json({ error: "只有房主可以改座位" }, { status: 403 });
   }
   // 改座位可以把真人座换成 AI 座，绕开建房的授权检查，所以这里要按「结果」再查一遍
@@ -113,7 +114,7 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ code: string }>
             kind: s.kind,
             characterId,
             playerName: s.kind === "human" ? seat.playerName : s.kind === "ai" ? seat.playerName ?? null : null,
-            ...(s.kind !== "human" ? { token: null } : {}),
+            ...(s.kind === "human" ? {} : { token: null }),
           },
         }),
       ];

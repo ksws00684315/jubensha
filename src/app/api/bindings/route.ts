@@ -75,7 +75,7 @@ async function PUT_IMPL(req: Request) {
       providerId: d.providerId,
       modelId: d.modelId,
       ...(d.temperature !== undefined ? { temperature: d.temperature } : {}),
-      ...(d.maxTokens !== undefined ? { maxTokens: d.maxTokens } : {}),
+      ...(d.maxTokens === undefined ? {} : { maxTokens: d.maxTokens }),
       ...(d.contextWindow !== undefined ? { contextWindow: d.contextWindow } : {}),
       ...(d.supportsSystem !== undefined ? { supportsSystem: d.supportsSystem } : {}),
       ...(d.supportsJson !== undefined ? { supportsJson: d.supportsJson } : {}),

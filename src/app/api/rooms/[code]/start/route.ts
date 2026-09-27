@@ -6,6 +6,7 @@ import { parseScriptForRuntime } from "@/core/script/compat";
 import { isScriptPlayable } from "@/core/script/v2/validate";
 import { GameEngine } from "@/core/engine/engine";
 import { hasDuplicateCharacterIds } from "@/lib/seats";
+import { verifyHostToken } from "@/lib/credentials";
 
 const startSchema = z.object({ hostToken: z.string().min(1) });
 
@@ -20,7 +21,7 @@ async function POST_IMPL(req: Request, ctx: { params: Promise<{ code: string }> 
     include: { seats: { orderBy: { index: "asc" } } },
   });
   if (!room) return NextResponse.json({ error: "房间不存在" }, { status: 404 });
-  if (!room.hostToken || room.hostToken !== parsed.data.hostToken) {
+  if (!verifyHostToken(room, parsed.data.hostToken)) {
     return NextResponse.json({ error: "只有房主可以开局" }, { status: 403 });
   }
   const existingGame = await db.game.findUnique({ where: { roomId: room.id } });

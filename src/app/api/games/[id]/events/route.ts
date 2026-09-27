@@ -5,6 +5,7 @@ import type { BusMessage, EngineEvent } from "@/core/engine/types";
 import type { Prisma } from "@prisma/client";
 import { sanitizeEventContent, visibleTo } from "@/core/engine/state";
 import { GameEngine } from "@/core/engine/engine";
+import { verifyDmToken, verifySeatToken } from "@/lib/credentials";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -52,17 +53,12 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
 
   // 座位视角需要 token 鉴权；失败则降级为纯观战（仅公开事件）
   let seatIndex: number | null = seatParam !== null && seatParam !== "" ? Number(seatParam) : null;
-  if (seatIndex !== null) {
-    const seatRow = game.room.seats.find((s) => s.index === seatIndex);
-    const token = url.searchParams.get("token");
-    if (!seatRow?.token || seatRow.token !== token) seatIndex = null;
-  }
+  if (!verifySeatToken(game.room.seats, seatIndex, url.searchParams.get("token"))) seatIndex = null;
   // 真人 DM 视角：可见全部事件（含所有座位私发内容）。DM 未认领时一律不授权。
   const dmView =
     url.searchParams.get("dm") === "1" &&
     game.room.humanDm &&
-    !!game.room.dmToken &&
-    game.room.dmToken === url.searchParams.get("dmtoken");
+    verifyDmToken(game.room, url.searchParams.get("dmtoken"));
 
   // 公开 SSE 只能回放事件，不得触发 AI。持有座位或 DM 凭证时才允许懒恢复。
   if (game.status === "running" && (seatIndex !== null || dmView) && !GameEngine.get(id)) {
@@ -139,9 +135,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
             });
             const stillValid =
               !!fresh &&
-              (seatIndex === null ||
-                (fresh.room.seats.find((s2) => s2.index === seatIndex)?.token ?? "") === (url.searchParams.get("token") ?? "")) &&
-              (!dmView || (fresh.room.humanDm && fresh.room.dmToken === url.searchParams.get("dmtoken")));
+              (seatIndex === null || verifySeatToken(fresh.room.seats, seatIndex, url.searchParams.get("token"))) &&
+              (!dmView || (fresh.room.humanDm && verifyDmToken(fresh.room, url.searchParams.get("dmtoken"))));
             if (!stillValid) {
               closed = true;
               unsubscribe?.();

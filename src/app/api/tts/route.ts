@@ -4,6 +4,7 @@ import { z } from "zod";
 import { synthesize } from "@/core/tts";
 import { db } from "@/lib/db";
 import { checkTtsRateLimit } from "@/lib/rate-limit";
+import { verifyDmToken, verifySeatToken } from "@/lib/credentials";
 
 const schema = z.object({
   gameId: z.string().min(1),
@@ -31,8 +32,8 @@ async function POST_IMPL(req: Request) {
     const game = await db.game.findUnique({ where: { id: gameId }, include: { room: { include: { seats: true } } } });
     if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
     const room = game.room;
-    const seatOk = seat !== undefined && !!token && room.seats.some((s) => s.index === seat && !!s.token && s.token === token);
-    const dmOk = dm === true && room.humanDm && !!room.dmToken && room.dmToken === dmToken;
+    const seatOk = verifySeatToken(room.seats, seat, token);
+    const dmOk = dm === true && !!room.humanDm && verifyDmToken(room, dmToken);
     if (!seatOk && !dmOk) {
       return NextResponse.json({ error: "需要本局玩家或主持人身份才能合成语音" }, { status: 401 });
     }

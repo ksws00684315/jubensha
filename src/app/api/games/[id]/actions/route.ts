@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { GameEngine, type GameAction } from "@/core/engine/engine";
 import { checkActionRateLimit } from "@/lib/rate-limit";
+import { verifySeatToken } from "@/lib/credentials";
 
 const actionSchema = z.object({
   seatIndex: z.number().int().min(0),
@@ -37,8 +38,7 @@ async function POST_IMPL(req: Request, ctx: { params: Promise<{ id: string }> })
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: true } } } });
   if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
 
-  const seatRow = game.room.seats.find((s) => s.index === seatIndex);
-  if (!seatRow || !seatRow.token || seatRow.token !== token) {
+  if (!verifySeatToken(game.room.seats, seatIndex, token)) {
     return NextResponse.json({ error: "座位鉴权失败" }, { status: 403 });
   }
 
