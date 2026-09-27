@@ -55,6 +55,7 @@
 | S2.1 | DONE | f250d85 | 2026-09-26 | 2026-09-26 | 夹具自测 14 用例；events 迁移后 10 用例断言不变；A13 示范 import+setup ≤10 行 | 无 |
 | S2.2 | DONE | ff45e32/ed88734/f168fbf/ada4546 | 2026-09-26 | 2026-09-26 | 35 个 A 编号 describe；L2 用例 165 过 + 2 it.fails；api 行覆盖 87.66%；test:api 约 1.2s | 无 |
 | S2.3 | DONE | 70133f5 | 2026-09-26 | 2026-09-26 | I01–I04、I06 过；连跑 5 次全绿；误连库名直接拒绝(exit 1)；CI integration job 绿(run 36259803390) | FIND-02 |
+| S2.4 | DONE | 57e0304 | 2026-09-26 | 2026-09-26 | 新增 6 个 L3 用例（SEARCH/VOTE/REVEAL 恢复点 + REVEAL→ENDED 推进 + 并发 speak 互斥 + 动作/定时器交错）；连跑 3 次全绿；未改生产代码 | DEV-03 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -120,4 +121,5 @@
 
 ## 偏差登记
 - **DEV-01（S0.4）**：计划 §1.1 称 `npm audit --omit=dev` 运行时链路为 0 high（3 high 全在 CLI 链路）。实测 `npm audit --omit=dev` 仍报 3 high（deepmerge-ts 经 @prisma/config ← prisma；prisma 在 devDependencies 中）。不影响任何指标的相对比较（后续只要求「不增加」），如实记录，不处理。
+- **DEV-03（S2.4）**：计划预期「同一座位并发 2 个 speak 只记 1 条发言」放在 DISCUSSION 验证；实际 DISCUSSION 的 speak 不做回合推进（圆桌自由发言是既有语义，engine.ts DISCUSSION 分支不调 markSpoken）。回合门禁语义在 SELF_INTRO 成立，用例改在 SELF_INTRO 验证并仍断言只记 1 条。不改生产代码。
 - **DEV-02（S1.3）**：ci-probe/lint-fail 的本地分支未删除——红线禁止 `git branch -D`，而 `git branch -d` 因分支未合并拒绝执行（分支内容仅为一个含 lint 错误的临时探针文件 src/__probe-lint__.ts，无保留价值）。远端分支已删除。留给用户清理：`git branch -D ci-probe/lint-fail`。
