@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { encryptSecret, maskSecret } from "@/lib/crypto";
 import { requireAdmin } from "@/lib/admin";
 import { assertProviderUrlAllowed } from "@/lib/url-guard";
+import { invalidateBindingCache } from "@/core/llm/client";
 
 const patchSchema = z.object({
   name: z.string().min(1).optional(),
@@ -44,6 +45,7 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }
       ...(parsed.data.note !== undefined ? { note: parsed.data.note } : {}),
     },
   });
+  invalidateBindingCache();
   return NextResponse.json({ id: provider.id, apiKeyMasked: maskSecret(provider.apiKeyCipher) });
 }
 
@@ -51,7 +53,8 @@ async function DELETE_IMPL(req: Request, ctx: { params: Promise<{ id: string }> 
   const denied = requireAdmin(req);
   if (denied) return denied;
   const { id } = await ctx.params;
-  await db.aiProvider.delete({ where: { id } }).catch(() => null);
+  const deleted = await db.aiProvider.delete({ where: { id } }).then(() => true).catch(() => false);
+  if (deleted) invalidateBindingCache();
   return NextResponse.json({ ok: true });
 }
 

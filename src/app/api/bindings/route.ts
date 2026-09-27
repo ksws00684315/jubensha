@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 import { BINDING_SLOT_KEYS } from "@/lib/provider-presets";
 import { MAX_BINDING_OUTPUT_TOKENS, MIN_BINDING_OUTPUT_TOKENS } from "@/core/llm/output-tokens";
+import { invalidateBindingCache } from "@/core/llm/client";
 
 const slotSchema = z.enum(BINDING_SLOT_KEYS);
 
@@ -82,6 +83,7 @@ async function PUT_IMPL(req: Request) {
       ...(d.fallbackSlot !== undefined ? { fallbackSlot: d.fallbackSlot } : {}),
     },
   });
+  invalidateBindingCache();
   return NextResponse.json({ slot: binding.slot });
 }
 

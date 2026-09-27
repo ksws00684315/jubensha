@@ -2,8 +2,10 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { adminHeaders, ctx, makeReq, mockDbInstance, TEST_ADMIN_TOKEN } from "@/test/api";
 import { db } from "@/lib/db";
 import { encryptSecret } from "@/lib/crypto";
+import { invalidateBindingCache } from "@/core/llm/client";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
+vi.mock("@/core/llm/client", () => ({ invalidateBindingCache: vi.fn() }));
 
 afterEach(() => vi.unstubAllEnvs());
 
@@ -72,6 +74,7 @@ describe("A04 POST /api/providers", () => {
 
   it("合法创建 → 201，落库的是密文而非明文", async () => {
     stubProduction();
+    vi.mocked(invalidateBindingCache).mockClear();
     vi.mocked(db.aiProvider.create).mockResolvedValue({ id: "prov-new" } as never);
     const { POST } = await import("./route");
     const res = await POST(
@@ -85,6 +88,7 @@ describe("A04 POST /api/providers", () => {
     expect(data.data.apiKeyCipher).not.toContain("sk-plain-1234567890");
     expect(data.data.apiKeyCipher.split(".")).toHaveLength(3);
     expect(data.data.baseUrl).toBe("https://api.example.com/v1"); // 去尾部斜杠
+    expect(invalidateBindingCache).toHaveBeenCalledTimes(1);
   });
 
   it("缺字段 → 400 参数不合法", async () => {

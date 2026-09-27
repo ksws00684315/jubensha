@@ -13,13 +13,24 @@ import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } f
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
 export { extractJson } from "./json";
 
+const BINDING_CACHE_TTL_MS = 60_000;
+const bindingCache = new Map<Purpose, { binding: ResolvedBinding; at: number }>();
+
+export function invalidateBindingCache(): void {
+  bindingCache.clear();
+}
+
 /** 不包含密钥的 embedding 空间标识；模型或端点变化会自然形成新空间。 */
 export function embeddingSpaceId(b: Pick<ResolvedBinding, "providerId" | "baseUrl" | "modelId">): string {
   return createHash("sha256").update(`${b.providerId}\n${b.baseUrl}\n${b.modelId}`).digest("hex").slice(0, 24);
 }
 
-/** 读取某用途槽位的绑定（含 fallback 链），运行时解析 apiKey */
+/** 读取某用途槽位的绑定（含已配置但 Provider 禁用时的 fallback 链），运行时解析 apiKey。 */
 export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
+  const cached = bindingCache.get(slot);
+  if (cached && Date.now() - cached.at < BINDING_CACHE_TTL_MS) return cached.binding;
+  bindingCache.delete(slot);
+
   let current: string = slot;
   for (let i = 0; i < 3; i++) {
     const binding = await db.modelBinding.findUnique({ where: { slot: current }, include: { provider: true } });
@@ -31,7 +42,7 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
         }
         throw new Error(`绑定槽位 "${slot}" 的 Provider「${binding.provider.name}」已被禁用，请到设置页检查`);
       }
-      return {
+      const resolved = {
         bindingId: binding.id,
         detectedSystemSupport: binding.detectedSystemSupport,
         providerId: binding.providerId,
@@ -49,8 +60,10 @@ export async function resolveBinding(slot: Purpose): Promise<ResolvedBinding> {
           json: binding.supportsJson,
         },
       };
+      bindingCache.set(slot, { binding: resolved, at: Date.now() });
+      return resolved;
     }
-    // 该槽位无绑定，沿 fallbackSlot 找
+    // 当前槽位没有绑定记录，无法得知 fallbackSlot，直接给出配置错误。
     throw new Error(`用途槽位 "${slot}" 尚未绑定模型，请到「设置 → AI 接入」完成配置`);
   }
   throw new Error(`槽位 "${slot}" 的 fallback 链解析失败`);

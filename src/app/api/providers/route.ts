@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { encryptSecret, maskSecret } from "@/lib/crypto";
 import { requireAdmin } from "@/lib/admin";
 import { assertProviderUrlAllowed } from "@/lib/url-guard";
+import { invalidateBindingCache } from "@/core/llm/client";
 
 const createSchema = z.object({
   name: z.string().min(1),
@@ -53,6 +54,7 @@ async function POST_IMPL(req: Request) {
       note: parsed.data.note ?? null,
     },
   });
+  invalidateBindingCache();
   return NextResponse.json({ id: provider.id }, { status: 201 });
 }
 

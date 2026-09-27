@@ -1,8 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { adminHeaders, ctx, makeReq, mockDbInstance, TEST_ADMIN_TOKEN } from "@/test/api";
 import { db } from "@/lib/db";
+import { invalidateBindingCache } from "@/core/llm/client";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
+vi.mock("@/core/llm/client", () => ({ invalidateBindingCache: vi.fn() }));
 
 afterEach(() => vi.unstubAllEnvs());
 
@@ -79,6 +81,7 @@ describe("A09 PUT /api/bindings", () => {
 
   it("合法 upsert → 200 且写库数据正确", async () => {
     stubProduction();
+    vi.mocked(invalidateBindingCache).mockClear();
     vi.mocked(db.aiProvider.findUnique).mockResolvedValue({ id: "p1", enabled: true } as never);
     vi.mocked(db.modelBinding.findUnique).mockResolvedValue(null as never);
     vi.mocked(db.modelBinding.upsert).mockResolvedValue({ slot: "player" } as never);
@@ -88,5 +91,6 @@ describe("A09 PUT /api/bindings", () => {
     );
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ slot: "player" });
+    expect(invalidateBindingCache).toHaveBeenCalledTimes(1);
   });
 });
