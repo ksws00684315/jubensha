@@ -111,16 +111,30 @@ describe("A28 GET /api/games/[id]", () => {
     expect(await res.json()).toMatchObject({ error: expect.stringContaining("损坏") });
   });
 
-  it.fails("BUG-01（S3.3 修复）：注释称 header 优先，实际 query 优先", async () => {
+  it("BUG-01 已修复（S3.3）：注释所述 header 优先成立", async () => {
     vi.mocked(db.game.findUnique).mockResolvedValue(runningGame() as never);
     vi.mocked(db.seatState.findMany).mockResolvedValue([] as never);
-    // header 给对、query 给错：按注释语义应认证成功；当前实现 query 优先 → 认证失败
+    // header 给对、query 给错：按 header 优先应认证成功（修复前 query 优先 → mySeat=null）
     const { GET } = await import("./route");
     const res = await GET(
       makeReq("GET", `/api/games/${ID}?seat=0&token=wrong`, { headers: { "x-seat-token": "seat-token-1" } }),
       ctx({ id: ID })
     );
     const body = await res.json();
-    expect(body.mySeat).toBe(0); // 当前代码失败（mySeat=null），it.fails 预期内
+    expect(body.mySeat).toBe(0);
+  });
+
+  it("header 缺失时回退 query（兼容期），header 在场则 query 不再被采信", async () => {
+    vi.mocked(db.game.findUnique).mockResolvedValue(runningGame() as never);
+    vi.mocked(db.seatState.findMany).mockResolvedValue([] as never);
+    const { GET } = await import("./route");
+    const byQuery = await GET(makeReq("GET", `/api/games/${ID}?seat=0&token=seat-token-1`), ctx({ id: ID }));
+    expect((await byQuery.json()).mySeat).toBe(0);
+    // header 是错的：query 里的正确凭证不能翻案，否则日志里的 token 仍是有效凭证
+    const mixed = await GET(
+      makeReq("GET", `/api/games/${ID}?seat=0&token=seat-token-1`, { headers: { "x-seat-token": "wrong" } }),
+      ctx({ id: ID })
+    );
+    expect((await mixed.json()).mySeat).toBeNull();
   });
 });

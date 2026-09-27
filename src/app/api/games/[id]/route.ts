@@ -8,6 +8,7 @@ import { searchLocationOptions } from "@/core/engine/search-locations";
 import { unlockedActs } from "@/core/engine/flow";
 import { GameEngine } from "@/core/engine/engine";
 import { buildSeatSettlement } from "@/core/engine/settlement";
+import { verifySeatToken } from "@/lib/credentials";
 import type { GameState } from "@/core/engine/types";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
@@ -16,7 +17,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   const url = new URL(req.url);
   const seatParam = url.searchParams.get("seat");
   // 凭证优先走 header（不进访问日志）；query 为兼容期回退，一个版本后删除
-  const token = url.searchParams.get("token") ?? req.headers.get("x-seat-token");
+  const token = req.headers.get("x-seat-token") ?? url.searchParams.get("token");
 
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: { orderBy: { index: "asc" } } } }, script: true } });
   if (!game) return NextResponse.json({ error: "对局不存在" }, { status: 404 });
@@ -34,10 +35,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   }
   const v2 = publicScriptViewV2(doc);
   let mySeat: number | null = seatParam !== null ? Number(seatParam) : null;
-  if (mySeat !== null) {
-    const seatRow = game.room.seats.find((s) => s.index === mySeat);
-    if (!seatRow || !seatRow.token || seatRow.token !== token) mySeat = null;
-  }
+  if (!verifySeatToken(game.room.seats, mySeat, token)) mySeat = null;
 
   // 只有持有有效座位凭证的参与者才可触发懒恢复；公开观战请求只读快照，避免被匿名轮询唤醒 AI 消耗。
   if (game.status === "running" && mySeat !== null && !GameEngine.get(id)) {
