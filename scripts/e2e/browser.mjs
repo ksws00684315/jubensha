@@ -235,9 +235,14 @@ class Page {
       } else if (msg.method === "Log.entryAdded") {
         if (p.entry?.level === "error") this.push(this.consoleErrors, `${p.entry.source ?? "log"}: ${p.entry.text} @ ${p.entry.url ?? ""}`.slice(0, 300));
       } else if (msg.method === "Network.requestWillBeSent") {
-        // 只记「URL 里带了 token」这件事，不记 token 值本身（报告文件也是本地产物，别留明文口令）
+        // 只记「URL 里带了凭证」这件事，不记凭证值本身（报告文件也是本地产物，别留明文口令）
         const url = p.request?.url ?? "";
-        this.requests.push({ url: url.replace(/(token|dmtoken|ticket)=([^&]+)/g, "$1=‹redacted›"), method: p.request?.method, hasTokenQuery: /[?&]token=/.test(url) });
+        this.requests.push({
+          url: url.replace(/(token|dmtoken|ticket)=([^&]+)/g, "$1=‹redacted›"),
+          method: p.request?.method,
+          hasTokenQuery: /[?&]token=/.test(url),
+          hasTicketQuery: /[?&]ticket=/.test(url),
+        });
       } else if (msg.method === "Page.javascriptDialogOpening") {
         this.events.push(`dialog:${p.message}`);
         this.cdp.send("Page.handleJavaScriptDialog", { accept: true }, this.sessionId).catch(() => {});
@@ -591,20 +596,30 @@ async function main() {
   // CSP 违规单独计数：转强制执行后「违规 0」是判据，不能只混在 console error 总数里
   const cspViolations = consoleErrors.filter((t) => /Content Security Policy|Refused to (?:load|execute|apply|display|connect|install|bypass)/i.test(t));
   const tokenRequests = [...new Set(allPages.flatMap((p) => p.requests.filter((r) => r.hasTokenQuery).map((r) => r.url)))];
+  // 正面侧证：token= 归零要和 ticket>0 一起看，否则「0」也可能只是根本没建流
+  const ticketRequests = [...new Set(allPages.flatMap((p) => p.requests.filter((r) => r.hasTicketQuery).map((r) => r.url)))];
   const layout = await state.page.eval("return __r9.layout();").catch(() => null);
   const pages = Object.fromEntries(
-    Object.entries(named).map(([name, p]) => [name, { consoleErrors: p.consoleErrors.length, exceptions: p.exceptions.length, tokenQueries: p.requests.filter((r) => r.hasTokenQuery).length }])
+    Object.entries(named).map(([name, p]) => [
+      name,
+      {
+        consoleErrors: p.consoleErrors.length,
+        exceptions: p.exceptions.length,
+        tokenQueries: p.requests.filter((r) => r.hasTokenQuery).length,
+        ticketQueries: p.requests.filter((r) => r.hasTicketQuery).length,
+      },
+    ])
   );
   writeFileSync(
     // 同一 plan 在桌面/移动各跑一遍时报告不能互相覆盖：文件名带上 --shot-prefix（d / m）
     path.join(screens, `${plan.step ?? "run"}${shotPrefix ? `-${shotPrefix}` : ""}-report.json`),
-    JSON.stringify({ ...report, consoleErrors, cspViolations, exceptions, tokenQueryRequests: tokenRequests, layout, pages, elapsedMs: Date.now() - t0 }, null, 2) + "\n"
+    JSON.stringify({ ...report, consoleErrors, cspViolations, exceptions, tokenQueryRequests: tokenRequests, ticketQueryRequests: ticketRequests, layout, pages, elapsedMs: Date.now() - t0 }, null, 2) + "\n"
   );
   appendFileSync(
     path.join(E2E_DIR, "screens", "console-errors.jsonl"),
     JSON.stringify({ at: new Date().toISOString(), plan: String(argv.plan), step: plan.step, viewport: vp, consoleErrors, cspViolations, exceptions }) + "\n"
   );
-  log(`完成：${report.steps.length} 步，失败 ${report.failures.length}，控制台 error ${consoleErrors.length}（其中 CSP 违规 ${cspViolations.length}），未捕获异常 ${exceptions.length}`);
+  log(`完成：${report.steps.length} 步，失败 ${report.failures.length}，控制台 error ${consoleErrors.length}（其中 CSP 违规 ${cspViolations.length}），未捕获异常 ${exceptions.length}，URL 凭证 token= ${tokenRequests.length} 条 / ticket= ${ticketRequests.length} 条`);
   // --keep-browser 只保留标签页（供下一步 plan 附着），WebSocket 必须关掉否则进程不退出
   if (!argv["keep-browser"]) {
     for (const p of allPages) await cdp.send("Target.closeTarget", { targetId: p.id }).catch(() => {});
