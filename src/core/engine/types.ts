@@ -21,6 +21,13 @@ export interface PlayerActionPlan {
 
 export const PHASE_ORDER: Phase[] = ["LOBBY", "READING", "SELF_INTRO", "SEARCH", "DISCUSSION", "VOTE", "REVEAL", "ENDED"];
 
+/**
+ * `GameState` 快照的当前版本号，新建对局与迁移的终点都用它。
+ * 升级规则见 `state-migrate.ts` 文件头。放在 types 而非 state-migrate，是为了让
+ * `initialState()` 与迁移函数共用同一个常量而不产生模块环。
+ */
+export const CURRENT_STATE_VERSION = 1;
+
 export interface SeatInfo {
   index: number;
   kind: "human" | "ai" | "empty";
@@ -47,6 +54,11 @@ export interface QuizResult {
 
 /** 引擎运行时状态。持久化于 games.state，可由事件流重建。 */
 export interface GameState {
+  /**
+   * 快照格式版本，见 `state-migrate.ts`。持久化到 `games.state`；
+   * 旧快照（S4.3 之前）没有这个字段，按 v0 处理。
+   */
+  stateVersion: number;
   phase: Phase;
   /** 阶段内轮次：SEARCH/DISCUSSION 的第几轮（1-based） */
   round: number;

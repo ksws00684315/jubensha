@@ -1,11 +1,13 @@
 import { db } from "@/lib/db";
 import { publish } from "./bus";
 import type { EngineEvent, GameState, Phase, SeatInfo } from "./types";
+import { CURRENT_STATE_VERSION } from "./types";
 import type { Prisma } from "@prisma/client";
 
 /** 初始状态 */
 export function initialState(seats: SeatInfo[]): GameState {
   return {
+    stateVersion: CURRENT_STATE_VERSION,
     phase: "LOBBY",
     round: 0,
     seats,
@@ -42,7 +44,8 @@ export function sanitizeEventContent(content: Record<string, unknown>): Record<s
 }
 
 /**
- * 状态恢复路径说明：权威来源是 `games.state` 快照（`GameEngine.load()` 直接读取并补默认值）。
+ * 状态恢复路径说明：权威来源是 `games.state` 快照（`GameEngine.load()` 交给 `migrateState()`
+ * 迁到当前版本并校验后使用）。
  * 事件流 `game_events` 是 append-only 的，用于 SSE 断线续传与事后审计，**不用于重建状态**——
  * 早期这里有一个 `rebuildStateFromEvents`，但它既不覆盖技能/答题/限时/提问等新状态、也没有任何调用者，
  * 只会让人误以为"重启靠重放事件恢复"。重放协议若要补齐，须与"锁外生成"重构同期做。

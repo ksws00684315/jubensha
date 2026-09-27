@@ -6,6 +6,7 @@ import { clueText, parseScriptForRuntime, resolveLocation } from "@/core/script/
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import type { AgentCtx } from "@/core/agents";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
+import { migrateState } from "./state-migrate";
 import { ensureDiscussionState, finaleMissing, nextAfterDiscussion, validateTransfer, validateUseSkill } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { createHash } from "node:crypto";
@@ -180,44 +181,7 @@ export class GameEngine {
         content: r.content as EngineEvent["content"],
         createdAt: r.createdAt.toISOString(),
       }));
-      const state = (game.state as unknown as GameState | null) ?? initialState([]);
-      // 兼容旧快照：缺字段补默认值
-      state.pendingPublish ??= {};
-      state.heldClues ??= {};
-      state.searchChoices ??= {};
-      state.votes ??= {};
-      state.privateChat ??= {};
-      state.readySeats ??= [];
-      state.readingPromptedSeats ??= [];
-      state.spokenSeats ??= [];
-      state.searchDealtRound ??= 0;
-      state.questionsLeft ??= {};
-      state.pendingAnswer ??= null;
-      state.humanDeadlines ??= {};
-      state.actionPoints ??= {};
-      state.usedSkills ??= [];
-      state.quizAnswers ??= {};
-      state.quizResult ??= null;
-      state.unlockedSecrets ??= {};
-      state.hostHandouts ??= {};
-      state.guaranteeDeferUntil ??= {};
-      state.hostHints ??= {};
-      state.actionPlans ??= {};
-      state.pendingInteraction ??= null;
-      state.interactionChoices ??= {};
-      if (state.pendingAnswer) state.pendingAnswer.questionId ??= `legacy:${gameId}:${state.round}:${state.pendingAnswer.fromSeat}:${state.pendingAnswer.toSeat}`;
-      // 兼容曾被主持保证公开、却仍残留在待决策队列中的快照。
-      // 玩家端不会为已公开线索显示“公开/私藏”按钮，若不清理会在搜证阶段死锁。
-      for (const seat of Object.keys(state.pendingPublish)) {
-        state.pendingPublish[seat] = (state.pendingPublish[seat] ?? []).filter((id) => !state.clueStates[id]?.isPublic);
-      }
-      // 旧快照可能没有这个字段：不补默认会让 `undefined++` 变成 NaN，
-      // 而 `NaN >= 上限` 恒为假 → 该轮插话上限彻底失效。字段虽标 deprecated，但仍在读写。
-      state.interjections ??= 0;
-      // 服务重启后内存定时器已丢失，过期截止时间一并清掉，避免前端挂着永不跳转的倒计时
-      for (const k of Object.keys(state.humanDeadlines)) {
-        if (state.humanDeadlines[k] <= Date.now()) delete state.humanDeadlines[k];
-      }
+      const state = migrateState(game.state, { now: Date.now(), gameId });
       const snapshot = game.scriptSnapshot ?? scriptRow.content;
       const engine = new GameEngine(gameId, parseScriptForRuntime(snapshot), state, events, game.room.unlimitedHumanTurns);
       rememberEngine(gameId, engine);
