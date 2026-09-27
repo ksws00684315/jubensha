@@ -133,22 +133,37 @@ export function useGameStream(gameId: string, retryKey: number) {
   // 2) SSE 订阅：不依赖 summary，避免阶段刷新时拆掉连接导致 lastSeq 丢失；
   // streamKey 门控——身份认领解析完成（座位/DM 参数就绪）后才建流，
   // 否则观战流会先把 lastSeq 推进到只有公开事件的位置，座位私有事件将错发。
+  //
+  // 凭证是一次性票据（60s、用后即废），每次建连都得重新换票，所以重连由本 hook 接管，
+  // 不能再交给 EventSource 的自动重连——它会拿同一张已消费的 ticket 反复重试。
+  // 续传位置走 lastSeq 查询参数（服务端与 Last-Event-ID 头等价）。
   useEffect(() => {
     if (streamKey !== gameId) return;
-    const url = gameEventsUrl(gameId, {
-      dm: isDm,
-      dmToken,
-      seat: mySeat,
-      token: myToken,
-      lastSeq: lastSeq.current,
-    });
-    const es = new EventSource(url);
+    let disposed = false;
+    let es: EventSource | null = null;
+    let retryTimer: ReturnType<typeof setTimeout> | null = null;
+    let retries = 0;
     let endAfterSeq: string | null = null;
+
+    const closeSocket = () => {
+      es?.close();
+      es = null;
+    };
+    const scheduleReconnect = () => {
+      if (disposed || retryTimer) return;
+      const delay = Math.min(1_000 * 2 ** retries, 15_000);
+      retries += 1;
+      retryTimer = setTimeout(() => {
+        retryTimer = null;
+        void connect();
+      }, delay);
+    };
     const finishEndedStream = () => {
       setSummary((s) => (s ? { ...s, status: "ended", phase: "ENDED" } : s));
-      es.close();
+      closeSocket();
     };
-    es.onmessage = (m) => {
+
+    const handleMessage = (m: MessageEvent) => {
       const msg = JSON.parse(m.data) as
         | { kind: "event"; event: GameEventView }
         | { kind: "delta"; seat: number | "dm"; text: string; audience?: "public" | number }
@@ -205,14 +220,66 @@ export function useGameStream(gameId: string, retryKey: number) {
           endAfterSeq = msg.lastEventSeq;
           return;
         }
-        // 终局：服务端不会再推事件，主动收掉这条长连接（否则 EventSource 会一直空转重连）
+        // 终局：服务端不会再推事件，主动收掉这条长连接（否则重连逻辑会让它一直空转）
         finishEndedStream();
       }
     };
-    es.onerror = () => {
-      /* EventSource 自动重连，服务端按 Last-Event-ID 补发 */
+
+    const openSocket = (url: string) => {
+      closeSocket();
+      const socket = new EventSource(url);
+      es = socket;
+      socket.onopen = () => {
+        retries = 0;
+      };
+      socket.onmessage = handleMessage;
+      socket.onerror = () => {
+        closeSocket();
+        scheduleReconnect();
+      };
     };
-    return () => es.close();
+
+    /** 公开观战流：没有凭证，也就没有 ticket 可换。 */
+    const openPublicSocket = () => openSocket(gameEventsUrl(gameId, { lastSeq: lastSeq.current }));
+
+    const connect = async () => {
+      if (disposed) return;
+      const wantsView = isDm ? !!dmToken : mySeat !== null && !!myToken;
+      if (!wantsView) {
+        openPublicSocket();
+        return;
+      }
+      try {
+        const res = await fetch(`/api/games/${gameId}/stream-ticket`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            ...(isDm ? { "x-dm-token": dmToken ?? "" } : { "x-seat-token": myToken ?? "" }),
+          },
+          body: JSON.stringify(isDm ? { dm: true } : { seat: mySeat }),
+        });
+        // 凭证不被认同时降级为公开流，与旧版「token 校验不过就当观战」一致；
+        // 其余失败（网络、5xx、限流）不能降级——那会让本席静默丢掉私有事件，退回重试。
+        if (res.status === 403 || res.status === 404) {
+          openPublicSocket();
+          return;
+        }
+        const data = (await res.json().catch(() => ({}))) as { ticket?: string };
+        if (!data.ticket) throw new Error("stream-ticket 响应缺少 ticket");
+        if (disposed) return;
+        openSocket(gameEventsUrl(gameId, { ticket: data.ticket, lastSeq: lastSeq.current }));
+      } catch {
+        scheduleReconnect();
+      }
+    };
+
+    void connect();
+    return () => {
+      disposed = true;
+      if (retryTimer) clearTimeout(retryTimer);
+      closeSocket();
+    };
   }, [gameId, streamKey, mySeat, myToken, isDm, dmToken, queueSummaryRefresh]);
 
   // 新事件的音效提示（阶段/线索/揭晓三档）

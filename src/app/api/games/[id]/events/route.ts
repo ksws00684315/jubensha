@@ -6,6 +6,7 @@ import type { Prisma } from "@prisma/client";
 import { sanitizeEventContent, visibleTo } from "@/core/engine/state";
 import { GameEngine } from "@/core/engine/engine";
 import { verifyDmToken, verifySeatToken } from "@/lib/credentials";
+import { consumeStreamTicket } from "@/lib/stream-tickets";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -34,7 +35,15 @@ function rowToEvent(r: {
   };
 }
 
-/** SSE 事件流。查询参数：seat（座位号，缺省为纯观战）。支持 Last-Event-ID 断线续传。 */
+/** 兼容期告警：只记「走了旧凭证方式 + 是哪个视角」，token 明文一律不入日志（硬性不变式 5）。 */
+function warnLegacyCredential(gameId: string, view: string): void {
+  console.warn(
+    `[sse] ${gameId} 使用已废弃的 query 凭证（${view}），token 会进访问日志；` +
+      `请改用 POST /api/games/${gameId}/stream-ticket 换取一次性 ticket。此兼容路径保留一个版本。`
+  );
+}
+
+/** SSE 事件流。查询参数：ticket（首选，见 stream-tickets）或兼容期的 seat/token/dm/dmtoken。支持 Last-Event-ID 断线续传。 */
 async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
   const url = new URL(req.url);
@@ -51,14 +60,39 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   const game = await db.game.findUnique({ where: { id }, include: { room: { include: { seats: true } } } });
   if (!game) return new Response("game not found", { status: 404 });
 
-  // 座位视角需要 token 鉴权；失败则降级为纯观战（仅公开事件）
-  let seatIndex: number | null = seatParam !== null && seatParam !== "" ? Number(seatParam) : null;
-  if (!verifySeatToken(game.room.seats, seatIndex, url.searchParams.get("token"))) seatIndex = null;
+  // 视角与凭证：鉴权失败一律降级为纯观战（仅公开事件），不回具体原因。
+  // 带 ticket 时视角是签发那一刻定死在票据里的；ticket 已被消费，心跳不能再去 URL 里读它，
+  // 所以把当时验证过的凭证留在连接作用域内（seatCredential / dmCredential）当比对基准。
+  let seatIndex: number | null = null;
+  let seatCredential: string | null = null;
+  let dmCredential: string | null = null;
+  const ticketParam = url.searchParams.get("ticket");
+  if (ticketParam) {
+    const principal = consumeStreamTicket(id, ticketParam);
+    if (!principal) {
+      // 有 ticket 参数就以 ticket 为准，不再回落到 query 里的旧凭证
+      console.warn(`[sse] ${id} ticket 无效（过期 / 重复使用 / 跨局），降级为纯观战`);
+    } else if (principal.kind === "seat") {
+      seatIndex = principal.seat;
+      seatCredential = principal.credential;
+    } else {
+      dmCredential = principal.credential;
+    }
+  } else {
+    seatIndex = seatParam !== null && seatParam !== "" ? Number(seatParam) : null;
+    seatCredential = url.searchParams.get("token");
+    if (url.searchParams.get("dm") === "1") dmCredential = url.searchParams.get("dmtoken");
+  }
+  if (!verifySeatToken(game.room.seats, seatIndex, seatCredential)) {
+    seatIndex = null;
+    seatCredential = null;
+  } else if (!ticketParam) {
+    warnLegacyCredential(id, `座位 ${seatIndex}`);
+  }
   // 真人 DM 视角：可见全部事件（含所有座位私发内容）。DM 未认领时一律不授权。
-  const dmView =
-    url.searchParams.get("dm") === "1" &&
-    game.room.humanDm &&
-    verifyDmToken(game.room, url.searchParams.get("dmtoken"));
+  const dmView = !!dmCredential && !!game.room.humanDm && verifyDmToken(game.room, dmCredential);
+  if (dmView && !ticketParam) warnLegacyCredential(id, "真人主持");
+  if (!dmView) dmCredential = null;
 
   // 公开 SSE 只能回放事件，不得触发 AI。持有座位或 DM 凭证时才允许懒恢复。
   if (game.status === "running" && (seatIndex !== null || dmView) && !GameEngine.get(id)) {
@@ -135,8 +169,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
             });
             const stillValid =
               !!fresh &&
-              (seatIndex === null || verifySeatToken(fresh.room.seats, seatIndex, url.searchParams.get("token"))) &&
-              (!dmView || (fresh.room.humanDm && verifyDmToken(fresh.room, url.searchParams.get("dmtoken"))));
+              (seatIndex === null || verifySeatToken(fresh.room.seats, seatIndex, seatCredential)) &&
+              (!dmView || (fresh.room.humanDm && verifyDmToken(fresh.room, dmCredential)));
             if (!stillValid) {
               closed = true;
               unsubscribe?.();

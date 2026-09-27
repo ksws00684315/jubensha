@@ -106,6 +106,15 @@ export function checkActionRateLimit(req: Request): { ok: true } | { ok: false; 
   return { ok: true };
 }
 
+/** SSE 一次性票据的签发端点：它是「长期凭证 → 可放进 URL 的短期凭证」的兑换口，按 IP 30 次/分钟、全局 600 次/分钟。 */
+export function checkStreamTicketRateLimit(req: Request): { ok: true } | { ok: false; retryAfterSec: number } {
+  const perIp = rateLimit(`ticket:ip:${clientIp(req)}`, 30, 60_000);
+  if (!perIp.ok) return { ok: false, retryAfterSec: Math.ceil(perIp.retryAfterMs / 1000) };
+  const global = rateLimit("ticket:global", 600, 60_000);
+  if (!global.ok) return { ok: false, retryAfterSec: Math.ceil(global.retryAfterMs / 1000) };
+  return { ok: true };
+}
+
 /** TTS 合成：外部合成服务按量计费，凭证校验通过后仍要有频控。 */
 export function checkTtsRateLimit(req: Request): { ok: true } | { ok: false; retryAfterSec: number } {
   const perIp = rateLimit(`tts:ip:${clientIp(req)}`, 20, 60_000);
