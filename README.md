@@ -96,9 +96,17 @@ npm run script:migrate-db -- --write
 ## 测试
 
 ```bash
-npm test          # Vitest：剧本校验 / 防火墙 / 输出守卫 单测
-node scripts/smoke-m3.mjs   # 端到端冒烟：1 真人 + 4 AI 走完全场（需 dev server 运行中；未配模型时 AI 发言降级为提示，流程仍应闭环）
+npm test          # L1：单元测试
+npm run test:api  # L2：API 路由测试
+npm run db:test:up
+DATABASE_URL='postgresql://postgres:postgres@localhost:5433/jubensha_test' npm run test:int # L3：集成测试
+npm run db:test:down
+npm run e2e:up
+npm run e2e:smoke # L4：R1–R3 实机冒烟；R4、R5 的分段步骤见 scripts/e2e/README.md
+npm run e2e:down
 ```
+
+全量提交门禁为 `npm run check`（类型检查、Lint、L1 和种子校验）。L3 和 L4 使用专用隔离数据库与实例；执行前请阅读 [`scripts/e2e/README.md`](scripts/e2e/README.md)。
 
 可选：安装本地提交钩子（提交前自动跑 typecheck + lint）：
 
