@@ -19,14 +19,15 @@
 |---|---|---|---|---|
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
-| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 78 / 558，约 4.1s | 不降 | S2.5 |
+| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 78 / 581 + 2 expected fail，约 6.0s | 不降 | S3.1 |
 | L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 22/22 个 route.ts 文件都有同名测试（覆盖全部 34 个导出处理器） | 34/34 | S2.2（S2.6 复测） |
-| L2 用例数 | ~10（events route 10 个） | 165 过 + 2 it.fails（`npm run test:api`，23 files，2.5s） | ≥ 140 | S2.2（S2.6 复测） |
+| L2 用例数 | ~10（events route 10 个） | 188 过 + 2 it.fails（`npm run test:api`，23 files，1.4s） | ≥ 140 | S2.2（S3.1 复测） |
 | L3 用例数 | 0 | 10（3 files） | ≥ 30 | S2.5 |
+| 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
 | src/core/engine 行覆盖率（同上） | 71.98%（1166/1620） | 71.98% | ≥ 基线 | S0.4 |
-| 非测试代码 console.*（grep，排除 .test.） | 27 | 27 | 0（log.ts 除外） | S0.4 |
+| 非测试代码 console.*（grep，排除 .test.） | 27 | 30（S3.1 新增 3 条：`room-policy.ts` 的配置错误提示，沿用 `admin.ts:66`/`registry.ts:25` 的 `[模块]` 直写约定；见 DEV-08） | 0（log.ts 除外） | S3.1 |
 | 非测试代码 as unknown as（grep，排除 .test.） | 12 | 12 | ≤ 3 | S0.4 |
 | engine.ts 行数（wc -l） | 1044 | 1044 | ≤ 700 | S0.4 |
 | handleActionInner 函数体 | :670–:945 ≈ 275 行 | 275 | ≤ 60 | S0.4 |
@@ -62,6 +63,7 @@
 | S2.4 | DONE | 57e0304 | 2026-09-26 | 2026-09-26 | 新增 6 个 L3 用例（SEARCH/VOTE/REVEAL 恢复点 + REVEAL→ENDED 推进 + 并发 speak 互斥 + 动作/定时器交错）；连跑 3 次全绿；未改生产代码 | DEV-03 |
 | S2.5 | DONE | f25de5c/4b9310e | 2026-09-27 | 2026-09-27 | 实机实例 :3110 隔离跑通 R1×4（61s/次，action_failed=0）、R2、R3、R4；pm2 jubensha 重启计数 25→25 未变；e2e:down 后 jubensha_e2e 计数 0；种子 29 导入 / L3 10 过 / npm run check 绿 | DEV-04, DEV-05, FIND-03 |
 | S2.6 | DONE | 79b66f5/（本提交） | 2026-09-27 | 2026-09-27 | R9 清单 1–6 项桌面 1280×800 与移动 375×812 各一遍，6 份清单 ×2 = 12 次运行 exit 0、每遍 171 步 0 失败；截图 64 张；控制台 error 基线 2（均为第 1 项故意的 404）+ 未捕获异常 0；13 个布局采样无横向滚动；公开/私藏两分支与真人票均有 DB 侧证；第 7 项首轮为基线（无可比截图） | DEV-06, DEV-07, FIND-04, FIND-05, FIND-06 |
+| S3.1 | DONE | 2ab7417/5dcc91e/dfefd64/（本提交） | 2026-09-27 | 2026-09-27 | 三种策略与 D2 默认值逐项对上（证据节）；L2 新增 23 用例（A22 14 + A24 9，两文件 21/17），`npm run check` exit 0（78 files / 581 过 + 2 expected fail，6.0s）、`test:api` 188 过、`test:int` 10 过；实机 R1/R2/R3/R4 全绿（实例按生产默认 admin 跑，未放宽），R9 桌面续跑链 115 步 0 失败、新增负向清单 9 步 0 失败 | DEV-08, DEV-09 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -167,6 +169,44 @@
 - 凭证外泄审计：驱动记录到 `tokenQueryRequests`，两遍各 1 条（d3 与 d5 的玩家标签）：`/api/games/{id}/events?seat=0&token=…`（报告里已掩码）。这是清单第 6 项/?token= 审计的基线值 → 见 FIND-04，由 S3.5 关闭。页面 URL、`document.body` 与 `localStorage` 均无 token 明文（`feedHealth.tokenInUrl=false`、`sseHasToken=false`）。
 - 收尾：`npm run e2e:down` 后 `SELECT count(*) FROM pg_database WHERE datname='jubensha_e2e'` → 0；`node scripts/e2e/browser.mjs --shutdown` 清 profile；pm2 `jubensha`（:3000）restarts 未变。
 
+### S3.1 开房授权策略
+落点：新增 `src/lib/room-policy.ts`（64 行，`roomCreatePolicy()` :12 / `requireRoomCreateAuth()` :34），接入 `src/app/api/rooms/route.ts:41`（POST 建房）与 `src/app/api/rooms/[code]/route.ts:82`（PATCH 改座）；文档 `.env.example`、README 新增小节「谁能开「含 AI 座位」的房间」；实机脚本与清单见 `dfefd64`。判据只有一条：**结果座位里是否含 `kind === "ai"`**（D2 的口径 —— 会消耗 LLM 额度的房才管，纯真人房一律自由）。
+
+**三种策略逐条实测（L2 断言 → 结果）**
+
+| 场景 | 期望 | 证据 |
+|---|---|---|
+| `open` × 无凭证 / 带口令 | 201 | A22 两用例 |
+| 开发/测试默认 | `open`（不带任何凭证 201） | A22 |
+| 生产默认（`NODE_ENV=production`） | `admin` | A22/A24 各 1 用例 + 实机（见下） |
+| `admin` × 管理员口令 | 201 | A22/A24 |
+| `admin` × 无凭证 | 403「创建含 AI 座位的房间需要管理员身份」，且 `db.room.create` 未被调用 | A22（文案逐字断言） |
+| `admin` × 纯真人房 | 201 | A22/A24 |
+| `invite` × 正确 / 错误 / 缺字段 | 201 / 403「邀请码不正确」 / 403 | A22/A24（`safeEqualString` 常量时间比较） |
+| `invite` × 未配置 `ROOM_INVITE_CODE` | 403（fail closed，不放行） | A22/A24 |
+| `ROOM_CREATE_POLICY` 取值无法识别 | 回落该环境默认值（生产 = admin）+ 一条 warn | A22 |
+| `admin` 且漏配 `ADMIN_TOKEN` | 403「服务未正确配置管理员口令，暂时无法创建含 AI 座位的房间」，不是 500 | A22（见 DEV-08 第 2 条） |
+| 检查顺序 | 未授权时 `db.script.findFirst` 不被调用（不能靠 404/400 差异探测剧本 id 与 zod 细节） | A22 |
+| PATCH 改出 AI 座 | 与建房同检查；房主 token 校验优先（403「只有房主可以改座位」），且 `$transaction` 未被调用 | A24 |
+
+用例数：A22 新增 14、A24 新增 9（共 23 ≥ 计划要求 10），两文件从 8/8 增至 21/17。原 `admin 策略待 S3.1 实现` 的弱断言 `expect([201,403]).toContain(...)` 收敛为 `expect(res.status).toBe(201)`（管理员路径），是收紧不是弱化。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 78 / Tests 581 passed | 2 expected fail（6.0s）；tsc 0 / eslint 0 warning / seeds 校验 exit 0。
+- `npm run test:api` → 23 files / 188 passed | 2 expected fail（1.4s）。
+- `DATABASE_URL=…jubensha_test npm run test:int` → 3 files / 10 passed（含 `src/app/api/rooms.int.test.ts` 4 条，真库路径未受策略影响：测试环境默认 `open`）。
+
+**实机（e2e 实例 :3120，生产构建，策略按生产默认 `admin`，未做任何放宽）**
+- **R1** PASSED：`ENDED ✓ voteResult: {"caught":true,"counts":{"1":1,"2":1,"3":2,"4":1},"culpritSeat":3}`；`grep -c '!! action failed'` → 0。建房请求带 `x-admin-token` 后为 `room U7UA9 / game cmujhz90y000as8g0aenzv38b`（`/tmp/e2e-smoke-s31.log`，会话临时）。
+- **R2** PASSED，新增两条判据：`无口令建 AI 房 → 403`（文案逐字核对）+ `无口令建纯真人房 → 201`；原有 4 条（错 token 403 / 观战流仅公开 / 无口令 providers 401 / 伪造 Host 401）不变。
+- **R3** PASSED：`全量回放 1 条，lastSeq=97` → `重连补传 3 条` → `seq 严格递增 ✓ 与 DB 全集一致（不重不漏）✓`。
+- **R4** PASSED：停等 `已停等并记录 DISCUSSION r1` → `e2e:down --keep-db` → `e2e:up --keep-db` → `重启后首读核对一致：DISCUSSION r1 turn=0` → … → `恢复后推进到 ENDED ✓ voteResult: {"caught":true,"counts":{"1":1,"3":4},"culpritSeat":3}`；重启后 `.e2e/instance.log`（420 行）异常计数 `grep -cE 'unhandled|UnhandledPromiseRejection|FATAL'` → **0**。
+- **R9 续跑链**（建房 → 搜证/决策 → 讨论/投票/结算 → 刷新与观众，桌面 1280×800）：`d3 36 + d4a 32 + d5 29 + d4b 18 = 115 步，0 失败、控制台 error 0、未捕获异常 0`；驱动内耗时 8.1/22.8/7.1/10.6s。`tokenQueryRequests` 仍是每个玩家标签 1 条（d3、d5 各 1）→ FIND-04 基线不变，由 S3.5 关闭。
+- **R9 负向清单** `scripts/e2e/plans/s31-unauthorized-create-room.json`（无管理会话的独立 context）：9 步 0 失败，`waitSelector "text:创建含 AI 座位的房间需要管理员身份"` 命中 → 服务端 403 文案确实渲染在原表单上，`stillOnForm=true`、`submitEnabled=true`，横向溢出 false，耗时 2.3s；控制台 1 条 error 即该故意的 403 资源日志（`.e2e/screens/S3.1/`）。
+- **UI 侧零改动**（计划把 `src/app/rooms/new/page.tsx` 列为涉及范围）：`src/lib/client.ts:14` 已把 `data.error` 抛给调用方，`src/app/rooms/new/page.tsx:176` 原样渲染 —— 上面的负向清单即为行为证明，因此不改代码（DEV-08 第 1 条）。
+- 口令处理：`x-admin-token` 只从 `.e2e/up.json`（gitignore）读取，plan / report / 台账 / 提交信息中均无口令明文；R9 的 `adminSession` 走真实 `/api/admin/unlock` + CDP 注入会话 cookie，不如实在页面上填口令以外的后门。
+- 收尾：`npm run e2e:down` 后 `pg_database` 中 `jubensha_e2e` 计数 0（只剩 `jubensha_test`）；`pm2 describe jubensha` → online、restarts **25 → 25**（:3000 未被触碰）。
+
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
 - **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
@@ -201,6 +241,12 @@
 | 2026-09-27 | P2/S2.5 | R4 进程重启恢复 | PASSED（DISCUSSION r1 一致 → ENDED；日志异常计数 0） | ~4 分钟 | scripts/e2e/restart-resume.mjs |
 | 2026-09-27 | P2/S2.6 | R9 浏览器走查 桌面 1280×800（清单 1–7） | PASSED 6/6 清单、31+25+36+32+29+18=171 步 0 失败；控制台 error 1（故意的 404）、异常 0；无横向滚动 | 60.2s（驱动内） | .e2e/screens/S2.6/{d01–d31a}.png、S2.6-d*-{d}-report.json |
 | 2026-09-27 | P2/S2.6 | R9 浏览器走查 移动 375×812（触摸 + iPhone UA，清单 1–7） | PASSED 6/6 清单、171 步 0 失败；控制台 error 1（同上）、异常 0；5 页 + 对局页 + 观众页 scrollWidth=clientWidth=375 | 57.6s（驱动内） | .e2e/screens/S2.6/{m01–m31a}.png、S2.6-d*-{m}-report.json |
+| 2026-09-27 | P3/S3.1 | R1 无模型冒烟（实例策略 = 生产默认 admin，建房带口令） | PASSED，`ENDED ✓`，`!! action failed` 计数 0 | 未单独计时（S2.5 同脚本量级 ~61s） | /tmp/e2e-smoke-s31.log（会话临时）；台账 S3.1 证据节 |
+| 2026-09-27 | P3/S3.1 | R2 鉴权负向（含新增「无口令建 AI 房 → 403」「无口令建纯真人房 → 201」） | PASSED（6 条判据全中，403 文案逐字一致） | ~15s | scripts/e2e/auth.mjs |
+| 2026-09-27 | P3/S3.1 | R3 SSE 断线续传（复跑） | PASSED（补传 3 条、seq 递增、与 DB 全集一致） | ~25s | scripts/e2e/sse-resume.mjs |
+| 2026-09-27 | P3/S3.1 | R4 进程重启恢复（复跑，验证策略改动不影响停等/恢复） | PASSED（`重启后首读核对一致：DISCUSSION r1 turn=0` → ENDED；日志异常计数 0） | ~4 分钟 | scripts/e2e/restart-resume.mjs |
+| 2026-09-27 | P3/S3.1 | R9 桌面续跑链 d3→d4a→d5→d4b（同一局，管理员会话） | PASSED 115 步 0 失败、控制台 error 0、异常 0；`tokenQueryRequests` 每玩家标签 1 条（FIND-04 不变） | 48.6s（驱动内合计） | .e2e/screens/S2.6/S2.6-{d3,d4a,d5,d4b}-d-report.json（见 DEV-09） |
+| 2026-09-27 | P3/S3.1 | R9 负向清单 s31-unauthorized-create-room（无管理会话建房提交） | PASSED 9 步 0 失败：403 文案渲染在原表单（`stillOnForm=true`、`submitEnabled=true`）、无横向溢出 | 2.3s | .e2e/screens/S3.1/x01-rooms-new-403.png、S3.1-ui403-x-report.json |
 
 ## 推送与 CI 记录
 | 日期 | 分支 | 推送范围 | CI |
@@ -224,3 +270,10 @@
 - **DEV-05（S2.5）**：接手时工作区除 S2.5 的 e2e 脚本外，还带着 `src/core/engine/engine.ts` 的 8 行调试探针（`globalThis.__tickProbe` + `console.error`，上一会话诊断 tick 循环所留，不属于任何计划步骤，且会让「非测试代码 console.*」指标变差、并把探针打进实机构建）。处理：`git diff` 存为 `.e2e/engine-tick-probe.patch`（gitignore 目录，未丢）后 `git restore`，不入库。留给用户：若还要用该探针，`git apply .e2e/engine-tick-probe.patch`。
 - **DEV-06（S2.6）**：R9 的「用浏览器自动化工具（内置 Browser 面板）」改为**本机 Chrome（headless=new + 独立临时 profile）+ CDP**（新增 `scripts/e2e/browser.mjs`，零新增依赖：Node 内置 WebSocket + 本机 Chrome 路径）。原因：内置 Browser 面板未打开真实窗口时页面 `innerWidth=0`、`document.hidden=true`，既截不出图也判不了 375×812 的横向滚动（NATIVE_BROWSER_VIEWPORT_UNAVAILABLE）；CDP 能精确设两种视口、开触摸模拟与 iPhone UA、开独立 browser context（等价无痕窗口）、并汇总控制台 error / 未捕获异常 / 带 `token=` 的网络请求 —— 判据覆盖计划要求。附带 3 处基建增量：报告文件名带 `--shot-prefix`（否则桌面与移动同名互覆盖）、新增 `waitJs` 动作（等「结果态」而不是等瞬态文案）、报告内 `?token=` 一律掩码且口令只从 `.e2e/up.json` 读取。另附 `scripts/e2e/db-proof.sh`：R9 判定需要的落库侧证（seat 0 的搜证选择、线索公开/私藏、投票与结算、降级提示去重度量），只读查询、gameId 先做白名单正则、连接串取自 `.e2e/up.json`。
 - **DEV-07（S2.6）**：R9 清单第 4 项的 3 个文案断言按实机语义改写，均不弱化「操作生效」这一判据：① 线索 `policy=auto_public` 时不存在公开/私藏决策窗（引擎直接公示并发 `该线索为公开线索，已向全场公示`），故该步用 `clickIf`，分支改由 DB 事件（`你决定私藏线索[…]` / `clue|public|publicBy:0`）证明；② SEARCH 选完地点后 `已选择，等待其他玩家搜证…` 是瞬态（其余座位秒选），改等「地点按钮不再可选」并 `collect` 当帧是否见到该提示；③ VOTE 后 `已投票，等待其他人…` 同理，改断言 `指认真凶` 面板消失 + `本局结算` 出现，票以 `votes` 表为准。
+- **DEV-08（S3.1）**：开房授权策略的 5 处偏差/增量，均不改变 D2 的策略语义：
+  1. 计划把 `src/app/rooms/new/page.tsx`（错误提示）列入涉及范围，实测**不需要改**：`src/lib/client.ts:14` 已把服务端 `error` 抛出、`src/app/rooms/new/page.tsx:176` 原样渲染，负向清单已作为行为证明，故本步零改动。附带后果：`invite` 模式在页面上没有邀请码输入框（只能靠 API 直接带 `inviteCode`），已在 `.env.example` 注释里写明；补 UI 不在本步范围。
+  2. `admin` 模式多一条 fail-closed 分支：`isAdminRequest()` 在生产缺 `ADMIN_TOKEN` / `SECRET_MASTER_KEY` 时经 `assertAdminConfig()` 抛错，若照计划直调，玩家侧建房会变成被 `withRoute` 掩盖成固定文案的 500。改为 try/catch → 403「服务未正确配置管理员口令，暂时无法创建含 AI 座位的房间」，比计划的「未授权 → 403」更保守，并有 L2 用例锁定。
+  3. e2e 实例改按**生产默认 `admin`** 跑，而不是在 `.env` 里设 `open` 走捷径 —— 否则 D2 的默认值没有任何实机证明。连带 4 处基建改动：`run.mjs` 用 `SMOKE_ADMIN_TOKEN` 把口令传给冒烟脚本；`smoke-m3.mjs`/`sse-resume.mjs`/`restart-resume.mjs` 的建房请求带 `x-admin-token`；`auth.mjs` 加 2 条负向；`browser.mjs` 新增 plan 级 `adminSession`（真实 `/api/admin/unlock` + CDP `Network.setCookie`，口令不进 plan/report/日志）。曾考虑 `ADMIN_TRUST_LOOPBACK=1`，但那会让 R2 既有的「伪造 Host → 401」断言失去意义，弃。
+  4. `browser.mjs` 的 `--var` 由「后者覆盖前者」改为重复传参累加（逗号分隔），以便一次运行注入多个变量；单次的既有用法行为不变。
+  5. 指标「非测试代码 console.*」27 → **30**：新增 3 条 `[room-policy]` 配置错误提示按 `src/lib/admin.ts:66`、`src/core/engine/registry.ts:25` 的现有约定直写 console（项目还没有统一 log 出口，S5.x 收敛）。不为 3 条日志发明只有这一处用的私有约定，但如实计入指标。
+- **DEV-09（S3.1）**：自伤记录。第一次 R9 续跑链运行失败（漏 `--keep-browser`，且当时 `--var` 只保留最后一个参数，见 DEV-08 第 4 条），那次失败运行用新局数据**覆盖了 S2.6 的 3 份桌面报告**（`S2.6-d4a-d` / `S2.6-d5-d` / `S2.6-d4b-d`）。修正后的重跑已生成结构相同、但属于另一局的报告。影响范围：这些是 gitignore 的本地产物、不入库；S2.6 台账引用的数字（气泡数 32→31、seq 侧证等）出自当时的原始运行，现已无法从磁盘复现。S2.6 的结论与判据不改，其完整基线将在 S3.4 的全量 R9 重跑中重建。
