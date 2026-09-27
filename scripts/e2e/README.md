@@ -34,6 +34,7 @@ npm run e2e:up -- --keep-db   # 沿用现有库重启实例（R4 用），不重
 | R2 | `scripts/e2e/auth.mjs` | 无口令建含 AI 座位的房 → 403（生产默认 admin），无口令建纯真人房 → 201；错 token 发 action → 403；观战 SSE 收不到座位私有事件、DM 流能收到；无口令访问 `/api/providers` → 401；伪造 `Host: localhost` + `X-Forwarded-For: 127.0.0.1` → 401 |
 | R3 | `scripts/e2e/sse-resume.mjs` | 断线期间产生新事件后带 `Last-Event-ID` 重连，补传 seq 严格递增、与 DB 全集比对不重不漏 |
 | R4 | `scripts/e2e/restart-resume.mjs`（人工分两段执行，见下） | 进程重启后 phase/round 与重启前一致，能继续推进到 ENDED，日志无未捕获异常 |
+| R5 | `scripts/e2e/dual-instance.mjs`（脚本自己起第二实例） | 同一局只有持牌实例写事件：非持牌实例日志出 `lease held by`、它的 action 被拒且事件数不变；A 段结束后 SIGTERM 持牌实例，1s 内租约交回、另一实例接管并跑到 ENDED；全程 `game_events` 的 seq 连续不重复 |
 
 ## R4 进程重启恢复（操作步骤）
 
@@ -51,6 +52,32 @@ npm run e2e:down
 
 判定标准：第 ④ 步输出「重启后首读核对一致」与 `R4 PASSED`（`voteResult` 非空），且第 ⑤ 步为 0。
 注意：`e2e:up` 默认会 drop 并重建 `jubensha_e2e`，R4 的第 ③ 步必须带 `--keep-db`。
+
+## R5 多实例单写者（`dual-instance.mjs`）
+
+同一个 `jubensha_e2e` 上再起一个实例（端口取主实例 +1，其次 3101/3111/3121/3131/3141），两个实例都用座位 token 打 `GET /api/games/[id]` 触发懒恢复，验 S4.1 的两件事：拿不到写租约的一方只能只读，持牌方被 SIGTERM 后另一方能在 1s 内取牌续跑。
+
+```bash
+npm run e2e:up                              # 全新库：R5 要求 ai_providers 为空（第二实例的 master key 解不开既有密钥）
+node scripts/e2e/dual-instance.mjs          # A 段（单写者）+ B 段（跨实例接管）
+node scripts/e2e/dual-instance.mjs --phase=a  # 只跑 A 段，不停主实例
+npm run e2e:up -- --keep-db                 # B 段会停掉主实例，跑完这样复原
+```
+
+判定标准：`R5 PASSED`。中段还各有硬判据——A 段：非持牌实例对同一局的动作被拒（`对局由其他实例主持，请刷新`）且被拒前后 `game_events` 计数不变、第二实例日志 `lease held by` ≥2 次、主实例日志无 `lease lost`；B 段：SIGTERM 后 ≤1000ms 持牌者变化、由第二实例跑到 ENDED 且 `voteResult` 非空。两段都跑一遍事件流不变量（seq 连续且唯一；同座位同阶段一条发言、阶段横幅与线索公示不出现二遍）——双驱动的签名正是这些被写两遍。
+
+- **为什么不变量不是「每轮每人一条 speech」**：e2e 库刻意不绑模型，AI 座位不发 `speech`（只留一行「思考时遇到问题」的 system 事件），所以重复检测落在真人发言、阶段横幅/幕旁白、线索发现与公示这几类必然产生的写上。
+- **为什么 A 段要主动往非持牌实例发一次动作**：只读视图本身不产生证据，`lease held by` 只能证明它没取到牌；被拒 + 事件纹丝不动才证明它也没在写。
+- 两段日志（`.e2e/instance.log` / `instance2.log`）跨多次运行 append，判据一律按本轮起始字节偏移切片，否则上一轮的 `lease lost` 会让这一轮误判。
+- 座位 token 只写 `.e2e/r5-state.json`（gitignore），不打印。
+
+## R1 的续租计量（`r1-lease-meter.mjs`）
+
+S4.1 验收 2 要的是「续租写入次数 ≈ 持牌时长 / 10s（±20%）」。脚本不改 `smoke-m3`，而是在它旁边每 ~900ms 用 psql 采样一次 `games.leaseUntil`：**这个值变一次就是一次写**（`acquireLease` 与 `renewLease` 都会顺延它），首次看到持牌的那次算取牌不计，交牌后的 `null` 也不计。持牌窗口取「首次看到持牌 → 最后一次续租」，smoke 结束后再多采 45s 收尾。两个口径必须写死：只统计本轮新建的那一局（开局前先记一遍已有 gameId——终局的引擎要等 10 分钟才驱逐交牌，上一轮残留的局此刻仍在续租，混进来会把每局次数算高），以及采样粒度是秒，续租间隔 10s 远大于它才不会漏计。
+
+```bash
+npm run e2e:up && node scripts/e2e/r1-lease-meter.mjs   # 输出「持牌窗口 / 续租写入 / 期望 / 偏差」与 R1+续租计数 PASSED
+```
 
 ## R9 浏览器实机走查（`browser.mjs`）
 
