@@ -1,5 +1,11 @@
 # Docker Compose 部署
 
+> **实验性，暂不可用于正式对局（2026-09-28）。** 已知问题：
+> - 无模型对局在容器内会停在搜证阶段（SEARCH），走不到结局；常规 `next start` / pm2 部署没有这个问题。
+> - 镜像约 529 MB，超过 400 MB 的目标。
+>
+> 修复并通过 R1 实机冒烟之前，请继续使用 pm2 部署（`ecosystem.config.js`）。详见 `docs/optimization-progress.md` 中的 S8.4。
+
 项目使用 Next.js standalone 输出，Compose 启动时先执行数据库迁移，再启动 Node 服务。PostgreSQL 数据保存在命名卷 `postgres-data` 中。
 
 ## 配置并启动
