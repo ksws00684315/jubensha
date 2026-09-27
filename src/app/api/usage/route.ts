@@ -2,6 +2,7 @@ import { withRoute } from "@/lib/api";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
+import { dailyTokenBudget, startOfLocalDay, usedTokensToday } from "@/core/llm/budget";
 
 /** 用量统计：按 provider+model+purpose 汇总（近 30 天） */
 async function GET_IMPL(req: Request) {
@@ -51,7 +52,15 @@ async function GET_IMPL(req: Request) {
     cachedTokens: r._sum.cachedTokens ?? 0,
     totalTokens: r._sum.totalTokens ?? 0,
   }));
-  return NextResponse.json({ since: since.toISOString(), summary, recentErrors, recentDiagnostics });
+  // 熔断用的是「本地当天」，看板同口径，否则运营看到的数和实际触发点会差一天里的时段
+  const usedToday = await usedTokensToday();
+  return NextResponse.json({
+    since: since.toISOString(),
+    summary,
+    recentErrors,
+    recentDiagnostics,
+    budget: { daily: dailyTokenBudget(), usedToday, dayStart: startOfLocalDay().toISOString() },
+  });
 }
 
 export const GET = withRoute(GET_IMPL);

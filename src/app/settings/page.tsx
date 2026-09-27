@@ -54,6 +54,7 @@ interface UsageView {
     totalTokens: number;
   }>;
   recentErrors: Array<{ providerName: string; modelId: string; purpose: string; error: string | null; createdAt: string }>;
+  budget?: { daily: number; usedToday: number; dayStart: string };
 }
 
 const PURPOSE_LABEL: Record<string, string> = {
@@ -670,8 +671,25 @@ function UsageTab() {
   const cached = okRows.reduce((a, r) => a + (r.cachedTokens ?? 0), 0);
   const prompt = okRows.reduce((a, r) => a + r.promptTokens, 0);
   const hit = prompt > 0 ? Math.round((cached / prompt) * 100) : 0;
+  const daily = usage.budget?.daily ?? 0;
+  const usedToday = usage.budget?.usedToday ?? 0;
+  const usedPct = daily > 0 ? Math.min(100, Math.round((usedToday / daily) * 100)) : 0;
   return (
     <div className="space-y-6">
+      <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
+        <h3 className="font-semibold">今日用量（服务器本地时区）</h3>
+        <p className="mt-2 text-3xl font-bold text-gold-400">
+          {usedToday.toLocaleString()}
+          <span className="text-base font-normal text-paper-400">
+            {daily > 0 ? ` / 预算 ${daily.toLocaleString()}（已用 ${usedPct}%）` : " / 未设每日预算"}
+          </span>
+        </p>
+        <p className="text-xs text-paper-400">
+          {daily > 0
+            ? "达到预算后 AI 发言降级为提示语，真人操作与观战不受影响；要改上限请调整 LLM_DAILY_TOKEN_BUDGET 后重启。"
+            : "设置 LLM_DAILY_TOKEN_BUDGET（例如 2000000）可限制单日 token 花费，达到上限后 AI 发言降级为提示语。"}
+        </p>
+      </div>
       <div className="rounded-xl border border-gold-400/12 bg-ink-900/60 p-6">
         <h3 className="font-semibold">近 30 天总用量</h3>
         <p className="mt-2 text-3xl font-bold text-gold-400">{total.toLocaleString()}</p>
