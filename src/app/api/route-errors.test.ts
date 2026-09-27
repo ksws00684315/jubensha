@@ -44,6 +44,7 @@ const cases: Case[] = [
   { name: "POST /api/games/[id]/actions", path: "./games/[id]/actions/route", exportName: "POST", method: "POST", url: "/api/games/g1/actions", body: { seatIndex: 0, token: "t", action: { type: "ready" } }, params: { id: "g1" }, poison: ["game", "findUnique"] },
   { name: "POST /api/games/[id]/dm-actions", path: "./games/[id]/dm-actions/route", exportName: "POST", method: "POST", url: "/api/games/g1/dm-actions", body: { token: "t", action: { type: "nudge" } }, params: { id: "g1" }, poison: ["game", "findUnique"] },
   { name: "GET /api/games/[id]/dm-actions", path: "./games/[id]/dm-actions/route", exportName: "GET", method: "GET", url: "/api/games/g1/dm-actions?token=t", params: { id: "g1" }, poison: ["game", "findUnique"] },
+  { name: "POST /api/games/[id]/stream-ticket", path: "./games/[id]/stream-ticket/route", exportName: "POST", method: "POST", url: "/api/games/g1/stream-ticket", body: { seat: 0 }, params: { id: "g1" }, headers: { "x-seat-token": "t" }, poison: ["game", "findUnique"] },
   { name: "POST /api/tts", path: "./tts/route", exportName: "POST", method: "POST", url: "/api/tts", body: { gameId: "g1", eventSeq: "7", seat: 0, token: "t" }, poison: ["game", "findUnique"] },
   { name: "GET /api/tts/[hash]", path: "./tts/[hash]/route", exportName: "GET", method: "GET", url: `/api/tts/${"a".repeat(32)}`, params: { hash: "a".repeat(32) }, poison: ["ttsCache", "findUnique"] },
 ];

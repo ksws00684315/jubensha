@@ -114,4 +114,10 @@ describe("gameEventsUrl", () => {
       "/api/games/g1/events?dm=1&dmtoken=d&lastSeq=9"
     );
   });
+
+  it("ticket 建连：地址里只有 ticket，长期 token 与视角参数都不出现（S3.5）", () => {
+    expect(gameEventsUrl("g1", { ticket: "t1", lastSeq: "42" })).toBe("/api/games/g1/events?ticket=t1&lastSeq=42");
+    expect(gameEventsUrl("g1", { ticket: "t1", seat: 2, token: "abc" })).toBe("/api/games/g1/events?ticket=t1");
+    expect(gameEventsUrl("g1", { ticket: "t1", dm: true, dmToken: "d" })).toBe("/api/games/g1/events?ticket=t1");
+  });
 });

@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { GameEngine } from "@/core/engine/engine";
 import { publish } from "@/core/engine/bus";
 import type { EngineEvent } from "@/core/engine/types";
+import { issueStreamTicket, resetStreamTickets, STREAM_TICKET_TTL_MS } from "@/lib/stream-tickets";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
 // 路由只需 get/load 判定懒恢复；真引擎模块图（LLM/定时器）与 SSE 测试无关
@@ -56,13 +57,14 @@ function busEvent(seq: string, patch: Partial<EngineEvent> = {}): EngineEvent {
   };
 }
 
-/** 建流并后台解析 SSE 帧；abort() 断开以清理心跳与订阅。 */
+/** 建流并后台解析 SSE 帧；abort() 断开以清理心跳与订阅。isEnded() 读服务端是否已主动收流。 */
 async function openStream(query: string, headers: Record<string, string> = {}) {
   const ac = new AbortController();
   const { GET } = await import("./route");
   const req = new Request(`http://localhost/api/games/${GAME_ID}/events${query}`, { headers, signal: ac.signal });
   const res = await GET(req, { params: Promise.resolve({ id: GAME_ID }) });
   const msgs: Record<string, unknown>[] = [];
+  let ended = false;
   if (res.body) {
     const reader = res.body.getReader();
     const dec = new TextDecoder();
@@ -70,7 +72,10 @@ async function openStream(query: string, headers: Record<string, string> = {}) {
     void (async () => {
       while (true) {
         const { value, done } = await reader.read();
-        if (done) break;
+        if (done) {
+          ended = true;
+          break;
+        }
         buf += dec.decode(value, { stream: true });
         let idx: number;
         while ((idx = buf.indexOf("\n\n")) >= 0) {
@@ -90,9 +95,9 @@ async function openStream(query: string, headers: Record<string, string> = {}) {
         await new Promise<void>((r) => setTimeout(r, 20));
       }
     };
-    return { res, msgs, waitFor, abort: () => ac.abort() };
+    return { res, msgs, waitFor, isEnded: () => ended, abort: () => ac.abort() };
   }
-  return { res, msgs, waitFor: async () => undefined, abort: () => ac.abort() };
+  return { res, msgs, waitFor: async () => undefined, isEnded: () => ended, abort: () => ac.abort() };
 }
 
 const seqsOf = (msgs: Record<string, unknown>[]) => msgs.filter((m) => m.kind === "event").map((m) => (m.event as EngineEvent).seq);
@@ -218,5 +223,124 @@ describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断�
     expect(msgs.findIndex((m) => m.kind === "end")).toBeGreaterThan(msgs.findIndex((m) => m.kind === "event" && (m.event as EngineEvent).type === "phase" && (m.event as EngineEvent).phase === "ENDED"));
     expect((msgs.find((m) => m.kind === "end") as { lastEventSeq: string }).lastEventSeq).toBe("8");
     abort();
+  });
+
+  describe("A29 附加：ticket 建连（S3.5，长期 token 不再出现在 SSE 地址里）", () => {
+    // 6=公开，7=本席私有，8=他席私有（只有真人主持可见）
+    const VIEW_ROWS = () =>
+      [
+        row(6),
+        row(7, { visibility: "seat:0", content: { text: "私密" } }),
+        row(8, { visibility: "seat:1", content: { text: "他席私信" } }),
+      ] as never;
+
+    beforeEach(() => {
+      resetStreamTickets();
+      mockFindGame.mockResolvedValue(
+        gameRow({
+          room: {
+            humanDm: true,
+            dmToken: "dm-1",
+            seats: [
+              { index: 0, token: "tok-0" },
+              { index: 1, token: "tok-1" },
+            ],
+          },
+        }) as never
+      );
+      mockFindEvents.mockResolvedValue(VIEW_ROWS());
+    });
+
+    const seatTicket = (gameId = GAME_ID, credential = "tok-0", now = Date.now()) =>
+      issueStreamTicket(gameId, { kind: "seat", seat: 0, credential }, now).ticket;
+
+    it("有效 ticket → 本席私有事件可见且触发懒恢复；地址里没有 token", async () => {
+      const query = `?${new URLSearchParams({ ticket: seatTicket(), lastSeq: "0" })}`;
+      expect(query).not.toContain("token=");
+      const { msgs, waitFor, abort } = await openStream(query);
+      await waitFor(() => msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(msgs)).toEqual(["6", "7"]);
+      expect(JSON.stringify(msgs)).not.toContain("他席私信");
+      expect(mockEngineLoad).toHaveBeenCalledWith(GAME_ID);
+      abort();
+    });
+
+    it("同一张 ticket 再用一次（重放攻击/重复建连）→ 降级纯观战", async () => {
+      const ticket = seatTicket();
+      const first = await openStream(`?${new URLSearchParams({ ticket, lastSeq: "0" })}`);
+      await first.waitFor(() => first.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(first.msgs)).toEqual(["6", "7"]);
+      first.abort();
+
+      const again = await openStream(`?${new URLSearchParams({ ticket, lastSeq: "0" })}`);
+      await again.waitFor(() => again.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(again.msgs)).toEqual(["6"]);
+      expect(JSON.stringify(again.msgs)).not.toContain("私密");
+      again.abort();
+    });
+
+    it("过期 ticket 与跨局 ticket 一律降级纯观战，且都不唤醒引擎", async () => {
+      mockEngineLoad.mockClear();
+      const expired = seatTicket(GAME_ID, "tok-0", Date.now() - STREAM_TICKET_TTL_MS);
+      const expiredStream = await openStream(`?${new URLSearchParams({ ticket: expired, lastSeq: "0" })}`);
+      await expiredStream.waitFor(() => expiredStream.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(expiredStream.msgs)).toEqual(["6"]);
+      expiredStream.abort();
+
+      const otherGame = seatTicket("another-game-1");
+      const crossed = await openStream(`?${new URLSearchParams({ ticket: otherGame, lastSeq: "0" })}`);
+      await crossed.waitFor(() => crossed.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(crossed.msgs)).toEqual(["6"]);
+      crossed.abort();
+      expect(mockEngineLoad).not.toHaveBeenCalled();
+    });
+
+    it("DM ticket 看得到他席私有；座位 ticket 混入 dm 查询参数也升不了视角", async () => {
+      const dmTicket = issueStreamTicket(GAME_ID, { kind: "dm", credential: "dm-1" }, Date.now()).ticket;
+      const dmStream = await openStream(`?${new URLSearchParams({ ticket: dmTicket, lastSeq: "0" })}`);
+      await dmStream.waitFor(() => dmStream.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(dmStream.msgs)).toEqual(["6", "7", "8"]);
+      dmStream.abort();
+
+      // 视角主体在签发时就写死在票据里，URL 上的 dm/dmtoken 对 ticket 连接不生效
+      const seatStream = await openStream(`?${new URLSearchParams({ ticket: seatTicket(), lastSeq: "0" })}&dm=1&dmtoken=dm-1`);
+      await seatStream.waitFor(() => seatStream.msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(seatStream.msgs)).toEqual(["6", "7"]);
+      seatStream.abort();
+    });
+
+    it("兼容期：token query 仍可用，但记 deprecation 日志且日志不含凭证明文", async () => {
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+      const { msgs, waitFor, abort } = await openStream("?seat=0&token=tok-0&lastSeq=0");
+      await waitFor(() => msgs.some((m) => m.kind === "hello"));
+      expect(seqsOf(msgs)).toEqual(["6", "7"]);
+      const logged = warn.mock.calls.map((c) => c.join(" ")).join("\n");
+      expect(logged).toContain("stream-ticket");
+      expect(logged).not.toContain("tok-0");
+      warn.mockRestore();
+      abort();
+    });
+
+    it("心跳按签发时的凭证快照重验：凭证未变则保活，token 轮换后一个心跳周期内收流", async () => {
+      vi.useFakeTimers({ toFake: ["setInterval"] });
+      try {
+        const { ticket } = issueStreamTicket(GAME_ID, { kind: "seat", seat: 0, credential: "tok-0" });
+        const stream = await openStream(`?${new URLSearchParams({ ticket, lastSeq: "0" })}`);
+        await vi.advanceTimersByTimeAsync(0); // 让回放与 hello 的微任务跑完
+        expect(seqsOf(stream.msgs)).toEqual(["6", "7"]);
+        expect(stream.isEnded()).toBe(false);
+
+        await vi.advanceTimersByTimeAsync(20_000); // 凭证未轮换的心跳
+        expect(stream.isEnded()).toBe(false);
+
+        mockFindGame.mockResolvedValueOnce(
+          gameRow({ room: { humanDm: false, dmToken: null, seats: [{ index: 0, token: "rotated" }] } }) as never
+        );
+        await vi.advanceTimersByTimeAsync(20_000); // 轮换后的心跳：主动断开
+        expect(stream.isEnded()).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
   });
 });
