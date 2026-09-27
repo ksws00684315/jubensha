@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
+import { log } from "@/lib/log";
 
 export const ADMIN_COOKIE = "jbs_admin";
 
@@ -63,10 +64,7 @@ let trustLoopbackWarned = false;
 function warnTrustLoopbackOnce(): void {
   if (trustLoopbackWarned) return;
   trustLoopbackWarned = true;
-  console.warn(
-    "[admin] ADMIN_TRUST_LOOPBACK 已开启：生产构建下 Host 头由客户端控制，" +
-      "「信任本机」实际等价于信任所有能访问该端口的主机。请确保进程只监听 127.0.0.1（HOSTNAME=127.0.0.1）并经反代对外。"
-  );
+  log.warn("[admin] ADMIN_TRUST_LOOPBACK 已开启：生产构建下 Host 头由客户端控制，「信任本机」实际等价于信任所有能访问该端口的主机。请确保进程只监听 127.0.0.1（HOSTNAME=127.0.0.1）并经反代对外。");
 }
 
 export function isAdminSync(opts: {

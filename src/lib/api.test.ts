@@ -28,6 +28,7 @@ describe("withRoute 统一异常兜底", () => {
     // 细节只进服务端日志，且带方法/路径定位信息
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy.mock.calls[0][0]).toContain("POST /api/games/game-1/actions");
+    expect(JSON.parse(spy.mock.calls[0][0] as string).requestId).toMatch(/^[0-9a-f-]{36}$/i);
   });
 
   it("非 Error 抛出物也安全序列化", async () => {

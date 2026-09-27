@@ -7,6 +7,7 @@ import { sanitizeEventContent, visibleTo } from "@/core/engine/state";
 import { GameEngine } from "@/core/engine/engine";
 import { verifyDmToken, verifySeatToken } from "@/lib/credentials";
 import { consumeStreamTicket } from "@/lib/stream-tickets";
+import { log } from "@/lib/log";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -37,10 +38,7 @@ function rowToEvent(r: {
 
 /** 兼容期告警：只记「走了旧凭证方式 + 是哪个视角」，token 明文一律不入日志（硬性不变式 5）。 */
 function warnLegacyCredential(gameId: string, view: string): void {
-  console.warn(
-    `[sse] ${gameId} 使用已废弃的 query 凭证（${view}），token 会进访问日志；` +
-      `请改用 POST /api/games/${gameId}/stream-ticket 换取一次性 ticket。此兼容路径保留一个版本。`
-  );
+  log.warn("[sse] 已废弃的 query 凭证，请改用 stream-ticket 换取一次性 ticket。此兼容路径保留一个版本。", { gameId, view });
 }
 
 /** SSE 事件流。查询参数：ticket（首选，见 stream-tickets）或兼容期的 seat/token/dm/dmtoken。支持 Last-Event-ID 断线续传。 */
@@ -71,7 +69,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
     const principal = consumeStreamTicket(id, ticketParam);
     if (!principal) {
       // 有 ticket 参数就以 ticket 为准，不再回落到 query 里的旧凭证
-      console.warn(`[sse] ${id} ticket 无效（过期 / 重复使用 / 跨局），降级为纯观战`);
+      log.warn("[sse] ticket 无效（过期 / 重复使用 / 跨局），降级为纯观战", { gameId: id });
     } else if (principal.kind === "seat") {
       seatIndex = principal.seat;
       seatCredential = principal.credential;
@@ -184,7 +182,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           cursor = lastHistorySeq;
         }
       } catch (err) {
-        console.error(`[sse] ${id} 历史回放失败，仅保留实时流：${String(err)}`);
+        log.error("[sse] 历史回放失败，仅保留实时流", { gameId: id, error: err });
       }
       replaying = false;
       pending.sort((a, b) => (BigInt(a.seq) < BigInt(b.seq) ? -1 : BigInt(a.seq) > BigInt(b.seq) ? 1 : 0));
@@ -205,7 +203,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
         }, 20_000);
       }
       })().catch((err) => {
-        console.error(`[sse] ${id} 初始化实时流失败：${String(err)}`);
+        log.error("[sse] 初始化实时流失败", { gameId: id, error: err });
         close();
       });
     },

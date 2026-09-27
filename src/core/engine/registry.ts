@@ -1,6 +1,7 @@
 import { evictBus } from "./bus";
 import { releaseLease } from "./lease";
 import type { GameEngine } from "./engine";
+import { log } from "@/lib/log";
 
 /**
  * 常驻引擎注册表（批次 I1 自 engine.ts 下沉）：
@@ -23,7 +24,7 @@ const ENDED_EVICTION_DELAY_MS = 10 * 60_000;
 export function rememberEngine(gameId: string, engine: GameEngine): void {
   engines.set(gameId, engine);
   if (engines.size > ENGINES_SOFT_CAP) {
-    console.warn(`[engine] 常驻对局引擎 ${engines.size} 个，超过软上限 ${ENGINES_SOFT_CAP}；请检查终局驱逐是否生效`);
+    log.warn("[engine] 常驻对局引擎数量超过软上限；请检查终局驱逐是否生效", { engineCount: engines.size, softCap: ENGINES_SOFT_CAP });
   }
 }
 

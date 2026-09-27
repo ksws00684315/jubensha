@@ -5,6 +5,7 @@ import { synthesize } from "@/core/tts";
 import { db } from "@/lib/db";
 import { checkTtsRateLimit } from "@/lib/rate-limit";
 import { verifyDmToken, verifySeatToken } from "@/lib/credentials";
+import { log } from "@/lib/log";
 
 const schema = z.object({
   gameId: z.string().min(1),
@@ -52,7 +53,7 @@ async function POST_IMPL(req: Request) {
     const result = await synthesize(text);
     return NextResponse.json({ url: `/api/tts/${result.hash}`, cached: result.cached });
   } catch (err) {
-    console.error("[tts] 合成失败：", err);
+    log.error("[tts] 合成失败", { error: err });
     return NextResponse.json({ error: "语音合成失败，请稍后重试" }, { status: 502 });
   }
 }

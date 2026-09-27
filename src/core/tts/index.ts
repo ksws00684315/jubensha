@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { db } from "@/lib/db";
 import { decryptSecret } from "@/lib/crypto";
+import { log } from "@/lib/log";
 
 /**
  * TTS 接口层：以 "tts" 槽位的 ModelBinding 为配置来源（OpenAI 兼容 /audio/speech 协议）。
@@ -79,6 +80,6 @@ async function trimTtsCache(): Promise<void> {
     await db.ttsCache.deleteMany({ where: { id: { in: overflow.map((o) => o.id) } } });
     for (const o of overflow) await fs.unlink(o.filePath).catch(() => null);
   } catch (err) {
-    console.error(`[tts] 缓存修剪失败（不影响本次合成）：${String(err)}`);
+    log.error("[tts] 缓存修剪失败（不影响本次合成）", { error: err });
   }
 }

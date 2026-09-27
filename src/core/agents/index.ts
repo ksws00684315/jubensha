@@ -14,6 +14,7 @@ import { rewriteAppropriatedWitness } from "./witness";
 import { quizPrompt } from "@/core/engine/flow";
 import type { QuizQuestionV2 } from "@/core/script/v2/schema";
 import { validatePlayerActionPlan } from "./plan";
+import { log } from "@/lib/log";
 
 /** JSON 决策解析失败时的重采样次数；全部失败走各自的兜底（随机/默认值） */
 const JSON_DECISION_RETRIES = 3;
@@ -151,7 +152,7 @@ export const agent = {
     let guarded = await say(opts.intro ? "self_intro" : opts.taskType ?? "speech");
     // 拒绝语被当成正文返回时不报错，只能按台词判定：补角色锚定重发一次，仍是被拒就当没有发言。
     if (isRefusalBoilerplate(guarded.text)) {
-      console.warn(`[llm] speech_refusal_reanchor task=${opts.intro ? "self_intro" : opts.taskType ?? "speech"} seat=${seatIndex}`);
+      log.warn("[llm] speech_refusal_reanchor", { task: opts.intro ? "self_intro" : opts.taskType ?? "speech", seat: seatIndex });
       guarded = await say("speech_refusal_reanchor", true);
     }
     if (isRefusalBoilerplate(guarded.text)) return "";
@@ -192,7 +193,7 @@ export const agent = {
       }
     } catch (err) {
       if (!emitted && isSafetyRefusal(err)) {
-        console.warn(`[llm] stream_refusal_fallback task=${opts.intro ? "self_intro" : opts.taskType ?? "speech"} seat=${seatIndex}`);
+        log.warn("[llm] stream_refusal_fallback", { task: opts.intro ? "self_intro" : opts.taskType ?? "speech", seat: seatIndex });
         return;
       }
       throw err;
@@ -230,7 +231,7 @@ export const agent = {
     const suspicion = [shouldReviewSpeech(text, ownLast) ? "ooc" : "", repeated(text) ? "repeated" : "", duplicateClaim ? "claim" : ""].filter(Boolean).join("+");
     const trace = (outcome: string, finalText: string) => {
       if (finalText === text && outcome === "keep") return;
-      console.warn(`[agents] speech_refine game=${ctx.gameId} seat=${seatIndex} fired=${suspicion} outcome=${outcome} from="${text.slice(0, 40)}" to="${finalText.slice(0, 40)}"`);
+      log.warn("[agents] speech_refine", { gameId: ctx.gameId, seat: seatIndex, fired: suspicion, outcome, from: text.slice(0, 40), to: finalText.slice(0, 40) });
     };
     if (!suspicion) return spoken;
     const targetName = plan?.targetSeat == null ? null : characterOf(ctx.script, ctx.state, plan.targetSeat)?.name ?? ctx.state.seats[plan.targetSeat]?.playerName ?? null;

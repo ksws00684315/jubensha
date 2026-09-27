@@ -13,6 +13,7 @@ import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { createHash } from "node:crypto";
 import { engineLoads, engines, rememberEngine } from "./registry";
 import { msgOf } from "./util";
+import { log } from "@/lib/log";
 import {
   advanceSelfIntroRound,
   beginGame,
@@ -194,7 +195,7 @@ export class GameEngine {
       ]);
       const eventRows = recentRows.slice().reverse();
       if (totalEvents > eventRows.length) {
-        console.log(`[engine] ${gameId} 历史事件 ${totalEvents} 条，仅恢复最近 ${eventRows.length} 条`);
+        log.info("[engine] 恢复历史事件窗口", { gameId, totalEvents, restoredEvents: eventRows.length });
       }
       const events: EngineEvent[] = eventRows.map((r) => ({
         seq: r.seq.toString(),
@@ -213,7 +214,7 @@ export class GameEngine {
       if (!(await acquireLease(gameId, ownerId))) {
         engine.drive = false;
         // R5 的判据要在实例日志里 grep 到 `lease held by`；日志只写 id，不含任何凭证。
-        console.warn(`[lease] ${gameId} 本实例只读（lease held by ${await leaseOwner(gameId)}）`);
+        log.warn("[lease] 本实例只读（lease held by other instance）", { gameId, leaseOwner: await leaseOwner(gameId) });
         return engine;
       }
       rememberEngine(gameId, engine);
@@ -262,7 +263,7 @@ export class GameEngine {
       })
       .catch(async (err: unknown) => {
         // 老版本 Prisma/方言不支持 createMany 时退回逐条建（保持旧的容错语义）
-        console.error(`[engine] seatState.createMany 失败，回落逐条创建：${String(err)}`);
+        log.error("[engine] seatState.createMany 失败，回落逐条创建", { error: err });
         for (const s of seats.filter((x) => x.kind !== "empty")) {
           await db.seatState.create({ data: { gameId: game.id, seatIndex: s.index, data: { clueIds: [], readScript: false } } }).catch(() => null);
         }
@@ -271,7 +272,7 @@ export class GameEngine {
     // 行是本次刚建的，正常一定拿得到；被并发开局抢先时退回只读，交给持牌实例驱动。
     if (!(await acquireLease(game.id))) {
       engine.drive = false;
-      console.warn(`[lease] ${game.id} 开局即由其他实例主持（lease held by ${await leaseOwner(game.id)}）`);
+      log.warn("[lease] 开局时由其他实例主持", { gameId: game.id, leaseOwner: await leaseOwner(game.id) });
       return engine;
     }
     rememberEngine(game.id, engine);
@@ -330,7 +331,7 @@ export class GameEngine {
     this.turnToken++;
     this.activeAbortController?.abort();
     engines.delete(this.gameId);
-    console.warn(`[lease] ${this.gameId} lease lost：租约已被其他实例接管，本实例停止驱动`);
+    log.warn("[lease] lease lost：租约已被其他实例接管，本实例停止驱动", { gameId: this.gameId });
   }
 
   /** 只读视图的一切写出口：抛错让当前步骤就地中止，别把状态写花。 */
@@ -343,7 +344,7 @@ export class GameEngine {
   private warnReadOnly(where: string): void {
     if (this.leaseWarned) return;
     this.leaseWarned = true;
-    console.warn(`[lease] ${this.gameId} 未持有租约，忽略${where}`);
+    log.warn("[lease] 未持有租约，忽略写入动作", { gameId: this.gameId, operation: where });
   }
 
   schedule(key: string, fn: () => void | Promise<void>, ms: number): void {
@@ -360,7 +361,7 @@ export class GameEngine {
       void this.exclusive(async () => {
         await fn();
       }).catch((err) => {
-        console.error(`[engine] 定时任务 ${key} 失败:`, err);
+        log.error("[engine] 定时任务失败", { gameId: this.gameId, timerKey: key, error: err });
       });
     }, ms);
     this.timers.set(key, t);
@@ -479,12 +480,12 @@ export class GameEngine {
         iterations++;
       } while (this.pendingTick && iterations < 200 && this.state.phase !== "ENDED");
       if (iterations >= 200 && this.pendingTick && this.state.phase !== "ENDED") {
-        console.error(`[engine] ${this.gameId} 单次 tick 连续推进达到 200 步，phase=${this.state.phase} round=${this.state.round}`);
+        log.error("[engine] 单次 tick 连续推进达到 200 步", { gameId: this.gameId, phase: this.state.phase, round: this.state.round });
       }
       this.revealRetries = 0;
     } catch (err) {
       // 内部调度错误只进入服务日志；玩家端不应看见“200 步”或数据库等实现细节。
-      console.error(`[engine ${this.gameId}] tick failed: ${msgOf(err)}`);
+      log.error("[engine] tick failed", { gameId: this.gameId, error: msgOf(err) });
       // REVEAL/ENDED 的收尾本应幂等重入，但触发下一次 tick 的来源只剩"玩家动作/重启"——
       // 给它一次定时兜底，避免终局卡在 REVEAL 只能靠真人点 nudge。上限 3 次防死循环。
       if ((this.state.phase === "REVEAL" || this.state.phase === "ENDED") && this.revealRetries < 3) {

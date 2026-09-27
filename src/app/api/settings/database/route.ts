@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/admin";
 import { assertPostgresUrl, maskDatabaseUrl, resolveDatabaseUrl, writeAppConfig } from "@/lib/app-config";
 import { pingDatabase, reconnectDatabase } from "@/lib/db";
+import { log } from "@/lib/log";
 
 const bodySchema = z.object({
   url: z.string().min(1),
@@ -63,7 +64,7 @@ async function PUT_IMPL(req: Request) {
     await reconnectDatabase(url);
   } catch (err) {
     // Prisma 连接错误细节只进日志；响应给固定文案（admin 可看日志排查）
-    console.error("[settings/database] 切换连接失败：", err);
+    log.error("[settings/database] 切换连接失败", { error: err });
     return NextResponse.json({ error: "数据库连接切换失败，请检查地址与网络后重试" }, { status: 502 });
   }
   return NextResponse.json({

@@ -5,6 +5,7 @@ import { AI_DECISION_TIMEOUT_MS, msgOf, withTimeout } from "./util";
 import { createRepetitionGuard } from "./repetition";
 import { agent } from "@/core/agents";
 import { renderActionPlan } from "@/core/agents/plan";
+import { log } from "@/lib/log";
 
 /**
  * ★ 回合执行器（TurnScheduler）★：正式回合（AI 发言 / DM 旁白）的 LLM 工作移出互斥锁。
@@ -48,7 +49,7 @@ export function dispatchTurn(
     try {
       text = await args.produce(controller.signal);
     } catch (err) {
-      console.error(`[engine] 回合 ${token} 生成失败:`, err);
+      log.error("[engine] 回合生成失败", { generationId: token, error: err });
       await e.exclusive(async () => {
         if (e.turnToken !== token) return;
         e.turnInFlight = false;
@@ -79,7 +80,7 @@ export function dispatchTurn(
   // 看门狗：produce 全链路（含降级）仍卡死时强制推进，回合绝不悬空
   e.scheduleBackground(`turn-watchdog:${token}`, async () => {
     if (!e.turnInFlight || e.turnToken !== token) return;
-    console.error(`[engine] 回合 ${token} 超时未完成,强制跳过`);
+    log.error("[engine] 回合生成超时，强制跳过", { generationId: token });
     await e.exclusive(async () => {
       if (!e.turnInFlight || e.turnToken !== token) return;
       e.turnInFlight = false;

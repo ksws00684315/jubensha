@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { db } from "@/lib/db";
+import { log } from "@/lib/log";
 
 /**
  * 单写者租约（S4.1）：同一局在任一时刻最多只有一个进程在驱动。
@@ -145,10 +146,10 @@ export function installLeaseReleaseOnSignal(): void {
   // prependListener：Next 自己也挂了 SIGTERM 处理器做优雅退出（start-server.ts），
   // 它会先注册。放牌必须在它之前起头，否则两边抢同一次优雅退出的时间窗。
   process.prependOnceListener("SIGTERM", () => {
-    console.log(`[lease] SIGTERM：交回 ${renewals.size} 个写租约（instance=${INSTANCE_ID.slice(0, 8)}）`);
+    log.info("[lease] SIGTERM：交回写租约", { leaseCount: renewals.size, instanceId: INSTANCE_ID.slice(0, 8) });
     void releaseAllLeases()
       .catch((err: unknown) => {
-        console.warn(`[lease] 退出前释放租约失败：${String(err)}`);
+        log.warn("[lease] 退出前释放租约失败", { error: err });
       })
       .finally(() => {
         process.exit(0);

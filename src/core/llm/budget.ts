@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { log } from "@/lib/log";
 
 /** 当日 token 预算已耗尽。调用方不需要单独 catch：引擎沿用「未绑定模型」的降级路径。 */
 export class BudgetExceededError extends Error {
@@ -53,7 +54,7 @@ async function usedToday(): Promise<number> {
       } catch (err) {
         // 查不到就当 0 放行：resolveBinding 紧接着要读库，库不可用时这次调用本来也不会成功。
         // 结果仍写进缓存，避免库故障期间每次 LLM 调用都刷一条日志。
-        console.warn("[llm] budget_query_failed，本次按未超预算放行：", err instanceof Error ? err.message : err);
+        log.warn("[llm] budget_query_failed，本次按未超预算放行", { error: err });
         return 0;
       }
     })().then((used) => {
@@ -78,6 +79,6 @@ export async function assertWithinBudget(purpose = "llm"): Promise<void> {
   if (!budget) return;
   const used = await usedToday();
   if (used < budget) return;
-  console.warn(`[llm] budget_exceeded purpose=${purpose} used=${used} budget=${budget}`);
+  log.warn(`[llm] budget_exceeded purpose=${purpose} used=${used} budget=${budget}`, { purpose, used, budget });
   throw new BudgetExceededError(used, budget);
 }

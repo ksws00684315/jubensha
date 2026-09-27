@@ -7,6 +7,7 @@ import { armHumanTimeout } from "./human-turn";
 import { jevVoteFallback, shadowVote } from "@/core/jev/live";
 import { legalPublicEvidenceIds } from "./evidence";
 import type { GameEngine } from "./engine";
+import { log } from "@/lib/log";
 
 /**
  * ★ 终局域（批次 I1 自 engine.ts 拆出）★：投票 / 复盘答题的 AI 决策、超时兜底与真人限时。
@@ -20,10 +21,10 @@ export async function recordVote(e: GameEngine, seat: number, target: number, re
   try {
     await db.vote.create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason } });
   } catch (err) {
-    console.error(`[engine ${e.gameId}] 投票落库失败（seat ${seat}），重试一次：`, err);
+    log.error("engine.vote.persist_failed_retrying", { gameId: e.gameId, seat, error: err });
     await db.vote
       .create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason } })
-      .catch((err2) => console.error(`[engine ${e.gameId}] 投票落库重试仍失败，仅存在于内存态：`, err2));
+      .catch((err2) => log.error("engine.vote.persist_retry_failed_memory_only", { gameId: e.gameId, seat, error: err2 }));
   }
   await e.recordEvent({
     type: "vote",

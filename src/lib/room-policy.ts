@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAdminRequest, safeEqualString } from "@/lib/admin";
+import { log } from "@/lib/log";
 
 /** 开房授权策略（决策 D2）。 */
 export type RoomCreatePolicy = "open" | "admin" | "invite";
@@ -16,7 +17,7 @@ export function roomCreatePolicy(): RoomCreatePolicy {
   const raw = (process.env.ROOM_CREATE_POLICY ?? "").trim().toLowerCase();
   if (raw === "open" || raw === "admin" || raw === "invite") return raw;
   const fallback = defaultPolicy();
-  if (raw) console.warn(`[room-policy] ROOM_CREATE_POLICY 取值无法识别，按 ${fallback} 处理`);
+  if (raw) log.warn("[room-policy] ROOM_CREATE_POLICY 取值无法识别，按默认策略处理", { fallback });
   return fallback;
 }
 
@@ -48,14 +49,14 @@ export function requireRoomCreateAuth(
     } catch {
       // 生产环境漏配 ADMIN_TOKEN（或与主密钥相同）时 assertAdminConfig 会抛错。
       // 建房的拒绝原因不该以 500 的形式砸到玩家脸上，按 fail closed 给可读文案。
-      console.warn("[room-policy] 管理面未正确配置，含 AI 座位的房间已拒绝创建");
+      log.warn("[room-policy] 管理面未正确配置，含 AI 座位的房间已拒绝创建");
       return NextResponse.json({ error: "服务未正确配置管理员口令，暂时无法创建含 AI 座位的房间" }, { status: 403 });
     }
   }
 
   const expected = (process.env.ROOM_INVITE_CODE ?? "").trim();
   if (!expected) {
-    console.warn("[room-policy] ROOM_CREATE_POLICY=invite 但未配置 ROOM_INVITE_CODE，含 AI 座位的房间已拒绝创建");
+    log.warn("[room-policy] ROOM_CREATE_POLICY=invite 但未配置 ROOM_INVITE_CODE，含 AI 座位的房间已拒绝创建");
     return NextResponse.json({ error: "服务未配置邀请码，暂时无法创建含 AI 座位的房间" }, { status: 403 });
   }
   return typeof inviteCode === "string" && inviteCode && safeEqualString(inviteCode, expected)

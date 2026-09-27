@@ -18,6 +18,7 @@
  * 不需要重放，也不依赖离线重建出来的状态。
  */
 import { db } from "@/lib/db";
+import { log } from "@/lib/log";
 import { clueText, narrativeToText } from "@/core/script/compat";
 import type { EngineEvent, GameState } from "@/core/engine/types";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
@@ -138,12 +139,17 @@ async function writeLiveRow(row: LiveRow, mode: JevLiveMode): Promise<void> {
       },
     });
   } catch (err) {
-    console.error(`[jev] 记账写入失败 game=${row.gameId} slot=${row.slot} seat=${row.seatIndex}:`, err);
+    log.error("[jev] 记账写入失败", { gameId: row.gameId, slot: row.slot, seat: row.seatIndex, error: err });
   }
   const costUsd = row.inputTokens * JEV_INPUT_COST_PER_TOKEN_USD;
   totalCostUsd += costUsd;
   totalCalls += 1;
-  console.log(`[jev] ${mode} game=${row.gameId.slice(0, 8)} slot=${row.slot} seat=${row.seatIndex} jev=${row.jevKey ?? "-"} actual=${actualKey ?? "-"} legal=${row.legal} used=${usedForAction} tok=${row.inputTokens} ms=${row.latencyMs} ≈$${costUsd.toFixed(6)} 累计$${totalCostUsd.toFixed(4)}`);
+  log.info(`[jev] ${mode}`, {
+    gameId: row.gameId.slice(0, 8), slot: row.slot, seat: row.seatIndex,
+    jev: row.jevKey ?? "-", actual: actualKey ?? "-", legal: row.legal,
+    used: usedForAction, inputCount: row.inputTokens, latencyMs: row.latencyMs,
+    costUsd: Number(costUsd.toFixed(6)), totalCostUsd: Number(totalCostUsd.toFixed(4)),
+  });
 }
 
 let totalCalls = 0;

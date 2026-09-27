@@ -8,6 +8,7 @@ import { emptyCompletionError, isRetryableLlmError, isSafetyRefusal, resolveMaxO
 import { createHash, randomUUID } from "node:crypto";
 import { composeSegments, type PromptSegments } from "./prompt-segments";
 import { assertWithinBudget } from "./budget";
+import { log } from "@/lib/log";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
@@ -326,9 +327,7 @@ async function callOnce(
     const usage = normalizeUsage(result.usage);
     const text = (result.text ?? "").trim();
     if (!text) {
-      console.warn(
-        `[llm] empty text purpose=${purpose} model=${b.modelId} completion=${usage.completion} maxOutput=${maxOutputTokens}`
-      );
+      log.warn("[llm] empty text", { purpose, model: b.modelId, completion: usage.completion, maxOutputTokens });
       throw emptyCompletionError(usage.completion);
     }
     return {
@@ -419,14 +418,14 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
         };
       } catch (err) {
         lastErr = err;
-        console.warn(`[llm] call failed purpose=${opts.purpose} model=${b.modelId}:`, err instanceof Error ? err.message : err);
+        log.warn("[llm] call failed", { purpose: opts.purpose, model: b.modelId, error: err });
         if (opts.abortSignal?.aborted || (err instanceof Error && (err.name === "AbortError" || /aborted|取消/i.test(err.message)))) break;
         // 内容审核以助手口吻拒绝时，同一份输入重发大概率仍被拒；只在硬区尾部补一次角色锚定再试。
         if (refusalRetries === 0 && isSafetyRefusal(err)) {
           refusalRetries = 1;
           activeOpts = withRoleAnchor(opts);
           fallbackReason = mergeFallbackReason(fallbackReason, "safety_refusal_reanchored");
-          console.warn(`[llm] safety_refusal_reanchored purpose=${opts.purpose} task=${opts.taskType ?? "-"} model=${b.modelId}`);
+          log.warn("[llm] safety_refusal_reanchored", { purpose: opts.purpose, task: opts.taskType, model: b.modelId });
           continue;
         }
         if (!isRetryable(err)) break;
@@ -460,7 +459,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
   }
   // 上游原始报文只进 UsageLog（error 字段），不随异常外流——
   // 该异常会被引擎捕获并广播进公开事件流（独立审查 M10）
-  console.error(`[llm] ${slotsToTry[0].providerName}/${slotsToTry[0].modelId} 调用失败：${msg}`);
+  log.error("[llm] 调用失败", { provider: slotsToTry[0].providerName, model: slotsToTry[0].modelId, error: msg });
   throw new Error(`LLM 调用失败（${slotsToTry[0].providerName}/${slotsToTry[0].modelId}），详情见设置→用量日志`);
 }
 
@@ -506,7 +505,7 @@ export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
         refusalRetries = 1;
         activeOpts = withRoleAnchor(opts);
         fallbackReason = mergeFallbackReason(fallbackReason, "safety_refusal_reanchored");
-        console.warn(`[llm] safety_refusal_reanchored purpose=${opts.purpose} task=${opts.taskType ?? "-"} model=${b.modelId} stream=1`);
+        log.warn("[llm] safety_refusal_reanchored", { purpose: opts.purpose, task: opts.taskType, model: b.modelId, stream: true });
         continue;
       }
       await logUsage({ b, purpose: opts.purpose, gameId: opts.gameId, prompt: 0, completion: 0, latencyMs: Date.now() - started, ok: false, error: msg, ...diagnostics, retryCount: retryCount + refusalRetries, fallbackReason, cancelled: opts.abortSignal?.aborted || (err instanceof Error && err.name === "AbortError") });
@@ -534,10 +533,7 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
     // 每次发言都会走这里，只提示一次，避免刷屏
     if (!embedUnboundWarned) {
       embedUnboundWarned = true;
-      console.warn(
-        "[llm] embedding 槽位未绑定，向量检索记忆层已停用（可在「设置 → AI 接入」绑定）：",
-        err instanceof Error ? err.message : err
-      );
+      log.warn("[llm] embedding 槽位未绑定，向量检索记忆层已停用（可在「设置 → AI 接入」绑定）", { error: err });
     }
     return null;
   }

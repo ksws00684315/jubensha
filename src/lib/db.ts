@@ -2,8 +2,33 @@ import { PrismaClient } from "@prisma/client";
 import { appendFileSync } from "node:fs";
 import { resolve, sep } from "node:path";
 import { resolveDatabaseUrl } from "@/lib/app-config";
+import { log } from "@/lib/log";
 
-const g = globalThis as unknown as { prisma?: PrismaClient; prismaUrl?: string };
+const g = globalThis as unknown as {
+  prisma?: PrismaClient;
+  prismaUrl?: string;
+  __jbsPrismaQueryCount?: { count: number; timer?: NodeJS.Timeout };
+};
+
+function attachQueryDiagnostics(client: PrismaClient, timingPath?: string): void {
+  const countQueries = process.env.DEBUG_PRISMA_QUERY_COUNT === "1";
+  if (!countQueries && !timingPath) return;
+  const state = countQueries ? (g.__jbsPrismaQueryCount ??= { count: 0 }) : undefined;
+  if (state && !state.timer) {
+    state.timer = setInterval(() => {
+      const count = state.count;
+      state.count = 0;
+      log.info("prisma.qpm", { count });
+    }, 60_000);
+    state.timer.unref();
+  }
+  // The listener is installed only on PrismaClient instances configured with query event logging.
+  const onQuery = client.$on as unknown as (eventType: "query", callback: (event: { duration: number }) => void) => void;
+  onQuery.call(client, "query", (event) => {
+    if (state) state.count++;
+    if (timingPath) appendFileSync(timingPath, `${event.duration}\n`);
+  });
+}
 
 function createClient(url: string): PrismaClient {
   const timingFile = process.env.E2E_QUERY_TIMINGS_FILE;
@@ -15,9 +40,15 @@ function createClient(url: string): PrismaClient {
       datasources: { db: { url } },
       log: [{ emit: "event", level: "query" }],
     });
-    client.$on("query", (event) => {
-      appendFileSync(timingPath, `${event.duration}\n`);
+    attachQueryDiagnostics(client, timingPath);
+    return client;
+  }
+  if (process.env.DEBUG_PRISMA_QUERY_COUNT === "1") {
+    const client = new PrismaClient({
+      datasources: { db: { url } },
+      log: [{ emit: "event", level: "query" }],
     });
+    attachQueryDiagnostics(client);
     return client;
   }
   return new PrismaClient({ datasources: { db: { url } } });

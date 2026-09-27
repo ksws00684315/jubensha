@@ -11,24 +11,24 @@ import { resolveDatabaseUrl } from "@/lib/app-config";
 process.env.APP_CONFIG_PATH ??= "/nonexistent/lease-holder-child.json";
 const url = resolveDatabaseUrl().url ?? "";
 if (!url.endsWith("/jubensha_test")) {
-  console.error("REFUSED 只允许连接 jubensha_test");
+  process.stderr.write("REFUSED 只允许连接 jubensha_test\n");
   process.exit(2);
 }
 
 const gameId = process.argv[2];
 if (!gameId) {
-  console.error("用法：lease-holder-child <gameId>");
+  process.stderr.write("用法：lease-holder-child <gameId>\n");
   process.exit(2);
 }
 
 async function main(): Promise<void> {
   installLeaseReleaseOnSignal();
-  console.log(`ACQUIRED ${await acquireLease(gameId, INSTANCE_ID)}`);
-  console.log(`HOLDER ${INSTANCE_ID}`);
-  startLeaseRenewal(gameId, () => console.log("LOST"));
+  process.stdout.write(`ACQUIRED ${await acquireLease(gameId, INSTANCE_ID)}\n`);
+  process.stdout.write(`HOLDER ${INSTANCE_ID}\n`);
+  startLeaseRenewal(gameId, () => process.stdout.write("LOST\n"));
   // 续租定时器是 unref 的，本进程需要一个真句柄才能活到 SIGTERM
   setInterval(() => undefined, 5_000);
-  console.log("READY");
+  process.stdout.write("READY\n");
 }
 
 void main();
