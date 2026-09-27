@@ -123,6 +123,10 @@ model Game {
   scriptSnapshot       Json?
   scriptHash           String?
   scriptSnapshotSource String?  // start | legacy_baseline
+  /// 单写者租约（S4.1）：正在驱动本局的实例 id；null = 无人主持，任何实例都可接管。
+  ownerId                String?
+  /// 租约有效到期时刻；持有者每 10s 续租，超过此时刻即视为失效、可被别的实例抢走。
+  leaseUntil             DateTime?
   createdAt DateTime  @default(now())
   endedAt   DateTime?
 
