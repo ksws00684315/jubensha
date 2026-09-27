@@ -438,6 +438,7 @@
 | 2026-09-26 | opt/2026-09 | P0/P1（至 24847c0） | check job 绿（run 36254901201） |
 | 2026-09-26 | opt/2026-09 | P2 前半（至 70133f5） | integration job 首次绿（run 36259803390） |
 | 2026-09-27 | opt/2026-09 | P2 收尾（S2.4–S2.6 + 阶段验收，`70133f5..b42d246`，9 个提交） | 绿：run 36302004848（check 与 integration 均 success，各约 50s） |
+| 2026-09-27 | opt/2026-09 | P3 全部（S3.1–S3.5 + 阶段验收，`b42d246..fa21b69`，25 个提交，其中前 2 个是 P2 收尾的补记） | 绿：run 36312551209（check 1m0s、integration 1m1s） |
 
 ## 偏差登记
 - **DEV-01（S0.4）**：计划 §1.1 称 `npm audit --omit=dev` 运行时链路为 0 high（3 high 全在 CLI 链路）。实测 `npm audit --omit=dev` 仍报 3 high（deepmerge-ts 经 @prisma/config ← prisma；prisma 在 devDependencies 中）。不影响任何指标的相对比较（后续只要求「不增加」），如实记录，不处理。
