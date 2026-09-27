@@ -74,7 +74,7 @@ function loadState() {
 let lastActAt = 0;
 const run = async (action) => {
   const r = await act(action);
-  if (!r.ok && !/已经选过|已经投过|已作答/.test(r.error ?? "")) log("  !! action failed:", JSON.stringify(action), r.error);
+  if (!r.ok && !/已经选过|已经投过|已作答|当前不能公开或私藏/.test(r.error ?? "")) log("  !! action failed:", JSON.stringify(action), r.error);
   return r;
 };
 async function driveOnce(g) {
@@ -107,18 +107,19 @@ async function driveOnce(g) {
     return true;
   }
   if (g.phase === "SEARCH") {
-    const fresh = (g.myClues ?? []).slice(handoff.clueSeen);
-    if (fresh.length) {
-      for (const clueId of fresh) await run({ type: "publish", clueId, publish: false });
-      handoff.clueSeen += fresh.length;
-      return true;
-    }
+    // 顺序照 smoke-m3：先把本轮地点选掉（不选，这一轮会一直等真人），再对新到手的卡做公开/私藏决定。
+    // 政策强制公开的卡会被拒（「当前不能公开或私藏这张卡」），拒了就翻页——
+    // 攥着一张决定不了的卡重试，会让后面几轮都停在搜证里（--stage=resume 跑不到 ENDED 就是这个）。
+    let acted = false;
     const loc = (g.availableLocations ?? [])[0];
     if (loc) {
       const r = await run({ type: "choose_location", location: loc });
-      if (r.ok) return true;
+      acted = Boolean(r.ok);
     }
-    return false;
+    const fresh = (g.myClues ?? []).slice(handoff.clueSeen);
+    for (const clueId of fresh) await run({ type: "publish", clueId, publish: false });
+    handoff.clueSeen = Math.max(handoff.clueSeen, (g.myClues ?? []).length);
+    return acted || fresh.length > 0;
   }
   if (g.phase === "DISCUSSION" && Date.now() - lastActAt > 6000) {
     await act({ type: "rush" });
