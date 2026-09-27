@@ -17,6 +17,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:export": "node scripts/db-export.mjs",
     "db:import": "node scripts/db-import.mjs",
+    "db:retention": "tsx scripts/retention.ts",
     "db:backfill-snapshots": "tsx scripts/backfill-game-snapshots.ts",
     "eval:snapshots": "tsx scripts/build-eval-snapshots.ts",
     "design:validate": "npx tsx scripts/validate-design-packages.ts",
