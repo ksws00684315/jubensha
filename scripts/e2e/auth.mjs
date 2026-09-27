@@ -1,4 +1,5 @@
-/* R2 鉴权负向实机：错 token 发 action / 观战 SSE 只见公开 / 无口令访问管理接口 / 伪造 Host 访问 providers。
+/* R2 鉴权负向实机：无口令建含 AI 座位的房（D2 admin 策略）/ 错 token 发 action / 观战 SSE 只见公开 /
+ * 无口令访问管理接口 / 伪造 Host 访问 providers。
  * 需要 up.mjs 已启动实例（读 .e2e/up.json）。 */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -23,7 +24,7 @@ async function createHumanDmGame() {
   const sample = scripts.find((s) => s.minPlayers <= 5 && s.maxPlayers >= 5);
   if (!sample) throw new Error("没有可用剧本");
   const seats = Array.from({ length: Math.max(3, sample.minPlayers) }, (_, i) => ({ kind: i === 0 ? "human" : "ai" }));
-  const room = await post("/api/rooms", { scriptId: sample.id, seats, humanDm: true }).then((r) => r.json());
+  const room = await post("/api/rooms", { scriptId: sample.id, seats, humanDm: true }, { "x-admin-token": ADMIN_TOKEN }).then((r) => r.json());
   const join = await post("/api/rooms/join", { code: room.code, name: "R2真人" }).then((r) => r.json());
   const dmJoin = await post("/api/rooms/dm-join", { code: room.code, name: "R2主持" }).then((r) => r.json());
   const start = await post(`/api/rooms/${room.code}/start`, { hostToken: room.hostToken }).then((r) => r.json());
@@ -62,6 +63,23 @@ async function collectStream(url, ms, headers = {}) {
 }
 
 async function main() {
+  // 0) 生产构建的实例默认 ROOM_CREATE_POLICY=admin（决策 D2，S3.1）：
+  //    未带口令建含 AI 座位的房间 → 403；纯真人房不受策略影响 → 201。
+  const list = await fetch(`${BASE}/api/scripts`, { signal: AbortSignal.timeout(10_000) }).then((r) => r.json());
+  const probe = list.find((s) => s.minPlayers <= 5 && s.maxPlayers >= 5);
+  if (!probe) throw new Error("没有可用于建房检查的剧本");
+  const noCred = await post("/api/rooms", { scriptId: probe.id, seats: [{ kind: "ai" }, { kind: "ai" }, { kind: "ai" }] });
+  log("无口令建 AI 房 →", noCred.status);
+  if (noCred.status !== 403) throw new Error(`期望 403，实际 ${noCred.status}`);
+  const deniedBody = await noCred.json();
+  if (deniedBody.error !== "创建含 AI 座位的房间需要管理员身份") throw new Error(`403 文案不符: ${JSON.stringify(deniedBody)}`);
+  const humanRoom = await post(
+    "/api/rooms",
+    { scriptId: probe.id, seats: Array.from({ length: Math.max(3, probe.minPlayers) }, () => ({ kind: "human" })) }
+  );
+  log("无口令建纯真人房 →", humanRoom.status);
+  if (humanRoom.status !== 201) throw new Error(`纯真人房不该被策略拦住，实际 ${humanRoom.status}`);
+
   const { gameId, seat, dm } = await createHumanDmGame();
   log("game", gameId);
 

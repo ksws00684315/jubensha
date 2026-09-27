@@ -25,6 +25,8 @@ for (const s of scenarios) {
       (await import("node:fs")).readFileSync(path.join(ROOT, ".e2e", "up.json"), "utf8")
     );
     env.SMOKE_BASE = `http://127.0.0.1:${cfg.port}`;
+    // 实例跑的是生产构建，按 D2 默认 ROOM_CREATE_POLICY=admin：建含 AI 座位的房要带管理员口令
+    env.SMOKE_ADMIN_TOKEN = String(cfg.adminToken ?? "");
   }
   for (const [k, v] of Object.entries(s.env)) if (v) env[k] = v;
   const r = spawnSync("node", [s.file], { stdio: "inherit", cwd: ROOT, env });

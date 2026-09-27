@@ -23,10 +23,10 @@ if (cfg.port === 3000) {
 const log = (...a) => console.log("[e2e:r4]", ...a);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const post = async (p, body) => {
+const post = async (p, body, extraHeaders = {}) => {
   const res = await fetch(BASE + p, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...extraHeaders },
     body: JSON.stringify(body),
     signal: AbortSignal.timeout(60_000),
   });
@@ -47,7 +47,7 @@ async function newGame() {
   const sample = scripts.find((s) => s.minPlayers <= 5 && s.maxPlayers >= 5);
   if (!sample) throw new Error("没有 5 人本可用");
   const seats = Array.from({ length: Math.max(3, sample.minPlayers) }, (_, i) => ({ kind: i === 0 ? "human" : "ai" }));
-  const room = await post("/api/rooms", { scriptId: sample.id, seats });
+  const room = await post("/api/rooms", { scriptId: sample.id, seats }, { "x-admin-token": cfg.adminToken });
   if (!room.code) throw new Error("建房失败: " + JSON.stringify(room));
   const join = await post("/api/rooms/join", { code: room.code, name: "R4真人" });
   if (!join.token) throw new Error("入座失败: " + JSON.stringify(join));

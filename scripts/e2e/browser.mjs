@@ -19,12 +19,26 @@ const E2E_DIR = path.join(ROOT, ".e2e");
 const CHROME_INFO = path.join(E2E_DIR, "chrome.json");
 const CHROME_BIN = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-const argv = Object.fromEntries(
-  process.argv.slice(2).map((a) => {
+const argv = (() => {
+  const out = {};
+  const vars = [];
+  for (const a of process.argv.slice(2)) {
     const m = /^--([^=]+)(?:=(.*))?$/.exec(a);
-    return m ? [m[1], m[2] === undefined ? true : m[2]] : [a, true];
-  })
-);
+    if (!m) {
+      out[a] = true;
+      continue;
+    }
+    const [, key, value] = m;
+    // --var 可重复给（写两个 --var 时后者覆盖前者会让人误以为变量没生效，attach 才报“没有可附着的标签页”）
+    if (key === "var" && value !== undefined) {
+      vars.push(...value.split(","));
+      continue;
+    }
+    out[key] = value === undefined ? true : value;
+  }
+  out.var = vars.join(",");
+  return out;
+})();
 
 function log(...a) {
   console.log("[e2e:browser]", ...a);
@@ -384,6 +398,7 @@ async function main() {
     });
   let state = { page };
   const t0 = Date.now();
+  if (plan.adminSession) await seedAdminSession();
 
   const openTab = async (name, sessionId, targetId) => {
     const p = new Page(cdp, targetId, sessionId);
@@ -393,6 +408,26 @@ async function main() {
     return p;
   };
   const exists = (p, sel) => p.eval(`return __r9.exists(${JSON.stringify(subst(sel))});`);
+
+  /**
+   * 生产构建的 e2e 实例默认 ROOM_CREATE_POLICY=admin（决策 D2），走 UI 建含 AI 座位的房间
+   * 得先有管理会话。这里用真实解锁接口换 cookie 再种进浏览器，等同于人在「设置」页输口令；
+   * 口令只在进程内出现，不写进计划文件，也不进报告。
+   */
+  async function seedAdminSession() {
+    const res = await fetch(`${BASE}/api/admin/unlock`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: up.adminToken }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) fail(`注入管理员会话失败：HTTP ${res.status}（解锁接口可能被限流，稍后重试）`);
+    const pair = (res.headers.get("set-cookie") ?? "").split(";")[0];
+    const [name, ...rest] = pair.split("=");
+    if (!name || !rest.length) fail("解锁响应里没有 Set-Cookie，无法注入会话");
+    await cdp.send("Network.setCookie", { name, value: rest.join("="), url: BASE, httpOnly: true, sameSite: "Lax" }, page.sessionId);
+    log("已注入管理员会话（供 UI 创建含 AI 座位的房间）");
+  }
 
   /** 执行单步；If 变体在目标不存在时跳过而非失败。返回 'ok' 或 'skip:<原因>'。 */
   const execOne = async (p, action) => {

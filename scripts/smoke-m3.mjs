@@ -18,11 +18,13 @@ const withRetry = async (fn, tries = 5) => {
     }
   }
 };
-const post = (p, b) =>
+const ADMIN_TOKEN = process.env.SMOKE_ADMIN_TOKEN ?? ""; // e2e 实例按 D2 默认 admin 策略，建 AI 房要管理员凭证
+const adminHeaders = () => (ADMIN_TOKEN ? { "x-admin-token": ADMIN_TOKEN } : {});
+const post = (p, b, extraHeaders = {}) =>
   withRetry(() =>
     fetch(BASE + p, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...extraHeaders },
       body: JSON.stringify(b),
       signal: AbortSignal.timeout(120_000),
     }).then((r) => r.json())
@@ -42,7 +44,7 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
   log("script", sample.title, scriptId);
   const seatCount = Math.max(3, sample.minPlayers ?? 5);
   const seats = Array.from({ length: seatCount }, (_, i) => ({ kind: i === 0 ? "human" : "ai" }));
-  const room = await post("/api/rooms", { scriptId, seats });
+  const room = await post("/api/rooms", { scriptId, seats }, adminHeaders());
   log("room", room.code);
   if (!room.hostToken) throw new Error("create room missing hostToken: " + JSON.stringify(room));
   const join = await post("/api/rooms/join", { code: room.code, name: "测试真人" });

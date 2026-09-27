@@ -1,6 +1,7 @@
 {
   "step": "S2.6-d3",
   "dir": "S2.6",
+  "adminSession": true,
   "viewport": {
     "width": 1280,
     "height": 800

@@ -1,0 +1,50 @@
+{
+  "step": "S3.1-ui403",
+  "dir": "S3.1",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 700,
+  "actions": [
+    {
+      "nav": "{BASE}/rooms/new"
+    },
+    {
+      "waitSelector": "text:创建房间",
+      "label": "建房页就绪（无管理会话的默认上下文）"
+    },
+    {
+      "collect": "const l = await (await fetch('/api/scripts')).json(); const s = l.find((x) => (x.title || '').includes('云澜山庄')) || l[0]; return s.id;",
+      "save": "scriptId",
+      "label": "取 5 人本 id"
+    },
+    {
+      "pick": "label:剧本",
+      "value": "{scriptId}",
+      "label": "切换剧本"
+    },
+    {
+      "waitSelector": "select[aria-label=\"座位 2 类型\"]",
+      "label": "座位配置出现（默认 1 真人 + 4 AI）"
+    },
+    {
+      "click": "text:创建房间",
+      "label": "提交建房"
+    },
+    {
+      "waitSelector": "text:创建含 AI 座位的房间需要管理员身份",
+      "timeoutMs": 20000,
+      "label": "服务端 403 文案渲染到页面上"
+    },
+    {
+      "shot": "01-rooms-new-403.png",
+      "label": "未授权报错截图"
+    },
+    {
+      "collect": "return { stillOnForm: location.pathname.endsWith('/rooms/new'), submitEnabled: [...document.querySelectorAll('button')].some((b) => /创建房间/.test(b.textContent||'') && !b.disabled) };",
+      "save": "after403",
+      "label": "报错后表单仍可继续操作"
+    }
+  ]
+}

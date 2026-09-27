@@ -10,6 +10,7 @@
 | 实例 | `next start`，默认 :3100（被占用时依次尝试 3110、3120），只绑定 127.0.0.1 |
 | 配置 | `APP_CONFIG_PATH=.e2e/app.json`（隔离，读不到 `local.app.json`） |
 | 凭据 | `ADMIN_TOKEN` / `SECRET_MASTER_KEY` 每次随机生成，写入 `.e2e/up.json`（已 gitignore） |
+| 开房策略 | 实例是生产构建，按 D2 默认 `ROOM_CREATE_POLICY=admin`：建含 AI 座位的房要带管理员口令，所以 `smoke-m3` 用 `SMOKE_ADMIN_TOKEN`（由 `run.mjs` 从 `up.json` 注入），其余脚本直接读 `cfg.adminToken` |
 | 模式 | 无模型（`jubensha_e2e` 不配置任何 binding），AI 发言降级为提示，流程仍须闭环 |
 | 种子 | `seeds/sample-5p-cloudlanshan.json`（5 人）+ `seeds/generated/4p-huoguoju.json` + `seeds/generated/06p-hongyanbanhang.json` |
 
@@ -30,7 +31,7 @@ npm run e2e:up -- --keep-db   # 沿用现有库重启实例（R4 用），不重
 | # | 脚本 | 断言 |
 |---|---|---|
 | R1 | `scripts/smoke-m3.mjs`（`SMOKE_BASE` 取自 `.e2e/up.json` 的端口） | 15 分钟内到 ENDED；`voteResult` 非空；输出无 `!! action failed`（「已经选过」除外）；退出码 0。门禁要求连续 3 次通过 |
-| R2 | `scripts/e2e/auth.mjs` | 错 token 发 action → 403；观战 SSE 收不到座位私有事件、DM 流能收到；无口令访问 `/api/providers` → 401；伪造 `Host: localhost` + `X-Forwarded-For: 127.0.0.1` → 401 |
+| R2 | `scripts/e2e/auth.mjs` | 无口令建含 AI 座位的房 → 403（生产默认 admin），无口令建纯真人房 → 201；错 token 发 action → 403；观战 SSE 收不到座位私有事件、DM 流能收到；无口令访问 `/api/providers` → 401；伪造 `Host: localhost` + `X-Forwarded-For: 127.0.0.1` → 401 |
 | R3 | `scripts/e2e/sse-resume.mjs` | 断线期间产生新事件后带 `Last-Event-ID` 重连，补传 seq 严格递增、与 DB 全集比对不重不漏 |
 | R4 | `scripts/e2e/restart-resume.mjs`（人工分两段执行，见下） | 进程重启后 phase/round 与重启前一致，能继续推进到 ENDED，日志无未捕获异常 |
 
@@ -70,6 +71,9 @@ npm run e2e:browser -- --shutdown               # 只杀本 profile 的 Chrome�
 | 4 | `r9-d4a-play-early.json` → `r9-d4b-play-vote.json` | READING/SELF_INTRO/SEARCH/DISCUSSION 与 VOTE/REVEAL/ENDED；中间插 d5 保证 5、6 项在局中执行 |
 | 5、6 | `r9-d5-identity-spectator.json` | 刷新后身份/阶段/事件数一致；无痕上下文只带房间码或 `/play` 地址时看不到私有卡与私聊 |
 | 7 | — | 首轮为基线留档，无上一阶段可比；后续阶段重跑时同名截图对比 |
+| 附 | `s31-unauthorized-create-room.json` | S3.1 负向：默认上下文（无管理会话）走 UI 建 AI 房，断言服务端的 403 中文文案渲染出来、表单仍可用。截图前缀用 `x`，产物落在 `.e2e/screens/S3.1/`，不与 R9 基线同名 |
+
+plan 顶层可加 `"adminSession": true`（目前只有 `r9-d3` 需要）：驱动先用 `.e2e/up.json` 里的口令打一次 `/api/admin/unlock`，把换来的管理会话 cookie 种进默认上下文，UI 才建得出含 AI 座位的房间（实例按 D2 默认 admin）。口令只在驱动进程内出现，不进计划文件也不进报告。
 
 动作清单是 JSON（`actions` 数组），支持 `nav / reload / waitSelector / waitJs / click(If) / clickFirst / type(If) / pick(If) / press / shot / collect / assert / tabNew / attach / useTab / until`。选择器三种写法：CSS、`text:文案`（先在可交互元素里找，精确优先再取子串，再退到正文文本节点）、`label:文案`（label 包裹的控件）。`{BASE}`、`{ADMIN_TOKEN}` 与 `--var=k=v` 注入的变量会在执行前替换。`waitJs` 轮询一段返回布尔的脚本，用于「只能等结果态」的步骤。
 
@@ -88,4 +92,6 @@ UI 判据之外还要落库侧证时用 `zsh scripts/e2e/db-proof.sh <gameId>`�
 - `EADDRINUSE` / 端口被占用：`up.mjs` 会自动改用 3110、3120（三者全忙才失败）。实际端口见 `.e2e/up.json`。
 - 遗留实例杀不掉（`.e2e/up.json` 丢了）：`lsof -nP -iTCP:3100 -sTCP:LISTEN` 找到 pid，确认命令行是本项目 `next start` 后再手工 `kill`。
 - 实例 60s 未就绪：看 `.e2e/instance.log`。
+- `POST /api/rooms` 限流 5 次/分钟·IP：R2 一次跑 3 次建房（403 用例、纯真人房、正式开局），紧跟着跑 R3/R9 若撞上 429，等一分钟再试，别误判成授权失效。
+- 建 AI 房返回 403「创建含 AI 座位的房间需要管理员身份」：脚本漏了 `x-admin-token`，或浏览器 plan 没标 `adminSession`（见上）。
 - pg-test 容器没起：`npm run db:test:up`。
