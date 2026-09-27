@@ -14,7 +14,7 @@ model Script {
   minPlayers  Int
   maxPlayers  Int
   durationMin Int
-  difficulty  String // 新手 | 进阶 | 硬核
+  difficulty  String // CHECK scripts_difficulty_stable_check: 新手 | 进阶 | 硬核
   tags        String[]
   intro       String
   content     Json
@@ -22,7 +22,7 @@ model Script {
   designPackage Json?
   designHash  String?
   designReview Json?
-  source      String   @default("manual") // manual | ai | import
+  source      String   @default("manual") // CHECK scripts_source_stable_check: manual | ai | import
   deleted     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -32,7 +32,7 @@ model Script {
   @@map("scripts")
 }
 
-/// AI 接入方。protocol: openai_compatible | anthropic
+/// AI 接入方。protocol CHECK ai_providers_protocol_stable_check: openai_compatible | anthropic
 model AiProvider {
   id           String   @id @default(cuid())
   name         String
@@ -77,7 +77,7 @@ model Room {
   id        String   @id @default(cuid())
   code      String   @unique
   scriptId  String
-  status    String   @default("lobby") // lobby | playing | ended | aborted
+  status    String   @default("lobby") // CHECK rooms_status_stable_check: lobby | playing | ended | aborted
   humanDm              Boolean  @default(false) // 开启后由真人担任 DM
   unlimitedHumanTurns  Boolean  @default(true) // 真人发言/搜证/投票不限时；关闭则 3 分钟后自动跳过
   dmToken              String? // 真人 DM 的身份凭证
@@ -92,7 +92,7 @@ model Room {
   @@map("rooms")
 }
 
-/// 座位。kind: human | ai | empty
+/// 座位。kind CHECK seats_kind_stable_check: human | ai | empty
 model Seat {
   id          String  @id @default(cuid())
   roomId      String
@@ -115,8 +115,8 @@ model Game {
   id        String    @id @default(cuid())
   roomId    String    @unique
   scriptId  String
-  status    String    @default("running") // running | ended | aborted
-  phase     String    @default("LOBBY")
+  status    String    @default("running") // CHECK games_status_stable_check: running | ended | aborted
+  phase     String    @default("LOBBY") // CHECK games_phase_stable_check: LOBBY | READING | SELF_INTRO | SEARCH | DISCUSSION | VOTE | REVEAL | ENDED
   round     Int       @default(0)
   state     Json      @default("{}")
   /// 开局时规范化的剧本快照；对局恢复不得读取后续被编辑的 Script.content。

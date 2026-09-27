@@ -19,7 +19,7 @@ describe("L3：SSE 历史回放分页（I10）", () => {
       data: {
         code: "PAG01",
         scriptId: script.id,
-        status: "started",
+        status: "playing",
         hostToken: "host-token-1",
         seats: { create: seats1h2a().map((seat, index) => ({ index, kind: seat.kind, characterId: seat.characterId })) },
       },

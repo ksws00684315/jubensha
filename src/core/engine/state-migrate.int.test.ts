@@ -51,7 +51,7 @@ async function seedGameFromFixture(fixture: Record<string, unknown>) {
       minPlayers: 5,
       maxPlayers: 5,
       durationMin: 120,
-      difficulty: "normal",
+      difficulty: "新手",
       tags: ["test"],
       intro: "用于旧快照恢复的集成测试",
       content: doc as object,
