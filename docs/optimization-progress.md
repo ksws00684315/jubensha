@@ -19,18 +19,18 @@
 |---|---|---|---|---|
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
-| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 80 / 609 + 1 expected fail，约 4.0s | 不降 | S3.3 |
-| L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 22/22 个 route.ts 文件都有同名测试（覆盖全部 34 个导出处理器） | 34/34 | S2.2（S2.6 复测） |
-| L2 用例数 | ~10（events route 10 个） | 191 过 + 1 it.fails（BUG-01 已于 S3.3 翻正）（`npm run test:api`，23 files，1.0s） | ≥ 140 | S3.3 |
+| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 81 / 625 + 1 expected fail，约 4.4s | 不降 | S3.5 |
+| L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 23/23 个 route.ts 文件都有同名测试（覆盖全部 35 个导出处理器） | 34/34 | S3.5 |
+| L2 用例数 | ~10（events route 10 个） | 206 过 + 1 expected fail（`npm run test:api`，24 files，1.2s） | ≥ 140 | S3.5 |
 | L3 用例数 | 0 | 13（4 files，14.8s） | ≥ 30 | S3.2 |
-| 凭证比较方式（座位 / DM / 房主） | 7 处裸 `===` / `!==` + join.ts 4 处，长度与内容可被计时探测；`games/[id]` 还是 query 优先（BUG-01） | 全部经 `src/lib/credentials.ts`（`timingSafeEqual`，任一侧为空即不匹配），验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `join.ts` 为空；header 优先已修正 | 无常量时间以外的凭证比较 | S3.3 |
+| 凭证比较方式（座位 / DM / 房主） | 7 处裸 `===` / `!==` + join.ts 4 处，长度与内容可被计时探测；`games/[id]` 还是 query 优先（BUG-01） | 全部经 `src/lib/credentials.ts`（`timingSafeEqual`，任一侧为空即不匹配），验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `join.ts` 为空；header 优先已修正。S3.5 的换票端点与 SSE 心跳重验也都走同一套 `verify*` | 无常量时间以外的凭证比较 | S3.5 |
 | 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
 | 单日 LLM token 上限 | 无：授权被绕过后可一路消耗 | `LLM_DAILY_TOKEN_BUDGET` 熔断，`chat`/`chatStream`/`embedTexts` 第一行拦截 + 看板显示今日已用；L1 13 用例 + L3 I11 3 用例 | 超预算不崩溃、对局仍走到 ENDED | S3.2 |
 | CSP 执行模式 | 全站只有 `Content-Security-Policy-Report-Only`，含 `'unsafe-eval'`，不拦截任何资源 | 生产 `Content-Security-Policy` 强制、`script-src` 无 `'unsafe-eval'`；开发仍 report-only + eval（Next 需要） | 生产强制 | S3.4 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
 | src/core/engine 行覆盖率（同上） | 71.98%（1166/1620） | 71.98% | ≥ 基线 | S0.4 |
-| 非测试代码 console.*（grep，排除 .test.） | 27 | 32（S3.2 新增 2 条：`budget.ts:56` 查库失败放行、`:81` 熔断命中，计划明文要求 S6.1 之前先用 `console.warn`；沿用 `[模块]` 直写约定） | 0（log.ts 除外） | S3.2 |
+| 非测试代码 console.*（grep，排除 .test.） | 27 | 34（S3.2 +2：`budget.ts:56/:81`；S3.5 +2：`events/route.ts:40` 废弃 query 凭证告警、`:74` ticket 无效降级告警——两条都是本步判据要求「兼容期记 deprecation 日志」「重放必须可见」所需的，沿用 `[模块]` 直写约定） | 0（log.ts 除外） | S3.5 |
 | 非测试代码 as unknown as（grep，排除 .test.） | 12 | 12 | ≤ 3 | S0.4 |
 | engine.ts 行数（wc -l） | 1044 | 1044 | ≤ 700 | S0.4 |
 | handleActionInner 函数体 | :670–:945 ≈ 275 行 | 275 | ≤ 60 | S0.4 |
@@ -40,11 +40,11 @@
 | npm audit --omit=dev | 3 high（复测仍含 CLI 链路，见偏差 DEV-01） | 3 high | 0 | S0.4 |
 | CI | 无（无 .github/） | 无 | push 自动 check | S0.4 |
 | R1 无模型冒烟 | 未测 | 连续 4 次通过，~61s/次（e2e 实例 :3110/:3120） | 连续 3 次 | S2.5 |
-| R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败；S3.4 在强制 CSP 下全量重跑 12/12 exit 0（合计 342 步、驱动内 113.2s） | 两遍全绿 | S3.4 |
-| R9 控制台 error / 未捕获异常 | 未测 | error 2（12 次运行合计，全部是第 1 项故意的 404）/ 异常 0 / **CSP 违规 0** | 除故意负向用例外为 0 | S3.4 |
-| UI 基线截图（`.e2e/screens/S2.6/`，不入库） | 0 | 78 张：桌面 d01–d31a 32 + 移动 m01–m31a 32（S3.4 全量重跑已重生成）+ 决策分支验证 pd 14 | ≥ 20 | S3.4 |
-| SSE URL 带 `token=` 的请求（R9 网络捕获，每玩家标签页） | 未测 | 每遍 2 条（d3 建连 1 + d5 刷新重连 1），S3.4 重跑 12 次运行合计 4 | 0（S3.5） | S3.4 |
-| API 处理器总数（grep export const GET|POST|…） | 34（计划 §1.1 记 35，复测为准） | 34 | — | S0.4 |
+| R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败；S3.4 在强制 CSP 下全量重跑 12/12 exit 0（342 步、驱动内 113.2s）；S3.5 再全量重跑 12/12 exit 0（342 步、驱动内 116.4s，桌面 60.2s / 移动 56.2s） | 两遍全绿 | S3.5 |
+| R9 控制台 error / 未捕获异常 | 未测 | S3.5 复测：error 2（12 次运行合计，全部是第 1 项故意的 404）/ 异常 0 / **CSP 违规 0** / 步失败 0 | 除故意负向用例外为 0 | S3.5 |
+| UI 基线截图（`.e2e/screens/S2.6/`，不入库） | 0 | 142 张：桌面 d01–d31a 32 + 移动 m01–m31a 32（S3.4 基线）+ 决策分支 pd 14 + S3.5 前缀 td 32 + tm 32（同两套清单，不覆盖基线） | ≥ 20 | S3.5 |
+| SSE URL 带 `token=` 的请求（R9 网络捕获，每玩家标签页） | 未测 | **0 条**（S3.5 12 次运行合计；同批 `ticket=` 请求 4 条：桌面/移动各在 d3 建连 1 + d5 重连 1，值在报告里掩码）。兼容期 query 通道仍在，但前端已不走它 | 0（S3.5） | S3.5 |
+| API 处理器总数（grep export const GET|POST|…） | 34（计划 §1.1 记 35，复测为准） | 35（S3.5 新增 `POST /api/games/[id]/stream-ticket`） | — | S3.5 |
 | recordEvent/persist 调用点（src/core 非测试） | 86（计划记 84） | 86 | — | S0.4 |
 | engine.events 读取点（`\.events\.` 模式） | 10（`\.events` 宽匹配 26；计划记 19） | 10 | — | S0.4 |
 | 种子剧本 V2 文件 | 35（seeds/*.json + seeds/generated/*.json；计划记 25） | 35 | — | S0.4 |
@@ -70,6 +70,7 @@
 | S3.2 | DONE | 9c32200/7d4c17b/29aa39c/fdc28da | 2026-09-27 | 2026-09-27 | 三入口第一行拦截 + 关闭时零库调用 + 60s 缓存 + ≥ 才拦 + 本地当天口径，L1 13 用例逐条对上（证据节）；计划验收的「关闭时 chat 查询数与改动前相同」以 mock 计数断言覆盖，「超预算对局仍走到 ENDED」由 L3 I11 覆盖（阶段轨迹逐个走完、真人发言 ≥2、模型请求 0）；`npm run check` exit 0（79 files / 595 过 + 2 expected fail，5.9s）、`test:api` 189 过（2.0s）、`test:int` 13 过（4 files，15.2s）；commit 9c32200 单独 worktree 复验 tsc 0 + 13 过 | DEV-10, FIND-07 |
 | S3.3 | DONE | 8e44e16/db34130/9aea713/ab7bf76/69f8917 | 2026-09-27 | 2026-09-27 | 9 个文件里的全部裸凭证比较（座位 / DM / 房主，含 SSE 心跳重验与 join 判定）改为 17 处 `verify*` 调用，验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `src/lib/join.ts` **输出为空**；BUG-01 关闭（header 优先，A28 的 it.fails 翻正 + 补兼容期用例）；L1 新增 12 用例；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，4.0s）、`test:api` 191 过（1.0s）、`test:int` 13 过（14.8s）、`next build` exit 0；实机 R1/R2/R3 全绿（R2 含错 token 403 / DM 200 / 观战与座位流过滤），实例日志异常 0 | DEV-11 |
 | S3.4 | DONE | 6dd4872/4205c38/cc093b2/（本提交） | 2026-09-27 | 2026-09-27 | 生产 `Content-Security-Policy` 强制、`script-src` 无 `'unsafe-eval'`（curl 实读），开发仍 report-only + eval（不启 dev 服务、直接对 `next.config.ts` 求值取两分支）；R9 全量重跑 12/12 exit 0、每遍 171 步 0 失败、**CSP 违规 0/12**、未捕获异常 0、控制台 error 2（均为第 1 项故意的 404）；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，3.6s）、`test:int` 13 过（14.9s）；顺带修掉 DEV-10 无效的 e2e 半边（实例真出网 240 条 ≈$0.0100 → 重启后 0）与 R9 清单里从 S2.6 起就是空操作的搜证决策步 | DEV-10（更正）, DEV-12, FIND-08 |
+| S3.5 | DONE(deviation) | fe67d54/5b759ef/f9e872c/6e15f2b/（本提交） | 2026-09-27 | 2026-09-27 | 新增 `POST /api/games/[id]/stream-ticket`（header 凭证 → 60s 一次性票据，进程内 Map、用后即删）+ `src/lib/stream-tickets.ts`；events 路由 `?ticket=` 优先、旧 `token`/`dmtoken` query 保留一个版本并记 deprecation 日志；心跳改按签发时凭证快照重验；前端建连先换票再连。R9 全量重跑 **12/12 exit 0、342 步 0 失败、`token=` 请求 0 条 / `ticket=` 4 条、CSP 违规 0**；实机 R1/R2/R3 全绿且 R3 追加段证明「ticket 建流不重不漏、重放被服务端降级、兼容期仍可用」，实例日志里本轮两局 **0 条**降级/废弃告警、`[jev]` 出网 0；L2 新增 A37 8 用例 + A29 附加 6 用例（过期/重放/跨局/心跳），`npm run check` exit 0（81 files / 625 过 + 1 expected fail）、`test:api` 206 过、`test:int` 13 过、`next build` exit 0 | DEV-13, FIND-09（顺带修 L3 I06 竞态）, FIND-04 关闭 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -324,6 +325,44 @@
 **发现**：真人的「线索公开/私藏」决策没有回合限时（FIND-08）——`armHumanTimeout` 覆盖读本、自我介绍、选搜证地点、圆桌发言、回答提问、投票六处，独缺这一处，所以真人不做决策可以让 SEARCH 无限停等；上面那次 5 分 26 秒就是实测读数。
 
 **收尾**：`node scripts/e2e/browser.mjs --shutdown` 只杀本 profile 的 Chrome（11 个进程），用户日常 Chrome（pid 1960）存活未受影响；e2e 实例保留在 :3120 供 P3 阶段验收续用，`pm2 jubensha`（:3000）未触碰。
+### S3.5 SSE 凭证改一次性票据
+
+**落点**
+- 新建 `src/lib/stream-tickets.ts`（58 行）：`:12` `STREAM_TICKET_TTL_MS = 60_000`；`:14` `StreamPrincipal = {kind:"seat",seat,credential} | {kind:"dm",credential}`；`:20` 进程内 `Map`（与引擎注册表、限流桶同一单实例前提）；`:29` `issueStreamTicket`（`randomBytes(16)` 十六进制、签发时顺带清扫过期项）；`:45` `consumeStreamTicket`（**先删再判**：过期/重复使用/跨局一律 `null`）；`:56` `resetStreamTickets`（A29 的 `beforeEach` 用）。票据主体存的是签发时已验证的凭证，见 DEV-13 第 4 条。
+- 新建 `src/app/api/games/[id]/stream-ticket/route.ts`（53 行）：`:22` 限流 → `:32` 参数 400 → `:35` 404 → `:39` 座位（`x-seat-token` + `verifySeatToken`）→ `:45` 真人主持（`x-dm-token` + `room.humanDm` + `verifyDmToken`）→ `:50` 一律 403 `{error:"凭证校验失败"}`；`:53` `withRoute` 包装（不变式 5：500 只回固定文案）。凭证只从 header 读，绝不从 query 读。
+- `src/app/api/games/[id]/events/route.ts`：`:65-95` 凭证判定改为 ticket 优先——`:71` `consumeStreamTicket`，命中则按票据主体定 `seatIndex`/视角并存凭证快照；`:83-84` 无 ticket 时走旧 query 分支；`:86-94` 校验不过降级纯观战，`:90/:94` 兼容路径各记一条 deprecation 日志（`:39` `warnLegacyCredential`，**只写视角不写凭证**）；`:172-173` 心跳重验的比对基准换成快照而非 `url.searchParams`。`visibleTo` 与事件产出路径一字未动（不变式 1/4）。
+- `src/lib/game-events-url.ts:24-26`：`opts.ticket` 优先，写了 ticket 就**不再**写 `seat`/`token`/`dm`/`dmtoken`；旧分支保留（`:27-31`）。
+- `src/app/play/[gameId]/_components/useGameStream.ts:140-283`：连接由自己管（原生 `EventSource` 的自动重连与一次性票据不兼容）——`:245` `connect()` 先换票再建流，`:265` 仅 403/404 降级公开流（与旧版「校验不过当观战」一致），`:273` 其他失败按 `min(1s·2^n, 15s)` 退避重试（`:152`）；`:271` 建连 URL 用 `ticket + lastSeq`；`:278-283` cleanup 里 `disposed` + 清定时器 + 关流，effect 依赖不变。
+- `src/lib/rate-limit.ts:110-116`：`checkStreamTicketRateLimit`（同 IP 30/min + 全局 600/min），见 DEV-13 第 2 条。
+
+**验收标准逐条**
+1. *L2：ticket 过期、重复使用、跨局使用均被拒* —— A29 附加 6 用例（`events/route.test.ts:228-345`）逐条对上：`:257` 有效 ticket 收到本席私密（行 6/7）且**断言 URL 里没有 `token=`**、并触发引擎懒恢复；`:268` 同一张票第二次建连 → 只收到公开事件 `["6"]`；`:282` `issueStreamTicket(..., Date.now()-STREAM_TICKET_TTL_MS)` 过期票与跨局票 → 都只剩 `["6"]` 且 `db.game.findUnique` 未被调用（不唤醒引擎）；`:298` DM 票看得到他席私信（行 8），而座位票硬拼 `&dm=1&dmtoken=…` 也升不了视角；`:312` 兼容期 `?seat=&token=` 仍可用且 `console.warn` 文案含 `stream-ticket`、不含 `tok-0`；`:324` fake timers 推 20s 心跳：凭证快照未变 → 流保活，座位 token 换成 `rotated` → 一个心跳周期内收流。
+2. *A37 与 A29 补充* —— 新建 `stream-ticket/route.test.ts` 8 用例（票格式 `^[0-9a-f]{32}$`、TTL、票据绑座、二次消费为 `null`、DM 票、6 种凭证不符/缺凭证/跨座用票 → 403、`humanDm:false` 不能换 DM 票、`seat:99/-1/"0"` 与 `dm:"yes"` → 400、404、同 IP 第 31 次 → 429 + `Retry-After`、响应体不含凭证明文）；A35 的 `cases[]` 加一行覆盖新处理器（21 → 22），`POST /api/games/[id]/stream-ticket` 毒化 `game.findUnique` 后仍只回固定文案。`npm run test:api` → **24 files / 206 passed + 1 expected fail**（1.2s）。
+3. *前端建连 URL 不含 `token=`（R9 网络面板核对）* —— R9 全量重跑（生产构建、:3120、无 Jev 出网），桌面 1280×800 与移动 375×812 各 6 份清单，**12/12 exit 0**、每遍 171 步、合计 342 步 0 失败，驱动内合计 116.4s（桌面 60.2s / 移动 56.2s）：
+
+| 运行 | 步数/失败 | 控制台 error | CSP 违规 | 未捕获异常 | `token=` 请求 | `ticket=` 请求 |
+|---|---|---|---|---|---|---|
+| td01–td06（桌面） | 31/25/36/32/29/18，失败全 0 | 1/0/0/0/0/0 | 0 | 0 | **0/0/0/0/0/0** | 0/0/**1**/0/**1**/0 |
+| tm01–tm06（移动） | 31/25/36/32/29/18，失败全 0 | 1/0/0/0/0/0 | 0 | 0 | **0/0/0/0/0/0** | 0/0/**1**/0/**1**/0 |
+
+   捕获到的建连 URL 原文（票据值按 DEV-06 的掩码规则处理）：`http://127.0.0.1:3120/api/games/cmujnqk0c…/events?ticket=‹redacted›`（桌面 d3 建连、d5 重连各 1 条；移动两局 `cmujnsx2y…` 同形）。对照 S3.4 基线：同两套清单当时是 `token=` 4 条 / `ticket=` 0 条。12 份报告 `layout.horizontalOverflow` 全为 false；error 2 条仍是第 1 项故意的 404。
+4. *兼容路径仍然可用* —— 三面同证：L2 `:312` 用例（旧 query 建流仍能收到本席私密）；R3 追加段实机检查（`sse-resume.mjs`：`?seat=&token=` 建流成功 **且** 实例日志新增行里出现「使用已废弃的 query 凭证」而**不含 seatToken 明文**）；`gameEventsUrl` 的旧分支保留（`join.test.ts` 新增 1 用例锁住「给了 ticket 就不再写 seat/token」的优先级，旧 4 条用例断言原样）。
+5. *L4：R3 通过* —— 原三段公开流断言逐字未改（`seq 严格递增 ✓ 与 DB 全集一致（不重不漏）✓`），追加的 ticket 段另外断言：座位票流是公开全集的**超集**且严格递增、地址不含 `token=`；主持票流可建；重复使用同一张票 → 服务端按未鉴权降级（日志出现「ticket 无效」）。`npm run e2e:smoke` 输出 `R1/R2/R3 PASSED`、exit 0。
+
+**不变式自查**
+- #5 不外泄：换票响应只有 `{ticket, expiresAt}`；两条新日志只写视角/gameId；R9 报告对 `token|dmtoken|ticket` 三类值统一掩码（`browser.mjs:241`）；R3 显式断言实例日志不含 seatToken 明文。本轮 R9 期间实例日志新增 17 行，其中**提到这两局 gameId 的行 0 条**（即没有任何降级/告警被触发）。
+- #3 旧档兼容 / #4 SSE 三处一致：本步不碰 `games.state`、不碰事件类型与 `visibleTo`，只换凭证层。
+- #6：本步不是「重构」标注步，行为变化就是目标本身（URL 去凭证），并用「公开流全集 ⊆ ticket 流」保证私有事件不因换票而丢。
+
+**顺带修掉的 L3 竞态（FIND-09）**：`recovery.int.test.ts` 的 I06 在整批并发跑时 3 次里挂 2 次（`restored.events` 比内存快照多一条 `seq 4` 的「轮到你发言」系统事件）。用一次性探针（快照后 sleep 1500ms）稳定复现同一多出行后定位：该事件由引擎**定时器**写库，不在 `handleAction` 的 await 链里，落在「取快照」与 `GameEngine.load()` 回读之间。修法是在快照前先 `engine.clearTimers()`（`:77`，与同文件 `:64` 的既有做法一致），不改生产代码、不删断言、不放宽阈值。之后 `test:int` 连跑 4 次全绿（4 files / 13 过，约 15s）。探针文件已删除。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 81 / Tests 625 passed | 1 expected fail（首测 4.4s，收口复跑 5.9s；expected fail 仍是 BUG-03）。
+- `npm run test:api` → 24 files / 206 passed | 1 expected fail（1.2s）；`test:int` → 4 files / 13 passed；`npm run build` → exit 0。
+- `npm run e2e:down && npm run e2e:up && npm run e2e:smoke` → exit 0，R1（`ENDED ✓ voteResult {"caught":false,…,"culpritSeat":3}`）/ R2 / R3 全绿；实例日志 `ERROR` 0、`Unhandled` 0、本轮 `[jev]` 0（累计仍 240，即历史值未增加）。
+- R9 全量重跑 12/12 exit 0（见上表）；`node scripts/e2e/browser.mjs --shutdown` 后用户日常 Chrome 未受影响；e2e 实例 :3120 保留给 P3 阶段验收，`pm2 jubensha`（:3000）未触碰。
+
+**过程中的自伤与更正**：`.e2e/plans/chain-s35.mjs` 第一版按**字节偏移**去切按字符读入的日志文本（`readFileSync(LOG,"utf8").slice(size)`），中文日志里这个口径会把统计整体前移，第一次跑只报「新增 1 行」。改为 `readFileSync(LOG).subarray(startedAt).toString("utf8")` 后重跑整轮 R9（上表即重跑结果），并按 gameId 单独核对「本轮两局的服务端日志行 = 0」。
 
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
@@ -346,7 +385,8 @@
 | FIND-02 | S2.3 | vi.useFakeTimers 下引擎定时器链不收敛：AI ready 定时器延迟膨胀（5s 实际 ~60s）、SEARCH 阶段后台决策的互斥提交不落账。真实定时器 + 轮询路径正常。I06 已改为真实定时器 + 状态快进；完整流程由 R1 实机覆盖 | recovery.int.test.ts | OPEN（测试环境观察，非生产行为证明） | |
 | FIND-03 | S2.5 | 实机 VOTE 阶段真人座位停等 8 分钟以上，未见 `HUMAN_TURN_TIMEOUT_MS`（180s）到点自动出手；当时测试脚本自身有缺陷（一直发 speak 未发 vote），不能据此判定产品缺陷。S6.3 卡局告警落地后用 `restart-resume.mjs` 复现一次 | scripts/e2e/restart-resume.mjs（待定版） | OPEN（待复现） | |
 | FIND-01 | S0.4 | `repetition.test.ts`「只在尾部窗口内扫描」在 --coverage 插桩下超时失败（5392ms），非覆盖率模式通过；时间敏感用例，覆盖率门禁需容忍或后续修复 | npx vitest run --coverage | CLOSED（S1.3） | 4b71bd7 |
-| FIND-04 | S2.6 | 前端 SSE 建连把座位 token 放进 URL query：`GET /api/games/{id}/events?seat=0&token=…`，会进浏览器历史与反向代理访问日志（不变式 5 的暴露面）。R9 网络捕获基线 = 每个玩家标签 1 条 | scripts/e2e/browser.mjs 的 `tokenQueryRequests`（`.e2e/screens/S2.6/S2.6-d5-{d,m}-report.json`） | OPEN（S3.5 一次性票据关闭） | |
+| FIND-04 | S2.6 | 前端 SSE 建连把座位 token 放进 URL query：`GET /api/games/{id}/events?seat=0&token=…`，会进浏览器历史与反向代理访问日志（不变式 5 的暴露面）。R9 网络捕获基线 = 每个玩家标签 1 条 | scripts/e2e/browser.mjs 的 `tokenQueryRequests`（`.e2e/screens/S2.6/S2.6-d5-{d,m}-report.json`） | CLOSED（S3.5：R9 12 次运行 `tokenQueryRequests` 合计 0、`ticketQueryRequests` 4；旧 query 仅保留一个版本并记 deprecation 日志） | |
+| FIND-09 | S3.5 | L3 `I06`（引擎重启恢复）在**整批并发**跑时不确定失败 2/3 次：`restored.events` 比内存快照多一条 `seq 4`（`system / seat:0 / 轮到你发言…`）。根因不是恢复逻辑——下一回合提示是引擎**定时器**写库的，不在 `handleAction` 的 await 链里；取 `memoryEvents` 快照与 `GameEngine.load()` 回读之间存在竞态窗口。同批并发把窗口拉长，单跑不复现（用 1500ms sleep 探针可稳定复现同一多出行） | 探针已删除；常驻修法：`recovery.int.test.ts:77` 在快照前 `engine.clearTimers()`（与同文件 :64 的既有做法一致）。改后连跑 `test:int` 4 次 0 FAIL | OPEN（测试基建竞态，非生产缺陷；FIND-02 的同族——fake/真实定时器在测试环境的收敛问题） | |
 | FIND-05 | S2.6 | 无模型局 ChatFeed 里「（AI 玩家「X」思考时遇到问题：用途槽位 "player" 尚未绑定模型…）」这类降级提示按座位×回合重复记录为公开事件：一局 5 人出现 12 条事件、只有 4 种文案，同屏 5 组重复行，观众也能看到。事件不重复（渲染无 bug），是引擎侧提示未去重 | R9 `r9-d5` 的 `identityBefore/After.bubbles vs uniqueTexts` + `psql … group by type,visibility`（台账 S2.6 证据节） | OPEN（建议 S7.3 关闭：同类 notice 按回合合并） | |
 | FIND-06 | S2.6 | 未匹配路由渲染的是 Next 内置 404，正文为英文 `This page could not be found`，与全站中文文案不一致（项目无 `src/app/not-found.tsx`） | R9 `r9-d1` 的 `notFoundText`（截图 `d06-404.png` / `m06-404.png`） | OPEN（S2.6 只建基线不改代码；建议 S7.3 一并处理） | |
 | FIND-07 | S3.2 | Jev 影子/接管走独立 HTTP 通道（`src/core/jev/live.ts` 直连 `JEV_BASE_URL`，默认 `https://api.typesafe.ai/v1/systemone`），**不经 `chat`/`chatStream`，因此 S3.2 的预算熔断管不到它**：单日花费上限对这条通道无效，且它的开关来自 `@prisma/client` 自动加载的仓库根 `.env`。本步只在测试与 e2e 侧删键止血（DEV-10），生产部署若开着 `JEV_*` 仍在守卫之外。**S3.4 追加实证**：删键对实机子进程根本无效（`next start` 里的 Prisma Client 自己读 `.env`），当天 :3120 实例日志累计 240 条 `[jev]` 出网记账 ≈$0.0100；改显式置 0 后新日志计数 0。生产侧仍未收口 | I11 的 fetch 探针：首轮同一配置下抓到 12 次出网，加删键后为 0；`.e2e/instance.log` 第 444/445 行前后 `[jev]` 计数 240 → 0（台账 S3.4 证据节） | OPEN（计划 P3 内无对应步骤：建议作为 P3 追加项，或并入 S6.1 的成本/日志口径时一并给 Jev 独立额度与显式开关） | |
@@ -374,6 +414,12 @@
 | 2026-09-27 | P3/S3.4 | R9 全量重跑 移动 375×812（同一实例、同一套清单） | PASSED 6/6 清单、171 步 0 失败；**CSP 违规 0**、error 1（同上）、异常 0 | 56.0s（驱动内） | .e2e/chain-s34-r3.log、.e2e/screens/S2.6/{m01–m31a}.png + S2.6-d*-{m}-report.json |
 | 2026-09-27 | P3/S3.4 | R9 缺陷运行（清单决策步未生效那一次） | 第 1 遍桌面 d4a FAILED（`等待元素超时: text:公开质询`，SEARCH 停等 5 分 26 秒）；第 2 遍桌面 + 移动 d4a 同时同因 FAILED → 判定为清单缺陷而非偶发，修复见 DEV-12 | 每遍各多花 ~5 分钟停等 | .e2e/chain-s34.log、.e2e/chain-s34-r2.log；`game_events` seq 49→63（game cmujkxw1d…） |
 | 2026-09-27 | P3/S3.4 | 搜证决策分支定向验证（`pd` 前缀，跑到出现需决策线索为止） | 第 1 次无决策窗（skip 正确）；第 2 次真人抽到需决策线索 → **5 秒内自行点「暂时私藏」**并立刻进入圆桌讨论，d4a 32 步 0 失败 | ~40s/次 | .e2e/prove-decision.log、S2.6-d4a-pd-report.json；`game_events` seq 674→688→690（game cmujm3scd…） |
+| 2026-09-27 | P3/S3.5 | R1 无模型冒烟（前端凭证层换成一次性票据后的整局） | PASSED，`ENDED ✓ voteResult {"caught":false,"counts":{"2":2,"3":1,"4":2},"tiedSeats":[2,4],"culpritSeat":3}`、无 `!! action failed` | 未单独计时（run.mjs 不分段） | .e2e/s35-e2e.log（`SMOKE_EXIT=0`）；台账 S3.5 证据节 |
+| 2026-09-27 | P3/S3.5 | R2 鉴权负向（复跑，凭证判定改动后） | PASSED（无口令建 AI 房 403 / 纯真人房 201 / 错 token action 403 / DM force_ready 200 / 观战流只见公开 / providers 401×2） | 未单独计时 | scripts/e2e/auth.mjs；.e2e/s35-e2e.log |
+| 2026-09-27 | P3/S3.5 | R3 SSE 续传 + **新增 ticket 段** | PASSED：原三段公开流断言不变（补传 3 条、与 DB 全集一致）；座位票流 5 条 ⊇ 公开全集 4 条且**地址无 `token=`**、主持票流 5 条、重放同一票 → 服务端按未鉴权降级、兼容期 `?seat=&token=` 仍可用且日志记废弃告警（日志内无 seatToken 明文） | 未单独计时 | scripts/e2e/sse-resume.mjs；.e2e/s35-e2e.log 第 241–252 行；实例日志新增 2 条 `[sse]` 告警 |
+| 2026-09-27 | P3/S3.5 | R9 全量重跑 桌面 1280×800（`td` 前缀，生产强制 CSP，实例 :3120 无 Jev 出网） | PASSED 6/6 清单、31+25+36+32+29+18=171 步 0 失败；**`token=` 请求 0 条 / `ticket=` 2 条**、CSP 违规 0、控制台 error 1（故意的 404）、异常 0、13 个采样点无横向滚动 | 60.2s（驱动内） | .e2e/s35-r9-r2.log、.e2e/screens/S2.6/{td01–td31a}.png + S2.6-d*-{td}-report.json（game cmujnqk0c…，房间 GJDD6） |
+| 2026-09-27 | P3/S3.5 | R9 全量重跑 移动 375×812（`tm` 前缀，同一实例同一套清单） | PASSED 6/6 清单、171 步 0 失败；**`token=` 0 条 / `ticket=` 2 条**、CSP 违规 0、error 1（同上）、异常 0、无横向滚动 | 56.2s（驱动内） | .e2e/s35-r9-r2.log、.e2e/screens/S2.6/{tm01–tm31a}.png + S2.6-d*-{tm}-report.json（game cmujnsx2y…，房间 DTVDL） |
+| 2026-09-27 | P3/S3.5 | R9 首轮（`.e2e/s35-r9.log`）与链脚本自伤 | 首轮 12/12 exit 0，但链脚本按字节偏移切字符读入的日志，统计口径前移（只报「新增 1 行」）→ 改 `subarray` 后**整轮重跑**，上表为重跑结果；另按 gameId 核对本轮两局的服务端日志行数 = 0 | — | .e2e/s35-r9.log（首轮）、.e2e/plans/chain-s35.mjs（gitignore） |
 
 ## 推送与 CI 记录
 | 日期 | 分支 | 推送范围 | CI |
@@ -418,3 +464,8 @@
   3. `scripts/e2e/browser.mjs:461/468/477/479` 的 `skip:` 记录改为替换后的选择器（纯报告口径，让「驱动到底找过什么」在报告里可读）。
   本步没有新增或修改任何 vitest 用例与断言，也没有放宽阈值；唯一的产品行为变化是生产 `script-src` 去掉 `'unsafe-eval'` 并转为强制头，由 R9 12 次运行「CSP 违规 0 + 整局走到 ENDED」证明没有合法资源被误伤。
 
+- **DEV-13（S3.5）**：SSE 一次性票据的 4 处计划外/口径性处理，均不改鉴权语义：
+  1. **前置冲突按依赖图执行**：S3.5 的步骤卡写「前置：S3.3、S5.1」，而附录依赖速查是 `S2.2 ─┬→ S3.1(D2), S3.3 → S3.5`（S5.1 与 S3.5 都在 `S2.2` 之后、彼此无上下游关系）。两处只有一个对，按「哪个更小可逆」判：步骤卡的前置若成立，P3 就要等 P5，而 S3.5 的暴露面（token 进访问日志）是当天已确认的不变式 5 问题；反过来 S5.1（心跳去 DB 化）不依赖票据。按图先做 S3.5，并把 S5.1 需要的那一半留好：连接作用域里保存的是**已验证的凭证快照**（`seatCredential` / `dmCredential`），S5.1 删掉心跳里的 `db.game.findUnique` 后，重验基准仍然在作用域内，不需要再回读库。
+  2. **计划范围外的 `src/lib/rate-limit.ts`**：新增 `checkStreamTicketRateLimit`（同 IP 30/min + 全局 600/min）。签发端点是「长期凭证 → 可放进 URL 的短期凭证」的兑换口，也是本步唯一新增的公开写入口，不限流就等于给爆破凭证提供一个更快的循环；沿用文件里既有的 `rateLimit` 原语与 `{ok:false, retryAfterSec}` 形态，未新建机制。
+  3. **R3 的「改用 ticket」改为「增补 ticket 段」**：计划测试项写「L4：R3 改用 ticket 后仍然通过」。把原有用例改写成 ticket 建流会让 R3 失去「匿名观战续传」这一既有覆盖（红线：不弱化既有断言）。做法是原三段公开流与全部断言逐字保留，只在末尾追加 ticket 段（座位票 / 主持票 / 重放必拒 / 兼容期 token query），并让兼容期检查读实例日志的新增量。判据覆盖面只增不减。
+  4. **心跳重验改为凭证快照**（计划未提这一处连带）：ticket 用后即删，心跳若照旧从 `url.searchParams` 取凭证，则所有 ticket 连接都会在 20 秒后被自己踢下线。改为按签发时验证过的快照比对，并在 A29 用 fake timers 锁定两条语义：凭证未变 → 心跳周期内存活；座位 token 被轮换 → 一个心跳周期内收流。吊销检测能力与改动前等价（比对的仍是真凭证，只是基准来自快照）。
