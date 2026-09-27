@@ -75,6 +75,8 @@ npm run e2e:browser -- --shutdown               # 只杀本 profile 的 Chrome�
 
 产物：`.e2e/screens/S2.6/<step>-<shot 前缀>-report.json`（步骤、失败、`collect` 值、每标签的控制台 error / 异常 / 带 `token=` 的请求、布局度量；同一 plan 的桌面 `d` 与移动 `m` 两份报告互不覆盖）与同名截图前缀 PNG；所有运行的 error 汇总追加到 `.e2e/screens/console-errors.jsonl`。目录与文件都不入库。
 
+UI 判据之外还要落库侧证时用 `zsh scripts/e2e/db-proof.sh <gameId>`：输出真人座位的 `choose|…`、`clue|…|公开次数=`（0=仍私藏）、`notice|…条/种文案`（降级提示去重度量）、`vote|seatN->M`、`state|phase|rN|status|voteResult`。只读查询，连接串取 `.e2e/up.json`。
+
 已知判定口径：
 - SEARCH 的「当场公开 / 暂时私藏」决策窗只在线索 `policy ≠ auto_public` 时出现；`r9-d4a` 用 `--var=decisionFirst=…` 决定先点哪一边（桌面先私藏、移动先公开），两边都是 `clickIf`，无决策窗时记 skip 不算失败。
 - 投票成功后 `已投票，等待其他人…` 是瞬态文案（无模型局其他座位秒投），断言改看 `本局结算`，真人票以 `votes` 表落库为准。
