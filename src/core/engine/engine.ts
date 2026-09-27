@@ -1,14 +1,15 @@
-import { runInteractionBeats, chooseInteraction } from "./interactions";
-import { randomUUID } from "node:crypto";
+import { runInteractionBeats } from "./interactions";
+import { DM_ACTIONS, handleUnknownDmAction, PLAYER_ACTIONS, handleUnknownPlayerAction, type DmAction, type GameAction } from "./actions";
+export type { GameAction } from "./actions";
 import { db } from "@/lib/db";
 import type { Room, Seat } from "@prisma/client";
-import { clueText, parseScriptForRuntime, resolveLocation } from "@/core/script/compat";
+import { parseScriptForRuntime } from "@/core/script/compat";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import type { AgentCtx } from "@/core/agents";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
 import { migrateState } from "./state-migrate";
 import { INSTANCE_ID, LeaseLostError, acquireLease, leaseOwner, startLeaseRenewal } from "./lease";
-import { ensureDiscussionState, finaleMissing, nextAfterDiscussion, validateTransfer, validateUseSkill } from "./flow";
+import { ensureDiscussionState, finaleMissing, nextAfterDiscussion } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { createHash } from "node:crypto";
 import { engineLoads, engines, rememberEngine } from "./registry";
@@ -26,67 +27,23 @@ import {
   transitionVote,
 } from "./phases";
 import { dispatchPlayerSpeech } from "./turns";
-import { clearSuggestions, maybeQueueInterjection, queueAiPrivateReply, queueEmbed, queueSuggestReply } from "./social";
+import { queueEmbed, queueSuggestReply } from "./social";
 import { armHumanTimeout, clearHumanTimeout, ensureHumanTimeout } from "./human-turn";
 import {
-  applyPublish,
   availableLocations,
-  cluesAt,
   collectPublishDecisions,
   dispatchClues,
   finalizeSearchRound,
   fallbackLocations,
   NO_SEARCH_CHOICE,
   queueAiSearchChoice,
-  seatCharacterId,
-  skillOf,
-  syncSeatClueIds,
 } from "./search-deal";
-import { armVotePhaseHuman, queueAiQuiz, queueAiVote, recordVote } from "./finale";
-import { resolvePendingAnswer, runAiDiscussionTurn, submitQuestion } from "./discussion";
-import { validateVoteEvidence } from "./evidence";
-
-/**
- * ★ GameEngine——编排门面（批次 I1 拆分后）★
- *
- * 本类只保留：实例构造/注册（registry）、事件与状态的落库原语（recordEvent/persist）、
- * 互斥锁与定时器（exclusive/schedule/scheduleBackground）、主驱动（tick/step）、
- * 真人与 DM 的动作入口（handleAction/handleDmAction）。
- * 各功能域已按职责拆出为兄弟模块，均以 `(e: GameEngine, ...)` 形态接收引擎实例，
- * 对 engine.ts 只有 type-only 依赖，不构成运行时循环：
- * - phases.ts      阶段流转（beginGame / transition 系列 / finalizeEnded）
- * - turns.ts       回合执行器（锁外生成 → 锁内提交 + 看门狗）
- * - social.ts      插话/私信/推荐回复/向量写入/轮次摘要
- * - search-deal.ts 搜证域（地点/线索发放/公开决策）
- * - discussion.ts  讨论域（提问/作答/AI 讨论回合）
- * - finale.ts      终局域（投票/复盘答题/超时兜底）
- * - human-turn.ts  真人限时（arm/ensure/clear）
- * - registry.ts    常驻实例表与终局延迟驱逐
- * - lease.ts       单写者租约：谁在驱动这一局（load/start 取牌，只读视图不写库）
- * - util.ts        小工具与超时常量
- */
+import { armVotePhaseHuman, queueAiQuiz, queueAiVote } from "./finale";
+import { resolvePendingAnswer, runAiDiscussionTurn } from "./discussion";
 
 /** 重启恢复时事件回放上限：只取最近 N 条，超长对局历史不进内存。 */
 const EVENT_REPLAY_LIMIT = 800;
-
-/** 本实例没拿到写租约时对玩家/DM 动作的统一回复（走 `error` 字段，不抛异常）。 */
 const LEASE_READ_ONLY_ERROR = "对局由其他实例主持，请刷新";
-
-export interface GameAction {
-  type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill" | "answer_quiz" | "interaction";
-  beatId?: string;
-  choiceId?: string;
-  text?: string;
-  location?: string;
-  clueId?: string;
-  skillId?: string;
-  publish?: boolean;
-  target?: number;
-  reason?: string;
-  evidenceIds?: string[];
-  toSeat?: number;
-  answers?: Array<{ questionId: string; optionId: string }>;
-}
 
 export class GameEngine {
   readonly gameId: string;
@@ -723,375 +680,20 @@ export class GameEngine {
     if (this.state.phase === "ENDED") return { ok: false, error: "对局已结束" };
     const seat = this.state.seats[seatIndex];
     if (!seat || seat.kind !== "human") return { ok: false, error: "无权操作该座位" };
-    switch (action.type) {
-      case "interaction":
-        return chooseInteraction(this, seatIndex, action.beatId ?? "", action.choiceId ?? "");
-      case "ready": {
-        if (this.state.phase !== "READING") return { ok: false, error: "当前不在读本环节" };
-        clearHumanTimeout(this, seatIndex);
-        if (!this.state.readySeats.includes(seatIndex)) this.state.readySeats.push(seatIndex);
-        await this.systemSay("你已确认读完剧本。", seatIndex);
-        await this.persist();
-        this.continueTick();
-        return { ok: true };
-      }
-      case "speak": {
-        const text = (action.text ?? "").trim().slice(0, 800);
-        if (!text) return { ok: false, error: "发言不能为空" };
-        if (this.state.phase === "SELF_INTRO") {
-          if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在不是你的发言回合" };
-          await this.recordEvent({
-            type: "speech",
-            phase: this.state.phase,
-            round: this.state.round,
-            fromSeat: seatIndex,
-            toSeat: null,
-            visibility: "public",
-            content: { text, speakerName: this.speakerName(seatIndex) },
-          });
-          clearSuggestions(this, seatIndex);
-          clearHumanTimeout(this, seatIndex);
-          this.markSpoken(seatIndex);
-          await this.nextTurnOrAdvance();
-          return { ok: true };
-        }
-        if (this.state.phase === "DISCUSSION") {
-          if (this.state.pendingAnswer?.toSeat === seatIndex) {
-            await this.recordEvent({
-              type: "speech",
-              phase: this.state.phase,
-              round: this.state.round,
-              fromSeat: seatIndex,
-              toSeat: this.state.pendingAnswer.fromSeat,
-              visibility: "public",
-              content: { text, speakerName: this.speakerName(seatIndex), answer: true, questionId: this.state.pendingAnswer.questionId },
-            });
-            clearHumanTimeout(this, seatIndex);
-            this.state.pendingAnswer = null;
-            await this.persist();
-            return { ok: true };
-          }
-          if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在不是你的发言回合" };
-          if (this.state.pendingAnswer) return { ok: false, error: "请先等待对方回答你的提问" };
-          await this.recordEvent({
-            type: "speech",
-            phase: this.state.phase,
-            round: this.state.round,
-            fromSeat: seatIndex,
-            toSeat: null,
-            visibility: "public",
-            content: { text, speakerName: this.speakerName(seatIndex) },
-          });
-          clearSuggestions(this, seatIndex);
-          await this.persist();
-          // 点名了某位 AI → 对方可以立即简短插话回应（不占回合）
-          maybeQueueInterjection(this, seatIndex, text);
-          return { ok: true };
-        }
-        return { ok: false, error: "当前不能自由发言" };
-      }
-      case "ask": {
-        return submitQuestion(this, seatIndex, action.toSeat ?? -1, action.text ?? "", action.evidenceIds);
-      }
-      case "skip": {
-        if (this.state.phase !== "SELF_INTRO" && this.state.phase !== "DISCUSSION") {
-          return { ok: false, error: "当前没有可跳过的发言回合" };
-        }
-        if (this.state.phase === "DISCUSSION" && this.state.pendingAnswer) {
-          if (this.state.pendingAnswer.toSeat === seatIndex) {
-            clearHumanTimeout(this, seatIndex);
-            await this.systemSay("（你拒绝回答这个问题。）");
-            this.state.pendingAnswer = null;
-            await this.persist();
-            this.continueTick();
-            return { ok: true };
-          }
-          return { ok: false, error: "请先等待对方回答" };
-        }
-        if (this.state.turnSeat !== seatIndex) return { ok: false, error: "现在还没轮到你发言" };
-        clearHumanTimeout(this, seatIndex);
-        clearSuggestions(this, seatIndex);
-        this.markSpoken(seatIndex);
-        await this.systemSay("（你结束了本轮发言。）", seatIndex);
-        await this.nextTurnOrAdvance();
-        return { ok: true };
-      }
-      case "choose_location": {
-        if (this.state.phase !== "SEARCH") return { ok: false, error: "当前不在搜证环节" };
-        const chosen = this.state.searchChoices[String(seatIndex)];
-        if (chosen) {
-          // 哨兵值代表"本轮已无可搜、系统自动跳过"，与玩家主动选过地点是两回事，文案必须可区分
-          return { ok: false, error: chosen === NO_SEARCH_CHOICE ? "本轮已无可搜地点，系统已自动完成搜证，无需选择" : "本轮已经选过地点" };
-        }
-        const loc = resolveLocation(this.script, action.location ?? "");
-        if (!loc) return { ok: false, error: "地点不合法" };
-        if (loc.ownerCharacterId === seatCharacterId(this, seatIndex)) {
-          return { ok: false, error: "你不能搜自己的房间" };
-        }
-        if (!availableLocations(this, seatIndex).includes(loc.name) || cluesAt(this, loc.name, seatIndex).length === 0) {
-          return { ok: false, error: `「${loc.name}」的线索已搜完，请选择其他地点` };
-        }
-        this.state.searchChoices[String(seatIndex)] = loc.name;
-        clearHumanTimeout(this, seatIndex);
-        await this.systemSay(`你选择了「${loc.name}」搜证。`, seatIndex);
-        await this.persist();
-        this.continueTick();
-        return { ok: true };
-      }
-      case "publish": {
-        if (this.state.phase !== "SEARCH") return { ok: false, error: "当前不在搜证环节" };
-        const clueId = action.clueId ?? "";
-        const held = (this.state.heldClues[seatIndex] ?? []).includes(clueId);
-        if (!held) return { ok: false, error: "你没有这张线索卡" };
-        const pending = this.state.pendingPublish[String(seatIndex)] ?? [];
-        if (!pending.includes(clueId)) return { ok: false, error: "当前不能公开或私藏这张卡" };
-        const clue = this.script.clues.find((c) => c.id === clueId);
-        if (clue?.policy === "keep_private" && action.publish) return { ok: false, error: "该线索必须私藏" };
-        await applyPublish(this, seatIndex, clueId, action.publish ?? false);
-        this.state.pendingPublish[String(seatIndex)] = pending.filter((id) => id !== clueId);
-        if (this.state.pendingPublish[String(seatIndex)]?.length === 0) this.clearTimers(`pub:${seatIndex}`);
-        await this.persist();
-        this.continueTick();
-        return { ok: true };
-      }
-      case "vote": {
-        if (this.state.phase !== "VOTE") return { ok: false, error: "当前不在投票环节" };
-        if (this.script.flow.voteMode === "choice") return { ok: false, error: "本局为复盘答题模式，无需投票" };
-        if (this.state.votes[String(seatIndex)]) return { ok: false, error: "本轮已经投过票" };
-        const target = action.target;
-        if (target === undefined || !activeSeats(this.state).includes(target)) return { ok: false, error: "投票对象不合法" };
-        if (target === seatIndex) return { ok: false, error: "不能投自己" };
-        const evidenceError = validateVoteEvidence(this.script.clues, this.state.clueStates, action.evidenceIds);
-        if (evidenceError) return { ok: false, error: evidenceError };
-        await recordVote(this, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined, action.evidenceIds);
-        clearHumanTimeout(this, seatIndex);
-        // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时
-        this.turnAsked.delete(`ask:VOTE:${seatIndex}`);
-        this.continueTick();
-        return { ok: true };
-      }
-      case "answer_quiz": {
-        // ★ 复盘答题 ★：choice/hybrid 模式整卷一次性提交，提交后锁定。
-        if (this.state.phase !== "VOTE") return { ok: false, error: "当前不在投票/复盘环节" };
-        if (this.script.flow.voteMode === "culprit") return { ok: false, error: "本局没有复盘答题" };
-        const questions = this.script.ending.quiz;
-        if (!questions.length) return { ok: false, error: "本局没有复盘答题" };
-        if (this.state.quizAnswers?.[String(seatIndex)]) return { ok: false, error: "已作答，不能修改" };
-        const answers = Array.isArray(action.answers) ? action.answers : [];
-        const sheet: Record<string, string> = {};
-        for (const a of answers) {
-          const q = questions.find((qq) => qq.id === a?.questionId);
-          if (!q) return { ok: false, error: `题目不存在：${a?.questionId ?? "?"}` };
-          if (!q.options.some((o) => o.id === a.optionId)) return { ok: false, error: `选项不合法：${a.optionId ?? "?"}` };
-          sheet[q.id] = a.optionId;
-        }
-        if (Object.keys(sheet).length !== questions.length) return { ok: false, error: "请答完全部题目后再整卷提交" };
-        this.state.quizAnswers ??= {};
-        this.state.quizAnswers[String(seatIndex)] = sheet;
-        clearHumanTimeout(this, seatIndex);
-        // hybrid：交卷后可能还差投票，允许 step 按剩余项重新武装
-        this.turnAsked.delete(`ask:VOTE:${seatIndex}`);
-        await this.systemSay("（你已提交复盘答题卡，等待其他人作答。）", seatIndex);
-        await this.persist();
-        this.continueTick();
-        return { ok: true };
-      }
-      case "use_skill": {
-        // ★ 技能卡·质询（verify）★：消耗行动点，强制目标 AI 当众正面回答。
-        const skillId = action.skillId ?? "";
-        const toSeat = action.toSeat;
-        const text = (action.text ?? "").trim().slice(0, 200);
-        const invalid = validateUseSkill(this.script, this.state, seatIndex, skillId, toSeat, text);
-        if (invalid) return { ok: false, error: invalid };
-        const skill = skillOf(this, seatIndex, skillId);
-        if (!skill || toSeat === undefined) return { ok: false, error: "技能不可用" };
-        this.state.actionPoints ??= {};
-        this.state.actionPoints[String(seatIndex)] = (this.state.actionPoints[String(seatIndex)] ?? 0) - skill.cost;
-        this.state.usedSkills ??= [];
-        if (skill.once) this.state.usedSkills.push(`${seatIndex}:${skill.id}`);
-        this.state.pendingAnswer = { questionId: randomUUID(), fromSeat: seatIndex, toSeat, question: text, forced: true };
-        // 技能提问与普通提问一样，暂停提问者的回合超时；作答完成后由讨论推进重新武装。
-        clearHumanTimeout(this, seatIndex);
-        await this.recordEvent({
-          type: "system",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: null,
-          toSeat: null,
-          visibility: "public",
-          content: {
-            text: `${this.speakerName(seatIndex)} 动用了技能【${skill.name}】，要求 ${this.speakerName(toSeat)} 当众正面回答：${text}`,
-            skillId,
-            questionId: this.state.pendingAnswer.questionId,
-          },
-        });
-        await this.persist();
-        return { ok: true };
-      }
-      case "transfer": {
-        // ★ 线索转交 ★：讨论阶段把未公开的持有线索私下面交给其他座位，双方可见。
-        const toSeat = action.toSeat;
-        const clueId = action.clueId ?? "";
-        if (toSeat === undefined) return { ok: false, error: "转交对象不合法" };
-        const invalid = validateTransfer(this.script, this.state, seatIndex, clueId, toSeat);
-        if (invalid) return { ok: false, error: invalid };
-        const clue = this.script.clues.find((c) => c.id === clueId);
-        if (!clue) return { ok: false, error: "你没有这张线索卡" };
-        this.state.heldClues[seatIndex] = (this.state.heldClues[seatIndex] ?? []).filter((id) => id !== clueId);
-        this.state.heldClues[toSeat] = [...(this.state.heldClues[toSeat] ?? []), clueId];
-        await this.recordEvent({
-          type: "transfer",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: seatIndex,
-          toSeat,
-          visibility: `seat:${toSeat}`,
-          content: {
-            clueId,
-            clueName: clue.name,
-            clueContent: clueText(clue),
-            text: `${this.speakerName(seatIndex)} 悄悄把一张线索卡交给了你。`,
-          },
-        });
-        await syncSeatClueIds(this, seatIndex);
-        await syncSeatClueIds(this, toSeat);
-        await this.persist();
-        return { ok: true };
-      }
-      case "private_chat": {
-        // ★ AI 主动私信的回复通道 ★：只有当某位 AI 向你开过私信窗口时才能回复。
-        if (!this.script.flow.allowPrivateChat) return { ok: false, error: "本局未开放私聊" };
-        if (this.state.phase !== "DISCUSSION") return { ok: false, error: "当前不在讨论环节" };
-        const toSeat = action.toSeat ?? -1;
-        const target = this.state.seats[toSeat];
-        if (!target || target.kind !== "ai") return { ok: false, error: "只能回复 AI 玩家的私信" };
-        const key = `${toSeat}-${seatIndex}`;
-        if ((this.state.privateChat[key] ?? 0) <= 0) return { ok: false, error: "对方没有向你发起私信" };
-        const text = (action.text ?? "").trim().slice(0, 300);
-        if (!text) return { ok: false, error: "回复不能为空" };
-        // 消耗一次窗口额度（非一次性封口）：AI 再次私信可续，额度用尽即封口。
-        this.state.privateChat[key] -= 1;
-        await this.recordEvent({
-          type: "private",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: seatIndex,
-          toSeat,
-          visibility: `seat:${toSeat}`,
-          content: { text },
-        });
-        await this.persist();
-        queueAiPrivateReply(this, toSeat, seatIndex, text);
-        return { ok: true };
-      }
-      case "rush": {
-        this.continueTick();
-        return { ok: true };
-      }
-      default:
-        return { ok: false, error: "未知动作" };
-    }
+    const handler = PLAYER_ACTIONS[action.type];
+    return handler ? handler(this, seatIndex, action) : handleUnknownPlayerAction();
   }
 
   // ============ 真人 DM 动作入口 ============
 
-  async handleDmAction(action: { type: "narrate" | "nudge" | "skip_turn" | "handout" | "hint" | "force_ready" | "abort_game"; text?: string; clueId?: string; hintIndex?: number; seatIndex?: number }): Promise<{ ok: boolean; error?: string }> {
+  async handleDmAction(action: DmAction): Promise<{ ok: boolean; error?: string }> {
     if (!this.drive) return { ok: false, error: LEASE_READ_ONLY_ERROR };
     return this.exclusive(() => this.handleDmActionInner(action));
   }
 
-  private async handleDmActionInner(action: { type: "narrate" | "nudge" | "skip_turn" | "handout" | "hint" | "force_ready" | "abort_game"; text?: string; clueId?: string; hintIndex?: number; seatIndex?: number }): Promise<{ ok: boolean; error?: string }> {
+  private async handleDmActionInner(action: DmAction): Promise<{ ok: boolean; error?: string }> {
     if (this.state.phase === "ENDED") return { ok: false, error: "对局已结束" };
-    switch (action.type) {
-      case "force_ready": {
-        if (this.state.phase !== "READING") return { ok: false, error: "当前不在读本环节" };
-        const seat = action.seatIndex;
-        if (seat === undefined || !activeSeats(this.state).includes(seat)) return { ok: false, error: "座位不存在" };
-        if (!this.state.readySeats.includes(seat)) this.state.readySeats.push(seat);
-        clearHumanTimeout(this, seat);
-        await this.systemSay(`（真人 DM 已代座位${seat + 1}完成读本确认。）`, seat);
-        await this.persist();
-        this.continueTick();
-        return { ok: true };
-      }
-      case "abort_game": {
-        this.clearTimers();
-        this.activeAbortController?.abort();
-        this.state.phase = "ENDED";
-        this.state.pendingAnswer = null;
-        await this.systemSay(`（真人 DM 已中止本局，对局状态已封存。）`);
-        await this.persist();
-        await db.$transaction(async (tx) => {
-          const ended = await tx.game.update({ where: { id: this.gameId }, data: { status: "aborted", endedAt: new Date() } });
-          await tx.room.update({ where: { id: ended.roomId }, data: { status: "aborted" } });
-        });
-        return { ok: true };
-      }
-      case "narrate": {
-        const text = (action.text ?? "").trim().slice(0, 500);
-        if (!text) return { ok: false, error: "内容不能为空" };
-        await this.recordEvent({
-          type: "system",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: null,
-          toSeat: null,
-          visibility: "public",
-          content: { text: `【真人DM】${text}` },
-        });
-        return { ok: true };
-      }
-      case "nudge": {
-        this.continueTick();
-        return { ok: true };
-      }
-      case "skip_turn": {
-        if ((this.state.phase === "SELF_INTRO" || this.state.phase === "DISCUSSION") && this.state.turnSeat !== null) {
-          const seat = this.state.turnSeat;
-          this.markSpoken(seat);
-          await this.systemSay(`（真人DM 跳过了本回合的发言。）`);
-          await this.nextTurnOrAdvance();
-        } else {
-          this.continueTick();
-        }
-        return { ok: true };
-      }
-      case "handout": {
-        const clueId = action.clueId?.trim();
-        const clue = clueId ? this.script.clues.find((candidate) => candidate.id === clueId) : undefined;
-        if (!clue) return { ok: false, error: "线索不存在" };
-        if (clue.policy === "keep_private") return { ok: false, error: "该线索被作者标记为不可公开" };
-        if (this.state.clueStates[clue.id]?.isPublic) return { ok: true };
-        this.state.clueStates[clue.id] = { discoveredBy: this.state.clueStates[clue.id]?.discoveredBy ?? null, isPublic: true };
-        this.state.hostHandouts ??= {};
-        this.state.hostHandouts[clue.id] = { round: this.state.round, reason: "manual_dm" };
-        await this.recordEvent({
-          type: "clue",
-          phase: this.state.phase,
-          round: this.state.round,
-          fromSeat: null,
-          toSeat: null,
-          visibility: "public",
-          content: { clueId: clue.id, clueName: clue.name, clueContent: clueText(clue), hostRelease: true, manual: true },
-        });
-        await this.systemSay(`真人 DM 公开补发线索卡【${clue.name}】。`);
-        await this.persist();
-        return { ok: true };
-      }
-      case "hint": {
-        const index = action.hintIndex;
-        const hint = index === undefined ? undefined : this.script.hostGuide?.stallBreakers[index];
-        if (!hint) return { ok: false, error: "主持提示不存在" };
-        this.state.hostHints ??= {};
-        const key = `${this.state.round}:${index}`;
-        if (this.state.hostHints[key]) return { ok: true };
-        this.state.hostHints[key] = { round: this.state.round, condition: hint.condition, hint: hint.hint };
-        await this.systemSay(`【主持提示】${hint.hint}`);
-        await this.persist();
-        return { ok: true };
-      }
-      default:
-        return { ok: false, error: "未知 DM 动作" };
-    }
+    const handler = DM_ACTIONS[action.type];
+    return handler ? handler(this, action) : handleUnknownDmAction();
   }
 }
