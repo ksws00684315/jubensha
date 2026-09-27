@@ -7,6 +7,7 @@ import { parseScriptForRuntime } from "@/core/script/compat";
 import { isScriptPlayable } from "@/core/script/v2/validate";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 import { checkCreateRoomRateLimit } from "@/lib/rate-limit";
+import { requireRoomCreateAuth } from "@/lib/room-policy";
 
 const seatSchema = z.object({
   kind: z.enum(["human", "ai", "empty"]),
@@ -18,6 +19,7 @@ const createSchema = z.object({
   seats: z.array(seatSchema).min(3).max(8),
   humanDm: z.boolean().optional(),
   unlimitedHumanTurns: z.boolean().optional(),
+  inviteCode: z.string().max(64).optional(),
 });
 
 function genRoomCode(): string {
@@ -34,6 +36,10 @@ async function POST_IMPL(req: Request) {
   const body = await req.json().catch(() => null);
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "参数不合法" }, { status: 400 });
+
+  // 授权检查放在查剧本之前：未授权者不应通过 404/400 的差异探测剧本 id 与校验细节
+  const denied = requireRoomCreateAuth(req, parsed.data.seats, parsed.data.inviteCode);
+  if (denied) return denied;
 
   const scriptRow = await db.script.findFirst({ where: { id: parsed.data.scriptId, deleted: false } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });

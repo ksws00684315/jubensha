@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { parseScriptForRuntime, publicBioText } from "@/core/script/compat";
 import { assignCharacterIds, hasDuplicateCharacterIds } from "@/lib/seats";
 import { checkRoomRateLimit } from "@/lib/rate-limit";
+import { requireRoomCreateAuth } from "@/lib/room-policy";
 
 async function loadRoom(code: string) {
   const room = await db.room.findUnique({
@@ -57,6 +58,7 @@ async function GET_IMPL(_req: Request, ctx: { params: Promise<{ code: string }> 
 
 const patchSchema = z.object({
   hostToken: z.string().min(1),
+  inviteCode: z.string().max(64).optional(),
   seats: z
     .array(z.object({ index: z.number().int(), kind: z.enum(["human", "ai", "empty"]), characterId: z.string().nullable().optional() }))
     .min(3)
@@ -76,6 +78,9 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ code: string }>
   if (!room.hostToken || room.hostToken !== parsed.data.hostToken) {
     return NextResponse.json({ error: "只有房主可以改座位" }, { status: 403 });
   }
+  // 改座位可以把真人座换成 AI 座，绕开建房的授权检查，所以这里要按「结果」再查一遍
+  const denied = requireRoomCreateAuth(req, parsed.data.seats, parsed.data.inviteCode);
+  if (denied) return denied;
 
   const scriptRow = await db.script.findUnique({ where: { id: room.scriptId } });
   if (!scriptRow) return NextResponse.json({ error: "剧本不存在" }, { status: 404 });

@@ -50,6 +50,16 @@ npm run dev
 4. **剧本库**：内置原创样例本《云澜山庄的雪夜》（5 人本格）在 `seeds/` 下，可通过「导入 JSON」入库；也可用「AI 生成剧本」
 5. **开房间**：选剧本 → 座位配置（AI / 真人）→ 创建 → 分享房间码给朋友入座 → 开始游戏
 
+### 谁能开「含 AI 座位」的房间
+
+AI 玩家会真实调用模型并按 token 计费，因此这类房间的创建权限由 `ROOM_CREATE_POLICY` 控制（纯真人房不受限制）：
+
+- **本机开发**（`npm run dev`）默认 `open`：直接建带 AI 的房间即可。
+- **生产部署**（`next start` / Docker / pm2）默认 `admin`：浏览器需先在「设置」页输入 `ADMIN_TOKEN` 解锁管理员身份，接口调用需带 `x-admin-token` 请求头；未授权时创建会被拒绝并提示「创建含 AI 座位的房间需要管理员身份」。
+- **局域网开黑不想配口令**：启动前设 `ROOM_CREATE_POLICY=open`（仅在服务只暴露给本机或可信内网时使用）。
+
+三种策略与 `ROOM_INVITE_CODE` 的完整说明见 `.env.example`。
+
 ## 剧本 Schema
 
 核心契约见 `src/core/script/v2/schema.ts`（V2）。一个剧本文档包含：
