@@ -4,7 +4,7 @@ module.exports = {
       name: 'jubensha',
       script: 'npm',
       args: 'start',
-      cwd: '/Users/hh-mini/Public/dev/jubensha',
+      cwd: __dirname,
       env: {
         NODE_ENV: 'production',
         PORT: 3000,

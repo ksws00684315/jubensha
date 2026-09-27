@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: jubensha
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the Compose env file}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d jubensha"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    image: jubensha-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .e2e/docker.env
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: --max-old-space-size=768
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/jubensha
+      JEV_SHADOW: "0"
+      JEV_FALLBACK: "0"
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then((r) => { if (!r.ok) process.exit(1); }).catch(() => process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      start_period: 45s
+      retries: 5
+
+volumes:
+  postgres-data:

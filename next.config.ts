@@ -29,6 +29,7 @@ function cspHeaderValue(): { key: string; value: string } {
 }
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   async headers() {
     return [
       {
