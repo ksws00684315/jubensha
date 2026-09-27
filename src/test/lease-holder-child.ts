@@ -22,6 +22,12 @@ if (!gameId) {
 }
 
 async function main(): Promise<void> {
+  // Mimic Next's start-server cleanup: it registers SIGINT/SIGTERM handlers before
+  // instrumentation runs and ends in process.exit(). Here it exits synchronously (worst case).
+  if (process.env.LEASE_CHILD_COMPETING_EXIT === "1") {
+    process.on("SIGTERM", () => process.exit(143));
+    process.on("SIGINT", () => process.exit(130));
+  }
   installLeaseReleaseOnSignal();
   process.stdout.write(`ACQUIRED ${await acquireLease(gameId, INSTANCE_ID)}\n`);
   process.stdout.write(`HOLDER ${INSTANCE_ID}\n`);

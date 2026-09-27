@@ -135,24 +135,50 @@ export async function releaseAllLeases(): Promise<number> {
   return res.count;
 }
 
+/** 退出前放牌的最长等待：pm2 默认 kill_timeout 为 1.6s，之后直接 SIGKILL。 */
+const RELEASE_ON_EXIT_TIMEOUT_MS = 1_000;
+
 /**
- * `SIGTERM` → 先放租约再退出，避免接管方等满 30s TTL。
- * 只处理 SIGTERM：`next dev` 的 Ctrl-C 走 SIGINT，那条路径交给 TTL 自然过期，
- * 不在开发热重载里抢退出时序。
+ * 收到退出信号 → 先放租约再退出，避免接管方等满 30s TTL。
+ * - SIGTERM：docker / systemd / 手动 kill。
+ * - SIGINT：仅生产环境。pm2 stop/restart 默认发的就是 SIGINT；
+ *   `next dev` 的 Ctrl-C 也是 SIGINT，开发环境那条路径交给 TTL 自然过期，不抢热重载的退出时序。
  */
 export function installLeaseReleaseOnSignal(): void {
   if (globalThis.__jbsLeaseSignalInstalled) return;
   globalThis.__jbsLeaseSignalInstalled = true;
-  // prependListener：Next 自己也挂了 SIGTERM 处理器做优雅退出（start-server.ts），
-  // 它会先注册。放牌必须在它之前起头，否则两边抢同一次优雅退出的时间窗。
-  process.prependOnceListener("SIGTERM", () => {
-    log.info("[lease] SIGTERM：交回写租约", { leaseCount: renewals.size, instanceId: INSTANCE_ID.slice(0, 8) });
-    void releaseAllLeases()
-      .catch((err: unknown) => {
-        log.warn("[lease] 退出前释放租约失败", { error: err });
-      })
-      .finally(() => {
-        process.exit(0);
+  const signals: NodeJS.Signals[] = process.env.NODE_ENV === "production" ? ["SIGTERM", "SIGINT"] : ["SIGTERM"];
+  for (const signal of signals) {
+    // Next 的优雅退出处理器（start-server.ts）在 instrumentation 之前就挂在这个信号上，最后会
+    // process.exit()，与异步放牌竞速：它先退出，放牌的 UPDATE 就丢了。emit 会先复制监听器列表，
+    // 到信号来时再摘已经拦不住，所以安装时就把已注册的处理器接管过来，放牌完成（或超时）后
+    // 再按原顺序把信号转交给它们，退出流程与退出码仍由它们决定。
+    // 局限：安装之后才注册的处理器仍与放牌并行。
+    const others = process.listeners(signal);
+    for (const l of others) process.removeListener(signal, l);
+    let handling = false;
+    const handler = () => {
+      // 放牌期间的重复信号直接忽略（此时本信号上只剩这一个处理器，不能让默认行为立即杀进程）
+      if (handling) return;
+      handling = true;
+      log.info(`[lease] ${signal}：交回写租约`, { leaseCount: renewals.size, instanceId: INSTANCE_ID.slice(0, 8) });
+      let timer: NodeJS.Timeout | undefined;
+      const timeout = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`放牌超过 ${RELEASE_ON_EXIT_TIMEOUT_MS}ms`)), RELEASE_ON_EXIT_TIMEOUT_MS);
       });
-  });
+      void Promise.race([releaseAllLeases(), timeout])
+        .catch((err: unknown) => {
+          log.warn("[lease] 退出前释放租约失败", { error: err });
+        })
+        .finally(() => {
+          clearTimeout(timer);
+          if (others.length === 0) {
+            process.exit(0);
+            return;
+          }
+          for (const l of others) (l as (s: NodeJS.Signals) => void)(signal);
+        });
+    };
+    process.on(signal, handler);
+  }
 }

@@ -165,55 +165,75 @@ describe("L3：租约过期接管（I09）", () => {
   }, 60_000);
 });
 
-describe("L3：SIGTERM 交牌（验收 4）", () => {
+/**
+ * 拉起一个持牌子进程（真·另一实例），发信号，返回交牌耗时与退出码。
+ * 用 `node --import tsx` 而不是 `node_modules/.bin/tsx`：后者会再 fork 一个包装进程，
+ * 交牌判据要打在真正跑脚本的进程上。
+ */
+async function signalHolder(code: string, signal: NodeJS.Signals, extraEnv: Record<string, string> = {}) {
+  const gameId = await startGame(code);
+  await releaseLease(gameId); // 本实例退出驱动，把牌让给子进程
+  expect(await leaseOwner(gameId)).toBeNull();
+
+  const child = spawn(process.execPath, ["--import", "tsx", path.join("src", "test", "lease-holder-child.ts"), gameId], {
+    cwd: process.cwd(),
+    env: { ...process.env, ...extraEnv },
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  // 退出事件必须在发信号之前就挂上：`exit` 不会补发，晚挂就再也等不到（子进程 50ms 内退了）。
+  const exited = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>((r) => {
+    child.once("exit", (exitCode, exitSignal) => r({ code: exitCode, signal: exitSignal }));
+  });
+  let out = "";
+  let err = "";
+  child.stdout.on("data", (chunk: Buffer) => {
+    out += chunk.toString();
+  });
+  child.stderr.on("data", (chunk: Buffer) => {
+    err += chunk.toString();
+  });
+
+  const t0 = Date.now();
+  while (!out.includes("READY")) {
+    if (child.exitCode !== null || child.signalCode !== null) throw new Error(`子进程提前退出（code=${child.exitCode}）：${out}|${err}`);
+    if (Date.now() - t0 > 60_000) throw new Error(`子进程 60s 内未就绪：${out}|${err}`);
+    await sleep(100);
+  }
+  expect(out).toContain("ACQUIRED true"); // 真取到了牌，才谈得上「交牌」
+  expect(out).toContain("HOLDER ");
+
+  const owner = await leaseOwner(gameId);
+  expect(owner).not.toBeNull();
+  expect(owner).not.toBe(INSTANCE_ID); // 牌在另一个进程手上
+
+  const t1 = Date.now();
+  child.kill(signal);
+  const finished = await Promise.race([exited, sleep(10_000).then(() => null)]);
+  if (!finished) throw new Error(`${signal} 后 10s 内子进程未退出`);
+  // 进程已退出：此刻还没交牌，就只能等 30s TTL 过期了
+  const releasedBeforeExit = (await leaseOwner(gameId)) === null;
+  return { releasedBeforeExit, elapsed: Date.now() - t1, exitCode: finished.code };
+}
+
+describe("L3：退出信号交牌（验收 4）", () => {
   it("子进程（真·另一实例）收到 SIGTERM 后 1s 内释放租约", async () => {
-    const gameId = await startGame("LSE10");
-    await releaseLease(gameId); // 本实例退出驱动，把牌让给子进程
-    expect(await leaseOwner(gameId)).toBeNull();
+    const r = await signalHolder("LSE10", "SIGTERM");
+    expect(r.releasedBeforeExit).toBe(true);
+    expect(r.elapsed).toBeLessThan(1_000);
+    expect(r.exitCode).toBe(0);
+  }, 90_000);
 
-    // 用 `node --import tsx` 而不是 `node_modules/.bin/tsx`：后者会再 fork 一个包装进程，
-    // SIGTERM 交牌这条判据要打在真正跑脚本的进程上。
-    const child = spawn(process.execPath, ["--import", "tsx", path.join("src", "test", "lease-holder-child.ts"), gameId], {
-      cwd: process.cwd(),
-      env: process.env,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-    // 退出事件必须在发信号之前就挂上：`exit` 不会补发，晚挂就再也等不到（子进程 50ms 内退了）。
-    const exited = new Promise<{ code: number | null; signal: NodeJS.Signals | null }>((r) => {
-      child.once("exit", (code, signal) => r({ code, signal }));
-    });
-    let out = "";
-    let err = "";
-    child.stdout.on("data", (chunk: Buffer) => {
-      out += chunk.toString();
-    });
-    child.stderr.on("data", (chunk: Buffer) => {
-      err += chunk.toString();
-    });
+  it("与 Next 的退出处理器并存时，先交牌再交给它退出（SIGTERM）", async () => {
+    const r = await signalHolder("LSE11", "SIGTERM", { LEASE_CHILD_COMPETING_EXIT: "1" });
+    expect(r.releasedBeforeExit).toBe(true);
+    expect(r.elapsed).toBeLessThan(1_000);
+    expect(r.exitCode).toBe(143); // Next 的处理器最终照常执行，退出码归它定
+  }, 90_000);
 
-    const t0 = Date.now();
-    while (!out.includes("READY")) {
-      if (child.exitCode !== null || child.signalCode !== null) throw new Error(`子进程提前退出（code=${child.exitCode}）：${out}|${err}`);
-      if (Date.now() - t0 > 60_000) throw new Error(`子进程 60s 内未就绪：${out}|${err}`);
-      await sleep(100);
-    }
-    expect(out).toContain("ACQUIRED true"); // 真取到了牌，才谈得上「交牌」
-    expect(out).toContain("HOLDER ");
-
-    const owner = await leaseOwner(gameId);
-    expect(owner).not.toBeNull();
-    expect(owner).not.toBe(INSTANCE_ID); // 牌在另一个进程手上
-
-    const t1 = Date.now();
-    child.kill("SIGTERM");
-    while (Date.now() - t1 < 5_000 && (await leaseOwner(gameId)) !== null) {
-      await sleep(50);
-    }
-    const elapsed = Date.now() - t1;
-    expect(await leaseOwner(gameId)).toBeNull();
-    expect(elapsed).toBeLessThan(1_000);
-    const finished = await Promise.race([exited, sleep(10_000).then(() => null)]);
-    if (!finished) throw new Error("SIGTERM 后 10s 内子进程未退出");
-    expect(finished.code).toBe(0);
+  it("生产环境下 pm2 默认的 SIGINT 同样先交牌", async () => {
+    const r = await signalHolder("LSE12", "SIGINT", { LEASE_CHILD_COMPETING_EXIT: "1", NODE_ENV: "production" });
+    expect(r.releasedBeforeExit).toBe(true);
+    expect(r.elapsed).toBeLessThan(1_000);
+    expect(r.exitCode).toBe(130);
   }, 90_000);
 });
