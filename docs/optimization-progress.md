@@ -36,6 +36,10 @@
 | npm audit --omit=dev | 3 high（复测仍含 CLI 链路，见偏差 DEV-01） | 3 high | 0 | S0.4 |
 | CI | 无（无 .github/） | 无 | push 自动 check | S0.4 |
 | R1 无模型冒烟 | 未测 | 连续 4 次通过，~61s/次（e2e 实例 :3110/:3120） | 连续 3 次 | S2.5 |
+| R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败，6/6 清单通过 | 两遍全绿 | S2.6 |
+| R9 控制台 error / 未捕获异常 | 未测 | error 2（12 次运行合计，全部是第 1 项故意的 404）/ 异常 0 | 除故意负向用例外为 0 | S2.6 |
+| UI 基线截图（`.e2e/screens/S2.6/`，不入库） | 0 | 64 张（桌面 d01–d31a 32 + 移动 m01–m31a 32） | ≥ 20 | S2.6 |
+| SSE URL 带 `token=` 的请求（R9 网络捕获，每玩家标签页） | 未测 | 1 | 0（S3.5） | S2.6 |
 | API 处理器总数（grep export const GET|POST|…） | 34（计划 §1.1 记 35，复测为准） | 34 | — | S0.4 |
 | recordEvent/persist 调用点（src/core 非测试） | 86（计划记 84） | 86 | — | S0.4 |
 | engine.events 读取点（`\.events\.` 模式） | 10（`\.events` 宽匹配 26；计划记 19） | 10 | — | S0.4 |
@@ -57,6 +61,7 @@
 | S2.3 | DONE | 70133f5 | 2026-09-26 | 2026-09-26 | I01–I04、I06 过；连跑 5 次全绿；误连库名直接拒绝(exit 1)；CI integration job 绿(run 36259803390) | FIND-02 |
 | S2.4 | DONE | 57e0304 | 2026-09-26 | 2026-09-26 | 新增 6 个 L3 用例（SEARCH/VOTE/REVEAL 恢复点 + REVEAL→ENDED 推进 + 并发 speak 互斥 + 动作/定时器交错）；连跑 3 次全绿；未改生产代码 | DEV-03 |
 | S2.5 | DONE | f25de5c/4b9310e | 2026-09-27 | 2026-09-27 | 实机实例 :3110 隔离跑通 R1×4（61s/次，action_failed=0）、R2、R3、R4；pm2 jubensha 重启计数 25→25 未变；e2e:down 后 jubensha_e2e 计数 0；种子 29 导入 / L3 10 过 / npm run check 绿 | DEV-04, DEV-05, FIND-03 |
+| S2.6 | DONE | 79b66f5/（本提交） | 2026-09-27 | 2026-09-27 | R9 清单 1–6 项桌面 1280×800 与移动 375×812 各一遍，6 份清单 ×2 = 12 次运行 exit 0、每遍 171 步 0 失败；截图 64 张；控制台 error 基线 2（均为第 1 项故意的 404）+ 未捕获异常 0；13 个布局采样无横向滚动；公开/私藏两分支与真人票均有 DB 侧证；第 7 项首轮为基线（无可比截图） | DEV-06, DEV-07, FIND-04, FIND-05, FIND-06 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -132,6 +137,36 @@
 - L3 连带复跑：`DATABASE_URL=…jubensha_test npm run test:int` → 3 files / 10 passed，exit 0
 - 最终门禁：`npm run check` → exit 0，Test Files 78 / Tests 558 passed | 2 expected fail
 
+### S2.6 R9 浏览器实机首轮
+驱动 `scripts/e2e/browser.mjs`（本机 Chrome headless=new + CDP，见 DEV-06），动作清单 `scripts/e2e/plans/r9-d{1,2,3,4a,4b,5}-*.json`，目标为 S2.5 起的隔离实例 **:3120**（`npm run e2e:up` 的端口回退）。桌面与移动各跑一遍同一套 6 个清单：**每遍 171 步、0 失败**，共 12 次运行全部 exit 0；驱动内 `elapsedMs` 合计桌面 60.2s、移动 57.6s（整条链墙钟约 4.5 分钟）：
+
+| 清单 | plan | 桌面 1280×800 | 移动 375×812 |
+|---|---|---|---|
+| 1 静态 5 页 + 404 | `r9-d1-static` | 31 步 0 失败，error 1（故意的 `/no-such-page` 404），异常 0 | 31 步 0 失败，error 1（同上），异常 0 |
+| 2 `/settings` 管理门 + 掩码 | `r9-d2-settings` | 25 步 0 失败 | 25 步 0 失败 |
+| 3 建房→房间码→另开标签入座→开局→`/play` | `r9-d3-create-room` | 36 步 0 失败 | 36 步 0 失败 |
+| 4 对局页全流程 | `r9-d4a` + `r9-d4b` | 32 + 18 步 0 失败 | 32 + 18 步 0 失败 |
+| 5 刷新后身份/事件/阶段 | `r9-d5-identity-spectator` | 29 步 0 失败 | 29 步 0 失败 |
+| 6 无痕上下文无私有卡与私聊 | 同上（后半） | 含在 29 步内 | 含在 29 步内 |
+| 7 截图对比 | — | 首轮为基线，无上一阶段同名截图可比 | 同左 |
+
+- 命令：`zsh .e2e/plans/chain-final.sh`（每遍先 `node scripts/e2e/browser.mjs --shutdown` 清 profile，再按 d1→d2→d3→d4a→d5→d4b 顺序，桌面 `--shot-prefix=d`、移动 `--width=375 --height=812 --mobile --shot-prefix=m`）。退出码序列：`EXIT_{d,m}_{D1,D2,D3,D4A,D5,D4B}=0` 共 12 个。
+- 截图：`.e2e/screens/S2.6/` 共 **64 张 PNG（d01–d31a 桌面 32 张、m01–m31a 移动 32 张）**，≥ 20 张达标；目录 gitignore，不入库。
+- 控制台 error 基线：整遍 12 次运行合计 **2 条**，且都是清单第 1 项故意访问 `/no-such-page` 产生的 `Failed to load resource: 404 @ http://127.0.0.1:3120/no-such-page`；其余 11 次运行 0 条。**未捕获异常 0 条**；`grep -c . .e2e/screens/console-errors.jsonl` 的 59 行含开发期调试运行，正式基线以上述 2 条为准（计划 §3.5「控制台 0 条 error」中的 404 一条按「故意负向用例」豁免，其余为 0）。
+- 无横向滚动：12 次运行收集到的 13 个 `layout()` 采样（含首页/剧本库/详情/建房/设置/刷新后对局页/观众页/VOTE/结算）`scrollWidth > clientWidth` 均为 **false**，移动 375 视口下 `scrollW=375=clientW`。
+- 第 2 项细节：独立上下文首访显示 `解锁管理面` 口令门（`lockedText` 采集），输入 e2e 口令后卡片消失、出现「AI 接入 / 模型绑定 / 用量统计」；新增 provider 的 apiKey 在列表里渲染为 `http://127.0.0.1:1/v1 · ••••••••abcd`，断言 `body.innerText` 含掩码且不含 `sk-e2e-demo-0000` 明文 → 两侧视口均过。
+- 第 3 项细节：`座位 1=human、2–5=ai`（`seatKinds=["human","ai","ai","ai","ai"]`），房间码取自 URL `/rooms/{code}`（桌面 `WK63G`、移动 `JR4FP`，格式断言 `/^[A-Z0-9]{4,10}$/i`），第二标签（独立上下文）填昵称入座→房主开局→房主跳 `/play/[id]` 显示观众视角、访客点「进入对局」后进 READING。
+- 第 4 项细节（真人座位 seat 0，两局独立验证）：
+  - READING「我已读完剧本」→ SELF_INTRO 输入框发言进 ChatFeed → SEARCH 选地点 → DISCUSSION 提问（`select[aria-label="选择提问对象"]` + 公开质询表单）→ VOTE 指认 + 引用公开材料 → REVEAL/ENDED 结算卡（`真凶「苏晚」逃脱`、`你的投票 未命中 有效证据 1 条 表现分 10/100`）。
+  - 落库侧证（`zsh .e2e/plans/db-proof.sh <gameId>`，psql 只读查询）：
+    - 桌面局 `cmujgkpif00aes83piruui3nw`：`choose|seq581|r1|书房`、`choose|seq614|r2|门廊雪地`；`seq594 system|seat:0|你决定私藏线索【遗体初验与胃内容物试验】` → **私藏分支**成立，`state.heldClues."0"=["tea_autopsy","footprint"]`，且两卡最终 `clueStates.*.isPublic=true`（第 2 轮结束由主持公开）；`vote|seat0->1` + `voteEvent seq657 evidenceIds=["teacup"]` → 引证据投票成立；`state|ENDED|ended|{"caught":false,"counts":{"0":2,"1":1,"3":1,"4":1},"culpritSeat":3}`。
+    - 移动局 `cmujgn2xn00bus83py3hj6j9i`：`choose|seq676|r1|书房`；`seq691 clue|public|{"clueId":"tea_autopsy","publicBy":0}` → **当场公开分支**成立；`seq721 seat:0|你决定私藏线索【雪地脚印】` → 同一局内两个分支都验到；`vote|seat0->1`、`state|ENDED|ended|{"caught":false,"counts":{"1":3,"2":1,"3":1},"culpritSeat":3}`。
+  - 决策窗并非每卡都有：`policy=auto_public` 的线索（如【参茶残液】）发牌即 `system|seat:0|…该线索为公开线索，已向全场公示。`，不出现公开/私藏按钮 —— 属既有设计，清单第 4 项的按钮步骤因此用 `clickIf`，无窗口时记 skip；分支证据以上述 DB 事件为准。
+- 第 5 项细节：刷新前后 `bubbles` 桌面 32→32、移动 31→31，`phase` 文本一致（`搜证 · 第 2 轮 ✓ 读本 ✓ 自我介绍`），`privateCardShown=true`（我的剧本页签含「你的秘密」），`lsKeys=1`（座位凭证留在 localStorage）→ 刷新不产生渲染重复、身份保持。同屏出现的 5 组同文案气泡经核对是 **12 条独立 `system|public` 事件（4 种文案）** 的降级提示，不是渲染重复 → 见 FIND-05。
+- 第 6 项细节（独立 browser context = 无痕等价）：只带房间码打开 `/rooms/{code}` → 只有「回到本局」与「请使用原设备凭证恢复」提示，`localStorageKeys=0`，无「你的秘密」；直连 `/play/{gameId}` → 出现「观众身份观看」，无「你的行动」面板、无线索（页签内 `还没有获得任何线索`）、正文不含「私聊」。桌面 `spectatorView.bubbles=20`、移动 21（仅公开事件）。
+- 凭证外泄审计：驱动记录到 `tokenQueryRequests`，两遍各 1 条（d3 与 d5 的玩家标签）：`/api/games/{id}/events?seat=0&token=…`（报告里已掩码）。这是清单第 6 项/?token= 审计的基线值 → 见 FIND-04，由 S3.5 关闭。页面 URL、`document.body` 与 `localStorage` 均无 token 明文（`feedHealth.tokenInUrl=false`、`sseHasToken=false`）。
+- 收尾：`npm run e2e:down` 后 `SELECT count(*) FROM pg_database WHERE datname='jubensha_e2e'` → 0；`node scripts/e2e/browser.mjs --shutdown` 清 profile；pm2 `jubensha`（:3000）restarts 未变。
+
 ## 发现的缺陷
 | 编号 | 发现于 | 描述 | 复现测试 | 状态 | 关闭提交 |
 |---|---|---|---|---|---|
@@ -141,6 +176,9 @@
 | FIND-02 | S2.3 | vi.useFakeTimers 下引擎定时器链不收敛：AI ready 定时器延迟膨胀（5s 实际 ~60s）、SEARCH 阶段后台决策的互斥提交不落账。真实定时器 + 轮询路径正常。I06 已改为真实定时器 + 状态快进；完整流程由 R1 实机覆盖 | recovery.int.test.ts | OPEN（测试环境观察，非生产行为证明） | |
 | FIND-03 | S2.5 | 实机 VOTE 阶段真人座位停等 8 分钟以上，未见 `HUMAN_TURN_TIMEOUT_MS`（180s）到点自动出手；当时测试脚本自身有缺陷（一直发 speak 未发 vote），不能据此判定产品缺陷。S6.3 卡局告警落地后用 `restart-resume.mjs` 复现一次 | scripts/e2e/restart-resume.mjs（待定版） | OPEN（待复现） | |
 | FIND-01 | S0.4 | `repetition.test.ts`「只在尾部窗口内扫描」在 --coverage 插桩下超时失败（5392ms），非覆盖率模式通过；时间敏感用例，覆盖率门禁需容忍或后续修复 | npx vitest run --coverage | CLOSED（S1.3） | 4b71bd7 |
+| FIND-04 | S2.6 | 前端 SSE 建连把座位 token 放进 URL query：`GET /api/games/{id}/events?seat=0&token=…`，会进浏览器历史与反向代理访问日志（不变式 5 的暴露面）。R9 网络捕获基线 = 每个玩家标签 1 条 | scripts/e2e/browser.mjs 的 `tokenQueryRequests`（`.e2e/screens/S2.6/S2.6-d5-{d,m}-report.json`） | OPEN（S3.5 一次性票据关闭） | |
+| FIND-05 | S2.6 | 无模型局 ChatFeed 里「（AI 玩家「X」思考时遇到问题：用途槽位 "player" 尚未绑定模型…）」这类降级提示按座位×回合重复记录为公开事件：一局 5 人出现 12 条事件、只有 4 种文案，同屏 5 组重复行，观众也能看到。事件不重复（渲染无 bug），是引擎侧提示未去重 | R9 `r9-d5` 的 `identityBefore/After.bubbles vs uniqueTexts` + `psql … group by type,visibility`（台账 S2.6 证据节） | OPEN（建议 S7.3 关闭：同类 notice 按回合合并） | |
+| FIND-06 | S2.6 | 未匹配路由渲染的是 Next 内置 404，正文为英文 `This page could not be found`，与全站中文文案不一致（项目无 `src/app/not-found.tsx`） | R9 `r9-d1` 的 `notFoundText`（截图 `d06-404.png` / `m06-404.png`） | OPEN（S2.6 只建基线不改代码；建议 S7.3 一并处理） | |
 
 ## 实机测试记录
 | 日期 | 阶段 | 场景 | 结果 | 耗时 | 证据路径 |
@@ -149,6 +187,8 @@
 | 2026-09-27 | P2/S2.5 | R2 鉴权负向 | PASSED（403 / 仅 public / 401 / 401）×3 轮 | ~15s/轮 | scripts/e2e/auth.mjs |
 | 2026-09-27 | P2/S2.5 | R3 SSE 断线续传 | PASSED（补传 3 条、与 DB 全集一致）×3 轮 | ~25s/轮 | scripts/e2e/sse-resume.mjs |
 | 2026-09-27 | P2/S2.5 | R4 进程重启恢复 | PASSED（DISCUSSION r1 一致 → ENDED；日志异常计数 0） | ~4 分钟 | scripts/e2e/restart-resume.mjs |
+| 2026-09-27 | P2/S2.6 | R9 浏览器走查 桌面 1280×800（清单 1–7） | PASSED 6/6 清单、31+25+36+32+29+18=171 步 0 失败；控制台 error 1（故意的 404）、异常 0；无横向滚动 | 60.2s（驱动内） | .e2e/screens/S2.6/{d01–d31a}.png、S2.6-d*-{d}-report.json |
+| 2026-09-27 | P2/S2.6 | R9 浏览器走查 移动 375×812（触摸 + iPhone UA，清单 1–7） | PASSED 6/6 清单、171 步 0 失败；控制台 error 1（同上）、异常 0；5 页 + 对局页 + 观众页 scrollWidth=clientWidth=375 | 57.6s（驱动内） | .e2e/screens/S2.6/{m01–m31a}.png、S2.6-d*-{m}-report.json |
 
 ## 偏差登记
 - **DEV-01（S0.4）**：计划 §1.1 称 `npm audit --omit=dev` 运行时链路为 0 high（3 high 全在 CLI 链路）。实测 `npm audit --omit=dev` 仍报 3 high（deepmerge-ts 经 @prisma/config ← prisma；prisma 在 devDependencies 中）。不影响任何指标的相对比较（后续只要求「不增加」），如实记录，不处理。
@@ -162,3 +202,5 @@
   5. `scripts/smoke-m3.mjs` 修 4 处「动作前置条件」：`choose_location` 先在 `availableLocations` 里选、`publish` 只在 SEARCH 阶段做、`speak` 后按 `turnSeat` 决定是否还需要 `skip`、`private_chat` 只在 `openWhispers` 有窗口时回复。修复前每轮 R1 输出 4 条 `!! action failed`，会让 §3.5 R1 的判据（输出里没有 `!! action failed`）永远不成立；这些都是脚本侧的非法动作尝试，不是引擎缺陷。
   6. R2 的「座位私有事件」探针由 DM `hint` 改为 `force_ready`：`hint` 需要 `hintIndex`（指向剧本 `hostGuide.stallBreakers`），且其产物是 public `system` 事件，无法验证 seat 过滤；`force_ready` 产生 `visibility=seat:N` 的事件且在读本阶段即可确定触发。
 - **DEV-05（S2.5）**：接手时工作区除 S2.5 的 e2e 脚本外，还带着 `src/core/engine/engine.ts` 的 8 行调试探针（`globalThis.__tickProbe` + `console.error`，上一会话诊断 tick 循环所留，不属于任何计划步骤，且会让「非测试代码 console.*」指标变差、并把探针打进实机构建）。处理：`git diff` 存为 `.e2e/engine-tick-probe.patch`（gitignore 目录，未丢）后 `git restore`，不入库。留给用户：若还要用该探针，`git apply .e2e/engine-tick-probe.patch`。
+- **DEV-06（S2.6）**：R9 的「用浏览器自动化工具（内置 Browser 面板）」改为**本机 Chrome（headless=new + 独立临时 profile）+ CDP**（新增 `scripts/e2e/browser.mjs`，零新增依赖：Node 内置 WebSocket + 本机 Chrome 路径）。原因：内置 Browser 面板未打开真实窗口时页面 `innerWidth=0`、`document.hidden=true`，既截不出图也判不了 375×812 的横向滚动（NATIVE_BROWSER_VIEWPORT_UNAVAILABLE）；CDP 能精确设两种视口、开触摸模拟与 iPhone UA、开独立 browser context（等价无痕窗口）、并汇总控制台 error / 未捕获异常 / 带 `token=` 的网络请求 —— 判据覆盖计划要求。附带 3 处基建增量：报告文件名带 `--shot-prefix`（否则桌面与移动同名互覆盖）、新增 `waitJs` 动作（等「结果态」而不是等瞬态文案）、报告内 `?token=` 一律掩码且口令只从 `.e2e/up.json` 读取。
+- **DEV-07（S2.6）**：R9 清单第 4 项的 3 个文案断言按实机语义改写，均不弱化「操作生效」这一判据：① 线索 `policy=auto_public` 时不存在公开/私藏决策窗（引擎直接公示并发 `该线索为公开线索，已向全场公示`），故该步用 `clickIf`，分支改由 DB 事件（`你决定私藏线索[…]` / `clue|public|publicBy:0`）证明；② SEARCH 选完地点后 `已选择，等待其他玩家搜证…` 是瞬态（其余座位秒选），改等「地点按钮不再可选」并 `collect` 当帧是否见到该提示；③ VOTE 后 `已投票，等待其他人…` 同理，改断言 `指认真凶` 面板消失 + `本局结算` 出现，票以 `votes` 表为准。
