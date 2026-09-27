@@ -44,8 +44,7 @@ describe("A34 GET /api/tts/[hash]", () => {
     }
   });
 
-  // BUG-03：createReadStream 的 ENOENT 是异步错误，try/catch 接不住 → 实际返回 200 后流中断
-  it.fails("缓存行在但文件丢失 → 404", async () => {
+  it("缓存行在但文件丢失 → 404", async () => {
     vi.mocked(db.ttsCache.findUnique).mockResolvedValue({ hash: "d".repeat(32), filePath: "/nonexistent/a.mp3" } as never);
     const { GET } = await import("./route");
     const res = await GET(makeReq("GET", `/api/tts/${"d".repeat(32)}`), ctx({ hash: "d".repeat(32) }));
