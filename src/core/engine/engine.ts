@@ -147,7 +147,7 @@ export class GameEngine {
     this.events = events;
     this.unlimitedHumanTurns = unlimitedHumanTurns;
     this.ownerId = ownerId;
-    // 恢复已落事件、尚未落快照的幂等边界。
+    // 纵深防御：原子写启用后，正常情况下不会出现「事件已落、快照未落」；仍保留旧数据与异常现场的幂等修复。
     for (const event of events) {
       if (event.type === "clue" && event.visibility === "public" && typeof event.content.clueId === "string") {
         const id = event.content.clueId;
@@ -293,7 +293,7 @@ export class GameEngine {
   /** 落库 + 总线广播 + 同步写回内存事件流（AI/DM 的 prompt 数据源必须是最新现场） */
   async recordEvent(ev: Omit<EngineEvent, "seq" | "createdAt"> & { content: Record<string, unknown> }): Promise<EngineEvent> {
     this.assertNotLeaseLost();
-    const event = await appendEvent(this.gameId, ev);
+    const event = await appendEvent(this.gameId, ev, this.state);
     this.events.push(event);
     queueEmbed(this, event);
     return event;

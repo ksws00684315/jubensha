@@ -54,9 +54,10 @@ export function sanitizeEventContent(content: Record<string, unknown>): Record<s
 /** 追加事件：落库 + 总线广播。返回完整事件。 */
 export async function appendEvent(
   gameId: string,
-  ev: Omit<EngineEvent, "seq" | "createdAt"> & { content: Record<string, unknown> }
+  ev: Omit<EngineEvent, "seq" | "createdAt"> & { content: Record<string, unknown> },
+  snapshot?: GameState
 ): Promise<EngineEvent> {
-  const row = await db.gameEvent.create({
+  const eventCreate = db.gameEvent.create({
     data: {
       gameId,
       type: ev.type,
@@ -68,6 +69,22 @@ export async function appendEvent(
       content: sanitizeEventContent(ev.content) as Prisma.InputJsonValue,
     },
   });
+  let row: Awaited<typeof eventCreate>;
+  if (snapshot) {
+    [row] = await db.$transaction([
+      eventCreate,
+      db.game.update({
+        where: { id: gameId },
+        data: {
+          state: snapshot as unknown as Prisma.InputJsonValue,
+          phase: snapshot.phase,
+          round: snapshot.round,
+        },
+      }),
+    ]);
+  } else {
+    row = await eventCreate;
+  }
   const event: EngineEvent = {
     seq: row.seq.toString(),
     type: row.type as EngineEvent["type"],
