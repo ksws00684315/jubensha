@@ -71,6 +71,10 @@ describe("L3：引擎重启恢复（I06）", () => {
     const speakRes = await engine.handleAction(0, { type: "speak", text: "讨论开始：谁最后见到死者的？" } as never);
     expect(speakRes.ok).toBe(true);
     expect(engine.state.phase).toBe("DISCUSSION");
+    // 发言推进回合后，「轮到你发言」这类提示是**定时器**写库的（不在 handleAction 的 await 里）。
+    // 不在取快照前停掉它，同批并发下它会落在 memoryEvents 之后、load 回读之前 →
+    // restored.events 多出一条内存侧没有的事件（实测 seq 4，见台账 FIND-09）。
+    engine.clearTimers();
 
     const memoryPhase = engine.state.phase;
     const memoryRound = engine.state.round;
