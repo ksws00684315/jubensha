@@ -5,6 +5,7 @@ import { ingestScriptDoc } from "@/core/script/compat";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { requireAdmin } from "@/lib/admin";
 import { authorDesignPackageSchema, designPackageHash, validateAuthorDesignPackage } from "@/core/script/design";
+import { toPrismaJsonObject } from "@/lib/prisma-json";
 
 /** 剧本列表（仅元数据） */
 async function GET_IMPL() {
@@ -73,8 +74,8 @@ async function POST_IMPL(req: Request) {
       difficulty: doc.meta.difficulty,
       tags: doc.meta.tags,
       intro: doc.meta.intro,
-      content: doc as unknown as object,
-      ...(designParsed?.success ? { designPackage: designParsed.data as unknown as object, designHash: designPackageHash(designParsed.data) } : {}),
+      content: toPrismaJsonObject(doc),
+      ...(designParsed?.success ? { designPackage: toPrismaJsonObject(designParsed.data), designHash: designPackageHash(designParsed.data) } : {}),
       source,
     },
   });

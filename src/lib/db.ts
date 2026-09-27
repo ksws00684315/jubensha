@@ -4,7 +4,8 @@ import { resolve, sep } from "node:path";
 import { resolveDatabaseUrl } from "@/lib/app-config";
 import { log } from "@/lib/log";
 
-const g = globalThis as unknown as {
+// Keep these process-wide caches across Next dev reloads; this module owns their shapes.
+const g = globalThis as typeof globalThis & {
   prisma?: PrismaClient;
   prismaUrl?: string;
   __jbsPrismaQueryCount?: { count: number; timer?: NodeJS.Timeout };
@@ -22,7 +23,8 @@ function attachQueryDiagnostics(client: PrismaClient, timingPath?: string): void
     }, 60_000);
     state.timer.unref();
   }
-  // The listener is installed only on PrismaClient instances configured with query event logging.
+  // The listener is installed only on query-event clients; Prisma's general client type omits this overload.
+  // This is the sole remaining production `as unknown as`: narrowing that overload is intentional here.
   const onQuery = client.$on as unknown as (eventType: "query", callback: (event: { duration: number }) => void) => void;
   onQuery.call(client, "query", (event) => {
     if (state) state.count++;

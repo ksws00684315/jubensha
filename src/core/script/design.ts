@@ -38,6 +38,10 @@ export const authorDesignPackageSchema = z.object({
   }).strict().default({ status: "draft", issues: [] }),
 }).strict();
 
+export const authorDesignReviewSchema = authorDesignPackageSchema.shape.review.unwrap().extend({
+  staleReason: z.string().optional(),
+});
+
 export type AuthorDesignPackage = z.infer<typeof authorDesignPackageSchema>;
 
 export function designPackageHash(pkg: AuthorDesignPackage): string {

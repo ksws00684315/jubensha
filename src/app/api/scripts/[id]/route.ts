@@ -5,7 +5,8 @@ import { ingestScriptDoc, parseScriptForRuntime } from "@/core/script/compat";
 import { publicScriptViewV2 } from "@/core/script/v2/schema";
 import { validateScriptV2 } from "@/core/script/v2/validate";
 import { isAdminRequest, requireAdmin } from "@/lib/admin";
-import { authorDesignPackageSchema, designPackageHash, validateAuthorDesignPackage } from "@/core/script/design";
+import { authorDesignPackageSchema, authorDesignReviewSchema, designPackageHash, validateAuthorDesignPackage } from "@/core/script/design";
+import { toPrismaJsonObject } from "@/lib/prisma-json";
 
 async function getScript(id: string) {
   return db.script.findFirst({ where: { id, deleted: false } });
@@ -20,15 +21,19 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   if (full) {
     const denied = requireAdmin(req);
     if (denied) return denied;
+    const designPackage = script.designPackage === null ? null : authorDesignPackageSchema.safeParse(script.designPackage);
+    if (designPackage && !designPackage.success) return NextResponse.json({ error: "作者设计包数据损坏" }, { status: 503 });
+    const designReview = script.designReview === null ? null : authorDesignReviewSchema.safeParse(script.designReview);
+    if (designReview && !designReview.success) return NextResponse.json({ error: "审稿记录数据损坏" }, { status: 503 });
     return NextResponse.json({
       id: script.id,
       source: script.source,
       updatedAt: script.updatedAt,
       issues: validateScriptV2(doc),
       doc,
-      designPackage: script.designPackage,
+      designPackage: designPackage?.success ? designPackage.data : null,
       designHash: script.designHash,
-      designReview: script.designReview,
+      designReview: designReview?.success ? designReview.data : null,
     });
   }
   const publicView = publicScriptViewV2(doc);
@@ -70,7 +75,9 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }
   if (designIssues.some((issue) => issue.level === "error")) return NextResponse.json({ error: "作者设计包引用校验失败", issues: designIssues }, { status: 400 });
 
   // 审稿门禁：新设计包或库里既有审稿记录标着 needs_revision，且仍有 error 级问题 → 不 force 就退回
-  const reviewStatus = (designParsed?.success ? designParsed.data.review.status : undefined) ?? (existing.designReview as { status?: string } | null)?.status;
+  const existingReview = existing.designReview === null ? null : authorDesignReviewSchema.safeParse(existing.designReview);
+  if (existingReview && !existingReview.success) return NextResponse.json({ error: "审稿记录数据损坏" }, { status: 503 });
+  const reviewStatus = (designParsed?.success ? designParsed.data.review.status : undefined) ?? (existingReview?.success ? existingReview.data.status : undefined);
   if (reviewStatus === "needs_revision" && errors.length && body.force !== true) {
     return NextResponse.json(
       { error: "审稿结论为 needs_revision 且仍有 error 级问题未处理：请先修改，确认无误再带 force:true 强制入库", issues: errors },
@@ -89,10 +96,10 @@ async function PATCH_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }
       difficulty: ingested.doc.meta.difficulty,
       tags: ingested.doc.meta.tags,
       intro: ingested.doc.meta.intro,
-      content: ingested.doc as unknown as object,
-      ...(designParsed?.success ? { designPackage: designParsed.data as unknown as object, designHash: designPackageHash(designParsed.data) } : {}),
-      ...(!designParsed?.success && existing.designReview
-        ? { designReview: { ...(existing.designReview as Record<string, unknown>), status: "needs_revision", staleReason: "正文已修改，需重新审稿" } as object }
+      content: toPrismaJsonObject(ingested.doc),
+      ...(designParsed?.success ? { designPackage: toPrismaJsonObject(designParsed.data), designHash: designPackageHash(designParsed.data) } : {}),
+      ...(!designParsed?.success && existingReview?.success
+        ? { designReview: toPrismaJsonObject({ ...existingReview.data, status: "needs_revision", staleReason: "正文已修改，需重新审稿" }) }
         : {}),
     },
   });

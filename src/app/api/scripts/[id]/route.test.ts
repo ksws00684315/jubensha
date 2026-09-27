@@ -51,13 +51,21 @@ describe("A16 GET /api/scripts/[id]", () => {
 
   it("full=1 管理员拿到完整文档与设计包", async () => {
     stubProduction();
-    vi.mocked(db.script.findFirst).mockResolvedValue(scriptRow({ designPackage: { author: "a" }, designHash: "h1" }) as never);
+    vi.mocked(db.script.findFirst).mockResolvedValue(scriptRow({ designPackage: { version: 1, experienceGoal: "test goal" }, designHash: "h1" }) as never);
     const { GET } = await import("./route");
     const res = await GET(makeReq("GET", `/api/scripts/${ID}?full=1`, { headers: adminHeaders() }), ctx({ id: ID }));
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.doc).toBeTruthy();
     expect(body.designHash).toBe("h1");
+  });
+
+  it("full=1 遇到损坏的设计包 JSON 返回 503", async () => {
+    stubProduction();
+    vi.mocked(db.script.findFirst).mockResolvedValue(scriptRow({ designPackage: { version: "invalid" } }) as never);
+    const { GET } = await import("./route");
+    const res = await GET(makeReq("GET", `/api/scripts/${ID}?full=1`, { headers: adminHeaders() }), ctx({ id: ID }));
+    expect(res.status).toBe(503);
   });
 });
 

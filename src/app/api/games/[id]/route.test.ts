@@ -116,6 +116,12 @@ describe("A28 GET /api/games/[id]", () => {
     expect(ended.quizResult).toEqual({ perSeat: {}, perQuestion: [] });
   });
 
+  it("无法通过状态 schema 的快照返回 503", async () => {
+    vi.mocked(db.game.findUnique).mockResolvedValue(runningGame({ state: { phase: "UNKNOWN" } }) as never);
+    const res = await getGame();
+    expect(res.status).toBe(503);
+  });
+
   it("快照与剧本全部损坏 → 503", async () => {
     vi.mocked(db.game.findUnique).mockResolvedValue(
       runningGame({ scriptSnapshot: { broken: true }, script: { content: { broken: true } } }) as never

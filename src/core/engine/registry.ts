@@ -9,7 +9,8 @@ import { log } from "@/lib/log";
  * 避免模块间运行时循环。
  */
 
-const g = globalThis as unknown as {
+// Keep the registry and timers across Next dev reloads; values are initialized below.
+const g = globalThis as typeof globalThis & {
   __jbsEngines?: Map<string, GameEngine>;
   __jbsEngineLoads?: Map<string, Promise<GameEngine>>;
   __jbsStuckWatchTimer?: NodeJS.Timeout;

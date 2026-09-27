@@ -5,7 +5,9 @@ import { parseScriptForRuntime } from "@/core/script/compat";
 import { buildSeatView } from "@/core/engine/seat-view";
 import { GameEngine } from "@/core/engine/engine";
 import { verifySeatToken } from "@/lib/credentials";
-import type { GameState } from "@/core/engine/types";
+import { migrateState } from "@/core/engine/state-migrate";
+import { initialState } from "@/core/engine/state";
+import { seatInfoSchema } from "@/core/engine/seat-data-schema";
 
 /** 对局概要：阶段、座位、我的角色卡（按 token 鉴权） */
 async function GET_IMPL(
@@ -50,10 +52,22 @@ async function GET_IMPL(
   if (game.status === "running" && mySeat !== null && !GameEngine.get(id)) {
     void GameEngine.load(id).catch(() => null);
   }
-  const runtimeState = (game.state as unknown as GameState) ?? {
-    clueStates: {},
-    heldClues: {},
-  };
+  let runtimeState;
+  try {
+    const seatInfos = game.room.seats.map((seat) => seatInfoSchema.parse({
+      index: seat.index,
+      kind: seat.kind,
+      characterId: seat.characterId ?? "",
+      playerName: seat.playerName ?? `玩家${seat.index + 1}`,
+    }));
+    const defaults = initialState(seatInfos);
+    const rawState = typeof game.state === "object" && game.state !== null && !Array.isArray(game.state)
+      ? { ...defaults, ...game.state }
+      : defaults;
+    runtimeState = migrateState(rawState, { now: Date.now(), gameId: id });
+  } catch {
+    return NextResponse.json({ error: "对局状态数据损坏，请联系主持人" }, { status: 503 });
+  }
   return NextResponse.json(buildSeatView({ game, doc, runtimeState, mySeat }));
 }
 

@@ -3,6 +3,7 @@ import { publish } from "./bus";
 import type { EngineEvent, GameState, Phase, SeatInfo } from "./types";
 import { CURRENT_STATE_VERSION } from "./types";
 import type { Prisma } from "@prisma/client";
+import { toPrismaJsonObject } from "@/lib/prisma-json";
 
 /** 初始状态 */
 export function initialState(seats: SeatInfo[]): GameState {
@@ -76,7 +77,7 @@ export async function appendEvent(
       db.game.update({
         where: { id: gameId },
         data: {
-          state: snapshot as unknown as Prisma.InputJsonValue,
+          state: toPrismaJsonObject(snapshot),
           phase: snapshot.phase,
           round: snapshot.round,
         },
@@ -102,7 +103,7 @@ export async function appendEvent(
 
 /** 持久化引擎状态快照 */
 export async function persistState(gameId: string, state: GameState): Promise<void> {
-  await db.game.update({ where: { id: gameId }, data: { phase: state.phase, round: state.round, state: state as unknown as Prisma.InputJsonValue } });
+  await db.game.update({ where: { id: gameId }, data: { phase: state.phase, round: state.round, state: toPrismaJsonObject(state) } });
 }
 
 /** 事件可见性过滤：玩家视角只看 public + 自己座位 + 自己发出的私聊/转交 */

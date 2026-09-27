@@ -4,6 +4,7 @@ export type { GameAction } from "./actions";
 import { db } from "@/lib/db";
 import type { Room, Seat } from "@prisma/client";
 import { parseScriptForRuntime } from "@/core/script/compat";
+import { toPrismaJsonObject } from "@/lib/prisma-json";
 import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import type { AgentCtx } from "@/core/agents";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
@@ -195,7 +196,7 @@ export class GameEngine {
       .sort((a, b) => a.index - b.index)
       .map((s) => ({ index: s.index, kind: s.kind as SeatInfo["kind"], characterId: s.characterId ?? "", playerName: s.playerName ?? `玩家${s.index + 1}` }));
     const state = initialState(seats);
-    const normalizedSnapshot = script as unknown as object;
+    const normalizedSnapshot = toPrismaJsonObject(script);
     const scriptHash = createHash("sha256").update(JSON.stringify(normalizedSnapshot)).digest("hex");
     const game = await db.game.create({
       data: {
@@ -204,7 +205,7 @@ export class GameEngine {
         status: "running",
         phase: "READING",
         round: 0,
-        state: state as unknown as object,
+        state: toPrismaJsonObject(state),
         scriptSnapshot: normalizedSnapshot,
         scriptHash,
         scriptSnapshotSource: "start",
