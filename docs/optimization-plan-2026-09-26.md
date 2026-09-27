@@ -195,7 +195,7 @@ npm run e2e:down
 | SSE 连接保持期间每连接每分钟的数据库查询次数 | 3 | 0 | L2 计数断言 + R6 |
 | 非 LLM API p95 延迟（本机，e2e 库） | 未测 | < 300ms；DB 单查询 < 100ms | R7 |
 | CI | 无 | PR/push 自动跑 `check` + `test:int` | GitHub Actions 运行记录 |
-| npm audit high（运行时依赖链） | 0（3 个在 CLI 链路） | 0，且不新增 | `npm audit --omit=dev` |
+| npm audit high（运行时依赖链） | 0（3 个在 CLI 链路） | 不新增（2026-09-28 按 D9 由「0」调整：3 个 high 在 Prisma CLI 链，需大版本升级才能消除，不在本计划范围） | `npm audit --omit=dev` |
 | R1 无模型冒烟 | 手动、不稳定 | 连续 3 次通过 | `npm run e2e:smoke` |
 
 ---

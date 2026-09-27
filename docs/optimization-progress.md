@@ -13,6 +13,10 @@
 | D5 | 单次 ≤ 300k，P4、P7 各 1 次；无凭证则 SKIPPED | 2026-09-26 | 用户批准 |
 | D6 | 允许 @vitest/coverage-v8（同版本） | 2026-09-26 | 用户批准 |
 | D7 | Docker 与 pm2 并存 | 2026-09-26 | 用户批准 |
+| D8 | S5.4（运行期事件数组截断）本期不做：收益小（3–8 人局，恢复时已只载最近 800 条），而截断会影响摘要、私密备忘与重入幂等 | 2026-09-28 | 用户批准 |
+| D9 | `npm audit --omit=dev` 目标由「0」改为「不新增」：3 个 high 在 Prisma CLI 依赖链，只能靠 Prisma 7 大版本升级消除，而大版本升级不在本计划范围内（原目标与范围自相矛盾） | 2026-09-28 | 用户批准 |
+| D10 | `games/[id]/route.ts` 74 行（目标 ≤70）接受现状 | 2026-09-28 | 用户批准 |
+| D11 | Docker 部署标注为实验性，随分支保留；pm2 仍为正式部署方式 | 2026-09-28 | 用户批准 |
 
 ## 指标看板（基线于 S0.4 实测；采集命令见括号）
 | 指标 | 基线 | 当前 | 目标 | 最近更新步骤 |
@@ -35,11 +39,11 @@
 | games.state 旧快照兼容方式 | `load()` 里 24 条 `state.x ??=` + 3 段清理，无版本号、无校验、不可测试 | `stateVersion` + `migrateState(raw, {now, gameId})` + zod `.loose()` 校验；7 份 v0 快照 fixtures 常驻 L1/L3 | 版本化迁移可测 | S4.3 |
 | 同一对局的并发写者 | 无防护：多实例（或热重载后的两份引擎）可同时驱动同一局 → 重复发言、快照互相覆盖 | `games.ownerId`/`leaseUntil` 两列 CAS 租约（`lease.ts`，租期 30s / 续租 10s）：取到牌才驱动，只读视图拒绝动作且两个写出口抛 `LeaseLostError`；SIGTERM 先交牌再退出（实测 25ms）。L1 12 + L3 5 + 实机 R5 | 任一时刻每局最多 1 个写者 | S4.1 |
 | handleActionInner 函数体 | :670–:945 ≈ 275 行 | 6 行（仅状态/权限守卫与动作分发） | ≤ 60 | S7.1 |
-| games/[id]/route.ts 行数（wc -l） | 185 | 74 | ≤ 70 | S8.5 |
+| games/[id]/route.ts 行数（wc -l） | 185 | 74 | ≤ 70（D10 接受 74） | S8.5 |
 | SSE 稳态 DB 查询/连接/分钟 | 未测 | 0（S5.1：50 条流保持 5 分钟，心跳期间 0 次查询） | 0 | S5.1 |
 | 非 LLM API p95 / 单条 DB 查询 p95（R7） | 未测 | API p95 3.46–12.03ms；Prisma 单查询 p95 0–2ms（S6.2，低于 300ms / 100ms） | < 300ms / < 100ms | S6.2 |
 | npm audit（全量） | 3 high（prisma→@prisma/config→deepmerge-ts，CLI 链路） | 3 high | 不新增 | S0.4 |
-| npm audit --omit=dev | 3 high（复测仍含 CLI 链路，见偏差 DEV-01） | 3 high | 0 | S0.4 |
+| npm audit --omit=dev | 3 high（复测仍含 CLI 链路，见偏差 DEV-01） | 3 high | 不新增（D9，原为 0） | 2026-09-28 |
 | CI | 无（无 .github/） | P8 push commit `645b31e` 后 run 36343310736 check + integration 均 success | push 自动 check | S8.5 |
 | R1 无模型冒烟 | 未测 | S7.3 / S8.1 的独立 E2E 曾连续通过；S8.4 Docker 部署最近三轮 0/3 到 ENDED（两轮固定 420s 超时于 SEARCH r1/r2，启动阶段一次 ECONNRESET） | 连续 3 次；P8 Docker 部署也需通过 | S8.4 |
 | R9 浏览器走查（桌面 1280×800 / 移动 375×812） | 未测 | 两遍各 171 步 0 失败；S3.4 在强制 CSP 下全量重跑 12/12 exit 0（342 步、驱动内 113.2s）；S3.5 再全量重跑 12/12 exit 0（342 步、驱动内 116.4s，桌面 60.2s / 移动 56.2s） | 两遍全绿 | S3.5 |
@@ -80,7 +84,7 @@
 | S5.1 | DONE(deviation) | dcae02b | 2026-09-27 | 2026-09-27 | `events/route.ts` 心跳只发 ping；revoke 即时关闭匹配 seat/DM 流。改前 50 流/5 分钟总 `game.findUnique=800`（50 建连 + 750 心跳），改后仍为 50（心跳查询 0），RSS 增长断言 <50MiB；revoke 同步关闭目标流且其他座位保持在线。三处写入端点定向验证写库后发布。`npm run check` 84 files / 667 passed + 1 expected fail；`test:int` 7 files / 23；R3 PASSED。 | DEV-17 |
 | S5.2 | DONE(deviation) | 9546406 | 2026-09-27 | 2026-09-27 | 回放按 seq 游标 `take:500` 分批；L2 1,200 条 3 批、排序/去重正确，第二批期间 abort 后停止；I10 真库 5,000 条全部有序回放，GC 后 heapUsed 对照：一次性读取 24,316,800B、分页峰值 0B（低于 50%）；R3 PASSED。最终 `npm run check` 84 files / 669 passed + 1 expected fail；`test:int` 8 files / 24 passed。 | DEV-18 |
 | S5.3 | DONE(deviation) | （本提交） | 2026-09-27 | 2026-09-27 | 新增 60s 进程内绑定缓存和显式失效；L1 TTL/失效后重查/provider 禁用生效 3 过；bindings PUT、providers POST、provider PATCH/DELETE 成功写后失效，删除失败不失效，L2 均断言；`npm run check` 85 files / 674 passed + 1 expected fail，`test:int` 8 files / 24 passed。 | BUG-02, DEV-19 |
-| S5.4 | NEEDS-DECISION | — | 2026-09-27 | — | 基线 `npm run check` 85 files / 674 passed + 1 expected fail；专用库 `test:int` 8 files / 24 passed。读取审计发现 5 类全局历史依赖（摘要/私密备忘、旧发言与线索召回、公开证据目录、REVEAL 重入幂等、历史陈述去重审查），超过计划的 3 类上限；按风险条款延后，无产品代码修改。审计明细见证据节。 | DEV-20 |
+| S5.4 | WONT-DO（D8） | — | 2026-09-27 | — | 基线 `npm run check` 85 files / 674 passed + 1 expected fail；专用库 `test:int` 8 files / 24 passed。读取审计发现 5 类全局历史依赖（摘要/私密备忘、旧发言与线索召回、公开证据目录、REVEAL 重入幂等、历史陈述去重审查），超过计划的 3 类上限；按风险条款延后，无产品代码修改。审计明细见证据节。 | DEV-20 |
 | S5.5 | DONE(deviation) | 2d7525e | 2026-09-27 | 2026-09-27 | 新增 R7 驱动，每端点 200 次：scripts API p95/p99 4.3/8.8ms，room 11.6/14.6ms，game 13.7/18.9ms，skip action 10.2/11.4ms；单条 Prisma 查询 p95 1/2/2/3ms，均达标。`npm run check` 85 files / 674 passed + 1 expected fail；`test:int` 8 files / 24 passed。R1–R3 完整 smoke 3/3 轮通过。 | DEV-21 |
 | S6.1 | DONE(deviation) | da09636 | 2026-09-27 | 2026-09-27 | 新增结构化 JSON logger、敏感字段和值脱敏、开发 pretty、日志级别过滤、withRoute requestId 和 Prisma qpm 计数；生产 console grep 仅剩 `log.ts` 适配层。L1 脱敏/格式/级别 7 用例；路由、预算、SSE 定向测试 43/43（路由最终单测 20/20）；`npm run check` 86 files / 681 passed + 1 expected fail；`test:int` 8 files / 24 passed。实机 R1–R3 全通过，日志密钥扫描 4 类模式总命中 0，E2E 实例及库已清理。 | DEV-22 |
 | S6.2 | DONE | 1de696b | 2026-09-27 | 2026-09-27 | 新建 `/api/health`：DB ping 1s 超时、匿名只含 3 字段、管理员额外含引擎/租约/事件空闲秒数/预算；A36 L2 3 用例通过（正常匿名、管理员、DB down + fake timer 超时）；`e2e/up.mjs` readiness 改探测 health；R7 health 200 次、HTTP 200 全部、p95 4.03ms（阈值 <50ms），全套 R7 PASSED；R1–R3 clean 实例全通过；`npm run check` 87 files / 684 passed + 1 expected fail；`test:int` 8 files / 24 passed；E2E 实例和库清理。 | — |
@@ -90,8 +94,8 @@
 | S7.3 | DONE | 17b9cfb/3fd1be3/ea5e9a3/29cb824/739e6d4/f4a0025 | 2026-09-28 | 2026-09-28 | BUG-03 修复并翻正 A34；FIND-05 同轮同因提示合并；FIND-06 中文全局 404；JSON 读取均有 schema 校验；生产 `as unknown as` 1 处且有注释，`it.fails` 0；`npm run check` 91 files / 727 passed；`test:int` 8 files / 24 passed；R1–R4/R9 通过，R8 无凭证跳过。最终 R5 复测三轮未稳定通过，P7 阶段门禁受阻。 | DEV-25；R5 flaky |
 | S8.1 | DONE | a25fe75 | 2026-09-28 | 2026-09-28 | 新增 7 个稳定字符串 CHECK 约束及 I13 七条非法更新测试；测试库空库全量部署 15 个 migration 成功；E2E 现有数据预检后单独重放并成功应用新 migration；`test:int` 9 files / 31 passed；R1–R3 全通过；`npm run check` 91 files / 727 passed。生产库只留预检 SQL，未连接。 | DEV-26 |
 | S8.2 | DONE | （本提交） | 2026-09-28 | 2026-09-28 | `scripts/retention.ts`：默认 90 天 dry-run、目标库密码遮蔽、逐表行数、`--apply --confirm <库名>` 二次确认、事务清理游戏子表/usage/Jev 记录；I12 三用例覆盖 dry-run 零删除、apply 精确范围、缺少确认即拒绝；`test:int` 10 files / 34 passed；`npm run check` 91 files / 727 passed；CLI dry-run 目标 `jubensha_test`。 | — |
-| S8.3 | BLOCKED | — | 2026-09-28 | — | 前置 P7 的 G-e2e 因 R5 最终版本连续三轮未通过而 BLOCKED；D5 的 P7 R8 已按规定记 `SKIPPED(no-credentials)`，不可额外调用真实模型。 | P7 未通过；R8 凭证缺失 |
-| S8.4 | BLOCKED | 79aa326 | 2026-09-28 | 2026-09-28 | standalone + Compose + named volume + `/api/health` + PM2 `cwd: __dirname` 已实现；`npm run check` / `test:int` 通过。镜像 529,438,200 bytes（400 MB 门槛不通过）；Docker R1 三轮均未到 ENDED，最后两轮固定等待 420 秒后分别停在 SEARCH r1/r2，另一轮启动请求 ECONNRESET。下线并重建 Compose 后 games 保持 2 行，health HTTP 200；镜像文件/history 无 `.env`、`local.*.json`、`docker.env` 命中。 | Docker 镜像体积、R1 |
+| S8.3 | TODO | — | — | — | 原阻塞原因（P7 的 R5）已由 DEV-27 解除，P7 阶段门禁 2026-09-28 复测通过；本步尚未执行。 | 前置已解除 |
+| S8.4 | BLOCKED | 79aa326 | 2026-09-28 | 2026-09-28 | standalone + Compose + named volume + `/api/health` + PM2 `cwd: __dirname` 已实现；`npm run check` / `test:int` 通过。镜像 529,438,200 bytes（400 MB 门槛不通过）；Docker R1 三轮均未到 ENDED，最后两轮固定等待 420 秒后分别停在 SEARCH r1/r2，另一轮启动请求 ECONNRESET。下线并重建 Compose 后 games 保持 2 行，health HTTP 200；镜像文件/history 无 `.env`、`local.*.json`、`docker.env` 命中。 | Docker 镜像体积、R1；2026-09-28 按 D11 在 `docs/deployment-docker.md` 与 `docs/README.md` 标注为实验性。 |
 | S8.5 | DONE | 645b31e | 2026-09-28 | 2026-09-28 | docs 索引覆盖 docs/ 全部 22 个 Markdown，4 篇 ADR 均含四节；README 增补 L1–L4 命令。`npm run check` 91/727、`test:api` 25 files / 222 passed、`test:int` 10 files / 34 passed；coverage 见指标表；CI run 36343310736 绿。 | — |
 ## 验收证据（每步一节）
 ### S0.1
@@ -449,6 +453,7 @@
 - R2/R3/R9 未在本题重跑（判据不涉及），与 R1/R4 一起留到 P4 阶段验收全量重跑；本轮 R4 驱动只带了 SEARCH 分支的顺序修正（DEV-15 第 6 条）。
 
 ## 阶段验收
+- **P7 复测（2026-09-28，人工会话，阶段通过）**：DEV-25 的根因是 R5 脚本按字节偏移截取字符串（DEV-27），修复脚本并补上 DEV-28 的退出信号交牌后，R5 全新库连续 3 轮 PASSED（A 段只读拒绝探针与不变量通过；B 段主实例停止后 36 / 30 / 40ms 交回租约，第二实例跑到 ENDED，事件 seq 连续无重复）；`npm run check` 91 files / 727 passed；`test:int` 10 files / 36 passed。
 - **P7（2026-09-28，S7.3 代码与单步验收完成，阶段 BLOCKED）**：`npm run check` 91 files / 727 passed；`test:int` 8 files / 24 passed；R1–R4、R9 通过；R8 缺少全部 `E2E_LLM_*` 凭证，按 D5 `SKIPPED(no-credentials)`。最终版本 R5 连续三轮未通过（两轮主实例 SIGTERM 后 10s 内租约未释放/接管；第三轮第二实例只出现一次 `lease held by`），按 §0.1 停止重试，P7 G-e2e 未满足，后续只推进不依赖 P7 的步骤。
 - **P8/S8.1（2026-09-28）**：全新 `jubensha_test` 15 个 migration 部署成功；E2E 有现存数据时预检各字段，临时回滚新增约束后成功重新部署 migration；I13 7/7、`test:int` 9 files / 31 passed、R1–R3 PASSED、`npm run check` 91 files / 727 passed。生产数据库未连接。
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
@@ -477,6 +482,8 @@
 ## 发现的缺陷
 | 编号 | 发现于 | 描述 | 复现测试 | 状态 | 关闭提交 |
 |---|---|---|---|---|---|
+| BUG-04 | 2026-09-28 复核 | pm2 重启后进行中的对局最多 30s 不能操作：退出交牌只挂 SIGTERM，而 pm2 stop/restart 默认发 SIGINT；且 SIGTERM 时 Next 的退出处理器与异步放牌竞速，可能先退出 | L3「与 Next 的退出处理器并存时，先交牌再交给它退出（SIGTERM）」「生产环境下 pm2 默认的 SIGINT 同样先交牌」；pm2 实机探针 | CLOSED（DEV-28） | 见 2026-09-28 提交 |
+| BUG-05 | 2026-09-28 复核 | R5 脚本 `tailFrom` 用字节偏移截取 UTF-8 字符串，日志跨轮追加后本轮开头被跳过，`lease held by` 计数随轮次递减（1→0→0），导致 R5 不稳定失败 | R5 修复前 3 轮全部失败于同一判据，修复后 3/3 通过 | CLOSED（DEV-27） | 见 2026-09-28 提交 |
 | BUG-01 | 审查 | games/[id] token 取值 query 优先，与注释相反 | A28 两用例（S3.3 由 it.fails 翻正为 it） | CLOSED（S3.3） | 9aea713 |
 | BUG-02 | 审查 | resolveBinding 注释称沿 fallback 查找，实际直接抛错 | — | NEEDS-DECISION（改变缺失绑定槽位的 fallback 语义） | DEV-19 |
 | BUG-03 | S2.2 | tts/[hash]：缓存行在但音频文件丢失时，createReadStream 的 ENOENT 异步抛出，try/catch 接不住 → 实际 200 后流中断而非 404 | A34（S7.3 翻正） | CLOSED（S7.3） | 17b9cfb |
@@ -600,6 +607,11 @@
 ## 实机测试记录
 | 日期 | 阶段 | 场景 | 结果 | 耗时 | 证据路径 |
 |---|---|---|---|---|---|
+| 2026-09-28 | P7 复测 | R5 修复脚本前（最终代码）×3 | 3/3 FAILED，均失败于 `lease held by` 计数（1 / 0 / 0），A 段只读拒绝与不变量均通过 | ~4 分钟/轮 | 会话临时日志 |
+| 2026-09-28 | P7 复测 | R5 修复脚本后 ×3（全新库） | 3/3 PASSED；交牌 36 / 30 / 40ms | ~4 分钟/轮 | 会话临时日志 |
+| 2026-09-28 | DEV-28 | pm2 真实重启探针（独立 pm2 应用 `jbs-lease-probe`，:3130，jubensha_e2e；与 ecosystem.config.js 同形：npm start、未配 kill_signal）修复后 ×6 | 6/6 PASSED：重启后 320–374ms 交回租约，692–862ms 健康，792–973ms 真人动作被接受，被拒 0 次 | <1s/轮 | 会话临时脚本（未入库） |
+| 2026-09-28 | DEV-28 | 同上，修复前构建（对照）×1 | FAILED：27.1s 后租约才过期，0.7s 已健康，期间动作全部被拒（「对局由其他实例主持，请刷新」） | 27s+ | 同上 |
+| 2026-09-28 | DEV-28 | `kill -9` 服务进程模拟崩溃（pm2 自动拉起）×2 | PASSED：不交牌，靠 TTL 过期在 27.2s / 27.8s 接管并接受动作，被拒原因只有「对局由其他实例主持」（符合 30s 租期设计） | ~28s/轮 | 同上 |
 | 2026-09-27 | P2/S2.5 | R1 无模型冒烟 ×3（全新库连续 3 轮 up→smoke→down） | 3/3 PASSED，`action_failed=0`，voteResult 非空 | 61s / 62s / 61s | /tmp/s25-f-smoke-{1,2,3}.log（会话临时）；台账 S2.5 证据节 |
 | 2026-09-27 | P2/S2.5 | R2 鉴权负向 | PASSED（403 / 仅 public / 401 / 401）×3 轮 | ~15s/轮 | scripts/e2e/auth.mjs |
 | 2026-09-27 | P2/S2.5 | R3 SSE 断线续传 | PASSED（补传 3 条、与 DB 全集一致）×3 轮 | ~25s/轮 | scripts/e2e/sse-resume.mjs |
@@ -716,6 +728,8 @@
 - **DEV-23（S7.1）**：Madge 的 TypeScript 扫描将 `import type` 也纳入依赖边，导致 15 条静态循环路径（其中包括既有 `registry.ts → engine.ts`）；按计划关注的运行时循环语义，使用 TypeScript AST 将 `import type` 与 type-only 导出剔除后检查 26 个引擎模块，0 个运行时循环。R5 第一次与第二次实机运行均在主进程 SIGTERM 后 10s 内未观察到 owner 变化，第三次同代码运行于 25ms 释放并完整接管；没有改测试阈值或生产代码，保留失败轮次供复核。
 - **DEV-24（S7.2）**：计划签名列出 `seatStates`，但 S4.4 已按快照唯一事实源移除 `seat_states` 读取，A28 现有断言要求其查询次数为 0。为维持纯搬移和 S4.4 语义，`buildSeatView` 接收真实可用的 `game`、`doc`、`runtimeState`、`mySeat`，不增加无用参数、不恢复数据库读取。
 - **DEV-25（S7.3 / P7）**：最终代码版本的 R5 实机复测三轮未通过。两轮 SIGTERM 后 10 秒内主实例 owner 仍在，第三轮在交牌检查前因第二实例新增日志仅 1 次 `lease held by` 失败。此前 S7.1、P6 曾成功交牌（25ms/47ms），但本次按「同一步最多 3 轮」如实将 P7 G-e2e 标为 BLOCKED；没有调高超时或改弱判据。建议后续先修复/稳定 SIGTERM 租约观测，再重跑 R5。
+- **DEV-27（P7 复测）**：DEV-25 记录的 R5「不稳定」并非产品问题。`scripts/e2e/dual-instance.mjs` 的 `tailFrom` 用 `statSync().size`（字节）去 `slice` 一个 UTF-8 字符串（字符），实例日志含中文且跨轮追加，越往后截取起点越靠后，本轮的 `lease held by` 被整段跳过。第二实例日志里实际每 2s 一条（行为正确）。改为按字节切（`readFileSync(f).subarray(off)`）。`sse-resume.mjs` 的偏移同样按字符计算，与截取一致，无需修改。
+- **DEV-28（S4.1 追补）**：退出交牌只挂 SIGTERM；pm2（`ecosystem.config.js` 未配 `kill_signal`）默认发 SIGINT，旧进程不交牌，新进程要等 30s TTL 过期才能驱动。另外 Node 的 emit 会先复制监听器列表，SIGTERM 时 Next 的 start-server 退出处理器与异步放牌竞速。修复：生产环境同时处理 SIGINT；安装时接管已注册的同信号处理器，放牌完成（最长 1s，小于 pm2 默认 kill_timeout 1.6s）后再按原顺序转交，退出码仍由 Next 决定。局限：安装之后才注册的处理器仍会与放牌并行（记录在 `lease.ts` 注释中）。
 - **DEV-26（S8.1）**：新增 CHECK 后首次 `test:int` 发现两份既有测试输入越出已声明的稳定集合（分页测试房间状态 `started`、v0 快照测试难度 `normal`）。迁移在已有 `jubensha_test` 上成功应用，E2E 现存字段预检也均合法；仅把这两处测试夹具输入改为现行合法值 `playing` / `新手`，不改断言。随后全新测试库和带真实对局的 E2E 库均验证了迁移部署。
 
 ### S8.3
@@ -774,3 +788,12 @@
 - R2、R3：通过。R4：重启后首读 DISCUSSION r1 一致并推进到 ENDED。R5：最终 P7 复测 BLOCKED。R6：50 条 SSE 保持 5 分钟，5 个完整分钟窗口均 0 查询。R7：延迟达标。R8：P4、P7 均因凭证缺失 `SKIPPED(no-credentials)`，未调用真实模型。R9：桌面与移动各 6 份清单、每遍 171 步，0 步失败，CSP 违规 / 异常 / token URL 请求 / 服务端 ERROR 均 0。
 - 当前 `opt/2026-09` 已 push 至 `645b31e`；无需开 PR。本进度台账和计划文件在本轮启动前已是工作区改动，按执行约束未暂存；因此本最终报告仅留在本地台账，未纳入该 push。
 - 需要后续处理：决定是否接受 S5.4 的行为范围；修复后续跑 P7/R5、S8.4 Docker R1 并缩小镜像；执行 S8.1 migration 注释中的生产库预检 SQL（本轮没有连接生产库）；由用户决定何时将分支合并到 `main`。
+
+### 2026-09-28 收尾修复（人工会话）
+
+- 补交了执行期间未提交的计划与台账（`a54e56b`）。
+- **BUG-04 / DEV-28**：修复 pm2 重启后对局最多 30s 不能操作的问题（见偏差登记）。L3 新增 2 个用例（修复前失败、修复后连续 3 次通过）；pm2 真实重启 6/6 通过，修复前构建对照失败。
+- **BUG-05 / DEV-27**：修复 R5 脚本的日志截取错误；R5 连续 3 轮通过，**P7 阶段门禁通过**，S8.3 的前置随之解除（S8.3 本身尚未执行）。
+- 决策 D8–D11 已记录：S5.4 不做；audit 目标改为不新增；route 行数接受 74；Docker 标注为实验性。
+- 门禁：`npm run check` 91 files / 727 passed；`test:int` 10 files / 36 passed。用户 pm2 进程 `jubensha` 全程未触碰（重启计数 25）。
+- 仍未完成：S8.3（依赖补丁升级，前置已解除）、S8.4（Docker 镜像体积与容器内对局卡在 SEARCH）、R8（无凭证）。合并到 main 由用户决定。
