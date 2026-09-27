@@ -55,9 +55,10 @@ function isPortFree(port) {
   }
 }
 
-/** 实例日志是 append 模式、跨多次运行复用：只看本轮从 offset 之后新写的那一段。 */
+/** 实例日志是 append 模式、跨多次运行复用：只看本轮从 offset 之后新写的那一段。
+ *  offset 是字节数（statSync.size），必须按字节切：日志含中文，按字符切会越过本轮开头的日志。 */
 const sizeOf = (f) => (existsSync(f) ? statSync(f).size : 0);
-const tailFrom = (f, off) => (off === 0 ? readFileSync(f, "utf8") : readFileSync(f, "utf8").slice(off));
+const tailFrom = (f, off) => readFileSync(f).subarray(off).toString("utf8");
 
 const post = (base, p, body, extraHeaders = {}) =>
   fetch(base + p, {
