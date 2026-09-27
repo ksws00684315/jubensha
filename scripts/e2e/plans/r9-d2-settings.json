@@ -1,0 +1,113 @@
+{
+  "step": "S2.6-d2",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 700,
+  "actions": [
+    {
+      "tabNew": "{BASE}/settings",
+      "as": "admin",
+      "isolated": true,
+      "label": "2-独立上下文首访设置页"
+    },
+    {
+      "useTab": "admin"
+    },
+    {
+      "assert": "return __r9.exists('text:解锁管理面');",
+      "label": "2-未解锁显示管理口令门"
+    },
+    {
+      "collect": "return __r9.textOf('text:解锁管理面') + ' / ' + document.body.innerText.slice(0, 60).replace(/\\n/g, ' ');",
+      "save": "lockedText"
+    },
+    {
+      "shot": "07-settings-locked.png",
+      "label": "2-管理区锁定态"
+    },
+    {
+      "type": "input[aria-label=\"管理口令\"]",
+      "value": "{ADMIN_TOKEN}",
+      "label": "2-输入 e2e 口令"
+    },
+    {
+      "click": "text:解锁",
+      "label": "2-点解锁"
+    },
+    {
+      "waitSelector": "text:AI 接入",
+      "label": "2-解锁后出现管理 tab"
+    },
+    {
+      "assert": "return !__r9.exists('text:解锁管理面');",
+      "label": "2-锁定卡片消失"
+    },
+    {
+      "shot": "08-settings-unlocked.png",
+      "label": "2-解锁后数据库 tab"
+    },
+    {
+      "click": "text:AI 接入",
+      "label": "2-切到 AI 接入"
+    },
+    {
+      "waitSelector": "text:添加 Provider",
+      "label": "2-Provider 表单出现"
+    },
+    {
+      "type": "label:名称",
+      "value": "{providerName}"
+    },
+    {
+      "type": "label:Base URL",
+      "value": "http://127.0.0.1:1/v1"
+    },
+    {
+      "type": "label:API Key",
+      "value": "sk-e2e-demo-0000111122223333abcd",
+      "label": "2-填入假 apiKey"
+    },
+    {
+      "shot": "09-settings-provider-form.png",
+      "label": "2-添加 Provider 表单"
+    },
+    {
+      "click": "text:保存",
+      "label": "2-保存 Provider"
+    },
+    {
+      "waitSelector": "text:{providerName}",
+      "label": "2-列表出现新 Provider"
+    },
+    {
+      "collect": "return Array.from(document.querySelectorAll('p')).map(p => p.textContent.replace(/\\s+/g, ' ').trim()).filter(t => t.includes('••••'));",
+      "save": "maskedLines"
+    },
+    {
+      "assert": "const t = document.body.innerText; return t.includes('••••••••abcd') && !t.includes('sk-e2e-demo-0000');",
+      "label": "2-apiKey 以掩码显示且明文不外泄"
+    },
+    {
+      "shot": "10-settings-providers.png",
+      "label": "2-Provider 列表（掩码）"
+    },
+    {
+      "click": "text:用量统计",
+      "label": "2-切到用量统计"
+    },
+    {
+      "waitMs": 900
+    },
+    {
+      "collect": "return document.body.innerText.replace(/\\s+/g, ' ').slice(0, 220);",
+      "save": "usageText"
+    },
+    {
+      "shot": "11-settings-usage.png",
+      "label": "2-用量统计"
+    }
+  ]
+}

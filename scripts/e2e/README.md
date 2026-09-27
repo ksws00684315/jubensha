@@ -51,6 +51,36 @@ npm run e2e:down
 判定标准：第 ④ 步输出「重启后首读核对一致」与 `R4 PASSED`（`voteResult` 非空），且第 ⑤ 步为 0。
 注意：`e2e:up` 默认会 drop 并重建 `jubensha_e2e`，R4 的第 ③ 步必须带 `--keep-db`。
 
+## R9 浏览器实机走查（`browser.mjs`）
+
+计划 §3.5 的 R9 清单（7 项，桌面 1280×800 与移动 375×812 各一遍）。驱动用的是**本机 Chrome `--headless=new` + CDP**（Node 内建 `WebSocket`，零新依赖），不是 Qoder 内置 Browser 面板：面板在后台标签上 `innerWidth=0`、`document.hidden=true`，截图和移动端布局判定都没有意义。CDP 能精确设定视口、开独立 browser context（等价无痕），并汇总控制台 error 与未捕获异常。
+
+```bash
+npm run e2e:up                                  # 先起隔离实例（端口见 .e2e/up.json）
+npm run e2e:browser -- --plan=scripts/e2e/plans/r9-d1-static.json --shot-prefix=d
+npm run e2e:browser -- --plan=... --width=375 --height=812 --mobile --shot-prefix=m
+npm run e2e:browser -- --shutdown               # 只杀本 profile 的 Chrome，并清 profile（cookie/localStorage 不留到下一轮）
+```
+
+| 清单项 | plan | 覆盖 |
+|---|---|---|
+| 1 | `r9-d1-static.json` | 5 页可开、非白屏、无横向滚动，404 兜底 |
+| 2 | `r9-d2-settings.json` | 独立上下文首访 = 锁定态；口令解锁；provider apiKey 掩码 |
+| 3 | `r9-d3-create-room.json` | 5 人本 1 真人 + 4 AI → 房间码 → 另开无痕标签入座 → 开局 → `/play` |
+| 4 | `r9-d4a-play-early.json` → `r9-d4b-play-vote.json` | READING/SELF_INTRO/SEARCH/DISCUSSION 与 VOTE/REVEAL/ENDED；中间插 d5 保证 5、6 项在局中执行 |
+| 5、6 | `r9-d5-identity-spectator.json` | 刷新后身份/阶段/事件数一致；无痕上下文只带房间码或 `/play` 地址时看不到私有卡与私聊 |
+| 7 | — | 首轮为基线留档，无上一阶段可比；后续阶段重跑时同名截图对比 |
+
+动作清单是 JSON（`actions` 数组），支持 `nav / reload / waitSelector / waitJs / click(If) / clickFirst / type(If) / pick(If) / press / shot / collect / assert / tabNew / attach / useTab / until`。选择器三种写法：CSS、`text:文案`（先在可交互元素里找，精确优先再取子串，再退到正文文本节点）、`label:文案`（label 包裹的控件）。`{BASE}`、`{ADMIN_TOKEN}` 与 `--var=k=v` 注入的变量会在执行前替换。`waitJs` 轮询一段返回布尔的脚本，用于「只能等结果态」的步骤。
+
+产物：`.e2e/screens/S2.6/<step>-<shot 前缀>-report.json`（步骤、失败、`collect` 值、每标签的控制台 error / 异常 / 带 `token=` 的请求、布局度量；同一 plan 的桌面 `d` 与移动 `m` 两份报告互不覆盖）与同名截图前缀 PNG；所有运行的 error 汇总追加到 `.e2e/screens/console-errors.jsonl`。目录与文件都不入库。
+
+已知判定口径：
+- SEARCH 的「当场公开 / 暂时私藏」决策窗只在线索 `policy ≠ auto_public` 时出现；`r9-d4a` 用 `--var=decisionFirst=…` 决定先点哪一边（桌面先私藏、移动先公开），两边都是 `clickIf`，无决策窗时记 skip 不算失败。
+- 投票成功后 `已投票，等待其他人…` 是瞬态文案（无模型局其他座位秒投），断言改看 `本局结算`，真人票以 `votes` 表落库为准。
+- SEARCH 的 `已选择，等待其他玩家搜证…` 同样是瞬态文案：其余座位选完就推进出 SEARCH，该提示可以整帧不渲染（桌面抓到过、移动没抓到）。判定改为「地点按钮不再可选」的 `waitJs`，并把当帧是否见到确认提示 `collect` 成 `searchAck` 留档，不当失败。
+- SELF_INTRO 真人发言后回合自动结束，`跳过本轮发言` 同样只是 `clickIf`。
+
 ## 排障
 
 - `EADDRINUSE` / 端口被占用：`up.mjs` 会自动改用 3110、3120（三者全忙才失败）。实际端口见 `.e2e/up.json`。

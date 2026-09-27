@@ -1,0 +1,130 @@
+{
+  "step": "S2.6-d1",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 700,
+  "actions": [
+    {
+      "nav": "{BASE}/"
+    },
+    {
+      "assert": "return __r9.exists('main') && document.body.innerText.trim().length > 20;",
+      "label": "1-首页有内容非白屏"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "homeLayout"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "1-home无横向滚动"
+    },
+    {
+      "shot": "01-home.png",
+      "label": "1-首页"
+    },
+    {
+      "nav": "{BASE}/scripts"
+    },
+    {
+      "assert": "return document.body.innerText.trim().length > 20;",
+      "label": "1-/scripts 非白屏"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "scriptsLayout"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "1-scripts无横向滚动"
+    },
+    {
+      "shot": "02-scripts.png",
+      "label": "1-剧本库"
+    },
+    {
+      "collect": "const list = await (await fetch('/api/scripts')).json(); return Array.isArray(list) && list.length ? list[0].id : null;",
+      "save": "scriptId",
+      "label": "1-取第一个剧本 id"
+    },
+    {
+      "assert": "return !!document.querySelector('a[href^=\"/scripts/\"]');",
+      "label": "1-剧本卡有详情链接"
+    },
+    {
+      "nav": "{BASE}/scripts/{scriptId}"
+    },
+    {
+      "assert": "return document.body.innerText.trim().length > 20;",
+      "label": "1-/scripts/[id] 非白屏"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "detailLayout"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "1-detail无横向滚动"
+    },
+    {
+      "shot": "03-script-detail.png",
+      "label": "1-剧本详情"
+    },
+    {
+      "nav": "{BASE}/rooms/new"
+    },
+    {
+      "assert": "return document.body.innerText.trim().length > 20;",
+      "label": "1-/rooms/new 非白屏"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "newLayout"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "1-new无横向滚动"
+    },
+    {
+      "shot": "04-rooms-new.png",
+      "label": "1-建房页"
+    },
+    {
+      "nav": "{BASE}/settings"
+    },
+    {
+      "assert": "return document.body.innerText.trim().length > 20;",
+      "label": "1-/settings 非白屏"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "settingsLayout"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "1-settings无横向滚动"
+    },
+    {
+      "shot": "05-settings.png",
+      "label": "1-设置页"
+    },
+    {
+      "collect": "return Object.keys(localStorage);",
+      "save": "localStorageKeys"
+    },
+    {
+      "nav": "{BASE}/no-such-page"
+    },
+    {
+      "collect": "return document.title + '|' + document.body.innerText.slice(0, 40);",
+      "save": "notFoundText"
+    },
+    {
+      "shot": "06-404.png",
+      "label": "1-404 兜底页"
+    }
+  ]
+}

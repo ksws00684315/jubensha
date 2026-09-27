@@ -1,0 +1,162 @@
+{
+  "step": "S2.6-d3",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 800,
+  "actions": [
+    {
+      "nav": "{BASE}/rooms/new"
+    },
+    {
+      "waitSelector": "text:创建房间",
+      "label": "3-建房页就绪"
+    },
+    {
+      "collect": "const l = await (await fetch('/api/scripts')).json(); const s = l.find((x) => (x.title || '').includes('云澜山庄')) || l[0]; return s.id;",
+      "save": "scriptId",
+      "label": "3-选 5 人本"
+    },
+    {
+      "pick": "label:剧本",
+      "value": "{scriptId}",
+      "label": "3-切换剧本"
+    },
+    {
+      "waitSelector": "select[aria-label=\"座位 2 类型\"]",
+      "label": "3-座位配置出现"
+    },
+    {
+      "pick": "select[aria-label=\"座位 1 类型\"]",
+      "value": "human",
+      "label": "3-座位 1 设为真人"
+    },
+    {
+      "collect": "return [...document.querySelectorAll('select[aria-label$=\"类型\"]')].map((s) => s.value);",
+      "save": "seatKinds"
+    },
+    {
+      "assert": "const k = [...document.querySelectorAll('select[aria-label$=\"类型\"]')].map((s) => s.value); return k[0] === 'human' && k.slice(1).every((v) => v === 'ai');",
+      "label": "3-1 真人 + 4 AI"
+    },
+    {
+      "shot": "12-rooms-new-config.png",
+      "label": "3-座位配置"
+    },
+    {
+      "click": "text:创建房间",
+      "label": "3-提交建房"
+    },
+    {
+      "waitSelector": "text:开始游戏",
+      "timeoutMs": 20000,
+      "label": "3-进入房间大厅"
+    },
+    {
+      "collect": "return location.pathname.split('/').pop();",
+      "save": "roomCode"
+    },
+    {
+      "assert": "return /^[A-Z0-9]{4,10}$/i.test(location.pathname.split('/').pop() || '');",
+      "label": "3-URL 即房间码"
+    },
+    {
+      "shot": "13-room-lobby-host.png",
+      "label": "3-房主大厅"
+    },
+    {
+      "tabNew": "{BASE}/rooms/{roomCode}",
+      "as": "guest",
+      "isolated": true,
+      "label": "3-独立上下文打开房间页"
+    },
+    {
+      "useTab": "guest"
+    },
+    {
+      "waitSelector": "text:入座",
+      "label": "3-访客看到入座入口"
+    },
+    {
+      "type": "input[aria-label=\"你的昵称\"]",
+      "value": "R9 访客",
+      "label": "3-填昵称"
+    },
+    {
+      "shot": "14-room-lobby-guest.png",
+      "label": "3-访客入座前"
+    },
+    {
+      "click": "text:入座",
+      "label": "3-点击入座"
+    },
+    {
+      "waitSelector": "text:等待房主开局",
+      "timeoutMs": 20000,
+      "label": "3-访客入座成功"
+    },
+    {
+      "shot": "15-guest-seated.png",
+      "label": "3-访客已入座"
+    },
+    {
+      "useTab": "host"
+    },
+    {
+      "assert": "return document.body.innerText.includes('真人玩家');",
+      "label": "3-房主页显示真人座位已入座"
+    },
+    {
+      "shot": "16-room-lobby-ready.png",
+      "label": "3-开局前座位表"
+    },
+    {
+      "click": "text:开始游戏",
+      "label": "3-房主开局"
+    },
+    {
+      "waitSelector": "text:观众身份观看",
+      "timeoutMs": 45000,
+      "label": "3-房主跳转对局页（观众视角）"
+    },
+    {
+      "collect": "return location.pathname;",
+      "save": "playPath"
+    },
+    {
+      "assert": "return /^\\/play\\//.test(location.pathname);",
+      "label": "3-房主 URL 为 /play/[id]"
+    },
+    {
+      "shot": "17-host-spectator.png",
+      "label": "3-观众视角对局页"
+    },
+    {
+      "useTab": "guest"
+    },
+    {
+      "waitSelector": "text:进入对局",
+      "timeoutMs": 30000,
+      "label": "3-访客看到进入对局"
+    },
+    {
+      "click": "text:进入对局",
+      "label": "3-访客进入对局"
+    },
+    {
+      "waitSelector": "text:你的行动",
+      "timeoutMs": 45000,
+      "label": "3-访客进入对局页行动区"
+    },
+    {
+      "assert": "return __r9.exists('text:我已读完剧本');",
+      "label": "3-READING 出现读完按钮"
+    },
+    {
+      "shot": "18-play-reading.png",
+      "label": "3-真人座位对局页 READING"
+    }
+  ]
+}

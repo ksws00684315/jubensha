@@ -1,0 +1,129 @@
+{
+  "step": "S2.6-d4b",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 900,
+  "actions": [
+    {
+      "attach": "player",
+      "isolated": true,
+      "urlIncludes": "/play/{gameId}",
+      "requireSelector": "text:你的行动",
+      "label": "4b-附着真人座位标签页"
+    },
+    {
+      "until": {
+        "done": "text:指认真凶",
+        "maxMs": 600000,
+        "tickMs": 1500,
+        "steps": [
+          {
+            "clickIf": "text:我已读完剧本"
+          },
+          {
+            "clickFirst": "optional:button[class*=\"border-clue-400\"]"
+          },
+          {
+            "clickIf": "text:我的线索"
+          },
+          {
+            "clickIf": "button[class*=\"border-secret-400/30\"]"
+          },
+          {
+            "clickIf": "text:当场公开"
+          },
+          {
+            "typeIf": "input[aria-label=\"当众回答内容\"]",
+            "value": "这个问题我记得的时间线稍后一起说，先把已知的讲清楚。"
+          },
+          {
+            "clickIf": "text:回答"
+          },
+          {
+            "typeIf": "input[aria-label=\"当众陈述内容\"]",
+            "value": "再补一句：把各位的时间线对起来看，茶盏这件事需要解释。"
+          },
+          {
+            "clickIf": "text:发言"
+          },
+          {
+            "clickIf": "text:结束发言"
+          },
+          {
+            "clickIf": "text:跳过本轮发言"
+          }
+        ]
+      },
+      "label": "4-自动走完剩余轮次直到 VOTE"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-VOTE 面板无横向滚动"
+    },
+    {
+      "shot": "26-play-vote.png",
+      "label": "4-VOTE 面板"
+    },
+    {
+      "collect": "return [...new Set([...document.querySelectorAll('input[type=radio]')].map((i) => i.name))].map((n) => { const el = document.querySelector('input[name=\"' + n + '\"]'); if (el) el.click(); return n; });",
+      "save": "quizAnswered",
+      "label": "4-逐题选第一项（若有复盘答题卡）"
+    },
+    {
+      "shot": "28-play-quiz.png",
+      "label": "4-复盘答题卡"
+    },
+    {
+      "clickIf": "text:交卷",
+      "label": "4-交卷"
+    },
+    {
+      "clickFirst": ".vote-target",
+      "label": "4-指认真凶"
+    },
+    {
+      "clickFirst": "optional:fieldset input[type=checkbox]",
+      "label": "4-引用公开证据"
+    },
+    {
+      "type": "input[aria-label=\"投票理由\"]",
+      "value": "综合讨论与线索，此人的疑点最大。"
+    },
+    {
+      "shot": "27-play-vote-form.png",
+      "label": "4-投票表单"
+    },
+    {
+      "click": "text:投票",
+      "label": "4-投出票"
+    },
+    {
+      "assert": "return __r9.exists('text:指认真凶') === false;",
+      "label": "4-提交后面板切换（真人票已出手）"
+    },
+    {
+      "waitSelector": "text:本局结算",
+      "timeoutMs": 240000,
+      "label": "4-REVEAL/ENDED 结算卡"
+    },
+    {
+      "shot": "29-play-reveal.png",
+      "label": "4-真相揭晓与结算"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-结算页无横向滚动"
+    },
+    {
+      "collect": "return document.body.innerText.replace(/\\s+/g, ' ').match(/(真凶|凶手)[^，。]{0,40}/g);",
+      "save": "revealText"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "revealLayout"
+    }
+  ]
+}

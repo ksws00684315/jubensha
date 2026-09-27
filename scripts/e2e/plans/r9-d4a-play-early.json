@@ -1,0 +1,145 @@
+{
+  "step": "S2.6-d4a",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 900,
+  "actions": [
+    {
+      "attach": "player",
+      "isolated": true,
+      "urlIncludes": "/play/{gameId}",
+      "requireSelector": "text:我已读完剧本",
+      "label": "4-附着真人座位标签页"
+    },
+    {
+      "assert": "return __r9.exists('text:我已读完剧本');",
+      "label": "4-READING 有「我已读完剧本」"
+    },
+    {
+      "shot": "19-play-reading.png",
+      "label": "4-READING 对局页"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-READING 对局页无横向滚动"
+    },
+    {
+      "click": "text:我已读完剧本",
+      "label": "4-点读完"
+    },
+    {
+      "waitSelector": "text:跳过本轮发言",
+      "timeoutMs": 150000,
+      "label": "4-SELF_INTRO 轮到真人"
+    },
+    {
+      "type": "input[aria-label=\"当众陈述内容\"]",
+      "value": "我是今晚的到场者之一，晚宴后便回房休息，听到喊声才赶下楼。",
+      "label": "4-填自我介绍"
+    },
+    {
+      "shot": "20-play-selfintro.png",
+      "label": "4-SELF_INTRO 输入框"
+    },
+    {
+      "click": "text:发言",
+      "label": "4-当众发言"
+    },
+    {
+      "clickIf": "text:跳过本轮发言",
+      "label": "4-若仍需手动收尾则跳过（实测发言后自动结束回合）"
+    },
+    {
+      "shot": "21-play-chatfeed.png",
+      "label": "4-发言进入 ChatFeed"
+    },
+    {
+      "waitSelector": "text:选择搜证地点",
+      "timeoutMs": 180000,
+      "label": "4-SEARCH 出现地点列表"
+    },
+    {
+      "shot": "22-play-search-options.png",
+      "label": "4-SEARCH 地点列表"
+    },
+    {
+      "clickFirst": "button[class*=\"border-clue-400\"]",
+      "label": "4-选第一个可搜地点"
+    },
+    {
+      "waitJs": "return ![...document.querySelectorAll('button[class*=\"border-clue-400\"]')].some((b) => !b.disabled);",
+      "timeoutMs": 60000,
+      "label": "4-搜证选择已受理（地点按钮不再可选）"
+    },
+    {
+      "collect": "return __r9.exists('text:已选择，等待其他玩家搜证') ? '确认提示可见' : '确认提示未渲染（SEARCH 已推进）';",
+      "save": "searchAck",
+      "label": "4-记录搜证确认态"
+    },
+    {
+      "click": "text:我的线索",
+      "label": "4-切到我的线索页签"
+    },
+    {
+      "waitMs": 3000
+    },
+    {
+      "clickIf": "{decisionFirst}",
+      "label": "4-公开/私藏决策（桌面先私藏，移动先公开；auto_public 线索则无此窗）"
+    },
+    {
+      "clickIf": "{decisionSecond}"
+    },
+    {
+      "shot": "23-play-my-clues.png",
+      "label": "4-我的线索列表"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-SEARCH/DISCUSSION 对局页无横向滚动"
+    },
+    {
+      "waitSelector": "text:公开质询",
+      "timeoutMs": 300000,
+      "label": "4-DISCUSSION 轮到我并可质询"
+    },
+    {
+      "type": "input[aria-label=\"当众陈述内容\"]",
+      "value": "我把已知的情况按时间顺序说一遍，请大家补充自己 21 点后的行踪。"
+    },
+    {
+      "click": "text:发言"
+    },
+    {
+      "pick": "select[aria-label=\"选择提问对象\"]",
+      "value": "1",
+      "label": "4-选提问对象"
+    },
+    {
+      "type": "input[aria-label=\"公开质询问题\"]",
+      "value": "案发前后那段时间，你一直在哪里？"
+    },
+    {
+      "shot": "24-play-question.png",
+      "label": "4-公开质询表单"
+    },
+    {
+      "click": "text:提交质询",
+      "label": "4-提交质询"
+    },
+    {
+      "waitMs": 9000
+    },
+    {
+      "shot": "25-play-answer.png",
+      "label": "4-对方当众回答"
+    },
+    {
+      "clickIf": "text:结束发言",
+      "label": "4-结束本轮发言"
+    }
+  ]
+}

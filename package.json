@@ -36,7 +36,9 @@
     "db:test:down": "docker compose -f docker-compose.test.yml down -v",
     "e2e:up": "node scripts/e2e/up.mjs",
     "e2e:down": "node scripts/e2e/down.mjs",
-    "e2e:smoke": "node scripts/e2e/run.mjs"
+    "e2e:smoke": "node scripts/e2e/run.mjs",
+    "e2e:browser": "node scripts/e2e/browser.mjs",
+    "e2e:browser:shutdown": "node scripts/e2e/browser.mjs --shutdown"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.45",

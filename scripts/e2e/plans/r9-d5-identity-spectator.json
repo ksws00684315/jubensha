@@ -1,0 +1,138 @@
+{
+  "step": "S2.6-d5",
+  "dir": "S2.6",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "settleMs": 900,
+  "actions": [
+    {
+      "attach": "player",
+      "isolated": true,
+      "urlIncludes": "/play/{gameId}",
+      "requireSelector": "text:你的行动",
+      "label": "5-附着真人座位标签页（局中）"
+    },
+    {
+      "click": "text:我的剧本",
+      "label": "5-切到我的剧本页签"
+    },
+    {
+      "assert": "return document.body.innerText.includes('你的秘密');",
+      "label": "5-私有剧本卡（你的秘密）对本人可见"
+    },
+    {
+      "collect": "const box = document.querySelector('[aria-label=\"现场记录消息流\"]'); const texts = [...box.children].map((k) => k.textContent.replace(/\\s+/g, ' ').trim()); return { url: location.pathname, phase: (document.body.innerText.replace(/\\s+/g, ' ').match(/CURRENT ACT\\s*(.{0,24})/) || [])[1] ?? null, bubbles: texts.length, uniqueTexts: new Set(texts).size, privateCardShown: document.body.innerText.includes('你的秘密'), lsKeys: Object.keys(localStorage).length };",
+      "save": "identityBefore"
+    },
+    {
+      "assert": "return __r9.exists('text:你的行动') && document.body.innerText.includes('你的秘密');",
+      "label": "5-刷新前：座位身份与私有剧本卡可见"
+    },
+    {
+      "reload": true,
+      "label": "5-刷新对局页"
+    },
+    {
+      "waitSelector": "text:你的行动",
+      "timeoutMs": 30000,
+      "label": "5-刷新后身份保持（凭证从 localStorage 恢复）"
+    },
+    {
+      "collect": "const box = document.querySelector('[aria-label=\"现场记录消息流\"]'); const texts = [...box.children].map((k) => k.textContent.replace(/\\s+/g, ' ').trim()); const dup = texts.filter((t, i) => t.length > 8 && texts.indexOf(t) !== i); return { url: location.pathname, phase: (document.body.innerText.replace(/\\s+/g, ' ').match(/CURRENT ACT\\s*(.{0,24})/) || [])[1] ?? null, bubbles: texts.length, uniqueTexts: new Set(texts).size, duplicated: dup.length, dupSample: dup.slice(0, 2).map((t) => t.slice(0, 40)), privateCardShown: document.body.innerText.includes('你的秘密'), lsKeys: Object.keys(localStorage).length };",
+      "save": "identityAfter"
+    },
+    {
+      "click": "text:我的剧本",
+      "label": "5-刷新后切到剧本页签"
+    },
+    {
+      "assert": "return document.body.innerText.includes('你的秘密');",
+      "label": "5-刷新后私有剧本卡仍在"
+    },
+    {
+      "assert": "return __r9.exists('text:我的线索');",
+      "label": "5-刷新后线索页签仍在"
+    },
+    {
+      "collect": "const box = document.querySelector('[aria-label=\"现场记录消息流\"]'); const t = [...box.children].map((k) => k.textContent.replace(/\\s+/g,' ').trim()); const leak = t.filter((x) => x.includes('[hidden]')); return { tokenInUrl: location.search.includes('token'), sseHasToken: false, hiddenBubbles: leak.length };",
+      "save": "feedHealth"
+    },
+    {
+      "shot": "30-play-after-reload.png",
+      "label": "5-刷新后对局页"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-刷新后对局页无横向滚动"
+    },
+    {
+      "tabNew": "{BASE}/rooms/{roomCode}",
+      "as": "anon",
+      "isolated": true,
+      "label": "6-无痕上下文只带房间码打开"
+    },
+    {
+      "waitSelector": "text:回到本局",
+      "timeoutMs": 30000,
+      "label": "6-无凭证访客只看到认领入口"
+    },
+    {
+      "assert": "return !document.body.innerText.includes('你的秘密') && !document.body.innerText.includes('线索卡');",
+      "label": "6-房间页无私有卡泄漏"
+    },
+    {
+      "collect": "return { text: document.body.innerText.replace(/\\s+/g, ' ').slice(0, 240), lsKeys: Object.keys(localStorage).length };",
+      "save": "anonRoom"
+    },
+    {
+      "shot": "31a-anon-room.png",
+      "label": "6-无痕上下文房间页"
+    },
+    {
+      "tabNew": "{BASE}/play/{gameId}",
+      "as": "spectator",
+      "isolated": true,
+      "label": "6-无痕上下文直连对局页"
+    },
+    {
+      "waitSelector": "text:观众身份观看",
+      "timeoutMs": 30000,
+      "label": "6-观众视角提示出现"
+    },
+    {
+      "assert": "return !__r9.exists('text:你的行动') && !document.body.innerText.includes('你的秘密');",
+      "label": "6-观众无行动面板与私有剧本"
+    },
+    {
+      "assert": "return !document.body.innerText.includes('私聊') && !document.body.innerText.includes('悄悄话');",
+      "label": "6-观众看不到私聊/悄悄话"
+    },
+    {
+      "click": "text:我的线索",
+      "label": "6-观众点开线索页签"
+    },
+    {
+      "waitSelector": "text:还没有获得任何线索",
+      "timeoutMs": 15000,
+      "label": "6-线索页签为空（无私有线索泄漏）"
+    },
+    {
+      "collect": "return { bubbles: document.querySelector('[aria-label=\"现场记录消息流\"]').children.length, queryHasToken: location.search.includes('token'), lsKeys: Object.keys(localStorage).length, visibility: document.visibilityState };",
+      "save": "spectatorView"
+    },
+    {
+      "shot": "31-spectator-clean.png",
+      "label": "6-无痕上下文观战页"
+    },
+    {
+      "assert": "return !__r9.layout().horizontalOverflow;",
+      "label": "布局-观众页无横向滚动"
+    },
+    {
+      "collect": "return __r9.layout();",
+      "save": "spectatorLayout"
+    }
+  ]
+}
