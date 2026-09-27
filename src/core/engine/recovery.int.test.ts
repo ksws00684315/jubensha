@@ -59,8 +59,9 @@ describe("L3：引擎重启恢复（I06）", () => {
     // 真人「读完」走真实动作链（事件落库、seatState 更新）
     const readyRes = await engine.handleAction(0, { type: "ready" } as never);
     expect(readyRes.ok).toBe(true);
-    // 等互斥队列与定时器链结算，避免与异步 tick 竞态
+    // 等互斥队列与定时器链结算，再停掉后台介绍轮定时器：恢复对比不允许异步写入干扰
     await new Promise((r) => setTimeout(r, 300));
+    engine.clearTimers();
 
     // 快进到 DISCUSSION 后真人发言（真实动作链），产生可对比的事件与状态
     engine.state.phase = "DISCUSSION";
