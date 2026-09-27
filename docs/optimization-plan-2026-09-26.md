@@ -3,14 +3,14 @@
 > 交付对象：负责持续迭代开发的执行代理（agent）。本计划自包含，按步骤顺序执行即可。
 > 项目：`/Users/hh-mini/Public/dev/jubensha`（Next.js 16 + React 19 + TS + Prisma/PostgreSQL + Vitest，pm2 跑 `next start` 于 :3000）。
 > 上游依据：2026-09-26 架构审查（七维度 + 13 项优先级清单）。本文把那 13 项展开为可执行、可验收的步骤。
-> 相关既有计划：`docs/engine-debt-rectification-plan.md`、`docs/engine-gameplay-batch-plan.md`（其中的硬性不变式继续有效，见 §1.3）。
+> 相关既有计划：`docs/engine-debt-rectification-plan.md`、`docs/engine-gameplay-batch-plan.md`（其中的硬性约束继续有效，见 §1.3）。
 
 ---
 
 ## 目录
 
 - §0 执行协议（agent 必读）
-- §1 基线事实、硬性不变式、需用户拍板的决策点
+- §1 基线事实、硬性约束、需用户拍板的决策点
 - §2 标准门禁与全局验收指标
 - §3 测试体系：L1 单元 / L2 API 路由 / L3 API 集成 / L4 实机
 - §4 阶段与步骤（P0 → P8，共 39 步）
@@ -27,7 +27,7 @@
 
 1. **读**：读本步全文 + 本步「涉及范围」列出的所有文件。发现代码事实与本文描述不一致时，以代码为准，在台账「偏差」栏记录，并判断是否影响本步设计；影响设计时按 §0.2「设计错误」的规则处理（无人值守，不提问）。
 2. **查前置**：确认「前置」列出的步骤在台账中为 `DONE`；按 §1.4 的最终决策执行。
-3. **跑基线**：执行标准门禁 `G-std`（§2.1），记录结果。基线不绿时先修复或报告，不在红基线上开发。
+3. **跑基线**：执行标准门禁 `G-std`（§2.1），记录结果。基线未通过时先修复，不在门禁未通过的状态下开发。
 4. **实施**：只做本步「具体操作」列出的改动。不顺手改进相邻代码（全局 CLAUDE.md §3）。
 5. **测**：按本步「测试」小节补写/执行测试。
 6. **验**：逐条核对本步「验收标准」。**每一条都必须有证据**（命令 + 输出摘要 / 测试名 / 截图路径）。
@@ -41,7 +41,7 @@
   1. 在台账「偏差」栏写明问题、备选方案（≤ 2 个）；
   2. 选择**改动面最小、可回滚、不改变对外行为**的方案继续执行，并标注 `DONE(deviation)`；
   3. 如果所有备选方案都会改变对外行为或数据结构，就标 `NEEDS-DECISION`，跳过本步及依赖它的步骤，继续执行其他步骤。
-- 任何时候 `G-std` 由绿转红且无法在本步内修复：`git restore`/`git revert` 回到上一绿点，不带红提交。
+- 任何时候 `G-std` 由通过变为失败且无法在本步内修复：用 `git restore`/`git revert` 回到上一个全部通过的提交，不提交未通过门禁的代码。
 - 环境类故障（docker 未启动、端口被占用、网络不通）：先自行排查修复（启动 docker、换端口 3100→3110 等）；30 分钟内修不好就标 `BLOCKED(env)`，跳到不依赖该环境的步骤。
 - **只有在剩余全部步骤都处于 BLOCKED / NEEDS-DECISION 时才停止**，并输出最终报告（见 §0.5）。
 
@@ -72,7 +72,7 @@
 
 ---
 
-## §1 基线事实、硬性不变式、决策点
+## §1 基线事实、硬性约束、决策点
 
 ### 1.1 基线事实（2026-09-26 实测，执行 S0.4 时复测并以复测值为准）
 
@@ -85,8 +85,8 @@
 | 非测试代码 `as unknown as` | 12 处 | 同上，模式换成 `as unknown as` |
 | `engine.ts` 行数 | 1044；`handleActionInner` 约 :670–:945，`handleDmActionInner` 约 :950–:1044 | `wc -l` |
 | `games/[id]/route.ts` 行数 | 185 | `wc -l` |
-| API 路由处理器 | 35 个（见 §3.3 表） | `grep -rn 'export const \(GET\|POST\|PUT\|PATCH\|DELETE\)' src/app/api` |
-| 有路由测试的处理器 | 1 个（`GET /api/games/[id]/events`） | `ls src/app/api/**/route.test.ts` |
+| API 接口（路由处理函数） | 35 个（见 §3.3 表） | `grep -rn 'export const \(GET\|POST\|PUT\|PATCH\|DELETE\)' src/app/api` |
+| 有路由测试的接口 | 1 个（`GET /api/games/[id]/events`） | `ls src/app/api/**/route.test.ts` |
 | `recordEvent`/`persist` 调用点 | 84 处（src/core，非测试） | grep |
 | `engine.events` 读取点 | 19 处 | grep `\.events\.` |
 | npm audit | 3 high（`prisma → @prisma/config → deepmerge-ts`，CLI 链路） | `npm audit` |
@@ -107,16 +107,16 @@
 ### 1.2 本计划的范围
 
 **包含**：审查报告的全部 13 项（P0–P2）；测试体系（L2/L3/L4）新建；CI；可观测性。
-**不包含**：玩法、提示词、剧本内容、前端视觉改版、Prisma/eslint 大版本升级（只评估不执行）、多副本横向扩展（只做单写者保护）。
+**不包含**：玩法、提示词、剧本内容、前端视觉改版、Prisma/eslint 大版本升级（只评估不执行）、多副本横向扩展（只保证同一局由单个进程主控）。
 
-### 1.3 硬性不变式（任何一步违反即返工）
+### 1.3 硬性约束（任何一步违反即返工）
 
 1. **信息防火墙**：AI prompt 只经 `src/core/agents/context.ts` 取数；不得新增取数路径。玩家可见数据只经 `visibleTo` 过滤。
 2. **前缀缓存**：同一座位的 system 整局不变；动态内容放 user 尾部。
 3. **旧档兼容**：已有数据库里的 `games.state` 快照必须能被新代码加载并继续对局（S4.3 之前靠 `??=`，之后靠迁移函数）。
 4. **SSE 三处一致**：新增或改动事件类型时，`renderEventLog`（LLM 视角）、events 路由 `visibleTo`、前端 `EventBubble` 必须同步。
 5. **错误不外泄**：路由 500 只回固定文案（`withRoute`）；日志中不得出现 apiKey、座位 token、DM token、hostToken、管理口令明文。
-6. **无行为漂移**：标注为「重构」的步骤，前后同一组测试必须全部通过，且不修改任何现有断言（只允许新增）。
+6. **行为不变**：标注为「重构」的步骤，前后同一组测试必须全部通过，且不修改任何现有断言（只允许新增）。
 
 ### 1.4 决策点（2026-09-26 用户已全部批准，按「最终决策」列执行）
 
@@ -153,7 +153,7 @@ npm run -s script:validate -- seeds/*.json seeds/generated/*.json
 |---|---|
 | tsc | 退出码 0，输出 0 行 `error TS` |
 | eslint | 退出码 0（0 error、0 warning） |
-| vitest | 0 failed；用例总数 ≥ 台账记录的上一步用例总数（不允许删测试换绿） |
+| vitest | 0 failed；用例总数 ≥ 台账记录的上一步用例总数（不允许靠删测试让门禁通过） |
 | 种子校验 | 退出码 0，0 error |
 
 S1.1 完成后，以上四条合并为 `npm run check`，此后用 `npm run check` 代替。
@@ -182,7 +182,7 @@ npm run e2e:down
 |---|---|---|---|
 | tsc 错误 | 0 | 0（保持） | `npx tsc --noEmit` |
 | eslint warning | 1 | 0 | `npx eslint src --max-warnings=0` |
-| 有 L2 测试的 API 处理器 | 1/35 | 100%（35 个现有处理器 + 计划中新增的 health、stream-ticket） | §3.3 表逐项打勾 + `npm run test:api` |
+| 有 L2 测试的 API 接口 | 1/35 | 100%（35 个现有接口 + 计划中新增的 health、stream-ticket） | §3.3 表逐项打勾 + `npm run test:api` |
 | L2 用例数 | ~8 | ≥ 140 | vitest 报告 |
 | L3 用例数 | 0 | ≥ 30 | vitest 报告 |
 | `src/lib` + `src/app/api` 行覆盖率 | 未测 | ≥ 80% | `npm run test:cov`（D6） |
@@ -192,7 +192,7 @@ npm run e2e:down
 | `engine.ts` 行数 | 1044 | ≤ 700 | `wc -l` |
 | `handleActionInner` 函数体 | ~275 行 | ≤ 60 行（只做分发） | 人工核对 |
 | `games/[id]/route.ts` 行数 | 185 | ≤ 70 | `wc -l` |
-| SSE 稳态每连接每分钟 DB 查询 | 3 | 0 | L2 计数断言 + R6 |
+| SSE 连接保持期间每连接每分钟的数据库查询次数 | 3 | 0 | L2 计数断言 + R6 |
 | 非 LLM API p95 延迟（本机，e2e 库） | 未测 | < 300ms；DB 单查询 < 100ms | R7 |
 | CI | 无 | PR/push 自动跑 `check` + `test:int` | GitHub Actions 运行记录 |
 | npm audit high（运行时依赖链） | 0（3 个在 CLI 链路） | 0，且不新增 | `npm audit --omit=dev` |
@@ -214,14 +214,14 @@ npm run e2e:down
 ### 3.2 L2 API 路由测试：方法
 
 - **写法**：参照现有 `src/app/api/games/[id]/events/route.test.ts`，直接 import 路由导出的 `GET/POST/...`，构造 `new Request(url, { method, headers, body })` 和 `{ params: Promise.resolve({...}) }` 调用，断言 `status` + JSON body。
-- **公共夹具**：S2.1 新建 `src/test/api.ts`，提供：
+- **公共测试工具**：S2.1 新建 `src/test/api.ts`，提供：
   - `makeReq(method, path, { body?, headers?, query? })`
   - `ctx(params)`
   - `mockDb()`：返回按模型分组的 `vi.fn()` 集合，支持 `$transaction` 数组形式和回调形式
   - `adminHeaders()`：生成合法的 `x-admin-token`（测试内设置 `process.env.ADMIN_TOKEN`）
   - 常用行工厂：`roomRow()`、`seatRow()`、`gameRow()`、`scriptRow()`（剧本用 `seeds/examples/script-v2.example.json`）
 - **环境**：每个文件 `beforeEach` 调 `resetRateLimits()`；需要生产模式分支时用 `vi.stubEnv("NODE_ENV", "production")`，并在 `afterEach` 调 `vi.unstubAllEnvs()`。
-- **必须覆盖的维度**（每个处理器按适用性覆盖）：
+- **必须覆盖的维度**（每个接口按适用性覆盖）：
   - (a) 正常路径
   - (b) 鉴权失败：无凭证 / 错凭证 / 他人凭证
   - (c) 参数校验：缺字段 / 类型错 / 超长 / 越界
@@ -231,11 +231,11 @@ npm run e2e:down
   - (g) 未捕获异常 → 500 且 body 仅固定文案、不含异常 message
   - (h) 信息泄露：响应不含他人私有字段、token、apiKey 明文
 
-### 3.3 L2 覆盖场景矩阵（35 个处理器）
+### 3.3 L2 覆盖场景矩阵（35 个接口）
 
-「维度」列引用 §3.2 的 (a)–(h)。每个处理器至少覆盖列出的维度；「关键断言」为必须存在的断言。
+「维度」列引用 §3.2 的 (a)–(h)。每个接口至少覆盖列出的维度；「关键断言」为必须存在的断言。
 
-| # | 处理器 | 维度 | 关键断言（预期结果） |
+| # | 接口 | 维度 | 关键断言（预期结果） |
 |---|---|---|---|
 | A01 | `POST /api/admin/unlock` | a b c f? g | 正确口令 → 200 + `Set-Cookie: jbs_admin=...; HttpOnly; SameSite=Lax`；错口令 → 401 且无 Set-Cookie；生产环境未配 ADMIN_TOKEN → 500 固定文案 |
 | A02 | `GET /api/admin/unlock` | a b | 带合法 cookie → `{admin:true}`；无 → `{admin:false}`；生产环境 + `Host: localhost` 且未开 TRUST_LOOPBACK → false |
@@ -271,9 +271,9 @@ npm run e2e:down
 | A32 | `GET /api/games/[id]/dm-actions` | a b h | 非 DM 拿不到 truth |
 | A33 | `POST /api/tts` | a b c d f | 无凭证 → 401；非公开发言 → 404；非 AI 发言 → 404；文本 > 600 → 404；合成失败 → 502 且不泄露上游报文 |
 | A34 | `GET /api/tts/[hash]` | a d c | hash 非法格式（含 `../`）→ 400/404，不读任意路径 |
-| A35 | 所有处理器 | g | 用 `it.each` 批量：mock 让 db 首次调用抛 `Error("SECRET-DETAIL")`，断言 500 且 body 不含 `SECRET-DETAIL` |
+| A35 | 所有接口 | g | 用 `it.each` 批量：mock 让 db 首次调用抛 `Error("SECRET-DETAIL")`，断言 500 且 body 不含 `SECRET-DETAIL` |
 
-新增的处理器（S6.2 的 `/api/health`）同样按本表补一行。
+新增的接口（S6.2 的 `/api/health`）同样按本表补一行。
 
 ### 3.4 L3 API 集成测试：方法
 
@@ -295,7 +295,7 @@ npm run e2e:down
 | I04 | 房间码撞码（预插入同 code） | 重试后成功，code 不同 |
 | I05 | `recordEvent` 事务（S4.2） | 注入 game.update 失败 → game_events 行数不变、总线未广播、内存 events 未增长 |
 | I06 | 重启恢复：start → 推进到 DISCUSSION → 清空 registry → `GameEngine.load` | phase/round/heldClues 与内存一致；继续 tick 可推进 |
-| I07 | 旧快照（v0 fixture）加载（S4.3） | 迁移后通过 zod 校验，`stateVersion` 为最新，可继续推进 |
+| I07 | 旧快照（v0 样本）加载（S4.3） | 迁移后通过 zod 校验，`stateVersion` 为最新，可继续推进 |
 | I08 | 租约（S4.2 前置的 S4.1）：两个引擎实例争同一局 | 只有 1 个获得租约；另一个 `drive=false`，不写事件 |
 | I09 | 租约过期接管 | 持有者停止续租，超过 TTL 后另一实例接管，事件 seq 连续、无重复发言 |
 | I10 | SSE 历史分页回放（S5.2），5,000 条事件 | 收到全部 5,000 条，按 seq 升序、无重复；单批查询 ≤ 500 条 |
@@ -319,11 +319,11 @@ npm run e2e:down
 | # | 场景 | 方法 | 预期结果（通过条件） |
 |---|---|---|---|
 | R1 | 无模型全流程冒烟 | `scripts/smoke-m3.mjs`（`SMOKE_BASE=http://127.0.0.1:3100`），5 人本 1 真人 + 4 AI | 15 分钟内到达 ENDED；`voteResult` 非空；输出里没有 `!! action failed`（「已经选过」除外）；退出码 0。**连续 3 次**通过 |
-| R2 | 鉴权负向实机 | `scripts/e2e/auth.mjs`：错 token 发 action、观战 SSE、无口令访问管理接口、伪造 `Host: localhost` + `X-Forwarded-For: 127.0.0.1` 访问 `/api/providers` | 分别为 403、仅 public 事件、401、401 |
+| R2 | 鉴权反向用例 | `scripts/e2e/auth.mjs`：错 token 发 action、观战 SSE、无口令访问管理接口、伪造 `Host: localhost` + `X-Forwarded-For: 127.0.0.1` 访问 `/api/providers` | 分别为 403、仅 public 事件、401、401 |
 | R3 | SSE 断线续传 | `scripts/e2e/sse-resume.mjs`：对局中途断开 SSE，等待期间有新事件产生，带 `Last-Event-ID` 重连 | 重连后收到的事件 seq 严格递增、与断线前衔接、不重不漏（与 DB 中 seq 列表比对，差集为空） |
 | R4 | 进程重启恢复 | 对局推进到 DISCUSSION 后 `down` 进程（保留库）→ `up` → 用同一座位 token 请求 `GET /api/games/[id]` 并继续 R1 剩余流程 | 恢复后 phase/round 与重启前一致；能继续推进到 ENDED；日志无未捕获异常 |
-| R5 | 多实例单写者（S4.1 后启用） | 同库再起一个 :3101 实例，两个实例都用座位 token 触发懒恢复 | 同一局只有 1 个实例写事件（按 `game_events` 统计，每个回合的 speech 事件数与单实例一致，无重复发言）；另一个实例日志出现 `lease held by` |
-| R6 | SSE 负载（S5.1 前后各测一次） | `scripts/e2e/sse-load.mjs`：50 个观战 SSE 连接保持 5 分钟；开启 Prisma query 日志计数（`DEBUG_PRISMA_QUERY_COUNT=1`，S6.1 提供） | S5.1 之前：基线约 150 次/分钟；之后：稳态 **0** 次/分钟（与连接数无关）；进程 RSS 增长 < 50MB |
+| R5 | 多实例下单进程主控（S4.1 后启用） | 同库再起一个 :3101 实例，两个实例都用座位 token 触发按需恢复 | 同一局只有 1 个实例写事件（按 `game_events` 统计，每个回合的 speech 事件数与单实例一致，无重复发言）；另一个实例日志出现 `lease held by` |
+| R6 | SSE 负载（S5.1 前后各测一次） | `scripts/e2e/sse-load.mjs`：50 个观战 SSE 连接保持 5 分钟；开启 Prisma query 日志计数（`DEBUG_PRISMA_QUERY_COUNT=1`，S6.1 提供） | S5.1 之前：基线约 150 次/分钟；之后：连接保持期间 **0** 次/分钟（与连接数无关）；进程 RSS 增长 < 50MB |
 | R7 | API 延迟 | `scripts/e2e/latency.mjs`：对 `GET /api/scripts`、`GET /api/rooms/[code]`、`GET /api/games/[id]`（带座位 token）、`POST actions`（skip 类）各请求 200 次 | p95 < 300ms，p99 < 500ms；Prisma 单查询耗时 p95 < 100ms（查询日志） |
 | R8 | 真模型对局（D5 限额；无凭证则 SKIPPED） | R1 脚本 + 真实 binding，1 局 | 到达 ENDED；`system` 事件中「后台 AI 操作失败」= 0；usage_logs 总 token ≤ D5 上限；预算熔断未误触发 |
 | R9 | 浏览器实机（UI） | 用浏览器自动化工具（内置 Browser 面板）打开 :3100，按下方清单执行，每项截图存到 `.e2e/screens/<步骤号>/` | 清单全部通过；控制台 0 条 error（CSP report-only 告警单独记录） |
@@ -372,7 +372,7 @@ npm run e2e:down
 
 #### S0.2 类型与 lint 归零
 
-- **目标**：`G-std` 全绿，作为后续所有步骤的基线。
+- **目标**：`G-std` 全部通过，作为后续所有步骤的基线。
 - **前置**：S0.1。
 - **涉及范围**：`src/core/engine/flow.ts`（若复测时 tsc 又出现错误，也在本步修复，且只改出错的文件）。
 - **具体操作**：
@@ -395,7 +395,7 @@ npm run e2e:down
 - **验收标准**：以上三条全部成立；`git check-ignore .env` 仍然命中（`.env` 依旧被忽略）。
 - **回滚**：revert。
 
-#### S0.4 度量基线与台账建立
+#### S0.4 建立指标基线与台账
 
 - **目标**：把 §1.1 的数字实测固化，作为后续对比的依据。
 - **前置**：S0.2、S0.3。
@@ -404,7 +404,7 @@ npm run e2e:down
 - **输出**：台账文件。
 - **验收标准**：台账包含 §1.1 全部指标的实测值，每个值旁附采集命令；覆盖率基线（若 D6 已批准）已记录。
 
-**P0 阶段验收**：S0.1–S0.4 全部 DONE；`G-std` 绿；台账存在。（P0 暂不要求 `G-e2e`，实机环境在 P2 才建。）
+**P0 阶段验收**：S0.1–S0.4 全部 DONE；`G-std` 通过；台账存在。（P0 暂不要求 `G-e2e`，实机环境在 P2 才建。）
 
 ---
 
@@ -450,8 +450,8 @@ npm run e2e:down
 - **测试**：本地用 `act` 验证（如果没装就跳过）；D4 允许后 push 工作分支，观察运行结果。
 - **验收标准**：
   1. workflow 的 YAML 语法合法（`npx --yes yaml-lint` 或 GitHub 界面无语法报错）；
-  2. D4 允许时，线上运行 `check` job 绿，耗时 < 10 分钟，运行链接记入台账；
-  3. 从 `opt/2026-09` 切出 `ci-probe/lint-fail`，提交一处 lint 错误并 push，CI 变红后执行 `git push origin --delete ci-probe/lint-fail` 并删除本地分支（这是唯一允许的远端分支删除）。push 不可用时，第 2、3 条标为 `push-pending`，不阻塞后续步骤。
+  2. D4 允许时，线上运行的 `check` job 通过，耗时 < 10 分钟，运行链接记入台账；
+  3. 从 `opt/2026-09` 切出 `ci-probe/lint-fail`，提交一处 lint 错误并 push，CI 失败后执行 `git push origin --delete ci-probe/lint-fail` 并删除本地分支（这是唯一允许的远端分支删除）。push 不可用时，第 2、3 条标为 `push-pending`，不阻塞后续步骤。
 
 #### S1.4 本地提交钩子（轻量，不引入依赖）
 
@@ -461,23 +461,23 @@ npm run e2e:down
 - **具体操作**：pre-commit 执行 `npm run typecheck && npm run lint`（不跑全量测试，控制在 60s 内）。不自动安装，README 加一句说明。
 - **验收标准**：执行 `hooks:install` 后，故意制造 lint 错误时 `git commit` 被拒；耗时 < 60s；未执行安装的人不受影响。
 
-**P1 阶段验收**：`npm run check` 可用且为绿；CI `check` job 绿（push 失败时台账标 `push-pending`，不阻塞）；`APP_CONFIG_PATH` 生效。
+**P1 阶段验收**：`npm run check` 可用且通过；CI `check` job 通过（push 失败时台账标 `push-pending`，不阻塞）；`APP_CONFIG_PATH` 生效。
 
 ---
 
 ### P2 测试基建（P0/P1，预计 2–3 天）
 
-#### S2.1 L2 公共夹具
+#### S2.1 L2 公共测试工具
 
-- **目标**：写 API 路由测试的样板代码 ≤ 10 行/文件。
+- **目标**：每个 API 路由测试文件的准备代码（import 与初始化）≤ 10 行。
 - **前置**：P1。
-- **涉及范围**：新建 `src/test/api.ts`、`src/test/fixtures.ts`；把现有 `events/route.test.ts` 改为使用新夹具（只改夹具用法，断言不动）。
+- **涉及范围**：新建 `src/test/api.ts`、`src/test/fixtures.ts`；把现有 `events/route.test.ts` 改为使用新的测试工具（只改准备代码，断言不动）。
 - **具体操作**：实现 §3.2 列出的函数；`mockDb()` 需要支持 `vi.mock("@/lib/db", () => ({ db: mockDbInstance }))` 这种写法。
-- **验收标准**：夹具本身有 ≥ 5 个 L1 用例；events 路由测试迁移后用例数和断言都不变且全部通过；新写一个处理器测试文件的 import 与 setup 不超过 10 行（用 A13 `/api/usage` 做示范）。
+- **验收标准**：测试工具本身有 ≥ 5 个 L1 用例；events 路由测试迁移后用例数和断言都不变且全部通过；新写一个接口的测试文件的 import 与 setup 不超过 10 行（用 A13 `/api/usage` 做示范）。
 
 #### S2.2 L2 鉴权矩阵与全量路由测试
 
-- **目标**：35 个处理器全部有 L2 测试，覆盖 §3.3 矩阵。
+- **目标**：35 个接口全部有 L2 测试，覆盖 §3.3 矩阵。
 - **前置**：S2.1。
 - **涉及范围**：`src/app/api/**/route.test.ts`（新建约 20 个文件）。
 - **具体操作**：按 §3.3 逐行实现；分 4 个提交：管理面（A01–A13）、剧本（A14–A21）、房间（A22–A27）、对局与 TTS（A28–A35）。**写测试时发现的缺陷只记录，不在本步修复**（登记到台账「发现的缺陷」栏，由 S7.3 或专门的步骤处理），测试用 `it.fails` 标注，并在注释里写明缺陷编号。
@@ -502,11 +502,11 @@ npm run e2e:down
   1. I01–I04、I06 通过；
   2. 连续跑 3 次，结果一致（无偶发失败）；
   3. 故意把 `DATABASE_URL` 设成别的库名时，测试在连库之前就失败退出；
-  4. 在 S1.3 的 CI 中启用 `integration` job 并变绿（D4）。
+  4. 在 S1.3 的 CI 中启用 `integration` job 并运行通过（D4）。
 
 #### S2.4 引擎恢复与并发的 L3 补强
 
-- **目标**：为 P4 的改造建立回归网。
+- **目标**：为 P4 的改造补足回归测试。
 - **前置**：S2.3。
 - **涉及范围**：`src/core/engine/*.int.test.ts`。
 - **具体操作**：
@@ -540,7 +540,7 @@ npm run e2e:down
 - **具体操作**：按 §3.5 的 R9 清单执行，桌面与移动各一遍。
 - **验收标准**：清单 7 项全部通过或已登记为缺陷；截图 ≥ 20 张；控制台 error 数记入台账作为基线。
 
-**P2 阶段验收**：`npm run check`、`npm run test:int`、`G-e2e`（R1–R4）全绿；L2 覆盖 35/35；台账「发现的缺陷」栏有完整登记。
+**P2 阶段验收**：`npm run check`、`npm run test:int`、`G-e2e`（R1–R4）全部通过；L2 覆盖 35/35；台账「发现的缺陷」栏有完整登记。
 
 ---
 
@@ -592,16 +592,16 @@ npm run e2e:down
 - **验收标准**：R9 通过；控制台 CSP 违规 = 0；`curl -sI http://127.0.0.1:3100/ | grep -i content-security-policy` 输出的是强制头，且不含 `unsafe-eval`。
 - **回滚**：如果 R9 出现违规且当天无法定位，恢复 report-only，并把违规资源登记到台账。
 
-#### S3.5 SSE 凭证改用一次性票据
+#### S3.5 SSE 凭证改用一次性临时凭证
 
 - **目标**：座位和 DM 的 token 不再出现在 SSE 的 URL（访问日志）里。
 - **前置**：S3.3、S5.1。
-- **涉及范围**：新建 `POST /api/games/[id]/stream-ticket`（凭 header 里的 token 换取 60s 有效、一次性的 ticket）；`events/route.ts` 接受 `?ticket=`；`src/lib/join.ts` 的 `gameEventsUrl`；`useGameStream.ts`。
-- **具体操作**：ticket 存在进程内 Map（单实例前提，与租约一致），用后即删，TTL 60s；旧的 `token` query 参数保留一个版本作为兼容，并记录 deprecation 日志。
-- **测试**：L2：ticket 过期、重复使用、跨局使用均被拒；A29 补充 ticket 用例。L4：R3 改用 ticket 后仍然通过。
+- **涉及范围**：新建 `POST /api/games/[id]/stream-ticket`（凭 header 里的 token 换取 60s 内有效、只能使用一次的临时凭证（ticket））；`events/route.ts` 接受 `?ticket=`；`src/lib/join.ts` 的 `gameEventsUrl`；`useGameStream.ts`。
+- **具体操作**：临时凭证存放在进程内 Map（单实例前提，与租约一致），用后即删，TTL 60s；旧的 `token` query 参数保留一个版本作为兼容，并记录 deprecation 日志。
+- **测试**：L2：临时凭证过期、重复使用、跨局使用均被拒；A29 补充临时凭证用例。L4：R3 改用临时凭证后仍然通过。
 - **验收标准**：以上用例通过；前端建连时 URL 中不再包含 `token=`（R9 在网络面板中核对）；兼容路径仍然可用。
 
-**P3 阶段验收**：`check` + `test:int` + `G-e2e`（R1–R4，R2 包含新增项）全绿；R9 在 CSP 强制执行下通过。
+**P3 阶段验收**：`check` + `test:int` + `G-e2e`（R1–R4，R2 包含新增项）全部通过；R9 在 CSP 强制执行下通过。
 
 ---
 
@@ -619,9 +619,9 @@ npm run e2e:down
   2. `migrateState(raw: unknown): GameState`：无 `stateVersion` 的视为 v0，v0→v1 就是把现在 `load()` 里全部 `??=` 和兼容清理逻辑原样搬过来；最后 `GameStateSchema.parse`。
   3. zod schema 对未知字段使用 `.passthrough()`，避免旧快照里的冗余字段导致 parse 失败。
   4. `load()` 中用 `migrateState(game.state)` 替换整段 `??=`；对「依赖 `Date.now()` 的过期清理」保持原有行为（迁移函数接收 `now` 参数）。
-  5. fixtures：从 L3/L4 测试对局生成 ≥ 5 个 v0 快照（覆盖 READING、SEARCH、DISCUSSION、VOTE、ENDED），另外手工构造 1 个「最老格式」（去掉 `actionPlans`、`interactionChoices` 等后加的字段）。**不得从用户日常使用的库导出。**
+  5. 测试样本：从 L3/L4 测试对局生成 ≥ 5 个 v0 快照（覆盖 READING、SEARCH、DISCUSSION、VOTE、ENDED），另外手工构造 1 个「最老格式」（去掉 `actionPlans`、`interactionChoices` 等后加的字段）。**不得从用户日常使用的库导出。**
   6. 以后新增状态字段的规则：版本号 +1，并新增一个迁移函数。把这条规则写进 `state-migrate.ts` 的文件头注释。
-- **测试**：L1：每个 fixture 迁移后通过 parse，且与「旧 `load()` 逻辑」的结果深度相等（先把旧逻辑复制进测试作为对照，本步完成后删除该对照副本）；幂等性：`migrateState(migrateState(x))` 等于 `migrateState(x)`。L3：I07。
+- **测试**：L1：每个样本迁移后通过 parse，且与「旧 `load()` 逻辑」的结果深度相等（先把旧逻辑复制进测试作为对照，本步完成后删除该对照副本）；幂等性：`migrateState(migrateState(x))` 等于 `migrateState(x)`。L3：I07。
 - **验收标准**：
   1. `load()` 中不再有任何 `state.xxx ??=`；
   2. 新增 L1 用例 ≥ 8 个并通过；I07 通过；
@@ -629,9 +629,9 @@ npm run e2e:down
   4. `as unknown as GameState` 的数量减少（记录前后数字）。
 - **回滚**：revert。数据层面无破坏：v1 快照被旧代码读取时，多出来的字段会被忽略。
 
-#### S4.1 单写者租约
+#### S4.1 单进程主控（租约机制）
 
-- **目标**：同一对局在任一时刻最多只有一个进程在驱动，从根上消除「双驱动」。
+- **目标**：同一对局在任一时刻最多只有一个进程在驱动，从根上避免两个进程同时驱动同一局。
 - **前置**：S4.3、S2.4。
 - **涉及范围**：Prisma schema（`Game` 增加 `ownerId String?`、`leaseUntil DateTime?`）+ 新 migration；新建 `src/core/engine/lease.ts`；`engine.ts` 的 `load/start`、`schedule/scheduleBackground` 的入口；`registry.ts`。
 - **具体操作**：
@@ -675,28 +675,28 @@ npm run e2e:down
 - **测试**：L2 A28：`myClues` 与 `state.heldClues[seat]` 一致；故意让 `seat_states` 的值与 state 不一致时，以 state 为准。
 - **验收标准**：用例通过；R1 通过；R9 中线索栏显示正确。
 
-**P4 阶段验收**：`check` + `test:int`（含 I05–I09）+ `G-e2e`（R1–R5）全绿；R8 真模型对局一次（D5）；台账记录租约和原子写的性能数据。
+**P4 阶段验收**：`check` + `test:int`（含 I05–I09）+ `G-e2e`（R1–R5）全部通过；R8 真模型对局一次（D5）；台账记录租约和原子写的性能数据。
 
 ---
 
 ### P5 性能（P1/P2，预计 1.5–2 天）
 
-#### S5.1 SSE 心跳去 DB 化
+#### S5.1 SSE 心跳不再查询数据库
 
-- **目标**：稳态下 SSE 连接不产生 DB 查询。
+- **目标**：SSE 连接保持期间不再产生数据库查询。
 - **前置**：S3.3、S2.2。
 - **涉及范围**：`events/route.ts`；`bus.ts`（新增消息类型 `revoke`）；`rooms/[code]` PATCH、`rooms/join`、`rooms/dm-join`（凭证变更点）。
 - **具体操作**：
   1. 复核「对局开始后座位 token 不再变化」这一事实（grep 所有写 `token` 的地方）。
-  2. 心跳只发 `: ping`，删除其中的 DB 查询。
+  2. 心跳只发 `: ping`，删除其中的数据库查询。
   3. 凭证变更点在写库成功后 `publish(gameId, { kind: "revoke", seat?, dm? })`（大厅阶段还没有 gameId 时跳过）；SSE 收到与自身视角匹配的 revoke 后关闭连接。
   4. 对局 abort/ENDED 后的行为保持不变。
 - **测试**：L2：心跳周期内 `db.game.findUnique` 调用次数 = 1（只有建连时那一次）——使用 fake timers 推进 5 分钟；收到 revoke 后流关闭，且不影响其他座位的连接。L4：R6 前后对比。
-- **验收标准**：以上 L2 用例通过；R6 中稳态查询次数 = 0/min；revoke 在 L2 中 < 1 个 tick 内生效；R3 仍然通过。
+- **验收标准**：以上 L2 用例通过；R6 中连接保持期间的查询次数 = 0 次/分钟；撤销通知（revoke）在 L2 中于同一轮事件循环内生效；R3 仍然通过。
 
 #### S5.2 SSE 历史回放分页
 
-- **目标**：大局首连时不一次性把全部事件载入内存。
+- **目标**：事件很多的对局首次建立连接时不一次性把全部事件载入内存。
 - **前置**：S5.1、S2.3。
 - **涉及范围**：`events/route.ts` 的历史回放段。
 - **具体操作**：改为以 `seq > cursor` 为条件、每批 `take: 500` 的循环，直到不足一批；批与批之间检查 `closed`，已关闭就中止。去重与 pending 合并的逻辑不变。
@@ -723,7 +723,7 @@ npm run e2e:down
   3. 全部为「近期」类后，`recordEvent` 在 `events.length > 1500` 时截断到最近 1200 条。
 - **测试**：L1：模拟 3,000 条事件后，AI 上下文构造仍然正常（摘要层覆盖早期事件）；幂等检查不受影响。L4：R1。
 - **验收标准**：审计表完整；用例通过；R1 连续 3 次通过；R8（若执行）中 AI 发言质量无明显回退（人工抽查 5 条，记入台账）。
-- **风险**：这一步最容易造成隐性行为漂移，所以审计必须先于改动；审计若发现 > 3 个「需要全局历史」的读取点，就推迟本步。
+- **风险**：这一步最容易造成不易察觉的行为变化，所以审计必须先于改动；审计若发现 > 3 个「需要全局历史」的读取点，就推迟本步。
 
 #### S5.5 延迟基线与预算核对
 
@@ -733,7 +733,7 @@ npm run e2e:down
 - **具体操作**：执行 R7；超标的接口用 Prisma 查询日志定位；每个优化单独提交（例如加索引走 migration、减少 include）。
 - **验收标准**：R7 通过；每个优化提交在台账中都有前后对比数据。
 
-**P5 阶段验收**：`check` + `test:int` + `G-e2e` 全绿；R6、R7 达标；台账有前后对比。
+**P5 阶段验收**：`check` + `test:int` + `G-e2e` 全部通过；R6、R7 达标；台账有前后对比。
 
 ---
 
@@ -754,7 +754,7 @@ npm run e2e:down
 
 #### S6.2 健康检查接口
 
-- **目标**：pm2、反向代理、e2e 脚本可以探活，并能发现卡住的对局。
+- **目标**：pm2、反向代理、e2e 脚本可以做存活检查，并能发现卡住的对局。
 - **前置**：S6.1、S4.1。
 - **涉及范围**：新建 `src/app/api/health/route.ts`。
 - **具体操作**：
@@ -771,9 +771,9 @@ npm run e2e:down
 - **涉及范围**：`registry.ts`（新增一个 60s 的巡检 timer，`unref`）。
 - **具体操作**：巡检所有常驻引擎，如果 `phase` 不是 ENDED，没有 `turnInFlight`，没有等待中的真人截止时间，并且距上次事件已超过 5 分钟，就输出 `log.warn("engine.stuck", {gameId, phase, round, idleSec})`，每局每 15 分钟最多报一次。
 - **测试**：L1（fake timers）：满足条件时告警；有真人截止时间时不告警；有节流。
-- **验收标准**：用例通过；R1 全程无 stuck 告警。
+- **验收标准**：用例通过；R1 全程没有出现卡局告警。
 
-**P6 阶段验收**：`check` + `test:int` + `G-e2e` 全绿；`console.*` 为 0；health 接口已接入 e2e 脚本。
+**P6 阶段验收**：`check` + `test:int` + `G-e2e` 全部通过；`console.*` 为 0；health 接口已接入 e2e 脚本。
 
 ---
 
@@ -783,14 +783,14 @@ npm run e2e:down
 
 #### S7.1 拆分 `handleActionInner` / `handleDmActionInner`
 
-- **目标**：`engine.ts` ≤ 700 行；动作处理器可以独立测试。
-- **前置**：P2（L2/L3 回归网）、S4.2。
+- **目标**：`engine.ts` ≤ 700 行；动作处理函数可以独立测试。
+- **前置**：P2（L2/L3 回归测试）、S4.2。
 - **涉及范围**：`engine.ts`；新建 `src/core/engine/actions/{index,player,dm}.ts`（或按领域拆成 speak/search/vote/social/skill/dm 多个文件，单文件 ≤ 250 行）。
 - **具体操作**：
-  1. 提交 1（纯搬移）：每个 `case` 的函数体原样搬成 `(e: GameEngine, seatIndex, action) => Promise<Result>`，放进 `const PLAYER_ACTIONS: Record<GameAction["type"], Handler>`；`handleActionInner` 只剩查表加兜底。DM 动作同样处理。
+  1. 提交 1（纯搬移）：每个 `case` 的函数体原样搬成 `(e: GameEngine, seatIndex, action) => Promise<Result>`，放进 `const PLAYER_ACTIONS: Record<GameAction["type"], Handler>`；`handleActionInner` 只剩查表分发和未知动作的默认处理。DM 动作同样处理。
   2. 提交 2：私有成员如需被 actions 模块访问，改为 internal（沿用现有 `e: GameEngine` 形态），不新增 public API。
   3. 保持「只有 type-only 依赖 engine.ts」的约束。
-- **测试**：全量 `check` + `test:int`；另为每个动作处理器新增 ≥ 1 个 L1 用例（13 个玩家动作 + 7 个 DM 动作）。
+- **测试**：全量 `check` + `test:int`；另为每个动作处理函数新增 ≥ 1 个 L1 用例（13 个玩家动作 + 7 个 DM 动作）。
 - **验收标准**：
   1. `wc -l src/core/engine/engine.ts` ≤ 700；
   2. `handleActionInner` 和 `handleDmActionInner` 各 ≤ 30 行；
@@ -799,24 +799,24 @@ npm run e2e:down
   5. 用 `npx madge --circular src/core/engine`（临时 npx，不加依赖）检查，无运行时循环依赖；
   6. `G-e2e` 通过。
 
-#### S7.2 抽取座位视图投影
+#### S7.2 抽取按座位组装数据的逻辑
 
-- **目标**：`GET /api/games/[id]` 的防泄露投影可以单独做单元测试。
+- **目标**：`GET /api/games/[id]` 中按座位裁剪数据（防泄露）的逻辑可以单独做单元测试。
 - **前置**：S2.2（A28）、S4.4。
 - **涉及范围**：新建 `src/core/engine/seat-view.ts`（`buildSeatView({ game, doc, runtimeState, seatStates, mySeat })`）；路由只负责取数、鉴权和调用。
-- **具体操作**：提交 1 纯搬移；提交 2 为投影函数补测试。
+- **具体操作**：提交 1 纯搬移；提交 2 为这个函数补测试。
 - **测试（L1）**：信息泄露专项 ≥ 12 个用例：观战者看不到 `myCard`/`myClues`/`pendingAnswer`/`suggestions`/`openWhispers`/`skills`；A 座位看不到 B 座位的 `myCardV2`；`stages` 只包含已解锁的幕；`quiz` 不含正确选项；`quizResult` 只在 ENDED 返回；`interactionBeats` 只包含 public；`flow` 不外泄 truth 相关字段。
 - **验收标准**：路由文件 ≤ 70 行；A28 全部通过且断言未改动；新增 L1 ≥ 12 个用例并通过；R9 第 6 项（无痕观战）通过。
 
-#### S7.3 Json 边界类型收口与缺陷清理
+#### S7.3 统一 Json 字段的类型校验并清理缺陷
 
 - **目标**：`as unknown as` ≤ 3 处；台账中登记的缺陷全部关闭或已转交用户决策。
 - **前置**：S4.3、S7.2。
-- **涉及范围**：12 处 cast 所在文件；台账「发现的缺陷」栏中的所有条目。
+- **涉及范围**：12 处类型强转（`as unknown as`）所在文件；台账「发现的缺陷」栏中的所有条目。
 - **具体操作**：Json 列的读取统一经过 zod parse（剧本走现有的 `parseScriptForRuntime`，state 走 `migrateState`，seat 数据新增一个小 schema）；每个缺陷单独一个 `fix:` 提交，并把对应的 `it.fails` 改为 `it`。
-- **验收标准**：cast 数 ≤ 3，且每处都有注释说明原因；`grep -rn 'it.fails' src` 为空，或剩余条目都在台账中标记为「用户决策」；`check` 全绿。
+- **验收标准**：类型强转 ≤ 3 处，且每处都有注释说明原因；`grep -rn 'it.fails' src` 为空，或剩余条目都在台账中标记为「用户决策」；`check` 全部通过。
 
-**P7 阶段验收**：`check` + `test:int` + `G-e2e` + R9 全绿；R8 真模型对局一次（D5），结果与 P4 那次对比无回退（到达 ENDED；失败事件数不增加）。
+**P7 阶段验收**：`check` + `test:int` + `G-e2e` + R9 全部通过；R8 真模型对局一次（D5），结果与 P4 那次对比无回退（到达 ENDED；失败事件数不增加）。
 
 ---
 
@@ -863,10 +863,10 @@ npm run e2e:down
 
 - **目标**：计划、审查、决策类文档可检索，并标明是否仍然有效。
 - **前置**：无（可以随时穿插执行）。
-- **涉及范围**：新建 `docs/README.md`（索引）、`docs/adr/0001-单写者租约.md`、`0002-状态版本化.md`、`0003-事件快照原子写.md`、`0004-开房授权与预算熔断.md`；README 的「测试」一节更新为 L1–L4 的命令。
+- **涉及范围**：新建 `docs/README.md`（索引）、`docs/adr/0001-单进程主控租约.md`、`0002-状态版本化.md`、`0003-事件快照原子写.md`、`0004-开房授权与预算熔断.md`；README 的「测试」一节更新为 L1–L4 的命令。
 - **验收标准**：`docs/` 下每个 .md 文件都在索引中出现，并标注状态（有效 / 已完成 / 已作废）；每篇 ADR 包含背景、决策、备选方案、后果四节；README 中的命令逐条可以执行（抽查）。
 
-**P8 阶段验收**：`check` + `test:int` + `G-e2e` 全绿；Docker 部署下 R1 通过。
+**P8 阶段验收**：`check` + `test:int` + `G-e2e` 全部通过；Docker 部署下 R1 通过。
 
 ---
 
@@ -875,16 +875,16 @@ npm run e2e:down
 同时满足以下全部条件，才判定本计划完成：
 
 1. **步骤**：§4 中全部 39 步的状态为 `DONE`；任何 `BLOCKED` 或 `NEEDS-DECISION` 都必须已由用户明确接受为「本期不做」，并在台账中留有记录。
-2. **门禁**：在最终提交上 `npm run check`、`npm run test:int` 退出码均为 0；CI 最近一次运行为绿（D4）。
+2. **门禁**：在最终提交上 `npm run check`、`npm run test:int` 退出码均为 0；CI 最近一次运行通过（D4）。
 3. **指标**：§2.4 表中每一项都达到目标值，且台账中有实测证据。
 4. **实机**：R1 连续 3 次通过；R2–R7 通过；R9 桌面与移动均通过；R8（D5）在 P4、P7 结束时各通过一次；无凭证时记为 `SKIPPED(no-credentials)`，不视为未通过，但要写进最终报告。
-5. **不变式**：§1.3 的 6 条不变式在最终代码上逐条核对并记录：
+5. **硬性约束**：§1.3 的 6 条硬性约束在最终代码上逐条核对并记录：
    - 防火墙：`grep` 确认 AI prompt 的构造只从 `context.ts` 进入；
    - 前缀缓存：抽查 1 局中同一座位多次调用的 system 哈希相同；
    - 旧档兼容：I07 通过；
    - SSE 三处一致：新增的 `revoke` 不进入事件流（它是总线控制消息，不是事件），这一点需要确认；
    - 错误不外泄：A35 通过；
-   - 无行为漂移：P7 的 JSON 报告对比通过。
+   - 行为不变：P7 的 JSON 报告对比通过。
 6. **安全**：R2 全部通过；日志脱敏检查无命中；`npm audit --omit=dev` 的 high 不多于基线。
 7. **文档**：台账完整；`docs/README.md` 与 ADR 齐全；README 已更新。
 
@@ -913,7 +913,7 @@ npm run e2e:down
 | 指标 | 基线 | 当前 | 目标 | 最近更新步骤 |
 |---|---|---|---|---|
 | tsc 错误 | 0 | | 0 | |
-| L2 覆盖处理器 | 1/35 | | 35/35 | |
+| L2 覆盖接口 | 1/35 | | 35/35 | |
 | ...（§2.4 全部指标） | | | | |
 
 ## 步骤状态
