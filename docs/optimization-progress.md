@@ -20,8 +20,8 @@
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
 | 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 78 / 558，约 4.1s | 不降 | S2.5 |
-| L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 1/34 | 34/34 | S0.4 |
-| L2 用例数 | ~10（events route 10 个） | 10 | ≥ 140 | S0.4 |
+| L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 22/22 个 route.ts 文件都有同名测试（覆盖全部 34 个导出处理器） | 34/34 | S2.2（S2.6 复测） |
+| L2 用例数 | ~10（events route 10 个） | 165 过 + 2 it.fails（`npm run test:api`，23 files，2.5s） | ≥ 140 | S2.2（S2.6 复测） |
 | L3 用例数 | 0 | 10（3 files） | ≥ 30 | S2.5 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
@@ -153,7 +153,7 @@
 - 命令：`zsh .e2e/plans/chain-final.sh`（每遍先 `node scripts/e2e/browser.mjs --shutdown` 清 profile，再按 d1→d2→d3→d4a→d5→d4b 顺序，桌面 `--shot-prefix=d`、移动 `--width=375 --height=812 --mobile --shot-prefix=m`）。退出码序列：`EXIT_{d,m}_{D1,D2,D3,D4A,D5,D4B}=0` 共 12 个。
 - 截图：`.e2e/screens/S2.6/` 共 **64 张 PNG（d01–d31a 桌面 32 张、m01–m31a 移动 32 张）**，≥ 20 张达标；目录 gitignore，不入库。
 - 控制台 error 基线：整遍 12 次运行合计 **2 条**，且都是清单第 1 项故意访问 `/no-such-page` 产生的 `Failed to load resource: 404 @ http://127.0.0.1:3120/no-such-page`；其余 11 次运行 0 条。**未捕获异常 0 条**；`grep -c . .e2e/screens/console-errors.jsonl` 的 59 行含开发期调试运行，正式基线以上述 2 条为准（计划 §3.5「控制台 0 条 error」中的 404 一条按「故意负向用例」豁免，其余为 0）。
-- 无横向滚动：12 次运行收集到的 13 个 `layout()` 采样（含首页/剧本库/详情/建房/设置/刷新后对局页/观众页/VOTE/结算）`scrollWidth > clientWidth` 均为 **false**，移动 375 视口下 `scrollW=375=clientW`。
+- 无横向滚动：每个视口 11 条断言、两遍合计 **22 条全过**（静态 5 页 + READING + SEARCH/DISCUSSION + VOTE + 结算 + 刷新后对局页 + 观众页）；另有 26 个 `layout()` 样本，`scrollWidth > clientWidth` 全为 false，移动 375 视口下 `scrollW=375=clientW`。
 - 第 2 项细节：独立上下文首访显示 `解锁管理面` 口令门（`lockedText` 采集），输入 e2e 口令后卡片消失、出现「AI 接入 / 模型绑定 / 用量统计」；新增 provider 的 apiKey 在列表里渲染为 `http://127.0.0.1:1/v1 · ••••••••abcd`，断言 `body.innerText` 含掩码且不含 `sk-e2e-demo-0000` 明文 → 两侧视口均过。
 - 第 3 项细节：`座位 1=human、2–5=ai`（`seatKinds=["human","ai","ai","ai","ai"]`），房间码取自 URL `/rooms/{code}`（桌面 `WK63G`、移动 `JR4FP`，格式断言 `/^[A-Z0-9]{4,10}$/i`），第二标签（独立上下文）填昵称入座→房主开局→房主跳 `/play/[id]` 显示观众视角、访客点「进入对局」后进 READING。
 - 第 4 项细节（真人座位 seat 0，两局独立验证）：
@@ -166,6 +166,18 @@
 - 第 6 项细节（独立 browser context = 无痕等价）：只带房间码打开 `/rooms/{code}` → 只有「回到本局」与「请使用原设备凭证恢复」提示，`localStorageKeys=0`，无「你的秘密」；直连 `/play/{gameId}` → 出现「观众身份观看」，无「你的行动」面板、无线索（页签内 `还没有获得任何线索`）、正文不含「私聊」。桌面 `spectatorView.bubbles=20`、移动 21（仅公开事件）。
 - 凭证外泄审计：驱动记录到 `tokenQueryRequests`，两遍各 1 条（d3 与 d5 的玩家标签）：`/api/games/{id}/events?seat=0&token=…`（报告里已掩码）。这是清单第 6 项/?token= 审计的基线值 → 见 FIND-04，由 S3.5 关闭。页面 URL、`document.body` 与 `localStorage` 均无 token 明文（`feedHealth.tokenInUrl=false`、`sseHasToken=false`）。
 - 收尾：`npm run e2e:down` 后 `SELECT count(*) FROM pg_database WHERE datname='jubensha_e2e'` → 0；`node scripts/e2e/browser.mjs --shutdown` 清 profile；pm2 `jubensha`（:3000）restarts 未变。
+
+## 阶段验收
+- **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
+- **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
+- **P2（2026-09-27，S2.1–S2.6）**：
+  - `npm run check` → exit 0（12.3s），Test Files 78 / Tests 558 passed | 2 expected fail。
+  - `npm run db:test:up` + `DATABASE_URL=…jubensha_test npm run test:int` → 3 files / 10 passed（I01–I04、I06 与 S2.4 的恢复点/并发用例）。
+  - `G-e2e`（同一轮全新库）：`e2e:down` → `e2e:up` → `e2e:smoke` 依次 **R1 PASSED**（`ENDED ✓ voteResult: {"caught":false,"counts":{"0":2,"3":2,"4":1},"tiedSeats":[0,3],"culpritSeat":3}`，`!! action failed` 计数 0）、**R2 PASSED**（403 / 观战流无座位事件 / 无口令 401 / 伪造 Host 401）、**R3 PASSED**（断线补传、seq 递增、与 DB 全集一致）；**R4 PASSED**（停等 `DISCUSSION r1 turn=0` → `e2e:down --keep-db`（`实例 pid=145 已停止`）→ `e2e:up --keep-db` → `重启后首读核对一致：DISCUSSION r1 turn=0` → `SEARCH r2` → `DISCUSSION r2` → `VOTE r1` → `ENDED`，`恢复后推进到 ENDED ✓ voteResult: {"caught":true,"counts":{"1":1,"3":4},"culpritSeat":3}`；`grep -cE 'unhandled|UnhandledPromiseRejection|FATAL' .e2e/instance.log` → **0**，该文件含本轮 R1–R4 全部 350+ 行）。
+  - 清理与无影响证明：`npm run e2e:down` → `jubensha_e2e 库已删除`，`pg_database` 计数 0；`pm2 describe jubensha` → status online、restarts **25 → 25**（:3000 未被触碰）。
+  - **L2 覆盖 35/35**：`grep -oE "describe\(.A[0-9]{2}"` 去重得 A01–A35 全在；`npm run test:api` → 23 files / 165 passed + 2 expected fail（2.5s）；22 个 `route.ts`（34 个导出处理器）全部有同名 `route.test.ts`。
+  - 台账「发现的缺陷」栏：BUG-01–03、FIND-01–06 完整登记（FIND-01 已关闭，其余 OPEN 并标注归属步骤）。
+  - R9（S2.6）双视口基线见证据节；推送与 CI 见「推送与 CI 记录」。
 
 ## 发现的缺陷
 | 编号 | 发现于 | 描述 | 复现测试 | 状态 | 关闭提交 |
@@ -189,6 +201,14 @@
 | 2026-09-27 | P2/S2.5 | R4 进程重启恢复 | PASSED（DISCUSSION r1 一致 → ENDED；日志异常计数 0） | ~4 分钟 | scripts/e2e/restart-resume.mjs |
 | 2026-09-27 | P2/S2.6 | R9 浏览器走查 桌面 1280×800（清单 1–7） | PASSED 6/6 清单、31+25+36+32+29+18=171 步 0 失败；控制台 error 1（故意的 404）、异常 0；无横向滚动 | 60.2s（驱动内） | .e2e/screens/S2.6/{d01–d31a}.png、S2.6-d*-{d}-report.json |
 | 2026-09-27 | P2/S2.6 | R9 浏览器走查 移动 375×812（触摸 + iPhone UA，清单 1–7） | PASSED 6/6 清单、171 步 0 失败；控制台 error 1（同上）、异常 0；5 页 + 对局页 + 观众页 scrollWidth=clientWidth=375 | 57.6s（驱动内） | .e2e/screens/S2.6/{m01–m31a}.png、S2.6-d*-{m}-report.json |
+
+## 推送与 CI 记录
+| 日期 | 分支 | 推送范围 | CI |
+|---|---|---|---|
+| 2026-09-26 | opt/2026-09 | S0.1 首次 `push -u origin`（new branch） | — |
+| 2026-09-26 | opt/2026-09 | P0/P1（至 24847c0） | check job 绿（run 36254901201） |
+| 2026-09-26 | opt/2026-09 | P2 前半（至 70133f5） | integration job 首次绿（run 36259803390） |
+| 2026-09-27 | opt/2026-09 | P2 收尾（S2.4–S2.6 + 阶段验收） | 本次推送后以独立 docs 提交回填 run id |
 
 ## 偏差登记
 - **DEV-01（S0.4）**：计划 §1.1 称 `npm audit --omit=dev` 运行时链路为 0 high（3 high 全在 CLI 链路）。实测 `npm audit --omit=dev` 仍报 3 high（deepmerge-ts 经 @prisma/config ← prisma；prisma 在 devDependencies 中）。不影响任何指标的相对比较（后续只要求「不增加」），如实记录，不处理。
