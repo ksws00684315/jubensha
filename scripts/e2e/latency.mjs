@@ -77,6 +77,7 @@ async function sample(name, fetchOne) {
   };
   console.log(JSON.stringify(result));
   if (result.apiMs.p95 >= 300 || result.apiMs.p99 >= 500) throw new Error(`R7 延迟超标：${name}`);
+  if (name === "GET /api/health" && result.apiMs.p95 >= 50) throw new Error("R7 health 延迟超标：GET /api/health p95 必须小于 50ms");
   if (result.prismaQueryMs.p95 === null || result.prismaQueryMs.p95 >= 100) throw new Error(`R7 Prisma 查询 p95 超标或无采样：${name}`);
 }
 
@@ -86,6 +87,10 @@ try {
   await sample("GET /api/scripts", async (i) => {
     const result = await request(`${BASE}/api/scripts`, { headers: clientIp(i) });
     return { ...result, status: 200 };
+  });
+  await sample("GET /api/health", async (i) => {
+    const result = await request(`${BASE}/api/health`, { headers: clientIp(i) });
+    return { ...result, status: result.body?.ok && result.body?.db === "up" ? 200 : 503 };
   });
   await sample("GET /api/rooms/[code]", async (i) => {
     const result = await request(`${BASE}/api/rooms/${code}`, { headers: clientIp(i) });

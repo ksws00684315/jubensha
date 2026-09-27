@@ -102,7 +102,7 @@ async function waitForReady() {
   const deadline = Date.now() + 60_000;
   while (Date.now() < deadline) {
     try {
-      const r = await fetch(`${BASE}/api/scripts`, { signal: AbortSignal.timeout(2000) });
+      const r = await fetch(`${BASE}/api/health`, { signal: AbortSignal.timeout(2000) });
       if (r.ok) return true;
     } catch {
       /* not ready yet */
