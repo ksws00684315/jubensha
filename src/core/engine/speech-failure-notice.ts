@@ -14,7 +14,7 @@ export async function reportSpeechFailure(
   seat: number,
   reason: string,
 ): Promise<boolean> {
-  const key = `${engine.state.phase}:${engine.state.round}:${reason}`;
+  const key = `${engine.state.round}:${reason}`;
   let reported = reportedByEngine.get(engine);
   if (!reported) {
     reported = new Set();

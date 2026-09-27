@@ -1,15 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
+import type { GameState } from "./types";
 import { reportSpeechFailure } from "./speech-failure-notice";
 
 describe("reportSpeechFailure", () => {
-  it("同一阶段与轮次的同类错误只写一条公开提示", async () => {
+  it("同一轮跨阶段的同类错误只写一条公开提示", async () => {
     const engine = {
-      state: { phase: "DISCUSSION" as const, round: 1 },
+      state: { phase: "SELF_INTRO" as GameState["phase"], round: 1 },
       speakerName: vi.fn((seat: number) => `玩家${seat + 1}`),
       systemSay: vi.fn(async () => {}),
     };
 
     await expect(reportSpeechFailure(engine, 0, "用途槽位尚未绑定模型")).resolves.toBe(true);
+    engine.state.phase = "DISCUSSION";
     await expect(reportSpeechFailure(engine, 1, "用途槽位尚未绑定模型")).resolves.toBe(false);
 
     expect(engine.systemSay).toHaveBeenCalledTimes(1);
@@ -18,7 +20,7 @@ describe("reportSpeechFailure", () => {
 
   it("不同原因或不同轮次各保留一条提示", async () => {
     const engine = {
-      state: { phase: "DISCUSSION" as const, round: 1 },
+      state: { phase: "DISCUSSION" as GameState["phase"], round: 1 },
       speakerName: vi.fn(() => "玩家一"),
       systemSay: vi.fn(async () => {}),
     };
