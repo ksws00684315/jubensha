@@ -7,6 +7,7 @@ import { candidateModelListUrls, normalizeProviderBaseUrl } from "./provider-url
 import { emptyCompletionError, isRetryableLlmError, isSafetyRefusal, resolveMaxOutputTokens } from "./output-tokens";
 import { createHash, randomUUID } from "node:crypto";
 import { composeSegments, type PromptSegments } from "./prompt-segments";
+import { assertWithinBudget } from "./budget";
 import type { ChatMessage, ChatOptions, ChatResult, Purpose, ResolvedBinding } from "./types";
 
 export type { ChatMessage, ChatOptions, ChatResult, Purpose } from "./types";
@@ -353,6 +354,7 @@ async function callOnce(
 
 /** 非流式对话：重试 + fallback + 用量记账 */
 export async function chat(opts: ChatOptions): Promise<ChatResult> {
+  await assertWithinBudget(opts.purpose);
   const binding = await resolveBinding(opts.purpose);
 
   const slotsToTry: ResolvedBinding[] = [binding];
@@ -451,6 +453,7 @@ export async function chat(opts: ChatOptions): Promise<ChatResult> {
 
 /** 流式对话：逐 token 产出文本；结束时记账。失败时抛出。 */
 export async function* chatStream(opts: ChatOptions): AsyncGenerator<string> {
+  await assertWithinBudget(opts.purpose);
   const b = await resolveBinding(opts.purpose);
   const started = Date.now();
   const maxOutputTokens = resolveMaxOutputTokens(b.maxTokens, opts.maxTokens);
@@ -505,6 +508,12 @@ let embedUnboundWarned = false;
 
 export async function embedTexts(texts: string[]): Promise<number[][] | null> {
   if (!texts.length) return [];
+  // 预算耗尽时与「未绑定」同一契约：返回 null 让检索层整体停用，不把异常抛进发言主流程
+  try {
+    await assertWithinBudget("embedding");
+  } catch {
+    return null;
+  }
   let b: ResolvedBinding;
   try {
     b = await resolveBinding("embedding");
