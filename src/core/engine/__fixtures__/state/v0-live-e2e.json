@@ -1,0 +1,125 @@
+{
+  "phase": "DISCUSSION",
+  "round": 1,
+  "seats": [
+    {
+      "kind": "human",
+      "index": 0,
+      "playerName": "R4真人",
+      "characterId": "qinghe"
+    },
+    {
+      "kind": "ai",
+      "index": 1,
+      "playerName": "玩家2",
+      "characterId": "zhoubo"
+    },
+    {
+      "kind": "ai",
+      "index": 2,
+      "playerName": "玩家3",
+      "characterId": "baimusen"
+    },
+    {
+      "kind": "ai",
+      "index": 3,
+      "playerName": "玩家4",
+      "characterId": "suwan"
+    },
+    {
+      "kind": "ai",
+      "index": 4,
+      "playerName": "玩家5",
+      "characterId": "luxiaokai"
+    }
+  ],
+  "votes": {},
+  "turnSeat": 0,
+  "heldClues": {
+    "0": [
+      "tea_autopsy"
+    ],
+    "1": [
+      "teacup"
+    ],
+    "2": [
+      "spare_key"
+    ],
+    "3": [
+      "late_sound"
+    ],
+    "4": [
+      "ledger"
+    ]
+  },
+  "hostHints": {},
+  "clueStates": {
+    "ledger": {
+      "isPublic": false,
+      "discoveredBy": 4
+    },
+    "teacup": {
+      "isPublic": true,
+      "discoveredBy": 1
+    },
+    "spare_key": {
+      "isPublic": false,
+      "discoveredBy": 2
+    },
+    "late_sound": {
+      "isPublic": false,
+      "discoveredBy": 3
+    },
+    "tea_autopsy": {
+      "isPublic": false,
+      "discoveredBy": 0
+    }
+  },
+  "readySeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "voteResult": null,
+  "actionPlans": {},
+  "privateChat": {},
+  "spokenSeats": [],
+  "suggestions": {},
+  "actionPoints": {},
+  "hostHandouts": {
+    "teacup": {
+      "round": 1,
+      "reason": "already_public"
+    }
+  },
+  "interjections": 0,
+  "pendingAnswer": null,
+  "questionsLeft": {
+    "0": 3,
+    "1": 3,
+    "2": 3,
+    "3": 3,
+    "4": 3
+  },
+  "searchChoices": {
+    "0": "书房",
+    "1": "书房",
+    "2": "陆小开的房间",
+    "3": "门廊雪地",
+    "4": "周伯的房间"
+  },
+  "pendingPublish": {
+    "0": [],
+    "2": [],
+    "3": [],
+    "4": []
+  },
+  "unlockedSecrets": {},
+  "searchDealtRound": 1,
+  "interactionChoices": {},
+  "pendingInteraction": null,
+  "guaranteeDeferUntil": {},
+  "readingPromptedSeats": []
+}

@@ -1,0 +1,60 @@
+{
+  "phase": "READING",
+  "round": 0,
+  "seats": [
+    {
+      "index": 0,
+      "kind": "human",
+      "characterId": "qinghe",
+      "playerName": "测试真人"
+    },
+    {
+      "index": 1,
+      "kind": "ai",
+      "characterId": "suwan",
+      "playerName": "AI1"
+    },
+    {
+      "index": 2,
+      "kind": "ai",
+      "characterId": "zhoubo",
+      "playerName": "AI2"
+    },
+    {
+      "index": 3,
+      "kind": "ai",
+      "characterId": "baimusen",
+      "playerName": "AI3"
+    },
+    {
+      "index": 4,
+      "kind": "ai",
+      "characterId": "luxiaokai",
+      "playerName": "AI4"
+    }
+  ],
+  "clueStates": {},
+  "heldClues": {},
+  "readySeats": [
+    0
+  ],
+  "readingPromptedSeats": [],
+  "spokenSeats": [],
+  "turnSeat": null,
+  "votes": {},
+  "privateChat": {},
+  "searchChoices": {},
+  "pendingPublish": {},
+  "searchDealtRound": 0,
+  "voteResult": null,
+  "interjections": 0,
+  "questionsLeft": {},
+  "pendingAnswer": null,
+  "unlockedSecrets": {},
+  "hostHandouts": {},
+  "guaranteeDeferUntil": {},
+  "hostHints": {},
+  "actionPlans": {},
+  "pendingInteraction": null,
+  "interactionChoices": {}
+}

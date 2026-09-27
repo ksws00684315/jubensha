@@ -1,0 +1,209 @@
+{
+  "phase": "VOTE",
+  "round": 1,
+  "seats": [
+    {
+      "index": 0,
+      "kind": "human",
+      "characterId": "qinghe",
+      "playerName": "测试真人"
+    },
+    {
+      "index": 1,
+      "kind": "ai",
+      "characterId": "suwan",
+      "playerName": "AI1"
+    },
+    {
+      "index": 2,
+      "kind": "ai",
+      "characterId": "zhoubo",
+      "playerName": "AI2"
+    },
+    {
+      "index": 3,
+      "kind": "ai",
+      "characterId": "baimusen",
+      "playerName": "AI3"
+    },
+    {
+      "index": 4,
+      "kind": "ai",
+      "characterId": "luxiaokai",
+      "playerName": "AI4"
+    }
+  ],
+  "clueStates": {
+    "teacup": {
+      "discoveredBy": 0,
+      "isPublic": true
+    },
+    "tea_autopsy": {
+      "discoveredBy": 1,
+      "isPublic": true
+    },
+    "ledger": {
+      "discoveredBy": 0,
+      "isPublic": false
+    },
+    "bottle": {
+      "discoveredBy": 2,
+      "isPublic": true
+    },
+    "missing_key": {
+      "discoveredBy": 4,
+      "isPublic": true
+    },
+    "late_sound": {
+      "discoveredBy": null,
+      "isPublic": true
+    },
+    "footprint": {
+      "discoveredBy": null,
+      "isPublic": true
+    },
+    "safe_report": {
+      "discoveredBy": null,
+      "isPublic": true
+    },
+    "diary": {
+      "discoveredBy": null,
+      "isPublic": true
+    }
+  },
+  "heldClues": {
+    "0": [
+      "teacup",
+      "ledger"
+    ],
+    "1": [
+      "tea_autopsy"
+    ],
+    "2": [
+      "bottle"
+    ],
+    "4": [
+      "missing_key"
+    ]
+  },
+  "readySeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "readingPromptedSeats": [],
+  "spokenSeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "turnSeat": 0,
+  "votes": {
+    "1": {
+      "target": 2,
+      "reason": "依据公开材料暂作判断，仍需核实。",
+      "evidenceIds": [
+        "teacup"
+      ]
+    },
+    "2": {
+      "target": 4,
+      "reason": "依据公开材料暂作判断，仍需核实。",
+      "evidenceIds": [
+        "teacup"
+      ]
+    },
+    "3": {
+      "target": 2,
+      "reason": "依据公开材料暂作判断，仍需核实。",
+      "evidenceIds": [
+        "teacup"
+      ]
+    },
+    "4": {
+      "target": 3,
+      "reason": "依据公开材料暂作判断，仍需核实。",
+      "evidenceIds": [
+        "teacup"
+      ]
+    }
+  },
+  "privateChat": {},
+  "searchChoices": {
+    "0": "周伯的房间",
+    "1": "周伯的房间",
+    "2": "苏晚的房间",
+    "3": "苏晚的房间",
+    "4": "门廊雪地"
+  },
+  "pendingPublish": {
+    "0": [],
+    "4": []
+  },
+  "searchDealtRound": 2,
+  "voteResult": null,
+  "interjections": 0,
+  "questionsLeft": {
+    "0": 3,
+    "1": 3,
+    "2": 3,
+    "3": 3,
+    "4": 3
+  },
+  "pendingAnswer": null,
+  "unlockedSecrets": {},
+  "hostHandouts": {
+    "teacup": {
+      "round": 1,
+      "reason": "already_public"
+    },
+    "tea_autopsy": {
+      "round": 2,
+      "reason": "deadline_guarantee"
+    },
+    "missing_key": {
+      "round": 2,
+      "reason": "deadline_guarantee"
+    },
+    "bottle": {
+      "round": 2,
+      "reason": "already_public"
+    },
+    "late_sound": {
+      "round": 2,
+      "reason": "vote_flush"
+    },
+    "footprint": {
+      "round": 2,
+      "reason": "vote_flush"
+    },
+    "safe_report": {
+      "round": 2,
+      "reason": "vote_flush"
+    },
+    "diary": {
+      "round": 2,
+      "reason": "vote_flush"
+    }
+  },
+  "guaranteeDeferUntil": {
+    "late_sound": 3,
+    "footprint": 3,
+    "safe_report": 3,
+    "diary": 3
+  },
+  "hostHints": {},
+  "actionPlans": {},
+  "pendingInteraction": null,
+  "interactionChoices": {},
+  "suggestions": {},
+  "humanDeadlines": {
+    "0": 1790507130411
+  },
+  "actionPoints": {},
+  "quizAnswers": {}
+}

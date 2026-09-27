@@ -1,0 +1,112 @@
+{
+  "phase": "DISCUSSION",
+  "round": 1,
+  "seats": [
+    {
+      "index": 0,
+      "kind": "human",
+      "characterId": "qinghe",
+      "playerName": "测试真人"
+    },
+    {
+      "index": 1,
+      "kind": "ai",
+      "characterId": "suwan",
+      "playerName": "AI1"
+    },
+    {
+      "index": 2,
+      "kind": "ai",
+      "characterId": "zhoubo",
+      "playerName": "AI2"
+    },
+    {
+      "index": 3,
+      "kind": "ai",
+      "characterId": "baimusen",
+      "playerName": "AI3"
+    },
+    {
+      "index": 4,
+      "kind": "ai",
+      "characterId": "luxiaokai",
+      "playerName": "AI4"
+    }
+  ],
+  "clueStates": {
+    "teacup": {
+      "discoveredBy": 0,
+      "isPublic": true
+    },
+    "tea_autopsy": {
+      "discoveredBy": 1,
+      "isPublic": false
+    }
+  },
+  "heldClues": {
+    "0": [
+      "teacup"
+    ],
+    "1": [
+      "tea_autopsy"
+    ]
+  },
+  "readySeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "readingPromptedSeats": [],
+  "spokenSeats": [],
+  "turnSeat": 0,
+  "votes": {},
+  "privateChat": {},
+  "searchChoices": {
+    "0": "书房",
+    "1": "书房",
+    "2": "书房",
+    "3": "书房",
+    "4": "书房"
+  },
+  "pendingPublish": {
+    "1": []
+  },
+  "searchDealtRound": 1,
+  "voteResult": null,
+  "interjections": 0,
+  "questionsLeft": {
+    "0": 2,
+    "1": 3,
+    "2": 3,
+    "3": 3,
+    "4": 3
+  },
+  "pendingAnswer": {
+    "questionId": "6e9c8197-96da-4f4e-8496-87fa0cf252ea",
+    "fromSeat": 0,
+    "toSeat": 1,
+    "question": "案发时你在哪里？"
+  },
+  "unlockedSecrets": {},
+  "hostHandouts": {
+    "teacup": {
+      "round": 1,
+      "reason": "already_public"
+    }
+  },
+  "guaranteeDeferUntil": {},
+  "hostHints": {},
+  "actionPlans": {},
+  "pendingInteraction": null,
+  "interactionChoices": {},
+  "suggestions": {
+    "0": [
+      "我在场。",
+      "我没见过。"
+    ]
+  },
+  "humanDeadlines": {},
+  "actionPoints": {}
+}

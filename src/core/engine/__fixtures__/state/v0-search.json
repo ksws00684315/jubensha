@@ -1,0 +1,101 @@
+{
+  "phase": "SEARCH",
+  "round": 1,
+  "seats": [
+    {
+      "index": 0,
+      "kind": "human",
+      "characterId": "qinghe",
+      "playerName": "测试真人"
+    },
+    {
+      "index": 1,
+      "kind": "ai",
+      "characterId": "suwan",
+      "playerName": "AI1"
+    },
+    {
+      "index": 2,
+      "kind": "ai",
+      "characterId": "zhoubo",
+      "playerName": "AI2"
+    },
+    {
+      "index": 3,
+      "kind": "ai",
+      "characterId": "baimusen",
+      "playerName": "AI3"
+    },
+    {
+      "index": 4,
+      "kind": "ai",
+      "characterId": "luxiaokai",
+      "playerName": "AI4"
+    }
+  ],
+  "clueStates": {
+    "teacup": {
+      "discoveredBy": 0,
+      "isPublic": true
+    },
+    "tea_autopsy": {
+      "discoveredBy": 1,
+      "isPublic": false
+    }
+  },
+  "heldClues": {
+    "0": [
+      "teacup"
+    ],
+    "1": [
+      "tea_autopsy"
+    ]
+  },
+  "readySeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "readingPromptedSeats": [],
+  "spokenSeats": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "turnSeat": null,
+  "votes": {},
+  "privateChat": {},
+  "searchChoices": {
+    "0": "书房",
+    "1": "书房",
+    "2": "书房",
+    "3": "书房",
+    "4": "书房"
+  },
+  "pendingPublish": {
+    "1": [
+      "tea_autopsy"
+    ]
+  },
+  "searchDealtRound": 0,
+  "voteResult": null,
+  "interjections": 0,
+  "questionsLeft": {},
+  "pendingAnswer": null,
+  "unlockedSecrets": {},
+  "hostHandouts": {},
+  "guaranteeDeferUntil": {},
+  "hostHints": {},
+  "actionPlans": {},
+  "pendingInteraction": null,
+  "interactionChoices": {},
+  "suggestions": {},
+  "humanDeadlines": {
+    "0": 1790506362754
+  },
+  "actionPoints": {}
+}
