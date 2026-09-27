@@ -6,6 +6,7 @@ import { createRepetitionGuard } from "./repetition";
 import { agent } from "@/core/agents";
 import { renderActionPlan } from "@/core/agents/plan";
 import { log } from "@/lib/log";
+import { reportSpeechFailure } from "./speech-failure-notice";
 
 /**
  * ★ 回合执行器（TurnScheduler）★：正式回合（AI 发言 / DM 旁白）的 LLM 工作移出互斥锁。
@@ -150,7 +151,7 @@ export function dispatchPlayerSpeech(
         try {
           text = await withTimeout(agent.playerSpeak(e.ctx(), seatIndex, { ...opts, abortSignal, generationId: String(e.turnToken) }), AI_DECISION_TIMEOUT_MS);
         } catch (err) {
-          await e.systemSay(`（AI 玩家「${e.speakerName(seatIndex)}」思考时遇到问题：${msgOf(err)}。场内玩家可稍作等待或继续。）`);
+          await reportSpeechFailure(e, seatIndex, msgOf(err));
           return "";
         }
       }
