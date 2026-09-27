@@ -12,9 +12,46 @@ import { log } from "@/lib/log";
 const g = globalThis as unknown as {
   __jbsEngines?: Map<string, GameEngine>;
   __jbsEngineLoads?: Map<string, Promise<GameEngine>>;
+  __jbsStuckWatchTimer?: NodeJS.Timeout;
+  __jbsStuckWarnings?: Map<string, number>;
 };
 export const engines = (g.__jbsEngines ??= new Map<string, GameEngine>());
 export const engineLoads = (g.__jbsEngineLoads ??= new Map<string, Promise<GameEngine>>());
+
+const STUCK_CHECK_INTERVAL_MS = 60_000;
+const STUCK_THRESHOLD_MS = 5 * 60_000;
+const STUCK_LOG_THROTTLE_MS = 15 * 60_000;
+const lastStuckWarnings = (g.__jbsStuckWarnings ??= new Map<string, number>());
+
+function checkStuckEngines(now: number): void {
+  for (const [gameId, engine] of engines) {
+    if (engine.state.phase === "ENDED" || engine.turnInFlight) continue;
+    if (Object.values(engine.state.humanDeadlines ?? {}).some((deadline) => deadline > now)) continue;
+    const lastEventAt = Date.parse(engine.events.at(-1)?.createdAt ?? "");
+    if (!Number.isFinite(lastEventAt)) continue;
+    const idleMs = now - lastEventAt;
+    if (idleMs <= STUCK_THRESHOLD_MS) continue;
+    const lastWarnedAt = lastStuckWarnings.get(gameId);
+    if (lastWarnedAt !== undefined && now - lastWarnedAt < STUCK_LOG_THROTTLE_MS) continue;
+
+    log.warn("engine.stuck", {
+      gameId,
+      phase: engine.state.phase,
+      round: engine.state.round,
+      idleSec: Math.floor(idleMs / 1_000),
+    });
+    lastStuckWarnings.set(gameId, now);
+  }
+
+  for (const gameId of lastStuckWarnings.keys()) {
+    if (!engines.has(gameId)) lastStuckWarnings.delete(gameId);
+  }
+}
+
+if (!g.__jbsStuckWatchTimer) {
+  g.__jbsStuckWatchTimer = setInterval(() => checkStuckEngines(Date.now()), STUCK_CHECK_INTERVAL_MS);
+  g.__jbsStuckWatchTimer.unref?.();
+}
 
 /** 常驻对局引擎软上限：终局有延迟驱逐兜底，超过软上限说明有泄漏，打告警。 */
 const ENGINES_SOFT_CAP = 200;
