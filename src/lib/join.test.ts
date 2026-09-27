@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { decideDmJoin, decideJoin, gameEventsUrl, type JoinableSeat } from "./join";
+import { decideDmJoin, decideJoin, type JoinableSeat } from "./join";
+import { gameEventsUrl } from "./game-events-url";
 
 function seat(partial: Partial<JoinableSeat> & { index: number }): JoinableSeat {
   return {

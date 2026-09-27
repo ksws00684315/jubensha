@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api, getIdentity, saveIdentity, type GameEventView, type GameSummary } from "@/lib/client";
-import { gameEventsUrl } from "@/lib/join";
+import { gameEventsUrl } from "@/lib/game-events-url";
 import type { DmStructuredView } from "@/lib/client";
 
 export interface DmView {

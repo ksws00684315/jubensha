@@ -1,3 +1,5 @@
+import { verifyToken } from "@/lib/credentials";
+
 export type JoinableSeat = {
   id: string;
   index: number;
@@ -28,8 +30,8 @@ export function decideJoin(
   const named = seats.filter((s) => s.kind === "human" && (s.playerName ?? "").trim() === trimmed);
   if (named.length > 1) return { type: "ambiguous" };
   if (named.length === 1) {
-    const hostConfirmed = Boolean(presentedHostToken && roomHostToken && presentedHostToken === roomHostToken);
-    if (named[0].token && (named[0].token === presentedToken || hostConfirmed)) return { type: "resume", seat: named[0] };
+    const hostConfirmed = verifyToken(presentedHostToken, roomHostToken);
+    if (named[0].token && (verifyToken(presentedToken, named[0].token) || hostConfirmed)) return { type: "resume", seat: named[0] };
     return roomStatus === "lobby" ? { type: "taken" } : { type: "started" };
   }
   if (roomStatus !== "lobby") return { type: "started" };
@@ -51,30 +53,9 @@ export function decideDmJoin(
 ): DmJoinDecision {
   if (!humanDm) return "not-human-dm";
   if (dmToken && (dmName ?? "").trim() === name.trim()) {
-    const hostConfirmed = Boolean(presentedHostToken && roomHostToken && presentedHostToken === roomHostToken);
-    return dmToken === presentedToken || hostConfirmed ? "resume" : "taken";
+    const hostConfirmed = verifyToken(presentedHostToken, roomHostToken);
+    return verifyToken(presentedToken, dmToken) || hostConfirmed ? "resume" : "taken";
   }
   if (dmToken) return "taken";
   return "claim";
-}
-
-/**
- * SSE 订阅地址。凭证只能走 query——EventSource 不支持自定义请求头；
- * 其余 REST 调用已迁到 x-seat-token / x-dm-token 头（避免 token 进访问日志）。
- */
-export function gameEventsUrl(
-  gameId: string,
-  opts: { seat?: number | null; token?: string | null; dm?: boolean; dmToken?: string | null; lastSeq?: string }
-): string {
-  const q = new URLSearchParams();
-  if (opts.dm) {
-    q.set("dm", "1");
-    if (opts.dmToken) q.set("dmtoken", opts.dmToken);
-  } else if (opts.seat != null && opts.token) {
-    q.set("seat", String(opts.seat));
-    q.set("token", opts.token);
-  }
-  if (opts.lastSeq && opts.lastSeq !== "0") q.set("lastSeq", opts.lastSeq);
-  const s = q.toString();
-  return `/api/games/${gameId}/events${s ? `?${s}` : ""}`;
 }
