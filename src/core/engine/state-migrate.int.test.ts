@@ -7,10 +7,9 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { LLM_LINE, setupIntEnv, truncateAll } from "@/test/int";
+import { LLM_LINE, setupIntEnv, teardownIntEnv, truncateAll } from "@/test/int";
 import { db } from "@/lib/db";
 import { GameEngine } from "./engine";
-import { engines, engineLoads } from "./registry";
 import { CURRENT_STATE_VERSION } from "./state-migrate";
 import { GameStateSchema } from "./state-schema";
 
@@ -31,10 +30,8 @@ beforeEach(async () => {
   await setupIntEnv();
   await truncateAll();
 });
-afterEach(() => {
-  for (const e of engines.values()) e.clearTimers();
-  engines.clear();
-  engineLoads.clear();
+afterEach(async () => {
+  await teardownIntEnv();
 });
 
 const FIXTURE_DIR = path.join(process.cwd(), "src/core/engine/__fixtures__/state");

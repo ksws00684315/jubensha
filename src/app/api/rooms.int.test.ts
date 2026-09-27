@@ -1,8 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ctx, makeReq } from "@/test/api";
-import { LLM_LINE, seedScript, seats1h2a, setupIntEnv, truncateAll } from "@/test/int";
+import { LLM_LINE, seedScript, seats1h2a, setupIntEnv, teardownIntEnv, truncateAll } from "@/test/int";
 import { db } from "@/lib/db";
-import { engines, engineLoads } from "@/core/engine/registry";
 
 // LLM 一律 mock：固定台词，不发真实请求
 vi.mock("@/core/llm/client", async (importOriginal) => {
@@ -21,12 +20,10 @@ beforeEach(async () => {
   await setupIntEnv();
   await truncateAll();
 });
-afterEach(() => {
-  // 清掉常驻引擎定时器，避免挂起测试进程
-  for (const e of engines.values()) e.clearTimers();
-  engines.clear();
-  engineLoads.clear();
+afterEach(async () => {
+  // 先还回真实时钟：本文件多个用例开着 fake timers，续租心跳和交牌的 DB 往返都要用真时钟
   vi.useRealTimers();
+  await teardownIntEnv();
 });
 
 describe("L3：房间全链路（真库）", () => {

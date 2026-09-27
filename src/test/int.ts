@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { db } from "@/lib/db";
 import { resetRateLimits } from "@/lib/rate-limit";
+import { releaseAllLeases } from "@/core/engine/lease";
+import { engines, engineLoads } from "@/core/engine/registry";
 
 /** L3 集成测试公共助手。DATABASE_URL 必须指向 jubensha_test（globalSetup 已校验）。 */
 
@@ -13,6 +15,23 @@ export async function setupIntEnv(): Promise<void> {
   // L3 对局就会向外部决策端点发真付费请求（这条通道不经 chat/chatStream，预算熔断也管不到）。
   for (const key of Object.keys(process.env)) if (key.startsWith("JEV_")) delete process.env[key];
   resetRateLimits();
+}
+
+/**
+ * L3 用例收尾：清常驻引擎定时器，并交回本实例持有的写租约（S4.1）。
+ *
+ * 先把 `drive` 关掉：`handleAction` 之后引擎还挂着 `setImmediate(tick)` 这类不在 timers 里的
+ * 待执行链，只 clearTimers 拦不住它们——链子跑到下一条用例 truncateAll 之后就会写已删除的对局，
+ * 打出一堆 P2025。关掉 drive 后 tick/continueTick 直接早退（日志里的「未持有租约」就是这一步）。
+ */
+export async function teardownIntEnv(): Promise<void> {
+  for (const e of engines.values()) {
+    e.drive = false;
+    e.clearTimers();
+  }
+  engines.clear();
+  engineLoads.clear();
+  await releaseAllLeases();
 }
 
 const TABLES = [

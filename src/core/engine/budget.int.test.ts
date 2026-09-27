@@ -1,11 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { seedScript, seats1h2a, setupIntEnv, truncateAll } from "@/test/int";
+import { seedScript, seats1h2a, setupIntEnv, teardownIntEnv, truncateAll } from "@/test/int";
 import { db } from "@/lib/db";
 import { chat } from "@/core/llm/client";
 import { BudgetExceededError, resetBudgetCache, startOfLocalDay } from "@/core/llm/budget";
 import { GameEngine } from "./engine";
 import { availableLocations } from "./search-deal";
-import { engines, engineLoads } from "./registry";
 import type { GameState } from "./types";
 
 /**
@@ -132,10 +131,8 @@ beforeEach(async () => {
   resetBudgetCache();
 });
 
-afterEach(() => {
-  for (const e of engines.values()) e.clearTimers();
-  engines.clear();
-  engineLoads.clear();
+afterEach(async () => {
+  await teardownIntEnv();
   resetBudgetCache();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();

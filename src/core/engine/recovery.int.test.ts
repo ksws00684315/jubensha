@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { LLM_LINE, seedScript, seats1h2a, setupIntEnv, truncateAll } from "@/test/int";
+import { LLM_LINE, seedScript, seats1h2a, setupIntEnv, teardownIntEnv, truncateAll } from "@/test/int";
 import { db } from "@/lib/db";
 import { GameEngine } from "./engine";
 import { engines, engineLoads } from "./registry";
@@ -21,11 +21,8 @@ beforeEach(async () => {
   await setupIntEnv();
   await truncateAll();
 });
-afterEach(() => {
-  // 清掉常驻引擎的全部定时器，避免跨文件竞态与挂起
-  for (const e of engines.values()) e.clearTimers();
-  engines.clear();
-  engineLoads.clear();
+afterEach(async () => {
+  await teardownIntEnv();
 });
 
 describe("L3：引擎重启恢复（I06）", () => {
