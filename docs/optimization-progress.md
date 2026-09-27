@@ -19,10 +19,10 @@
 |---|---|---|---|---|
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
-| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 81 / 625 + 1 expected fail，约 4.4s | 不降 | S3.5 |
+| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 82 / 648 + 1 expected fail，约 3.0s | 不降 | S4.3 |
 | L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 23/23 个 route.ts 文件都有同名测试（覆盖全部 35 个导出处理器） | 34/34 | S3.5 |
 | L2 用例数 | ~10（events route 10 个） | 206 过 + 1 expected fail（`npm run test:api`，24 files，1.2s） | ≥ 140 | S3.5 |
-| L3 用例数 | 0 | 13（4 files，14.8s） | ≥ 30 | S3.2 |
+| L3 用例数 | 0 | 15（5 files，15.4s） | ≥ 30 | S4.3 |
 | 凭证比较方式（座位 / DM / 房主） | 7 处裸 `===` / `!==` + join.ts 4 处，长度与内容可被计时探测；`games/[id]` 还是 query 优先（BUG-01） | 全部经 `src/lib/credentials.ts`（`timingSafeEqual`，任一侧为空即不匹配），验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `join.ts` 为空；header 优先已修正。S3.5 的换票端点与 SSE 心跳重验也都走同一套 `verify*` | 无常量时间以外的凭证比较 | S3.5 |
 | 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
 | 单日 LLM token 上限 | 无：授权被绕过后可一路消耗 | `LLM_DAILY_TOKEN_BUDGET` 熔断，`chat`/`chatStream`/`embedTexts` 第一行拦截 + 看板显示今日已用；L1 13 用例 + L3 I11 3 用例 | 超预算不崩溃、对局仍走到 ENDED | S3.2 |
@@ -31,8 +31,9 @@
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
 | src/core/engine 行覆盖率（同上） | 71.98%（1166/1620） | 71.98% | ≥ 基线 | S0.4 |
 | 非测试代码 console.*（grep，排除 .test.） | 27 | 34（S3.2 +2：`budget.ts:56/:81`；S3.5 +2：`events/route.ts:40` 废弃 query 凭证告警、`:74` ticket 无效降级告警——两条都是本步判据要求「兼容期记 deprecation 日志」「重放必须可见」所需的，沿用 `[模块]` 直写约定） | 0（log.ts 除外） | S3.5 |
-| 非测试代码 as unknown as（grep，排除 .test.） | 12 | 12 | ≤ 3 | S0.4 |
-| engine.ts 行数（wc -l） | 1044 | 1044 | ≤ 700 | S0.4 |
+| 非测试代码 as unknown as（grep，排除 .test.） | 12 | 11（S4.3 消掉 `engine.ts` load() 的 `as unknown as GameState`；该模式在 `games/[id]/route.ts:45`、`build-jev-vote-set.ts:68` 仍有 2 处） | ≤ 3 | S4.3 |
+| engine.ts 行数（wc -l） | 1044 | 1008（S4.3 把 load() 的 38 行 `??=`/兼容段换成一行 `migrateState` 调用） | ≤ 700 | S4.3 |
+| games.state 旧快照兼容方式 | `load()` 里 24 条 `state.x ??=` + 3 段清理，无版本号、无校验、不可测试 | `stateVersion` + `migrateState(raw, {now, gameId})` + zod `.loose()` 校验；7 份 v0 快照 fixtures 常驻 L1/L3 | 版本化迁移可测 | S4.3 |
 | handleActionInner 函数体 | :670–:945 ≈ 275 行 | 275 | ≤ 60 | S0.4 |
 | games/[id]/route.ts 行数（wc -l） | 185 | 185 | ≤ 70 | S0.4 |
 | SSE 稳态 DB 查询/连接/分钟 | 未测 | 未测 | 0 | — |
@@ -71,6 +72,7 @@
 | S3.3 | DONE | 8e44e16/db34130/9aea713/ab7bf76/69f8917 | 2026-09-27 | 2026-09-27 | 9 个文件里的全部裸凭证比较（座位 / DM / 房主，含 SSE 心跳重验与 join 判定）改为 17 处 `verify*` 调用，验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `src/lib/join.ts` **输出为空**；BUG-01 关闭（header 优先，A28 的 it.fails 翻正 + 补兼容期用例）；L1 新增 12 用例；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，4.0s）、`test:api` 191 过（1.0s）、`test:int` 13 过（14.8s）、`next build` exit 0；实机 R1/R2/R3 全绿（R2 含错 token 403 / DM 200 / 观战与座位流过滤），实例日志异常 0 | DEV-11 |
 | S3.4 | DONE | 6dd4872/4205c38/cc093b2/（本提交） | 2026-09-27 | 2026-09-27 | 生产 `Content-Security-Policy` 强制、`script-src` 无 `'unsafe-eval'`（curl 实读），开发仍 report-only + eval（不启 dev 服务、直接对 `next.config.ts` 求值取两分支）；R9 全量重跑 12/12 exit 0、每遍 171 步 0 失败、**CSP 违规 0/12**、未捕获异常 0、控制台 error 2（均为第 1 项故意的 404）；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，3.6s）、`test:int` 13 过（14.9s）；顺带修掉 DEV-10 无效的 e2e 半边（实例真出网 240 条 ≈$0.0100 → 重启后 0）与 R9 清单里从 S2.6 起就是空操作的搜证决策步 | DEV-10（更正）, DEV-12, FIND-08 |
 | S3.5 | DONE(deviation) | fe67d54/5b759ef/f9e872c/6e15f2b/（本提交） | 2026-09-27 | 2026-09-27 | 新增 `POST /api/games/[id]/stream-ticket`（header 凭证 → 60s 一次性票据，进程内 Map、用后即删）+ `src/lib/stream-tickets.ts`；events 路由 `?ticket=` 优先、旧 `token`/`dmtoken` query 保留一个版本并记 deprecation 日志；心跳改按签发时凭证快照重验；前端建连先换票再连。R9 全量重跑 **12/12 exit 0、342 步 0 失败、`token=` 请求 0 条 / `ticket=` 4 条、CSP 违规 0**；实机 R1/R2/R3 全绿且 R3 追加段证明「ticket 建流不重不漏、重放被服务端降级、兼容期仍可用」，实例日志里本轮两局 **0 条**降级/废弃告警、`[jev]` 出网 0；L2 新增 A37 8 用例 + A29 附加 6 用例（过期/重放/跨局/心跳），`npm run check` exit 0（81 files / 625 过 + 1 expected fail）、`test:api` 206 过、`test:int` 13 过、`next build` exit 0 | DEV-13, FIND-09（顺带修 L3 I06 竞态）, FIND-04 关闭 |
+| S4.3 | DONE(deviation) | 229d2e0/8084efe/（本提交） | 2026-09-27 | 2026-09-27 | `load()` 的 38 行 `??=`/兼容段（原 `engine.ts:183-220`）换成 `:184` 一行 `migrateState(game.state, {now, gameId})`，段内 **`??=` 计数 0**；新建 `state-schema.ts`（112 行，`z.looseObject` 全字段）+ `state-migrate.ts`（123 行，迁移表 + 每次加载的字段补齐/清理 + 文件头的「新增字段怎么升版本」规则），`GameState.stateVersion` / `CURRENT_STATE_VERSION=1` 落地，`initialState` 直接带最新版。fixtures 7 份（READING/SEARCH/DISCUSSION/VOTE/ENDED + 改动前 `jubensha_e2e` 真快照 + 手工「最老格式」）核实均无 `stateVersion`、座位无凭证字段。L1 **23 用例**（判据 ≥8）过、L3 **I07 2 用例**过；零漂移用临时对照副本证明（8 用例过）后按计划删除；R4 换新 build 恢复**改动前**的 v0 快照跑到 ENDED（`R4 PASSED`，落库 `ENDED|stateVersion 1`）；`as unknown as GameState` 3→2、非测试 `as unknown as` 12→11、engine.ts 1044→1008；`npm run check` exit 0（82 files / 648 过 + 1 expected fail，3.0s）、`test:int` 15 过（5 files，15.4s），两个 commit 各自 worktree 复验 tsc 0 / 625→648 过 | DEV-14 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -364,6 +366,36 @@
 
 **过程中的自伤与更正**：`.e2e/plans/chain-s35.mjs` 第一版按**字节偏移**去切按字符读入的日志文本（`readFileSync(LOG,"utf8").slice(size)`），中文日志里这个口径会把统计整体前移，第一次跑只报「新增 1 行」。改为 `readFileSync(LOG).subarray(startedAt).toString("utf8")` 后重跑整轮 R9（上表即重跑结果），并按 gameId 单独核对「本轮两局的服务端日志行 = 0」。
 
+### S4.3 GameState 版本化与 zod 校验
+
+**落点**
+- `src/core/engine/types.ts:29` `export const CURRENT_STATE_VERSION = 1`；`:61` 必带字段 `stateVersion: number`，注释写明「旧快照（S4.3 之前）没有这个字段，按 v0 处理」。常量放 types 而非 state-migrate 的理由写在 `:24-28`：`initialState()` 与迁移函数共用同一个值，放哪一边都会形成模块环。
+- `src/core/engine/state.ts:10` `initialState()` 返回体首字段 `stateVersion: CURRENT_STATE_VERSION`；`:47` 的「状态恢复路径说明」注释改指 `migrateState()`。
+- 新建 `src/core/engine/state-schema.ts`（112 行）：`:14` `PhaseSchema`（8 阶段 `z.enum`）、`:16` `SeatSchema`、`:23` `VoteRecordSchema`、`:29` `QuizResultSchema`、`:40` `ActionPlanSchema`、`:51` `GameStateSchema = z.looseObject({…})` 逐字段对照 `types.ts`、`:110` `parseGameState()`。未登记字段用 `.looseObject` 而非计划的 `.passthrough()`（DEV-14 第 1 条）；座位等数字键记录用 `z.record(z.number(), …)`（JSON 里是字符串键，v4 按 key schema 归一，实测成立）。
+- 新建 `src/core/engine/state-migrate.ts`（123 行）：`:11` 文件头规则（计划「具体操作」第 6 条）；`:6` 从 types 再导出常量；`:24` `MigrateContext {now, gameId}`；`:39` `MIGRATIONS`（当前只有 v0→v1：登记版本号，不改写数据）；`:55` `ensureCurrentFields()`（原 24 条 `state.x ??=` 逐条照搬，含 `interjections` 那条「不补会变 NaN → 上限失效」的注释）；`:87` `normalizeOnLoad()`（legacy `questionId` 补法、已公示线索出队、按 `ctx.now` 清过期 `humanDeadlines`）；`:111` `migrateState(raw, ctx)`：复制 → 按版本跑迁移 → 补字段 → 清理 → `parseGameState()`。
+- `src/core/engine/engine.ts:9` import、`:184` 一行调用替换原 `:183-:220` 的 38 行（25 条 `??=` + 3 段清理 + `as unknown as GameState | null` 兜底）。
+- 新建 `src/core/engine/__fixtures__/state/`（7 份，逐份核实 `stateVersion` 缺席）：`v0-reading`(25 键) / `v0-search`(28) / `v0-discussion`(28) / `v0-vote`(29) / `v0-ended`(29) 由 mock 库长流程用例在对应阶段截取；`v0-live-e2e`(27) 取自改动前 :3120 实机对局的 `games.state`（计划禁止的是「用户日常库」，这里是隔离库 `jubensha_e2e`）；`v0-oldest`(17) 手工裁到只剩早期字段，并让 `pendingAnswer` 没有 `questionId`、`pendingPublish["0"]` 里留一条已公示线索。7 份的 `seats[*]` 只有 `index/kind/characterId/playerName`，快照里没有任何凭证字段（不变式 5）。
+
+**验收标准逐条**
+1. *`load()` 中不再有任何 `state.xxx ??=`* —— `awk 'NR>=170 && NR<=200' src/core/engine/engine.ts | grep -c '??='` → **0**（`load()` 现为 `:153-:197`）。文件里剩余 7 条 `??=` 在 `:140/:424/:801/:820/:822/:977/:996`，都是动作处理中的运行期补齐，不属加载兼容段，本步不动（「不顺手改进相邻代码」）。
+2. *新增 L1 用例 ≥ 8 个并通过；I07 通过* —— `npx vitest run src/core/engine/state-migrate.test.ts` → **23 passed**：7 份 fixture × 2（迁移后过校验并升到最新版 / 幂等 `migrateState(migrateState(x))` 与 `migrateState(x)` 相等）+「最老格式」缺字段补默认与 legacy `questionId`（含不覆盖已有值）+ 已公示线索出队 + 过期 `humanDeadlines` 双向断言（用 fixture 内 baked 时刻的 ±1s 两侧）+ `.loose` 保留未登记字段 + 4 种结构性错误被拒（`phase:"SETTLEMENT"`、`seats:"0,1,2"`、座位缺 `kind`、`clueStates` 缺 `isPublic`）+ 高于当前版本不被降级改写 + 空快照（`null/undefined/"broken"/42`）兜底 + `initialState` 直接过校验。L3 I07（`state-migrate.int.test.ts` 2 用例，`test:int` **5 files / 15 passed**，15.4s）：把 v0 快照直接写成 `games.state` 行 → `GameEngine.load()` 升到 `CURRENT_STATE_VERSION`、`GameStateSchema.safeParse` 为真、缺的默认补齐、座位 0 发言产生新 `game_events`（对局可继续）、`persist()` 回写的 `state.stateVersion` 已是最新；第二条用「最老格式」断言 `pendingAnswer.questionId` 命中 `/^legacy:/` 且待决策队列里没有已公示线索（搜证不死锁）。
+3. *R4 通过（用改动前产生的快照做恢复）* —— 分两段做实：先用**改动前**的 build 起 e2e 对局并停等在 DISCUSSION（`.e2e/s43-park.log`，`[e2e:r4] 已停等并记录 DISCUSSION r1`，gameId `cmujofzyo000as8g0zl51tsm8`，座位 token 只落在 gitignore 的 `.e2e/r4-state.json`），随后换新代码 `npm run e2e:down -- --keep-db && npm run e2e:up -- --keep-db && node scripts/e2e/restart-resume.mjs --stage=resume` → exit 0，输出 `[e2e:up] 构建产物过期，执行 npm run build`、`实例已启动 pid=18851 port=3120`、`[e2e:r4] 重启后首读核对一致：DISCUSSION r1 turn=0`、`恢复后推进到 ENDED ✓ voteResult {"caught":false,"counts":{"0":1,"1":1,"3":1,"4":2},"culpritSeat":3}`、`R4 PASSED`。落库侧现在仍可读：`select phase, state->>'stateVersion' from games where id='cmujofzyo…'` → `ENDED | 1`，即这份 v0 快照被新代码载入、跑完、按 v1 写回。同一条快照的 DISCUSSION 形态已固化成 fixture `v0-live-e2e.json`。
+4. *`as unknown as GameState` 数量减少* —— **3 → 2**（消掉 `engine.ts` load 里的 `(game.state as unknown as GameState | null)`；仍存 `src/app/api/games/[id]/route.ts:45`、`scripts/build-jev-vote-set.ts:68`，两处属 S4.4/S6 范围）。同口径「非测试代码 `as unknown as`」12 → **11**；`engine.ts` 行数 1044 → **1008**。
+
+**零漂移证明（对照副本，按计划删除）**：本步是「重构」标注步，判据是迁移结果必须与旧 `load()` 兼容段完全一致。做法：把改动前的整段逐字复制成临时对照 `src/core/engine/state-migrate-equivalence.test.ts` 的 `legacyLoadCompat(rawState, gameId, now)`，对 7 份 v0 fixture 与 4 种空快照输入做 `toEqual` → `npx vitest run src/core/engine/state-migrate-equivalence.test.ts` **8 passed**；随后按计划「本步完成后删除该对照副本」删掉它，同时删掉生成 fixtures 用的 `_gen-fixtures.test.ts`。删生成器不是收尾洁癖而是必须：它会在 `npm run check` 里重跑，用**新** `initialState`（已带 `stateVersion`）覆写 5 份生成快照，把 v0 变成 v1——8 条对照用例第一次转红正是这个原因，发现后逐个剥回 `stateVersion` 并复核 7 份仍为 v0（`v=` 全 `absent`）。
+
+**不变式自查**
+- **#3 旧档兼容（本步的主题）**：三处独立证据——L1 逐份迁移过校验、L3 I07 真库 `load()` 恢复并继续推进、R4 实机用改动前快照续跑到 ENDED（验收 3）。`ensureCurrentFields()` 对**所有**版本每次加载都跑（不只是 v0），原因见 DEV-14 第 3 条：`initialState` 本就不产出某些可选字段，旧 `load()` 对新版快照也会补，只有每次都补才等价。
+- **#6 无行为漂移**：清理三段逐字照搬、默认值一一对应、`Date.now()` 改成注入的 `ctx.now`（同一时刻语义相同）；对照副本 8 用例 + R4 + I07 三面覆盖。唯一非字面等价处是 `draft.clueStates?.[id]?.isPublic` 多了一层 `?.`（DEV-14 第 5 条），后果是「缺 `isPublic` 的坏快照」由 ZodError 而不是 TypeError 拒绝——`state-migrate.test.ts:113` 把这条新行为钉成断言。
+- **#5 错误不外泄**：`migrateState` 抛的 ZodError 沿 `GameEngine.load()` 上抛到路由，仍由 `withRoute` 收敛成固定 500 文案；错误内容只有字段路径与期望类型，且快照与 fixtures 里没有任何凭证字段（见落点末条），新日志 0 条。
+- **#1 / #2 / #4**：未触碰 prompt 出口、前缀缓存顺序、事件类型与 `visibleTo`；迁移只读写 `games.state` 的字段形态。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 82 / Tests 648 passed | 1 expected fail（3.0s；expected fail 仍是 BUG-03）。
+- `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/jubensha_test npm run test:int` → exit 0：5 files / 15 passed（15.4s）。
+- 可二分性（临时 worktree，逐个 commit 复验）：`229d2e0` → `npx tsc --noEmit` exit 0、`npx vitest run` 81 files / 625 过 + 1 expected fail，与 S3.5 收口时逐字相同（即纯重构、测试数不变）；`8084efe` → tsc exit 0、engine L1 15 files / 126 过、`test:int` 5 files / 15 过。worktree 用完已 `git worktree remove`。
+- e2e：本轮只跑 R4 一段（判据所需），:3120 实例与 `jubensha_e2e` 按 P4 期间惯例保留（`--keep-db`）；`pm2 jubensha`（:3000）未重启未触碰；用户日常库未连接。R1/R2/R3 与 R9 留到 P4 阶段验收一次性全量重跑。
+
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
 - **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
@@ -480,3 +512,9 @@
   2. **计划范围外的 `src/lib/rate-limit.ts`**：新增 `checkStreamTicketRateLimit`（同 IP 30/min + 全局 600/min）。签发端点是「长期凭证 → 可放进 URL 的短期凭证」的兑换口，也是本步唯一新增的公开写入口，不限流就等于给爆破凭证提供一个更快的循环；沿用文件里既有的 `rateLimit` 原语与 `{ok:false, retryAfterSec}` 形态，未新建机制。
   3. **R3 的「改用 ticket」改为「增补 ticket 段」**：计划测试项写「L4：R3 改用 ticket 后仍然通过」。把原有用例改写成 ticket 建流会让 R3 失去「匿名观战续传」这一既有覆盖（红线：不弱化既有断言）。做法是原三段公开流与全部断言逐字保留，只在末尾追加 ticket 段（座位票 / 主持票 / 重放必拒 / 兼容期 token query），并让兼容期检查读实例日志的新增量。判据覆盖面只增不减。
   4. **心跳重验改为凭证快照**（计划未提这一处连带）：ticket 用后即删，心跳若照旧从 `url.searchParams` 取凭证，则所有 ticket 连接都会在 20 秒后被自己踢下线。改为按签发时验证过的快照比对，并在 A29 用 fake timers 锁定两条语义：凭证未变 → 心跳周期内存活；座位 token 被轮换 → 一个心跳周期内收流。吊销检测能力与改动前等价（比对的仍是真凭证，只是基准来自快照）。
+- **DEV-14（S4.3）**：GameState 版本化的 5 处口径/计划外处理，均不改快照读写语义（判据「重构 = 零行为漂移」由对照副本 8 用例 + I07 + R4 三面立住）：
+  1. **`.passthrough()` → `.looseObject()`**：计划写「zod schema 对未知字段使用 `.passthrough()`」，但仓库里是 zod 4.5.4，`.passthrough()` 在 v4 已废弃（对象层的替代就是 `.loose()`）。按原意实现，`state-schema.ts` 全部对象节点用 `z.looseObject`，未知字段原样保留并有 L1 用例（`:102` 注入 `someFutureField` 后仍在）钉住。若照字面写 `.passthrough()` 会引一条 deprecation 警告，且将来 v4 移除时又要改。
+  2. **`migrateState(raw, {now, gameId})` 而非计划的 `migrateState(raw)`**：兼容段里有两处外部输入——过期 `humanDeadlines` 要用「本次加载的时刻」比、legacy `questionId` 要用 `gameId` 拼。让迁移函数自己读 `Date.now()` 会把时钟藏进被测函数里，「未过期的保留」这条断言就只能在真实当下跑一次、无法确定化。改为调用方注入（`engine.ts:184` 传 `Date.now()`），行为与改动前一致，L1 因此能拿 fixture 内 baked 时刻做 ±1s 双向断言。
+  3. **`ensureCurrentFields()` 每次加载都跑，而不是只在 v0 迁移里跑**：更「干净」的写法是把 24 条 `??=` 塞进 v0→v1 那一步，但那样 v1 快照就不再补字段——而 `initialState()` 本来就不产出 `suggestions` / `memory` 这类可选字段，旧 `load()` 对**任何**快照都会补，只补 v0 是行为漂移。因此按「零漂移」重排成：`MIGRATIONS` 只负责登记版本，补齐与清理对所有版本各跑一次（幂等）。对照副本里唯一需要抹平的差异恰好就是版本字段本身（喂进对照函数的输入已带 `stateVersion: 1`，两边各剥一层再比），其余 7 份快照与 4 种空输入深度相等。
+  4. **`CURRENT_STATE_VERSION` 定义在 `types.ts`（`:29`），`state-migrate.ts:6` 再导出**：计划把常量归给 `state-migrate.ts`。`initialState()`（`state.ts`）必须用它，而 `state-migrate.ts` 已经 import `state.ts`；常量留在 state-migrate 会形成 state ↔ state-migrate 的模块环。放 types（纯类型/常量层，无依赖）两边都能引，出口仍从 state-migrate 再导一次，调用方按计划的名字与位置都能拿到。
+  5. **给 `draft.clueStates?.[id]?.isPublic` 加了一层 `?.`**：原写法是 `state.clueStates[id]?.isPublic`，而 `clueStates` 本身在坏快照里可能缺席 → 迁移段先 TypeError，比改动前更早、且绕过了 schema 的结构化拒绝。加 `?.` 后坏数据照样被拒，只是改由 `parseGameState()` 的 ZodError 报出（`state-migrate.test.ts:113` 钉住「`clueStates: {c1:{discoveredBy:null}}` 被拒」）。路由侧两种错误都收敛成同一个固定 500 文案，对外行为不变。
