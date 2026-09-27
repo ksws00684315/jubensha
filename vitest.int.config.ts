@@ -14,6 +14,7 @@ export default defineConfig({
     fileParallelism: false,
     globalSetup: "src/test/int-setup.ts",
     environment: "node",
+    execArgv: ["--expose-gc"],
     testTimeout: 30_000,
   },
 });

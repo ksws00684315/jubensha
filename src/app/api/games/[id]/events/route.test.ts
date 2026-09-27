@@ -126,6 +126,45 @@ describe("A29 GET /api/games/[id]/events（SSE）：回放 / 鉴权降级 / 断�
     abort();
   });
 
+  it("历史 1,200 条按 500 条分页，输出升序且不重不漏", async () => {
+    const history = Array.from({ length: 1_200 }, (_, index) => row(index + 1));
+    let resolveFirst: (rows: unknown[]) => void = () => undefined;
+    mockFindEvents.mockImplementation((args) => {
+      const query = args as { where: { seq: { gt: bigint } }; take: number };
+      if (query.where.seq.gt === BigInt(0)) return new Promise((resolve) => { resolveFirst = resolve; }) as never;
+      return Promise.resolve(history.filter((event) => event.seq > query.where.seq.gt).slice(0, query.take)) as never;
+    });
+
+    const { msgs, waitFor, abort } = await openStream("?lastSeq=0");
+    publish(GAME_ID, { kind: "event", event: busEvent("750") });
+    resolveFirst(history.slice(0, 500));
+    await waitFor(() => msgs.some((msg) => msg.kind === "hello"));
+    expect(mockFindEvents).toHaveBeenCalledTimes(3);
+    expect(mockFindEvents.mock.calls.map(([args]) => (args as { take: number }).take)).toEqual([500, 500, 500]);
+    expect(seqsOf(msgs)).toEqual(history.map((event) => event.seq.toString()));
+    expect(seqsOf(msgs).filter((seq) => seq === "750")).toHaveLength(1);
+    expect((msgs.find((msg) => msg.kind === "hello") as { lastSeq: string }).lastSeq).toBe("1200");
+    abort();
+  });
+
+  it("分页期间 abort 后不再继续查询", async () => {
+    const history = Array.from({ length: 1_000 }, (_, index) => row(index + 1));
+    let resolveSecond: (rows: unknown[]) => void = () => undefined;
+    mockFindEvents.mockImplementation((args) => {
+      const query = args as { where: { seq: { gt: bigint } }; take: number };
+      if (query.where.seq.gt === BigInt(0)) return Promise.resolve(history.slice(0, 500)) as never;
+      if (query.where.seq.gt === BigInt(500)) return new Promise((resolve) => { resolveSecond = resolve; }) as never;
+      return Promise.resolve(history.slice(1_000)) as never;
+    });
+
+    const stream = await openStream("?lastSeq=0");
+    await stream.waitFor(() => mockFindEvents.mock.calls.length === 2);
+    stream.abort();
+    resolveSecond(history.slice(500, 1_000));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(mockFindEvents).toHaveBeenCalledTimes(2);
+  });
+
   it("座位 token 无效 → 降级纯观战，私有事件不外泄", async () => {
     mockFindEvents.mockResolvedValue([row(6), row(7, { visibility: "seat:0", content: { text: "私密" } })] as never);
     const { msgs, waitFor, abort } = await openStream("?seat=0&token=wrong&lastSeq=0");

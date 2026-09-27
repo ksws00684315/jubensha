@@ -102,10 +102,11 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   const encoder = new TextEncoder();
   let unsubscribe: (() => void) | null = null;
   let heartbeat: NodeJS.Timeout | null = null;
+  let removeAbortListener: (() => void) | null = null;
+  let closed = false;
 
   const stream = new ReadableStream({
-    async start(controller) {
-      let closed = false;
+    start(controller) {
       const send = (data: unknown, eventId?: string) => {
         if (closed) return;
         try {
@@ -125,7 +126,15 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           /* already closed */
         }
       };
+      const onAbort = () => close();
+      req.signal.addEventListener("abort", onAbort, { once: true });
+      removeAbortListener = () => req.signal.removeEventListener("abort", onAbort);
+      if (req.signal.aborted) {
+        close();
+        return;
+      }
 
+      void (async () => {
       // 先订阅再查询历史，避免查询与订阅之间产生事件丢失。
       // 历史查询期间暂存实时事件，回放完成后按序发送并去重。
       const delivered = new Set<string>();
@@ -155,19 +164,32 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
 
       // 1) 补发历史事件（> lastSeq，按视角过滤）。查询失败只放弃回放、保住实时订阅，
       // 避免 start() 抛错让 unsubscribe 已建立的订阅泄漏。
-      let history: Awaited<ReturnType<typeof db.gameEvent.findMany>> = [];
+      let lastHistorySeq: bigint | null = null;
       try {
-        history = await db.gameEvent.findMany({ where: { gameId: id, seq: { gt: lastSeq } }, orderBy: { seq: "asc" } });
+        let cursor = lastSeq;
+        while (!closed) {
+          const batch = await db.gameEvent.findMany({
+            where: { gameId: id, seq: { gt: cursor } },
+            orderBy: { seq: "asc" },
+            take: 500,
+          });
+          if (closed || batch.length === 0) break;
+          for (const row of batch) {
+            if (closed) break;
+            sendEvent(rowToEvent(row));
+          }
+          if (closed) break;
+          lastHistorySeq = batch[batch.length - 1].seq;
+          if (batch.length < 500) break;
+          cursor = lastHistorySeq;
+        }
       } catch (err) {
         console.error(`[sse] ${id} 历史回放失败，仅保留实时流：${String(err)}`);
-      }
-      for (const row of history) {
-        sendEvent(rowToEvent(row));
       }
       replaying = false;
       pending.sort((a, b) => (BigInt(a.seq) < BigInt(b.seq) ? -1 : BigInt(a.seq) > BigInt(b.seq) ? 1 : 0));
       for (const ev of pending) sendEvent(ev);
-      const lastDelivered = history.length ? history[history.length - 1].seq.toString() : lastSeq.toString();
+      const lastDelivered = lastHistorySeq?.toString() ?? lastSeq.toString();
       send({ kind: "hello", lastSeq: lastDelivered });
       for (const end of pendingEnds) send(end);
 
@@ -182,14 +204,16 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
           }
         }, 20_000);
       }
-
-      req.signal.addEventListener("abort", () => {
+      })().catch((err) => {
+        console.error(`[sse] ${id} 初始化实时流失败：${String(err)}`);
         close();
       });
     },
     cancel() {
+      closed = true;
       unsubscribe?.();
       if (heartbeat) clearInterval(heartbeat);
+      removeAbortListener?.();
     },
   });
 
