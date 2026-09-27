@@ -127,7 +127,10 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
       if (g.phase !== "SEARCH") return g.myClues.length;
       if (g.myClues.length > prevCount) {
         const fresh = g.myClues.slice(prevCount);
-        for (const clueId of fresh) await act({ type: "publish", clueId, publish: false });
+        const awaitingDecision = new Set(g.pendingPublishClueIds ?? []);
+        for (const clueId of fresh) {
+          if (awaitingDecision.has(clueId)) await act({ type: "publish", clueId, publish: false });
+        }
         return g.myClues.length;
       }
       await sleep(800);
