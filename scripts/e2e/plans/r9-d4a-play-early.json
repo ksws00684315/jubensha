@@ -87,11 +87,11 @@
       "waitMs": 3000
     },
     {
-      "clickIf": "{decisionFirst}",
+      "clickIf": "text:{decisionFirst}",
       "label": "4-公开/私藏决策（桌面先私藏，移动先公开；auto_public 线索则无此窗）"
     },
     {
-      "clickIf": "{decisionSecond}"
+      "clickIf": "text:{decisionSecond}"
     },
     {
       "shot": "23-play-my-clues.png",

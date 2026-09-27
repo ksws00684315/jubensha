@@ -91,8 +91,12 @@ const ENV = {
   SECRET_MASTER_KEY: MASTER_KEY,
 };
 // 实机只跑无模型链路（除 R8 的真模型场景，用的是 E2E_LLM_*）：仓库 .env 里开着 Jev 影子/接管时，
-// 下一局就会对每个 AI 座位向外部决策端点发真付费请求，删掉这些键让实例整体静默。
+// 下一局就会对每个 AI 座位向外部决策端点发真付费请求。
+// 只从父进程 env 里删键是拦不住的：next start 子进程首次实例化 Prisma Client 时会自己读仓库根 .env
+// 把 JEV_* 灌回来（FIND-07）。显式置成非 "1" 才有效——dotenv 不覆盖已存在的键。
 for (const key of Object.keys(ENV)) if (key.startsWith("JEV_")) delete ENV[key];
+ENV.JEV_SHADOW = "0";
+ENV.JEV_FALLBACK = "0";
 
 async function waitForReady() {
   const deadline = Date.now() + 60_000;
