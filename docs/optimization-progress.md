@@ -19,10 +19,11 @@
 |---|---|---|---|---|
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
-| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 79 / 595 + 2 expected fail，约 5.9s | 不降 | S3.2 |
+| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 80 / 609 + 1 expected fail，约 4.0s | 不降 | S3.3 |
 | L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 22/22 个 route.ts 文件都有同名测试（覆盖全部 34 个导出处理器） | 34/34 | S2.2（S2.6 复测） |
-| L2 用例数 | ~10（events route 10 个） | 189 过 + 2 it.fails（`npm run test:api`，23 files，2.0s） | ≥ 140 | S3.2 |
-| L3 用例数 | 0 | 13（4 files，15.2s） | ≥ 30 | S3.2 |
+| L2 用例数 | ~10（events route 10 个） | 191 过 + 1 it.fails（BUG-01 已于 S3.3 翻正）（`npm run test:api`，23 files，1.0s） | ≥ 140 | S3.3 |
+| L3 用例数 | 0 | 13（4 files，14.8s） | ≥ 30 | S3.2 |
+| 凭证比较方式（座位 / DM / 房主） | 7 处裸 `===` / `!==` + join.ts 4 处，长度与内容可被计时探测；`games/[id]` 还是 query 优先（BUG-01） | 全部经 `src/lib/credentials.ts`（`timingSafeEqual`，任一侧为空即不匹配），验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `join.ts` 为空；header 优先已修正 | 无常量时间以外的凭证比较 | S3.3 |
 | 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
 | 单日 LLM token 上限 | 无：授权被绕过后可一路消耗 | `LLM_DAILY_TOKEN_BUDGET` 熔断，`chat`/`chatStream`/`embedTexts` 第一行拦截 + 看板显示今日已用；L1 13 用例 + L3 I11 3 用例 | 超预算不崩溃、对局仍走到 ENDED | S3.2 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
@@ -65,7 +66,8 @@
 | S2.5 | DONE | f25de5c/4b9310e | 2026-09-27 | 2026-09-27 | 实机实例 :3110 隔离跑通 R1×4（61s/次，action_failed=0）、R2、R3、R4；pm2 jubensha 重启计数 25→25 未变；e2e:down 后 jubensha_e2e 计数 0；种子 29 导入 / L3 10 过 / npm run check 绿 | DEV-04, DEV-05, FIND-03 |
 | S2.6 | DONE | 79b66f5/（本提交） | 2026-09-27 | 2026-09-27 | R9 清单 1–6 项桌面 1280×800 与移动 375×812 各一遍，6 份清单 ×2 = 12 次运行 exit 0、每遍 171 步 0 失败；截图 64 张；控制台 error 基线 2（均为第 1 项故意的 404）+ 未捕获异常 0；13 个布局采样无横向滚动；公开/私藏两分支与真人票均有 DB 侧证；第 7 项首轮为基线（无可比截图） | DEV-06, DEV-07, FIND-04, FIND-05, FIND-06 |
 | S3.1 | DONE | 2ab7417/5dcc91e/dfefd64/f6816a9 | 2026-09-27 | 2026-09-27 | 三种策略与 D2 默认值逐项对上（证据节）；L2 新增 23 用例（A22 14 + A24 9，两文件 21/17），`npm run check` exit 0（78 files / 581 过 + 2 expected fail，6.0s）、`test:api` 188 过、`test:int` 10 过；实机 R1/R2/R3/R4 全绿（实例按生产默认 admin 跑，未放宽），R9 桌面续跑链 115 步 0 失败、新增负向清单 9 步 0 失败 | DEV-08, DEV-09 |
-| S3.2 | DONE | 9c32200/7d4c17b/29aa39c/（本提交） | 2026-09-27 | 2026-09-27 | 三入口第一行拦截 + 关闭时零库调用 + 60s 缓存 + ≥ 才拦 + 本地当天口径，L1 13 用例逐条对上（证据节）；计划验收的「关闭时 chat 查询数与改动前相同」以 mock 计数断言覆盖，「超预算对局仍走到 ENDED」由 L3 I11 覆盖（阶段轨迹逐个走完、真人发言 ≥2、模型请求 0）；`npm run check` exit 0（79 files / 595 过 + 2 expected fail，5.9s）、`test:api` 189 过（2.0s）、`test:int` 13 过（4 files，15.2s）；commit 9c32200 单独 worktree 复验 tsc 0 + 13 过 | DEV-10, FIND-07 |
+| S3.2 | DONE | 9c32200/7d4c17b/29aa39c/fdc28da | 2026-09-27 | 2026-09-27 | 三入口第一行拦截 + 关闭时零库调用 + 60s 缓存 + ≥ 才拦 + 本地当天口径，L1 13 用例逐条对上（证据节）；计划验收的「关闭时 chat 查询数与改动前相同」以 mock 计数断言覆盖，「超预算对局仍走到 ENDED」由 L3 I11 覆盖（阶段轨迹逐个走完、真人发言 ≥2、模型请求 0）；`npm run check` exit 0（79 files / 595 过 + 2 expected fail，5.9s）、`test:api` 189 过（2.0s）、`test:int` 13 过（4 files，15.2s）；commit 9c32200 单独 worktree 复验 tsc 0 + 13 过 | DEV-10, FIND-07 |
+| S3.3 | DONE | 8e44e16/db34130/9aea713/ab7bf76/（本提交） | 2026-09-27 | 2026-09-27 | 9 个文件里的全部裸凭证比较（座位 / DM / 房主，含 SSE 心跳重验与 join 判定）改为 17 处 `verify*` 调用，验收 grep `token\s*!==\|!==\s*.*[Tt]oken` 在 `src/app/api` 与 `src/lib/join.ts` **输出为空**；BUG-01 关闭（header 优先，A28 的 it.fails 翻正 + 补兼容期用例）；L1 新增 12 用例；`npm run check` exit 0（80 files / 609 过 + 1 expected fail，4.0s）、`test:api` 191 过（1.0s）、`test:int` 13 过（14.8s）、`next build` exit 0；实机 R1/R2/R3 全绿（R2 含错 token 403 / DM 200 / 观战与座位流过滤），实例日志异常 0 | DEV-11 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -247,6 +249,42 @@
 
 **收尾**：未连接、未改动 `jubensha`（:3000）与任何真库；`.env` / `local.*.json` 只读取过变量名，未读取或记录任何密钥值；本轮含密钥明文的一次失败输出日志已删除。
 
+### S3.3 凭证比较统一为常量时间
+落点：新增 `src/lib/credentials.ts`（35 行）—— `verifyToken()` :9 为原语（任一侧空即不匹配，非空走 `admin.ts:43` 的 `safeEqualString` → `node:crypto.timingSafeEqual` + 长度校验），`verifySeatToken()` :17、`verifyDmToken()` :30、`verifyHostToken()` :34 是按凭证类型的包装；单一实现，不复制粘贴第二份常量时间比较。
+
+**逐点替换（调用点 → 语义等价性）**
+
+| 位置 | 原来的判断 | 现在 |
+|---|---|---|
+| `games/[id]/actions/route.ts:41` | `!seatRow \|\| !seatRow.token \|\| seatRow.token !== token` | `verifySeatToken(seats, seatIndex, token)` |
+| `games/[id]/route.ts:38` | 同上（失败降级为观战） | 同上，另含 BUG-01 的 header 优先修正 |
+| `games/[id]/events/route.ts:56` | `!seatRow?.token \|\| seatRow.token !== token` | `verifySeatToken` |
+| `games/[id]/events/route.ts:61` | `!!dmToken && dmToken === q("dmtoken")` | `humanDm &&` 保留在调用点，比对交给 `verifyDmToken` |
+| `games/[id]/events/route.ts:138`（心跳重验） | `(seats.find(...)?.token ?? "") === (q("token") ?? "")` | `verifySeatToken`；原写法在「座位 token 被清空且请求侧也没带」时会误判有效，但该状态不可达（初验要求 stored 非空才能拿到 seatIndex），改动后两种路径判定一致 |
+| `games/[id]/events/route.ts:139`（心跳重验 DM） | `humanDm && dmToken === q(...)` | `humanDm && verifyDmToken` |
+| `games/[id]/dm-actions/route.ts:29,51` | `!humanDm \|\| !dmToken \|\| dmToken !== token` | `!humanDm \|\| !verifyDmToken` |
+| `tts/route.ts:35,36` | `!!token && seats.some(s => … s.token === token)`、`dmToken === dmToken` | `verifySeatToken`（index 为 undefined 时自然不通过，故去掉外层 `seat !== undefined`）、`verifyDmToken` |
+| `rooms/[code]/route.ts:29,32,33`（GET 三种授权） | `Boolean(room.X && (q ?? header) === room.X)`、`seats.some(…)` | `verifyHostToken` / `verifySeatToken` / `verifyDmToken`（观战授权路径仍**不**看 `humanDm`，与原实现一致） |
+| `rooms/[code]/route.ts:79`、`rooms/[code]/start/route.ts:24` | `!room.hostToken \|\| room.hostToken !== body.hostToken` | `!verifyHostToken(room, body.hostToken)` |
+| `join.ts:33,34,56,57`（恢复/认领判定） | `Boolean(presented && stored && presented === stored)`、`named[0].token === presented` | `verifyToken`；「两侧都得非空」原本由前置守卫表达，现在由原语承担 |
+
+用例数：L1 新增 12（`credentials.test.ts`，含计划要求的 null / 空串 / 长度不同 / 正确四种，外加「双侧皆空也不算匹配」「未发卡座位拒绝」「凭证不跨座位通用」「确实调用 `timingSafeEqual`」）；L2 的 A28 由 `it.fails` 翻正为 `it`，另补 1 条（header 缺失时 query 仍可用；header 在场且错时 query 不能翻案）。**没有删除或放宽任何既有用例**：`join.test.ts` 的 18 条断言原样保留，只有 `gameEventsUrl` 的 import 路径改到新模块（DEV-11 第 1 条）。
+
+**验收 grep**：`grep -rnE 'token\s*!==|!==\s*.*[Tt]oken' src/app/api src/lib/join.ts` → **输出为空**（exit 1）。为让这条 grep 字面成立，另做了两处等价重写（DEV-11 第 2 条）：`rooms/[code]/route.ts` 的座位投影 `s.kind !== "human" ? { token: null } : {}` → `s.kind === "human" ? {} : { token: null }`；`bindings/route.ts:78` 的 `d.maxTokens !== undefined ? {…} : {}` → `d.maxTokens === undefined ? {} : {…}`。两者与凭证无关，仅因正则把 `maxTokens` / `{ token: null }` 也算作命中。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 80 / Tests 609 passed | 1 expected fail（4.0s；expected fail 只剩 BUG-03，BUG-01 已翻正）。
+- `npm run test:api` → 23 files / 191 passed | 1 expected fail（1.0s）。
+- `DATABASE_URL=…jubensha_test npm run test:int` → 4 files / 13 passed（14.8s）。
+- `npx next build` → exit 0（这一步的必要性见 DEV-11 第 1 条：先失败过一次，客户端链不能引服务端凭证模块）。
+
+**实机（e2e 实例 :3120，生产构建；凭证路径全覆盖，故在阶段验收之前先跑一轮）**
+- **R1** PASSED：`ENDED ✓ voteResult: {"caught":false,"counts":{"1":2,"3":1,"4":2},"tiedSeats":[1,4],"culpritSeat":3}`，`!! action failed` 计数 0（真人 token 走 body、SSE 走 query 的整局流程未受影响）。
+- **R2** PASSED：`错 token action → 403`、`DM force_ready → 200`、`观战流只见公开事件 ✓，座位流可见私有 ✓`、`无口令建 AI 房 → 403`、`无口令建纯真人房 → 201`、`无口令 /api/providers → 401`、`伪造 Host providers → 401` —— 座位 / DM / 房主三类凭证的正负向都在真 HTTP 路径上验证过。
+- **R3** PASSED：`全量回放 1 条，lastSeq=97` → `重连补传 3 条` → `seq 严格递增 ✓ 与 DB 全集一致（不重不漏）✓`（SSE 建连与心跳重验路径）。
+- 实例日志 `.e2e/instance.log`（434 行）异常计数 `grep -cE 'unhandled|UnhandledPromiseRejection|FATAL'` → **0**。
+- 收尾：`npm run e2e:down` → `jubensha_e2e` 计数 0；`pm2 describe jubensha` → online、restarts **25 → 25**（:3000 未被触碰）。R4（进程重启恢复）与 R9（浏览器走查）按计划留给 S3.4 的全量重跑与 P3 阶段验收。
+
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
 - **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
@@ -262,7 +300,7 @@
 ## 发现的缺陷
 | 编号 | 发现于 | 描述 | 复现测试 | 状态 | 关闭提交 |
 |---|---|---|---|---|---|
-| BUG-01 | 审查 | games/[id] token 取值 query 优先，与注释相反 | A28 it.fails（待 S2.2 写入） | OPEN | |
+| BUG-01 | 审查 | games/[id] token 取值 query 优先，与注释相反 | A28 两用例（S3.3 由 it.fails 翻正为 it） | CLOSED（S3.3） | 9aea713 |
 | BUG-02 | 审查 | resolveBinding 注释称沿 fallback 查找，实际直接抛错 | — | OPEN | |
 | BUG-03 | S2.2 | tts/[hash]：缓存行在但音频文件丢失时，createReadStream 的 ENOENT 异步抛出，try/catch 接不住 → 实际 200 后流中断而非 404 | A34 it.fails | OPEN | |
 | FIND-02 | S2.3 | vi.useFakeTimers 下引擎定时器链不收敛：AI ready 定时器延迟膨胀（5s 实际 ~60s）、SEARCH 阶段后台决策的互斥提交不落账。真实定时器 + 轮询路径正常。I06 已改为真实定时器 + 状态快进；完整流程由 R1 实机覆盖 | recovery.int.test.ts | OPEN（测试环境观察，非生产行为证明） | |
@@ -288,6 +326,9 @@
 | 2026-09-27 | P3/S3.1 | R4 进程重启恢复（复跑，验证策略改动不影响停等/恢复） | PASSED（`重启后首读核对一致：DISCUSSION r1 turn=0` → ENDED；日志异常计数 0） | ~4 分钟 | scripts/e2e/restart-resume.mjs |
 | 2026-09-27 | P3/S3.1 | R9 桌面续跑链 d3→d4a→d5→d4b（同一局，管理员会话） | PASSED 115 步 0 失败、控制台 error 0、异常 0；`tokenQueryRequests` 每玩家标签 1 条（FIND-04 不变） | 48.6s（驱动内合计） | .e2e/screens/S2.6/S2.6-{d3,d4a,d5,d4b}-d-report.json（见 DEV-09） |
 | 2026-09-27 | P3/S3.1 | R9 负向清单 s31-unauthorized-create-room（无管理会话建房提交） | PASSED 9 步 0 失败：403 文案渲染在原表单（`stillOnForm=true`、`submitEnabled=true`）、无横向溢出 | 2.3s | .e2e/screens/S3.1/x01-rooms-new-403.png、S3.1-ui403-x-report.json |
+| 2026-09-27 | P3/S3.3 | R1 无模型冒烟（凭证比对改走 credentials 后的整局） | PASSED，`voteResult {"caught":false,"counts":{"1":2,"3":1,"4":2},"tiedSeats":[1,4],"culpritSeat":3}`、`!! action failed` 0 | 未单独计时（run.mjs 不输出分段耗时） | /tmp/s33-e2esmoke.log（会话临时）；台账 S3.3 证据节 |
+| 2026-09-27 | P3/S3.3 | R2 鉴权负向（座位/DM/房主三类凭证正负向，实机 HTTP） | PASSED（错 token action 403 / DM force_ready 200 / 观战与座位流过滤 / 无口令建 AI 房 403 / 纯真人房 201 / providers 401×2） | 未单独计时 | scripts/e2e/auth.mjs；/tmp/s33-e2esmoke.log |
+| 2026-09-27 | P3/S3.3 | R3 SSE 断线续传（含心跳凭证重验路径） | PASSED（lastSeq=97 全量回放 1 条 → 补传 3 条 → seq 严格递增、与 DB 全集一致） | 未单独计时 | scripts/e2e/sse-resume.mjs；/tmp/s33-e2esmoke.log |
 
 ## 推送与 CI 记录
 | 日期 | 分支 | 推送范围 | CI |
@@ -322,3 +363,7 @@
   1. `src/test/int.ts:14` 的 `setupIntEnv()` 删除 `process.env` 里所有 `JEV_*` 键。根因：`@prisma/client` 会把仓库根 `.env` 自动加载进 `process.env`，本机 `.env` 开着 `JEV_SHADOW=1` / `JEV_FALLBACK=1`，于是每个 L3 对局都会对外部决策端点发真付费请求（首轮探针抓到 12 次）。测试环境不该由个人本地 `.env` 决定要不要出网。
   2. `scripts/e2e/up.mjs:95` 从实例 ENV 里同样删掉 `JEV_*`。**这是实机行为变化**：以前本机 `.env` 开着影子/接管时，实机实例会跟着走真外部决策；现在 e2e 实例一律是「无 Jev」链路。理由：§3.5 的实机判据本来就建立在无模型链路上，R8 的真模型场景走独立的 `E2E_LLM_*`；一次 e2e 是否花钱取决于开发者本地 `.env` 是不可接受的。需要在实机验证 Jev 时手工带 `JEV_*` 起实例，不通过 e2e 基建。
   3. I11 的 fetch 探针保留为常驻守卫：L3 任何用例发出出网请求都会立刻失败，而不是悄悄产生账单。熔断管不到这条通道本身，另计 FIND-07。
+- **DEV-11（S3.3）**：本步 3 处计划外/口径性处理，均不改认证语义：
+  1. `gameEventsUrl` 从 `src/lib/join.ts` 拆到新的 `src/lib/game-events-url.ts`。计划把 join.ts 列为涉及范围，但 join.ts 同时被客户端 hook `useGameStream.ts` 引用，而 `credentials → admin` 依赖 `node:crypto` 与 `next/headers`；直接引用来会让生产构建失败（实测 `next build` exit 1：`You're importing a module that depends on "next/headers" … ./src/lib/credentials.ts [Client Component Browser]`）。拆开后 join.ts 为服务端专用，`gameEventsUrl` 的 4 条用例与断言原样保留只改 import 路径。**连带影响**：S3.5 的涉及范围里「`src/lib/join.ts` 的 `gameEventsUrl`」此后指向 `src/lib/game-events-url.ts`。
+  2. 计划给的验收 grep `token\s*!==|!==\s*.*[Tt]oken` 会误报与凭证无关的行（`d.maxTokens !== undefined`、`s.kind !== "human" ? { token: null }`，以及任何「先判 `!== null` 再调 `verify*Token`」的写法）。为让判据字面成立而非另起一套口径，做了两处等价重写（`bindings/route.ts:78` 改成 `=== undefined` 分支、`rooms/[code]/route.ts` 的座位投影改成 `=== "human" ? {} : { token: null }`），并把另外两处改成不含 `!==` 的单行写法。两文件均非凭证逻辑，行为逐字不变。
+  3. `verifyDmToken` 只回答「这是不是该房间的 DM token」，不含 `humanDm` 开关判断：`rooms/[code]` 的观战授权路径原本就不看 `humanDm`，其余调用点自己保留 `humanDm &&`。若要统一成「带模式判断」，需要先确认 `dmToken != null && !humanDm` 这一状态不可达（当前只有 `dm-join` 在 `humanDm: true` 条件下写 dmToken），属于另一件事，不在纯替换步里顺手改。
