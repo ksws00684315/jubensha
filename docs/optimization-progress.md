@@ -54,6 +54,7 @@
 | S1.4 | DONE | 24847c0 | 2026-09-26 | 2026-09-26 | hooks:install 后 lint 错误提交被拒（14.5s）；未安装者不受影响 | 无 |
 | S2.1 | DONE | f250d85 | 2026-09-26 | 2026-09-26 | 夹具自测 14 用例；events 迁移后 10 用例断言不变；A13 示范 import+setup ≤10 行 | 无 |
 | S2.2 | DONE | ff45e32/ed88734/f168fbf/ada4546 | 2026-09-26 | 2026-09-26 | 35 个 A 编号 describe；L2 用例 165 过 + 2 it.fails；api 行覆盖 87.66%；test:api 约 1.2s | 无 |
+| S2.3 | DONE | 70133f5 | 2026-09-26 | 2026-09-26 | I01–I04、I06 过；连跑 5 次全绿；误连库名直接拒绝(exit 1)；CI integration job 绿(run 36259803390) | FIND-02 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -110,6 +111,7 @@
 | BUG-01 | 审查 | games/[id] token 取值 query 优先，与注释相反 | A28 it.fails（待 S2.2 写入） | OPEN | |
 | BUG-02 | 审查 | resolveBinding 注释称沿 fallback 查找，实际直接抛错 | — | OPEN | |
 | BUG-03 | S2.2 | tts/[hash]：缓存行在但音频文件丢失时，createReadStream 的 ENOENT 异步抛出，try/catch 接不住 → 实际 200 后流中断而非 404 | A34 it.fails | OPEN | |
+| FIND-02 | S2.3 | vi.useFakeTimers 下引擎定时器链不收敛：AI ready 定时器延迟膨胀（5s 实际 ~60s）、SEARCH 阶段后台决策的互斥提交不落账。真实定时器 + 轮询路径正常。I06 已改为真实定时器 + 状态快进；完整流程由 R1 实机覆盖 | recovery.int.test.ts | OPEN（测试环境观察，非生产行为证明） | |
 | FIND-01 | S0.4 | `repetition.test.ts`「只在尾部窗口内扫描」在 --coverage 插桩下超时失败（5392ms），非覆盖率模式通过；时间敏感用例，覆盖率门禁需容忍或后续修复 | npx vitest run --coverage | CLOSED（S1.3） | 4b71bd7 |
 
 ## 实机测试记录
