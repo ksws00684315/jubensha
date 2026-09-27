@@ -65,6 +65,12 @@ vi.mock("@/lib/db", () => {
         return row;
       },
       findUnique: async ({ where: { id } }: any) => hoisted.gameRows.get(id) ?? null,
+      // 租约（S4.1）用到的最小 CAS 语义：本文件的对局只有这一个实例在抢，恒成立即可。
+      updateMany: async ({ where, data }: any) => {
+        const rows = [...hoisted.gameRows.values()].filter((r) => (where.id ? r.id === where.id : r.ownerId === where.ownerId));
+        for (const r of rows) Object.assign(r, data);
+        return { count: rows.length };
+      },
       update: async ({ where: { id }, data }: any) => {
         hoisted.calls.gameUpdate += 1;
         const row = hoisted.gameRows.get(id) ?? { id, roomId: "room-1" };

@@ -1,4 +1,5 @@
 import { evictBus } from "./bus";
+import { releaseLease } from "./lease";
 import type { GameEngine } from "./engine";
 
 /**
@@ -32,6 +33,8 @@ export function scheduleEndedEviction(engine: GameEngine): void {
     if (engines.get(engine.gameId) === engine && engine.state.phase === "ENDED") {
       engines.delete(engine.gameId);
       evictBus(engine.gameId);
+      // 交牌一并做：已经打完的对局不该让别的实例等满 30s TTL 才能重建（比如复盘重放）。
+      void releaseLease(engine.gameId, engine.ownerId).catch(() => null);
     }
   }, ENDED_EVICTION_DELAY_MS);
   timer.unref?.();

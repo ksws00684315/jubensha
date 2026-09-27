@@ -7,6 +7,7 @@ import type { ScriptDocV2 } from "@/core/script/v2/schema";
 import type { AgentCtx } from "@/core/agents";
 import { activeSeats, appendEvent, initialState, persistState } from "./state";
 import { migrateState } from "./state-migrate";
+import { INSTANCE_ID, LeaseLostError, acquireLease, leaseOwner, startLeaseRenewal } from "./lease";
 import { ensureDiscussionState, finaleMissing, nextAfterDiscussion, validateTransfer, validateUseSkill } from "./flow";
 import type { EngineEvent, GameState, SeatInfo } from "./types";
 import { createHash } from "node:crypto";
@@ -60,11 +61,15 @@ import { validateVoteEvidence } from "./evidence";
  * - finale.ts      终局域（投票/复盘答题/超时兜底）
  * - human-turn.ts  真人限时（arm/ensure/clear）
  * - registry.ts    常驻实例表与终局延迟驱逐
+ * - lease.ts       单写者租约：谁在驱动这一局（load/start 取牌，只读视图不写库）
  * - util.ts        小工具与超时常量
  */
 
 /** 重启恢复时事件回放上限：只取最近 N 条，超长对局历史不进内存。 */
 const EVENT_REPLAY_LIMIT = 800;
+
+/** 本实例没拿到写租约时对玩家/DM 动作的统一回复（走 `error` 字段，不抛异常）。 */
+const LEASE_READ_ONLY_ERROR = "对局由其他实例主持，请刷新";
 
 export interface GameAction {
   type: "ready" | "speak" | "skip" | "ask" | "choose_location" | "publish" | "vote" | "private_chat" | "rush" | "transfer" | "use_skill" | "answer_quiz" | "interaction";
@@ -117,18 +122,31 @@ export class GameEngine {
   lastSummaryBoundary = Number.NEGATIVE_INFINITY;
   /** 终局结算是否已落库（幂等标记） */
   endFinalized = false;
+  /**
+   * 本引擎代表哪个实例驱动（S4.1 单写者租约）。默认本进程的 `INSTANCE_ID`；
+   * 显式传入别的 id 只用于 L3「同进程模拟另一实例」。
+   */
+  readonly ownerId: string;
+  /**
+   * 是否持有写租约。`false` = 只读视图：不 tick、不排定时器、动作一律拒绝，
+   * 写出口抛 `LeaseLostError`。
+   */
+  drive = true;
 
   private busy = false;
+  /** 只读视图的告警只记一次，避免每个被丢弃的入口都刷一行 */
+  private leaseWarned = false;
   /** 终局收尾失败后的自动重试次数（成功推进后归零） */
   private revealRetries = 0;
   private exclusiveTail: Promise<unknown> = Promise.resolve();
 
-  private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[], unlimitedHumanTurns = true) {
+  private constructor(gameId: string, script: ScriptDocV2, state: GameState, events: EngineEvent[], unlimitedHumanTurns = true, ownerId = INSTANCE_ID) {
     this.gameId = gameId;
     this.script = script;
     this.state = state;
     this.events = events;
     this.unlimitedHumanTurns = unlimitedHumanTurns;
+    this.ownerId = ownerId;
     // 恢复已落事件、尚未落快照的幂等边界。
     for (const event of events) {
       if (event.type === "clue" && event.visibility === "public" && typeof event.content.clueId === "string") {
@@ -149,11 +167,19 @@ export class GameEngine {
     return engines.get(gameId);
   }
 
-  /** 从 DB 加载（已存在的对局，服务重启后恢复） */
-  static async load(gameId: string): Promise<GameEngine> {
+  /**
+   * 从 DB 加载（已存在的对局，服务重启后恢复）。
+   * 拿到写租约才驱动；拿不到就返回只读视图，且**不进常驻表**——
+   * 否则持有者放掉租约后，本实例会一直复用那个只读实例而再也接管不了。
+   *
+   * `opts.ownerId` 用于「同进程模拟另一实例」（L3 I08/I09），生产不传。
+   */
+  static async load(gameId: string, opts?: { ownerId?: string }): Promise<GameEngine> {
+    const ownerId = opts?.ownerId ?? INSTANCE_ID;
     const cached = engines.get(gameId);
-    if (cached) return cached;
-    const loading = engineLoads.get(gameId);
+    if (cached && cached.ownerId === ownerId) return cached;
+    const loadKey = ownerId === INSTANCE_ID ? gameId : `${gameId}|${ownerId}`;
+    const loading = engineLoads.get(loadKey);
     if (loading) return loading;
     const promise = (async () => {
       const game = await db.game.findUnique({ where: { id: gameId }, include: { room: true } });
@@ -183,16 +209,23 @@ export class GameEngine {
       }));
       const state = migrateState(game.state, { now: Date.now(), gameId });
       const snapshot = game.scriptSnapshot ?? scriptRow.content;
-      const engine = new GameEngine(gameId, parseScriptForRuntime(snapshot), state, events, game.room.unlimitedHumanTurns);
+      const engine = new GameEngine(gameId, parseScriptForRuntime(snapshot), state, events, game.room.unlimitedHumanTurns, ownerId);
+      if (!(await acquireLease(gameId, ownerId))) {
+        engine.drive = false;
+        // R5 的判据要在实例日志里 grep 到 `lease held by`；日志只写 id，不含任何凭证。
+        console.warn(`[lease] ${gameId} 本实例只读（lease held by ${await leaseOwner(gameId)}）`);
+        return engine;
+      }
       rememberEngine(gameId, engine);
+      startLeaseRenewal(gameId, () => engine.onLeaseLost(), ownerId);
       engine.resumeAfterLoad();
       return engine;
     })();
-    engineLoads.set(gameId, promise);
+    engineLoads.set(loadKey, promise);
     try {
       return await promise;
     } finally {
-      engineLoads.delete(gameId);
+      engineLoads.delete(loadKey);
     }
   }
 
@@ -235,7 +268,14 @@ export class GameEngine {
         }
       });
     const engine = new GameEngine(game.id, script, state, [], room.unlimitedHumanTurns);
+    // 行是本次刚建的，正常一定拿得到；被并发开局抢先时退回只读，交给持牌实例驱动。
+    if (!(await acquireLease(game.id))) {
+      engine.drive = false;
+      console.warn(`[lease] ${game.id} 开局即由其他实例主持（lease held by ${await leaseOwner(game.id)}）`);
+      return engine;
+    }
     rememberEngine(game.id, engine);
+    startLeaseRenewal(game.id, () => engine.onLeaseLost());
     await beginGame(engine);
     return engine;
   }
@@ -246,11 +286,13 @@ export class GameEngine {
 
   /** 状态快照落库（所有功能域模块的统一出口） */
   async persist(): Promise<void> {
+    this.assertNotLeaseLost();
     await persistState(this.gameId, this.state);
   }
 
   /** 落库 + 总线广播 + 同步写回内存事件流（AI/DM 的 prompt 数据源必须是最新现场） */
   async recordEvent(ev: Omit<EngineEvent, "seq" | "createdAt"> & { content: Record<string, unknown> }): Promise<EngineEvent> {
+    this.assertNotLeaseLost();
     const event = await appendEvent(this.gameId, ev);
     this.events.push(event);
     queueEmbed(this, event);
@@ -276,7 +318,39 @@ export class GameEngine {
     return run;
   }
 
+  /**
+   * 续租失败 = 这一局已归别的实例主持。必须立刻停手：停自己的定时器、中止在途 AI 生成、
+   * 把自己移出常驻表（下一次访问会重新争取租约）。写出口此后由 `assertNotLeaseLost` 拦住。
+   */
+  onLeaseLost(): void {
+    if (!this.drive) return;
+    this.drive = false;
+    this.clearTimers();
+    // 令号先加一再中止：在途的 AI 回合提交会因 token 不匹配被当作过期结果丢掉（见 turns.ts）。
+    this.turnToken++;
+    this.activeAbortController?.abort();
+    engines.delete(this.gameId);
+    console.warn(`[lease] ${this.gameId} lease lost：租约已被其他实例接管，本实例停止驱动`);
+  }
+
+  /** 只读视图的一切写出口：抛错让当前步骤就地中止，别把状态写花。 */
+  private assertNotLeaseLost(): void {
+    if (this.drive) return;
+    throw new LeaseLostError(this.gameId);
+  }
+
+  /** 只读视图被调到的驱动入口：放弃并留一行日志（同一引擎只记一次，避免刷屏）。 */
+  private warnReadOnly(where: string): void {
+    if (this.leaseWarned) return;
+    this.leaseWarned = true;
+    console.warn(`[lease] ${this.gameId} 未持有租约，忽略${where}`);
+  }
+
   schedule(key: string, fn: () => void | Promise<void>, ms: number): void {
+    if (!this.drive) {
+      this.warnReadOnly(`定时任务 ${key}`);
+      return;
+    }
     const existing = this.timers.get(key);
     if (existing) clearTimeout(existing);
     const t = setTimeout(() => {
@@ -294,6 +368,10 @@ export class GameEngine {
 
   /** 慢速 AI 决策不能占用引擎互斥锁；完成后只把短暂状态提交重新排队。 */
   scheduleBackground(key: string, fn: () => void | Promise<void>, ms: number): void {
+    if (!this.drive) {
+      this.warnReadOnly(`后台任务 ${key}`);
+      return;
+    }
     const existing = this.timers.get(key);
     if (existing) clearTimeout(existing);
     const t = setTimeout(() => {
@@ -380,6 +458,10 @@ export class GameEngine {
 
   /** 引擎心脏：根据当前状态推进下一步。外部入口走互斥队列。 */
   async tick(): Promise<void> {
+    if (!this.drive) {
+      this.warnReadOnly("tick");
+      return;
+    }
     return this.exclusive(() => this.tickInner());
   }
 
@@ -604,6 +686,10 @@ export class GameEngine {
 
   /** 已在 tick 内则记 pending；否则等当前互斥释放后再推进，避免挡住 HTTP。 */
   continueTick(): void {
+    if (!this.drive) {
+      this.warnReadOnly("回合推进");
+      return;
+    }
     if (this.turnInFlight && this.activeAbortController && this.activeGenerationBoundary) {
       const boundary = this.activeGenerationBoundary;
       if (boundary.phase !== this.state.phase || boundary.round !== this.state.round || boundary.turnSeat !== this.state.turnSeat) {
@@ -626,6 +712,7 @@ export class GameEngine {
   // ============ 真人动作入口 ============
 
   async handleAction(seatIndex: number, action: GameAction): Promise<{ ok: boolean; error?: string }> {
+    if (!this.drive) return { ok: false, error: LEASE_READ_ONLY_ERROR };
     const result = await this.exclusive(() => this.handleActionInner(seatIndex, action));
     if (result.ok) this.continueTick();
     return result;
@@ -908,6 +995,7 @@ export class GameEngine {
   // ============ 真人 DM 动作入口 ============
 
   async handleDmAction(action: { type: "narrate" | "nudge" | "skip_turn" | "handout" | "hint" | "force_ready" | "abort_game"; text?: string; clueId?: string; hintIndex?: number; seatIndex?: number }): Promise<{ ok: boolean; error?: string }> {
+    if (!this.drive) return { ok: false, error: LEASE_READ_ONLY_ERROR };
     return this.exclusive(() => this.handleDmActionInner(action));
   }
 
