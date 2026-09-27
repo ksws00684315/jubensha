@@ -2,7 +2,8 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
-const BASE = "http://localhost:3000";
+const BASE = process.env.SEED_BASE ?? "http://localhost:3000";
+const ADMIN_TOKEN = process.env.SEED_ADMIN_TOKEN ?? "";
 const dir = path.join(process.cwd(), "seeds", "generated");
 
 const existing = await fetch(`${BASE}/api/scripts`).then((r) => r.json());
@@ -20,7 +21,7 @@ for (const f of readdirSync(dir).filter((x) => x.endsWith(".json"))) {
   }
   const res = await fetch(`${BASE}/api/scripts`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(ADMIN_TOKEN ? { "x-admin-token": ADMIN_TOKEN } : {}) },
     body: JSON.stringify(doc),
   });
   const data = await res.json().catch(() => ({}));

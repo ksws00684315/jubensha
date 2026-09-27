@@ -45,6 +45,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# e2e 实例的运行产物（pid 文件 / 实例日志 / 隔离配置 / 截图）
+/.e2e/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

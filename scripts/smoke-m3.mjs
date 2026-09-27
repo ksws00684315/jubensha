@@ -3,6 +3,11 @@ import { writeSync } from "node:fs";
 const log = (...a) => writeSync(1, a.map(String).join(" ") + "\n");
 
 const BASE = process.env.SMOKE_BASE ?? "http://127.0.0.1:3000";
+// 防呆：冒烟绝不允许指向 :3000 的用户实例（除非显式 E2E_ALLOW_3000=1）
+if (BASE.includes(":3000") && process.env.E2E_ALLOW_3000 !== "1") {
+  writeSync(2, "FAILED: SMOKE_BASE 指向 :3000（用户实例）。请用 e2e 实例端口，或显式设置 E2E_ALLOW_3000=1。\n");
+  process.exit(1);
+}
 const withRetry = async (fn, tries = 5) => {
   for (let i = 0; i < tries; i++) {
     try {
@@ -91,7 +96,9 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
       }
       if (g.turnSeat === join.seatIndex) {
         log("speak:", JSON.stringify(await act({ type: "speak", text })));
-        await act({ type: "skip" });
+        // 发言后引擎可能已按阅读时长推进回合，此时再 skip 会被拒
+        const after = await myStatus();
+        if (after.turnSeat === join.seatIndex) await act({ type: "skip" });
         return true;
       }
       if (!okPhases.includes(g.phase)) return false;
@@ -100,22 +107,22 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
     return false;
   };
 
+  /** 只在仍然可搜的地点里选：先试目标地点，不可用则退到第一个可用地点。 */
   const pickLocation = async (location) => {
-    let r = await act({ type: "choose_location", location });
+    const g = await myStatus();
+    const options = g.availableLocations ?? [];
+    const target = options.includes(location) ? location : options[0];
+    if (!target) return { ok: true, skipped: true, note: "没有可搜地点" };
+    let r = await act({ type: "choose_location", location: target });
     if (!r.ok && /已经选过/.test(r.error || "")) return { ok: true, skipped: true };
-    // 目标地点不存在/线索被搜完时，改为选择第一个还有线索的地点
-    if (!r.ok) {
-      const g = await myStatus();
-      const alt = (g.availableLocations ?? [])[0];
-      if (alt) r = await act({ type: "choose_location", location: alt });
-    }
     return r;
   };
 
-  // 等待获得新线索（数量从 0 增加）后做私藏决定
+  // 等待获得新线索（数量从 0 增加）后做私藏决定；离开搜证环节后该决定已无法再补
   const publishWhenNewClues = async (prevCount) => {
     for (let i = 0; i < 25; i++) {
       const g = await myStatus();
+      if (g.phase !== "SEARCH") return g.myClues.length;
       if (g.myClues.length > prevCount) {
         const fresh = g.myClues.slice(prevCount);
         for (const clueId of fresh) await act({ type: "publish", clueId, publish: false });
@@ -141,7 +148,10 @@ const phaseIdx = (phase) => PHASE_ORDER.indexOf(phase);
   const clueCount = await publishWhenNewClues(0);
 
   await waitUntil("DISCUSSION r1", (g) => g.phase === "DISCUSSION" && g.round >= 1);
-  log("private:", JSON.stringify(await act({ type: "private_chat", toSeat: 1, text: "问一句：案发前后你都在哪里？" })));
+  // 真人只能回复 AI 主动发起的私信窗口；无模型模式下 AI 不发起，则跳过而不是发一条必被拒的动作
+  const whisperTo = ((await myStatus()).openWhispers ?? [])[0];
+  if (whisperTo === undefined) log("  .. 无私信窗口（AI 未主动私信），跳过 private_chat");
+  else log("private:", JSON.stringify(await act({ type: "private_chat", toSeat: whisperTo, text: "问一句：案发前后你都在哪里？" })));
   await speakMyTurn("我发现现场少了一件关键东西，谁能解释？");
   await act({ type: "rush" });
 
