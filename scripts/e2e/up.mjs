@@ -90,6 +90,9 @@ const ENV = {
   ADMIN_TOKEN,
   SECRET_MASTER_KEY: MASTER_KEY,
 };
+// 实机只跑无模型链路（除 R8 的真模型场景，用的是 E2E_LLM_*）：仓库 .env 里开着 Jev 影子/接管时，
+// 下一局就会对每个 AI 座位向外部决策端点发真付费请求，删掉这些键让实例整体静默。
+for (const key of Object.keys(ENV)) if (key.startsWith("JEV_")) delete ENV[key];
 
 async function waitForReady() {
   const deadline = Date.now() + 60_000;

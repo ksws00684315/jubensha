@@ -9,6 +9,9 @@ export const LLM_LINE = "（测试固定台词：我昨晚在码头看到过可�
 
 export async function setupIntEnv(): Promise<void> {
   process.env.APP_CONFIG_PATH = "/nonexistent/app-config-int.json";
+  // Prisma Client 会把仓库根 .env 读进 process.env：其中 JEV_SHADOW/JEV_FALLBACK 一旦开着，
+  // L3 对局就会向外部决策端点发真付费请求（这条通道不经 chat/chatStream，预算熔断也管不到）。
+  for (const key of Object.keys(process.env)) if (key.startsWith("JEV_")) delete process.env[key];
   resetRateLimits();
 }
 
