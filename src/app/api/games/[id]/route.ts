@@ -41,10 +41,8 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
   if (game.status === "running" && mySeat !== null && !GameEngine.get(id)) {
     void GameEngine.load(id).catch(() => null);
   }
-  const seatStates = await db.seatState.findMany({ where: { gameId: id } });
   const runtimeState = (game.state as unknown as GameState) ?? { clueStates: {}, heldClues: {} };
   const clueStates = runtimeState.clueStates ?? {};
-  const myState = mySeat !== null ? seatStates.find((s) => s.seatIndex === mySeat)?.data : null;
   const mySeatCharacterId = mySeat !== null ? game.room.seats.find((s) => s.index === mySeat)?.characterId ?? null : null;
   const searchOptions = mySeat === null
     ? []
@@ -124,7 +122,7 @@ async function GET_IMPL(req: Request, ctx: { params: Promise<{ id: string }> }) 
     pendingPublishClueIds: mySeat !== null ? runtimeState.pendingPublish?.[String(mySeat)] ?? [] : [],
     pendingInteraction: runtimeState.pendingInteraction?.seatIndex === mySeat ? doc.flow.interactionBeats?.find((beat) => beat.id === runtimeState.pendingInteraction?.beatId) ?? null : null,
     mySeat,
-    myClues: (myState as { clueIds?: string[] } | null)?.clueIds ?? [],
+    myClues: mySeat !== null ? runtimeState.heldClues?.[mySeat] ?? [] : [],
     clues: visibleClues,
     scriptV2: { background: v2.background, characters: v2.characters, locations: v2.locations },
     myCluesV2: doc.clues

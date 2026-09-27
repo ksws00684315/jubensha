@@ -247,7 +247,10 @@ export async function flushRemainingGuarantees(e: GameEngine): Promise<void> {
   }
 }
 
-/** 把某座位的持有线索写回 seatState（概要接口 myClues 的数据源） */
+/**
+ * @deprecated 仅为旧版前端和脚本保留 seat_states.data.clueIds 镜像写入；
+ * GET /api/games/[id] 已以 games.state.heldClues 为唯一读取源。待兼容期结束后删除。
+ */
 export async function syncSeatClueIds(e: GameEngine, seat: number): Promise<void> {
   await db.seatState
     .upsert({

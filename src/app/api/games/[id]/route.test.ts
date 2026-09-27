@@ -75,7 +75,7 @@ describe("A28 GET /api/games/[id]", () => {
   });
 
   it("正确 token → 返回本席 myCard，且其他座位 myCardV2 恒 null", async () => {
-    vi.mocked(db.game.findUnique).mockResolvedValue(runningGame() as never);
+    vi.mocked(db.game.findUnique).mockResolvedValue(runningGame({ state: { heldClues: { "0": ["clue-1"] } } }) as never);
     vi.mocked(db.seatState.findMany).mockResolvedValue([{ seatIndex: 0, data: { clueIds: ["clue-1"] } }] as never);
     const res = await getGame("?seat=0&token=seat-token-1");
     const body = await res.json();
@@ -87,6 +87,20 @@ describe("A28 GET /api/games/[id]", () => {
     expect(body.seats[1].myCardV2).toBeNull();
     expect(body.seats[1].myCard).toBeNull();
     expect(GameEngine.load).toHaveBeenCalledWith(ID); // 参与者可懒恢复
+  });
+
+  it("myClues 以 games.state.heldClues 为准，不读 seat_states 的旧镜像", async () => {
+    vi.mocked(db.game.findUnique).mockResolvedValue(
+      runningGame({ state: { heldClues: { "0": ["state-clue"] } } }) as never
+    );
+    vi.mocked(db.seatState.findMany).mockResolvedValue(
+      [{ seatIndex: 0, data: { clueIds: ["stale-seat-state-clue"] } }] as never
+    );
+
+    const body = await (await getGame("?seat=0&token=seat-token-1")).json();
+
+    expect(body.myClues).toEqual(["state-clue"]);
+    expect(db.seatState.findMany).not.toHaveBeenCalled();
   });
 
   it("quizResult 仅 ENDED 返回", async () => {
