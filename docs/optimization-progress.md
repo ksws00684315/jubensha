@@ -19,15 +19,16 @@
 |---|---|---|---|---|
 | tsc 错误（npx tsc --noEmit） | 0 | 0 | 0 | S0.4 |
 | eslint warning（npx eslint src --max-warnings=0） | 0（S0.2 归零） | 0 | 0 | S0.4 |
-| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 78 / 581 + 2 expected fail，约 6.0s | 不降 | S3.1 |
+| 测试文件 / 用例（npx vitest run） | 55 / 387，约 3.2s | 79 / 595 + 2 expected fail，约 5.9s | 不降 | S3.2 |
 | L2 覆盖处理器（find src/app/api -name route.test.ts） | 1/34 | 22/22 个 route.ts 文件都有同名测试（覆盖全部 34 个导出处理器） | 34/34 | S2.2（S2.6 复测） |
-| L2 用例数 | ~10（events route 10 个） | 188 过 + 2 it.fails（`npm run test:api`，23 files，1.4s） | ≥ 140 | S2.2（S3.1 复测） |
-| L3 用例数 | 0 | 10（3 files） | ≥ 30 | S2.5 |
+| L2 用例数 | ~10（events route 10 个） | 189 过 + 2 it.fails（`npm run test:api`，23 files，2.0s） | ≥ 140 | S3.2 |
+| L3 用例数 | 0 | 13（4 files，15.2s） | ≥ 30 | S3.2 |
 | 含 AI 座位房间的创建授权 | 无检查（任何人可建房消耗 LLM 额度） | 三档策略生效，生产默认 admin；L2 23 用例 + R2 实机 403 + R9 负向清单 403 | 未授权创建/改座 → 403 | S3.1 |
+| 单日 LLM token 上限 | 无：授权被绕过后可一路消耗 | `LLM_DAILY_TOKEN_BUDGET` 熔断，`chat`/`chatStream`/`embedTexts` 第一行拦截 + 看板显示今日已用；L1 13 用例 + L3 I11 3 用例 | 超预算不崩溃、对局仍走到 ENDED | S3.2 |
 | src/lib 行覆盖率（vitest --coverage, L1 口径） | 58.26%（201/345） | 58.26% | ≥ 80% | S0.4 |
 | src/app/api 行覆盖率（同上） | 76.14%（67/88） | 76.14% | ≥ 80% | S0.4 |
 | src/core/engine 行覆盖率（同上） | 71.98%（1166/1620） | 71.98% | ≥ 基线 | S0.4 |
-| 非测试代码 console.*（grep，排除 .test.） | 27 | 30（S3.1 新增 3 条：`room-policy.ts` 的配置错误提示，沿用 `admin.ts:66`/`registry.ts:25` 的 `[模块]` 直写约定；见 DEV-08） | 0（log.ts 除外） | S3.1 |
+| 非测试代码 console.*（grep，排除 .test.） | 27 | 32（S3.2 新增 2 条：`budget.ts:56` 查库失败放行、`:81` 熔断命中，计划明文要求 S6.1 之前先用 `console.warn`；沿用 `[模块]` 直写约定） | 0（log.ts 除外） | S3.2 |
 | 非测试代码 as unknown as（grep，排除 .test.） | 12 | 12 | ≤ 3 | S0.4 |
 | engine.ts 行数（wc -l） | 1044 | 1044 | ≤ 700 | S0.4 |
 | handleActionInner 函数体 | :670–:945 ≈ 275 行 | 275 | ≤ 60 | S0.4 |
@@ -63,7 +64,8 @@
 | S2.4 | DONE | 57e0304 | 2026-09-26 | 2026-09-26 | 新增 6 个 L3 用例（SEARCH/VOTE/REVEAL 恢复点 + REVEAL→ENDED 推进 + 并发 speak 互斥 + 动作/定时器交错）；连跑 3 次全绿；未改生产代码 | DEV-03 |
 | S2.5 | DONE | f25de5c/4b9310e | 2026-09-27 | 2026-09-27 | 实机实例 :3110 隔离跑通 R1×4（61s/次，action_failed=0）、R2、R3、R4；pm2 jubensha 重启计数 25→25 未变；e2e:down 后 jubensha_e2e 计数 0；种子 29 导入 / L3 10 过 / npm run check 绿 | DEV-04, DEV-05, FIND-03 |
 | S2.6 | DONE | 79b66f5/（本提交） | 2026-09-27 | 2026-09-27 | R9 清单 1–6 项桌面 1280×800 与移动 375×812 各一遍，6 份清单 ×2 = 12 次运行 exit 0、每遍 171 步 0 失败；截图 64 张；控制台 error 基线 2（均为第 1 项故意的 404）+ 未捕获异常 0；13 个布局采样无横向滚动；公开/私藏两分支与真人票均有 DB 侧证；第 7 项首轮为基线（无可比截图） | DEV-06, DEV-07, FIND-04, FIND-05, FIND-06 |
-| S3.1 | DONE | 2ab7417/5dcc91e/dfefd64/（本提交） | 2026-09-27 | 2026-09-27 | 三种策略与 D2 默认值逐项对上（证据节）；L2 新增 23 用例（A22 14 + A24 9，两文件 21/17），`npm run check` exit 0（78 files / 581 过 + 2 expected fail，6.0s）、`test:api` 188 过、`test:int` 10 过；实机 R1/R2/R3/R4 全绿（实例按生产默认 admin 跑，未放宽），R9 桌面续跑链 115 步 0 失败、新增负向清单 9 步 0 失败 | DEV-08, DEV-09 |
+| S3.1 | DONE | 2ab7417/5dcc91e/dfefd64/f6816a9 | 2026-09-27 | 2026-09-27 | 三种策略与 D2 默认值逐项对上（证据节）；L2 新增 23 用例（A22 14 + A24 9，两文件 21/17），`npm run check` exit 0（78 files / 581 过 + 2 expected fail，6.0s）、`test:api` 188 过、`test:int` 10 过；实机 R1/R2/R3/R4 全绿（实例按生产默认 admin 跑，未放宽），R9 桌面续跑链 115 步 0 失败、新增负向清单 9 步 0 失败 | DEV-08, DEV-09 |
+| S3.2 | DONE | 9c32200/7d4c17b/29aa39c/（本提交） | 2026-09-27 | 2026-09-27 | 三入口第一行拦截 + 关闭时零库调用 + 60s 缓存 + ≥ 才拦 + 本地当天口径，L1 13 用例逐条对上（证据节）；计划验收的「关闭时 chat 查询数与改动前相同」以 mock 计数断言覆盖，「超预算对局仍走到 ENDED」由 L3 I11 覆盖（阶段轨迹逐个走完、真人发言 ≥2、模型请求 0）；`npm run check` exit 0（79 files / 595 过 + 2 expected fail，5.9s）、`test:api` 189 过（2.0s）、`test:int` 13 过（4 files，15.2s）；commit 9c32200 单独 worktree 复验 tsc 0 + 13 过 | DEV-10, FIND-07 |
 
 ## 验收证据（每步一节）
 ### S0.1
@@ -207,6 +209,44 @@
 - 口令处理：`x-admin-token` 只从 `.e2e/up.json`（gitignore）读取，plan / report / 台账 / 提交信息中均无口令明文；R9 的 `adminSession` 走真实 `/api/admin/unlock` + CDP 注入会话 cookie，不如实在页面上填口令以外的后门。
 - 收尾：`npm run e2e:down` 后 `pg_database` 中 `jubensha_e2e` 计数 0（只剩 `jubensha_test`）；`pm2 describe jubensha` → online、restarts **25 → 25**（:3000 未被触碰）。
 
+### S3.2 每日 LLM token 预算熔断
+落点：新增 `src/core/llm/budget.ts`（83 行）——`BudgetExceededError` :4、`dailyTokenBudget()` :15、`startOfLocalDay()` :23、`usedToday()` :45（60s 缓存 + 并发共用一次查询）、`usedTokensToday()` :71（看板用的免缓存读数）、`assertWithinBudget()` :76；三个入口的第一行接入：`chat` `src/core/llm/client.ts:357`、`chatStream` `:456`、`embedTexts` `:513`（`.env.example` 新增 `LLM_DAILY_TOKEN_BUDGET` 说明块）；看板 `src/app/api/usage/route.ts:56`（响应加 `budget` 字段）+ `src/app/settings/page.tsx:680`（「今日用量」卡片）。
+
+**口径与逐条实测（L1 断言 → 结果，13 用例）**
+
+| 场景 | 期望 | 证据 |
+|---|---|---|
+| `LLM_DAILY_TOKEN_BUDGET` = 未设置 / `""` / `0` / `abc` / `-5` / 空白 | 视为关闭，**一次库都不查**（`usageLog.aggregate` 调用数 0） | L1 用例 1 |
+| 关闭时 `chat` 的库调用 | 与改动前逐字一致：只有 1 次绑定查询 + 1 条用量日志，`aggregate` 0 次 | L1 用例 8（计划验收「查询数相同」的 mock 计数断言） |
+| 60s 内连续调用 | 只查库 1 次；跨过 60s 才第 2 次（fake timers：59s→1、+2s→2） | L1 用例 2 |
+| 当日合计 999 / 预算 1000 | 放行 / **≥ 才拦**（1000 抛） | L1 用例 3 |
+| 求和窗口 | `where.createdAt.gte` 恰为服务器本地时区当天 00:00 | L1 用例 4 |
+| 跨过次日 00:00 | 缓存按天失效，重新按新一天求和 | L1 用例 5 |
+| 并发 5 次调用 | 共用同一次查询（不放大库压力） | L1 用例 6 |
+| 求和本身失败（库抖动） | 放行 + 一条 `warn`，并把该结果缓存 60s（守卫不新增失败面） | L1 用例 7 |
+| 超预算 × `chat` | 抛 `BudgetExceededError`，模型请求 0 次、绑定查询 0 次、用量日志 0 条 | L1 用例 9 |
+| 超预算 × `chatStream` | 在**首个 chunk 之前**抛（不是流中断） | L1 用例 10 |
+| 超预算 × `embedTexts` | 返回 `null` → 检索层整体停用，不把异常抛进发言主流程（与「未绑定」同契约，`client.ts:509`） | L1 用例 11 |
+| 错误文案 | 含 `used/budget` 两个数字，**不含** URL / apiKey / Bearer / provider / `model=`（该文案会经 `turns.ts:152` 广播进公开事件流，观众可见） | L1 用例 12 |
+| 运营日志 | `[llm] budget_exceeded purpose=dm used=150 budget=100`（S6.1 之前先用 `console.warn`，计划明文要求） | L1 用例 13 |
+
+**L3（I11，真库 `jubensha_test`，不 mock `@/core/llm/client`，3 用例 / 15.2s）**
+- 真实 `usage_logs` 当日合计 1200 ≥ 预算 1000 → `chat` 拒绝为 `BudgetExceededError`；**fetch 探针 0 次调用**（探针替换 `globalThis.fetch` 为抛错桩，任何出网请求都会立刻暴露）。
+- 昨天 9999 + 今天 10 未超 → `chat` 抛的是原有的「尚未绑定模型」，证明求和**只按本地当天**，且熔断未抢在既有降级之前。
+- 超预算全程对局（预算 500、当日 501，真人 1 + AI 补位）：**走到 `ENDED`**、`voteResult` 非空、阶段轨迹 `READING → SELF_INTRO → SEARCH → DISCUSSION → VOTE → ENDED` 逐个走完（不是直接落到结束），AI 发言降级为公开提示且文案含「预算已用尽」，真人正式发言 ≥ 2 条，全程 10.7s、模型请求 0 次。这一条就是计划验收的「R1 式对局在超预算时仍能走到 ENDED」。
+
+**看板一致性**：`GET /api/usage` 加 `budget: { daily, usedToday, dayStart }`，与熔断共用 `startOfLocalDay()` 一个口径；L2 用例断言该读数**不走 60s 缓存**（`aggregate` 恰好再查一次），否则运营看到的百分比会比实际熔断点滞后最多一分钟。`settings` 页新增首卡「今日用量（服务器本地时区）」，未设预算时显示「/ 未设每日预算」并提示如何开启。UI 其余部分零改动。
+
+**门禁**
+- `npm run check` → exit 0：Test Files 79 / Tests 595 passed | 2 expected fail（5.9s）；tsc 0 / eslint 0 warning / seeds 校验 exit 0。
+- `npm run test:api` → 23 files / 189 passed | 2 expected fail（2.0s）。
+- `DATABASE_URL=…jubensha_test npm run test:int` → 4 files / 13 passed（15.2s，本轮 35 条 `budget_exceeded` warn 全部来自用例内主动熔断）。
+- 本步不需要实机：S3.2 的验收判据（三入口拦截、关闭时查询数、超预算对局走到 ENDED）全部在 L1/L3 覆盖，实机 R1–R4/R9 由 P3 阶段验收统一跑。
+
+**过程中发现的对外花钱通道（FIND-07）**：`@prisma/client` 会把仓库根 `.env` 自动读进 `process.env`，本机 `.env` 里的 `JEV_SHADOW=1` / `JEV_FALLBACK=1` 因此让 L3 对局与 :3120 实机实例在每个 AI 座位决策时向外部端点发真付费 HTTP 请求 —— 这条通道不经 `chat`/`chatStream`，**本步的预算熔断管不到**。证据：I11 首跑 fetch 探针被调用 12 次（同一配置下熔断已生效、模型请求为 0）。已在 `src/test/int.ts:14` 与 `scripts/e2e/up.mjs:95` 删除 `JEV_*` 键（DEV-10），探针保留为常驻守卫；通道本身另计 FIND-07。
+
+**收尾**：未连接、未改动 `jubensha`（:3000）与任何真库；`.env` / `local.*.json` 只读取过变量名，未读取或记录任何密钥值；本轮含密钥明文的一次失败输出日志已删除。
+
 ## 阶段验收
 - **P0（补记）**：S0.1–S0.4 全 DONE；`G-std` 绿（tsc 0 / eslint 0 / vitest 387→389 / seeds 校验 exit 0）；台账与指标看板建立。
 - **P1（补记）**：`npm run check` 可用且绿（10.4s）；CI `check` job 线上绿（run 36254901201，39s）；`APP_CONFIG_PATH` 生效（读写落盘 + 回落 env 两用例）；pre-commit hook 生效且不影响未安装者。
@@ -231,6 +271,7 @@
 | FIND-04 | S2.6 | 前端 SSE 建连把座位 token 放进 URL query：`GET /api/games/{id}/events?seat=0&token=…`，会进浏览器历史与反向代理访问日志（不变式 5 的暴露面）。R9 网络捕获基线 = 每个玩家标签 1 条 | scripts/e2e/browser.mjs 的 `tokenQueryRequests`（`.e2e/screens/S2.6/S2.6-d5-{d,m}-report.json`） | OPEN（S3.5 一次性票据关闭） | |
 | FIND-05 | S2.6 | 无模型局 ChatFeed 里「（AI 玩家「X」思考时遇到问题：用途槽位 "player" 尚未绑定模型…）」这类降级提示按座位×回合重复记录为公开事件：一局 5 人出现 12 条事件、只有 4 种文案，同屏 5 组重复行，观众也能看到。事件不重复（渲染无 bug），是引擎侧提示未去重 | R9 `r9-d5` 的 `identityBefore/After.bubbles vs uniqueTexts` + `psql … group by type,visibility`（台账 S2.6 证据节） | OPEN（建议 S7.3 关闭：同类 notice 按回合合并） | |
 | FIND-06 | S2.6 | 未匹配路由渲染的是 Next 内置 404，正文为英文 `This page could not be found`，与全站中文文案不一致（项目无 `src/app/not-found.tsx`） | R9 `r9-d1` 的 `notFoundText`（截图 `d06-404.png` / `m06-404.png`） | OPEN（S2.6 只建基线不改代码；建议 S7.3 一并处理） | |
+| FIND-07 | S3.2 | Jev 影子/接管走独立 HTTP 通道（`src/core/jev/live.ts` 直连 `JEV_BASE_URL`，默认 `https://api.typesafe.ai/v1/systemone`），**不经 `chat`/`chatStream`，因此 S3.2 的预算熔断管不到它**：单日花费上限对这条通道无效，且它的开关来自 `@prisma/client` 自动加载的仓库根 `.env`。本步只在测试与 e2e 侧删键止血（DEV-10），生产部署若开着 `JEV_*` 仍在守卫之外 | I11 的 fetch 探针：首轮同一配置下抓到 12 次出网，加删键后为 0 | OPEN（计划 P3 内无对应步骤：建议作为 P3 追加项，或并入 S6.1 的成本/日志口径时一并给 Jev 独立额度与显式开关） | |
 
 ## 实机测试记录
 | 日期 | 阶段 | 场景 | 结果 | 耗时 | 证据路径 |
@@ -277,3 +318,7 @@
   4. `browser.mjs` 的 `--var` 由「后者覆盖前者」改为重复传参累加（逗号分隔），以便一次运行注入多个变量；单次的既有用法行为不变。
   5. 指标「非测试代码 console.*」27 → **30**：新增 3 条 `[room-policy]` 配置错误提示按 `src/lib/admin.ts:66`、`src/core/engine/registry.ts:25` 的现有约定直写 console（项目还没有统一 log 出口，S5.x 收敛）。不为 3 条日志发明只有这一处用的私有约定，但如实计入指标。
 - **DEV-09（S3.1）**：自伤记录。第一次 R9 续跑链运行失败（漏 `--keep-browser`，且当时 `--var` 只保留最后一个参数，见 DEV-08 第 4 条），那次失败运行用新局数据**覆盖了 S2.6 的 3 份桌面报告**（`S2.6-d4a-d` / `S2.6-d5-d` / `S2.6-d4b-d`）。修正后的重跑已生成结构相同、但属于另一局的报告。影响范围：这些是 gitignore 的本地产物、不入库；S2.6 台账引用的数字（气泡数 32→31、seq 侧证等）出自当时的原始运行，现已无法从磁盘复现。S2.6 的结论与判据不改，其完整基线将在 S3.4 的全量 R9 重跑中重建。
+- **DEV-10（S3.2）**：两处计划范围之外的改动，都是被 I11 的 fetch 探针逼出来的（不改就会在测试与实机里真花钱）：
+  1. `src/test/int.ts:14` 的 `setupIntEnv()` 删除 `process.env` 里所有 `JEV_*` 键。根因：`@prisma/client` 会把仓库根 `.env` 自动加载进 `process.env`，本机 `.env` 开着 `JEV_SHADOW=1` / `JEV_FALLBACK=1`，于是每个 L3 对局都会对外部决策端点发真付费请求（首轮探针抓到 12 次）。测试环境不该由个人本地 `.env` 决定要不要出网。
+  2. `scripts/e2e/up.mjs:95` 从实例 ENV 里同样删掉 `JEV_*`。**这是实机行为变化**：以前本机 `.env` 开着影子/接管时，实机实例会跟着走真外部决策；现在 e2e 实例一律是「无 Jev」链路。理由：§3.5 的实机判据本来就建立在无模型链路上，R8 的真模型场景走独立的 `E2E_LLM_*`；一次 e2e 是否花钱取决于开发者本地 `.env` 是不可接受的。需要在实机验证 Jev 时手工带 `JEV_*` 起实例，不通过 e2e 基建。
+  3. I11 的 fetch 探针保留为常驻守卫：L3 任何用例发出出网请求都会立刻失败，而不是悄悄产生账单。熔断管不到这条通道本身，另计 FIND-07。
