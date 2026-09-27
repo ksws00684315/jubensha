@@ -1,14 +1,21 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { ctx, makeReq, mockDbInstance, resetRateLimits } from "@/test/api";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { adminHeaders, ctx, makeReq, mockDbInstance, resetRateLimits, TEST_ADMIN_TOKEN } from "@/test/api";
 import { db } from "@/lib/db";
 import { roomRow, seatRow, scriptRow } from "@/test/fixtures";
 
 vi.mock("@/lib/db", () => ({ db: mockDbInstance }));
 
+afterEach(() => vi.unstubAllEnvs());
 beforeEach(() => {
   resetRateLimits();
   vi.clearAllMocks();
 });
+
+function stubProduction() {
+  vi.stubEnv("NODE_ENV", "production");
+  vi.stubEnv("SECRET_MASTER_KEY", "master-key-for-test-0123456789");
+  vi.stubEnv("ADMIN_TOKEN", TEST_ADMIN_TOKEN);
+}
 
 function lobbyRoom(overrides: Record<string, unknown> = {}) {
   return roomRow({
@@ -104,5 +111,119 @@ describe("A24 PATCH /api/rooms/[code]", () => {
     const data = aiCall![0] as unknown as { data: { kind: string; token: string | null } };
     expect(data.data.kind).toBe("ai");
     expect(data.data.token).toBeNull();
+  });
+});
+
+/**
+ * S3.1：把真人座改成 AI 座与建 AI 房花同样的钱，所以 PATCH 要按「改完的结果」再查一遍授权。
+ * 无权限用例同样要 stub NODE_ENV=production —— 测试环境的「本机免登录」会把 localhost 请求当作管理员。
+ */
+describe("A24 PATCH /api/rooms/[code] —— S3.1 开房授权策略", () => {
+  const seatsWithAi = [
+    { index: 0, kind: "human" },
+    { index: 1, kind: "ai" },
+    { index: 2, kind: "ai" },
+  ];
+  const allHuman = [
+    { index: 0, kind: "human" },
+    { index: 1, kind: "human" },
+    { index: 2, kind: "human" },
+  ];
+
+  function stubPatchOk() {
+    vi.mocked(db.room.findUnique).mockResolvedValue(lobbyRoom() as never);
+    vi.mocked(db.script.findUnique).mockResolvedValue(scriptRow() as never);
+    vi.mocked(db.seat.update).mockResolvedValue(seatRow() as never);
+  }
+
+  async function patch(seats: Record<string, unknown>[], extra: Record<string, unknown> = {}, headers?: Record<string, string>) {
+    const { PATCH } = await import("./route");
+    return PATCH(
+      makeReq("PATCH", "/api/rooms/ABCDE", { body: { hostToken: "host-token-1", seats, ...extra }, headers }),
+      ctx({ code: "ABCDE" })
+    );
+  }
+
+  it("策略 admin：无凭证改出 AI 座位 → 403，座位不落库", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "admin");
+    stubPatchOk();
+    const res = await patch(seatsWithAi);
+    expect(res.status).toBe(403);
+    expect((await res.json()).error).toBe("创建含 AI 座位的房间需要管理员身份");
+    expect(db.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("默认策略：生产环境为 admin，无凭证改出 AI 座位被拒", async () => {
+    stubProduction();
+    stubPatchOk();
+    const res = await patch(seatsWithAi);
+    expect(res.status).toBe(403);
+  });
+
+  it("策略 admin：管理员口令可改出 AI 座位", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "admin");
+    stubPatchOk();
+    const res = await patch(seatsWithAi, {}, adminHeaders());
+    expect(res.status).toBe(200);
+    expect(db.$transaction).toHaveBeenCalled();
+  });
+
+  it("策略 open：无凭证可改出 AI 座位", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "open");
+    stubPatchOk();
+    const res = await patch(seatsWithAi);
+    expect(res.status).toBe(200);
+  });
+
+  it("策略 admin：改完全真人座位不需要授权", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "admin");
+    stubPatchOk();
+    const res = await patch(allHuman);
+    expect(res.status).toBe(200);
+  });
+
+  it("策略 invite：邀请码正确可改出 AI 座位", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "invite");
+    vi.stubEnv("ROOM_INVITE_CODE", "invite-code-for-test");
+    stubPatchOk();
+    const res = await patch(seatsWithAi, { inviteCode: "invite-code-for-test" });
+    expect(res.status).toBe(200);
+  });
+
+  it("策略 invite：邀请码错误 → 403", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "invite");
+    vi.stubEnv("ROOM_INVITE_CODE", "invite-code-for-test");
+    stubPatchOk();
+    const res = await patch(seatsWithAi, { inviteCode: "wrong" });
+    expect(res.status).toBe(403);
+    expect(db.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("策略 invite：缺 ROOM_INVITE_CODE 时 fail closed", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "invite");
+    vi.stubEnv("ROOM_INVITE_CODE", "");
+    stubPatchOk();
+    const res = await patch(seatsWithAi, { inviteCode: "whatever" });
+    expect(res.status).toBe(403);
+  });
+
+  it("房主校验仍然优先：hostToken 错时不给授权提示", async () => {
+    stubProduction();
+    vi.stubEnv("ROOM_CREATE_POLICY", "admin");
+    stubPatchOk();
+    const { PATCH } = await import("./route");
+    const res = await PATCH(
+      makeReq("PATCH", "/api/rooms/ABCDE", { body: { hostToken: "wrong", seats: seatsWithAi } }),
+      ctx({ code: "ABCDE" })
+    );
+    expect(res.status).toBe(403);
+    expect((await res.json()).error).toBe("只有房主可以改座位");
   });
 });
