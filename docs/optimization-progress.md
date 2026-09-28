@@ -94,7 +94,7 @@
 | S7.3 | DONE | 17b9cfb/3fd1be3/ea5e9a3/29cb824/739e6d4/f4a0025 | 2026-09-28 | 2026-09-28 | BUG-03 修复并翻正 A34；FIND-05 同轮同因提示合并；FIND-06 中文全局 404；JSON 读取均有 schema 校验；生产 `as unknown as` 1 处且有注释，`it.fails` 0；`npm run check` 91 files / 727 passed；`test:int` 8 files / 24 passed；R1–R4/R9 通过，R8 无凭证跳过。最终 R5 复测三轮未稳定通过，P7 阶段门禁受阻。 | DEV-25；R5 flaky |
 | S8.1 | DONE | a25fe75 | 2026-09-28 | 2026-09-28 | 新增 7 个稳定字符串 CHECK 约束及 I13 七条非法更新测试；测试库空库全量部署 15 个 migration 成功；E2E 现有数据预检后单独重放并成功应用新 migration；`test:int` 9 files / 31 passed；R1–R3 全通过；`npm run check` 91 files / 727 passed。生产库只留预检 SQL，未连接。 | DEV-26 |
 | S8.2 | DONE | （本提交） | 2026-09-28 | 2026-09-28 | `scripts/retention.ts`：默认 90 天 dry-run、目标库密码遮蔽、逐表行数、`--apply --confirm <库名>` 二次确认、事务清理游戏子表/usage/Jev 记录；I12 三用例覆盖 dry-run 零删除、apply 精确范围、缺少确认即拒绝；`test:int` 10 files / 34 passed；`npm run check` 91 files / 727 passed；CLI dry-run 目标 `jubensha_test`。 | — |
-| S8.3 | TODO | — | — | — | 原阻塞原因（P7 的 R5）已由 DEV-27 解除，P7 阶段门禁 2026-09-28 复测通过；本步尚未执行。 | 前置已解除 |
+| S8.3 | DONE | （本提交） | 2026-09-28 | 2026-09-28 | 6 个目标包在原有 `^` 范围内升到 wanted；`package.json` 不变，lockfile 只涉及目标包及 AI SDK 子依赖；audit --omit=dev 前后均 3 high；`check` 91 files / 727 passed；`test:int` 10 files / 36 passed；R1–R3 PASSED；R8 `SKIPPED(no-credentials)`。 | DEV-29 |
 | S8.4 | BLOCKED | 79aa326 | 2026-09-28 | 2026-09-28 | standalone + Compose + named volume + `/api/health` + PM2 `cwd: __dirname` 已实现；`npm run check` / `test:int` 通过。镜像 529,438,200 bytes（400 MB 门槛不通过）；Docker R1 三轮均未到 ENDED，最后两轮固定等待 420 秒后分别停在 SEARCH r1/r2，另一轮启动请求 ECONNRESET。下线并重建 Compose 后 games 保持 2 行，health HTTP 200；镜像文件/history 无 `.env`、`local.*.json`、`docker.env` 命中。 | Docker 镜像体积、R1；2026-09-28 按 D11 在 `docs/deployment-docker.md` 与 `docs/README.md` 标注为实验性。 |
 | S8.5 | DONE | 645b31e | 2026-09-28 | 2026-09-28 | docs 索引覆盖 docs/ 全部 22 个 Markdown，4 篇 ADR 均含四节；README 增补 L1–L4 命令。`npm run check` 91/727、`test:api` 25 files / 222 passed、`test:int` 10 files / 34 passed；coverage 见指标表；CI run 36343310736 绿。 | — |
 ## 验收证据（每步一节）
@@ -730,10 +730,18 @@
 - **DEV-25（S7.3 / P7）**：最终代码版本的 R5 实机复测三轮未通过。两轮 SIGTERM 后 10 秒内主实例 owner 仍在，第三轮在交牌检查前因第二实例新增日志仅 1 次 `lease held by` 失败。此前 S7.1、P6 曾成功交牌（25ms/47ms），但本次按「同一步最多 3 轮」如实将 P7 G-e2e 标为 BLOCKED；没有调高超时或改弱判据。建议后续先修复/稳定 SIGTERM 租约观测，再重跑 R5。
 - **DEV-27（P7 复测）**：DEV-25 记录的 R5「不稳定」并非产品问题。`scripts/e2e/dual-instance.mjs` 的 `tailFrom` 用 `statSync().size`（字节）去 `slice` 一个 UTF-8 字符串（字符），实例日志含中文且跨轮追加，越往后截取起点越靠后，本轮的 `lease held by` 被整段跳过。第二实例日志里实际每 2s 一条（行为正确）。改为按字节切（`readFileSync(f).subarray(off)`）。`sse-resume.mjs` 的偏移同样按字符计算，与截取一致，无需修改。
 - **DEV-28（S4.1 追补）**：退出交牌只挂 SIGTERM；pm2（`ecosystem.config.js` 未配 `kill_signal`）默认发 SIGINT，旧进程不交牌，新进程要等 30s TTL 过期才能驱动。另外 Node 的 emit 会先复制监听器列表，SIGTERM 时 Next 的 start-server 退出处理器与异步放牌竞速。修复：生产环境同时处理 SIGINT；安装时接管已注册的同信号处理器，放牌完成（最长 1s，小于 pm2 默认 kill_timeout 1.6s）后再按原顺序转交，退出码仍由 Next 决定。局限：安装之后才注册的处理器仍会与放牌并行（记录在 `lease.ts` 注释中）。
+- **DEV-29（S8.3）**：计划要求 LLM SDK 升级后跑 R8，但环境中没有 `E2E_LLM_*` 凭证，按 D5 记 `SKIPPED(no-credentials)`。真模型链路的回归只由 L1/L2 的 mock 与 R1 的无模型链路覆盖，建议在正式部署后用一局真实对局观察。
 - **DEV-26（S8.1）**：新增 CHECK 后首次 `test:int` 发现两份既有测试输入越出已声明的稳定集合（分页测试房间状态 `started`、v0 快照测试难度 `normal`）。迁移在已有 `jubensha_test` 上成功应用，E2E 现存字段预检也均合法；仅把这两处测试夹具输入改为现行合法值 `playing` / `新手`，不改断言。随后全新测试库和带真实对局的 E2E 库均验证了迁移部署。
 
 ### S8.3
-- 前置 P7 的最终阶段门禁为 BLOCKED（DEV-25）；P7 的 R8 按 D5 已执行一次凭证存在性检查并记 `SKIPPED(no-credentials)`。不重复调用 R8，因此本步不能推进。
+- 前置：P7 阶段门禁已于 2026-09-28 复测通过（DEV-27），本步解除阻塞。
+- 升级：`npm update ai @ai-sdk/anthropic @ai-sdk/openai @ai-sdk/openai-compatible @types/react @types/react-dom`。结果 `ai` 7.0.84→7.0.118、`@ai-sdk/anthropic` 4.0.45→4.0.65、`@ai-sdk/openai` 4.0.51→4.0.78、`@ai-sdk/openai-compatible` 3.0.40→3.0.57、`@types/react` 19.2.18→19.3.0、`@types/react-dom` 19.2.5→19.3.0。`package.json` 的 `^` 范围已覆盖，未改动。
+- lockfile 版本变化只有：上述 6 个目标包 + `@ai-sdk/gateway` 4.0.68→4.0.96、`@ai-sdk/provider` 4.0.8→4.0.18、`@ai-sdk/provider-utils` 5.0.33→5.0.49、`undici` 7.29.0→7.30.0（`npm ls undici`：经 `@ai-sdk/provider-utils` 引入），均为目标包的子依赖。
+- `npm audit --omit=dev`：升级前 3 high / 升级后 3 high（D9：不新增）。
+- 门禁：`npm run check` exit 0，91 files / 727 passed；`test:int` 10 files / 36 passed。
+- 实机：R1 PASSED（ENDED，voteResult 非空）、R2 PASSED、R3 PASSED。首轮 R1 曾在 14:47 因测试库容器 `jubensha-pg-test` 被外部正常停止（exit 0、非 OOM）而得到 500，与升级无关；重新拉起容器后整套重跑通过。
+- R8：环境中无 `E2E_LLM_*`，按 D5 记 `SKIPPED(no-credentials)`（DEV-29）。
+- 大版本评估（不执行）：Prisma 7 可消除 audit 的 3 个 high，但涉及客户端生成方式与配置迁移，需单独立项；eslint 10 需等 `eslint-config-next` 跟进；`@types/node` 应与运行时 Node 22 对齐，建议改为 `^22` 而非跳到 26。另有 `next` 16.3.3→16.3.6、`zod` 4.5.4→4.6.5、`tsx` 4.23.13→4.23.15 等补丁版本可升，不在本步清单内，未动。
 
 ### S8.4
 - 基线/最终代码门禁：`npm run check` → exit 0，91 files / 727 passed；`DATABASE_URL=...jubensha_test npm run test:int` → exit 0，10 files / 34 passed。
@@ -796,4 +804,5 @@
 - **BUG-05 / DEV-27**：修复 R5 脚本的日志截取错误；R5 连续 3 轮通过，**P7 阶段门禁通过**，S8.3 的前置随之解除（S8.3 本身尚未执行）。
 - 决策 D8–D11 已记录：S5.4 不做；audit 目标改为不新增；route 行数接受 74；Docker 标注为实验性。
 - 门禁：`npm run check` 91 files / 727 passed；`test:int` 10 files / 36 passed。用户 pm2 进程 `jubensha` 全程未触碰（重启计数 25）。
-- 仍未完成：S8.3（依赖补丁升级，前置已解除）、S8.4（Docker 镜像体积与容器内对局卡在 SEARCH）、R8（无凭证）。合并到 main 由用户决定。
+- S8.3 已完成（依赖补丁升级，门禁与 R1–R3 通过，R8 无凭证跳过）。
+- 仍未完成：S8.4（Docker 镜像体积与容器内对局卡在 SEARCH）、R8（无凭证）。合并到 main 由用户决定。
