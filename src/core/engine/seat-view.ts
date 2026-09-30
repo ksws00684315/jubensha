@@ -191,11 +191,17 @@ export function buildSeatView(args: {
         id,
         name,
         locationId,
+        locationName: locationNameOf(doc, locationId),
+        // 区分"在我手里（我搜出/他人面交）"与"仅全场公示"（T3.1）
+        held: (runtimeState.heldClues?.[mySeat ?? -1] ?? []).includes(id),
         category,
         content,
         policy,
       })),
     voteResult,
+    // 我这一票（投票后可确认已生效；ENDED 查询时仍可回看）。T3.1：此前该值算了没返回，
+    // 客户端无法判断"我投过没有"，出现"投票成功仍提示待投票"。
+    myVote: myVote ?? null,
     // 结构化结局：模式 + 答题卡（题面公开不含正确项；myAnswers 仅本人）
     voteMode: doc.flow.voteMode,
     quiz:
@@ -216,7 +222,8 @@ export function buildSeatView(args: {
       runtimeState.phase === "ENDED" ? (runtimeState.quizResult ?? null) : null,
     settlement,
     culpritSettlement,
-    turnSeat: runtimeState.turnSeat ?? null,
+    // 终局后"轮到谁发言"已无意义，清零避免客户端残留"轮到你"提示（T3.1 实测）
+    turnSeat: game.status === "ended" ? null : (runtimeState.turnSeat ?? null),
     questionsLeft:
       mySeat !== null ? (runtimeState.questionsLeft?.[String(mySeat)] ?? 0) : 0,
     // 在途质询只发给有座位的参与者：题干本身在公开发言里，但"谁被问、还没答"不该给观战者看

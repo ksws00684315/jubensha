@@ -156,4 +156,54 @@ describe("buildSeatView 信息隔离", () => {
     expect(view).not.toHaveProperty("truth");
     expect(view).not.toHaveProperty("culpritId");
   });
+
+  it("myVote 返回我的投票记录（T3.1）", () => {
+    const state = stateFixture({
+      turnSeat: 2,
+      votes: { "0": { target: 2, reason: "嫌疑最大" } },
+    });
+    const view = viewFixture({ mySeat: 0, state });
+    // 此前 myVote 计算了却从未放进返回对象，客户端无法确认投票生效
+    expect(view.myVote).toEqual({ target: 2, reason: "嫌疑最大" });
+    const spectator = viewFixture({ mySeat: null, state });
+    expect(spectator.myVote).toBeNull();
+  });
+
+  it("ENDED 状态下 turnSeat 返回 null，避免残留『轮到你』提示（T3.1）", () => {
+    const doc = docFixture();
+    const roomSeats = doc.characters.slice(0, 3).map((character, index) =>
+      seatRow({ id: `seat-${index}`, index, kind: index === 0 ? "human" : "ai", characterId: character.id }),
+    );
+    const game = {
+      ...gameRow({ status: "ended", phase: "ENDED", round: 0 }),
+      room: { id: "room-1", code: "ABCDE", seats: roomSeats },
+    };
+    const view = buildSeatView({
+      game: game as never,
+      doc,
+      runtimeState: stateFixture({ turnSeat: 2 }),
+      mySeat: 0,
+    });
+    expect(view.turnSeat).toBeNull();
+  });
+
+  it("myCluesV2 区分我手里的线索与仅公示的线索，并带地点名（T3.1）", () => {
+    const doc = docFixture();
+    const clueA = doc.clues[0];
+    const clueB = doc.clues[1];
+    const state = stateFixture({
+      clueStates: {
+        [clueA.id]: { isPublic: true, discoveredBy: 0 },
+        [clueB.id]: { isPublic: true, discoveredBy: 1 },
+      },
+      heldClues: { "0": [clueA.id] },
+    });
+    const view = viewFixture({ mySeat: 0, state });
+    const mine = view.myCluesV2.find((clue) => clue.id === clueA.id);
+    const others = view.myCluesV2.find((clue) => clue.id === clueB.id);
+    expect(mine?.held).toBe(true);
+    expect(others?.held).toBe(false);
+    expect(mine?.locationName).toBeTruthy();
+    expect(typeof mine?.locationName).toBe("string");
+  });
 });

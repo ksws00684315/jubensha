@@ -127,7 +127,9 @@ export interface GameSummary {
   myClues: string[];
   clues: Array<{ id: string; name: string; location: string }>;
   scriptV2: Pick<PublicScriptViewV2, "background" | "characters" | "locations"> | null;
-  myCluesV2: Array<Pick<ClueV2, "id" | "name" | "locationId" | "category" | "content" | "policy">>;
+  myCluesV2: Array<Pick<ClueV2, "id" | "name" | "locationId" | "category" | "content" | "policy"> & { locationName: string; held: boolean }>;
+  /** 我这一票（投票后非空）；此前该值从未返回，客户端无法确认投票已生效（T3.1） */
+  myVote: { target: number; reason?: string; evidenceIds?: string[] } | null;
   turnSeat: number | null;
   questionsLeft: number;
   publicEvidence?: Array<{ id: string; name: string }>;

@@ -438,10 +438,10 @@ export default function PlayPage() {
                   <p className="text-xs text-paper-400">等待 {seatName(summary.pendingAnswer.toSeat)} 回答你的提问…</p>
                 ) : summary.turnSeat === mySeat ? (
                   <>
-                    <p className="text-xs text-paper-400">轮到你发言。可当众陈述，也可提问（剩余 {summary.questionsLeft} 次）。结束后请点「结束发言」。</p>
+                    <p className="text-xs text-paper-400">轮到你发言。可当众陈述，也可提问（本轮剩余 {summary.questionsLeft} 次，每轮重置）。结束后请点「结束发言」。</p>
                     {summary.questionsLeft > 0 && (
                       <fieldset className="space-y-2 border-t border-gold-400/20 pt-3">
-                        <legend className="text-xs font-semibold text-gold-400">公开质询 · 剩余 {summary.questionsLeft} 次</legend>
+                        <legend className="text-xs font-semibold text-gold-400">公开质询 · 本轮剩余 {summary.questionsLeft} 次</legend>
                         <p className="text-[11px] text-paper-500">问题和引用的证据会进入全场记录，并由对方当众回答。</p>
                         <select
                           aria-label="选择提问对象"
