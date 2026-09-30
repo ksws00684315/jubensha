@@ -277,13 +277,36 @@ export const PLAYER_ACTIONS: Record<GameAction["type"], Handler> = {
     if (e.state.phase !== "DISCUSSION") return { ok: false, error: "当前不在讨论环节" };
     const toSeat = action.toSeat ?? -1;
     const target = e.state.seats[toSeat];
-    if (!target || target.kind !== "ai") return { ok: false, error: "只能回复 AI 玩家的私信" };
-    const key = `${toSeat}-${seatIndex}`;
-    if ((e.state.privateChat[key] ?? 0) <= 0) return { ok: false, error: "对方没有向你发起私信" };
+    if (!target || toSeat === seatIndex) return { ok: false, error: "私信对象不合法" };
     const text = (action.text ?? "").trim().slice(0, 300);
     if (!text) return { ok: false, error: "回复不能为空" };
-    // 消耗一次窗口额度（非一次性封口）：AI 再次私信可续，额度用尽即封口。
-    e.state.privateChat[key] -= 1;
+    if (target.kind === "ai") {
+      // ★ AI 主动私信的回复通道 ★：只有当某位 AI 向你开过私信窗口时才能回复。
+      const key = `${toSeat}-${seatIndex}`;
+      if ((e.state.privateChat[key] ?? 0) <= 0) return { ok: false, error: "对方没有向你发起私信" };
+      // 消耗一次窗口额度（非一次性封口）：AI 再次私信可续，额度用尽即封口。
+      e.state.privateChat[key] -= 1;
+      await e.recordEvent({
+        type: "private",
+        phase: e.state.phase,
+        round: e.state.round,
+        fromSeat: seatIndex,
+        toSeat,
+        visibility: `seat:${toSeat}`,
+        content: { text },
+      });
+      await e.persist();
+      queueAiPrivateReply(e, toSeat, seatIndex, text);
+      return { ok: true };
+    }
+    // ★ 真人→真人主动私信（T2.1）★：纯真人局唯一的私聊通道；每个方向独立限
+    // privateChatMessageLimit 条，已用数记在 `h${发起方}-${接收方}`（h 前缀与 AI 窗口的
+    // 剩余额度语义隔离，避免被 seat view 的 openWhispers 误渲染成可回复窗口）。
+    const ownKey = `h${seatIndex}-${toSeat}`;
+    const used = e.state.privateChat[ownKey] ?? 0;
+    const limit = e.script.flow.privateChatMessageLimit;
+    if (used >= limit) return { ok: false, error: `对这位玩家的私信额度已用完（每个方向 ${limit} 条）` };
+    e.state.privateChat[ownKey] = used + 1;
     await e.recordEvent({
       type: "private",
       phase: e.state.phase,
@@ -294,7 +317,6 @@ export const PLAYER_ACTIONS: Record<GameAction["type"], Handler> = {
       content: { text },
     });
     await e.persist();
-    queueAiPrivateReply(e, toSeat, seatIndex, text);
     return { ok: true };
   },
   "rush": async (e) => {

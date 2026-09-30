@@ -308,7 +308,84 @@ export function ChatFeed(props: ChatFeedProps) {
           </div>
         </fieldset>
       )}
+
+      {/* 真人→真人私信（T2.1）：讨论阶段向其他真人座位发起悄悄话 */}
+      {showComposer && summary.flow?.allowPrivateChat && (
+        <WhisperComposer
+          mySeat={mySeat}
+          seats={summary.seats}
+          seatName={seatName}
+          sending={sending}
+          onSendWhisper={onSendWhisper}
+        />
+      )}
     </section>
+  );
+}
+
+/** 私信发起区：选择一个真人座位，发一条仅双方可见的悄悄话（每方向条数由对局配置限定）。 */
+function WhisperComposer({
+  mySeat,
+  seats,
+  seatName,
+  sending,
+  onSendWhisper,
+}: {
+  mySeat: number | null;
+  seats: GameSummary["seats"];
+  seatName: (i: number) => string;
+  sending: boolean;
+  onSendWhisper: (toSeat: number, text: string) => Promise<boolean>;
+}) {
+  const [target, setTarget] = useState<number | null>(null);
+  const [text, setText] = useState("");
+  const humans = seats.filter((s) => s.kind === "human" && s.index !== mySeat);
+  if (!humans.length) return null;
+  const send = () => {
+    if (target === null || !text.trim()) return;
+    void onSendWhisper(target, text).then((ok) => {
+      if (ok) setText("");
+    });
+  };
+  return (
+    <fieldset className="border-t border-gold-400/10 bg-ink-950/45 p-4">
+      <legend className="px-1 text-xs font-semibold text-gold-400">悄悄话 · 私信</legend>
+      <p className="mb-2 text-[11px] text-paper-500">仅双方可见，不进入全场记录；条数有限，精打细算。</p>
+      <div className="mb-2 flex flex-wrap gap-1.5">
+        {humans.map((s) => (
+          <button
+            key={s.index}
+            type="button"
+            onClick={() => setTarget(s.index)}
+            className={`rounded-full border px-3 py-1 text-xs ${target === s.index ? "border-gold-400/70 bg-gold-400/10 text-gold-400" : "border-paper-500/20 text-paper-300 hover:border-gold-400/40"}`}
+          >
+            {seatName(s.index)}
+          </button>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <input
+          value={text}
+          maxLength={300}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && target !== null && text.trim()) send();
+          }}
+          disabled={sending || target === null}
+          placeholder={target === null ? "先选择一位玩家…" : `悄悄话给 ${seatName(target)}…`}
+          aria-label="私信内容"
+          className="min-w-0 flex-1 rounded-lg border border-gold-400/15 bg-ink-950 px-3 py-2 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-gold-400 disabled:opacity-50"
+        />
+        <button
+          type="button"
+          onClick={send}
+          disabled={sending || target === null || !text.trim()}
+          className="rounded-lg border border-gold-400/40 px-4 text-sm font-semibold text-gold-400 hover:bg-gold-400/10 disabled:opacity-40"
+        >
+          发送
+        </button>
+      </div>
+    </fieldset>
   );
 }
 

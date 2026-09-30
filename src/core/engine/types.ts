@@ -74,8 +74,12 @@ export interface GameState {
   /** 当前轮到谁发言（轮流阶段） */
   turnSeat: number | null;
   votes: Record<string, VoteRecord>; // key = 座位索引字符串
-  /** 私聊窗口：当前开放的 from→to 计数 */
-  privateChat: Record<string, number>; // key = `${from}-${to}`
+  /**
+   * 私聊额度映射，两种 key 语义并存（T2.1）：
+   * - `${aiFrom}-${humanTo}`：AI 开窗的**剩余可回复次数**（AI 每次私信 +1，真人回复 -1）
+   * - `h${humanFrom}-${humanTo}`：真人主动私信的**已用条数**（每方向封顶 privateChatMessageLimit）
+   */
+  privateChat: Record<string, number>;
   /** 搜证阶段：已选地点待分派 */
   searchChoices: Record<string, string>; // key = 座位, value = 地点
   /** 搜证阶段：待玩家决定公开/私藏的线索（座位 → 线索id），随状态持久化以防重启丢失 */

@@ -267,6 +267,45 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     e.clearTimers("");
   });
 
+  it("真人向真人主动私信放行、双向可见、第三者不可见、每方向限额（T2.1）", async () => {
+    const room = makeRoom();
+    // 座位 1 也改成真人，构造纯私聊通道
+    (room.seats as any)[1] = { ...room.seats[1], kind: "human", playerName: "真人二号" };
+    const e = await GameEngine.start(room as any, { id: "script-p", content: JSON.parse(JSON.stringify(doc)) });
+    e.clearTimers(""); e.state.phase = "DISCUSSION"; e.state.turnSeat = 0;
+
+    // 互发：0→1 与 1→0 各自成向，互不挤占额度
+    expect((await e.handleAction(0, { type: "private_chat", toSeat: 1, text: "私下聊聊？" })).ok).toBe(true);
+    expect((await e.handleAction(1, { type: "private_chat", toSeat: 0, text: "你说。" })).ok).toBe(true);
+
+    const p0to1 = e.events.filter((ev) => ev.type === "private" && ev.fromSeat === 0 && ev.toSeat === 1);
+    const p1to0 = e.events.filter((ev) => ev.type === "private" && ev.fromSeat === 1 && ev.toSeat === 0);
+    expect(p0to1).toHaveLength(1);
+    expect(p1to0).toHaveLength(1);
+    expect(p0to1[0].visibility).toBe("seat:1");
+
+    // 空文本 / 私信自己 / 非法目标被拒
+    expect((await e.handleAction(0, { type: "private_chat", toSeat: 1, text: "  " })).ok).toBe(false);
+    expect((await e.handleAction(0, { type: "private_chat", toSeat: 0, text: "自言自语" })).ok).toBe(false);
+    expect((await e.handleAction(0, { type: "private_chat", toSeat: 99, text: "不存在" })).ok).toBe(false);
+
+    // 每方向限额：0→1 打满 privateChatMessageLimit 后拒绝；1→0 的额度不受影响
+    const limit = e.script.flow.privateChatMessageLimit;
+    const used = e.state.privateChat["h0-1"] ?? 0;
+    for (let i = used; i < limit; i += 1) {
+      expect((await e.handleAction(0, { type: "private_chat", toSeat: 1, text: `第${i + 2}条` })).ok).toBe(true);
+    }
+    expect(e.state.privateChat["h0-1"]).toBe(limit);
+    const exhausted = await e.handleAction(0, { type: "private_chat", toSeat: 1, text: "超限" });
+    expect(exhausted.ok).toBe(false);
+    expect(exhausted.error).toContain("额度已用完");
+    expect((await e.handleAction(1, { type: "private_chat", toSeat: 0, text: "反方向还有额度" })).ok).toBe(true);
+
+    // h 前缀的已用计数与 AI 开窗额度共存于同一映射，但互不干扰（本局无 AI 开窗）
+    expect(Object.keys(e.state.privateChat).sort()).toEqual(["h0-1", "h1-0"]);
+    e.clearTimers("");
+  });
+
   it("超时跳过 + 真人提问 + AI 全兜底,完整走完两轮讨论并结算", async () => {
     const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
     const ready = await engine.handleAction(0, { type: "ready" });
