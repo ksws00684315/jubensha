@@ -15,9 +15,10 @@ for G in $@; do
     select count(*) from game_events p where p.\"gameId\"=e.\"gameId\" and p.type='clue' and p.visibility='public'
       and p.content::jsonb->>'clueId'=e.content::jsonb->>'clueId')
   from game_events e where e.\"gameId\"='$G' and e.type='clue' and e.visibility='seat:0' order by e.seq;"
-  # T4.1：此处 '种文案' 曾漏闭合单引号，字面量吞掉 WHERE 子句必报语法错，
-  # 且 set -e 会静默吞掉其后 vote/state 两段取证输出。
-  psql $DB -At -c "select 'notice|'||type||'|'||visibility||'|'||count(*)||'条/'||count(distinct content::text)||'种文案' from game_events where \"gameId\"='$G' and content::text like '%尚未绑定模型%' group by 1,2;"
+  # T4.1：此处有两处历史错误——'种文案' 漏闭合单引号（字面量吞掉 WHERE，报语法错），
+  # 且 group by 1,2 把含聚合的整串表达式当分组键（aggregate functions are not allowed in GROUP BY）。
+  # 该查询在修复前从未成功过，set -e 会静默吞掉其后 vote/state 两段取证输出。
+  psql $DB -At -c "select type||'|'||visibility||'|'||count(*)||'条/'||count(distinct content::text)||'种文案' from game_events where \"gameId\"='$G' and content::text like '%尚未绑定模型%' group by type, visibility;"
   psql $DB -At -c "select 'vote|seat'||\"seatIndex\"||'->'||\"targetIndex\"||'|'||left(coalesce(reason,''),16) from votes where \"gameId\"='$G' order by \"seatIndex\";"
   psql $DB -At -c "select 'state|'||phase||'|r'||round||'|'||status||'|'||coalesce(state::jsonb->>'voteResult','null') from games where id='$G';"
 done
