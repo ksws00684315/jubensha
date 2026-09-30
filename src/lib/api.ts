@@ -22,7 +22,12 @@ export function withRoute<P>(
         /* 保留原始 url */
       }
       log.error(`${req.method} ${path} api.unhandled`, { method: req.method, path, requestId, error: err });
-      return NextResponse.json({ error: "服务器内部错误，请稍后重试" }, { status: 500 });
+      // 固定文案不外泄错误细节（独立审查 M4）；带下一步动作建议与 requestId 供反馈定位（T3.2，
+      // 2026-10-01 实测：故障期间玩家连续收到零指引文案，无法区分"重试/重进/联系房主"）。
+      return NextResponse.json(
+        { error: "服务暂时不可用，请稍后重试；若持续出现，请刷新页面或联系房主。", requestId },
+        { status: 500 },
+      );
     }
   };
 }

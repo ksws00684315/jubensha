@@ -21,8 +21,9 @@ describe("withRoute 统一异常兜底", () => {
     });
     const res = await withRoute(handler)(new Request("http://x/api/games/game-1/actions", { method: "POST" }), ctx);
     expect(res.status).toBe(500);
-    const body = (await res.json()) as { error: string };
-    expect(body.error).toBe("服务器内部错误，请稍后重试");
+    const body = (await res.json()) as { error: string; requestId?: string };
+    expect(body.error).toBe("服务暂时不可用，请稍后重试；若持续出现，请刷新页面或联系房主。");
+    expect(typeof body.requestId).toBe("string");
     expect(JSON.stringify(body)).not.toContain("P2002");
     expect(JSON.stringify(body)).not.toContain("Prisma");
     // 细节只进服务端日志，且带方法/路径定位信息

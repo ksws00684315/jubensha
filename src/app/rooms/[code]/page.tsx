@@ -195,7 +195,14 @@ export default function RoomPage() {
       </div>
 
       <div className="grid gap-2 md:grid-cols-2">
-        <h3 className="text-sm font-medium text-paper-200 md:col-span-2">座位</h3>
+        <h3 className="text-sm font-medium text-paper-200 md:col-span-2">
+          {(() => {
+            // 已入座进度（T3.2）：AI 座位开局自动补名，视作已就位；真人以填名为准
+            const active = room.seats.filter((s) => s.kind !== "empty");
+            const filled = active.filter((s) => s.kind === "ai" || s.playerName).length;
+            return `座位（已就位 ${filled}/${active.length}）`;
+          })()}
+        </h3>
         {room.seats.map((s) => {
           const isMe = my?.seatIndex === s.index;
           return (
@@ -293,7 +300,9 @@ export default function RoomPage() {
               开始游戏（{room.seats.filter((s) => s.kind !== "empty").length} 人）
             </button>
           ) : (
-            <p className="text-sm text-paper-400">等待房主开局。入座后请留在此页。</p>
+            <p className="text-sm text-paper-400">
+              等待房主开局（已就位 {room.seats.filter((s) => s.kind !== "empty" && (s.kind === "ai" || s.playerName)).length}/{room.seats.filter((s) => s.kind !== "empty").length}）。入座后请留在此页。
+            </p>
           )}
         </div>
       ) : (

@@ -44,7 +44,9 @@ describe("A01 POST /api/admin/unlock", () => {
     const { POST } = await import("./route");
     const res = await POST(makeReq("POST", "/api/admin/unlock", { body: { token: "anything" } }), ctx({}));
     expect(res.status).toBe(500);
-    expect(await res.json()).toEqual({ error: "服务器内部错误，请稍后重试" });
+    const body = (await res.json()) as { error: string; requestId?: string };
+    expect(body.error).toBe("服务暂时不可用，请稍后重试；若持续出现，请刷新页面或联系房主。");
+    expect(typeof body.requestId).toBe("string");
   });
 
   it("限流：同 IP 第 6 次/分钟 → 429 且带 Retry-After", async () => {
