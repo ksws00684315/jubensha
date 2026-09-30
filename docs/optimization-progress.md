@@ -806,3 +806,26 @@
 - 门禁：`npm run check` 91 files / 727 passed；`test:int` 10 files / 36 passed。用户 pm2 进程 `jubensha` 全程未触碰（重启计数 25）。
 - S8.3 已完成（依赖补丁升级，门禁与 R1–R3 通过，R8 无凭证跳过）。
 - 仍未完成：S8.4（Docker 镜像体积与容器内对局卡在 SEARCH）、R8（无凭证）。合并到 main 由用户决定。
+
+---
+
+# T 计划进度台账
+
+计划：docs/playtest-optimization-plan-2026-10-01.md
+工作分支：opt/2026-10　　基线：main c312fd0（G-std 通过，91 文件 / 727 用例）
+
+## 步骤状态
+| 步骤 | 状态 | 提交 | 验收证据摘要 | 偏差 |
+|---|---|---|---|---|
+| T0.0 计划入库 | DONE | caa1d14 | docs/playtest-optimization-plan-2026-10-01.md | — |
+| T1.1 DM 降级文案中性化 + 票数 0-based | DONE | ba61b03 | `dm-narration.test.ts` 5 用例（降级文案无指令词/互异非空/voteBrief 口径）；longflow 新增"生成失败降级"集成用例断言 `text === dmFallbackText("REVEAL")` 且 `taskKind=dm_narrate`；`grep "主持人正在准备" src` = 0 | — |
+| T1.2 投票理由超限拒绝/节选标注 | DONE | 574db6e | longflow 2 用例：真人 201 字拒（文案精确匹配）、200 字放行原文完整、recordVote 260 字节选标注；UI maxLength=200+计数器 | 引擎节选上限 120→200（120 会二次截断人类 121–200 字理由，与 D-2a 矛盾） |
+| T2.1 真人私聊放行 | DONE | c38ea5a | longflow 集成：human→human 互发/双向可见/空文本与自私信拒绝/每方向限额用尽拒绝/反方向独立/`h` 前缀 key 与 AI 窗口语义隔离；UI 新增私信发起区 | 额度语义：AI key=剩余、`h` key=已用，已在 types.ts 注明 |
+| T2.2 搜证信息对称 | DONE | 71aa74a | 空手文案分流（材料被搜完 vs 角色不可见）；SEARCH 首轮横幅补"每人可选地点不同/自己的房不可自搜/可能空手"；UI 四态渲染复核前批已落地 | UI 部分免做（page.tsx:332 已渲染四态+reason） |
+| T2.3 投票证据要求前置 | DONE | c47bd49 | culprit/hybrid 横幅补"须引用至少一张公开线索卡" | UI 勾选器复核前批已落地（VotePanel fieldset） |
+| T3.1 座位视图状态面 | DONE | df362fa | seat-view.test 3 新用例：myVote 返回（观战 null）、ENDED turnSeat=null、myCluesV2 held/locationName；client.ts 类型同步 | 线索来源以 held 布尔实现（transferred 并入 held，转交溯源留待后续） |
+| T3.2 5xx 指引 + 大厅进度 | DONE | 206ed36 | 500 文案带下一步动作 + requestId 字段（api.test 断言文案与 requestId 类型、不含内部细节）；A35 不受影响（仅断言不泄密）；大厅"已就位 n/N" | — |
+| T3.3 读本引导 | DONE | e3bedc9 | READING 按钮 下提示"ready 后可随时回看角色卡" | 阶段流程条/倒计时复核前批已存在，免做 |
+| T4.1 db-proof.sh 修复 | DONE | 5493e55 | SQL 闭合引号修复；实测见验证节 | — |
+| T4.2 云澜山庄内容校正 | DONE | d094ca7 | 5 处文本修正（杯量口径×2、卡面元信息×2、二楼/廊柱矛盾）+ 双结局情感收尾；`npm run validate:seeds` exit 0（warnings 均为存量） | — |
+| T4.3 角色分配默认打乱 | NEEDS-DECISION | — | 改变产品默认行为，待用户对 D-1 拍板 | — |
