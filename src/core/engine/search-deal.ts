@@ -107,7 +107,15 @@ export async function dispatchClues(e: GameEngine): Promise<void> {
     }
     const candidates = cluesAt(e, loc, seat);
     if (!candidates.length) {
-      await e.systemSay(`你翻遍了「${loc}」，一无所获。`, seat);
+      // 空手分两种原因说清（T2.2）：材料被搜完 vs 材料存在但对本角色不可见——
+      // 2026-10-01 实测里"一无所获"零解释，新手第一反应是"我操作错了"。
+      const anyLeft = cluesAt(e, loc).length > 0;
+      await e.systemSay(
+        anyLeft
+          ? `你翻遍了「${loc}」，没有发现你能看懂的东西——有些材料只对特定角色或条件可见，本轮落空。`
+          : `「${loc}」里能搜的材料已经被人搜完了，你扑了个空。搜证不是先到先得，每人独立结算。`,
+        seat,
+      );
       continue;
     }
     const clue = candidates[Math.floor(Math.random() * candidates.length)];

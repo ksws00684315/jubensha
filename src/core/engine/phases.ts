@@ -116,7 +116,10 @@ export async function transitionSearch(e: GameEngine, round: number): Promise<vo
     });
   await announcePhase(
     e,
-    `进入【第 ${round} 轮搜证】。每位玩家选择一个地点；获得线索后可选择公开或私藏。共 ${e.script.flow.searchRounds} 轮。`,
+    `进入【第 ${round} 轮搜证】。每位玩家选择一个地点；获得线索后可选择公开或私藏。共 ${e.script.flow.searchRounds} 轮。` +
+      (round === 1
+        ? "注意：每人可选地点不同（自己的房间不可自搜）；线索按角色视角分配，同一地点也可能空手。"
+        : ""),
     "SEARCH",
     round,
     async () => {
