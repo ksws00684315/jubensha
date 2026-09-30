@@ -216,6 +216,13 @@ export function quizBrief(e: GameEngine): string {
     .join("；");
 }
 
+/** 复盘口播的票数摘要。座位编号与 votes 表/事件流一致（0-based seatIndex），附角色名便于口播。 */
+export function voteBriefOf(counts: Record<string, number>, nameOf: (seat: number) => string): string {
+  return Object.entries(counts)
+    .map(([k, n]) => `座位${k}（${nameOf(Number(k))}）得 ${n} 票`)
+    .join("，") || "无人投票";
+}
+
 /** 计票判定（批次 J 定规）：并列最高票=平票=指认失败；无人投票/还原本/真凶未入座一律不判「被抓」。 */
 export function tallyVotes(args: { counts: Record<string, number>; culpritSeat: number; voteMode: string }): {
   culpritSeat: number;
@@ -287,9 +294,9 @@ export async function finishReveal(e: GameEngine): Promise<void> {
   const voteMode = e.script.flow.voteMode;
   const culpritName = e.script.characters.find((c) => c.id === e.script.truth.culpritId)?.name ?? "?";
   const culpritSeated = result.culpritSeat >= 0 && !!e.state.seats[result.culpritSeat];
-  const voteBrief = Object.entries(result.counts)
-    .map(([k, n]) => `座位${Number(k) + 1} 得 ${n} 票`)
-    .join("，") || "无人投票";
+  // 票数口径与事件流/votes 表一致（0-based seatIndex），并附角色名便于口播；
+  // 2026-10-01 实测曾用 +1 生成"座位2 得 1 票"，与玩家侧 0-based 数据错位误导全场。
+  const voteBrief = voteBriefOf(result.counts, (seat) => e.speakerName(seat));
   let task: string;
   if (voteMode === "choice") {
     task = `直接按案件事实复盘，不要重复开场背景或场景氛围。本局为还原本，不指认凶手。请逐题宣读正确答案与全场作答分布（${quizBrief(e)}），按得分点评全场还原度，然后完整说明手法、时间线和关键证据链。`;

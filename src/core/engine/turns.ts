@@ -234,6 +234,27 @@ export function dispatchAnswerTurn(e: GameEngine, target: number, hint: string, 
   });
 }
 
+/** DM 旁白降级文案：按阶段固定中性提示。绝不内插 task——task 是给模型的提示词，
+ * 内插会把幕后指令透传给玩家（2026-10-01 五人真人对局实测事件 #196）。 */
+export function dmFallbackText(phase: GameState["phase"]): string {
+  switch (phase) {
+    case "READING":
+      return "（主持人正在整理角色剧本，请稍候。）";
+    case "SELF_INTRO":
+      return "（主持人正在安排入场，请稍候。）";
+    case "SEARCH":
+      return "（主持人正在分发搜证材料，请稍候。）";
+    case "DISCUSSION":
+      return "（主持人正在推进圆桌议程，请稍候。）";
+    case "VOTE":
+      return "（主持人正在清点选票，请稍候。）";
+    case "REVEAL":
+      return "（主持人正在核对案情卷宗，请稍候。）";
+    default:
+      return "（主持人正在处理台上事务，请稍候。）";
+  }
+}
+
 /** DM 旁白回合（锁外生成，锁内提交）。after = 旁白落库后的阶段推进。 */
 export function dispatchDmTurn(
   e: GameEngine,
@@ -243,6 +264,7 @@ export function dispatchDmTurn(
   after: () => Promise<void>
 ): void {
   const boundary = { phase: e.state.phase, round: e.state.round };
+  const fallbackText = dmFallbackText(phase);
   dispatchTurn(e, {
     timeoutMs: AI_DECISION_TIMEOUT_MS * 4 + 10_000,
     produce: async (abortSignal) => {
@@ -260,7 +282,7 @@ export function dispatchDmTurn(
           text = "";
         }
       }
-      if (!text.trim()) text = `（主持人正在准备：${task}）`;
+      if (!text.trim()) text = fallbackText;
       return text;
     },
     stale: () => e.state.phase !== boundary.phase || e.state.round !== boundary.round,
@@ -272,7 +294,7 @@ export function dispatchDmTurn(
         fromSeat: null,
         toSeat: null,
         visibility: "public",
-        content: { text, phase, round },
+        content: { text, phase, round, ...(text === fallbackText ? { taskKind: "dm_narrate" } : {}) },
       });
       await after();
     },
@@ -284,7 +306,7 @@ export function dispatchDmTurn(
         fromSeat: null,
         toSeat: null,
         visibility: "public",
-        content: { text: `（主持人正在准备：${task}）`, phase, round },
+        content: { text: fallbackText, phase, round, taskKind: "dm_narrate" },
       });
       await after();
     },

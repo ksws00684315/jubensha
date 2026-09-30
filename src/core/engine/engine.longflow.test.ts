@@ -19,6 +19,7 @@ import path from "node:path";
 
 const hoisted = vi.hoisted(() => {
   const hang = { stream: false, chat: false };
+  const fail = { stream: false, chat: false };
   let releaseStream: (() => void) | null = null;
   const tables = { rooms: [] as any[], games: [] as any[], events: [] as any[], seatStates: [] as any[], votes: [] as any[] };
   const calls = { chatStream: 0 };
@@ -36,6 +37,7 @@ const hoisted = vi.hoisted(() => {
     },
     gameRows,
     hang,
+    fail,
     get releaseStream() { return releaseStream; },
     set releaseStream(value: (() => void) | null) { releaseStream = value; },
     // AI 私信决策开关:null=拒绝;设为 {to,text} 则 AI 向该真人开窗（to 为 1 基座位号）
@@ -115,6 +117,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
   return {
     ...actual,
     chat: vi.fn(async (opts: any) => {
+      if (hoisted.fail.chat) throw new Error("mock chat fail");
       if (hoisted.hang.chat) await new Promise(() => {});
       const last = opts.messages[opts.messages.length - 1].content as string;
       let text = speech;
@@ -128,6 +131,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
     }),
     chatStream: vi.fn(async function* () {
       hoisted.llmCalls.chatStream += 1;
+      if (hoisted.fail.stream) throw new Error("mock stream fail");
       if (hoisted.hang.stream) await new Promise<void>((resolve) => { hoisted.releaseStream = resolve; });
       const speech = "我确认我当时一直待在房间里，哪里都没有去。";
       yield speech.slice(0, 10);
@@ -140,6 +144,7 @@ vi.mock("@/core/llm/client", async (importOriginal) => {
 import { GameEngine } from "./engine";
 import { maybeQueueWhisper, maybeQueueInterjection } from "./social";
 import { tallyVotes, transitionSelfIntro } from "./phases";
+import { dmFallbackText } from "./turns";
 import { dispatchClues, dispatchGuaranteedPublicClues, NO_SEARCH_CHOICE } from "./search-deal";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
@@ -338,6 +343,34 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     expect(revealIndex).toBeLessThan(endedIndex);
     await engine.tick();
     expect(eventsOf(engine).filter((event) => event.type === "reveal")).toHaveLength(1);
+  }, 30_000);
+
+  it("复盘旁白生成失败时降级为固定中性文案，不透传 DM 提示词（T1.1）", async () => {
+    const engine = await GameEngine.start(makeRoom() as any, { id: "script-1", content: JSON.parse(JSON.stringify(doc)) });
+    await vi.advanceTimersByTimeAsync(500); // 让开场旁白完成
+
+    engine.state.phase = "REVEAL";
+    engine.state.voteResult = { counts: { "0": 1 }, culpritSeat: 0, caught: true };
+    hoisted.fail.stream = true;
+    hoisted.fail.chat = true;
+    await engine.tick();
+    await vi.advanceTimersByTimeAsync(2000); // 流式与全文重试立即抛错 → 走降级文案提交
+
+    hoisted.fail.stream = false;
+    hoisted.fail.chat = false;
+
+    const narration = eventsOf(engine).find(
+      (event) => event.type === "phase" && event.phase === "REVEAL" && Boolean(event.content.text),
+    );
+    expect(narration).toBeTruthy();
+    expect(narration!.content.text).toBe(dmFallbackText("REVEAL"));
+    expect(narration!.content.taskKind).toBe("dm_narrate");
+    // 降级文案绝不携带提示词原文——"不要重述/点评"只存在于 task（2026-10-01 实测 #196 泄漏）
+    expect(narration!.content.text).not.toContain("不要重述");
+    expect(narration!.content.text).not.toContain("点评");
+    // 降级提交后流程仍要闭环
+    expect(eventsOf(engine).filter((event) => event.type === "reveal")).toHaveLength(1);
+    expect(eventsOf(engine).some((event) => event.type === "phase" && event.content.phase === "ENDED")).toBe(true);
   }, 30_000);
 
   it("无限真人时间下连续推进只向真人发送一次读本提示", async () => {
