@@ -145,6 +145,7 @@ import { GameEngine } from "./engine";
 import { maybeQueueWhisper, maybeQueueInterjection } from "./social";
 import { tallyVotes, transitionSelfIntro } from "./phases";
 import { dmFallbackText } from "./turns";
+import { recordVote } from "./finale";
 import { dispatchClues, dispatchGuaranteedPublicClues, NO_SEARCH_CHOICE } from "./search-deal";
 import { parseScriptForRuntime } from "@/core/script/compat";
 
@@ -230,6 +231,39 @@ describe("引擎长流程(限时模式,1 真人 + 4 AI)", () => {
     expect((await e.handleAction(0, { type: "vote", target: 1, evidenceIds: [clueId] })).ok).toBe(true);
     expect(e.state.votes["0"].evidenceIds).toEqual([clueId]);
     expect(e.events.find((event) => event.type === "vote")?.content.evidenceIds).toEqual([clueId]);
+    e.clearTimers("");
+  });
+
+  it("投票理由：真人超限明确拒绝，AI 超长节选标注（T1.2）", async () => {
+    const e = await GameEngine.start(makeRoom() as any, { id: "script-v2", content: JSON.parse(JSON.stringify(doc)) });
+    e.clearTimers(""); e.state.phase = "VOTE";
+    const clueId = doc.clues[0].id;
+    e.state.clueStates[clueId] = { isPublic: true, discoveredBy: 0 };
+
+    // 真人 201 字：明确拒绝，不静默截断
+    const humanLong = await e.handleAction(0, { type: "vote", target: 1, reason: "嫌".repeat(201), evidenceIds: [clueId] });
+    expect(humanLong.ok).toBe(false);
+    expect(humanLong.error).toBe("投票理由请控制在 200 字内");
+    expect(e.state.votes["0"]).toBeUndefined();
+
+    // 真人恰好 200 字：放行且原文完整
+    const okLong = await e.handleAction(0, { type: "vote", target: 1, reason: "正".repeat(200), evidenceIds: [clueId] });
+    expect(okLong.ok).toBe(true);
+    expect(e.state.votes["0"].reason).toBe("正".repeat(200));
+    const broadcast = e.events.find((event) => event.type === "vote" && event.fromSeat === 0)?.content.text ?? "";
+    expect(broadcast).toContain(`：${"正".repeat(200)}`);
+    expect(broadcast).not.toContain("已节选");
+    e.clearTimers("");
+  });
+
+  it("recordVote 对超长理由（AI 路径）节选并显式标注（T1.2）", async () => {
+    const e = await GameEngine.start(makeRoom() as any, { id: "script-v3", content: JSON.parse(JSON.stringify(doc)) });
+    e.clearTimers("");
+    await recordVote(e, 1, 0, "疑".repeat(260));
+    const stored = e.state.votes["1"].reason as string;
+    expect(stored.startsWith("疑".repeat(200))).toBe(true);
+    expect(stored).toContain("…（理由过长已节选）");
+    expect(e.events.find((event) => event.type === "vote" && event.fromSeat === 1)?.content.reason).toBe(stored);
     e.clearTimers("");
   });
 

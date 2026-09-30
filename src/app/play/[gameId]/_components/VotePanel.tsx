@@ -54,10 +54,12 @@ export function VotePanel({
           <input
             aria-label="投票理由"
             value={voteReason}
+            maxLength={200}
             onChange={(e) => setVoteReason(e.target.value)}
-            placeholder="一句话理由（可选）"
+            placeholder="一句话理由（可选，200 字内）"
             className="w-full rounded-lg border border-danger-400/20 bg-ink-950/80 px-3 py-2 text-sm text-paper-50 outline-none placeholder:text-paper-500 focus:border-danger-400"
           />
+          {voteReason.length > 160 && <p className="text-right text-[11px] text-paper-500">{voteReason.length}/200</p>}
           <button
             onClick={() => {
               if (voteTarget !== null) void send({ type: "vote", target: voteTarget, reason: voteReason, evidenceIds }).then(() => setVoteTarget(null));

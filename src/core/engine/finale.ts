@@ -17,13 +17,15 @@ import { log } from "@/lib/log";
 
 export async function recordVote(e: GameEngine, seat: number, target: number, reason?: string, evidenceIds?: string[]): Promise<void> {
   const legalEvidence = legalPublicEvidenceIds(e, evidenceIds);
-  e.state.votes[String(seat)] = { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}) };
+  // 超长理由节选并显式标注：此前的静默 slice(0,120) 让广播戛然而止，玩家以为提交出错（T1.2）
+  const trimmed = reason && reason.length > 200 ? `${reason.slice(0, 200)}…（理由过长已节选）` : reason;
+  e.state.votes[String(seat)] = { target, reason: trimmed, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}) };
   try {
-    await db.vote.create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason } });
+    await db.vote.create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason: trimmed } });
   } catch (err) {
     log.error("engine.vote.persist_failed_retrying", { gameId: e.gameId, seat, error: err });
     await db.vote
-      .create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason } })
+      .create({ data: { gameId: e.gameId, seatIndex: seat, targetIndex: target, reason: trimmed } })
       .catch((err2) => log.error("engine.vote.persist_retry_failed_memory_only", { gameId: e.gameId, seat, error: err2 }));
   }
   await e.recordEvent({
@@ -33,7 +35,7 @@ export async function recordVote(e: GameEngine, seat: number, target: number, re
     fromSeat: seat,
     toSeat: null,
     visibility: `seat:${seat}`,
-    content: { target, reason, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}), text: `你投给了 ${e.speakerName(target)}${reason ? `：${reason}` : ""}` },
+    content: { target, reason: trimmed, ...(legalEvidence.length ? { evidenceIds: legalEvidence } : {}), text: `你投给了 ${e.speakerName(target)}${trimmed ? `：${trimmed}` : ""}` },
   });
   const seats = activeSeats(e.state);
   if (seats.every((index) => e.state.votes[String(index)])) {

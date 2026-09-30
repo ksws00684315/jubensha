@@ -171,7 +171,12 @@ export const PLAYER_ACTIONS: Record<GameAction["type"], Handler> = {
     if (target === seatIndex) return { ok: false, error: "不能投自己" };
     const evidenceError = validateVoteEvidence(e.script.clues, e.state.clueStates, action.evidenceIds);
     if (evidenceError) return { ok: false, error: evidenceError };
-    await recordVote(e, seatIndex, target, (action.reason ?? "").slice(0, 120) || undefined, action.evidenceIds);
+    // 真人理由超限给出明确拒绝而非静默腰斩；AI 长输出由 recordVote 统一节选标注（T1.2）
+    const rawReason = action.reason ?? "";
+    if (e.state.seats[seatIndex]?.kind !== "ai" && rawReason.length > 200) {
+      return { ok: false, error: "投票理由请控制在 200 字内" };
+    }
+    await recordVote(e, seatIndex, target, rawReason || undefined, action.evidenceIds);
     clearHumanTimeout(e, seatIndex);
     // hybrid：投票后可能还差答题，允许 step 重新武装剩余限时
     e.turnAsked.delete(`ask:VOTE:${seatIndex}`);
