@@ -322,9 +322,12 @@ export default function PlayPage() {
               </p>
             )}
             {phase === "READING" && (
-              <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400">
-                我已读完剧本
-              </button>
+              <>
+                <button onClick={() => void send({ type: "ready" })} className="w-full rounded-lg bg-gold-500 py-2.5 text-sm font-semibold text-ink-950 hover:bg-gold-400">
+                  我已读完剧本
+                </button>
+                <p className="text-[11px] text-paper-500">读不完也可先确认——确认后随时能在右侧「我的剧本」页签回看角色卡。</p>
+              </>
             )}
             {phase === "SEARCH" && !iChoseLocation && (
               <div className="space-y-1.5">
