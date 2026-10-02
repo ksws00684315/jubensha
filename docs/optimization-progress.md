@@ -847,3 +847,11 @@
 | 五人复测局（无模型） | 5 真人座位（协调者+4 agent 玩家，中途平台配额回收 4 次，以 bots 接管空位完赛），gameId cmup4fgq1000as87dcrvx4196 | 4:1 指中真凶（苏晚），caught=true；零机制吵架 ✅；零首投 400（5/5 票全部带 evidenceIds 且首投成功）✅；私聊本局未实演（指定的私聊玩家被 token 事故卡掉）❌；指令性文本泄漏 0（T1.1 运行时验证 ✅）；搜证横幅带规则说明（T2.2 ✅）；投票横幅带证据要求（T2.3 ✅）；myVote 投后立即可读（T3.1 ✅）；角色卡为 T4.2 修正后口径（✅）；两间房座位→角色映射不同（T4.3 洗牌 ✅） |
 | 中途事故与新发现 | 复测中数据库容器二次闪断（tmpfs 卷）→ 改持久卷重建；期间 :3100 实例返回 T3.2 新 5xx 文案（生产路径实测 ✅）。另发现：①座位 token 失效后 status 返回 200 观战视图（mySeat=null），act 才 403——客户端无法区分"凭证失效"与"观战"，建议 status 对携带无效凭证的请求显式报错或返回 authState；②大厅 seats 对非房主隐藏 playerName，"已就位 n/N"只能靠 hasToken 推断，建议 API 显式返回 filled/total |
 | 模型局（真模型） | :3000 用户实例（用户授权），1 真人 + 4 AI，DM/玩家槽 = deepseek-v4-flash（ctaigw），embedding = 本地 bge-m3，gameId cmupauxyt001ns8lqayvmal03 | 8.7 分钟完赛到 ENDED；4:1 指中苏晚（AI 玩家），caught=true，协调者座位 100 分；真模型 DM 全程真人级旁白与复盘点评（降级占位 0 次）；AI 座位攻防质量在线（周伯被公开账本后当场认账不认毒；凶手 AI 反构"日记被人为摊开"并嫁祸陆小开）；失败事件（后台 AI 操作失败/思考时遇到问题）= 0；泄露事故 = 0 |
+
+## R2 第二轮验证修补（2026-10-02）
+| 步骤 | 状态 | 提交 | 验收证据 |
+|---|---|---|---|
+| T5.0 计划附节 | DONE | f2ec8e1 | 计划文档「第二轮验证修补（R2）」节 |
+| T5.1 凭证失效显式化 | DONE | 3a786fa | games/[id] 状态接口：显式凭证无效 → 403（仅 seat 无 token 同样 403）；无凭证观战语义不变；"query 不能翻案错误 header"不变式保留（403 化改写）；前端 useGameStream 新增 credentialError + 页面警示横幅（观战数据保留兜底） |
+| T5.2 大厅 occupancy | DONE | 3a786fa | rooms/[code] 响应新增 occupancy{filled,total}；大厅页两处内联计算改消费 API 字段；client.ts RoomView 类型同步 |
+| 验证 | DONE | — | G-std 全绿（92 文件 / 743 用例，净增 2）；R9 合体走查 86 步 0 失败 0 控制台错误；访客大厅截图确认「已就位 4/5」渲染（`.e2e/screens/S2.6/r2c14`） |
