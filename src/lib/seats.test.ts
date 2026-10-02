@@ -14,12 +14,12 @@ describe("assignCharacterIds", () => {
   it("剩余角色池默认打乱（D-1）：多次分配不全等于顺序表", () => {
     const seats = ids.map(() => ({ kind: "ai", characterId: null }));
     const outcomes = new Set<string>();
-    for (let i = 0; i < 40; i += 1) {
+    for (let i = 0; i < 60; i += 1) {
       outcomes.add(assignCharacterIds(seats, ids).join(","));
     }
-    // 5! = 120 种排列，40 次全命中顺序表的概率约 (1/120)^39 ≈ 0
+    // 只断言"确实在打乱"：60 次全为同一排列的概率 (1/120)^59 ≈ 0。
+    // 不断言顺序表必然出现——单次命中概率仅 1/120，那是抛硬币式的脆弱断言（合并 main 时曾因此翻车）。
     expect(outcomes.size).toBeGreaterThan(1);
-    expect(outcomes.has(ids.join(","))).toBe(true); // 顺序表本身也是合法排列之一
   });
 
   it("注入确定性洗牌时按洗牌结果分配（T4.3）", () => {
