@@ -33,6 +33,12 @@ async function GET_IMPL(_req: Request, ctx: { params: Promise<{ code: string }> 
   const seatAuthorized = Number.isInteger(seatIndex) && verifySeatToken(room.seats, seatIndex, seatToken);
   const dmAuthorized = verifyDmToken(room, url.searchParams.get("dmToken") ?? _req.headers.get("x-dm-token"));
   const canSeeNames = hostAuthorized || dmAuthorized;
+  // R2/T5.2：就座进度对所有人可见（非房主看不到 playerName，但能知道还差几个人）
+  const activeSeats = room.seats.filter((s) => s.kind !== "empty");
+  const occupancy = {
+    filled: activeSeats.filter((s) => s.kind === "ai" || Boolean(s.token)).length,
+    total: activeSeats.length,
+  };
   return NextResponse.json({
     id: room.id,
     code: room.code,
@@ -40,6 +46,7 @@ async function GET_IMPL(_req: Request, ctx: { params: Promise<{ code: string }> 
     // gameId 是后续 SSE/动作接口的枚举入口，无凭证时不返回。
     gameId: hostAuthorized || dmAuthorized || seatAuthorized ? room.game?.id ?? null : null,
     gamePhase: room.game?.phase ?? null,
+    occupancy,
     humanDm: room.humanDm,
     dmTaken: Boolean(room.dmToken),
     dmName: canSeeNames ? room.dmName : null,

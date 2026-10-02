@@ -55,6 +55,26 @@ describe("A23 GET /api/rooms/[code]", () => {
     expect(body.gameId).toBeNull();
   });
 
+  it("occupancy：AI 座位与已认领真人座位计入 filled，空座只计入 total（R2/T5.2）", async () => {
+    // seat 0 真人已认领（有 token），seat 1/2 为 AI；再加一个未认领真人与空座
+    vi.mocked(db.room.findUnique).mockResolvedValue(
+      roomRow({
+        seats: [
+          seatRow(),
+          seatRow({ id: "seat-2", index: 1, kind: "ai", token: null, playerName: null }),
+          seatRow({ id: "seat-3", index: 2, kind: "ai", token: null, playerName: null }),
+          seatRow({ id: "seat-4", index: 3, kind: "human", token: null, playerName: null }),
+          seatRow({ id: "seat-5", index: 4, kind: "empty", token: null, playerName: null, characterId: null }),
+        ],
+      }) as never,
+    );
+    vi.mocked(db.script.findUnique).mockResolvedValue(scriptRow() as never);
+    const { GET } = await import("./route");
+    const res = await GET(makeReq("GET", "/api/rooms/ABCDE"), ctx({ code: "ABCDE" }));
+    const body = await res.json();
+    expect(body.occupancy).toEqual({ filled: 3, total: 4 });
+  });
+
   it("限流 429", async () => {
     vi.mocked(db.room.findUnique).mockResolvedValue(lobbyRoom() as never);
     vi.mocked(db.script.findUnique).mockResolvedValue(scriptRow() as never);

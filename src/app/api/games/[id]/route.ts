@@ -45,8 +45,13 @@ async function GET_IMPL(
     }
   }
 
-  let mySeat: number | null = seatParam !== null ? Number(seatParam) : null;
-  if (!verifySeatToken(game.room.seats, mySeat, token)) mySeat = null;
+  const mySeat: number | null = seatParam !== null ? Number(seatParam) : null;
+  // R2/T5.1：未带凭证 = 主动观战（维持降级语义，安全面不变）；
+  // 显式携带座位凭证而校验失败 = 凭证失效，直接 403——静默降级成观战会让客户端
+  // 误判"凭证还有效"（2026-10-01 复测局 seat 4 实测烧掉 25 分钟）。
+  if (seatParam !== null && !verifySeatToken(game.room.seats, mySeat, token)) {
+    return NextResponse.json({ error: "座位凭证已失效，请重新入座或联系房主" }, { status: 403 });
+  }
 
   // 只有持有有效座位凭证的参与者才可触发懒恢复；公开观战请求只读快照，避免被匿名轮询唤醒 AI 消耗。
   if (game.status === "running" && mySeat !== null && !GameEngine.get(id)) {

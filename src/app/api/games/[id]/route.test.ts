@@ -64,14 +64,21 @@ describe("A28 GET /api/games/[id]", () => {
     expect(GameEngine.load).not.toHaveBeenCalled();
   });
 
-  it("错 token → 与匿名等价，不泄露任何私有数据", async () => {
+  it("错 token（显式携带凭证但无效）→ 403 凭证失效，不再伪装成观战（R2/T5.1）", async () => {
     vi.mocked(db.game.findUnique).mockResolvedValue(runningGame() as never);
     vi.mocked(db.seatState.findMany).mockResolvedValue([{ seatIndex: 0, data: { clueIds: ["clue-1"] } }] as never);
     const res = await getGame("?seat=0&token=wrong");
+    expect(res.status).toBe(403);
     const body = await res.json();
-    expect(body.mySeat).toBeNull();
-    expect(body.myClues).toEqual([]);
-    expect(body.seats.every((s: { myCard: unknown }) => s.myCard === null)).toBe(true);
+    expect(body.error).toContain("座位凭证已失效");
+    expect(body.mySeat).toBeUndefined(); // 不返回任何视角数据
+  });
+
+  it("带 seat 但不带 token → 403（无法鉴权的显式占座请求）", async () => {
+    vi.mocked(db.game.findUnique).mockResolvedValue(runningGame() as never);
+    vi.mocked(db.seatState.findMany).mockResolvedValue([] as never);
+    const res = await getGame("?seat=0");
+    expect(res.status).toBe(403);
   });
 
   it("正确 token → 返回本席 myCard，且其他座位 myCardV2 恒 null", async () => {
@@ -150,11 +157,13 @@ describe("A28 GET /api/games/[id]", () => {
     const { GET } = await import("./route");
     const byQuery = await GET(makeReq("GET", `/api/games/${ID}?seat=0&token=seat-token-1`), ctx({ id: ID }));
     expect((await byQuery.json()).mySeat).toBe(0);
-    // header 是错的：query 里的正确凭证不能翻案，否则日志里的 token 仍是有效凭证
+    // header 是错的：query 里的正确凭证不能翻案，否则日志里的 token 仍是有效凭证。
+    // R2/T5.1 后"显式凭证无效"整体 403（不再降级观战）——query 救不了错误 header 的不变式不变。
     const mixed = await GET(
       makeReq("GET", `/api/games/${ID}?seat=0&token=seat-token-1`, { headers: { "x-seat-token": "wrong" } }),
       ctx({ id: ID })
     );
-    expect((await mixed.json()).mySeat).toBeNull();
+    expect(mixed.status).toBe(403);
+    expect((await mixed.json()).error).toContain("座位凭证已失效");
   });
 });

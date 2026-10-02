@@ -42,6 +42,8 @@ export interface RoomView {
   status: string;
   gameId: string | null;
   gamePhase: string | null;
+  /** 就座进度：filled = AI 座位 + 已认领真人座位；total = 非空座位（R2/T5.2，对房主与访客口径一致） */
+  occupancy: { filled: number; total: number };
   humanDm?: boolean;
   dmTaken?: boolean;
   dmName?: string | null;

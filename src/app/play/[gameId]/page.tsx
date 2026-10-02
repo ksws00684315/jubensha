@@ -33,7 +33,7 @@ export default function PlayPage() {
   const { gameId } = useParams<{ gameId: string }>();
   const [retryKey, setRetryKey] = useState(0);
   const { setSummary, ...stream } = useGameStream(gameId, retryKey);
-  const { summary, mySeat, myToken, isDm, dmToken, dmData, events, deltas, thinking, dmThinking, dmDelta, loadError, soundEnabled, setSoundEnabled, playCue, now } = stream;
+  const { summary, mySeat, myToken, isDm, dmToken, dmData, events, deltas, thinking, dmThinking, dmDelta, loadError, credentialError, soundEnabled, setSoundEnabled, playCue, now } = stream;
 
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -212,6 +212,11 @@ export default function PlayPage() {
 
   return (
     <div className="game-shell min-w-0 space-y-4">
+      {credentialError && (
+        <div className="game-panel border border-danger-400/40 bg-danger-400/10 px-5 py-3 text-sm text-danger-400" role="alert">
+          ⚠ {credentialError}。你当前看到的是观战视角，无法在本页操作。
+        </div>
+      )}
       <section className="game-panel min-w-0 overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">

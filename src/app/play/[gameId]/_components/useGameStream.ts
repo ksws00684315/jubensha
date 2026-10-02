@@ -34,6 +34,8 @@ export function useGameStream(gameId: string, retryKey: number) {
   const [dmThinking, setDmThinking] = useState(false);
   const [dmDelta, setDmDelta] = useState("");
   const [loadError, setLoadError] = useState<string | null>(null);
+  // R2/T5.1：携带的座位凭证被服务端判失效时置位，页面据此渲染横幅而非静默观战
+  const [credentialError, setCredentialError] = useState<string | null>(null);
   const [streamKey, setStreamKey] = useState<string | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [now, setNow] = useState(() => Date.now());
@@ -113,9 +115,14 @@ export function useGameStream(gameId: string, retryKey: number) {
           setMyToken(idToken);
           try {
             const mine = await api<GameSummary>(`/api/games/${gameId}?seat=${seatIndex}`, { headers: { "x-seat-token": idToken } });
-            if (!cancelled) setSummary(mine);
-          } catch {
+            if (!cancelled) {
+              setSummary(mine);
+              setCredentialError(null);
+            }
+          } catch (err) {
+            // R2/T5.1：携带凭证却拿到 403 = 凭证失效，明确告知而不是静默降级成观战
             setSummary(base);
+            if (!cancelled) setCredentialError(err instanceof Error ? err.message : "座位凭证校验失败");
           }
         } else {
           setSummary(base);
@@ -322,6 +329,7 @@ export function useGameStream(gameId: string, retryKey: number) {
     dmThinking,
     dmDelta,
     loadError,
+    credentialError,
     soundEnabled,
     setSoundEnabled,
     playCue,
